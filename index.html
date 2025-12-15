@@ -7,7 +7,6 @@
   <meta name="description" content="Observo entrega visibilidad de seguridad web: baseline, cambios y reportes claros para convertir seguridad en confianza." />
   <meta name="theme-color" content="#070B14" />
 
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -24,7 +23,7 @@
         var(--bg);
     }
 
-    /* Glass PRO (no pálido, sin blur global para evitar "nube") */
+    /* Glass PRO */
     .glass{
       background:
         radial-gradient(900px 260px at 20% 0%, rgba(255,255,255,.10), transparent 55%),
@@ -35,7 +34,7 @@
         inset 0 1px 0 rgba(255,255,255,.08);
     }
 
-    /* Barra superior con blur (solo aquí) */
+    /* Barra superior */
     .glass-nav{
       background: linear-gradient(to bottom, rgba(10,14,26,.78), rgba(10,14,26,.55));
       border: 1px solid rgba(255,255,255,.15);
@@ -46,7 +45,6 @@
     .btn{ transition: transform .15s ease, filter .15s ease; }
     .btn:hover{ transform: translateY(-1px); filter: brightness(1.07); }
 
-    /* Hover PRO para links del nav */
     .navlink{
       color: rgba(255,255,255,.72);
       transition: color .15s ease, text-shadow .15s ease;
@@ -86,7 +84,38 @@
       border-color: rgba(255,255,255,.18);
     }
 
-    /* Emblema flotante (no molesta clics) */
+    /* Feature cards (Read-only/Baseline/Reportes) igual al estilo de las cards */
+    .feature-card{
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .18s ease, filter .18s ease, border-color .18s ease;
+    }
+    .feature-card::before{
+      content:"";
+      position:absolute;
+      left:14px;
+      right:14px;
+      top:12px;
+      height:2px;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(56,189,248,.75), rgba(99,102,241,.65), rgba(217,70,239,.70));
+      opacity:.60;
+    }
+    .feature-card::after{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background: radial-gradient(520px 190px at 30% 10%, rgba(56,189,248,.10), transparent 60%);
+      pointer-events:none;
+    }
+    .feature-card:hover{
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+      border-color: rgba(255,255,255,.18);
+    }
+
+    /* Emblema flotante */
     .emblem{
       position: fixed;
       left: 16px;
@@ -101,12 +130,23 @@
     @media (max-width: 640px){
       .emblem{ width: 54px; height: 54px; left: 12px; bottom: 12px; }
     }
+
+    /* Popover */
+    .popover{
+      position: absolute;
+      left: 0;
+      top: calc(100% + 10px);
+      width: min(420px, 92vw);
+      z-index: 60;
+      display: none;
+    }
+    .popover.open{ display:block; }
   </style>
 </head>
 
 <body class="text-white">
 
-  <!-- Emblema flotante (escudo + ojo) -->
+  <!-- Emblema flotante -->
   <svg class="emblem" viewBox="0 0 120 120" aria-hidden="true">
     <defs>
       <linearGradient id="g1" x1="0" x2="1">
@@ -139,21 +179,17 @@
   <header class="sticky top-0 z-50">
     <div class="mx-auto max-w-6xl px-4">
       <div class="mt-4 glass-nav rounded-2xl px-4 py-3 flex items-center justify-between">
-
-        <!-- Logo degradado + nombre -->
         <a href="#top" class="flex items-center gap-3 group">
           <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500"></div>
           <span class="font-semibold tracking-tight">Observo</span>
         </a>
 
-        <!-- Links con hover -->
         <nav class="hidden md:flex items-center gap-6 text-sm">
           <a class="navlink" href="#como">Cómo funciona</a>
           <a class="navlink" href="#incluye">Qué incluye</a>
           <a class="navlink" href="#reportes">Reportes</a>
         </nav>
 
-        <!-- SOLO 2 botones -->
         <div class="flex items-center gap-3">
           <a href="/pricing.html"
              class="btn hidden sm:inline-flex px-4 py-2 rounded-xl glass text-sm text-white/90 hover:text-white">
@@ -165,7 +201,6 @@
             Pedir demo
           </a>
         </div>
-
       </div>
     </div>
   </header>
@@ -193,23 +228,95 @@
               Sin jerga innecesaria y sin “ruido”.
             </p>
 
-            <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-white/70">
-              <div class="glass rounded-2xl px-4 py-3">
-                <div class="font-semibold text-white/90">Read-only</div>
-                <div>Sin credenciales.</div>
+            <!-- Feature cards (como la imagen 2 + popover) -->
+            <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <!-- Read-only -->
+              <div class="relative">
+                <button type="button"
+                        class="glass feature-card w-full text-left rounded-2xl px-4 py-4 border border-white/10"
+                        data-popover="pop-readonly">
+                  <div class="font-semibold">Read-only</div>
+                  <div class="text-sm text-white/70">Sin credenciales.</div>
+                </button>
+
+                <div id="pop-readonly" class="popover glass rounded-2xl p-4 border border-white/10">
+                  <div class="flex items-start justify-between gap-4">
+                    <div>
+                      <div class="text-sm font-semibold">Read-only (sin credenciales)</div>
+                      <p class="mt-1 text-sm text-white/70">
+                        Observo analiza señales públicas del sitio (TLS, headers, exposición) sin pedir accesos.
+                        Ideal para demostrar postura de seguridad sin fricción.
+                      </p>
+                      <ul class="mt-3 text-sm text-white/70 space-y-1">
+                        <li>• No necesita usuario/contraseña.</li>
+                        <li>• No modifica tu sistema.</li>
+                        <li>• Menos riesgo operacional.</li>
+                      </ul>
+                    </div>
+                    <button class="text-white/60 hover:text-white" data-close="pop-readonly" aria-label="Cerrar">✕</button>
+                  </div>
+                </div>
               </div>
-              <div class="glass rounded-2xl px-4 py-3">
-                <div class="font-semibold text-white/90">Baseline</div>
-                <div>Comparación real.</div>
+
+              <!-- Baseline -->
+              <div class="relative">
+                <button type="button"
+                        class="glass feature-card w-full text-left rounded-2xl px-4 py-4 border border-white/10"
+                        data-popover="pop-baseline">
+                  <div class="font-semibold">Baseline</div>
+                  <div class="text-sm text-white/70">Comparación real.</div>
+                </button>
+
+                <div id="pop-baseline" class="popover glass rounded-2xl p-4 border border-white/10">
+                  <div class="flex items-start justify-between gap-4">
+                    <div>
+                      <div class="text-sm font-semibold">Baseline (foto del “hoy”)</div>
+                      <p class="mt-1 text-sm text-white/70">
+                        Guardamos una referencia del estado actual y luego comparamos para detectar cambios relevantes
+                        (configuración, headers, comportamientos visibles).
+                      </p>
+                      <ul class="mt-3 text-sm text-white/70 space-y-1">
+                        <li>• Detecta degradaciones con el tiempo.</li>
+                        <li>• Justifica cambios con evidencia.</li>
+                        <li>• Útil para cambios de equipo/infra.</li>
+                      </ul>
+                    </div>
+                    <button class="text-white/60 hover:text-white" data-close="pop-baseline" aria-label="Cerrar">✕</button>
+                  </div>
+                </div>
               </div>
-              <div class="glass rounded-2xl px-4 py-3">
-                <div class="font-semibold text-white/90">Reportes</div>
-                <div>Para clientes.</div>
+
+              <!-- Reportes -->
+              <div class="relative">
+                <button type="button"
+                        class="glass feature-card w-full text-left rounded-2xl px-4 py-4 border border-white/10"
+                        data-popover="pop-reportes">
+                  <div class="font-semibold">Reportes</div>
+                  <div class="text-sm text-white/70">Para clientes.</div>
+                </button>
+
+                <div id="pop-reportes" class="popover glass rounded-2xl p-4 border border-white/10">
+                  <div class="flex items-start justify-between gap-4">
+                    <div>
+                      <div class="text-sm font-semibold">Reportes listos para compartir</div>
+                      <p class="mt-1 text-sm text-white/70">
+                        Entregamos un resumen ejecutivo y evidencia simple para que un cliente entienda
+                        “qué está bien”, “qué falta” y “qué hacer ahora”.
+                      </p>
+                      <ul class="mt-3 text-sm text-white/70 space-y-1">
+                        <li>• Resumen ejecutivo + findings.</li>
+                        <li>• Evidencia simple (checks).</li>
+                        <li>• Comunicación sin jerga.</li>
+                      </ul>
+                    </div>
+                    <button class="text-white/60 hover:text-white" data-close="pop-reportes" aria-label="Cerrar">✕</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Derecha: Manifiesto (escudo + ojo + misión/visión/promesa) -->
+          <!-- Derecha: Manifiesto -->
           <div class="lg:col-span-5">
             <div class="glass rounded-3xl p-6 border border-white/10">
               <div class="flex items-center justify-between">
@@ -393,8 +500,9 @@
 
   </main>
 
-  <!-- Script PRO: mueve TODOS los ojos (emblema + manifiesto) -->
+  <!-- Scripts: ojo + popovers -->
   <script>
+  // Ojo sigue el puntero (todos los ojos)
   (function(){
     const eyes = Array.from(document.querySelectorAll(".ob-eye"));
     if (!eyes.length) return;
@@ -434,6 +542,60 @@
       if (!e.touches || !e.touches[0]) return;
       moveAll(e.touches[0].clientX, e.touches[0].clientY);
     }, { passive: true });
+  })();
+
+  // Popovers (features)
+  (function(){
+    const triggers = Array.from(document.querySelectorAll("[data-popover]"));
+    const popovers = new Map();
+
+    function closeAll(){
+      for (const el of popovers.values()){
+        el.classList.remove("open");
+        el.setAttribute("aria-hidden", "true");
+      }
+    }
+
+    triggers.forEach(btn => {
+      const id = btn.getAttribute("data-popover");
+      const pop = document.getElementById(id);
+      if (!pop) return;
+
+      popovers.set(id, pop);
+      pop.setAttribute("aria-hidden", "true");
+
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isOpen = pop.classList.contains("open");
+        closeAll();
+        if (!isOpen){
+          pop.classList.add("open");
+          pop.setAttribute("aria-hidden", "false");
+        }
+      });
+    });
+
+    // Close buttons
+    document.addEventListener("click", (e) => {
+      const closeId = e.target && e.target.getAttribute && e.target.getAttribute("data-close");
+      if (closeId && popovers.has(closeId)){
+        popovers.get(closeId).classList.remove("open");
+        popovers.get(closeId).setAttribute("aria-hidden","true");
+        e.stopPropagation();
+        return;
+      }
+      closeAll();
+    });
+
+    // ESC to close
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeAll();
+    });
+
+    // Prevent click inside popover from closing immediately
+    for (const pop of popovers.values()){
+      pop.addEventListener("click", (e) => e.stopPropagation());
+    }
   })();
   </script>
 </body>
