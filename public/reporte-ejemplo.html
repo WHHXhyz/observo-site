@@ -1,162 +1,473 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Ejemplo de Reporte | Observo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Observo — Ejemplo de Reporte</title>
+  <meta name="description" content="Ejemplo ilustrativo de reporte Observo: score, componentes, hallazgos y recomendaciones." />
+  <meta name="theme-color" content="#070B14" />
 
-  <!-- Tailwind CDN (ya permitido en tu CSP) -->
+  <!-- Tailwind CDN (requiere CSP allow https://cdn.tailwindcss.com + unsafe-inline/eval) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    body {
-      background: radial-gradient(1200px 600px at 20% -10%, #3b82f622, transparent 40%),
-                  radial-gradient(900px 500px at 90% 10%, #a855f722, transparent 40%),
-                  #020617;
+    :root{
+      --bg:#070B14;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
     }
-    .glass {
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-      backdrop-filter: blur(14px);
+    html{ scroll-behavior:smooth; }
+    body{
+      background:
+        radial-gradient(900px 520px at 18% -10%, rgba(102,227,255,.14), transparent 55%),
+        radial-gradient(980px 560px at 85% 0%, rgba(124,92,255,.12), transparent 55%),
+        radial-gradient(980px 560px at 50% 115%, rgba(39,232,167,.08), transparent 60%),
+        var(--bg);
+    }
+    .glass{
+      background:
+        radial-gradient(900px 260px at 20% 0%, rgba(255,255,255,.10), transparent 55%),
+        linear-gradient(to bottom, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow:
+        0 18px 60px rgba(0,0,0,.55),
+        inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    .glass-nav{
+      background: linear-gradient(to bottom, rgba(10,14,26,.78), rgba(10,14,26,.55));
+      border: 1px solid rgba(255,255,255,.15);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+    }
+    .btn{ transition: transform .15s ease, filter .15s ease; }
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.07); }
+
+    /* Cards clickeables */
+    .click-card{
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .18s ease, filter .18s ease, border-color .18s ease;
+    }
+    .click-card::before{
+      content:"";
+      position:absolute;
+      left:14px;
+      right:14px;
+      top:12px;
+      height:2px;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(56,189,248,.75), rgba(99,102,241,.65), rgba(217,70,239,.70));
+      opacity:.55;
+    }
+    .click-card::after{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background: radial-gradient(520px 190px at 30% 10%, rgba(56,189,248,.10), transparent 60%);
+      pointer-events:none;
+    }
+    .click-card:hover{
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+      border-color: rgba(255,255,255,.18);
     }
   </style>
 </head>
 
-<body class="text-white antialiased">
+<body class="text-white">
 
-<!-- NAV -->
-<header class="sticky top-0 z-50">
-  <div class="mx-auto max-w-6xl px-4">
-    <div class="mt-4 glass rounded-2xl px-4 py-3 flex items-center justify-between border border-white/10">
-      <a href="/index.html" class="flex items-center gap-3">
-        <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500"></div>
-        <span class="font-semibold tracking-tight">Observo</span>
-      </a>
-
-      <div class="flex items-center gap-3">
-        <a href="#" class="px-4 py-2 rounded-xl bg-white/10 border border-white/10 text-sm">
-          Descargar JSON
+  <!-- NAV -->
+  <header class="sticky top-0 z-40">
+    <div class="mx-auto max-w-6xl px-4">
+      <div class="mt-4 glass-nav rounded-2xl px-4 py-3 flex items-center justify-between">
+        <a href="/index.html#top" class="flex items-center gap-3 group">
+          <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500"></div>
+          <div class="leading-tight">
+            <div class="font-semibold tracking-tight">Observo</div>
+            <div class="text-xs text-white/50">Cyber risk visibility for startups</div>
+          </div>
         </a>
-        <a href="#" class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-sm font-semibold">
-          Descargar PDF
-        </a>
-      </div>
-    </div>
-  </div>
-</header>
 
-<main class="mx-auto max-w-6xl px-4 py-10">
+        <div class="flex items-center gap-3">
+          <button
+            class="btn px-4 py-2 rounded-xl glass text-sm text-white/90 hover:text-white"
+            data-modal
+            data-title="Descargar JSON"
+            data-desc="Exporta los resultados en formato JSON para integrarlo con tu equipo o herramientas internas."
+            data-impact="Sirve para automatización, auditorías, historial y comparaciones (baseline/diff)."
+            data-fix="Implementa un endpoint/acción que entregue el JSON firmado o descarga desde la interfaz."
+          >
+            Descargar JSON
+          </button>
 
-<!-- HEADER -->
-<section class="glass rounded-3xl p-8 md:p-10 border border-white/10">
-  <div class="flex flex-wrap items-center gap-3 text-xs text-white/70">
-    <span class="px-3 py-1 rounded-full bg-white/10 border border-white/10">Ejemplo ilustrativo</span>
-    <span class="px-3 py-1 rounded-full bg-white/10 border border-white/10">Read-only</span>
-    <span class="px-3 py-1 rounded-full bg-white/10 border border-white/10">Sin credenciales</span>
-    <span class="px-3 py-1 rounded-full bg-white/10 border border-white/10">Reporte compartible</span>
-  </div>
-
-  <h1 class="mt-6 text-3xl md:text-4xl font-semibold">
-    Ejemplo de Reporte Observo
-  </h1>
-
-  <p class="mt-3 text-white/70 max-w-3xl">
-    Este es un ejemplo ficticio pero realista de cómo se ve un reporte Observo.
-    El foco está en claridad, evidencia y decisiones accionables.
-  </p>
-</section>
-
-<!-- SCORE + ACTION -->
-<section class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-
-  <!-- SCORE -->
-  <div class="glass rounded-2xl p-6 border border-white/10">
-    <div class="text-xs text-white/60">SCORE GENERAL</div>
-    <div class="mt-2 flex items-end gap-2">
-      <div class="text-5xl font-semibold text-emerald-400">79</div>
-      <div class="text-white/40 text-lg">/100</div>
-    </div>
-    <div class="mt-2 inline-flex px-3 py-1 rounded-full bg-emerald-400/10 text-emerald-300 text-xs">
-      Riesgo bajo
-    </div>
-  </div>
-
-  <!-- ACTION -->
-  <div class="glass rounded-2xl p-6 border border-white/10 md:col-span-2">
-    <div class="text-sm font-semibold">Qué hacer ahora</div>
-    <p class="mt-2 text-sm text-white/70">
-      Prioridad recomendada: <span class="text-red-400 font-medium">HIGH</span>  
-      Falta <strong>Content-Security-Policy</strong>.
-    </p>
-    <p class="mt-2 text-sm text-white/70">
-      Definir CSP reduce riesgo XSS y carga no autorizada.
-      Impacto directo en confianza de clientes y partners.
-    </p>
-  </div>
-
-</section>
-
-<!-- COMPONENTES -->
-<section class="mt-8 glass rounded-2xl p-6 border border-white/10">
-  <h2 class="font-semibold text-lg">Componentes del sitio</h2>
-  <p class="text-sm text-white/60 mt-1">
-    Si un componente no existe, no se penaliza.
-  </p>
-
-  <div class="mt-4 space-y-3 text-sm">
-    <div class="flex justify-between items-center">
-      <span>Base de datos</span>
-      <span class="text-white/50">No detectado</span>
-    </div>
-    <div class="flex justify-between items-center">
-      <span>Pagos</span>
-      <span class="text-emerald-400">Detectado</span>
-    </div>
-    <div class="flex justify-between items-center">
-      <span>Login / contraseñas</span>
-      <span class="text-white/50">No detectado</span>
-    </div>
-  </div>
-</section>
-
-<!-- FINDINGS -->
-<section class="mt-8 glass rounded-2xl p-6 border border-white/10">
-  <h2 class="font-semibold text-lg">Top findings</h2>
-  <p class="text-sm text-white/60 mt-1">
-    Ordenados por severidad e impacto estimado.
-  </p>
-
-  <div class="mt-4 space-y-4">
-
-    <div class="flex justify-between gap-4">
-      <div>
-        <div class="inline-flex px-2 py-1 rounded-full bg-red-500/10 text-red-400 text-xs">HIGH</div>
-        <div class="mt-1 font-medium">Falta Content-Security-Policy</div>
-        <div class="text-sm text-white/60">
-          Definir CSP para reducir XSS y carga no autorizada.
+          <button
+            class="btn px-4 py-2 rounded-xl text-sm font-semibold
+                   bg-gradient-to-r from-sky-400 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20"
+            data-modal
+            data-title="Descargar PDF"
+            data-desc="Genera un PDF listo para enviar a clientes (resumen ejecutivo + evidencia)."
+            data-impact="Reduce fricción comercial: el cliente entiende el estado sin jerga técnica."
+            data-fix="Genera el PDF desde el reporte HTML con un render server-side o headless (ej. Playwright)."
+          >
+            Descargar PDF
+          </button>
         </div>
       </div>
-      <div class="text-sm text-red-400">-10 pts</div>
     </div>
+  </header>
 
-    <div class="flex justify-between gap-4">
-      <div>
-        <div class="inline-flex px-2 py-1 rounded-full bg-yellow-500/10 text-yellow-400 text-xs">MEDIUM</div>
-        <div class="mt-1 font-medium">Falta X-Frame-Options</div>
-        <div class="text-sm text-white/60">
-          Mitiga clickjacking y abuso de iframes.
+  <main class="mx-auto max-w-6xl px-4 pb-16">
+
+    <!-- HERO / RESUMEN -->
+    <section class="pt-10">
+      <div class="glass rounded-3xl p-8 md:p-10 border border-white/10">
+        <div class="flex flex-wrap gap-2 text-xs">
+          <span class="px-3 py-1 rounded-full bg-white/10 border border-white/10 text-white/80">Ejemplo ilustrativo</span>
+          <span class="px-3 py-1 rounded-full bg-white/10 border border-white/10 text-white/80">Read-only</span>
+          <span class="px-3 py-1 rounded-full bg-white/10 border border-white/10 text-white/80">Sin credenciales</span>
+          <span class="px-3 py-1 rounded-full bg-white/10 border border-white/10 text-white/80">Reporte compartible</span>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <!-- Target -->
+          <div class="glass rounded-2xl p-5 border border-white/10 lg:col-span-4 click-card"
+               data-modal
+               data-title="Target / Timestamp / Reachable"
+               data-desc="Este bloque resume el dominio evaluado, la marca de tiempo y si el sitio respondió correctamente."
+               data-impact="Ayuda a trazabilidad: puedes demostrar cuándo fue la revisión y si hubo disponibilidad."
+               data-fix="Mantén historial (baseline) y registra cambios entre ejecuciones para evidencias comparables.">
+            <div class="text-xs text-white/55 uppercase tracking-widest">Target</div>
+            <div class="mt-1 font-semibold text-sky-300">www.observosec.org</div>
+
+            <div class="mt-4 text-xs text-white/55 uppercase tracking-widest">Timestamp (UTC)</div>
+            <div class="mt-1 text-sm text-white/80">2025-12-15T19:07:58Z</div>
+
+            <div class="mt-4 text-xs text-white/55 uppercase tracking-widest">HTTPS</div>
+            <div class="mt-1 text-sm text-white/80 font-semibold">Reachable</div>
+
+            <p class="mt-3 text-xs text-white/55 leading-relaxed">
+              Revisión completada. Se muestran señales observables y recomendaciones prácticas para aumentar confianza.
+            </p>
+          </div>
+
+          <!-- Score -->
+          <div class="glass rounded-2xl p-5 border border-white/10 lg:col-span-4 click-card"
+               data-modal
+               data-title="Score General"
+               data-desc="El score es una forma simple de resumir señales observables (TLS, headers, exposición, consistencia)."
+               data-impact="Alinea conversaciones: equipo y cliente entienden tendencia (mejora / empeora) sin detalles técnicos."
+               data-fix="No uses el score como verdad absoluta: úsalo como tablero para priorizar mejoras de alto impacto.">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <div class="text-xs text-white/55 uppercase tracking-widest">Score general</div>
+                <div class="mt-4 text-6xl font-semibold tracking-tight">
+                  79<span class="text-white/35">/100</span>
+                </div>
+                <div class="mt-1 text-sm text-white/70">Estado de seguridad “operable”</div>
+              </div>
+              <div class="mt-2">
+                <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-emerald-300 text-xs font-semibold">
+                  LOW
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Qué hacer ahora -->
+          <div class="glass rounded-2xl p-5 border border-white/10 lg:col-span-4 click-card"
+               data-modal
+               data-title="Qué hacer ahora"
+               data-desc="Observo prioriza una acción recomendada según severidad y impacto en confianza."
+               data-impact="Define el siguiente paso: lo importante no es listar 20 cosas, sino resolver la 1 que mueve la aguja."
+               data-fix="Arma un mini-plan: 1) CSP, 2) X-Frame-Options, 3) Referrer/Permissions-Policy y re-ejecuta baseline.">
+            <div class="text-sm font-semibold">Qué hacer ahora</div>
+            <div class="mt-2 text-sm text-white/70">
+              Prioridad recomendada: <span class="text-white font-semibold">[HIGH]</span> Falta Content-Security-Policy
+            </div>
+            <div class="mt-3 text-sm text-white/60">
+              Define CSP para reducir XSS y carga no autorizada.
+            </div>
+            <div class="mt-3 text-xs text-white/55">
+              Impacto: mejora la seguridad estándar del sitio y aumenta la confianza de clientes y partners.
+            </div>
+          </div>
         </div>
       </div>
-      <div class="text-sm text-yellow-400">-4 pts</div>
+    </section>
+
+    <!-- COMPONENTES -->
+    <section class="pt-6">
+      <div class="glass rounded-3xl p-8 border border-white/10">
+        <div class="text-sm font-semibold">Componentes del sitio</div>
+        <div class="mt-1 text-sm text-white/60">
+          Detectamos si el sitio usa componentes “sensibles”. Si no aplican, no se penalizan.
+        </div>
+
+        <div class="mt-6 space-y-3">
+          <!-- DB -->
+          <div class="glass rounded-2xl p-4 border border-white/10 click-card"
+               data-modal
+               data-title="Base de datos"
+               data-desc="Intentamos inferir señales de exposición directa o endpoints típicos de DB desde el perímetro."
+               data-impact="Si hubiera DB expuesta, el riesgo sube fuerte. Si no existe o no es observable, no se penaliza."
+               data-fix="Asegura que DB no sea accesible públicamente; usa redes privadas, IP allowlist y credenciales rotadas.">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="h-9 w-9 rounded-xl bg-white/5 border border-white/10 grid place-items-center">🗄️</span>
+                <div>
+                  <div class="font-semibold">Base de datos</div>
+                  <div class="text-sm text-white/60">Exposición pública / señales observables</div>
+                </div>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-white/8 border border-white/10 text-white/70 text-xs font-semibold">
+                No detectado
+              </span>
+            </div>
+          </div>
+
+          <!-- Pagos -->
+          <div class="glass rounded-2xl p-4 border border-white/10 click-card"
+               data-modal
+               data-title="Pagos detectados"
+               data-desc="Observo detecta integraciones típicas de pagos (scripts, redirecciones, endpoints o providers conocidos)."
+               data-impact="Pagos implica datos sensibles y compliance. Aumenta necesidad de headers, CSP y hardening de frontend."
+               data-fix="Valida CSP, SRI (si aplica), políticas de permisos y revisa flujos de checkout/redirect.">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="h-9 w-9 rounded-xl bg-white/5 border border-white/10 grid place-items-center">💳</span>
+                <div>
+                  <div class="font-semibold">Pagos</div>
+                  <div class="text-sm text-white/60">Integración / superficie sensible</div>
+                </div>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-emerald-300 text-xs font-semibold">
+                Detectado
+              </span>
+            </div>
+          </div>
+
+          <!-- Login -->
+          <div class="glass rounded-2xl p-4 border border-white/10 click-card"
+               data-modal
+               data-title="Login / contraseñas"
+               data-desc="Intentamos detectar formularios o rutas típicas de autenticación. Si no se ve, se asume “no detectado”."
+               data-impact="Si existe login, sube la criticidad de TLS, cookies seguras, headers, y protecciones anti-bot."
+               data-fix="Asegura cookies HttpOnly/SameSite/Secure, rate limiting y protección contra credential stuffing.">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="h-9 w-9 rounded-xl bg-white/5 border border-white/10 grid place-items-center">🔐</span>
+                <div>
+                  <div class="font-semibold">Login / contraseñas</div>
+                  <div class="text-sm text-white/60">Autenticación observable</div>
+                </div>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-white/8 border border-white/10 text-white/70 text-xs font-semibold">
+                No detectado
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOP FINDINGS -->
+    <section class="pt-6">
+      <div class="glass rounded-3xl p-8 border border-white/10">
+        <div class="text-sm font-semibold">Top findings</div>
+        <div class="mt-1 text-sm text-white/60">Ordenados por severidad e impacto estimado.</div>
+
+        <div class="mt-6 space-y-3">
+
+          <!-- HIGH -->
+          <div class="glass rounded-2xl p-4 border border-white/10 click-card"
+               data-modal
+               data-title="Falta Content-Security-Policy (CSP)"
+               data-desc="CSP controla desde dónde el navegador permite cargar scripts/estilos/recursos. Sin CSP, hay más superficie para XSS."
+               data-impact="Reduce riesgo de ejecución de scripts inyectados y mejora confianza al endurecer el frontend."
+               data-fix="Define CSP alineada a recursos reales. Evita * excepto donde sea necesario. Revisa report-only primero si quieres.">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <span class="inline-flex px-2 py-1 rounded-full bg-red-500/10 text-red-300 text-xs font-semibold border border-red-400/20">HIGH</span>
+                <div class="mt-2 font-semibold">Falta Content-Security-Policy</div>
+                <div class="text-sm text-white/60">Fix: Define CSP para reducir XSS y carga no autorizada.</div>
+              </div>
+              <div class="text-sm text-red-300 font-semibold">-10 pts</div>
+            </div>
+          </div>
+
+          <!-- MEDIUM -->
+          <div class="glass rounded-2xl p-4 border border-white/10 click-card"
+               data-modal
+               data-title="Falta X-Frame-Options / frame-ancestors"
+               data-desc="Evita que tu sitio sea embebido en iframes por terceros (protege contra clickjacking)."
+               data-impact="Reduce fraude y ataques de UI redress. Muy importante si hay pagos o acciones sensibles."
+               data-fix="Usa frame-ancestors 'none' en CSP y/o X-Frame-Options DENY/SAMEORIGIN según corresponda.">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <span class="inline-flex px-2 py-1 rounded-full bg-amber-500/10 text-amber-200 text-xs font-semibold border border-amber-400/20">MEDIUM</span>
+                <div class="mt-2 font-semibold">Falta X-Frame-Options</div>
+                <div class="text-sm text-white/60">Fix: Agrega X-Frame-Options o frame-ancestors (CSP).</div>
+              </div>
+              <div class="text-sm text-amber-200 font-semibold">-4 pts</div>
+            </div>
+          </div>
+
+          <!-- MEDIUM -->
+          <div class="glass rounded-2xl p-4 border border-white/10 click-card"
+               data-modal
+               data-title="Falta X-Content-Type-Options"
+               data-desc="Evita que el navegador “adivine” tipos de contenido (MIME sniffing)."
+               data-impact="Reduce ciertos vectores de ejecución indebida (especialmente en recursos subidos/servidos)."
+               data-fix="Configura X-Content-Type-Options: nosniff para respuestas relevantes.">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <span class="inline-flex px-2 py-1 rounded-full bg-amber-500/10 text-amber-200 text-xs font-semibold border border-amber-400/20">MEDIUM</span>
+                <div class="mt-2 font-semibold">Falta X-Content-Type-Options</div>
+                <div class="text-sm text-white/60">Fix: Agrega X-Content-Type-Options: nosniff.</div>
+              </div>
+              <div class="text-sm text-amber-200 font-semibold">-3 pts</div>
+            </div>
+          </div>
+
+          <!-- LOW -->
+          <div class="glass rounded-2xl p-4 border border-white/10 click-card"
+               data-modal
+               data-title="Referrer-Policy mejorable"
+               data-desc="Controla cuánta info de la URL se envía como referrer al navegar."
+               data-impact="Reduce fuga de datos sensibles por URLs y mejora privacidad."
+               data-fix="Usa strict-origin-when-cross-origin o no-referrer según el caso.">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <span class="inline-flex px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-200 text-xs font-semibold border border-emerald-400/20">LOW</span>
+                <div class="mt-2 font-semibold">Falta Referrer-Policy</div>
+                <div class="text-sm text-white/60">Fix: Configura Referrer-Policy para limitar fuga de URLs.</div>
+              </div>
+              <div class="text-sm text-emerald-200 font-semibold">-2 pts</div>
+            </div>
+          </div>
+
+          <!-- LOW -->
+          <div class="glass rounded-2xl p-4 border border-white/10 click-card"
+               data-modal
+               data-title="Permissions-Policy recomendada"
+               data-desc="Restringe APIs del navegador (cámara, micrófono, geolocalización) si no se usan."
+               data-impact="Reduce superficie de abuso y mejora postura estándar del frontend."
+               data-fix="Define Permissions-Policy: camera=(), microphone=(), geolocation=() y agrega las APIs solo si las necesitas.">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <span class="inline-flex px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-200 text-xs font-semibold border border-emerald-400/20">LOW</span>
+                <div class="mt-2 font-semibold">Falta Permissions-Policy</div>
+                <div class="text-sm text-white/60">Fix: Define Permissions-Policy para reducir APIs del navegador.</div>
+              </div>
+              <div class="text-sm text-emerald-200 font-semibold">-2 pts</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- “NO APLICA” -->
+    <section class="pt-6">
+      <div class="glass rounded-3xl p-8 border border-white/10 click-card"
+           data-modal
+           data-title="Controles “No aplica”"
+           data-desc="Observo no penaliza funcionalidades inexistentes. Si no detectamos login, DB expuesta o módulos sensibles, no bajamos el score por eso."
+           data-impact="Evita notas injustas. El reporte se enfoca en señales reales y observables del perímetro."
+           data-fix="Mientras más claro sea tu stack (headers, CSP, buenas prácticas), más fácil demostrar seguridad sin fricción.">
+        <div class="text-sm font-semibold">Controles “No aplica”</div>
+        <div class="mt-2 text-sm text-white/70 leading-relaxed">
+          Observo no penaliza funcionalidades inexistentes. El reporte se centra en señales observables y acciones recomendadas.
+        </div>
+        <div class="mt-4 text-xs text-white/50">
+          Tip: esto vende muy bien, porque el cliente siente justicia (“no me castigaron por algo que no tengo”).
+        </div>
+      </div>
+    </section>
+
+    <footer class="mt-10 text-center text-xs text-white/45 pb-8">
+      © 2025 Observo — Ejemplo ilustrativo de reporte (no pentesting).
+    </footer>
+  </main>
+
+  <!-- MODAL (reutilizable) -->
+  <div id="modal"
+       class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm"
+       aria-hidden="true">
+    <div class="glass max-w-lg w-full mx-4 rounded-2xl p-6 border border-white/10">
+      <div class="flex justify-between items-start gap-4">
+        <h3 id="modal-title" class="text-lg font-semibold"></h3>
+        <button id="modal-close" class="text-white/60 hover:text-white" aria-label="Cerrar">✕</button>
+      </div>
+
+      <div class="mt-4 space-y-3 text-sm text-white/70">
+        <p id="modal-desc"></p>
+
+        <div>
+          <div class="text-xs uppercase tracking-widest text-white/50">Impacto</div>
+          <p id="modal-impact"></p>
+        </div>
+
+        <div>
+          <div class="text-xs uppercase tracking-widest text-white/50">Qué hacer</div>
+          <p id="modal-fix"></p>
+        </div>
+      </div>
+
+      <div class="mt-6 flex justify-end">
+        <button id="modal-ok"
+                class="btn px-4 py-2 rounded-xl bg-white/10 border border-white/10 text-sm text-white/90 hover:text-white">
+          Entendido
+        </button>
+      </div>
     </div>
-
   </div>
-</section>
 
-<!-- FOOTER -->
-<footer class="mt-12 text-center text-xs text-white/40">
-  Observo · Demo ilustrativa · No es pentesting · Read-only
-</footer>
+  <script>
+    const modal = document.getElementById('modal');
+    const t = document.getElementById('modal-title');
+    const d = document.getElementById('modal-desc');
+    const i = document.getElementById('modal-impact');
+    const f = document.getElementById('modal-fix');
+    const closeBtn = document.getElementById('modal-close');
+    const okBtn = document.getElementById('modal-ok');
 
-</main>
+    function openModalFrom(el){
+      t.textContent = el.dataset.title || 'Detalle';
+      d.textContent = el.dataset.desc || '';
+      i.textContent = el.dataset.impact || '';
+      f.textContent = el.dataset.fix || '';
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeModal(){
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    // Delegación: cualquier elemento con data-modal abre el modal
+    document.addEventListener('click', (e) => {
+      const el = e.target.closest('[data-modal]');
+      if (el) openModalFrom(el);
+    });
+
+    // Cerrar
+    closeBtn.addEventListener('click', closeModal);
+    okBtn.addEventListener('click', closeModal);
+
+    // Click fuera cierra
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // ESC cierra
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+
 </body>
 </html>
