@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ejemplo de Reporte — Observo</title>
+  <meta name="description" content="Ejemplo ilustrativo de un reporte Observo: score, checks y recomendaciones claras." />
+  <meta name="theme-color" content="#070B14" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root{ --bg:#070B14; --shadow:0 18px 60px rgba(0,0,0,.55); }
+    body{
+      background:
+        radial-gradient(900px 520px at 18% -10%, rgba(102,227,255,.14), transparent 55%),
+        radial-gradient(980px 560px at 85% 0%, rgba(124,92,255,.12), transparent 55%),
+        radial-gradient(980px 560px at 50% 115%, rgba(39,232,167,.08), transparent 60%),
+        var(--bg);
+    }
+    .glass{
+      background:
+        radial-gradient(900px 260px at 20% 0%, rgba(255,255,255,.10), transparent 55%),
+        linear-gradient(to bottom, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    .chip{
+      display:inline-flex;align-items:center;gap:.4rem;
+      padding:.35rem .65rem;border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      font-size:12px;color:rgba(255,255,255,.85);
+    }
+  </style>
+</head>
+
+<body class="text-white">
+<main class="mx-auto max-w-6xl px-4 py-12">
+
+  <!-- HERO -->
+  <section class="glass rounded-3xl p-10 border border-white/10">
+    <div class="flex flex-wrap gap-2 mb-6">
+      <span class="chip">Ejemplo ilustrativo</span>
+      <span class="chip">Read-only</span>
+      <span class="chip">Sin credenciales</span>
+      <span class="chip">Reporte compartible</span>
+    </div>
+
+    <h1 class="text-3xl md:text-5xl font-semibold tracking-tight">
+      Ejemplo de Reporte Observo
+    </h1>
+
+    <p class="mt-4 text-white/70 max-w-3xl text-lg">
+      Este es un ejemplo ficticio pero realista de cómo se ve un reporte Observo.
+      El objetivo es mostrar claridad, evidencia y decisiones accionables.
+    </p>
+  </section>
+
+  <!-- SCORE -->
+  <section class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="glass rounded-2xl p-6 border border-white/10 md:col-span-1">
+      <div class="text-xs tracking-widest text-white/50">SCORE GENERAL</div>
+      <div class="mt-4 text-5xl font-bold text-emerald-400">86</div>
+      <div class="mt-1 text-sm text-white/70">Buen estado de seguridad</div>
+    </div>
+
+    <div class="glass rounded-2xl p-6 border border-white/10 md:col-span-2">
+      <div class="text-xs tracking-widest text-white/50">RESUMEN EJECUTIVO</div>
+      <ul class="mt-4 space-y-2 text-sm text-white/80">
+        <li>✔ HTTPS y TLS correctamente configurados.</li>
+        <li>✔ No se detectan cambios críticos desde la última baseline.</li>
+        <li>⚠️ Headers de seguridad mejorables (CSP y Permissions-Policy).</li>
+        <li>🧭 Riesgo general bajo, con mejoras simples recomendadas.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CHECKS -->
+  <section class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="glass rounded-2xl p-6 border border-white/10">
+      <h3 class="font-semibold">HTTPS / TLS</h3>
+      <p class="mt-2 text-sm text-white/70">
+        Certificado válido, cadena confiable y protocolos modernos habilitados.
+      </p>
+      <p class="mt-3 text-xs text-emerald-400">Estado: Correcto</p>
+    </div>
+
+    <div class="glass rounded-2xl p-6 border border-white/10">
+      <h3 class="font-semibold">Headers de seguridad</h3>
+      <p class="mt-2 text-sm text-white/70">
+        Presencia parcial de headers. Se recomienda endurecer CSP y permisos.
+      </p>
+      <p class="mt-3 text-xs text-amber-400">Estado: Mejorable</p>
+    </div>
+
+    <div class="glass rounded-2xl p-6 border border-white/10">
+      <h3 class="font-semibold">Baseline</h3>
+      <p class="mt-2 text-sm text-white/70">
+        No se detectan cambios relevantes respecto al estado inicial guardado.
+      </p>
+      <p class="mt-3 text-xs text-emerald-400">Estado: Estable</p>
+    </div>
+  </section>
+
+  <!-- NO APLICA -->
+  <section class="mt-10 glass rounded-2xl p-6 border border-white/10">
+    <h3 class="font-semibold">Controles “No aplica”</h3>
+    <p class="mt-2 text-sm text-white/70">
+      Observo no penaliza funcionalidades inexistentes.
+    </p>
+    <ul class="mt-4 space-y-2 text-sm text-white/80">
+      <li>• Sistema de login: <b>No aplica</b></li>
+      <li>• Procesamiento de pagos: <b>No aplica</b></li>
+    </ul>
+  </section>
+
+  <!-- CTA -->
+  <section class="mt-12 text-center">
+    <h2 class="text-2xl md:text-3xl font-semibold">
+      ¿Quieres un reporte así para tu dominio?
+    </h2>
+    <p class="mt-3 text-white/70">
+      Sin accesos. Sin riesgo. Evidencia clara para mostrar.
+    </p>
+
+    <a href="/index.html#demo"
+       class="inline-flex mt-6 px-6 py-3 rounded-2xl font-semibold
+              bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
+      Pedir demo
+    </a>
+  </section>
+
+</main>
+</body>
+</html>
