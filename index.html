@@ -1,37 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Observo monitorea tu superficie de ataque y te entrega reportes claros para generar confianza en clientes e inversionistas." />
-  <meta name="theme-color" content="#0B0F1A" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Observo — Seguridad que se ve</title>
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Observo — Confianza visible en tu seguridad" />
-  <meta property="og:description" content="Escaneo, baseline y monitoreo continuo. Reportes claros para startups y emprendedores." />
-  <meta property="og:type" content="website" />
-
-  <title>Observo — Confianza visible en tu seguridad</title>
-
-  <!-- Tailwind (CDN) -->
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          boxShadow: {
-            glow: "0 0 0 1px rgba(255,255,255,0.06), 0 20px 80px rgba(0,0,0,0.6)"
-          }
-        }
-      }
-    }
-  </script>
 
   <style>
-    /* Smooth scroll + nicer selection */
+    /* Smooth scroll + selection */
     html { scroll-behavior: smooth; }
     ::selection { background: rgba(99,102,241,0.35); }
-    /* Subtle animated gradient background */
+
+    /* Background */
     .bg-aurora {
       background:
         radial-gradient(900px 450px at 10% 10%, rgba(99,102,241,.20), transparent 55%),
@@ -39,437 +21,144 @@
         radial-gradient(800px 420px at 40% 95%, rgba(236,72,153,.14), transparent 60%),
         linear-gradient(180deg, #070A12 0%, #0B1020 60%, #070A12 100%);
     }
-    /* Fancy border */
+
+    /* Glass */
     .glass {
-      background: rgba(255,255,255,0.04);
+      background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+    }
+
+    /* Trust badges */
+    .trust-wrap{ margin-top:18px; max-width:560px; }
+    .trust-label{
+      font-size:12px;
+      color: rgba(255,255,255,.55);
+      margin-bottom:8px;
+      letter-spacing:.3px;
+    }
+    .trust-badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
       backdrop-filter: blur(10px);
+      transition: transform .15s ease, box-shadow .15s ease;
+      white-space: nowrap;
+    }
+    .badge small{
+      font-size:12px;
+      color: rgba(255,255,255,.55);
+      padding-left:6px;
+      border-left:1px solid rgba(255,255,255,.15);
+    }
+    .badge:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
     }
   </style>
 </head>
 
 <body class="bg-aurora text-white antialiased">
-  <!-- Top bar -->
-  <header class="sticky top-0 z-50">
-    <div class="mx-auto max-w-6xl px-4">
-      <div class="mt-4 glass shadow-glow rounded-2xl">
-        <div class="flex items-center justify-between px-4 py-3">
-          <a href="#top" class="flex items-center gap-2">
-            <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 via-sky-400 to-fuchsia-500"></div>
-            <span class="font-semibold tracking-tight">Observo</span>
-          </a>
+<a id="top"></a>
 
-          <nav class="hidden md:flex items-center gap-6 text-sm text-white/75">
-            <a class="hover:text-white transition" href="#como">Cómo funciona</a>
-            <a class="hover:text-white transition" href="#reportes">Reportes</a>
-            <a class="hover:text-white transition" href="#pricing">Precios</a>
-            <a class="hover:text-white transition" href="#faq">FAQ</a>
-          </nav>
-
-          <div class="flex items-center gap-2">
-            <a href="#pricing"
-               class="hidden sm:inline-flex rounded-xl px-4 py-2 text-sm font-medium bg-white/10 hover:bg-white/15 transition">
-              Ver planes
-            </a>
-            <a href="#demo"
-               class="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold
-                      bg-gradient-to-r from-indigo-500 via-sky-500 to-fuchsia-500
-                      hover:scale-[1.04] active:scale-[0.98] transition-transform shadow-glow">
-              Pedir demo
-            </a>
-          </div>
-        </div>
+<!-- Header -->
+<header class="sticky top-0 z-50">
+  <div class="mx-auto max-w-6xl px-4 pt-4">
+    <div class="glass rounded-2xl px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 via-sky-400 to-fuchsia-500"></div>
+        <span class="font-semibold tracking-tight">Observo</span>
       </div>
-    </div>
-  </header>
 
-  <!-- Hero -->
-  <main id="top">
-    <section class="mx-auto max-w-6xl px-4 pt-14 pb-10">
-      <div class="grid md:grid-cols-2 gap-10 items-center">
-        <div>
-          <p class="inline-flex items-center gap-2 text-xs font-medium text-white/70 glass rounded-full px-3 py-1">
-            <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
-            Confianza visible para startups • monitoreo continuo
-          </p>
-
-          <h1 class="mt-4 text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
-            Seguridad que se <span class="bg-gradient-to-r from-sky-400 via-indigo-400 to-fuchsia-400 bg-clip-text text-transparent">ve</span>.
-            <br />
-            Reportes que convierten dudas en confianza.
-          </h1>
-
-          <p class="mt-4 text-white/75 text-lg leading-relaxed">
-            <b>Observo</b> revisa tu superficie de ataque, guarda un <b>baseline</b> y detecta cambios.
-            Entrega resultados en un lenguaje claro para clientes, aliados e inversionistas.
-          </p>
-
-          <div class="mt-6 flex flex-col sm:flex-row gap-3">
-            <a href="#demo"
-               class="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold
-                      bg-gradient-to-r from-indigo-500 via-sky-500 to-fuchsia-500
-                      hover:scale-[1.04] active:scale-[0.98] transition-transform shadow-glow">
-              Quiero un reporte de ejemplo
-            </a>
-            <a href="#como"
-               class="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold
-                      bg-white/10 hover:bg-white/15 hover:scale-[1.02] active:scale-[0.98] transition">
-              Ver cómo funciona
-            </a>
-          </div>
-
-          <div class="mt-6 flex items-center gap-6 text-xs text-white/60">
-            <div class="flex items-center gap-2">
-              <span class="h-5 w-5 rounded-lg bg-white/10 grid place-items-center">⚡</span>
-              Rápido y automatizado
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="h-5 w-5 rounded-lg bg-white/10 grid place-items-center">🧾</span>
-              Reporte listo para enviar
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="h-5 w-5 rounded-lg bg-white/10 grid place-items-center">🛡️</span>
-              Enfoque “trust-first”
-            </div>
-          </div>
-        </div>
-
-<div class="glass rounded-2xl shadow-glow p-10 flex flex-col items-center justify-center text-center">
-  <!-- Escudo -->
-  <div class="relative">
-    <div class="h-48 w-48 rounded-3xl bg-gradient-to-br from-indigo-500 via-sky-400 to-fuchsia-500 opacity-90"></div>
-    <div class="absolute inset-3 rounded-2xl bg-[#0B1020] grid place-items-center">
-      <div class="h-16 w-16 rounded-full border-2 border-white/40 grid place-items-center">
-        <div class="h-4 w-4 rounded-full bg-emerald-400"></div>
-      </div>
+      <nav class="hidden md:flex gap-6 text-sm text-white/70">
+        <a href="#como" class="hover:text-white">Cómo funciona</a>
+        <a href="#reportes" class="hover:text-white">Reportes</a>
+        <a href="#pricing" class="hover:text-white">Precios</a>
+        <a href="#faq" class="hover:text-white">FAQ</a>
+      </nav>
     </div>
   </div>
+</header>
 
-  <h3 class="mt-6 text-xl font-semibold">Observo activo</h3>
-  <p class="mt-2 text-white/70 max-w-xs">
-    Monitoreo continuo de tu superficie de ataque.
-  </p>
+<!-- HERO -->
+<main class="mx-auto max-w-6xl px-4 pt-14 pb-20">
+  <section class="grid md:grid-cols-2 gap-10 items-center">
 
-  <!-- Trust cards -->
-  <div class="mt-6 grid grid-cols-3 gap-3 text-xs w-full max-w-md">
-    <div class="glass rounded-xl p-3">
-      <div class="text-white/60">Riesgo</div>
-      <div class="font-semibold">Bajo → Medio</div>
-    </div>
-    <div class="glass rounded-xl p-3">
-      <div class="text-white/60">Cambios</div>
-      <div class="font-semibold">3 detectados</div>
-    </div>
-    <div class="glass rounded-xl p-3">
-      <div class="text-white/60">Acción</div>
-      <div class="font-semibold">Hoy</div>
-    </div>
-  </div>
-</div>
+    <!-- LEFT -->
+    <div>
+      <p class="inline-flex items-center gap-2 text-xs font-medium text-white/70 glass rounded-full px-3 py-1">
+        <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+        Confianza visible para startups • monitoreo continuo
+      </p>
 
-      <!-- Logos / trust strip -->
-      <div class="mt-10 glass rounded-2xl shadow-glow px-5 py-4">
-        <p class="text-xs text-white/60">Hecho para equipos pequeños que necesitan señales claras de seguridad:</p>
-        <div class="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm text-white/70">
-          <div class="glass rounded-xl p-3 text-center">Startups</div>
-          <div class="glass rounded-xl p-3 text-center">Agencias</div>
-          <div class="glass rounded-xl p-3 text-center">E-commerce</div>
-          <div class="glass rounded-xl p-3 text-center">SaaS</div>
+      <h1 class="mt-4 text-4xl md:text-5xl font-semibold leading-tight tracking-tight">
+        Seguridad que se
+        <span class="bg-gradient-to-r from-sky-400 via-indigo-400 to-fuchsia-400 bg-clip-text text-transparent">ve</span>.
+        <br />
+        Reportes que convierten dudas en confianza.
+      </h1>
+
+      <p class="mt-4 text-white/75 text-lg leading-relaxed">
+        <b>Observo</b> revisa tu superficie de ataque, guarda un <b>baseline</b> y detecta cambios.
+        Entrega resultados claros para clientes, aliados e inversionistas.
+      </p>
+
+      <!-- Trust -->
+      <div class="trust-wrap">
+        <div class="trust-label">Seguridad del sitio</div>
+        <div class="trust-badges">
+          <span class="badge" title="Forzamos HTTPS siempre">
+            🔒 HTTPS siempre activo <small>HSTS</small>
+          </span>
+          <span class="badge" title="Protección contra scripts maliciosos">
+            🧱 Protección anti-XSS <small>CSP</small>
+          </span>
+          <span class="badge" title="Previene clickjacking">
+            🪟 Anti-clickjacking <small>Headers</small>
+          </span>
         </div>
       </div>
-    </section>
 
-    <!-- How it works -->
-    <section id="como" class="mx-auto max-w-6xl px-4 py-12">
-      <div class="flex items-end justify-between gap-6 flex-wrap">
-        <div>
-          <h2 class="text-3xl font-semibold tracking-tight">Cómo funciona</h2>
-          <p class="mt-2 text-white/70 max-w-2xl">
-            Observo se enfoca en <b>visibilidad</b> + <b>cambios</b>: lo que hoy está bien, mañana puede cambiar.
-          </p>
-        </div>
-        <a href="#demo"
-           class="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold
-                  bg-white/10 hover:bg-white/15 hover:scale-[1.02] active:scale-[0.98] transition">
-          Ver demo
+      <div class="mt-6 flex gap-4">
+        <a class="px-5 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-fuchsia-500 font-medium hover:opacity-90">
+          Quiero un reporte de ejemplo
+        </a>
+        <a class="px-5 py-3 rounded-xl glass text-white/80 hover:text-white">
+          Ver cómo funciona
         </a>
       </div>
+    </div>
 
-      <div class="mt-8 grid md:grid-cols-3 gap-4">
-        <div class="glass rounded-2xl p-6 shadow-glow">
-          <div class="text-2xl">①</div>
-          <h3 class="mt-3 font-semibold text-lg">Scan inicial</h3>
-          <p class="mt-2 text-white/70">
-            Revisión rápida de señales externas: TLS, configuración web, endpoints expuestos y más.
-          </p>
-        </div>
-
-        <div class="glass rounded-2xl p-6 shadow-glow">
-          <div class="text-2xl">②</div>
-          <h3 class="mt-3 font-semibold text-lg">Baseline</h3>
-          <p class="mt-2 text-white/70">
-            Guardas un “estado esperado” y lo usas como referencia. Ideal para auditorías y cambios de versión.
-          </p>
-        </div>
-
-        <div class="glass rounded-2xl p-6 shadow-glow">
-          <div class="text-2xl">③</div>
-          <h3 class="mt-3 font-semibold text-lg">Watch continuo</h3>
-          <p class="mt-2 text-white/70">
-            Monitorea cambios cada X horas y te avisa cuando algo se sale del baseline.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Features -->
-    <section class="mx-auto max-w-6xl px-4 pb-12">
-      <div class="glass rounded-2xl p-6 md:p-8 shadow-glow">
-        <h2 class="text-3xl font-semibold tracking-tight">Lo que vendes: confianza</h2>
-        <p class="mt-2 text-white/70 max-w-3xl">
-          No es “hackear”. Es demostrar orden, control y señales externas de seguridad para que un tercero se sienta seguro.
-        </p>
-
-        <div class="mt-8 grid md:grid-cols-2 gap-4">
-          <div class="glass rounded-2xl p-6">
-            <h3 class="font-semibold">Reportes entendibles</h3>
-            <p class="mt-2 text-white/70">
-              Resumen ejecutivo + detalles técnicos. Listo para enviar a clientes, partners o compliance.
-            </p>
-          </div>
-          <div class="glass rounded-2xl p-6">
-            <h3 class="font-semibold">Alertas por cambios</h3>
-            <p class="mt-2 text-white/70">
-              “Apareció /debug”, “cambió un header”, “TLS vence pronto”. Cosas concretas que importan.
-            </p>
-          </div>
-          <div class="glass rounded-2xl p-6">
-            <h3 class="font-semibold">Evidencia, no promesas</h3>
-            <p class="mt-2 text-white/70">
-              Señales observables desde afuera: HTTPS, headers, configuración y superficie expuesta.
-            </p>
-          </div>
-          <div class="glass rounded-2xl p-6">
-            <h3 class="font-semibold">Ligero y automatizable</h3>
-            <p class="mt-2 text-white/70">
-              Úsalo como check previo a release, o integrado a tu rutina (cada 6h/1d).
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Reports -->
-    <section id="reportes" class="mx-auto max-w-6xl px-4 py-12">
-      <div class="grid md:grid-cols-2 gap-6 items-start">
-        <div class="glass rounded-2xl p-6 shadow-glow">
-          <h2 class="text-3xl font-semibold tracking-tight">Reportes que se entienden</h2>
-          <p class="mt-2 text-white/70">
-            El cliente no quiere 200 líneas de logs. Quiere saber: <b>qué está bien</b>, <b>qué cambió</b> y <b>qué hacer</b>.
-          </p>
-
-          <ul class="mt-6 space-y-3 text-white/75">
-            <li class="flex gap-3"><span class="text-emerald-300">✓</span> Score de postura + semáforo</li>
-            <li class="flex gap-3"><span class="text-emerald-300">✓</span> Cambios contra baseline</li>
-            <li class="flex gap-3"><span class="text-emerald-300">✓</span> Recomendaciones accionables</li>
-            <li class="flex gap-3"><span class="text-emerald-300">✓</span> Evidencias (fecha, hallazgo, impacto)</li>
-          </ul>
-        </div>
-
-        <div class="glass rounded-2xl p-6 shadow-glow">
-          <h3 class="font-semibold text-lg">Formato “Executive + Tech”</h3>
-          <div class="mt-4 grid gap-3">
-            <div class="glass rounded-xl p-4">
-              <div class="text-xs text-white/60">Executive summary</div>
-              <div class="mt-1 font-semibold">3 hallazgos • 1 acción prioritaria</div>
-              <p class="mt-1 text-sm text-white/70">“Se detectó endpoint nuevo de debug expuesto. Se recomienda restringir o eliminar.”</p>
-            </div>
-            <div class="glass rounded-xl p-4">
-              <div class="text-xs text-white/60">Detalle técnico</div>
-              <div class="mt-1 font-semibold">Endpoint: /debug • Riesgo: Medio</div>
-              <p class="mt-1 text-sm text-white/70">Evidencia, fecha, método de detección, recomendación, verificación.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Pricing -->
-    <section id="pricing" class="mx-auto max-w-6xl px-4 py-12">
-      <h2 class="text-3xl font-semibold tracking-tight">Planes simples</h2>
-      <p class="mt-2 text-white/70 max-w-2xl">Para startups: empezar rápido, crecer por necesidad.</p>
-
-      <div class="mt-8 grid lg:grid-cols-3 gap-4">
-        <div class="glass rounded-2xl p-6 shadow-glow">
-          <h3 class="font-semibold text-lg">Starter</h3>
-          <p class="mt-1 text-white/70 text-sm">Para comenzar y mostrar señales básicas.</p>
-          <div class="mt-4 text-3xl font-semibold">$0</div>
-          <p class="text-white/60 text-sm">demo / comunidad</p>
-          <ul class="mt-5 space-y-2 text-sm text-white/75">
-            <li>• 1 dominio</li>
-            <li>• Scan manual</li>
-            <li>• Reporte básico</li>
-          </ul>
-          <a href="#demo" class="mt-6 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 font-semibold
-                               bg-white/10 hover:bg-white/15 hover:scale-[1.02] active:scale-[0.98] transition">
-            Empezar
-          </a>
-        </div>
-
-        <div class="glass rounded-2xl p-6 shadow-glow border border-white/20">
-          <div class="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium bg-white/10">
-            Más vendido
-          </div>
-          <h3 class="mt-3 font-semibold text-lg">Growth</h3>
-          <p class="mt-1 text-white/70 text-sm">Monitoreo + baseline para confianza recurrente.</p>
-          <div class="mt-4 text-3xl font-semibold">$29</div>
-          <p class="text-white/60 text-sm">/mes (referencial)</p>
-          <ul class="mt-5 space-y-2 text-sm text-white/75">
-            <li>• 3 dominios</li>
-            <li>• Baseline + diff</li>
-            <li>• Watch programado</li>
-            <li>• Reporte executive + tech</li>
-          </ul>
-          <a href="#demo" class="mt-6 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 font-semibold
-                               bg-gradient-to-r from-indigo-500 via-sky-500 to-fuchsia-500
-                               hover:scale-[1.04] active:scale-[0.98] transition-transform shadow-glow">
-            Pedir demo
-          </a>
-        </div>
-
-        <div class="glass rounded-2xl p-6 shadow-glow">
-          <h3 class="font-semibold text-lg">Pro</h3>
-          <p class="mt-1 text-white/70 text-sm">Para equipos con compliance y múltiples entornos.</p>
-          <div class="mt-4 text-3xl font-semibold">$79</div>
-          <p class="text-white/60 text-sm">/mes (referencial)</p>
-          <ul class="mt-5 space-y-2 text-sm text-white/75">
-            <li>• 10+ dominios</li>
-            <li>• Alertas avanzadas</li>
-            <li>• Exportables (PDF/JSON)</li>
-            <li>• Soporte prioritario</li>
-          </ul>
-          <a href="#demo" class="mt-6 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 font-semibold
-                               bg-white/10 hover:bg-white/15 hover:scale-[1.02] active:scale-[0.98] transition">
-            Hablar con ventas
-          </a>
-        </div>
+    <!-- RIGHT -->
+    <div class="glass rounded-2xl p-10 flex flex-col items-center text-center">
+      <div class="h-28 w-28 rounded-2xl bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500 flex items-center justify-center">
+        <div class="h-6 w-6 rounded-full bg-emerald-400"></div>
       </div>
 
-      <p class="mt-4 text-xs text-white/55">
-        *Precios de ejemplo. Ajusta a tu estrategia. La estructura “simple + tier” es la típica en SaaS modernas.
+      <h3 class="mt-6 text-xl font-semibold">Observo activo</h3>
+      <p class="mt-2 text-white/70 text-sm max-w-xs">
+        Monitoreo continuo de tu superficie de ataque.
       </p>
-    </section>
 
-    <!-- Demo form -->
-    <section id="demo" class="mx-auto max-w-6xl px-4 pb-14">
-      <div class="glass rounded-2xl p-6 md:p-8 shadow-glow">
-        <div class="grid md:grid-cols-2 gap-8 items-start">
-          <div>
-            <h2 class="text-3xl font-semibold tracking-tight">Pide un reporte de ejemplo</h2>
-            <p class="mt-2 text-white/70">
-              Te enviamos una muestra del reporte (estilo executive + tech). Ideal para vender confianza desde el día 1.
-            </p>
-            <p class="mt-4 text-sm text-white/60">
-              Tip: en producción esto se conectaría a tu backend. Aquí dejamos el formulario “front-only” para que se vea real.
-            </p>
-          </div>
-
-          <form class="space-y-3" onsubmit="event.preventDefault(); fakeSubmit();">
-            <div class="grid sm:grid-cols-2 gap-3">
-              <div>
-                <label class="text-xs text-white/60">Nombre</label>
-                <input required
-                  class="mt-1 w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 outline-none
-                         focus:border-white/30 focus:ring-2 focus:ring-indigo-500/30"
-                  placeholder="Christian" />
-              </div>
-              <div>
-                <label class="text-xs text-white/60">Empresa</label>
-                <input
-                  class="mt-1 w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 outline-none
-                         focus:border-white/30 focus:ring-2 focus:ring-indigo-500/30"
-                  placeholder="Tu startup" />
-              </div>
-            </div>
-
-            <div>
-              <label class="text-xs text-white/60">Email</label>
-              <input type="email" required
-                class="mt-1 w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 outline-none
-                       focus:border-white/30 focus:ring-2 focus:ring-indigo-500/30"
-                placeholder="tu@correo.com" />
-            </div>
-
-            <div>
-              <label class="text-xs text-white/60">Dominio a observar</label>
-              <input required
-                class="mt-1 w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 outline-none
-                       focus:border-white/30 focus:ring-2 focus:ring-indigo-500/30"
-                placeholder="tudominio.com" />
-            </div>
-
-            <button
-              class="w-full rounded-xl px-5 py-3 font-semibold
-                     bg-gradient-to-r from-indigo-500 via-sky-500 to-fuchsia-500
-                     hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-glow">
-              Enviarme el ejemplo
-            </button>
-
-            <p id="demoMsg" class="text-sm text-white/70 hidden"></p>
-          </form>
-        </div>
+      <div class="mt-6 grid grid-cols-3 gap-3 text-xs text-white/70">
+        <div class="glass rounded-xl px-3 py-2">Riesgo<br><b class="text-white">Bajo–Medio</b></div>
+        <div class="glass rounded-xl px-3 py-2">Cambios<br><b class="text-white">3 detectados</b></div>
+        <div class="glass rounded-xl px-3 py-2">Acción<br><b class="text-white">Hoy</b></div>
       </div>
-    </section>
+    </div>
 
-    <!-- FAQ -->
-    <section id="faq" class="mx-auto max-w-6xl px-4 pb-16">
-      <h2 class="text-3xl font-semibold tracking-tight">FAQ</h2>
-      <div class="mt-6 grid md:grid-cols-2 gap-4">
-        <div class="glass rounded-2xl p-6 shadow-glow">
-          <h3 class="font-semibold">¿Observo reemplaza un pentest?</h3>
-          <p class="mt-2 text-white/70">No. Observo es para “señales externas + cambios” y reportes de confianza. El pentest es otra capa.</p>
-        </div>
-        <div class="glass rounded-2xl p-6 shadow-glow">
-          <h3 class="font-semibold">¿Qué es baseline?</h3>
-          <p class="mt-2 text-white/70">Es una foto del “estado esperado”. Luego comparas contra ese estado y detectas desviaciones.</p>
-        </div>
-        <div class="glass rounded-2xl p-6 shadow-glow">
-          <h3 class="font-semibold">¿Por qué esto ayuda a vender?</h3>
-          <p class="mt-2 text-white/70">Porque convierte seguridad en evidencia entendible: “antes/después” + “cambios” + “acciones”.</p>
-        </div>
-        <div class="glass rounded-2xl p-6 shadow-glow">
-          <h3 class="font-semibold">¿Cómo se automatiza?</h3>
-          <p class="mt-2 text-white/70">Con <code class="text-white/90">watch --every 6h</code> o CI/CD (GitHub Actions, etc.).</p>
-        </div>
-      </div>
-    </section>
+  </section>
+</main>
 
-    <!-- Footer -->
-    <footer class="border-t border-white/10">
-      <div class="mx-auto max-w-6xl px-4 py-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <div class="flex items-center gap-2">
-          <div class="h-8 w-8 rounded-xl bg-gradient-to-br from-indigo-500 via-sky-400 to-fuchsia-500"></div>
-          <div>
-            <div class="font-semibold">Observo</div>
-            <div class="text-xs text-white/60">Confianza visible en tu seguridad</div>
-          </div>
-        </div>
-        <div class="text-xs text-white/55">
-          © <span id="year"></span> Observo. Hecho para startups.
-        </div>
-      </div>
-    </footer>
-  </main>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    function fakeSubmit() {
-      const el = document.getElementById("demoMsg");
-      el.classList.remove("hidden");
-      el.textContent = "Listo ✅ (demo front-only). En producción aquí se enviaría a tu backend o a un servicio de formularios.";
-    }
-  </script>
 </body>
 </html>
-
