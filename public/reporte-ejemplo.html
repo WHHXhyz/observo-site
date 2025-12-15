@@ -1,134 +1,161 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ejemplo de Reporte — Observo</title>
-  <meta name="description" content="Ejemplo ilustrativo de un reporte Observo: score, checks y recomendaciones claras." />
-  <meta name="theme-color" content="#070B14" />
+  <meta charset="UTF-8" />
+  <title>Ejemplo de Reporte | Observo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Tailwind CDN (ya permitido en tu CSP) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    :root{ --bg:#070B14; --shadow:0 18px 60px rgba(0,0,0,.55); }
-    body{
-      background:
-        radial-gradient(900px 520px at 18% -10%, rgba(102,227,255,.14), transparent 55%),
-        radial-gradient(980px 560px at 85% 0%, rgba(124,92,255,.12), transparent 55%),
-        radial-gradient(980px 560px at 50% 115%, rgba(39,232,167,.08), transparent 60%),
-        var(--bg);
+    body {
+      background: radial-gradient(1200px 600px at 20% -10%, #3b82f622, transparent 40%),
+                  radial-gradient(900px 500px at 90% 10%, #a855f722, transparent 40%),
+                  #020617;
     }
-    .glass{
-      background:
-        radial-gradient(900px 260px at 20% 0%, rgba(255,255,255,.10), transparent 55%),
-        linear-gradient(to bottom, rgba(255,255,255,.07), rgba(255,255,255,.03));
-      border:1px solid rgba(255,255,255,.12);
-      box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.08);
-    }
-    .chip{
-      display:inline-flex;align-items:center;gap:.4rem;
-      padding:.35rem .65rem;border-radius:999px;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.12);
-      font-size:12px;color:rgba(255,255,255,.85);
+    .glass {
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      backdrop-filter: blur(14px);
     }
   </style>
 </head>
 
-<body class="text-white">
-<main class="mx-auto max-w-6xl px-4 py-12">
+<body class="text-white antialiased">
 
-  <!-- HERO -->
-  <section class="glass rounded-3xl p-10 border border-white/10">
-    <div class="flex flex-wrap gap-2 mb-6">
-      <span class="chip">Ejemplo ilustrativo</span>
-      <span class="chip">Read-only</span>
-      <span class="chip">Sin credenciales</span>
-      <span class="chip">Reporte compartible</span>
+<!-- NAV -->
+<header class="sticky top-0 z-50">
+  <div class="mx-auto max-w-6xl px-4">
+    <div class="mt-4 glass rounded-2xl px-4 py-3 flex items-center justify-between border border-white/10">
+      <a href="/index.html" class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500"></div>
+        <span class="font-semibold tracking-tight">Observo</span>
+      </a>
+
+      <div class="flex items-center gap-3">
+        <a href="#" class="px-4 py-2 rounded-xl bg-white/10 border border-white/10 text-sm">
+          Descargar JSON
+        </a>
+        <a href="#" class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-sm font-semibold">
+          Descargar PDF
+        </a>
+      </div>
     </div>
+  </div>
+</header>
 
-    <h1 class="text-3xl md:text-5xl font-semibold tracking-tight">
-      Ejemplo de Reporte Observo
-    </h1>
+<main class="mx-auto max-w-6xl px-4 py-10">
 
-    <p class="mt-4 text-white/70 max-w-3xl text-lg">
-      Este es un ejemplo ficticio pero realista de cómo se ve un reporte Observo.
-      El objetivo es mostrar claridad, evidencia y decisiones accionables.
-    </p>
-  </section>
+<!-- HEADER -->
+<section class="glass rounded-3xl p-8 md:p-10 border border-white/10">
+  <div class="flex flex-wrap items-center gap-3 text-xs text-white/70">
+    <span class="px-3 py-1 rounded-full bg-white/10 border border-white/10">Ejemplo ilustrativo</span>
+    <span class="px-3 py-1 rounded-full bg-white/10 border border-white/10">Read-only</span>
+    <span class="px-3 py-1 rounded-full bg-white/10 border border-white/10">Sin credenciales</span>
+    <span class="px-3 py-1 rounded-full bg-white/10 border border-white/10">Reporte compartible</span>
+  </div>
+
+  <h1 class="mt-6 text-3xl md:text-4xl font-semibold">
+    Ejemplo de Reporte Observo
+  </h1>
+
+  <p class="mt-3 text-white/70 max-w-3xl">
+    Este es un ejemplo ficticio pero realista de cómo se ve un reporte Observo.
+    El foco está en claridad, evidencia y decisiones accionables.
+  </p>
+</section>
+
+<!-- SCORE + ACTION -->
+<section class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
 
   <!-- SCORE -->
-  <section class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div class="glass rounded-2xl p-6 border border-white/10 md:col-span-1">
-      <div class="text-xs tracking-widest text-white/50">SCORE GENERAL</div>
-      <div class="mt-4 text-5xl font-bold text-emerald-400">86</div>
-      <div class="mt-1 text-sm text-white/70">Buen estado de seguridad</div>
+  <div class="glass rounded-2xl p-6 border border-white/10">
+    <div class="text-xs text-white/60">SCORE GENERAL</div>
+    <div class="mt-2 flex items-end gap-2">
+      <div class="text-5xl font-semibold text-emerald-400">79</div>
+      <div class="text-white/40 text-lg">/100</div>
     </div>
-
-    <div class="glass rounded-2xl p-6 border border-white/10 md:col-span-2">
-      <div class="text-xs tracking-widest text-white/50">RESUMEN EJECUTIVO</div>
-      <ul class="mt-4 space-y-2 text-sm text-white/80">
-        <li>✔ HTTPS y TLS correctamente configurados.</li>
-        <li>✔ No se detectan cambios críticos desde la última baseline.</li>
-        <li>⚠️ Headers de seguridad mejorables (CSP y Permissions-Policy).</li>
-        <li>🧭 Riesgo general bajo, con mejoras simples recomendadas.</li>
-      </ul>
+    <div class="mt-2 inline-flex px-3 py-1 rounded-full bg-emerald-400/10 text-emerald-300 text-xs">
+      Riesgo bajo
     </div>
-  </section>
+  </div>
 
-  <!-- CHECKS -->
-  <section class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div class="glass rounded-2xl p-6 border border-white/10">
-      <h3 class="font-semibold">HTTPS / TLS</h3>
-      <p class="mt-2 text-sm text-white/70">
-        Certificado válido, cadena confiable y protocolos modernos habilitados.
-      </p>
-      <p class="mt-3 text-xs text-emerald-400">Estado: Correcto</p>
-    </div>
-
-    <div class="glass rounded-2xl p-6 border border-white/10">
-      <h3 class="font-semibold">Headers de seguridad</h3>
-      <p class="mt-2 text-sm text-white/70">
-        Presencia parcial de headers. Se recomienda endurecer CSP y permisos.
-      </p>
-      <p class="mt-3 text-xs text-amber-400">Estado: Mejorable</p>
-    </div>
-
-    <div class="glass rounded-2xl p-6 border border-white/10">
-      <h3 class="font-semibold">Baseline</h3>
-      <p class="mt-2 text-sm text-white/70">
-        No se detectan cambios relevantes respecto al estado inicial guardado.
-      </p>
-      <p class="mt-3 text-xs text-emerald-400">Estado: Estable</p>
-    </div>
-  </section>
-
-  <!-- NO APLICA -->
-  <section class="mt-10 glass rounded-2xl p-6 border border-white/10">
-    <h3 class="font-semibold">Controles “No aplica”</h3>
+  <!-- ACTION -->
+  <div class="glass rounded-2xl p-6 border border-white/10 md:col-span-2">
+    <div class="text-sm font-semibold">Qué hacer ahora</div>
     <p class="mt-2 text-sm text-white/70">
-      Observo no penaliza funcionalidades inexistentes.
+      Prioridad recomendada: <span class="text-red-400 font-medium">HIGH</span>  
+      Falta <strong>Content-Security-Policy</strong>.
     </p>
-    <ul class="mt-4 space-y-2 text-sm text-white/80">
-      <li>• Sistema de login: <b>No aplica</b></li>
-      <li>• Procesamiento de pagos: <b>No aplica</b></li>
-    </ul>
-  </section>
-
-  <!-- CTA -->
-  <section class="mt-12 text-center">
-    <h2 class="text-2xl md:text-3xl font-semibold">
-      ¿Quieres un reporte así para tu dominio?
-    </h2>
-    <p class="mt-3 text-white/70">
-      Sin accesos. Sin riesgo. Evidencia clara para mostrar.
+    <p class="mt-2 text-sm text-white/70">
+      Definir CSP reduce riesgo XSS y carga no autorizada.
+      Impacto directo en confianza de clientes y partners.
     </p>
+  </div>
 
-    <a href="/index.html#demo"
-       class="inline-flex mt-6 px-6 py-3 rounded-2xl font-semibold
-              bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
-      Pedir demo
-    </a>
-  </section>
+</section>
+
+<!-- COMPONENTES -->
+<section class="mt-8 glass rounded-2xl p-6 border border-white/10">
+  <h2 class="font-semibold text-lg">Componentes del sitio</h2>
+  <p class="text-sm text-white/60 mt-1">
+    Si un componente no existe, no se penaliza.
+  </p>
+
+  <div class="mt-4 space-y-3 text-sm">
+    <div class="flex justify-between items-center">
+      <span>Base de datos</span>
+      <span class="text-white/50">No detectado</span>
+    </div>
+    <div class="flex justify-between items-center">
+      <span>Pagos</span>
+      <span class="text-emerald-400">Detectado</span>
+    </div>
+    <div class="flex justify-between items-center">
+      <span>Login / contraseñas</span>
+      <span class="text-white/50">No detectado</span>
+    </div>
+  </div>
+</section>
+
+<!-- FINDINGS -->
+<section class="mt-8 glass rounded-2xl p-6 border border-white/10">
+  <h2 class="font-semibold text-lg">Top findings</h2>
+  <p class="text-sm text-white/60 mt-1">
+    Ordenados por severidad e impacto estimado.
+  </p>
+
+  <div class="mt-4 space-y-4">
+
+    <div class="flex justify-between gap-4">
+      <div>
+        <div class="inline-flex px-2 py-1 rounded-full bg-red-500/10 text-red-400 text-xs">HIGH</div>
+        <div class="mt-1 font-medium">Falta Content-Security-Policy</div>
+        <div class="text-sm text-white/60">
+          Definir CSP para reducir XSS y carga no autorizada.
+        </div>
+      </div>
+      <div class="text-sm text-red-400">-10 pts</div>
+    </div>
+
+    <div class="flex justify-between gap-4">
+      <div>
+        <div class="inline-flex px-2 py-1 rounded-full bg-yellow-500/10 text-yellow-400 text-xs">MEDIUM</div>
+        <div class="mt-1 font-medium">Falta X-Frame-Options</div>
+        <div class="text-sm text-white/60">
+          Mitiga clickjacking y abuso de iframes.
+        </div>
+      </div>
+      <div class="text-sm text-yellow-400">-4 pts</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="mt-12 text-center text-xs text-white/40">
+  Observo · Demo ilustrativa · No es pentesting · Read-only
+</footer>
 
 </main>
 </body>
