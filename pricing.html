@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Precios | Observo Security</title>
+  <meta name="description" content="Planes de Observo: visibilidad de seguridad web, scoring, reportes y monitoreo. Precios claros para startups y pymes." />
+  <meta name="theme-color" content="#0B1220" />
+
+  <style>
+    :root{
+      --bg:#070B14;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.08);
+      --stroke:rgba(255,255,255,.12);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.70);
+      --muted2:rgba(255,255,255,.55);
+      --brand:#66E3FF;
+      --brand2:#7C5CFF;
+      --good:#27E8A7;
+      --warn:#FFD37A;
+      --bad:#FF6B8A;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --r:18px;
+      --max:1100px;
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 15% -10%, rgba(102,227,255,.18), transparent 55%),
+        radial-gradient(900px 520px at 85% 0%, rgba(124,92,255,.16), transparent 50%),
+        radial-gradient(900px 520px at 50% 115%, rgba(39,232,167,.10), transparent 55%),
+        var(--bg);
+      min-height:100vh;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding:28px 18px 60px; }
+
+    /* Top nav */
+    .nav{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(7,11,20,.85), rgba(7,11,20,.55));
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .navin{ max-width:var(--max); margin:0 auto; padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px;}
+    .brand{
+      display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px;
+    }
+    .logo{
+      width:34px; height:34px; border-radius:12px;
+      background: radial-gradient(circle at 30% 30%, rgba(102,227,255,.8), rgba(124,92,255,.55));
+      box-shadow: 0 12px 30px rgba(102,227,255,.12);
+      border:1px solid rgba(255,255,255,.14);
+    }
+    .links{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;}
+    .link{
+      padding:10px 12px;
+      border:1px solid transparent;
+      border-radius:999px;
+      color:var(--muted);
+    }
+    .link:hover{ border-color:rgba(255,255,255,.12); color:var(--text); background:rgba(255,255,255,.03); }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.06); border-color:rgba(255,255,255,.22); }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(102,227,255,.22), rgba(124,92,255,.20));
+      border-color: rgba(102,227,255,.35);
+      box-shadow: 0 14px 45px rgba(102,227,255,.10);
+    }
+    .btn.primary:hover{ border-color: rgba(102,227,255,.55); }
+
+    /* Header */
+    .hero{ padding:28px 0 12px; }
+    .kicker{
+      display:inline-flex; gap:10px; align-items:center;
+      padding:8px 12px; border-radius:999px;
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10);
+      color:var(--muted);
+      font-size:13px;
+    }
+    h1{
+      margin:14px 0 10px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height:1.05;
+      letter-spacing:-.6px;
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size: clamp(14px, 2vw, 16px);
+      max-width: 72ch;
+      line-height:1.55;
+    }
+    .heroactions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+
+    /* Pricing */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+      margin-top:22px;
+    }
+    @media (max-width: 980px){ .grid{ grid-template-columns:1fr; } }
+
+    .card{
+      background: linear-gradient(to bottom, rgba(255,255,255,.06), rgba(255,255,255,.035));
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      padding:18px;
+      position:relative;
+      overflow:hidden;
+    }
+    .card.featured{
+      border-color: rgba(102,227,255,.30);
+      background: linear-gradient(135deg, rgba(102,227,255,.09), rgba(124,92,255,.07));
+    }
+    .tag{
+      position:absolute; top:14px; right:14px;
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      color:var(--muted);
+    }
+    .plan{ font-weight:800; font-size:18px; margin:0 0 6px; }
+    .desc{ margin:0 0 14px; color:var(--muted); line-height:1.5; }
+    .price{
+      display:flex; align-items:baseline; gap:8px;
+      margin:12px 0 14px;
+    }
+    .price strong{ font-size:36px; letter-spacing:-.6px; }
+    .price span{ color:var(--muted2); font-size:14px; }
+    .ul{ list-style:none; margin:12px 0 0; padding:0; display:grid; gap:10px;}
+    .li{ display:flex; gap:10px; align-items:flex-start; color:var(--muted); line-height:1.45; }
+    .dot{
+      width:18px; height:18px; border-radius:6px;
+      background: rgba(39,232,167,.14);
+      border:1px solid rgba(39,232,167,.30);
+      flex:0 0 auto;
+      margin-top:2px;
+    }
+
+    /* Compare / notes */
+    .note{
+      margin-top:18px;
+      padding:14px 16px;
+      border-radius: var(--r);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.035);
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    /* FAQ */
+    .section{ margin-top:30px; }
+    .section h2{ margin:0 0 10px; font-size:22px; letter-spacing:-.2px;}
+    .section p{ margin:0 0 14px; color:var(--muted); line-height:1.6; }
+
+    details{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin: 10px 0;
+    }
+    summary{
+      cursor:pointer;
+      font-weight:700;
+      color:var(--text);
+      list-style:none;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    details p{ margin:10px 0 0; color:var(--muted); }
+
+    /* Footer */
+    footer{
+      margin-top:34px;
+      border-top:1px solid rgba(255,255,255,.08);
+      padding-top:18px;
+      color:var(--muted2);
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    }
+    .smalllinks{ display:flex; gap:10px; flex-wrap:wrap; }
+    .pill{
+      padding:8px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color:var(--muted);
+      font-size:12px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav">
+    <div class="navin">
+      <a class="brand" href="/"><span class="logo" aria-hidden="true"></span> Observo</a>
+      <div class="links">
+        <a class="link" href="/">Inicio</a>
+        <a class="link" href="/pricing.html">Precios</a>
+        <a class="link" href="#faq">FAQ</a>
+        <a class="btn primary" href="mailto:contact@observosec.org?subject=Observo%20-%20Quiero%20una%20demo">Pedir demo</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <header class="hero">
+      <div class="kicker">💠 Precios claros · Sin letras chicas · Enfocado en startups</div>
+      <h1>Planes para convertir seguridad en confianza visible</h1>
+      <p class="sub">
+        Observo te entrega visibilidad y evidencia del estado de seguridad web: scoring, hallazgos y reportes listos para compartir con tu equipo o clientes.
+        Elige un plan y escala cuando lo necesites.
+      </p>
+
+      <div class="heroactions">
+        <a class="btn primary" href="mailto:contact@observosec.org?subject=Observo%20-%20Quiero%20empezar&body=Hola%2C%20quiero%20contratar%20Observo.%0A%0ADominio%3A%20%0APlan%3A%20Starter%2FGrowth%2FPro%0A">Empezar ahora</a>
+        <a class="btn" href="#faq">Ver FAQ</a>
+      </div>
+    </header>
+
+    <section class="grid" aria-label="Planes">
+      <!-- Starter -->
+      <article class="card">
+        <p class="plan">Starter</p>
+        <p class="desc">Para proyectos pequeños que necesitan una “foto” clara y reportable de su postura web.</p>
+        <div class="price"><strong>$29</strong><span>/mes</span></div>
+        <a class="btn primary" href="mailto:contact@observosec.org?subject=Observo%20-%20Plan%20Starter&body=Hola%2C%20quiero%20el%20plan%20Starter.%0A%0ADominio%3A%20%0AObjetivo%3A%20Visibilidad%20b%C3%A1sica%20y%20reporte">Contratar Starter</a>
+        <ul class="ul">
+          <li class="li"><span class="dot"></span>1 dominio</li>
+          <li class="li"><span class="dot"></span>Scoring + findings priorizados</li>
+          <li class="li"><span class="dot"></span>Reporte listo para compartir</li>
+          <li class="li"><span class="dot"></span>Actualización mensual</li>
+        </ul>
+      </article>
+
+      <!-- Growth (featured) -->
+      <article class="card featured">
+        <span class="tag">Más popular</span>
+        <p class="plan">Growth</p>
+        <p class="desc">Para startups en crecimiento que requieren monitoreo, comparaciones y evidencia continua.</p>
+        <div class="price"><strong>$79</strong><span>/mes</span></div>
+        <a class="btn primary" href="mailto:contact@observosec.org?subject=Observo%20-%20Plan%20Growth&body=Hola%2C%20quiero%20el%20plan%20Growth.%0A%0ADominio(s)%3A%20%0AObjetivo%3A%20Monitoreo%20y%20reportes%20continuos">Contratar Growth</a>
+        <ul class="ul">
+          <li class="li"><span class="dot"></span>Hasta 3 dominios</li>
+          <li class="li"><span class="dot"></span>Monitoreo + alertas básicas</li>
+          <li class="li"><span class="dot"></span>Comparación (baseline vs actual)</li>
+          <li class="li"><span class="dot"></span>Reporte técnico + ejecutivo</li>
+        </ul>
+      </article>
+
+      <!-- Pro -->
+      <article class="card">
+        <p class="plan">Pro</p>
+        <p class="desc">Para equipos que necesitan trazabilidad, procesos y reportabilidad más seria (clientes / auditorías).</p>
+        <div class="price"><strong>$149</strong><span>/mes</span></div>
+        <a class="btn primary" href="mailto:contact@observosec.org?subject=Observo%20-%20Plan%20Pro&body=Hola%2C%20quiero%20el%20plan%20Pro.%0A%0ADominio(s)%3A%20%0AObjetivo%3A%20Gobernanza%2C%20evidencia%20y%20trazabilidad">Hablar con ventas</a>
+        <ul class="ul">
+          <li class="li"><span class="dot"></span>Hasta 10 dominios</li>
+          <li class="li"><span class="dot"></span>Políticas de reporte y evidencia</li>
+          <li class="li"><span class="dot"></span>Prioridad en soporte</li>
+          <li class="li"><span class="dot"></span>Customizaciones (según caso)</li>
+        </ul>
+      </article>
+    </section>
+
+    <div class="note">
+      <b>Nota:</b> Esto es “security visibility & reporting”, no pentesting.
+      Observo apunta a detectar exposición y señales de riesgo con evidencia reportable, sin explotar vulnerabilidades ni ejecutar ataques.
+    </div>
+
+    <section id="faq" class="section" aria-label="FAQ">
+      <h2>FAQ</h2>
+      <p>Respuestas directas a lo que siempre preguntan antes de pagar.</p>
+
+      <details>
+        <summary>¿Observo hace pentesting?</summary>
+        <p>No. Observo se centra en <b>visibilidad</b>: señales, exposición, configuración y evidencia. No explota vulnerabilidades ni intenta acceso.</p>
+      </details>
+
+      <details>
+        <summary>¿Qué significa “scoring” en Observo?</summary>
+        <p>Es una nota basada en controles y hallazgos detectables desde afuera (postura). También marcamos <b>“No aplica”</b> cuando una categoría no existe (por ejemplo, si no hay login/pagos).</p>
+      </details>
+
+      <details>
+        <summary>¿Observo puede decir “No aplica” para no castigar la nota?</summary>
+        <p>Sí. Si el sitio no tiene componentes como autenticación, panel admin, pagos, etc., Observo puede reflejarlo para evitar evaluar algo que no existe.</p>
+      </details>
+
+      <details>
+        <summary>¿Qué tan rápido está listo?</summary>
+        <p>En minutos. Se ejecuta el análisis y se genera el reporte. En planes con monitoreo, se programan ejecuciones recurrentes.</p>
+      </details>
+
+      <details>
+        <summary>¿Qué datos guardan?</summary>
+        <p>Solo información necesaria para reportar hallazgos y evidencia. No pedimos credenciales. No vendemos datos. Si necesitas un modo “no-store”, se puede conversar en Pro.</p>
+      </details>
+
+      <details>
+        <summary>¿Puedo cancelar cuando quiera?</summary>
+        <p>Sí. Si lo integras como servicio recurrente, puedes cortar cuando quieras. (Si lo manejas por email/transferencia, lo dejamos igual de simple.)</p>
+      </details>
+
+      <details>
+        <summary>¿Qué pasa si mi web está en Vercel / CDN / edge?</summary>
+        <p>No hay problema: Observo evalúa señales visibles desde Internet (TLS, headers, superficies, endpoints expuestos, etc.), independiente de dónde esté hosteado.</p>
+      </details>
+    </section>
+
+    <footer>
+      <div>
+        <div style="font-weight:800; color:rgba(255,255,255,.86)">Observo Security</div>
+        <div style="margin-top:6px">© 2025 · Seguridad visible para equipos reales.</div>
+      </div>
+      <div class="smalllinks">
+        <span class="pill">Sin credenciales</span>
+        <span class="pill">Read-only</span>
+        <a class="pill" href="mailto:contact@observosec.org?subject=Observo%20-%20Consulta">contact@observosec.org</a>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
