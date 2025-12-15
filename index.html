@@ -326,41 +326,45 @@
   </main>
 
   <script>
-    // Pupila siguiendo el puntero (global)
-    (function(){
-      const pupil = document.getElementById("pupil");
-      const iris  = document.getElementById("iris");
-      if (!pupil || !iris) return;
+  (function(){
+    const eyes = Array.from(document.querySelectorAll(".ob-eye"));
+    if (!eyes.length) return;
 
-      // Radio máximo de movimiento de la pupila dentro del iris
+    function moveEye(eye, clientX, clientY){
+      const iris  = eye.querySelector(".ob-iris");
+      const pupil = eye.querySelector(".ob-pupil");
+      if (!iris || !pupil) return;
+
+      const rect = iris.getBoundingClientRect();
+      const cx = rect.left + rect.width/2;
+      const cy = rect.top + rect.height/2;
+
+      const dx = clientX - cx;
+      const dy = clientY - cy;
+
+      const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+      const nx = dx / dist;
+      const ny = dy / dist;
+
       const maxR = 6.5;
+      const r = Math.min(maxR, dist / 40);
 
-      function movePupil(clientX, clientY){
-        const rect = iris.getBoundingClientRect();
-        const cx = rect.left + rect.width/2;
-        const cy = rect.top + rect.height/2;
+      const x = 60 + nx * r;
+      const y = 62 + ny * r;
 
-        const dx = clientX - cx;
-        const dy = clientY - cy;
+      pupil.setAttribute("cx", x.toFixed(2));
+      pupil.setAttribute("cy", y.toFixed(2));
+    }
 
-        const dist = Math.sqrt(dx*dx + dy*dy) || 1;
-        const nx = dx / dist;
-        const ny = dy / dist;
+    function moveAll(x,y){ eyes.forEach(e => moveEye(e,x,y)); }
 
-        const r = Math.min(maxR, dist / 40); // suaviza la respuesta
-        const x = 60 + nx * r;
-        const y = 62 + ny * r;
+    window.addEventListener("mousemove", (e) => moveAll(e.clientX, e.clientY), { passive:true });
+    window.addEventListener("touchmove", (e) => {
+      if (!e.touches || !e.touches[0]) return;
+      moveAll(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive:true });
+  })();
+</script>
 
-        pupil.setAttribute("cx", x.toFixed(2));
-        pupil.setAttribute("cy", y.toFixed(2));
-      }
-
-      window.addEventListener("mousemove", (e) => movePupil(e.clientX, e.clientY), { passive: true });
-      window.addEventListener("touchmove", (e) => {
-        if (!e.touches || !e.touches[0]) return;
-        movePupil(e.touches[0].clientX, e.touches[0].clientY);
-      }, { passive: true });
-    })();
-  </script>
 </body>
 </html>
