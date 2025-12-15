@@ -4,291 +4,333 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Observo — Cyber risk visibility for startups</title>
-  <meta name="description" content="Visibilidad de riesgo y reportes de seguridad listos para compartir. Sin jerga. Sin burocracia. En minutos." />
-
-  <!-- Optional: nice font fallback -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta name="description" content="Reportes de seguridad listos para compartir. Evidencia clara, sin burocracia. En minutos." />
 
   <style>
     :root{
-      --bg: #070a12;
-      --panel: #0b1220;
-      --panel2: #0f172a;
-      --text: #e5e7eb;
-      --muted: #93a4b8;
-      --line: rgba(255,255,255,0.08);
-      --shadow: 0 25px 60px rgba(0,0,0,0.55);
-      --glow: rgba(99,102,241,0.35);
-      --glow2: rgba(34,211,238,0.35);
-      --radius: 18px;
+      --bg:#070a12;
+      --panel:#0b1220;
+      --panel2:#0f172a;
+      --text:#e5e7eb;
+      --muted:#93a4b8;
+      --line:rgba(255,255,255,0.08);
+      --shadow:0 25px 60px rgba(0,0,0,0.55);
+      --glow:rgba(99,102,241,0.35);
+      --glow2:rgba(34,211,238,0.35);
+      --radius:18px;
     }
 
-    *{ box-sizing: border-box; }
-    html{ scroll-behavior: smooth; }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color: var(--text);
-      background: radial-gradient(1100px 600px at 20% 0%, rgba(34,211,238,0.10), transparent 55%),
-                  radial-gradient(900px 500px at 90% 10%, rgba(99,102,241,0.12), transparent 60%),
-                  radial-gradient(800px 500px at 50% 90%, rgba(34,197,94,0.06), transparent 55%),
-                  var(--bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 600px at 20% 0%, rgba(34,211,238,0.10), transparent 55%),
+        radial-gradient(900px 500px at 90% 10%, rgba(99,102,241,0.12), transparent 60%),
+        radial-gradient(800px 500px at 50% 90%, rgba(34,197,94,0.06), transparent 55%),
+        var(--bg);
       overflow-x:hidden;
     }
-
-    a{ color: inherit; text-decoration: none; }
-    .container{
-      width: min(1140px, calc(100% - 40px));
-      margin: 0 auto;
-    }
+    a{color:inherit;text-decoration:none}
+    .container{width:min(1140px, calc(100% - 40px)); margin:0 auto;}
 
     /* Topbar */
     .topbar{
-      position: sticky;
-      top: 0;
-      z-index: 50;
+      position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
-      background: rgba(7,10,18,0.6);
-      border-bottom: 1px solid var(--line);
+      background: rgba(7,10,18,0.65);
+      border-bottom:1px solid var(--line);
     }
     .topbar .inner{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      padding: 14px 0;
-      gap: 14px;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0; gap:14px;
     }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap: 12px;
-      min-width: 220px;
-    }
+    .brand{display:flex; align-items:center; gap:12px; min-width:220px;}
+    .brand h1{font-size:16px; margin:0; line-height:1.1; letter-spacing:.2px;}
+    .brand p{margin:2px 0 0; font-size:12.5px; color:var(--muted);}
 
-    /* Simple “shield+eye” mark using CSS */
+    /* Logo mini (navbar) */
     .logo{
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
+      width:42px;height:42px;border-radius:14px;
       background:
         radial-gradient(circle at 30% 30%, rgba(34,211,238,0.45), transparent 45%),
         radial-gradient(circle at 70% 30%, rgba(99,102,241,0.45), transparent 45%),
         linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.03));
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      position: relative;
-      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.12);
+      box-shadow:0 10px 30px rgba(0,0,0,0.4);
+      position:relative; overflow:hidden;
     }
     .logo:before{
       content:"";
       position:absolute;
-      inset: 9px 10px 12px 10px;
-      border-radius: 16px 16px 18px 18px;
+      inset:9px 10px 12px 10px;
+      border-radius:16px 16px 18px 18px;
       background: linear-gradient(180deg, rgba(15,23,42,0.0), rgba(15,23,42,0.65));
-      border: 1px solid rgba(255,255,255,0.09);
+      border:1px solid rgba(255,255,255,0.09);
       clip-path: polygon(50% 0%, 90% 18%, 90% 55%, 50% 100%, 10% 55%, 10% 18%);
-      opacity: .85;
+      opacity:.9;
     }
     .logo:after{
       content:"";
-      position:absolute;
-      left: 50%;
-      top: 52%;
+      position:absolute; left:50%; top:52%;
       transform: translate(-50%,-50%);
-      width: 18px;
-      height: 12px;
-      border-radius: 30px;
-      border: 1px solid rgba(255,255,255,0.16);
-      box-shadow: 0 0 22px rgba(34,211,238,0.18);
+      width:18px;height:12px;border-radius:30px;
+      border:1px solid rgba(255,255,255,0.16);
+      box-shadow:0 0 22px rgba(34,211,238,0.18);
       background: radial-gradient(circle at 50% 50%, rgba(34,211,238,0.45), rgba(15,23,42,0.55));
     }
 
-    .brand h1{
-      font-size: 16px;
-      margin:0;
-      line-height:1.1;
-      letter-spacing: 0.2px;
-    }
-    .brand p{
-      margin: 2px 0 0;
-      font-size: 12.5px;
-      color: var(--muted);
-    }
-
-    nav{
-      display:flex;
-      align-items:center;
-      gap: 18px;
-    }
+    nav{display:flex; align-items:center; gap:18px;}
     nav a{
-      font-size: 13.5px;
-      color: var(--muted);
-      padding: 8px 10px;
-      border-radius: 12px;
+      font-size:13.5px; color:var(--muted);
+      padding:8px 10px; border-radius:12px;
       transition: background .2s ease, color .2s ease, transform .2s ease;
     }
-    nav a:hover{
-      color: var(--text);
-      background: rgba(255,255,255,0.06);
-      transform: translateY(-1px);
-    }
+    nav a:hover{color:var(--text); background:rgba(255,255,255,0.06); transform:translateY(-1px);}
 
-    .cta-row{
-      display:flex;
-      gap: 10px;
-      align-items:center;
-    }
+    .cta-row{display:flex; gap:10px; align-items:center;}
+
     .btn{
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-      color: var(--text);
-      padding: 10px 14px;
-      border-radius: 14px;
-      font-size: 13.5px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.06);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:14px;
+      font-size:13.5px;
       cursor:pointer;
       transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
-      display:inline-flex;
-      align-items:center;
-      gap: 10px;
-      user-select:none;
+      display:inline-flex; align-items:center; gap:10px; user-select:none;
     }
     .btn:hover{
-      transform: translateY(-2px);
-      background: rgba(255,255,255,0.08);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-      border-color: rgba(255,255,255,0.16);
+      transform:translateY(-2px);
+      background:rgba(255,255,255,0.08);
+      box-shadow:0 12px 30px rgba(0,0,0,0.35);
+      border-color:rgba(255,255,255,0.16);
     }
     .btn.primary{
       background: linear-gradient(135deg, rgba(34,211,238,0.18), rgba(99,102,241,0.20));
       border-color: rgba(34,211,238,0.22);
       box-shadow: 0 20px 50px rgba(0,0,0,0.40);
     }
-    .btn.primary:hover{
-      box-shadow: 0 24px 70px rgba(0,0,0,0.55);
+    .btn.primary:hover{box-shadow:0 24px 70px rgba(0,0,0,0.55);}
+
+    /* HERO */
+    .hero{padding:44px 0 10px;}
+    .hero-wrap{
+      position:relative;
+      border-radius: var(--radius);
     }
 
-    /* Hero */
-    .hero{
-      padding: 42px 0 26px;
-      position: relative;
-    }
     .hero-grid{
       display:grid;
-      grid-template-columns: 1.25fr .75fr;
-      gap: 22px;
-      align-items: start;
-    }
-    .headline{
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 26px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
-      position: relative;
-      overflow:hidden;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap:18px;
+      align-items:stretch;
     }
 
-    /* ESCUDO + OJO ANIMADO */
-    .logo-animated{
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      width: 80px;
-      height: 80px;
-      z-index: 1000;
-      pointer-events: none;
-      animation: eye-move 5s infinite alternate;
+    .hero-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:28px;
+      box-shadow:0 20px 50px rgba(0,0,0,0.35);
+      position:relative;
+      overflow:hidden;
+      min-height: 320px;
     }
-    @keyframes eye-move {
-      0% { left: 20px; top: 20px; }
-      100% { left: calc(100% - 100px); top: calc(100% - 100px); }
+    .hero-card:before{
+      content:"";
+      position:absolute; width:420px; height:420px; left:-200px; top:-220px;
+      background: radial-gradient(circle, rgba(34,211,238,0.18), transparent 60%);
+      filter: blur(10px);
+    }
+    .hero-card:after{
+      content:"";
+      position:absolute; width:420px; height:420px; right:-240px; top:-240px;
+      background: radial-gradient(circle, rgba(99,102,241,0.18), transparent 60%);
+      filter: blur(10px);
+    }
+
+    .kicker{
+      display:inline-flex; gap:8px; align-items:center;
+      font-size:12.5px; color:#cbd5e1;
+      padding:6px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,0.10);
+      background: rgba(15,23,42,0.55);
+      position:relative; z-index:2;
+    }
+    .kicker .dot{
+      width:8px;height:8px;border-radius:99px;
+      background: radial-gradient(circle, rgba(34,211,238,0.95), rgba(99,102,241,0.65));
+      box-shadow:0 0 18px rgba(34,211,238,0.35);
     }
 
     h2{
-      margin: 14px 0 10px;
-      font-size: 44px;
-      letter-spacing: -0.8px;
-      line-height: 1.06;
-      position: relative;
-      z-index: 1;
+      margin:14px 0 10px;
+      font-size:44px;
+      letter-spacing:-0.8px;
+      line-height:1.06;
+      position:relative; z-index:2;
     }
     .sub{
-      margin: 0 0 16px;
-      color: var(--muted);
-      font-size: 15.5px;
-      line-height: 1.6;
-      position: relative;
-      z-index: 1;
-      max-width: 62ch;
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15.5px;
+      line-height:1.65;
+      position:relative; z-index:2;
+      max-width:62ch;
     }
 
-    .badges{
-      display:flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 12px 0 18px;
-      position: relative;
-      z-index: 1;
-    }
+    .badges{display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 20px; position:relative; z-index:2;}
     .badge{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.10);
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,0.10);
       background: rgba(15,23,42,0.50);
-      color: #dbeafe;
-      font-size: 12.8px;
+      color:#dbeafe;
+      font-size:12.8px;
+    }
+    .ico{
+      width:16px; height:16px; display:inline-block; border-radius:6px;
+      background: linear-gradient(135deg, rgba(34,211,238,0.35), rgba(99,102,241,0.35));
+      box-shadow:0 0 16px rgba(99,102,241,0.18);
+      border:1px solid rgba(255,255,255,0.10);
     }
 
-    /* Adjustments for sections */
-    section{
-      padding: 22px 0 14px;
+    .hero-actions{display:flex; gap:10px; flex-wrap:wrap; position:relative; z-index:2;}
+
+    /* Right side = 2 cards (sin botones extra) */
+    .side{display:flex; flex-direction:column; gap:12px;}
+    .mini-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow:0 18px 45px rgba(0,0,0,0.32);
     }
-    .section-head{
-      display:flex;
-      align-items:flex-end;
-      justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 14px;
+    .mini{color:var(--muted); font-size:12.2px; margin:0 0 6px; text-transform:uppercase; letter-spacing:.12em;}
+    .mini-card h3{margin:0 0 8px; font-size:16px;}
+    .mini-card p{margin:0; color:#cbd5e1; font-size:13.5px; line-height:1.55;}
+
+    /* Hero “eye + shield” (solo dentro del hero) */
+    .hero-eye{
+      position:absolute;
+      width:120px; height:120px;
+      left: 24px; top: 18px;
+      pointer-events:none;
+      opacity: .30;
+      filter: drop-shadow(0 10px 30px rgba(0,0,0,.45));
+      transition: transform .10s linear;
+      z-index:3;
     }
-    .section-head h3{
-      margin:0;
-      font-size: 24px;
-      letter-spacing: -0.4px;
+    .hero-eye .shell{
+      width:100%; height:100%;
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(34,211,238,0.28), transparent 55%),
+        radial-gradient(circle at 70% 25%, rgba(99,102,241,0.28), transparent 55%),
+        linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.12);
+      position:relative;
+      overflow:hidden;
     }
-    .section-head p{
-      margin:0;
-      color: var(--muted);
-      font-size: 13.5px;
-      line-height: 1.45;
-      max-width: 68ch;
+    .hero-eye .shield{
+      position:absolute;
+      inset: 20px 26px 26px 26px;
+      clip-path: polygon(50% 0%, 88% 16%, 88% 56%, 50% 100%, 12% 56%, 12% 16%);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(15,23,42,0.05), rgba(15,23,42,0.75));
+    }
+    .hero-eye .eye{
+      position:absolute;
+      left:50%; top:54%;
+      transform: translate(-50%,-50%);
+      width:44px; height:28px;
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: radial-gradient(circle at 50% 50%, rgba(34,211,238,0.42), rgba(15,23,42,0.55));
+      box-shadow: 0 0 26px rgba(34,211,238,0.16);
+      display:grid; place-items:center;
+    }
+    .hero-eye .pupil{
+      width:10px; height:10px; border-radius:99px;
+      background: radial-gradient(circle, rgba(34,211,238,0.95), rgba(99,102,241,0.65));
+      box-shadow:0 0 18px rgba(34,211,238,0.35);
+      transform: translate(var(--px,0px), var(--py,0px));
+      transition: transform .08s linear;
     }
 
-    .grid-3{
+    /* Sections spacing (para respirar) */
+    section{padding: 70px 0;}
+    .section-head{margin-bottom: 18px;}
+    .section-head h3{margin:0; font-size:26px; letter-spacing:-0.4px;}
+    .section-head p{margin:8px 0 0; color:var(--muted); font-size:13.8px; line-height:1.55; max-width: 78ch;}
+
+    /* Steps */
+    .grid-3{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; margin-top: 18px;}
+    .step-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.30);
+      cursor:pointer;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      position:relative;
+      min-height: 150px;
+    }
+    .step-card:hover{
+      transform: translateY(-4px);
+      box-shadow: 0 22px 55px rgba(0,0,0,0.42);
+      border-color: rgba(255,255,255,0.14);
+    }
+    .step{display:inline-block; font-size:12px; color:#a7b6c9; letter-spacing:.14em; text-transform:uppercase; margin-bottom:10px;}
+    .step-card h4{margin:0 0 8px; font-size:16.5px;}
+    .step-card p{margin:0; color:#cbd5e1; font-size:13.5px; line-height:1.55;}
+
+    /* Report section blocks */
+    .feature-grid{
       display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      margin-top: 18px;
+    }
+    .feature{
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.30);
+    }
+    .feature h4{margin:0 0 10px; font-size:16px;}
+    .feature ul{margin:0; padding-left:18px; color:#cbd5e1; font-size:13.5px; line-height:1.7;}
+
+    /* Footer */
+    footer{
+      padding: 26px 0 38px;
+      color: var(--muted);
+      font-size: 12.8px;
+      border-top: 1px solid var(--line);
+      margin-top: 14px;
     }
 
-    /* Modal styles */
+    /* MODALS (SOLID) */
     .modal{
-      position: fixed;
-      inset: 0;
+      position:fixed;
+      inset:0;
       background: rgba(0,0,0,0.65);
-      display: none;
+      display:none;
       align-items:center;
       justify-content:center;
-      z-index: 1000;
+      z-index:1000;
       padding: 20px;
     }
-    .modal.active{ display:flex; }
-
+    .modal.active{display:flex;}
     .modal-content{
       width: min(520px, 100%);
-      background: var(--panel2); /* sólido */
+      background: var(--panel2);
       border: 1px solid rgba(255,255,255,0.10);
       border-radius: 16px;
       padding: 22px 20px 18px;
@@ -298,37 +340,38 @@
       opacity: 0;
       animation: pop .18s ease forwards;
     }
-    @keyframes pop{
-      to{ transform: translateY(0) scale(1); opacity: 1; }
-    }
-
+    @keyframes pop{to{transform:translateY(0) scale(1); opacity:1;}}
     .modal-close{
-      position:absolute;
-      top: 12px;
-      right: 12px;
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.10);
+      position:absolute; top:12px; right:12px;
+      width:38px;height:38px;border-radius:12px;
+      border:1px solid rgba(255,255,255,0.10);
       background: rgba(255,255,255,0.05);
-      color: #cbd5e1;
+      color:#cbd5e1;
       cursor:pointer;
-      display:grid;
-      place-items:center;
-      font-size: 16px;
+      display:grid; place-items:center;
+      font-size:16px;
       transition: transform .15s ease, background .15s ease, color .15s ease;
     }
-    .modal-close:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-    }
+    .modal-close:hover{transform: translateY(-1px); background: rgba(255,255,255,0.08); color:#fff;}
+    .modal-title{margin:0 42px 10px 0; font-size:18px; letter-spacing:-0.2px;}
+    .modal-body{margin:0 0 12px; color:#cbd5e1; font-size:13.8px; line-height:1.65;}
+    .modal-list{margin:0; padding-left:18px; color:#cbd5e1; font-size:13.6px; line-height:1.75;}
+    .modal-actions{display:flex; justify-content:flex-end; gap:10px; margin-top: 16px;}
 
-    .modal-actions{
-      display:flex;
-      justify-content:flex-end;
-      gap: 10px;
-      margin-top: 16px;
+    /* Responsive */
+    @media (max-width: 980px){
+      nav{display:none;}
+      .hero-grid{grid-template-columns:1fr;}
+      .hero-eye{display:none;} /* ojo solo desktop */
+    }
+    @media (max-width: 860px){
+      h2{font-size:38px;}
+      section{padding:56px 0;}
+      .grid-3{grid-template-columns:1fr;}
+      .feature-grid{grid-template-columns:1fr;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none!important; transition:none!important;}
     }
   </style>
 </head>
@@ -354,94 +397,89 @@
 
         <div class="cta-row">
           <button class="btn" data-open="modal-reportes">Ver ejemplo</button>
-          <a class="btn primary" href="mailto:contacto@observosec.com?subject=Quiero%20Observo&body=Hola%2C%20quiero%20generar%20un%20reporte%20para%20mi%20dominio.%0A%0ADominio%3A%20%0AObjetivo%3A%20%0A" rel="noopener">
-            Pedir demo
-          </a>
+          <a class="btn primary" href="mailto:contacto@observosec.com?subject=Quiero%20Observo&body=Hola%2C%20quiero%20un%20reporte%20para%20mi%20dominio.%0A%0ADominio%3A%20%0A" rel="noopener">Pedir demo</a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Hero -->
+  <!-- HERO -->
   <header class="hero">
     <div class="container">
-      <div class="hero-grid">
-        <div class="headline reveal">
-          <div class="kicker"><span class="dot"></span> Evidencia clara, sin burocracia</div>
-
-          <h2>Reportes de seguridad que tu cliente <span style="text-shadow:0 0 28px var(--glow2)">entiende</span>.</h2>
-          <p class="sub">
-            Observo transforma señales visibles de tu web (HTTPS/TLS, headers, superficie expuesta) en un reporte
-            <b>listo para compartir</b>: qué está bien, qué falta y qué hacer ahora — sin jerga.
-          </p>
-
-          <div class="badges">
-            <span class="badge"><span class="ico"></span> Resumen ejecutivo</span>
-            <span class="badge"><span class="ico"></span> Checks verificables</span>
-            <span class="badge"><span class="ico"></span> “No aplica” cuando corresponde</span>
-            <span class="badge"><span class="ico"></span> Enfoque startup</span>
-          </div>
-
-          <div class="hero-actions">
-            <button class="btn primary" data-open="modal-vision">Visión / Promesa</button>
-            <button class="btn" data-open="modal-como">Cómo funciona</button>
-            <button class="btn" data-open="modal-que-incluye">Qué incluye</button>
+      <div class="hero-wrap" id="heroArea">
+        <!-- OJO + ESCUDO (solo hero) -->
+        <div class="hero-eye" id="heroEye" aria-hidden="true">
+          <div class="shell">
+            <div class="shield"></div>
+            <div class="eye"><div class="pupil" id="pupil"></div></div>
           </div>
         </div>
 
-        <aside class="side">
-          <div class="card reveal">
-            <p class="mini">Para clientes</p>
-            <h3>Reportes listos para compartir</h3>
-            <p>
-              Entregamos un resumen ejecutivo + findings con evidencia simple (checks).
-              Tu cliente entiende <b>qué está bien</b>, <b>qué falta</b> y <b>qué hacer</b>.
+        <div class="hero-grid">
+          <div class="hero-card">
+            <div class="kicker"><span class="dot"></span> Evidencia clara, sin burocracia</div>
+
+            <h2>Reportes de seguridad que tu cliente <span style="text-shadow:0 0 28px var(--glow2)">entiende</span>.</h2>
+
+            <p class="sub">
+              Observo transforma señales visibles de tu web (HTTPS/TLS, headers y superficie expuesta)
+              en un reporte <b>listo para compartir</b>: qué está bien, qué falta y qué hacer ahora — sin jerga.
             </p>
-            <button class="link" data-open="modal-reportes">
-              Ver estructura de reporte <span style="opacity:.7">→</span>
-            </button>
+
+            <div class="badges">
+              <span class="badge"><span class="ico"></span> Resumen ejecutivo</span>
+              <span class="badge"><span class="ico"></span> Checks verificables</span>
+              <span class="badge"><span class="ico"></span> “No aplica” cuando corresponde</span>
+              <span class="badge"><span class="ico"></span> Enfoque startup</span>
+            </div>
+
+            <!-- SOLO 2 botones (no más) -->
+            <div class="hero-actions">
+              <button class="btn primary" data-open="modal-reportes">Ver ejemplo de reporte</button>
+              <a class="btn" href="#como-funciona">Cómo funciona</a>
+            </div>
           </div>
 
-          <div class="card reveal">
-            <p class="mini">Para founders</p>
-            <h3>Menos ruido. Más claridad.</h3>
-            <p>
-              Prioriza mejoras que aumentan confianza (clientes, partners y equipo). Ideal para
-              ventas B2B, due diligence y decisiones rápidas.
-            </p>
-            <button class="link" data-open="modal-priorizacion">
-              Cómo priorizamos <span style="opacity:.7">→</span>
-            </button>
-          </div>
-        </aside>
+          <aside class="side">
+            <div class="mini-card">
+              <p class="mini">Para clientes</p>
+              <h3>Reportes listos para compartir</h3>
+              <p>Resumen ejecutivo + findings con evidencia simple. Tu cliente entiende qué está bien, qué falta y qué hacer.</p>
+            </div>
+
+            <div class="mini-card">
+              <p class="mini">Para founders</p>
+              <h3>Menos ruido. Más claridad.</h3>
+              <p>Prioriza mejoras que aumentan confianza (clientes, partners y equipo). Ideal para ventas B2B y decisiones rápidas.</p>
+            </div>
+          </aside>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- Cómo funciona -->
+  <!-- CÓMO FUNCIONA -->
   <section id="como-funciona">
     <div class="container">
-      <div class="section-head reveal">
-        <div>
-          <h3>Cómo funciona</h3>
-          <p>Un flujo simple en 3 pasos. Sin overengineering. Sin “pantallazos” por todos lados.</p>
-        </div>
+      <div class="section-head">
+        <h3>Cómo funciona</h3>
+        <p>Un flujo simple en 3 pasos. Sin overengineering. Sin “pantallazos” por todos lados.</p>
       </div>
 
       <div class="grid-3">
-        <div class="step-card reveal" data-modal="modal-paso-1" role="button" tabindex="0" aria-label="Abrir detalle Paso 01">
+        <div class="step-card" data-modal="modal-paso-1" role="button" tabindex="0">
           <span class="step">Paso 01</span>
           <h4>Análisis inicial</h4>
           <p>Revisamos señales visibles: HTTPS/TLS, headers de seguridad y superficie expuesta.</p>
         </div>
 
-        <div class="step-card reveal" data-modal="modal-paso-2" role="button" tabindex="0" aria-label="Abrir detalle Paso 02">
+        <div class="step-card" data-modal="modal-paso-2" role="button" tabindex="0">
           <span class="step">Paso 02</span>
           <h4>Baseline confiable</h4>
           <p>Guardamos una referencia del “hoy” para comparar y explicar cambios después.</p>
         </div>
 
-        <div class="step-card reveal" data-modal="modal-paso-3" role="button" tabindex="0" aria-label="Abrir detalle Paso 03">
+        <div class="step-card" data-modal="modal-paso-3" role="button" tabindex="0">
           <span class="step">Paso 03</span>
           <h4>Cambios y reportes</h4>
           <p>Detectamos variaciones relevantes y las dejamos claras para decidir con confianza.</p>
@@ -450,35 +488,30 @@
     </div>
   </section>
 
-  <!-- Reportes -->
+  <!-- REPORTES -->
   <section id="reportes">
     <div class="container">
-      <div class="section-head reveal">
-        <div>
-          <h3>Reportes</h3>
-          <p>
-            Pensados para compartir con personas no técnicas. Si algo no aplica (por ejemplo, no hay login),
-            se marca explícito para no “castigar” el score.
-          </p>
-        </div>
+      <div class="section-head">
+        <h3>Reportes</h3>
+        <p>Hechos para personas no técnicas. Si algo no aplica (por ejemplo, no hay login), se marca explícito para no “castigar” el score.</p>
       </div>
 
       <div class="feature-grid">
-        <div class="feature reveal">
+        <div class="feature">
           <h4>Contenido del reporte</h4>
           <ul>
             <li><b>Resumen ejecutivo</b> (1 página): estado y decisiones recomendadas.</li>
-            <li><b>Findings</b> con evidencia: qué se detectó y por qué importa.</li>
-            <li><b>Acciones</b> con prioridad: quick wins vs cambios estructurales.</li>
+            <li><b>Findings con evidencia</b>: qué se detectó y por qué importa.</li>
+            <li><b>Acciones</b>: quick wins vs cambios estructurales.</li>
             <li><b>“No aplica”</b> cuando corresponde (login, pagos, DB expuesta, etc.).</li>
           </ul>
         </div>
 
-        <div class="feature reveal" id="incluye">
+        <div class="feature" id="incluye">
           <h4>Qué incluye (checks)</h4>
           <ul>
             <li>HTTPS/TLS: validez, vigencia y configuración visible.</li>
-            <li>Headers de seguridad (visión práctica, no “checklist vacío”).</li>
+            <li>Headers de seguridad (visión práctica).</li>
             <li>Superficie expuesta: endpoints, redirecciones, pistas comunes.</li>
             <li>Baseline + diff: cambios relevantes entre ejecuciones.</li>
           </ul>
@@ -499,52 +532,165 @@
     </div>
   </footer>
 
-  <!-- ===================== MODALES ===================== -->
-  <!-- ... Same modals as before ... -->
+  <!-- MODAL: EJEMPLO REPORTE -->
+  <div id="modal-reportes" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-label="Ejemplo de reporte">
+      <button class="modal-close" aria-label="Cerrar">✕</button>
+      <h3 class="modal-title">Ejemplo de reporte</h3>
+      <p class="modal-body">Lo que recibe tu cliente (sin jerga, con evidencia y acciones).</p>
+      <ul class="modal-list">
+        <li><b>Resumen ejecutivo</b>: estado + decisión recomendada.</li>
+        <li><b>Findings</b>: evidencia + impacto + prioridad.</li>
+        <li><b>Acciones</b>: quick wins y mejoras recomendadas.</li>
+        <li><b>No aplica</b>: si el componente no existe, se marca.</li>
+      </ul>
+      <div class="modal-actions">
+        <button class="btn" data-close>Cerrar</button>
+      </div>
+    </div>
+  </div>
 
-  <!-- ===================== JS ===================== -->
+  <!-- MODALES PASOS (CORTOS) -->
+  <div id="modal-paso-1" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-label="Paso 01">
+      <button class="modal-close" aria-label="Cerrar">✕</button>
+      <h3 class="modal-title">Paso 01 — Análisis inicial</h3>
+      <p class="modal-body">Señales visibles que un cliente puede verificar desde fuera.</p>
+      <ul class="modal-list">
+        <li>HTTPS/TLS (vigencia y configuración visible).</li>
+        <li>Headers de seguridad (protecciones base).</li>
+        <li>Superficie expuesta (rutas típicas, redirecciones).</li>
+      </ul>
+      <div class="modal-actions"><button class="btn" data-close>Listo</button></div>
+    </div>
+  </div>
+
+  <div id="modal-paso-2" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-label="Paso 02">
+      <button class="modal-close" aria-label="Cerrar">✕</button>
+      <h3 class="modal-title">Paso 02 — Baseline confiable</h3>
+      <p class="modal-body">Guardamos el “hoy” para explicar cambios con evidencia.</p>
+      <ul class="modal-list">
+        <li>Baseline por dominio.</li>
+        <li>Comparación entre ejecuciones.</li>
+        <li>Historial simple para compartir.</li>
+      </ul>
+      <div class="modal-actions"><button class="btn" data-close>Listo</button></div>
+    </div>
+  </div>
+
+  <div id="modal-paso-3" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-label="Paso 03">
+      <button class="modal-close" aria-label="Cerrar">✕</button>
+      <h3 class="modal-title">Paso 03 — Cambios y reportes</h3>
+      <p class="modal-body">Variaciones relevantes, impacto y acciones claras.</p>
+      <ul class="modal-list">
+        <li>Diferencias vs baseline.</li>
+        <li>Prioridad por impacto/urgencia.</li>
+        <li>Reporte final listo para compartir.</li>
+      </ul>
+      <div class="modal-actions"><button class="btn" data-close>Listo</button></div>
+    </div>
+  </div>
+
+  <!-- LEGAL -->
+  <div id="modal-legal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-label="Aviso">
+      <button class="modal-close" aria-label="Cerrar">✕</button>
+      <h3 class="modal-title">Aviso</h3>
+      <p class="modal-body">
+        Observo analiza señales visibles (externas) y genera reportes de evidencia. No reemplaza pentesting ni auditorías completas,
+        pero ayuda a mejorar postura y comunicación de seguridad.
+      </p>
+      <div class="modal-actions"><button class="btn" data-close>Ok</button></div>
+    </div>
+  </div>
+
   <script>
     // Year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Modal helpers
+    // ===== Modals: open/close (X, click fuera, ESC) =====
     let lastActive = null;
 
-    function openModal(modal) {
-      if (!modal) return;
+    function openModal(modal){
+      if(!modal) return;
       lastActive = document.activeElement;
       modal.classList.add("active");
-      modal.setAttribute("aria-hidden", "false");
-
-      // focus first close button for usability
-      const closeBtn = modal.querySelector(".modal-close");
-      if (closeBtn) closeBtn.focus();
+      modal.setAttribute("aria-hidden","false");
       document.body.style.overflow = "hidden";
+      const btn = modal.querySelector(".modal-close");
+      if(btn) btn.focus();
     }
-
-    function closeModal(modal) {
-      if (!modal) return;
+    function closeModal(modal){
+      if(!modal) return;
       modal.classList.remove("active");
-      modal.setAttribute("aria-hidden", "true");
+      modal.setAttribute("aria-hidden","true");
       document.body.style.overflow = "";
-      if (lastActive && typeof lastActive.focus === "function") lastActive.focus();
+      if(lastActive && typeof lastActive.focus === "function") lastActive.focus();
     }
 
-    // Open buttons
-    document.querySelectorAll("[data-open]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const id = btn.getAttribute("data-open");
-        openModal(document.getElementById(id));
+    document.querySelectorAll("[data-open]").forEach(el=>{
+      el.addEventListener("click", ()=>{
+        openModal(document.getElementById(el.getAttribute("data-open")));
       });
     });
 
-    // ESC closes top-most active modal
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
+    // Step cards open + Enter/Space
+    document.querySelectorAll(".step-card").forEach(card=>{
+      const go = ()=> openModal(document.getElementById(card.dataset.modal));
+      card.addEventListener("click", go);
+      card.addEventListener("keydown", (e)=>{
+        if(e.key==="Enter" || e.key===" "){
+          e.preventDefault(); go();
+        }
+      });
+    });
+
+    document.addEventListener("click", (e)=>{
+      if(e.target.matches(".modal-close")) return closeModal(e.target.closest(".modal"));
+      if(e.target.matches("[data-close]")) return closeModal(e.target.closest(".modal"));
+      if(e.target.classList.contains("modal")) return closeModal(e.target);
+    });
+
+    document.addEventListener("keydown", (e)=>{
+      if(e.key==="Escape"){
         const active = document.querySelector(".modal.active");
-        if (active) closeModal(active);
+        if(active) closeModal(active);
       }
+    });
+
+    // ===== Hero eye follows pointer (SOLO dentro del hero) =====
+    const hero = document.getElementById("heroArea");
+    const pupil = document.getElementById("pupil");
+    const eyeWrap = document.getElementById("heroEye");
+
+    function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+    hero.addEventListener("mousemove", (e)=>{
+      const r = hero.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width;   // 0..1
+      const y = (e.clientY - r.top)  / r.height;  // 0..1
+
+      // pupil micro-move
+      const px = (x - 0.5) * 10;   // -5..5 aprox
+      const py = (y - 0.5) * 10;
+
+      pupil.style.setProperty("--px", clamp(px, -6, 6) + "px");
+      pupil.style.setProperty("--py", clamp(py, -5, 5) + "px");
+
+      // move whole badge slightly (premium parallax)
+      const tx = (x - 0.5) * 14;
+      const ty = (y - 0.5) * 14;
+      eyeWrap.style.transform = `translate(${tx}px, ${ty}px)`;
+    });
+
+    hero.addEventListener("mouseleave", ()=>{
+      pupil.style.setProperty("--px", "0px");
+      pupil.style.setProperty("--py", "0px");
+      eyeWrap.style.transform = "translate(0,0)";
     });
   </script>
 </body>
 </html>
+
