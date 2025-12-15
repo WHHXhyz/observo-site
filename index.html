@@ -1,461 +1,410 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Observo — Seguridad que se ve</title>
   <meta name="description" content="Observo revisa tu superficie de ataque, guarda un baseline y detecta cambios. Reportes claros para clientes, aliados e inversionistas." />
 
-  <!-- Tailwind CDN (recuerda: tu CSP ya debe permitir https://cdn.tailwindcss.com) -->
+  <!-- Tailwind CDN (rápido para landing). Si ya compilas Tailwind, puedes quitar esto. -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
     html { scroll-behavior: smooth; }
     ::selection { background: rgba(99,102,241,0.35); }
 
+    /* Background aurora */
     .bg-aurora {
       background:
-        radial-gradient(900px 450px at 10% 10%, rgba(99,102,241,.20), transparent 55%),
-        radial-gradient(700px 380px at 85% 15%, rgba(56,189,248,.18), transparent 55%),
-        radial-gradient(800px 420px at 40% 95%, rgba(236,72,153,.14), transparent 60%),
-        linear-gradient(180deg, #070A12 0%, #0B1020 60%, #070A12 100%);
+        radial-gradient(900px 450px at 20% 10%, rgba(56,189,248,.18), transparent 60%),
+        radial-gradient(900px 450px at 80% 30%, rgba(168,85,247,.18), transparent 60%),
+        radial-gradient(700px 400px at 50% 90%, rgba(34,197,94,.10), transparent 55%),
+        linear-gradient(180deg, #020617 0%, #050816 55%, #020617 100%);
     }
 
+    /* Glass */
     .glass {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .soft-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent);
     }
 
-    .soft-divider{
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent);
-      height:1px;
+    /* Buttons */
+    .btn {
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
     }
+    .btn:hover { transform: translateY(-1px) scale(1.01); }
+    .btn:active { transform: translateY(0px) scale(0.99); }
 
-    /* Trust badges */
-    .trust-wrap{ margin-top:18px; max-width:560px; }
-    .trust-label{
-      font-size:12px;
-      color: rgba(255,255,255,.55);
-      margin-bottom:8px;
-      letter-spacing:.3px;
-    }
-    .trust-badges{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 14px;
-      border-radius:999px;
-      font-size:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      transition: transform .15s ease, box-shadow .15s ease;
-      white-space: nowrap;
-    }
-    .badge small{
-      font-size:12px;
-      color: rgba(255,255,255,.55);
-      padding-left:6px;
-      border-left:1px solid rgba(255,255,255,.15);
-    }
-    .badge:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    /* Shield icon wrapper */
+    .shield-wrap {
+      width: 112px;
+      height: 112px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 1rem;
+      background:
+        radial-gradient(circle at top, rgba(15,23,42,.9), rgba(2,6,23,.95));
+      box-shadow:
+        0 0 30px rgba(99,102,241,.32),
+        inset 0 0 0 1px rgba(255,255,255,.08);
     }
   </style>
 </head>
 
-<body class="bg-aurora text-white antialiased">
-<a id="top"></a>
-
-<!-- Header -->
-<header class="sticky top-0 z-50">
-  <div class="mx-auto max-w-6xl px-4 pt-4">
-    <div class="glass rounded-2xl px-4 py-3 flex items-center justify-between">
-      <a href="#top" class="flex items-center gap-2">
-        <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 via-sky-400 to-fuchsia-500"></div>
-        <span class="font-semibold tracking-tight">Observo</span>
-      </a>
-
-      <nav class="hidden md:flex gap-6 text-sm text-white/70">
-        <a href="#como" class="hover:text-white transition">Cómo funciona</a>
-        <a href="#incluye" class="hover:text-white transition">Qué incluye</a>
-        <a href="#reportes" class="hover:text-white transition">Reportes</a>
-        <a href="#pricing" class="hover:text-white transition">Precios</a>
-        <a href="#faq" class="hover:text-white transition">FAQ</a>
-      </nav>
-
-      <div class="hidden md:flex items-center gap-2">
-        <a href="#pricing" class="px-4 py-2 rounded-xl glass text-white/80 hover:text-white">Ver planes</a>
-        <a href="#cta" class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-fuchsia-500 font-medium hover:opacity-90">Pedir demo</a>
-      </div>
-    </div>
-  </div>
-</header>
-
-<!-- HERO -->
-<main class="mx-auto max-w-6xl px-4 pt-14 pb-14">
-  <section class="grid md:grid-cols-2 gap-10 items-center">
-
-    <!-- LEFT -->
-    <div>
-      <p class="inline-flex items-center gap-2 text-xs font-medium text-white/70 glass rounded-full px-3 py-1">
-        <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
-        Confianza visible para startups • monitoreo continuo
-      </p>
-
-      <h1 class="mt-4 text-4xl md:text-5xl font-semibold leading-tight tracking-tight">
-        Seguridad que se
-        <span class="bg-gradient-to-r from-sky-400 via-indigo-400 to-fuchsia-400 bg-clip-text text-transparent">ve</span>.
-        <br />
-        Reportes que convierten dudas en confianza.
-      </h1>
-
-      <p class="mt-4 text-white/75 text-lg leading-relaxed">
-        <b>Observo</b> revisa tu superficie de ataque, guarda un <b>baseline</b> y detecta cambios.
-        Entrega resultados claros para clientes, aliados e inversionistas.
-      </p>
-
-      <!-- Trust -->
-      <div class="trust-wrap">
-        <div class="trust-label">Seguridad del sitio</div>
-        <div class="trust-badges">
-          <span class="badge" title="Forzamos HTTPS siempre">
-            🔒 HTTPS siempre activo <small>HSTS</small>
-          </span>
-          <span class="badge" title="Protección contra scripts maliciosos">
-            🧱 Protección anti-XSS <small>CSP</small>
-          </span>
-          <span class="badge" title="Previene clickjacking">
-            🪟 Anti-clickjacking <small>Headers</small>
-          </span>
-        </div>
-      </div>
-
-      <div class="mt-7 flex flex-wrap gap-4">
-        <a href="#cta" class="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-fuchsia-500 font-medium hover:opacity-90">
-          Quiero un reporte de ejemplo
+<body class="bg-aurora text-white">
+  <!-- NAV -->
+  <header class="sticky top-0 z-50">
+    <div class="mx-auto max-w-6xl px-4">
+      <div class="mt-4 glass rounded-2xl px-4 py-3 flex items-center justify-between">
+        <a href="#top" class="flex items-center gap-3">
+          <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500"></div>
+          <span class="font-semibold tracking-tight">Observo</span>
         </a>
-        <a href="#como" class="px-6 py-3 rounded-xl glass text-white/80 hover:text-white">
-          Ver cómo funciona
-        </a>
-      </div>
 
-      <div class="mt-5 flex flex-wrap gap-6 text-sm text-white/65">
-        <span class="inline-flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-white/25"></span>Rápido y automatizado</span>
-        <span class="inline-flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-white/25"></span>Reporte listo para enviar</span>
-        <span class="inline-flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-white/25"></span>Enfoque “trust-first”</span>
-      </div>
-    </div>
+        <nav class="hidden md:flex items-center gap-6 text-sm text-white/75">
+          <a class="hover:text-white" href="#como">Cómo funciona</a>
+          <a class="hover:text-white" href="#incluye">Qué incluye</a>
+          <a class="hover:text-white" href="#reportes">Reportes</a>
+          <a class="hover:text-white" href="#precios">Precios</a>
+          <a class="hover:text-white" href="#faq">FAQ</a>
+        </nav>
 
-    <!-- RIGHT -->
-    <div class="glass rounded-2xl p-10 flex flex-col items-center text-center">
-      <div class="h-28 w-28 rounded-2xl bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500 flex items-center justify-center shadow-lg">
-        <div class="h-7 w-7 rounded-full bg-emerald-400"></div>
-      </div>
-
-      <h3 class="mt-6 text-xl font-semibold">Observo activo</h3>
-      <p class="mt-2 text-white/70 text-sm max-w-xs">
-        Monitoreo continuo de tu superficie de ataque, con cambios detectables y trazables.
-      </p>
-
-      <div class="mt-6 grid grid-cols-3 gap-3 text-xs text-white/70">
-        <div class="glass rounded-xl px-3 py-2">Riesgo<br><b class="text-white">Bajo–Medio</b></div>
-        <div class="glass rounded-xl px-3 py-2">Cambios<br><b class="text-white">3 detectados</b></div>
-        <div class="glass rounded-xl px-3 py-2">Acción<br><b class="text-white">Hoy</b></div>
-      </div>
-
-      <div class="mt-6 soft-divider w-full"></div>
-
-      <p class="mt-4 text-xs text-white/60 max-w-sm">
-        Ideal para vender con confianza: muestra evidencia simple, sin jerga técnica innecesaria.
-      </p>
-    </div>
-
-  </section>
-</main>
-
-<!-- Cómo funciona -->
-<section id="como" class="mx-auto max-w-6xl px-4 pb-14">
-  <div class="glass rounded-2xl p-8 md:p-10">
-    <div class="flex items-start justify-between gap-6 flex-wrap">
-      <div>
-        <h2 class="text-2xl md:text-3xl font-semibold">Cómo funciona</h2>
-        <p class="mt-2 text-white/70 max-w-2xl">
-          Enfocado en visibilidad + cambios: lo que hoy está bien, mañana puede cambiar.
-        </p>
-      </div>
-      <a href="#cta" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 transition text-sm">Ver demo</a>
-    </div>
-
-    <div class="mt-8 grid md:grid-cols-3 gap-4">
-      <div class="glass rounded-2xl p-6">
-        <div class="text-sm text-white/60">Paso 1</div>
-        <div class="mt-2 font-semibold text-lg">Escaneo inicial</div>
-        <p class="mt-2 text-white/70 text-sm">
-          Mapea tu presencia pública y detecta señales de riesgo sin invadir tu infraestructura.
-        </p>
-      </div>
-
-      <div class="glass rounded-2xl p-6">
-        <div class="text-sm text-white/60">Paso 2</div>
-        <div class="mt-2 font-semibold text-lg">Baseline de confianza</div>
-        <p class="mt-2 text-white/70 text-sm">
-          Guardamos un “estado esperado”. Si algo cambia, lo verás (y podrás explicarlo).
-        </p>
-      </div>
-
-      <div class="glass rounded-2xl p-6">
-        <div class="text-sm text-white/60">Paso 3</div>
-        <div class="mt-2 font-semibold text-lg">Reporte listo para enviar</div>
-        <p class="mt-2 text-white/70 text-sm">
-          Entregamos un resumen claro: qué se encontró, qué importa y qué recomendamos.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Qué incluye -->
-<section id="incluye" class="mx-auto max-w-6xl px-4 pb-14">
-  <div class="grid md:grid-cols-2 gap-6">
-    <div class="glass rounded-2xl p-8">
-      <h2 class="text-2xl md:text-3xl font-semibold">Qué incluye</h2>
-      <p class="mt-2 text-white/70">
-        Señales concretas que elevan confianza sin “asustar” con tecnicismos.
-      </p>
-
-      <div class="mt-6 grid gap-3 text-sm text-white/75">
-        <div class="glass rounded-xl p-4">✅ Estado de TLS/HTTPS y políticas de navegador</div>
-        <div class="glass rounded-xl p-4">✅ Cambios en superficie pública (secciones, recursos, rutas visibles)</div>
-        <div class="glass rounded-xl p-4">✅ Evidencias reproducibles (para tu equipo o tu cliente)</div>
-        <div class="glass rounded-xl p-4">✅ Recomendaciones priorizadas (rápidas y accionables)</div>
-      </div>
-    </div>
-
-    <div class="glass rounded-2xl p-8">
-      <h3 class="text-xl font-semibold">¿Para quién es?</h3>
-      <p class="mt-2 text-white/70">
-        Para equipos pequeños que necesitan señales claras de seguridad para vender mejor.
-      </p>
-
-      <div class="mt-6 flex flex-wrap gap-2">
-        <span class="px-3 py-2 rounded-xl glass text-sm text-white/75">Startups</span>
-        <span class="px-3 py-2 rounded-xl glass text-sm text-white/75">Agencias</span>
-        <span class="px-3 py-2 rounded-xl glass text-sm text-white/75">E-commerce</span>
-        <span class="px-3 py-2 rounded-xl glass text-sm text-white/75">SaaS</span>
-      </div>
-
-      <div class="mt-6 soft-divider w-full"></div>
-
-      <div class="mt-6">
-        <div class="text-sm text-white/60">Promesa Observo</div>
-        <div class="mt-2 text-white font-semibold">
-          “Si cambia algo importante, lo vas a saber. Y lo vas a poder explicar.”
+        <div class="flex items-center gap-3">
+          <a href="#precios" class="btn hidden sm:inline-flex px-4 py-2 rounded-xl glass text-sm text-white/90 hover:text-white">
+            Ver planes
+          </a>
+          <a href="#demo" class="btn inline-flex px-4 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
+            Pedir demo
+          </a>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </header>
 
-<!-- Reportes -->
-<section id="reportes" class="mx-auto max-w-6xl px-4 pb-14">
-  <div class="glass rounded-2xl p-8 md:p-10">
-    <h2 class="text-2xl md:text-3xl font-semibold">Reportes que se entienden</h2>
-    <p class="mt-2 text-white/70 max-w-2xl">
-      Diseñados para clientes no técnicos: claridad, evidencia y próximos pasos.
-    </p>
+  <main id="top" class="mx-auto max-w-6xl px-4">
+    <!-- HERO -->
+    <section class="pt-12 md:pt-16 pb-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        <!-- LEFT -->
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass text-xs text-white/80">
+            <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+            Confianza visible para startups • monitoreo continuo
+          </div>
 
-    <div class="mt-8 grid md:grid-cols-3 gap-4">
-      <div class="glass rounded-2xl p-6">
-        <div class="text-sm text-white/60">Resumen ejecutivo</div>
-        <div class="mt-2 font-semibold">Lo importante en 1 minuto</div>
-        <p class="mt-2 text-white/70 text-sm">
-          Riesgos clave, estado general y recomendaciones priorizadas.
+          <h1 class="mt-6 text-4xl md:text-5xl font-semibold leading-tight tracking-tight">
+            Seguridad que se <span class="bg-gradient-to-r from-sky-300 via-indigo-300 to-fuchsia-300 bg-clip-text text-transparent">ve</span>.<br/>
+            Reportes que convierten dudas en confianza.
+          </h1>
+
+          <p class="mt-5 text-white/75 text-base md:text-lg max-w-xl">
+            Observo revisa tu superficie de ataque, guarda un <b class="text-white">baseline</b> y detecta cambios.
+            Entrega resultados claros para clientes, aliados e inversionistas.
+          </p>
+
+          <!-- Badges -->
+          <div class="mt-7 flex flex-wrap gap-3 text-sm text-white/80">
+            <span class="glass rounded-full px-4 py-2 inline-flex items-center gap-2">
+              🔒 <b class="text-white">HTTPS</b> siempre activo <span class="text-white/50">/ HSTS</span>
+            </span>
+            <span class="glass rounded-full px-4 py-2 inline-flex items-center gap-2">
+              🧠 <b class="text-white">Anti-XSS</b> <span class="text-white/50">/ CSP</span>
+            </span>
+            <span class="glass rounded-full px-4 py-2 inline-flex items-center gap-2">
+              🧱 <b class="text-white">Anti-clickjacking</b> <span class="text-white/50">/ Headers</span>
+            </span>
+          </div>
+
+          <!-- CTA -->
+          <div class="mt-8 flex flex-col sm:flex-row gap-3">
+            <a href="#reportes" class="btn inline-flex justify-center px-5 py-3 rounded-2xl font-semibold bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
+              Quiero un reporte de ejemplo
+            </a>
+            <a href="#como" class="btn inline-flex justify-center px-5 py-3 rounded-2xl glass font-semibold text-white/90 hover:text-white">
+              Ver cómo funciona
+            </a>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-5 text-xs text-white/60">
+            <span>• Rápido y automatizado</span>
+            <span>• Reporte listo para enviar</span>
+            <span>• Enfoque “trust-first”</span>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="glass rounded-2xl p-10 flex flex-col items-center text-center">
+          <!-- ICON: Shield + Eye -->
+          <div class="shield-wrap">
+            <svg
+              id="shieldEye"
+              width="140"
+              height="160"
+              viewBox="0 0 140 160"
+              xmlns="http://www.w3.org/2000/svg"
+              role="img"
+              aria-label="Observo Shield Eye"
+            >
+              <!-- Shield -->
+              <path
+                d="M70 5
+                  C95 15 120 15 120 15
+                  V75
+                  C120 110 90 135 70 150
+                  C50 135 20 110 20 75
+                  V15
+                  C20 15 45 15 70 5Z"
+                fill="url(#grad)"
+              />
+              <!-- Subtle inner border -->
+              <path
+                d="M70 10
+                  C93 19 115 19 115 19
+                  V75
+                  C115 107 88 130 70 143
+                  C52 130 25 107 25 75
+                  V19
+                  C25 19 47 19 70 10Z"
+                fill="rgba(255,255,255,0.05)"
+              />
+
+              <!-- Eye socket -->
+              <ellipse cx="70" cy="70" rx="24" ry="15" fill="#0B0F1A" opacity="0.95" />
+              <ellipse cx="70" cy="70" rx="24" ry="15" fill="rgba(255,255,255,0.06)" />
+
+              <!-- Iris -->
+              <circle cx="70" cy="70" r="9" fill="rgba(34,197,94,0.12)" />
+              <circle cx="70" cy="70" r="7" fill="rgba(34,197,94,0.18)" />
+
+              <!-- Pupil (moves) -->
+              <circle id="pupil" cx="70" cy="70" r="5.8" fill="#22c55e" />
+
+              <!-- Small highlight -->
+              <circle id="glint" cx="66.5" cy="66.5" r="1.6" fill="rgba(255,255,255,0.75)" />
+
+              <defs>
+                <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#38bdf8"/>
+                  <stop offset="55%" stop-color="#6366f1"/>
+                  <stop offset="100%" stop-color="#a855f7"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+
+          <h3 class="mt-6 text-xl font-semibold">Observo activo</h3>
+          <p class="mt-2 text-white/70 text-sm max-w-xs">
+            Monitoreo continuo de tu superficie de ataque, con cambios detectables y trazables.
+          </p>
+
+          <div class="mt-6 grid grid-cols-3 gap-3 text-xs text-white/70">
+            <div class="glass rounded-xl px-3 py-2">Riesgo<br><b class="text-white">Bajo–Medio</b></div>
+            <div class="glass rounded-xl px-3 py-2">Cambios<br><b class="text-white">3 detectados</b></div>
+            <div class="glass rounded-xl px-3 py-2">Acción<br><b class="text-white">Hoy</b></div>
+          </div>
+
+          <div class="mt-6 soft-divider w-full"></div>
+
+          <p class="mt-4 text-xs text-white/60 max-w-sm">
+            Ideal para vender con confianza: muestra evidencia simple, sin jerga técnica innecesaria.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMO FUNCIONA -->
+    <section id="como" class="py-10">
+      <div class="glass rounded-2xl p-10">
+        <div class="flex items-center justify-between gap-6 flex-wrap">
+          <div>
+            <h2 class="text-2xl md:text-3xl font-semibold">Cómo funciona</h2>
+            <p class="mt-2 text-white/70">Enfocado en visibilidad + cambios: lo que hoy está bien, mañana puede cambiar.</p>
+          </div>
+          <a href="#demo" class="btn inline-flex px-4 py-2 rounded-xl glass text-sm text-white/90 hover:text-white">Ver demo</a>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="glass rounded-2xl p-6">
+            <div class="text-sm text-white/70">Paso 1</div>
+            <div class="mt-2 text-lg font-semibold">Escaneo rápido</div>
+            <p class="mt-2 text-white/70 text-sm">Revisamos headers, HTTPS/TLS y señales base de exposición. Sin complicarte.</p>
+          </div>
+          <div class="glass rounded-2xl p-6">
+            <div class="text-sm text-white/70">Paso 2</div>
+            <div class="mt-2 text-lg font-semibold">Baseline</div>
+            <p class="mt-2 text-white/70 text-sm">Guardamos “cómo se ve hoy” para comparar. Eso convierte seguridad en evidencia.</p>
+          </div>
+          <div class="glass rounded-2xl p-6">
+            <div class="text-sm text-white/70">Paso 3</div>
+            <div class="mt-2 text-lg font-semibold">Cambios & reportes</div>
+            <p class="mt-2 text-white/70 text-sm">Detectamos variaciones y entregamos reportes claros, listos para enviar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INCLUYE -->
+    <section id="incluye" class="py-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="glass rounded-2xl p-10">
+          <h2 class="text-2xl md:text-3xl font-semibold">Qué incluye</h2>
+          <p class="mt-2 text-white/70">Lo esencial para “seguridad visible” sin ruido.</p>
+
+          <ul class="mt-6 space-y-3 text-white/75">
+            <li class="glass rounded-xl px-4 py-3">✅ Verificación HTTPS/TLS + expiración</li>
+            <li class="glass rounded-xl px-4 py-3">✅ Revisión de headers (CSP, HSTS, XFO, etc.)</li>
+            <li class="glass rounded-xl px-4 py-3">✅ Baseline + comparación (diff) de cambios</li>
+            <li class="glass rounded-xl px-4 py-3">✅ Reporte “cliente-friendly” y exportable</li>
+          </ul>
+        </div>
+
+        <div class="glass rounded-2xl p-10" id="reportes">
+          <h2 class="text-2xl md:text-3xl font-semibold">Reportes</h2>
+          <p class="mt-2 text-white/70">Pensados para que un cliente entienda y confíe, sin jerga innecesaria.</p>
+
+          <div class="mt-6 grid grid-cols-1 gap-4">
+            <div class="glass rounded-2xl p-5">
+              <div class="font-semibold">Resumen ejecutivo</div>
+              <div class="mt-1 text-sm text-white/70">Qué está bien, qué cambió, y qué acción conviene.</div>
+            </div>
+            <div class="glass rounded-2xl p-5">
+              <div class="font-semibold">Evidencia simple</div>
+              <div class="mt-1 text-sm text-white/70">Capturas / checks y explicación humana.</div>
+            </div>
+            <div class="glass rounded-2xl p-5">
+              <div class="font-semibold">Historial de cambios</div>
+              <div class="mt-1 text-sm text-white/70">Lo que hoy fue seguro, mañana puede degradarse: queda trazado.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRECIOS -->
+    <section id="precios" class="py-10">
+      <div class="glass rounded-2xl p-10">
+        <h2 class="text-2xl md:text-3xl font-semibold">Precios</h2>
+        <p class="mt-2 text-white/70">USD • simple y transparente.</p>
+
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="glass rounded-2xl p-6">
+            <div class="text-sm text-white/70">Starter</div>
+            <div class="mt-2 text-3xl font-semibold">$29<span class="text-base text-white/60">/mes</span></div>
+            <ul class="mt-4 space-y-2 text-sm text-white/75">
+              <li>• Escaneo mensual</li>
+              <li>• Reporte básico</li>
+              <li>• Baseline simple</li>
+            </ul>
+          </div>
+
+          <div class="glass rounded-2xl p-6 border border-white/15">
+            <div class="inline-flex text-xs px-3 py-1 rounded-full bg-white/10">Más popular</div>
+            <div class="mt-2 text-sm text-white/70">Growth</div>
+            <div class="mt-2 text-3xl font-semibold">$79<span class="text-base text-white/60">/mes</span></div>
+            <ul class="mt-4 space-y-2 text-sm text-white/75">
+              <li>• Escaneo semanal</li>
+              <li>• Baseline + diff</li>
+              <li>• Reporte para clientes</li>
+            </ul>
+          </div>
+
+          <div class="glass rounded-2xl p-6">
+            <div class="text-sm text-white/70">Enterprise</div>
+            <div class="mt-2 text-3xl font-semibold">$199<span class="text-base text-white/60">/mes</span></div>
+            <ul class="mt-4 space-y-2 text-sm text-white/75">
+              <li>• Monitoreo continuo</li>
+              <li>• Alertas y trazabilidad</li>
+              <li>• Reportes personalizados</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-8 flex flex-col sm:flex-row gap-3" id="demo">
+          <a href="mailto:ventas@observo.app?subject=Demo%20Observo&body=Hola%2C%20quiero%20una%20demo%20de%20Observo%20para%20mi%20sitio%3A%20"
+             class="btn inline-flex justify-center px-5 py-3 rounded-2xl font-semibold bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
+            Pedir demo por email
+          </a>
+          <a href="#faq" class="btn inline-flex justify-center px-5 py-3 rounded-2xl glass font-semibold text-white/90 hover:text-white">
+            Preguntas frecuentes
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-10 pb-20">
+      <div class="glass rounded-2xl p-10">
+        <h2 class="text-2xl md:text-3xl font-semibold">FAQ</h2>
+
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="glass rounded-2xl p-6">
+            <div class="font-semibold">¿Esto reemplaza un pentest?</div>
+            <p class="mt-2 text-sm text-white/70">No. Observo es monitoreo y evidencia continua. Complementa auditorías y pentests.</p>
+          </div>
+          <div class="glass rounded-2xl p-6">
+            <div class="font-semibold">¿Qué significa “baseline”?</div>
+            <p class="mt-2 text-sm text-white/70">Es una foto del estado de seguridad “hoy” para detectar cambios con el tiempo.</p>
+          </div>
+        </div>
+
+        <div class="mt-8 soft-divider"></div>
+        <p class="mt-6 text-xs text-white/50">
+          © <span id="y"></span> Observo. Seguridad que se ve.
         </p>
       </div>
+    </section>
+  </main>
 
-      <div class="glass rounded-2xl p-6">
-        <div class="text-sm text-white/60">Evidencia</div>
-        <div class="mt-2 font-semibold">Sin discusión</div>
-        <p class="mt-2 text-white/70 text-sm">
-          Datos reproducibles para respaldar lo que se afirma, sin humo.
-        </p>
-      </div>
+  <!-- JS: Eye tracking -->
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
 
-      <div class="glass rounded-2xl p-6">
-        <div class="text-sm text-white/60">Acción</div>
-        <div class="mt-2 font-semibold">Checklist de mejoras</div>
-        <p class="mt-2 text-white/70 text-sm">
-          Qué hacer ahora, qué programar y qué monitorear.
-        </p>
-      </div>
-    </div>
+    const shield = document.getElementById("shieldEye");
+    const pupil = document.getElementById("pupil");
+    const glint = document.getElementById("glint");
 
-    <div class="mt-8 flex flex-wrap gap-4">
-      <a href="#cta" class="px-5 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-fuchsia-500 font-medium hover:opacity-90">
-        Pedir un reporte de ejemplo
-      </a>
-      <a href="#pricing" class="px-5 py-3 rounded-xl glass text-white/80 hover:text-white">
-        Ver planes
-      </a>
-    </div>
-  </div>
-</section>
+    if (shield && pupil) {
+      shield.addEventListener("mousemove", (e) => {
+        const rect = shield.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
 
-<!-- Pricing -->
-<section id="pricing" class="mx-auto max-w-6xl px-4 pb-14">
-  <div class="flex items-end justify-between gap-6 flex-wrap">
-    <div>
-      <h2 class="text-2xl md:text-3xl font-semibold">Precios simples</h2>
-      <p class="mt-2 text-white/70 max-w-2xl">
-        Empieza liviano. Sube cuando tengas más clientes o más dominios.
-      </p>
-    </div>
-    <div class="text-sm text-white/60">*Precios referenciales (ajustables)</div>
-  </div>
+        const dx = e.clientX - cx;
+        const dy = e.clientY - cy;
 
-  <div class="mt-8 grid md:grid-cols-3 gap-4">
-    <!-- Starter -->
-    <div class="glass rounded-2xl p-7">
-      <div class="text-sm text-white/60">Starter</div>
-      <div class="mt-2 text-xl font-semibold">Para comenzar</div>
-      <div class="mt-4 text-4xl font-semibold">$19<span class="text-base text-white/60">/mes</span></div>
-      <ul class="mt-5 space-y-3 text-sm text-white/75">
-        <li>✅ 1 dominio</li>
-        <li>✅ Escaneo + baseline</li>
-        <li>✅ Reporte PDF/HTML</li>
-        <li>✅ Recomendaciones priorizadas</li>
-      </ul>
-      <a href="#cta" class="mt-6 block text-center px-5 py-3 rounded-xl glass hover:bg-white/10 transition">
-        Elegir Starter
-      </a>
-    </div>
+        const max = 6;
+        const angle = Math.atan2(dy, dx);
+        const dist = Math.min(Math.sqrt(dx*dx + dy*dy), max);
 
-    <!-- Pro -->
-    <div class="glass rounded-2xl p-7 border border-white/15">
-      <div class="inline-flex items-center gap-2 text-xs font-medium text-white/80 rounded-full px-3 py-1 bg-white/10">
-        ⭐ Recomendado
-      </div>
-      <div class="mt-3 text-sm text-white/60">Pro</div>
-      <div class="mt-2 text-xl font-semibold">Para vender con confianza</div>
-      <div class="mt-4 text-4xl font-semibold">$49<span class="text-base text-white/60">/mes</span></div>
-      <ul class="mt-5 space-y-3 text-sm text-white/75">
-        <li>✅ 3 dominios</li>
-        <li>✅ Monitoreo de cambios</li>
-        <li>✅ Reportes comparativos</li>
-        <li>✅ Soporte por email</li>
-      </ul>
-      <a href="#cta" class="mt-6 block text-center px-5 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-fuchsia-500 font-medium hover:opacity-90">
-        Elegir Pro
-      </a>
-    </div>
+        const px = 70 + Math.cos(angle) * dist;
+        const py = 70 + Math.sin(angle) * dist;
 
-    <!-- Business -->
-    <div class="glass rounded-2xl p-7">
-      <div class="text-sm text-white/60">Business</div>
-      <div class="mt-2 text-xl font-semibold">Para agencias / multi-cliente</div>
-      <div class="mt-4 text-4xl font-semibold">$99<span class="text-base text-white/60">/mes</span></div>
-      <ul class="mt-5 space-y-3 text-sm text-white/75">
-        <li>✅ 10 dominios</li>
-        <li>✅ Reportes por cliente</li>
-        <li>✅ SLA conversable</li>
-        <li>✅ Prioridad de soporte</li>
-      </ul>
-      <a href="#cta" class="mt-6 block text-center px-5 py-3 rounded-xl glass hover:bg-white/10 transition">
-        Hablar por Business
-      </a>
-    </div>
-  </div>
-</section>
+        pupil.setAttribute("cx", px);
+        pupil.setAttribute("cy", py);
 
-<!-- FAQ -->
-<section id="faq" class="mx-auto max-w-6xl px-4 pb-14">
-  <div class="glass rounded-2xl p-8 md:p-10">
-    <h2 class="text-2xl md:text-3xl font-semibold">FAQ</h2>
-    <div class="mt-6 grid md:grid-cols-2 gap-4">
-      <div class="glass rounded-2xl p-6">
-        <div class="font-semibold">¿Observo “hackea” mi sitio?</div>
-        <p class="mt-2 text-white/70 text-sm">
-          No. Observo trabaja sobre señales públicas y validaciones seguras. El objetivo es visibilidad y cambios.
-        </p>
-      </div>
-      <div class="glass rounded-2xl p-6">
-        <div class="font-semibold">¿Sirve si uso Vercel / Cloudflare / CDN?</div>
-        <p class="mt-2 text-white/70 text-sm">
-          Sí. Justamente ayuda a explicar postura de seguridad y políticas visibles para el navegador del cliente.
-        </p>
-      </div>
-      <div class="glass rounded-2xl p-6">
-        <div class="font-semibold">¿Qué recibo al final?</div>
-        <p class="mt-2 text-white/70 text-sm">
-          Un reporte claro (y compartible), con evidencias y recomendaciones. Ideal para enviar a clientes.
-        </p>
-      </div>
-      <div class="glass rounded-2xl p-6">
-        <div class="font-semibold">¿Puedo empezar sin pagar?</div>
-        <p class="mt-2 text-white/70 text-sm">
-          Podemos partir con un reporte de ejemplo para 1 dominio. Si te sirve, pasas a un plan.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
+        if (glint) {
+          glint.setAttribute("cx", (px - 3.5));
+          glint.setAttribute("cy", (py - 3.5));
+        }
+      });
 
-<!-- CTA -->
-<section id="cta" class="mx-auto max-w-6xl px-4 pb-20">
-  <div class="glass rounded-2xl p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-    <div>
-      <h2 class="text-2xl md:text-3xl font-semibold">¿Listo para vender con más confianza?</h2>
-      <p class="mt-2 text-white/70 max-w-2xl">
-        Pide un reporte de ejemplo y te mostramos cómo Observo deja evidencia clara para tus clientes.
-      </p>
-      <div class="mt-4 text-sm text-white/60">
-        Tip: usa <b>observosec.org</b> como sitio principal y suma más dominios cuando crezcas.
-      </div>
-    </div>
-
-    <div class="flex flex-col gap-3 w-full md:w-auto">
-      <a href="mailto:christianmora705@gmail.com?subject=Demo%20Observo&body=Hola%2C%20quiero%20un%20reporte%20de%20ejemplo%20para%3A%20%5Bdominio%5D"
-         class="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-fuchsia-500 font-medium hover:opacity-90 text-center">
-        Pedir demo por email
-      </a>
-      <a href="#pricing" class="px-6 py-3 rounded-xl glass text-white/80 hover:text-white text-center">
-        Ver planes
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer class="mx-auto max-w-6xl px-4 pb-10">
-  <div class="soft-divider w-full mb-6"></div>
-  <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-sm text-white/60">
-    <div class="flex items-center gap-2">
-      <div class="h-7 w-7 rounded-lg bg-gradient-to-br from-indigo-500 via-sky-400 to-fuchsia-500"></div>
-      <span>© <span id="year"></span> Observo. All rights reserved.</span>
-    </div>
-    <div class="flex gap-4">
-      <a class="hover:text-white" href="#top">Inicio</a>
-      <a class="hover:text-white" href="#pricing">Precios</a>
-      <a class="hover:text-white" href="#cta">Contacto</a>
-    </div>
-  </div>
-</footer>
-
-<script>
-  // tiny enhancement (allowed because your CSP now permits tailwindcdn; inline script might be blocked if script-src doesn't allow 'unsafe-inline')
-  // If your CSP blocks inline scripts, you can delete this and hardcode the year.
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
-
+      shield.addEventListener("mouseleave", () => {
+        pupil.setAttribute("cx", 70);
+        pupil.setAttribute("cy", 70);
+        if (glint) {
+          glint.setAttribute("cx", 66.5);
+          glint.setAttribute("cy", 66.5);
+        }
+      });
+    }
+  </script>
 </body>
 </html>
