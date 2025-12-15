@@ -363,48 +363,39 @@
     </section>
   </main>
 
-  <!-- JS: Eye tracking -->
-  <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
+<!-- JS: Eye tracking -->
+<script>
+  document.getElementById("y").textContent = new Date().getFullYear();
 
-    const shield = document.getElementById("shieldEye");
-    const pupil = document.getElementById("pupil");
-    const glint = document.getElementById("glint");
+  const shield = document.getElementById("shieldEye");
+  const pupil  = document.getElementById("pupil");
+  const glint  = document.getElementById("glint");
 
-    if (shield && pupil) {
-      shield.addEventListener("mousemove", (e) => {
-        const rect = shield.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
+  if (shield && pupil) {
+    document.addEventListener("mousemove", (e) => {
+      const rect = shield.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
 
-        const dx = e.clientX - cx;
-        const dy = e.clientY - cy;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
 
-        const max = 6;
-        const angle = Math.atan2(dy, dx);
-        const dist = Math.min(Math.sqrt(dx*dx + dy*dy), max);
+      const max = 6;
+      const angle = Math.atan2(dy, dx);
+      const dist = Math.min(Math.sqrt(dx*dx + dy*dy), max);
 
-        const px = 70 + Math.cos(angle) * dist;
-        const py = 70 + Math.sin(angle) * dist;
+      const px = 70 + Math.cos(angle) * dist;
+      const py = 70 + Math.sin(angle) * dist;
 
-        pupil.setAttribute("cx", px);
-        pupil.setAttribute("cy", py);
+      pupil.setAttribute("cx", px);
+      pupil.setAttribute("cy", py);
 
-        if (glint) {
-          glint.setAttribute("cx", (px - 3.5));
-          glint.setAttribute("cy", (py - 3.5));
-        }
-      });
-
-      shield.addEventListener("mouseleave", () => {
-        pupil.setAttribute("cx", 70);
-        pupil.setAttribute("cy", 70);
-        if (glint) {
-          glint.setAttribute("cx", 66.5);
-          glint.setAttribute("cy", 66.5);
-        }
-      });
-    }
-  </script>
+      if (glint) {
+        glint.setAttribute("cx", px - 3.5);
+        glint.setAttribute("cy", py - 3.5);
+      }
+    });
+  }
+</script>
 </body>
 </html>
