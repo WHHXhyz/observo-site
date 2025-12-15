@@ -322,24 +322,29 @@
 </div>
 
 
-                <div id="pop-baseline" class="popover glass rounded-2xl p-4 border border-white/10">
-                  <div class="flex items-start justify-between gap-4">
-                    <div>
-                      <div class="text-sm font-semibold">Baseline (foto del “hoy”)</div>
-                      <p class="mt-1 text-sm text-white/70">
-                        Guardamos una referencia del estado actual y luego comparamos para detectar cambios relevantes
-                        (configuración, headers, comportamientos visibles).
-                      </p>
-                      <ul class="mt-3 text-sm text-white/70 space-y-1">
-                        <li>• Detecta degradaciones con el tiempo.</li>
-                        <li>• Justifica cambios con evidencia.</li>
-                        <li>• Útil para cambios de equipo/infra.</li>
-                      </ul>
-                    </div>
-                    <button class="text-white/60 hover:text-white" data-close="pop-baseline" aria-label="Cerrar">✕</button>
-                  </div>
-                </div>
-              </div>
+<div id="pop-baseline" class="popover rounded-2xl border border-white/10">
+  <div class="glass p-4">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <div class="text-sm font-semibold">Baseline (foto del “hoy”)</div>
+        <p class="mt-1 text-sm text-white/70">
+          Guardamos una referencia del estado actual y luego comparamos para detectar cambios relevantes
+          (configuración, headers, comportamientos visibles).
+        </p>
+        <ul class="mt-3 text-sm text-white/70 space-y-1">
+          <li>• Detecta degradaciones con el tiempo.</li>
+          <li>• Justifica cambios con evidencia.</li>
+          <li>• Útil para cambios de equipo/infra.</li>
+        </ul>
+      </div>
+
+      <button class="text-white/60 hover:text-white"
+              data-close="pop-baseline"
+              aria-label="Cerrar">✕</button>
+    </div>
+  </div>
+</div>
+
 
               <!-- Reportes -->
               <div class="relative">
@@ -350,25 +355,29 @@
                   <div class="text-sm text-white/70">Para clientes.</div>
                 </button>
 
-                <div id="pop-reportes" class="popover glass rounded-2xl p-4 border border-white/10">
-                  <div class="flex items-start justify-between gap-4">
-                    <div>
-                      <div class="text-sm font-semibold">Reportes listos para compartir</div>
-                      <p class="mt-1 text-sm text-white/70">
-                        Entregamos un resumen ejecutivo y evidencia simple para que un cliente entienda
-                        “qué está bien”, “qué falta” y “qué hacer ahora”.
-                      </p>
-                      <ul class="mt-3 text-sm text-white/70 space-y-1">
-                        <li>• Resumen ejecutivo + findings.</li>
-                        <li>• Evidencia simple (checks).</li>
-                        <li>• Comunicación sin jerga.</li>
-                      </ul>
-                    </div>
-                    <button class="text-white/60 hover:text-white" data-close="pop-reportes" aria-label="Cerrar">✕</button>
-                  </div>
-                </div>
-              </div>
-             </div>
+ <div id="pop-reportes" class="popover rounded-2xl border border-white/10">
+  <div class="glass p-4">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <div class="text-sm font-semibold">Reportes listos para compartir</div>
+        <p class="mt-1 text-sm text-white/70">
+          Entregamos un resumen ejecutivo y evidencia simple para que un cliente entienda
+          “qué está bien”, “qué falta” y “qué hacer ahora”.
+        </p>
+        <ul class="mt-3 text-sm text-white/70 space-y-1">
+          <li>• Resumen ejecutivo + findings.</li>
+          <li>• Evidencia simple (checks).</li>
+          <li>• Comunicación sin jerga.</li>
+        </ul>
+      </div>
+
+      <button class="text-white/60 hover:text-white"
+              data-close="pop-reportes"
+              aria-label="Cerrar">✕</button>
+    </div>
+  </div>
+</div>
+</div>
 
             <!-- ✅ IMAGEN DEBAJO (UNA SOLA VEZ) -->
               <div class="mt-8">
