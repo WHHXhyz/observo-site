@@ -4,388 +4,458 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Observo — Seguridad que se ve</title>
+  <meta name="description" content="Observo revisa tu superficie de ataque, guarda un baseline y detecta cambios. Reportes claros para clientes, aliados e inversionistas." />
 
-  <!-- SEO básico -->
-  <meta name="description" content="Observo monitorea, observa y alerta sobre la seguridad de tu plataforma. Confianza real para startups y negocios digitales." />
-
-  <!-- Fuentes -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Tailwind CDN (recuerda: tu CSP ya debe permitir https://cdn.tailwindcss.com) -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    :root {
-      --bg: #0b0f1a;
-      --bg-soft: #12182a;
-      --primary: #3b82f6;
-      --primary-soft: rgba(59,130,246,0.15);
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --border: rgba(255,255,255,0.08);
-      --radius: 16px;
+    html { scroll-behavior: smooth; }
+    ::selection { background: rgba(99,102,241,0.35); }
+
+    .bg-aurora {
+      background:
+        radial-gradient(900px 450px at 10% 10%, rgba(99,102,241,.20), transparent 55%),
+        radial-gradient(700px 380px at 85% 15%, rgba(56,189,248,.18), transparent 55%),
+        radial-gradient(800px 420px at 40% 95%, rgba(236,72,153,.14), transparent 60%),
+        linear-gradient(180deg, #070A12 0%, #0B1020 60%, #070A12 100%);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    .glass {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: radial-gradient(1200px 600px at 20% -10%, rgba(59,130,246,0.15), transparent),
-                  radial-gradient(1000px 500px at 80% 0%, rgba(14,165,233,0.12), transparent),
-                  var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+    .soft-divider{
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent);
+      height:1px;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
+    /* Trust badges */
+    .trust-wrap{ margin-top:18px; max-width:560px; }
+    .trust-label{
+      font-size:12px;
+      color: rgba(255,255,255,.55);
+      margin-bottom:8px;
+      letter-spacing:.3px;
     }
-
-    /* ---------- Layout ---------- */
-
-    header {
-      padding: 28px 6%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    .trust-badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
     }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      font-weight: 800;
-      font-size: 1.25rem;
-    }
-
-    .logo-mark {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: linear-gradient(145deg, var(--primary), #0ea5e9);
-      display: grid;
-      place-items: center;
-      font-weight: 900;
-      color: #fff;
-      box-shadow: 0 0 25px rgba(59,130,246,0.6);
-    }
-
-    nav a {
-      margin-left: 28px;
-      font-weight: 500;
-      color: var(--muted);
-    }
-
-    nav a:hover {
-      color: var(--text);
-    }
-
-    /* ---------- Hero ---------- */
-
-    .hero {
-      padding: 90px 6% 80px;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 60px;
-      align-items: center;
-    }
-
-    .hero h1 {
-      font-size: clamp(2.4rem, 4vw, 3.5rem);
-      line-height: 1.1;
-      margin-bottom: 22px;
-    }
-
-    .hero p {
-      font-size: 1.1rem;
-      color: var(--muted);
-      max-width: 520px;
-      margin-bottom: 34px;
-    }
-
-    .cta {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 14px 22px;
-      border-radius: 999px;
-      font-weight: 600;
-      border: 1px solid var(--border);
-      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary), #0ea5e9);
-      color: #fff;
-      border: none;
-      box-shadow: 0 10px 40px rgba(59,130,246,0.35);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 60px rgba(59,130,246,0.55);
-    }
-
-    .btn-ghost:hover {
-      background: var(--primary-soft);
-    }
-
-    /* ---------- Hero Visual ---------- */
-
-    .hero-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform .15s ease, box-shadow .15s ease;
+      white-space: nowrap;
     }
-
-    .hero-card h3 {
-      margin-bottom: 16px;
-      font-size: 1.1rem;
+    .badge small{
+      font-size:12px;
+      color: rgba(255,255,255,.55);
+      padding-left:6px;
+      border-left:1px solid rgba(255,255,255,.15);
     }
-
-    .status {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 16px;
-      background: rgba(0,0,0,0.25);
-      border-radius: 12px;
-      margin-bottom: 12px;
-      border: 1px solid var(--border);
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #22c55e;
-      box-shadow: 0 0 10px #22c55e;
-      margin-right: 10px;
-    }
-
-    .status-left {
-      display: flex;
-      align-items: center;
-      font-size: 0.95rem;
-    }
-
-    /* ---------- Sections ---------- */
-
-    section {
-      padding: 90px 6%;
-    }
-
-    .section-title {
-      text-align: center;
-      max-width: 620px;
-      margin: 0 auto 60px;
-    }
-
-    .section-title h2 {
-      font-size: 2.2rem;
-      margin-bottom: 14px;
-    }
-
-    .section-title p {
-      color: var(--muted);
-    }
-
-    /* ---------- Features ---------- */
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 26px;
-    }
-
-    .card {
-      background: var(--bg-soft);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 26px;
-      transition: transform .25s ease, box-shadow .25s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-    }
-
-    .icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 12px;
-      background: var(--primary-soft);
-      display: grid;
-      place-items: center;
-      font-size: 1.3rem;
-      margin-bottom: 18px;
-    }
-
-    .card h3 {
-      margin-bottom: 10px;
-    }
-
-    .card p {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    /* ---------- Badges ---------- */
-
-    .badges {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 26px;
-    }
-
-    .badge {
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border);
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-
-    /* ---------- Footer ---------- */
-
-    footer {
-      padding: 50px 6%;
-      border-top: 1px solid var(--border);
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    /* ---------- Responsive ---------- */
-
-    @media (max-width: 900px) {
-      .hero {
-        grid-template-columns: 1fr;
-        padding-top: 60px;
-      }
+    .badge:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
     }
   </style>
 </head>
 
-<body>
+<body class="bg-aurora text-white antialiased">
+<a id="top"></a>
 
-  <!-- Header -->
-  <header>
-    <div class="logo">
-      <div class="logo-mark">O</div>
-      Observo
+<!-- Header -->
+<header class="sticky top-0 z-50">
+  <div class="mx-auto max-w-6xl px-4 pt-4">
+    <div class="glass rounded-2xl px-4 py-3 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-2">
+        <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 via-sky-400 to-fuchsia-500"></div>
+        <span class="font-semibold tracking-tight">Observo</span>
+      </a>
+
+      <nav class="hidden md:flex gap-6 text-sm text-white/70">
+        <a href="#como" class="hover:text-white transition">Cómo funciona</a>
+        <a href="#incluye" class="hover:text-white transition">Qué incluye</a>
+        <a href="#reportes" class="hover:text-white transition">Reportes</a>
+        <a href="#pricing" class="hover:text-white transition">Precios</a>
+        <a href="#faq" class="hover:text-white transition">FAQ</a>
+      </nav>
+
+      <div class="hidden md:flex items-center gap-2">
+        <a href="#pricing" class="px-4 py-2 rounded-xl glass text-white/80 hover:text-white">Ver planes</a>
+        <a href="#cta" class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-fuchsia-500 font-medium hover:opacity-90">Pedir demo</a>
+      </div>
     </div>
-    <nav>
-      <a href="#features">Qué hace</a>
-      <a href="#confianza">Confianza</a>
-      <a href="#contacto">Contacto</a>
-    </nav>
-  </header>
+  </div>
+</header>
 
-  <!-- Hero -->
-  <section class="hero">
+<!-- HERO -->
+<main class="mx-auto max-w-6xl px-4 pt-14 pb-14">
+  <section class="grid md:grid-cols-2 gap-10 items-center">
+
+    <!-- LEFT -->
     <div>
-      <h1>Seguridad que se ve.<br>Confianza que se siente.</h1>
-      <p>
-        Observo monitorea, analiza y alerta sobre la seguridad de tu plataforma.
-        Diseñado para startups que necesitan demostrar confianza real a sus clientes.
+      <p class="inline-flex items-center gap-2 text-xs font-medium text-white/70 glass rounded-full px-3 py-1">
+        <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+        Confianza visible para startups • monitoreo continuo
       </p>
 
-      <div class="cta">
-        <a class="btn btn-primary" href="#contacto">Solicitar demo</a>
-        <a class="btn btn-ghost" href="#features">Ver cómo funciona</a>
-      </div>
-    </div>
+      <h1 class="mt-4 text-4xl md:text-5xl font-semibold leading-tight tracking-tight">
+        Seguridad que se
+        <span class="bg-gradient-to-r from-sky-400 via-indigo-400 to-fuchsia-400 bg-clip-text text-transparent">ve</span>.
+        <br />
+        Reportes que convierten dudas en confianza.
+      </h1>
 
-    <div class="hero-card">
-      <h3>Estado de seguridad</h3>
+      <p class="mt-4 text-white/75 text-lg leading-relaxed">
+        <b>Observo</b> revisa tu superficie de ataque, guarda un <b>baseline</b> y detecta cambios.
+        Entrega resultados claros para clientes, aliados e inversionistas.
+      </p>
 
-      <div class="status">
-        <div class="status-left">
-          <span class="dot"></span>
-          Dominio monitoreado
+      <!-- Trust -->
+      <div class="trust-wrap">
+        <div class="trust-label">Seguridad del sitio</div>
+        <div class="trust-badges">
+          <span class="badge" title="Forzamos HTTPS siempre">
+            🔒 HTTPS siempre activo <small>HSTS</small>
+          </span>
+          <span class="badge" title="Protección contra scripts maliciosos">
+            🧱 Protección anti-XSS <small>CSP</small>
+          </span>
+          <span class="badge" title="Previene clickjacking">
+            🪟 Anti-clickjacking <small>Headers</small>
+          </span>
         </div>
-        <strong>Activo</strong>
       </div>
 
-      <div class="status">
-        <div class="status-left">
-          <span class="dot"></span>
-          Certificado TLS
+      <div class="mt-7 flex flex-wrap gap-4">
+        <a href="#cta" class="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-fuchsia-500 font-medium hover:opacity-90">
+          Quiero un reporte de ejemplo
+        </a>
+        <a href="#como" class="px-6 py-3 rounded-xl glass text-white/80 hover:text-white">
+          Ver cómo funciona
+        </a>
+      </div>
+
+      <div class="mt-5 flex flex-wrap gap-6 text-sm text-white/65">
+        <span class="inline-flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-white/25"></span>Rápido y automatizado</span>
+        <span class="inline-flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-white/25"></span>Reporte listo para enviar</span>
+        <span class="inline-flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-white/25"></span>Enfoque “trust-first”</span>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="glass rounded-2xl p-10 flex flex-col items-center text-center">
+      <div class="h-28 w-28 rounded-2xl bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500 flex items-center justify-center shadow-lg">
+        <div class="h-7 w-7 rounded-full bg-emerald-400"></div>
+      </div>
+
+      <h3 class="mt-6 text-xl font-semibold">Observo activo</h3>
+      <p class="mt-2 text-white/70 text-sm max-w-xs">
+        Monitoreo continuo de tu superficie de ataque, con cambios detectables y trazables.
+      </p>
+
+      <div class="mt-6 grid grid-cols-3 gap-3 text-xs text-white/70">
+        <div class="glass rounded-xl px-3 py-2">Riesgo<br><b class="text-white">Bajo–Medio</b></div>
+        <div class="glass rounded-xl px-3 py-2">Cambios<br><b class="text-white">3 detectados</b></div>
+        <div class="glass rounded-xl px-3 py-2">Acción<br><b class="text-white">Hoy</b></div>
+      </div>
+
+      <div class="mt-6 soft-divider w-full"></div>
+
+      <p class="mt-4 text-xs text-white/60 max-w-sm">
+        Ideal para vender con confianza: muestra evidencia simple, sin jerga técnica innecesaria.
+      </p>
+    </div>
+
+  </section>
+</main>
+
+<!-- Cómo funciona -->
+<section id="como" class="mx-auto max-w-6xl px-4 pb-14">
+  <div class="glass rounded-2xl p-8 md:p-10">
+    <div class="flex items-start justify-between gap-6 flex-wrap">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-semibold">Cómo funciona</h2>
+        <p class="mt-2 text-white/70 max-w-2xl">
+          Enfocado en visibilidad + cambios: lo que hoy está bien, mañana puede cambiar.
+        </p>
+      </div>
+      <a href="#cta" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 transition text-sm">Ver demo</a>
+    </div>
+
+    <div class="mt-8 grid md:grid-cols-3 gap-4">
+      <div class="glass rounded-2xl p-6">
+        <div class="text-sm text-white/60">Paso 1</div>
+        <div class="mt-2 font-semibold text-lg">Escaneo inicial</div>
+        <p class="mt-2 text-white/70 text-sm">
+          Mapea tu presencia pública y detecta señales de riesgo sin invadir tu infraestructura.
+        </p>
+      </div>
+
+      <div class="glass rounded-2xl p-6">
+        <div class="text-sm text-white/60">Paso 2</div>
+        <div class="mt-2 font-semibold text-lg">Baseline de confianza</div>
+        <p class="mt-2 text-white/70 text-sm">
+          Guardamos un “estado esperado”. Si algo cambia, lo verás (y podrás explicarlo).
+        </p>
+      </div>
+
+      <div class="glass rounded-2xl p-6">
+        <div class="text-sm text-white/60">Paso 3</div>
+        <div class="mt-2 font-semibold text-lg">Reporte listo para enviar</div>
+        <p class="mt-2 text-white/70 text-sm">
+          Entregamos un resumen claro: qué se encontró, qué importa y qué recomendamos.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Qué incluye -->
+<section id="incluye" class="mx-auto max-w-6xl px-4 pb-14">
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="glass rounded-2xl p-8">
+      <h2 class="text-2xl md:text-3xl font-semibold">Qué incluye</h2>
+      <p class="mt-2 text-white/70">
+        Señales concretas que elevan confianza sin “asustar” con tecnicismos.
+      </p>
+
+      <div class="mt-6 grid gap-3 text-sm text-white/75">
+        <div class="glass rounded-xl p-4">✅ Estado de TLS/HTTPS y políticas de navegador</div>
+        <div class="glass rounded-xl p-4">✅ Cambios en superficie pública (secciones, recursos, rutas visibles)</div>
+        <div class="glass rounded-xl p-4">✅ Evidencias reproducibles (para tu equipo o tu cliente)</div>
+        <div class="glass rounded-xl p-4">✅ Recomendaciones priorizadas (rápidas y accionables)</div>
+      </div>
+    </div>
+
+    <div class="glass rounded-2xl p-8">
+      <h3 class="text-xl font-semibold">¿Para quién es?</h3>
+      <p class="mt-2 text-white/70">
+        Para equipos pequeños que necesitan señales claras de seguridad para vender mejor.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-2">
+        <span class="px-3 py-2 rounded-xl glass text-sm text-white/75">Startups</span>
+        <span class="px-3 py-2 rounded-xl glass text-sm text-white/75">Agencias</span>
+        <span class="px-3 py-2 rounded-xl glass text-sm text-white/75">E-commerce</span>
+        <span class="px-3 py-2 rounded-xl glass text-sm text-white/75">SaaS</span>
+      </div>
+
+      <div class="mt-6 soft-divider w-full"></div>
+
+      <div class="mt-6">
+        <div class="text-sm text-white/60">Promesa Observo</div>
+        <div class="mt-2 text-white font-semibold">
+          “Si cambia algo importante, lo vas a saber. Y lo vas a poder explicar.”
         </div>
-        <strong>Válido</strong>
-      </div>
-
-      <div class="status">
-        <div class="status-left">
-          <span class="dot"></span>
-          Cambios detectados
-        </div>
-        <strong>0</strong>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Features -->
-  <section id="features">
-    <div class="section-title">
-      <h2>¿Qué hace Observo?</h2>
-      <p>Una capa de observabilidad de seguridad simple, clara y accionable.</p>
-    </div>
+<!-- Reportes -->
+<section id="reportes" class="mx-auto max-w-6xl px-4 pb-14">
+  <div class="glass rounded-2xl p-8 md:p-10">
+    <h2 class="text-2xl md:text-3xl font-semibold">Reportes que se entienden</h2>
+    <p class="mt-2 text-white/70 max-w-2xl">
+      Diseñados para clientes no técnicos: claridad, evidencia y próximos pasos.
+    </p>
 
-    <div class="grid">
-      <div class="card">
-        <div class="icon">👁️</div>
-        <h3>Observación continua</h3>
-        <p>Monitorea dominios, certificados y cambios críticos en el tiempo.</p>
+    <div class="mt-8 grid md:grid-cols-3 gap-4">
+      <div class="glass rounded-2xl p-6">
+        <div class="text-sm text-white/60">Resumen ejecutivo</div>
+        <div class="mt-2 font-semibold">Lo importante en 1 minuto</div>
+        <p class="mt-2 text-white/70 text-sm">
+          Riesgos clave, estado general y recomendaciones priorizadas.
+        </p>
       </div>
 
-      <div class="card">
-        <div class="icon">🛡️</div>
-        <h3>Confianza visible</h3>
-        <p>Demuestra a tus clientes que tu plataforma está siendo vigilada.</p>
+      <div class="glass rounded-2xl p-6">
+        <div class="text-sm text-white/60">Evidencia</div>
+        <div class="mt-2 font-semibold">Sin discusión</div>
+        <p class="mt-2 text-white/70 text-sm">
+          Datos reproducibles para respaldar lo que se afirma, sin humo.
+        </p>
       </div>
 
-      <div class="card">
-        <div class="icon">⚡</div>
-        <h3>Alertas claras</h3>
-        <p>Detecta cambios relevantes sin ruido ni complejidad innecesaria.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Trust -->
-  <section id="confianza">
-    <div class="section-title">
-      <h2>Construido para generar confianza</h2>
-      <p>No es solo seguridad. Es percepción, respaldo y tranquilidad.</p>
-
-      <div class="badges">
-        <span class="badge">Monitoreo real</span>
-        <span class="badge">Sin humo</span>
-        <span class="badge">Ideal para startups</span>
-        <span class="badge">Complementario a tu stack</span>
+      <div class="glass rounded-2xl p-6">
+        <div class="text-sm text-white/60">Acción</div>
+        <div class="mt-2 font-semibold">Checklist de mejoras</div>
+        <p class="mt-2 text-white/70 text-sm">
+          Qué hacer ahora, qué programar y qué monitorear.
+        </p>
       </div>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer id="contacto">
-    © 2025 Observo — Seguridad observable para negocios reales
-  </footer>
+    <div class="mt-8 flex flex-wrap gap-4">
+      <a href="#cta" class="px-5 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-fuchsia-500 font-medium hover:opacity-90">
+        Pedir un reporte de ejemplo
+      </a>
+      <a href="#pricing" class="px-5 py-3 rounded-xl glass text-white/80 hover:text-white">
+        Ver planes
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing" class="mx-auto max-w-6xl px-4 pb-14">
+  <div class="flex items-end justify-between gap-6 flex-wrap">
+    <div>
+      <h2 class="text-2xl md:text-3xl font-semibold">Precios simples</h2>
+      <p class="mt-2 text-white/70 max-w-2xl">
+        Empieza liviano. Sube cuando tengas más clientes o más dominios.
+      </p>
+    </div>
+    <div class="text-sm text-white/60">*Precios referenciales (ajustables)</div>
+  </div>
+
+  <div class="mt-8 grid md:grid-cols-3 gap-4">
+    <!-- Starter -->
+    <div class="glass rounded-2xl p-7">
+      <div class="text-sm text-white/60">Starter</div>
+      <div class="mt-2 text-xl font-semibold">Para comenzar</div>
+      <div class="mt-4 text-4xl font-semibold">$19<span class="text-base text-white/60">/mes</span></div>
+      <ul class="mt-5 space-y-3 text-sm text-white/75">
+        <li>✅ 1 dominio</li>
+        <li>✅ Escaneo + baseline</li>
+        <li>✅ Reporte PDF/HTML</li>
+        <li>✅ Recomendaciones priorizadas</li>
+      </ul>
+      <a href="#cta" class="mt-6 block text-center px-5 py-3 rounded-xl glass hover:bg-white/10 transition">
+        Elegir Starter
+      </a>
+    </div>
+
+    <!-- Pro -->
+    <div class="glass rounded-2xl p-7 border border-white/15">
+      <div class="inline-flex items-center gap-2 text-xs font-medium text-white/80 rounded-full px-3 py-1 bg-white/10">
+        ⭐ Recomendado
+      </div>
+      <div class="mt-3 text-sm text-white/60">Pro</div>
+      <div class="mt-2 text-xl font-semibold">Para vender con confianza</div>
+      <div class="mt-4 text-4xl font-semibold">$49<span class="text-base text-white/60">/mes</span></div>
+      <ul class="mt-5 space-y-3 text-sm text-white/75">
+        <li>✅ 3 dominios</li>
+        <li>✅ Monitoreo de cambios</li>
+        <li>✅ Reportes comparativos</li>
+        <li>✅ Soporte por email</li>
+      </ul>
+      <a href="#cta" class="mt-6 block text-center px-5 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-fuchsia-500 font-medium hover:opacity-90">
+        Elegir Pro
+      </a>
+    </div>
+
+    <!-- Business -->
+    <div class="glass rounded-2xl p-7">
+      <div class="text-sm text-white/60">Business</div>
+      <div class="mt-2 text-xl font-semibold">Para agencias / multi-cliente</div>
+      <div class="mt-4 text-4xl font-semibold">$99<span class="text-base text-white/60">/mes</span></div>
+      <ul class="mt-5 space-y-3 text-sm text-white/75">
+        <li>✅ 10 dominios</li>
+        <li>✅ Reportes por cliente</li>
+        <li>✅ SLA conversable</li>
+        <li>✅ Prioridad de soporte</li>
+      </ul>
+      <a href="#cta" class="mt-6 block text-center px-5 py-3 rounded-xl glass hover:bg-white/10 transition">
+        Hablar por Business
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="mx-auto max-w-6xl px-4 pb-14">
+  <div class="glass rounded-2xl p-8 md:p-10">
+    <h2 class="text-2xl md:text-3xl font-semibold">FAQ</h2>
+    <div class="mt-6 grid md:grid-cols-2 gap-4">
+      <div class="glass rounded-2xl p-6">
+        <div class="font-semibold">¿Observo “hackea” mi sitio?</div>
+        <p class="mt-2 text-white/70 text-sm">
+          No. Observo trabaja sobre señales públicas y validaciones seguras. El objetivo es visibilidad y cambios.
+        </p>
+      </div>
+      <div class="glass rounded-2xl p-6">
+        <div class="font-semibold">¿Sirve si uso Vercel / Cloudflare / CDN?</div>
+        <p class="mt-2 text-white/70 text-sm">
+          Sí. Justamente ayuda a explicar postura de seguridad y políticas visibles para el navegador del cliente.
+        </p>
+      </div>
+      <div class="glass rounded-2xl p-6">
+        <div class="font-semibold">¿Qué recibo al final?</div>
+        <p class="mt-2 text-white/70 text-sm">
+          Un reporte claro (y compartible), con evidencias y recomendaciones. Ideal para enviar a clientes.
+        </p>
+      </div>
+      <div class="glass rounded-2xl p-6">
+        <div class="font-semibold">¿Puedo empezar sin pagar?</div>
+        <p class="mt-2 text-white/70 text-sm">
+          Podemos partir con un reporte de ejemplo para 1 dominio. Si te sirve, pasas a un plan.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta" class="mx-auto max-w-6xl px-4 pb-20">
+  <div class="glass rounded-2xl p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+    <div>
+      <h2 class="text-2xl md:text-3xl font-semibold">¿Listo para vender con más confianza?</h2>
+      <p class="mt-2 text-white/70 max-w-2xl">
+        Pide un reporte de ejemplo y te mostramos cómo Observo deja evidencia clara para tus clientes.
+      </p>
+      <div class="mt-4 text-sm text-white/60">
+        Tip: usa <b>observosec.org</b> como sitio principal y suma más dominios cuando crezcas.
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-3 w-full md:w-auto">
+      <a href="mailto:christianmora705@gmail.com?subject=Demo%20Observo&body=Hola%2C%20quiero%20un%20reporte%20de%20ejemplo%20para%3A%20%5Bdominio%5D"
+         class="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-fuchsia-500 font-medium hover:opacity-90 text-center">
+        Pedir demo por email
+      </a>
+      <a href="#pricing" class="px-6 py-3 rounded-xl glass text-white/80 hover:text-white text-center">
+        Ver planes
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="mx-auto max-w-6xl px-4 pb-10">
+  <div class="soft-divider w-full mb-6"></div>
+  <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-sm text-white/60">
+    <div class="flex items-center gap-2">
+      <div class="h-7 w-7 rounded-lg bg-gradient-to-br from-indigo-500 via-sky-400 to-fuchsia-500"></div>
+      <span>© <span id="year"></span> Observo. All rights reserved.</span>
+    </div>
+    <div class="flex gap-4">
+      <a class="hover:text-white" href="#top">Inicio</a>
+      <a class="hover:text-white" href="#pricing">Precios</a>
+      <a class="hover:text-white" href="#cta">Contacto</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // tiny enhancement (allowed because your CSP now permits tailwindcdn; inline script might be blocked if script-src doesn't allow 'unsafe-inline')
+  // If your CSP blocks inline scripts, you can delete this and hardcode the year.
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 
 </body>
 </html>
