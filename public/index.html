@@ -294,13 +294,15 @@
               </div>
 
               <!-- Baseline -->
-              <div class="relative">
-                <button type="button"
-                        class="glass feature-card w-full text-left rounded-2xl px-4 py-4 border border-white/10"
-                        data-popover="pop-baseline">
-                  <div class="font-semibold">Baseline</div>
-                  <div class="text-sm text-white/70">Comparación real.</div>
-                </button>
+<div>
+  <button type="button"
+          class="glass feature-card w-full text-left rounded-2xl px-4 py-4 border border-white/10"
+          data-popover="pop-baseline">
+    <div class="font-semibold">Baseline</div>
+    <div class="text-sm text-white/70">Comparación real.</div>
+  </button>
+</div>
+
 
                 <div id="pop-baseline" class="popover glass rounded-2xl p-4 border border-white/10">
                   <div class="flex items-start justify-between gap-4">
@@ -547,6 +549,43 @@
 
   </main>
 
+<!-- POPUP BASELINE -->
+<div id="pop-baseline" class="fixed inset-0 z-50 hidden">
+
+  <!-- Fondo oscuro -->
+  <div class="absolute inset-0 bg-black/70"></div>
+
+  <!-- Caja -->
+  <div class="relative flex items-center justify-center min-h-screen px-4">
+    <div class="relative w-full max-w-lg rounded-2xl bg-[#0b1220] border border-white/10 p-5">
+
+      <!-- Botón cerrar -->
+      <button
+        class="absolute top-3 right-3 text-white/60 hover:text-white"
+        data-close="pop-baseline"
+        aria-label="Cerrar">
+        ✕
+      </button>
+
+      <div class="text-sm font-semibold mb-2">
+        Baseline (foto del “hoy”)
+      </div>
+
+      <p class="text-white/70 text-sm">
+        Guardamos una referencia del estado actual y luego comparamos
+        para detectar cambios relevantes.
+      </p>
+
+      <ul class="mt-3 text-sm text-white/70 space-y-1">
+        <li>• Detecta degradaciones con el tiempo.</li>
+        <li>• Justifica cambios con evidencia.</li>
+        <li>• Útil para cambios de equipo/infra.</li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
   <!-- Scripts: ojo + popovers -->
   <script>
   // Ojo sigue el puntero (todos los ojos)
@@ -591,59 +630,69 @@
     }, { passive: true });
   })();
 
-  // Popovers (features)
-  (function(){
-    const triggers = Array.from(document.querySelectorAll("[data-popover]"));
-    const popovers = new Map();
+<script>
+  // ABRIR POPUPS
+  document.querySelectorAll('[data-popover]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-popover');
+      document.getElementById(id).classList.remove('hidden');
+    });
+  });
 
-    function closeAll(){
-      for (const el of popovers.values()){
-        el.classList.remove("open");
-        el.setAttribute("aria-hidden", "true");
-      }
-    }
+  // CERRAR POPUPS (botón X)
+  document.querySelectorAll('[data-close]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-close');
+      document.getElementById(id).classList.add('hidden');
+    });
+  });
 
-    triggers.forEach(btn => {
-      const id = btn.getAttribute("data-popover");
-      const pop = document.getElementById(id);
-      if (!pop) return;
-
-      popovers.set(id, pop);
-      pop.setAttribute("aria-hidden", "true");
-
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const isOpen = pop.classList.contains("open");
-        closeAll();
-        if (!isOpen){
-          pop.classList.add("open");
-          pop.setAttribute("aria-hidden", "false");
-        }
+  // CERRAR CON ESC
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.popover').forEach(p => {
+        p.classList.add('hidden');
       });
-    });
-
-    // Close buttons
-    document.addEventListener("click", (e) => {
-      const closeId = e.target && e.target.getAttribute && e.target.getAttribute("data-close");
-      if (closeId && popovers.has(closeId)){
-        popovers.get(closeId).classList.remove("open");
-        popovers.get(closeId).setAttribute("aria-hidden","true");
-        e.stopPropagation();
-        return;
-      }
-      closeAll();
-    });
-
-    // ESC to close
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeAll();
-    });
-
-    // Prevent click inside popover from closing immediately
-    for (const pop of popovers.values()){
-      pop.addEventListener("click", (e) => e.stopPropagation());
     }
-  })();
-  </script>
+  });
+
+  // CERRAR CLICKEANDO EL FONDO OSCURO
+  document.querySelectorAll('.popover').forEach(popup => {
+    popup.addEventListener('click', e => {
+      if (e.target === popup) {
+        popup.classList.add('hidden');
+      }
+    });
+  });
+</script>
+
+
+<script>
+  // Abrir popups
+  document.querySelectorAll('[data-popover]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-popover');
+      document.getElementById(id).classList.remove('hidden');
+    });
+  });
+
+  // Cerrar popups (X o fondo)
+  document.querySelectorAll('[data-close]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-close');
+      document.getElementById(id).classList.add('hidden');
+    });
+  });
+
+  // Cerrar si se hace click fuera de la caja
+  document.querySelectorAll('.fixed.inset-0').forEach(popup => {
+    popup.addEventListener('click', e => {
+      if (e.target === popup) {
+        popup.classList.add('hidden');
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
