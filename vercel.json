@@ -1,4 +1,11 @@
 {
+  "rewrites": [
+    { "source": "/wp-login.php", "destination": "/hp?trap=wp-login" },
+    { "source": "/admin", "destination": "/hp?trap=admin" },
+    { "source": "/.env", "destination": "/hp?trap=dotenv" },
+    { "source": "/phpmyadmin", "destination": "/hp?trap=phpmyadmin" },
+    { "source": "/config.php", "destination": "/hp?trap=config" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -13,7 +20,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com; connect-src 'self' https:; upgrade-insecure-requests"
+          "value": "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; upgrade-insecure-requests"
         }
       ]
     }

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Observosec — Ruta no encontrada</title>
+</head>
+<body style="margin:0;font-family:system-ui;background:#070A12;color:#EAF0FF;display:flex;min-height:100vh;align-items:center;justify-content:center;padding:24px">
+  <div style="max-width:720px;width:100%;background:#0B1020;border:1px solid rgba(120,160,255,.18);border-radius:18px;padding:28px">
+    <h1 style="margin:0 0 8px;font-size:22px">Ruta no encontrada</h1>
+    <p style="margin:0 0 16px;opacity:.9;line-height:1.5">La página que buscas no existe o fue movida.</p>
+    <a href="/" style="display:inline-block;text-decoration:none;color:#0B1020;background:#7AA2FF;padding:10px 14px;border-radius:12px;font-weight:700">Volver al inicio</a>
+    <div style="opacity:.7;font-size:13px;margin-top:14px">Error 404</div>
+  </div>
+
+  <script>
+    (function(){
+      const trap = new URLSearchParams(location.search).get("trap") || "unknown";
+      fetch("/api/hp?trap=" + encodeURIComponent(trap), { method: "GET", keepalive: true }).catch(()=>{});
+    })();
+  </script>
+</body>
+</html>
