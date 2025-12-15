@@ -3,47 +3,109 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Observo Security — Seguridad visible para tu web</title>
-  <meta name="description" content="Observo entrega visibilidad de seguridad web: baseline, cambios, reportes y evidencia para convertir seguridad en confianza." />
+  <title>Observo Security — Seguridad visible, sin ruido</title>
+  <meta name="description" content="Observo entrega visibilidad de seguridad web: baseline, cambios y reportes claros para convertir seguridad en confianza." />
   <meta name="theme-color" content="#070B14" />
 
-  <!-- Tailwind CDN (si ya lo estás usando de otra forma, puedes quitar esto) -->
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
     :root{
       --bg:#070B14;
-      --glass: rgba(255,255,255,.06);
-      --glass2: rgba(255,255,255,.08);
-      --stroke: rgba(255,255,255,.12);
       --shadow: 0 18px 60px rgba(0,0,0,.55);
     }
     html{ scroll-behavior:smooth; }
     body{
       background:
-        radial-gradient(900px 500px at 15% -10%, rgba(102,227,255,.18), transparent 55%),
-        radial-gradient(900px 520px at 85% 0%, rgba(124,92,255,.16), transparent 50%),
-        radial-gradient(900px 520px at 50% 115%, rgba(39,232,167,.10), transparent 55%),
+        radial-gradient(900px 520px at 18% -10%, rgba(102,227,255,.16), transparent 55%),
+        radial-gradient(980px 560px at 85% 0%, rgba(124,92,255,.14), transparent 55%),
+        radial-gradient(980px 560px at 50% 115%, rgba(39,232,167,.10), transparent 60%),
         var(--bg);
     }
-    .bg-aurora{ background: transparent; }
+
+    /* Glass calm: sin blur global (evita "nube blanca") */
     .glass{
-      background: linear-gradient(to bottom, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      background: linear-gradient(to bottom, rgba(255,255,255,.06), rgba(255,255,255,.035));
       border: 1px solid rgba(255,255,255,.10);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
     }
+    /* Blur SOLO en la barra superior */
+    .glass-nav{
+      background: linear-gradient(to bottom, rgba(10,14,26,.72), rgba(10,14,26,.50));
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+    }
+
     .btn{ transition: transform .15s ease, filter .15s ease; }
     .btn:hover{ transform: translateY(-1px); filter: brightness(1.06); }
-    .soft-ring:focus{ outline: none; box-shadow: 0 0 0 4px rgba(124,92,255,.18); }
+
+    /* Emblema flotante (no molesta clics) */
+    .emblem{
+      position: fixed;
+      left: 18px;
+      bottom: 18px;
+      width: 64px;
+      height: 64px;
+      z-index: 40;
+      pointer-events: none;
+      opacity: .92;
+      filter: drop-shadow(0 20px 45px rgba(0,0,0,.55));
+    }
+    @media (max-width: 640px){
+      .emblem{ width: 54px; height: 54px; left: 12px; bottom: 12px; }
+    }
   </style>
 </head>
 
-<body class="bg-aurora text-white">
+<body class="text-white">
+  <!-- Emblema (escudo + ojo que sigue puntero) -->
+  <svg class="emblem" viewBox="0 0 120 120" aria-hidden="true">
+    <defs>
+      <linearGradient id="g1" x1="0" x2="1">
+        <stop offset="0" stop-color="#38BDF8" stop-opacity="0.95"/>
+        <stop offset="0.5" stop-color="#6366F1" stop-opacity="0.95"/>
+        <stop offset="1" stop-color="#D946EF" stop-opacity="0.95"/>
+      </linearGradient>
+      <radialGradient id="g2" cx="30%" cy="30%" r="80%">
+        <stop offset="0" stop-color="#ffffff" stop-opacity="0.18"/>
+        <stop offset="1" stop-color="#ffffff" stop-opacity="0.04"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Shield -->
+    <path d="M60 8
+             C78 18, 92 18, 104 22
+             C104 62, 90 92, 60 112
+             C30 92, 16 62, 16 22
+             C28 18, 42 18, 60 8Z"
+          fill="url(#g2)" stroke="url(#g1)" stroke-width="3" opacity="0.98"/>
+    <path d="M60 16
+             C76 25, 88 25, 98 28
+             C98 62, 86 86, 60 103
+             C34 86, 22 62, 22 28
+             C32 25, 44 25, 60 16Z"
+          fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+
+    <!-- Eye -->
+    <g id="eyeGroup" transform="translate(0,0)">
+      <path d="M30 62
+               C40 48, 52 40, 60 40
+               C68 40, 80 48, 90 62
+               C80 76, 68 84, 60 84
+               C52 84, 40 76, 30 62Z"
+            fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
+      <circle id="iris" cx="60" cy="62" r="14" fill="rgba(56,189,248,0.18)" stroke="rgba(56,189,248,0.45)" stroke-width="2"/>
+      <circle id="pupil" cx="60" cy="62" r="6" fill="rgba(255,255,255,0.92)"/>
+      <circle cx="66" cy="56" r="3" fill="rgba(255,255,255,0.35)"/>
+    </g>
+  </svg>
+
   <!-- NAV -->
   <header class="sticky top-0 z-50">
     <div class="mx-auto max-w-6xl px-4">
-      <div class="mt-4 glass rounded-2xl px-4 py-3 flex items-center justify-between">
+      <div class="mt-4 glass-nav rounded-2xl px-4 py-3 flex items-center justify-between">
         <a href="#top" class="flex items-center gap-3">
           <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500"></div>
           <span class="font-semibold tracking-tight">Observo</span>
@@ -53,11 +115,10 @@
           <a class="hover:text-white" href="#como">Cómo funciona</a>
           <a class="hover:text-white" href="#incluye">Qué incluye</a>
           <a class="hover:text-white" href="#reportes">Reportes</a>
-          <a class="hover:text-white" href="/pricing.html">Precios</a>
-          <a class="hover:text-white" href="/pricing.html#faq">FAQ</a>
         </nav>
 
         <div class="flex items-center gap-3">
+          <!-- SOLO 1 CTA de precios (como pediste) -->
           <a href="/pricing.html" class="btn hidden sm:inline-flex px-4 py-2 rounded-xl glass text-sm text-white/90 hover:text-white">
             Ver planes
           </a>
@@ -70,7 +131,7 @@
   </header>
 
   <main id="top" class="mx-auto max-w-6xl px-4">
-    <!-- HERO -->
+    <!-- HERO (calm, potente, no saturado) -->
     <section class="pt-10 pb-8">
       <div class="glass rounded-3xl p-10 md:p-12">
         <div class="inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full bg-white/10 text-white/80 border border-white/10">
@@ -78,95 +139,84 @@
           Seguridad visible · Baseline · Cambios · Reportes
         </div>
 
-        <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div class="mt-7 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           <div class="lg:col-span-7">
-            <h1 class="text-3xl md:text-5xl font-semibold tracking-tight">
-              Convierte seguridad en <span class="text-white">confianza visible</span>
+            <h1 class="text-3xl md:text-5xl font-semibold tracking-tight leading-tight">
+              Seguridad que se entiende.<br class="hidden md:block"/>
+              Evidencia que se comparte.
             </h1>
+
             <p class="mt-4 text-white/70 text-base md:text-lg leading-relaxed max-w-2xl">
-              Observo analiza señales visibles de seguridad web, guarda una referencia confiable y detecta cambios relevantes en el tiempo.
-              Entrega reportes claros (ejecutivos y técnicos) listos para compartir con tu equipo o clientes.
+              Observo te da una vista clara del estado de seguridad web, guarda una referencia confiable y detecta cambios relevantes con el tiempo.
+              Sin jerga innecesaria y sin “ruido”.
             </p>
 
-            <div class="mt-6 flex flex-wrap gap-3">
-              <a href="/pricing.html" class="btn soft-ring inline-flex px-5 py-3 rounded-2xl font-semibold bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
-                Ver precios
-              </a>
-              <a href="#como" class="btn soft-ring inline-flex px-5 py-3 rounded-2xl glass text-white/90">
-                Cómo funciona
-              </a>
-              <a href="#demo" class="btn soft-ring inline-flex px-5 py-3 rounded-2xl glass text-white/90">
-                Pedir demo
-              </a>
-            </div>
-
+            <!-- Micro-beneficios (solo 3, relajante) -->
             <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-white/70">
               <div class="glass rounded-2xl px-4 py-3">
                 <div class="font-semibold text-white/90">Read-only</div>
-                <div>Sin credenciales, sin explotación.</div>
+                <div>Sin credenciales.</div>
               </div>
               <div class="glass rounded-2xl px-4 py-3">
-                <div class="font-semibold text-white/90">Evidencia</div>
-                <div>Reportes compartibles.</div>
+                <div class="font-semibold text-white/90">Baseline</div>
+                <div>Comparación real.</div>
               </div>
               <div class="glass rounded-2xl px-4 py-3">
-                <div class="font-semibold text-white/90">Cambios</div>
-                <div>Baseline vs actual.</div>
+                <div class="font-semibold text-white/90">Reportes</div>
+                <div>Para clientes.</div>
               </div>
             </div>
           </div>
 
+          <!-- Panel derecho minimal (no grita) -->
           <div class="lg:col-span-5">
-            <!-- Mock panel (sin necesidad de imágenes) -->
             <div class="glass rounded-3xl p-6">
               <div class="flex items-center justify-between">
-                <div class="text-sm text-white/70">Estado de seguridad</div>
-                <div class="text-xs px-2 py-1 rounded-full bg-white/10 border border-white/10 text-white/70">Demo</div>
+                <div class="text-sm text-white/70">Vista rápida</div>
+                <div class="text-xs px-2 py-1 rounded-full bg-white/10 border border-white/10 text-white/70">Ejemplo</div>
               </div>
 
-              <div class="mt-5 grid gap-3">
+              <div class="mt-5 space-y-3">
                 <div class="glass rounded-2xl p-4">
                   <div class="flex items-center justify-between">
                     <div class="text-sm font-semibold">Postura general</div>
                     <div class="text-sm text-emerald-300 font-semibold">Buena</div>
                   </div>
                   <div class="mt-2 text-xs text-white/60">
-                    Señales externas: TLS, headers, superficie expuesta y consistencia.
+                    Señales externas: TLS, headers y consistencia.
                   </div>
                 </div>
 
                 <div class="glass rounded-2xl p-4">
                   <div class="text-sm font-semibold">Cambios detectados</div>
                   <div class="mt-2 text-xs text-white/60">
-                    Se muestran variaciones relevantes con evidencia y recomendación.
+                    Variaciones relevantes con explicación simple.
                   </div>
                 </div>
 
                 <div class="glass rounded-2xl p-4">
                   <div class="text-sm font-semibold">Reporte exportable</div>
                   <div class="mt-2 text-xs text-white/60">
-                    Resumen ejecutivo + hallazgos priorizados.
+                    Resumen ejecutivo + evidencia.
                   </div>
                 </div>
               </div>
 
-              <div class="mt-5">
-                <a href="/pricing.html" class="btn inline-flex w-full justify-center px-5 py-3 rounded-2xl font-semibold bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
-                  Ver planes
-                </a>
-              </div>
+              <p class="mt-5 text-xs text-white/50">
+                Observo es visibilidad & reporting (no pentesting).
+              </p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- COMO FUNCIONA (PRO) -->
-    <section id="como" class="py-10">
+    <!-- CÓMO FUNCIONA (PRO, tranquilo) -->
+    <section id="como" class="py-8">
       <div class="glass rounded-2xl p-10">
-        <h2 class="text-2xl md:text-3xl font-semibold">Cómo funciona Observo</h2>
+        <h2 class="text-2xl md:text-3xl font-semibold">Cómo funciona</h2>
         <p class="mt-2 text-white/70 max-w-2xl">
-          Seguridad visible en tres pasos claros: análisis inicial, referencia confiable y detección continua de cambios.
+          Un flujo simple en 3 pasos. Sin overengineering. Sin “pantallazos” por todos lados.
         </p>
 
         <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -174,7 +224,7 @@
             <div class="text-xs tracking-widest text-white/50">PASO 01</div>
             <h3 class="mt-2 font-semibold text-lg">Análisis inicial</h3>
             <p class="mt-2 text-sm text-white/70">
-              Evaluamos señales visibles de seguridad: HTTPS/TLS, headers, superficie expuesta y configuración básica.
+              Revisamos señales visibles: HTTPS/TLS, headers de seguridad y superficie expuesta.
             </p>
           </div>
 
@@ -182,7 +232,7 @@
             <div class="text-xs tracking-widest text-white/50">PASO 02</div>
             <h3 class="mt-2 font-semibold text-lg">Baseline confiable</h3>
             <p class="mt-2 text-sm text-white/70">
-              Guardamos una referencia del estado actual para poder detectar, explicar y comparar cualquier cambio futuro.
+              Guardamos una referencia del “hoy” para comparar y explicar cambios después.
             </p>
           </div>
 
@@ -190,89 +240,68 @@
             <div class="text-xs tracking-widest text-white/50">PASO 03</div>
             <h3 class="mt-2 font-semibold text-lg">Cambios y reportes</h3>
             <p class="mt-2 text-sm text-white/70">
-              Identificamos variaciones relevantes y las presentamos en reportes claros para apoyar decisiones técnicas o de negocio.
+              Detectamos variaciones relevantes y las dejamos claras para decidir con confianza.
             </p>
           </div>
-        </div>
-
-        <div class="mt-10 flex flex-wrap gap-3">
-          <a href="/pricing.html"
-             class="btn inline-flex px-5 py-3 rounded-2xl font-semibold bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
-            Ver planes
-          </a>
-          <a href="#demo"
-             class="btn inline-flex px-5 py-3 rounded-2xl glass text-white/90">
-            Pedir demo
-          </a>
         </div>
       </div>
     </section>
 
-    <!-- INCLUYE + REPORTES -->
-    <section class="py-10">
+    <!-- INCLUYE + REPORTES (calm, no saturado) -->
+    <section class="py-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div id="incluye" class="glass rounded-2xl p-10">
           <h2 class="text-2xl md:text-3xl font-semibold">Qué incluye</h2>
           <p class="mt-2 text-white/70">
-            Controles esenciales para visibilidad de seguridad web, sin ruido ni explotación.
+            Lo esencial para “seguridad visible”, sin ruido.
           </p>
 
           <ul class="mt-6 space-y-3 text-sm text-white/75">
-            <li class="glass rounded-xl px-4 py-3">✔ Verificación HTTPS/TLS y expiración de certificados</li>
-            <li class="glass rounded-xl px-4 py-3">✔ Revisión de headers de seguridad (CSP, HSTS, XFO, etc.)</li>
-            <li class="glass rounded-xl px-4 py-3">✔ Baseline y comparación (diff) de cambios relevantes</li>
-            <li class="glass rounded-xl px-4 py-3">✔ Reporte ejecutivo y técnico, exportable</li>
+            <li class="glass rounded-xl px-4 py-3">✔ Verificación HTTPS/TLS y expiración</li>
+            <li class="glass rounded-xl px-4 py-3">✔ Headers de seguridad (CSP, HSTS, XFO, etc.)</li>
+            <li class="glass rounded-xl px-4 py-3">✔ Baseline + comparación (diff) de cambios</li>
+            <li class="glass rounded-xl px-4 py-3">✔ Reporte “cliente-friendly” y exportable</li>
           </ul>
         </div>
 
         <div id="reportes" class="glass rounded-2xl p-10">
           <h2 class="text-2xl md:text-3xl font-semibold">Reportes</h2>
           <p class="mt-2 text-white/70">
-            Diseñados para que un cliente entienda y confíe, sin jerga innecesaria.
+            Hechos para que un cliente entienda y confíe.
           </p>
 
           <div class="mt-6 space-y-4">
             <div class="glass rounded-xl p-4">
               <h4 class="font-semibold">Resumen ejecutivo</h4>
-              <p class="text-sm text-white/70 mt-1">Qué está bien, qué cambió y qué acción conviene tomar.</p>
+              <p class="text-sm text-white/70 mt-1">
+                Qué está bien, qué cambió y qué acción conviene.
+              </p>
             </div>
 
             <div class="glass rounded-xl p-4">
-              <h4 class="font-semibold">Evidencia clara</h4>
-              <p class="text-sm text-white/70 mt-1">Capturas, checks y explicación humana, sin ruido.</p>
+              <h4 class="font-semibold">Evidencia simple</h4>
+              <p class="text-sm text-white/70 mt-1">
+                Checks y explicación humana, sin jerga.
+              </p>
             </div>
 
             <div class="glass rounded-xl p-4">
               <h4 class="font-semibold">Historial de cambios</h4>
-              <p class="text-sm text-white/70 mt-1">Trazabilidad del estado de seguridad a lo largo del tiempo.</p>
+              <p class="text-sm text-white/70 mt-1">
+                Lo que hoy está bien, mañana puede degradarse: queda trazado.
+              </p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- TEASER PRECIOS (sin planes en home) -->
-    <section class="py-10">
-      <div class="glass rounded-2xl p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <div>
-          <h2 class="text-2xl md:text-3xl font-semibold">Planes y precios</h2>
-          <p class="mt-2 text-white/70 max-w-2xl">
-            Todo el detalle (planes, límites y preguntas frecuentes) está en una página dedicada.
-          </p>
-        </div>
-        <a href="/pricing.html"
-           class="btn inline-flex px-5 py-3 rounded-2xl font-semibold bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
-          Ver planes y FAQ
-        </a>
-      </div>
-    </section>
-
-    <!-- DEMO -->
-    <section id="demo" class="py-10 pb-16">
+    <!-- DEMO (solo CTA demo; precios solo en la barra) -->
+    <section id="demo" class="py-8 pb-14">
       <div class="glass rounded-2xl p-10">
         <h2 class="text-2xl md:text-3xl font-semibold">Pedir demo</h2>
         <p class="mt-2 text-white/70 max-w-2xl">
-          Cuéntanos tu dominio y el objetivo (cliente / auditoría / control interno). Te mostramos cómo se vería tu reporte.
+          Envíanos tu dominio y el objetivo. Te mostramos cómo se vería tu reporte.
         </p>
 
         <div class="mt-6 flex flex-col sm:flex-row gap-3">
@@ -280,15 +309,8 @@
              class="btn inline-flex justify-center px-5 py-3 rounded-2xl font-semibold bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
             Pedir demo por email
           </a>
-
-          <a href="/pricing.html"
-             class="btn inline-flex justify-center px-5 py-3 rounded-2xl glass text-white/90">
-            Ver precios
-          </a>
-
-          <a href="/pricing.html#faq"
-             class="btn inline-flex justify-center px-5 py-3 rounded-2xl glass text-white/90">
-            Leer FAQ
+          <a href="#top" class="btn inline-flex justify-center px-5 py-3 rounded-2xl glass text-white/90">
+            Volver arriba
           </a>
         </div>
 
@@ -297,10 +319,48 @@
         </p>
       </div>
 
-      <footer class="mt-10 pb-6 text-xs text-white/45">
+      <footer class="mt-8 pb-6 text-xs text-white/45">
         © 2025 Observo. Seguridad que se ve.
       </footer>
     </section>
   </main>
+
+  <script>
+    // Pupila siguiendo el puntero (global)
+    (function(){
+      const pupil = document.getElementById("pupil");
+      const iris  = document.getElementById("iris");
+      if (!pupil || !iris) return;
+
+      // Radio máximo de movimiento de la pupila dentro del iris
+      const maxR = 6.5;
+
+      function movePupil(clientX, clientY){
+        const rect = iris.getBoundingClientRect();
+        const cx = rect.left + rect.width/2;
+        const cy = rect.top + rect.height/2;
+
+        const dx = clientX - cx;
+        const dy = clientY - cy;
+
+        const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+        const nx = dx / dist;
+        const ny = dy / dist;
+
+        const r = Math.min(maxR, dist / 40); // suaviza la respuesta
+        const x = 60 + nx * r;
+        const y = 62 + ny * r;
+
+        pupil.setAttribute("cx", x.toFixed(2));
+        pupil.setAttribute("cy", y.toFixed(2));
+      }
+
+      window.addEventListener("mousemove", (e) => movePupil(e.clientX, e.clientY), { passive: true });
+      window.addEventListener("touchmove", (e) => {
+        if (!e.touches || !e.touches[0]) return;
+        movePupil(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+    })();
+  </script>
 </body>
 </html>
