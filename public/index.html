@@ -175,37 +175,43 @@
     </g>
   </svg>
 
-  <!-- NAV -->
-  <header class="sticky top-0 z-50">
-    <div class="mx-auto max-w-6xl px-4">
-      <div class="mt-4 glass-nav rounded-2xl px-4 py-3 flex items-center justify-between">
-        <a href="#top" class="flex items-center gap-3 group">
-          <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500"></div>
-          <span class="font-semibold tracking-tight">Observo</span>
+<!-- NAV -->
+<header class="sticky top-0 z-50">
+  <div class="mx-auto max-w-6xl px-4">
+    <div class="mt-4 glass-nav rounded-2xl px-4 py-3 flex items-center justify-between">
+
+      <!-- Logo -->
+      <a href="/index.html#top" class="flex items-center gap-3 group">
+        <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500"></div>
+        <span class="font-semibold tracking-tight">Observo</span>
+      </a>
+
+      <!-- Navegación -->
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a class="navlink" href="/index.html#como">Cómo funciona</a>
+        <a class="navlink" href="/index.html#incluye">Qué incluye</a>
+        <a class="navlink" href="/index.html#reportes">Reportes</a>
+        <a class="navlink" href="/seguridad.html">Seguridad</a>
+      </nav>
+
+      <!-- CTAs -->
+      <div class="flex items-center gap-3">
+        <a href="/pricing.html"
+           class="btn hidden sm:inline-flex px-4 py-2 rounded-xl glass text-sm text-white/90 hover:text-white">
+          Ver planes
         </a>
-
-        <nav class="hidden md:flex items-center gap-6 text-sm">
-          <a class="navlink" href="#como">Cómo funciona</a>
-          <a class="navlink" href="#incluye">Qué incluye</a>
-          <a class="navlink" href="#reportes">Reportes</a>
-        </nav>
-
-        <div class="flex items-center gap-3">
-          <a href="/pricing.html"
-             class="btn hidden sm:inline-flex px-4 py-2 rounded-xl glass text-sm text-white/90 hover:text-white">
-            Ver planes
-          </a>
-          <a href="#demo"
-             class="btn inline-flex px-4 py-2 rounded-xl text-sm font-semibold
-                    bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
-            Pedir demo
-          </a>
-        </div>
+        <a href="/index.html#demo"
+           class="btn inline-flex px-4 py-2 rounded-xl text-sm font-semibold
+                  bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
+          Pedir demo
+        </a>
       </div>
-    </div>
-  </header>
 
-  <main id="top" class="mx-auto max-w-6xl px-4">
+    </div>
+  </div>
+</header>
+
+<main id="top" class="mx-auto max-w-6xl px-4">
 
     <!-- HERO -->
     <section class="pt-10 pb-8">
