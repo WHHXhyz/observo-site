@@ -2,695 +2,601 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Observo — Cyber risk visibility for startups</title>
-  <meta name="description" content="Reportes de seguridad listos para compartir. Evidencia clara, sin burocracia. En minutos." />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Observo — Seguridad visible, sin ruido</title>
+  <meta name="description" content="Observo entrega visibilidad de seguridad web: baseline, cambios y reportes claros para convertir seguridad en confianza." />
+  <meta name="theme-color" content="#070B14" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
     :root{
-      --bg:#070a12;
-      --panel:#0b1220;
-      --panel2:#0f172a;
-      --text:#e5e7eb;
-      --muted:#93a4b8;
-      --line:rgba(255,255,255,0.08);
-      --shadow:0 25px 60px rgba(0,0,0,0.55);
-      --glow:rgba(99,102,241,0.35);
-      --glow2:rgba(34,211,238,0.35);
-      --radius:18px;
+      --bg:#070B14;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
     }
-
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
+    html{ scroll-behavior:smooth; }
     body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      color:var(--text);
       background:
-        radial-gradient(1100px 600px at 20% 0%, rgba(34,211,238,0.10), transparent 55%),
-        radial-gradient(900px 500px at 90% 10%, rgba(99,102,241,0.12), transparent 60%),
-        radial-gradient(800px 500px at 50% 90%, rgba(34,197,94,0.06), transparent 55%),
+        radial-gradient(900px 520px at 18% -10%, rgba(102,227,255,.14), transparent 55%),
+        radial-gradient(980px 560px at 85% 0%, rgba(124,92,255,.12), transparent 55%),
+        radial-gradient(980px 560px at 50% 115%, rgba(39,232,167,.08), transparent 60%),
         var(--bg);
-      overflow-x:hidden;
     }
-    a{color:inherit;text-decoration:none}
-    .container{width:min(1140px, calc(100% - 40px)); margin:0 auto;}
 
-    /* Topbar */
-    .topbar{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(10px);
-      background: rgba(7,10,18,0.65);
-      border-bottom:1px solid var(--line);
-    }
-    .topbar .inner{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0; gap:14px;
-    }
-    .brand{display:flex; align-items:center; gap:12px; min-width:220px;}
-    .brand h1{font-size:16px; margin:0; line-height:1.1; letter-spacing:.2px;}
-    .brand p{margin:2px 0 0; font-size:12.5px; color:var(--muted);}
-
-    /* Logo mini (navbar) */
-    .logo{
-      width:42px;height:42px;border-radius:14px;
+    /* Glass PRO */
+    .glass{
       background:
-        radial-gradient(circle at 30% 30%, rgba(34,211,238,0.45), transparent 45%),
-        radial-gradient(circle at 70% 30%, rgba(99,102,241,0.45), transparent 45%),
-        linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.03));
-      border:1px solid rgba(255,255,255,0.12);
-      box-shadow:0 10px 30px rgba(0,0,0,0.4);
-      position:relative; overflow:hidden;
-    }
-    .logo:before{
-      content:"";
-      position:absolute;
-      inset:9px 10px 12px 10px;
-      border-radius:16px 16px 18px 18px;
-      background: linear-gradient(180deg, rgba(15,23,42,0.0), rgba(15,23,42,0.65));
-      border:1px solid rgba(255,255,255,0.09);
-      clip-path: polygon(50% 0%, 90% 18%, 90% 55%, 50% 100%, 10% 55%, 10% 18%);
-      opacity:.9;
-    }
-    .logo:after{
-      content:"";
-      position:absolute; left:50%; top:52%;
-      transform: translate(-50%,-50%);
-      width:18px;height:12px;border-radius:30px;
-      border:1px solid rgba(255,255,255,0.16);
-      box-shadow:0 0 22px rgba(34,211,238,0.18);
-      background: radial-gradient(circle at 50% 50%, rgba(34,211,238,0.45), rgba(15,23,42,0.55));
+        radial-gradient(900px 260px at 20% 0%, rgba(255,255,255,.10), transparent 55%),
+        linear-gradient(to bottom, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow:
+        0 18px 60px rgba(0,0,0,.55),
+        inset 0 1px 0 rgba(255,255,255,.08);
     }
 
-    nav{display:flex; align-items:center; gap:18px;}
-    nav a{
-      font-size:13.5px; color:var(--muted);
-      padding:8px 10px; border-radius:12px;
-      transition: background .2s ease, color .2s ease, transform .2s ease;
-    }
-    nav a:hover{color:var(--text); background:rgba(255,255,255,0.06); transform:translateY(-1px);}
-
-    .cta-row{display:flex; gap:10px; align-items:center;}
-
-    .btn{
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(255,255,255,0.06);
-      color:var(--text);
-      padding:10px 14px;
-      border-radius:14px;
-      font-size:13.5px;
-      cursor:pointer;
-      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
-      display:inline-flex; align-items:center; gap:10px; user-select:none;
-    }
-    .btn:hover{
-      transform:translateY(-2px);
-      background:rgba(255,255,255,0.08);
-      box-shadow:0 12px 30px rgba(0,0,0,0.35);
-      border-color:rgba(255,255,255,0.16);
-    }
-    .btn.primary{
-      background: linear-gradient(135deg, rgba(34,211,238,0.18), rgba(99,102,241,0.20));
-      border-color: rgba(34,211,238,0.22);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.40);
-    }
-    .btn.primary:hover{box-shadow:0 24px 70px rgba(0,0,0,0.55);}
-
-    /* HERO */
-    .hero{padding:44px 0 10px;}
-    .hero-wrap{
-      position:relative;
-      border-radius: var(--radius);
+    /* Barra superior */
+    .glass-nav{
+      background: linear-gradient(to bottom, rgba(10,14,26,.78), rgba(10,14,26,.55));
+      border: 1px solid rgba(255,255,255,.15);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
     }
 
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap:18px;
-      align-items:stretch;
+    .btn{ transition: transform .15s ease, filter .15s ease; }
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.07); }
+
+    .navlink{
+      color: rgba(255,255,255,.72);
+      transition: color .15s ease, text-shadow .15s ease;
+    }
+    .navlink:hover{
+      color: rgba(255,255,255,.96);
+      text-shadow: 0 0 18px rgba(99,102,241,.25);
     }
 
-    .hero-card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      padding:28px;
-      box-shadow:0 20px 50px rgba(0,0,0,0.35);
-      position:relative;
-      overflow:hidden;
-      min-height: 320px;
-    }
-    .hero-card:before{
-      content:"";
-      position:absolute; width:420px; height:420px; left:-200px; top:-220px;
-      background: radial-gradient(circle, rgba(34,211,238,0.18), transparent 60%);
-      filter: blur(10px);
-    }
-    .hero-card:after{
-      content:"";
-      position:absolute; width:420px; height:420px; right:-240px; top:-240px;
-      background: radial-gradient(circle, rgba(99,102,241,0.18), transparent 60%);
-      filter: blur(10px);
-    }
-
-    .kicker{
-      display:inline-flex; gap:8px; align-items:center;
-      font-size:12.5px; color:#cbd5e1;
-      padding:6px 10px; border-radius:999px;
-      border:1px solid rgba(255,255,255,0.10);
-      background: rgba(15,23,42,0.55);
-      position:relative; z-index:2;
-    }
-    .kicker .dot{
-      width:8px;height:8px;border-radius:99px;
-      background: radial-gradient(circle, rgba(34,211,238,0.95), rgba(99,102,241,0.65));
-      box-shadow:0 0 18px rgba(34,211,238,0.35);
-    }
-
-    h2{
-      margin:14px 0 10px;
-      font-size:44px;
-      letter-spacing:-0.8px;
-      line-height:1.06;
-      position:relative; z-index:2;
-    }
-    .sub{
-      margin:0 0 18px;
-      color:var(--muted);
-      font-size:15.5px;
-      line-height:1.65;
-      position:relative; z-index:2;
-      max-width:62ch;
-    }
-
-    .badges{display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 20px; position:relative; z-index:2;}
-    .badge{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:8px 10px; border-radius:999px;
-      border:1px solid rgba(255,255,255,0.10);
-      background: rgba(15,23,42,0.50);
-      color:#dbeafe;
-      font-size:12.8px;
-    }
-    .ico{
-      width:16px; height:16px; display:inline-block; border-radius:6px;
-      background: linear-gradient(135deg, rgba(34,211,238,0.35), rgba(99,102,241,0.35));
-      box-shadow:0 0 16px rgba(99,102,241,0.18);
-      border:1px solid rgba(255,255,255,0.10);
-    }
-
-    .hero-actions{display:flex; gap:10px; flex-wrap:wrap; position:relative; z-index:2;}
-
-    /* Right side = 2 cards (sin botones extra) */
-    .side{display:flex; flex-direction:column; gap:12px;}
-    .mini-card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      padding:18px;
-      box-shadow:0 18px 45px rgba(0,0,0,0.32);
-    }
-    .mini{color:var(--muted); font-size:12.2px; margin:0 0 6px; text-transform:uppercase; letter-spacing:.12em;}
-    .mini-card h3{margin:0 0 8px; font-size:16px;}
-    .mini-card p{margin:0; color:#cbd5e1; font-size:13.5px; line-height:1.55;}
-
-    /* Hero “eye + shield” (solo dentro del hero) */
-    .hero-eye{
-      position:absolute;
-      width:120px; height:120px;
-      left: 24px; top: 18px;
-      pointer-events:none;
-      opacity: .30;
-      filter: drop-shadow(0 10px 30px rgba(0,0,0,.45));
-      transition: transform .10s linear;
-      z-index:3;
-    }
-    .hero-eye .shell{
-      width:100%; height:100%;
-      border-radius: 26px;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(34,211,238,0.28), transparent 55%),
-        radial-gradient(circle at 70% 25%, rgba(99,102,241,0.28), transparent 55%),
-        linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
-      border: 1px solid rgba(255,255,255,0.12);
-      position:relative;
-      overflow:hidden;
-    }
-    .hero-eye .shield{
-      position:absolute;
-      inset: 20px 26px 26px 26px;
-      clip-path: polygon(50% 0%, 88% 16%, 88% 56%, 50% 100%, 12% 56%, 12% 16%);
-      border: 1px solid rgba(255,255,255,0.12);
-      background: linear-gradient(180deg, rgba(15,23,42,0.05), rgba(15,23,42,0.75));
-    }
-    .hero-eye .eye{
-      position:absolute;
-      left:50%; top:54%;
-      transform: translate(-50%,-50%);
-      width:44px; height:28px;
-      border-radius: 30px;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: radial-gradient(circle at 50% 50%, rgba(34,211,238,0.42), rgba(15,23,42,0.55));
-      box-shadow: 0 0 26px rgba(34,211,238,0.16);
-      display:grid; place-items:center;
-    }
-    .hero-eye .pupil{
-      width:10px; height:10px; border-radius:99px;
-      background: radial-gradient(circle, rgba(34,211,238,0.95), rgba(99,102,241,0.65));
-      box-shadow:0 0 18px rgba(34,211,238,0.35);
-      transform: translate(var(--px,0px), var(--py,0px));
-      transition: transform .08s linear;
-    }
-
-    /* Sections spacing (para respirar) */
-    section{padding: 70px 0;}
-    .section-head{margin-bottom: 18px;}
-    .section-head h3{margin:0; font-size:26px; letter-spacing:-0.4px;}
-    .section-head p{margin:8px 0 0; color:var(--muted); font-size:13.8px; line-height:1.55; max-width: 78ch;}
-
-    /* Steps */
-    .grid-3{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; margin-top: 18px;}
+    /* Cards “Cómo funciona” con acento */
     .step-card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 18px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.30);
-      cursor:pointer;
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-      position:relative;
-      min-height: 150px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .18s ease, filter .18s ease, border-color .18s ease;
+    }
+    .step-card::before{
+      content:"";
+      position:absolute;
+      left:14px;
+      right:14px;
+      top:12px;
+      height:2px;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(56,189,248,.75), rgba(99,102,241,.65), rgba(217,70,239,.70));
+      opacity:.60;
+    }
+    .step-card::after{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background: radial-gradient(520px 190px at 30% 10%, rgba(56,189,248,.10), transparent 60%);
+      pointer-events:none;
     }
     .step-card:hover{
-      transform: translateY(-4px);
-      box-shadow: 0 22px 55px rgba(0,0,0,0.42);
-      border-color: rgba(255,255,255,0.14);
-    }
-    .step{display:inline-block; font-size:12px; color:#a7b6c9; letter-spacing:.14em; text-transform:uppercase; margin-bottom:10px;}
-    .step-card h4{margin:0 0 8px; font-size:16.5px;}
-    .step-card p{margin:0; color:#cbd5e1; font-size:13.5px; line-height:1.55;}
-
-    /* Report section blocks */
-    .feature-grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      margin-top: 18px;
-    }
-    .feature{
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 18px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.30);
-    }
-    .feature h4{margin:0 0 10px; font-size:16px;}
-    .feature ul{margin:0; padding-left:18px; color:#cbd5e1; font-size:13.5px; line-height:1.7;}
-
-    /* Footer */
-    footer{
-      padding: 26px 0 38px;
-      color: var(--muted);
-      font-size: 12.8px;
-      border-top: 1px solid var(--line);
-      margin-top: 14px;
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+      border-color: rgba(255,255,255,.18);
     }
 
-    /* MODALS (SOLID) */
-    .modal{
-      position:fixed;
-      inset:0;
-      background: rgba(0,0,0,0.65);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:1000;
-      padding: 20px;
-    }
-    .modal.active{display:flex;}
-    .modal-content{
-      width: min(520px, 100%);
-      background: var(--panel2);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 16px;
-      padding: 22px 20px 18px;
-      box-shadow: var(--shadow);
+    /* Feature cards (Read-only/Baseline/Reportes) igual al estilo de las cards */
+    .feature-card{
       position: relative;
-      transform: translateY(8px) scale(0.985);
-      opacity: 0;
-      animation: pop .18s ease forwards;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .18s ease, filter .18s ease, border-color .18s ease;
     }
-    @keyframes pop{to{transform:translateY(0) scale(1); opacity:1;}}
-    .modal-close{
-      position:absolute; top:12px; right:12px;
-      width:38px;height:38px;border-radius:12px;
-      border:1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.05);
-      color:#cbd5e1;
-      cursor:pointer;
-      display:grid; place-items:center;
-      font-size:16px;
-      transition: transform .15s ease, background .15s ease, color .15s ease;
+    .feature-card::before{
+      content:"";
+      position:absolute;
+      left:14px;
+      right:14px;
+      top:12px;
+      height:2px;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(56,189,248,.75), rgba(99,102,241,.65), rgba(217,70,239,.70));
+      opacity:.60;
     }
-    .modal-close:hover{transform: translateY(-1px); background: rgba(255,255,255,0.08); color:#fff;}
-    .modal-title{margin:0 42px 10px 0; font-size:18px; letter-spacing:-0.2px;}
-    .modal-body{margin:0 0 12px; color:#cbd5e1; font-size:13.8px; line-height:1.65;}
-    .modal-list{margin:0; padding-left:18px; color:#cbd5e1; font-size:13.6px; line-height:1.75;}
-    .modal-actions{display:flex; justify-content:flex-end; gap:10px; margin-top: 16px;}
+    .feature-card::after{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background: radial-gradient(520px 190px at 30% 10%, rgba(56,189,248,.10), transparent 60%);
+      pointer-events:none;
+    }
+    .feature-card:hover{
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+      border-color: rgba(255,255,255,.18);
+    }
 
-    /* Responsive */
-    @media (max-width: 980px){
-      nav{display:none;}
-      .hero-grid{grid-template-columns:1fr;}
-      .hero-eye{display:none;} /* ojo solo desktop */
+    /* Emblema flotante */
+    .emblem{
+      position: fixed;
+      left: 16px;
+      bottom: 16px;
+      width: 66px;
+      height: 66px;
+      z-index: 40;
+      pointer-events: none;
+      opacity: .95;
+      filter: drop-shadow(0 18px 45px rgba(0,0,0,.60));
     }
-    @media (max-width: 860px){
-      h2{font-size:38px;}
-      section{padding:56px 0;}
-      .grid-3{grid-template-columns:1fr;}
-      .feature-grid{grid-template-columns:1fr;}
+    @media (max-width: 640px){
+      .emblem{ width: 54px; height: 54px; left: 12px; bottom: 12px; }
     }
-    @media (prefers-reduced-motion: reduce){
-      *{animation:none!important; transition:none!important;}
+
+    /* Popover */
+    .popover{
+      position: absolute;
+      left: 0;
+      top: calc(100% + 10px);
+      width: min(420px, 92vw);
+      z-index: 60;
+      display: none;
     }
+    .popover.open{ display:block; }
   </style>
 </head>
 
-<body>
-  <!-- Topbar -->
-  <div class="topbar">
-    <div class="container">
-      <div class="inner">
-        <div class="brand">
-          <div class="logo" aria-hidden="true"></div>
-          <div>
-            <h1>Observo</h1>
-            <p>Cyber risk visibility for startups</p>
-          </div>
-        </div>
+<body class="text-white">
 
-        <nav aria-label="Secciones">
-          <a href="#como-funciona">Cómo funciona</a>
-          <a href="#reportes">Reportes</a>
-          <a href="#incluye">Qué incluye</a>
+  <!-- Emblema flotante -->
+  <svg class="emblem" viewBox="0 0 120 120" aria-hidden="true">
+    <defs>
+      <linearGradient id="g1" x1="0" x2="1">
+        <stop offset="0" stop-color="#38BDF8"/>
+        <stop offset="0.5" stop-color="#6366F1"/>
+        <stop offset="1" stop-color="#D946EF"/>
+      </linearGradient>
+      <radialGradient id="g2" cx="30%" cy="30%" r="80%">
+        <stop offset="0" stop-color="#ffffff" stop-opacity="0.16"/>
+        <stop offset="1" stop-color="#ffffff" stop-opacity="0.04"/>
+      </radialGradient>
+    </defs>
+
+    <path d="M60 8 C78 18,92 18,104 22 C104 62,90 92,60 112 C30 92,16 62,16 22 C28 18,42 18,60 8Z"
+          fill="url(#g2)" stroke="url(#g1)" stroke-width="3" opacity="0.98"/>
+
+    <path d="M60 16 C76 25,88 25,98 28 C98 62,86 86,60 103 C34 86,22 62,22 28 C32 25,44 25,60 16Z"
+          fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+
+    <g class="ob-eye">
+      <path d="M30 62 C40 48,52 40,60 40 C68 40,80 48,90 62 C80 76,68 84,60 84 C52 84,40 76,30 62Z"
+            fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
+      <circle class="ob-iris" cx="60" cy="62" r="14" fill="rgba(56,189,248,0.18)" stroke="rgba(56,189,248,0.45)" stroke-width="2"/>
+      <circle class="ob-pupil" cx="60" cy="62" r="6" fill="rgba(255,255,255,0.92)"/>
+      <circle cx="66" cy="56" r="3" fill="rgba(255,255,255,0.30)"/>
+    </g>
+  </svg>
+
+  <!-- NAV -->
+  <header class="sticky top-0 z-50">
+    <div class="mx-auto max-w-6xl px-4">
+      <div class="mt-4 glass-nav rounded-2xl px-4 py-3 flex items-center justify-between">
+        <a href="#top" class="flex items-center gap-3 group">
+          <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500"></div>
+          <span class="font-semibold tracking-tight">Observo</span>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+          <a class="navlink" href="#como">Cómo funciona</a>
+          <a class="navlink" href="#incluye">Qué incluye</a>
+          <a class="navlink" href="#reportes">Reportes</a>
         </nav>
 
-        <div class="cta-row">
-          <button class="btn" data-open="modal-reportes">Ver ejemplo</button>
-          <a class="btn primary" href="mailto:contacto@observosec.com?subject=Quiero%20Observo&body=Hola%2C%20quiero%20un%20reporte%20para%20mi%20dominio.%0A%0ADominio%3A%20%0A" rel="noopener">Pedir demo</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- HERO -->
-  <header class="hero">
-    <div class="container">
-      <div class="hero-wrap" id="heroArea">
-        <!-- OJO + ESCUDO (solo hero) -->
-        <div class="hero-eye" id="heroEye" aria-hidden="true">
-          <div class="shell">
-            <div class="shield"></div>
-            <div class="eye"><div class="pupil" id="pupil"></div></div>
-          </div>
-        </div>
-
-        <div class="hero-grid">
-          <div class="hero-card">
-            <div class="kicker"><span class="dot"></span> Evidencia clara, sin burocracia</div>
-
-            <h2>Reportes de seguridad que tu cliente <span style="text-shadow:0 0 28px var(--glow2)">entiende</span>.</h2>
-
-            <p class="sub">
-              Observo transforma señales visibles de tu web (HTTPS/TLS, headers y superficie expuesta)
-              en un reporte <b>listo para compartir</b>: qué está bien, qué falta y qué hacer ahora — sin jerga.
-            </p>
-
-            <div class="badges">
-              <span class="badge"><span class="ico"></span> Resumen ejecutivo</span>
-              <span class="badge"><span class="ico"></span> Checks verificables</span>
-              <span class="badge"><span class="ico"></span> “No aplica” cuando corresponde</span>
-              <span class="badge"><span class="ico"></span> Enfoque startup</span>
-            </div>
-
-            <!-- SOLO 2 botones (no más) -->
-            <div class="hero-actions">
-              <button class="btn primary" data-open="modal-reportes">Ver ejemplo de reporte</button>
-              <a class="btn" href="#como-funciona">Cómo funciona</a>
-            </div>
-          </div>
-
-          <aside class="side">
-            <div class="mini-card">
-              <p class="mini">Para clientes</p>
-              <h3>Reportes listos para compartir</h3>
-              <p>Resumen ejecutivo + findings con evidencia simple. Tu cliente entiende qué está bien, qué falta y qué hacer.</p>
-            </div>
-
-            <div class="mini-card">
-              <p class="mini">Para founders</p>
-              <h3>Menos ruido. Más claridad.</h3>
-              <p>Prioriza mejoras que aumentan confianza (clientes, partners y equipo). Ideal para ventas B2B y decisiones rápidas.</p>
-            </div>
-          </aside>
+        <div class="flex items-center gap-3">
+          <a href="/pricing.html"
+             class="btn hidden sm:inline-flex px-4 py-2 rounded-xl glass text-sm text-white/90 hover:text-white">
+            Ver planes
+          </a>
+          <a href="#demo"
+             class="btn inline-flex px-4 py-2 rounded-xl text-sm font-semibold
+                    bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
+            Pedir demo
+          </a>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- CÓMO FUNCIONA -->
-  <section id="como-funciona">
-    <div class="container">
-      <div class="section-head">
-        <h3>Cómo funciona</h3>
-        <p>Un flujo simple en 3 pasos. Sin overengineering. Sin “pantallazos” por todos lados.</p>
-      </div>
+  <main id="top" class="mx-auto max-w-6xl px-4">
 
-      <div class="grid-3">
-        <div class="step-card" data-modal="modal-paso-1" role="button" tabindex="0">
-          <span class="step">Paso 01</span>
-          <h4>Análisis inicial</h4>
-          <p>Revisamos señales visibles: HTTPS/TLS, headers de seguridad y superficie expuesta.</p>
+    <!-- HERO -->
+    <section class="pt-10 pb-8">
+      <div class="glass rounded-3xl p-10 md:p-12 border border-white/10">
+        <div class="inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full bg-white/10 text-white/80 border border-white/10">
+          <span class="h-1.5 w-1.5 rounded-full bg-emerald-300"></span>
+          Seguridad visible · Baseline · Cambios · Reportes
         </div>
 
-        <div class="step-card" data-modal="modal-paso-2" role="button" tabindex="0">
-          <span class="step">Paso 02</span>
-          <h4>Baseline confiable</h4>
-          <p>Guardamos una referencia del “hoy” para comparar y explicar cambios después.</p>
-        </div>
+        <div class="mt-7 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          <!-- Izquierda -->
+          <div class="lg:col-span-7">
+            <h1 class="text-3xl md:text-5xl font-semibold tracking-tight leading-tight">
+              Seguridad que se entiende.<br class="hidden md:block"/>
+              Evidencia que se comparte.
+            </h1>
 
-        <div class="step-card" data-modal="modal-paso-3" role="button" tabindex="0">
-          <span class="step">Paso 03</span>
-          <h4>Cambios y reportes</h4>
-          <p>Detectamos variaciones relevantes y las dejamos claras para decidir con confianza.</p>
+            <p class="mt-4 text-white/70 text-base md:text-lg leading-relaxed max-w-2xl">
+              Observo te da visibilidad del estado de seguridad web, guarda una referencia confiable y detecta cambios relevantes con el tiempo.
+              Sin jerga innecesaria y sin “ruido”.
+            </p>
+
+            <!-- Feature cards (como la imagen 2 + popover) -->
+            <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <!-- Read-only -->
+              <div class="relative">
+                <button type="button"
+                        class="glass feature-card w-full text-left rounded-2xl px-4 py-4 border border-white/10"
+                        data-popover="pop-readonly">
+                  <div class="font-semibold">Read-only</div>
+                  <div class="text-sm text-white/70">Sin credenciales.</div>
+                </button>
+
+                <div id="pop-readonly" class="popover glass rounded-2xl p-4 border border-white/10">
+                  <div class="flex items-start justify-between gap-4">
+                    <div>
+                      <div class="text-sm font-semibold">Read-only (sin credenciales)</div>
+                      <p class="mt-1 text-sm text-white/70">
+                        Observo analiza señales públicas del sitio (TLS, headers, exposición) sin pedir accesos.
+                        Ideal para demostrar postura de seguridad sin fricción.
+                      </p>
+                      <ul class="mt-3 text-sm text-white/70 space-y-1">
+                        <li>• No necesita usuario/contraseña.</li>
+                        <li>• No modifica tu sistema.</li>
+                        <li>• Menos riesgo operacional.</li>
+                      </ul>
+                    </div>
+                    <button class="text-white/60 hover:text-white" data-close="pop-readonly" aria-label="Cerrar">✕</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Baseline -->
+              <div class="relative">
+                <button type="button"
+                        class="glass feature-card w-full text-left rounded-2xl px-4 py-4 border border-white/10"
+                        data-popover="pop-baseline">
+                  <div class="font-semibold">Baseline</div>
+                  <div class="text-sm text-white/70">Comparación real.</div>
+                </button>
+
+                <div id="pop-baseline" class="popover glass rounded-2xl p-4 border border-white/10">
+                  <div class="flex items-start justify-between gap-4">
+                    <div>
+                      <div class="text-sm font-semibold">Baseline (foto del “hoy”)</div>
+                      <p class="mt-1 text-sm text-white/70">
+                        Guardamos una referencia del estado actual y luego comparamos para detectar cambios relevantes
+                        (configuración, headers, comportamientos visibles).
+                      </p>
+                      <ul class="mt-3 text-sm text-white/70 space-y-1">
+                        <li>• Detecta degradaciones con el tiempo.</li>
+                        <li>• Justifica cambios con evidencia.</li>
+                        <li>• Útil para cambios de equipo/infra.</li>
+                      </ul>
+                    </div>
+                    <button class="text-white/60 hover:text-white" data-close="pop-baseline" aria-label="Cerrar">✕</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Reportes -->
+              <div class="relative">
+                <button type="button"
+                        class="glass feature-card w-full text-left rounded-2xl px-4 py-4 border border-white/10"
+                        data-popover="pop-reportes">
+                  <div class="font-semibold">Reportes</div>
+                  <div class="text-sm text-white/70">Para clientes.</div>
+                </button>
+
+                <div id="pop-reportes" class="popover glass rounded-2xl p-4 border border-white/10">
+                  <div class="flex items-start justify-between gap-4">
+                    <div>
+                      <div class="text-sm font-semibold">Reportes listos para compartir</div>
+                      <p class="mt-1 text-sm text-white/70">
+                        Entregamos un resumen ejecutivo y evidencia simple para que un cliente entienda
+                        “qué está bien”, “qué falta” y “qué hacer ahora”.
+                      </p>
+                      <ul class="mt-3 text-sm text-white/70 space-y-1">
+                        <li>• Resumen ejecutivo + findings.</li>
+                        <li>• Evidencia simple (checks).</li>
+                        <li>• Comunicación sin jerga.</li>
+                      </ul>
+                    </div>
+                    <button class="text-white/60 hover:text-white" data-close="pop-reportes" aria-label="Cerrar">✕</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Derecha: Manifiesto -->
+          <div class="lg:col-span-5">
+            <div class="glass rounded-3xl p-6 border border-white/10">
+              <div class="flex items-center justify-between">
+                <div class="text-sm text-white/70">Manifiesto</div>
+                <div class="text-xs px-2 py-1 rounded-full bg-white/10 border border-white/10 text-white/70">
+                  Startup
+                </div>
+              </div>
+
+              <div class="mt-5 glass rounded-2xl p-5 flex items-center gap-4 border border-white/10">
+                <svg viewBox="0 0 120 120" width="62" height="62" aria-hidden="true" class="shrink-0">
+                  <defs>
+                    <linearGradient id="g1m" x1="0" x2="1">
+                      <stop offset="0" stop-color="#38BDF8"/>
+                      <stop offset="0.5" stop-color="#6366F1"/>
+                      <stop offset="1" stop-color="#D946EF"/>
+                    </linearGradient>
+                    <radialGradient id="g2m" cx="30%" cy="30%" r="80%">
+                      <stop offset="0" stop-color="#ffffff" stop-opacity="0.14"/>
+                      <stop offset="1" stop-color="#ffffff" stop-opacity="0.04"/>
+                    </radialGradient>
+                  </defs>
+
+                  <path d="M60 8 C78 18,92 18,104 22 C104 62,90 92,60 112 C30 92,16 62,16 22 C28 18,42 18,60 8Z"
+                        fill="url(#g2m)" stroke="url(#g1m)" stroke-width="3"/>
+
+                  <g class="ob-eye">
+                    <path d="M30 62 C40 48,52 40,60 40 C68 40,80 48,90 62 C80 76,68 84,60 84 C52 84,40 76,30 62Z"
+                          fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
+                    <circle class="ob-iris" cx="60" cy="62" r="14"
+                            fill="rgba(56,189,248,0.18)" stroke="rgba(56,189,248,0.45)" stroke-width="2"/>
+                    <circle class="ob-pupil" cx="60" cy="62" r="6" fill="rgba(255,255,255,0.92)"/>
+                    <circle cx="66" cy="56" r="3" fill="rgba(255,255,255,0.30)"/>
+                  </g>
+                </svg>
+
+                <div>
+                  <div class="text-sm font-semibold">Startup ayudando startups</div>
+                  <div class="text-xs text-white/60 mt-1">
+                    Convertimos señales técnicas en confianza que se puede explicar y mostrar.
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-5 space-y-3">
+                <div class="glass rounded-2xl p-4 border border-white/10">
+                  <div class="text-xs tracking-widest text-white/50">MISIÓN</div>
+                  <div class="mt-1 text-sm text-white/80">
+                    Ayudar a startups a demostrar seguridad real con evidencia clara, sin burocracia.
+                  </div>
+                </div>
+
+                <div class="glass rounded-2xl p-4 border border-white/10">
+                  <div class="text-xs tracking-widest text-white/50">VISIÓN</div>
+                  <div class="mt-1 text-sm text-white/80">
+                    Que vender online no sea “confiar a ciegas”: que la seguridad se vea y se entienda.
+                  </div>
+                </div>
+
+                <div class="glass rounded-2xl p-4 border border-white/10">
+                  <div class="text-xs tracking-widest text-white/50">PROMESA</div>
+                  <div class="mt-1 text-sm text-white/80">
+                    Menos ruido. Más claridad. Reportes listos para clientes, partners y equipo.
+                  </div>
+                </div>
+              </div>
+
+              <p class="mt-5 text-xs text-white/50">
+                Observo es visibilidad & reporting (no pentesting). Read-only, sin credenciales.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- REPORTES -->
-  <section id="reportes">
-    <div class="container">
-      <div class="section-head">
-        <h3>Reportes</h3>
-        <p>Hechos para personas no técnicas. Si algo no aplica (por ejemplo, no hay login), se marca explícito para no “castigar” el score.</p>
+    <!-- CÓMO FUNCIONA -->
+    <section id="como" class="py-8">
+      <div class="glass rounded-2xl p-10 border border-white/10">
+        <h2 class="text-2xl md:text-3xl font-semibold">Cómo funciona</h2>
+        <p class="mt-2 text-white/70 max-w-2xl">
+          Un flujo simple en 3 pasos. Sin overengineering. Sin “pantallazos” por todos lados.
+        </p>
+
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="glass step-card rounded-2xl p-6 border border-white/10">
+            <div class="text-xs tracking-widest text-white/50">PASO 01</div>
+            <h3 class="mt-2 font-semibold text-lg">Análisis inicial</h3>
+            <p class="mt-2 text-sm text-white/70">
+              Revisamos señales visibles: HTTPS/TLS, headers de seguridad y superficie expuesta.
+            </p>
+          </div>
+
+          <div class="glass step-card rounded-2xl p-6 border border-white/10">
+            <div class="text-xs tracking-widest text-white/50">PASO 02</div>
+            <h3 class="mt-2 font-semibold text-lg">Baseline confiable</h3>
+            <p class="mt-2 text-sm text-white/70">
+              Guardamos una referencia del “hoy” para comparar y explicar cambios después.
+            </p>
+          </div>
+
+          <div class="glass step-card rounded-2xl p-6 border border-white/10">
+            <div class="text-xs tracking-widest text-white/50">PASO 03</div>
+            <h3 class="mt-2 font-semibold text-lg">Cambios y reportes</h3>
+            <p class="mt-2 text-sm text-white/70">
+              Detectamos variaciones relevantes y las dejamos claras para decidir con confianza.
+            </p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="feature-grid">
-        <div class="feature">
-          <h4>Contenido del reporte</h4>
-          <ul>
-            <li><b>Resumen ejecutivo</b> (1 página): estado y decisiones recomendadas.</li>
-            <li><b>Findings con evidencia</b>: qué se detectó y por qué importa.</li>
-            <li><b>Acciones</b>: quick wins vs cambios estructurales.</li>
-            <li><b>“No aplica”</b> cuando corresponde (login, pagos, DB expuesta, etc.).</li>
+    <!-- INCLUYE + REPORTES -->
+    <section class="py-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div id="incluye" class="glass rounded-2xl p-10 border border-white/10">
+          <h2 class="text-2xl md:text-3xl font-semibold">Qué incluye</h2>
+          <p class="mt-2 text-white/70">Lo esencial para “seguridad visible”, sin ruido.</p>
+
+          <ul class="mt-6 space-y-3 text-sm text-white/75">
+            <li class="glass rounded-xl px-4 py-3 border border-white/10">✔ Verificación HTTPS/TLS y expiración</li>
+            <li class="glass rounded-xl px-4 py-3 border border-white/10">✔ Headers de seguridad (CSP, HSTS, XFO, etc.)</li>
+            <li class="glass rounded-xl px-4 py-3 border border-white/10">✔ Baseline + comparación (diff) de cambios</li>
+            <li class="glass rounded-xl px-4 py-3 border border-white/10">✔ Reporte “cliente-friendly” y exportable</li>
           </ul>
         </div>
 
-        <div class="feature" id="incluye">
-          <h4>Qué incluye (checks)</h4>
-          <ul>
-            <li>HTTPS/TLS: validez, vigencia y configuración visible.</li>
-            <li>Headers de seguridad (visión práctica).</li>
-            <li>Superficie expuesta: endpoints, redirecciones, pistas comunes.</li>
-            <li>Baseline + diff: cambios relevantes entre ejecuciones.</li>
-          </ul>
+        <div id="reportes" class="glass rounded-2xl p-10 border border-white/10">
+          <h2 class="text-2xl md:text-3xl font-semibold">Reportes</h2>
+          <p class="mt-2 text-white/70">Hechos para que un cliente entienda y confíe.</p>
+
+          <div class="mt-6 space-y-4">
+            <div class="glass rounded-xl p-4 border border-white/10">
+              <h4 class="font-semibold">Resumen ejecutivo</h4>
+              <p class="text-sm text-white/70 mt-1">Qué está bien, qué cambió y qué acción conviene.</p>
+            </div>
+
+            <div class="glass rounded-xl p-4 border border-white/10">
+              <h4 class="font-semibold">Evidencia simple</h4>
+              <p class="text-sm text-white/70 mt-1">Checks + explicación humana, sin jerga.</p>
+            </div>
+
+            <div class="glass rounded-xl p-4 border border-white/10">
+              <h4 class="font-semibold">Historial de cambios</h4>
+              <p class="text-sm text-white/70 mt-1">Trazabilidad del estado de seguridad en el tiempo.</p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer>
-    <div class="container">
-      <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;">
-        <div>© <span id="year"></span> Observo — Security visibility & reporting</div>
-        <div style="display:flex; gap:10px; align-items:center;">
-          <button class="btn" data-open="modal-legal">Aviso</button>
-          <a class="btn" href="mailto:contacto@observosec.com">contacto@observosec.com</a>
+    <!-- DEMO -->
+    <section id="demo" class="py-8 pb-14">
+      <div class="glass rounded-2xl p-10 border border-white/10">
+        <h2 class="text-2xl md:text-3xl font-semibold">Pedir demo</h2>
+        <p class="mt-2 text-white/70 max-w-2xl">
+          Envíanos tu dominio y el objetivo. Te mostramos cómo se vería tu reporte.
+        </p>
+
+        <div class="mt-6 flex flex-col sm:flex-row gap-3">
+          <a href="mailto:ventas@observo.app?subject=Demo%20Observo&body=Hola%2C%20quiero%20una%20demo%20de%20Observo.%0A%0ADominio%3A%20%0AObjetivo%3A%20%0A"
+             class="btn inline-flex justify-center px-5 py-3 rounded-2xl font-semibold
+                    bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
+            Pedir demo por email
+          </a>
+
+          <a href="#top" class="btn inline-flex justify-center px-5 py-3 rounded-2xl glass text-white/90 border border-white/10">
+            Volver arriba
+          </a>
         </div>
+
+        <p class="mt-6 text-xs text-white/50">
+          Nota: Observo es “security visibility & reporting”, no pentesting. No explota vulnerabilidades ni solicita credenciales.
+        </p>
       </div>
-    </div>
-  </footer>
 
-  <!-- MODAL: EJEMPLO REPORTE -->
-  <div id="modal-reportes" class="modal" aria-hidden="true">
-    <div class="modal-content" role="dialog" aria-modal="true" aria-label="Ejemplo de reporte">
-      <button class="modal-close" aria-label="Cerrar">✕</button>
-      <h3 class="modal-title">Ejemplo de reporte</h3>
-      <p class="modal-body">Lo que recibe tu cliente (sin jerga, con evidencia y acciones).</p>
-      <ul class="modal-list">
-        <li><b>Resumen ejecutivo</b>: estado + decisión recomendada.</li>
-        <li><b>Findings</b>: evidencia + impacto + prioridad.</li>
-        <li><b>Acciones</b>: quick wins y mejoras recomendadas.</li>
-        <li><b>No aplica</b>: si el componente no existe, se marca.</li>
-      </ul>
-      <div class="modal-actions">
-        <button class="btn" data-close>Cerrar</button>
-      </div>
-    </div>
-  </div>
+      <footer class="mt-8 pb-6 text-xs text-white/45 text-center">
+        © 2025 Observo — Seguridad que se ve.
+      </footer>
+    </section>
 
-  <!-- MODALES PASOS (CORTOS) -->
-  <div id="modal-paso-1" class="modal" aria-hidden="true">
-    <div class="modal-content" role="dialog" aria-modal="true" aria-label="Paso 01">
-      <button class="modal-close" aria-label="Cerrar">✕</button>
-      <h3 class="modal-title">Paso 01 — Análisis inicial</h3>
-      <p class="modal-body">Señales visibles que un cliente puede verificar desde fuera.</p>
-      <ul class="modal-list">
-        <li>HTTPS/TLS (vigencia y configuración visible).</li>
-        <li>Headers de seguridad (protecciones base).</li>
-        <li>Superficie expuesta (rutas típicas, redirecciones).</li>
-      </ul>
-      <div class="modal-actions"><button class="btn" data-close>Listo</button></div>
-    </div>
-  </div>
+  </main>
 
-  <div id="modal-paso-2" class="modal" aria-hidden="true">
-    <div class="modal-content" role="dialog" aria-modal="true" aria-label="Paso 02">
-      <button class="modal-close" aria-label="Cerrar">✕</button>
-      <h3 class="modal-title">Paso 02 — Baseline confiable</h3>
-      <p class="modal-body">Guardamos el “hoy” para explicar cambios con evidencia.</p>
-      <ul class="modal-list">
-        <li>Baseline por dominio.</li>
-        <li>Comparación entre ejecuciones.</li>
-        <li>Historial simple para compartir.</li>
-      </ul>
-      <div class="modal-actions"><button class="btn" data-close>Listo</button></div>
-    </div>
-  </div>
-
-  <div id="modal-paso-3" class="modal" aria-hidden="true">
-    <div class="modal-content" role="dialog" aria-modal="true" aria-label="Paso 03">
-      <button class="modal-close" aria-label="Cerrar">✕</button>
-      <h3 class="modal-title">Paso 03 — Cambios y reportes</h3>
-      <p class="modal-body">Variaciones relevantes, impacto y acciones claras.</p>
-      <ul class="modal-list">
-        <li>Diferencias vs baseline.</li>
-        <li>Prioridad por impacto/urgencia.</li>
-        <li>Reporte final listo para compartir.</li>
-      </ul>
-      <div class="modal-actions"><button class="btn" data-close>Listo</button></div>
-    </div>
-  </div>
-
-  <!-- LEGAL -->
-  <div id="modal-legal" class="modal" aria-hidden="true">
-    <div class="modal-content" role="dialog" aria-modal="true" aria-label="Aviso">
-      <button class="modal-close" aria-label="Cerrar">✕</button>
-      <h3 class="modal-title">Aviso</h3>
-      <p class="modal-body">
-        Observo analiza señales visibles (externas) y genera reportes de evidencia. No reemplaza pentesting ni auditorías completas,
-        pero ayuda a mejorar postura y comunicación de seguridad.
-      </p>
-      <div class="modal-actions"><button class="btn" data-close>Ok</button></div>
-    </div>
-  </div>
-
+  <!-- Scripts: ojo + popovers -->
   <script>
-    // Year
-    document.getElementById("year").textContent = new Date().getFullYear();
+  // Ojo sigue el puntero (todos los ojos)
+  (function(){
+    const eyes = Array.from(document.querySelectorAll(".ob-eye"));
+    if (!eyes.length) return;
 
-    // ===== Modals: open/close (X, click fuera, ESC) =====
-    let lastActive = null;
+    const MAX_R = 6.5;
 
-    function openModal(modal){
-      if(!modal) return;
-      lastActive = document.activeElement;
-      modal.classList.add("active");
-      modal.setAttribute("aria-hidden","false");
-      document.body.style.overflow = "hidden";
-      const btn = modal.querySelector(".modal-close");
-      if(btn) btn.focus();
+    function moveEye(eye, clientX, clientY){
+      const iris  = eye.querySelector(".ob-iris");
+      const pupil = eye.querySelector(".ob-pupil");
+      if (!iris || !pupil) return;
+
+      const rect = iris.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top  + rect.height / 2;
+
+      const dx = clientX - cx;
+      const dy = clientY - cy;
+
+      const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+      const nx = dx / dist;
+      const ny = dy / dist;
+
+      const r = Math.min(MAX_R, dist / 40);
+      const x = 60 + nx * r;
+      const y = 62 + ny * r;
+
+      pupil.setAttribute("cx", x.toFixed(2));
+      pupil.setAttribute("cy", y.toFixed(2));
     }
-    function closeModal(modal){
-      if(!modal) return;
-      modal.classList.remove("active");
-      modal.setAttribute("aria-hidden","true");
-      document.body.style.overflow = "";
-      if(lastActive && typeof lastActive.focus === "function") lastActive.focus();
+
+    function moveAll(x, y){
+      eyes.forEach(eye => moveEye(eye, x, y));
     }
 
-    document.querySelectorAll("[data-open]").forEach(el=>{
-      el.addEventListener("click", ()=>{
-        openModal(document.getElementById(el.getAttribute("data-open")));
-      });
-    });
+    window.addEventListener("mousemove", (e) => moveAll(e.clientX, e.clientY), { passive: true });
+    window.addEventListener("touchmove", (e) => {
+      if (!e.touches || !e.touches[0]) return;
+      moveAll(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+  })();
 
-    // Step cards open + Enter/Space
-    document.querySelectorAll(".step-card").forEach(card=>{
-      const go = ()=> openModal(document.getElementById(card.dataset.modal));
-      card.addEventListener("click", go);
-      card.addEventListener("keydown", (e)=>{
-        if(e.key==="Enter" || e.key===" "){
-          e.preventDefault(); go();
+  // Popovers (features)
+  (function(){
+    const triggers = Array.from(document.querySelectorAll("[data-popover]"));
+    const popovers = new Map();
+
+    function closeAll(){
+      for (const el of popovers.values()){
+        el.classList.remove("open");
+        el.setAttribute("aria-hidden", "true");
+      }
+    }
+
+    triggers.forEach(btn => {
+      const id = btn.getAttribute("data-popover");
+      const pop = document.getElementById(id);
+      if (!pop) return;
+
+      popovers.set(id, pop);
+      pop.setAttribute("aria-hidden", "true");
+
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isOpen = pop.classList.contains("open");
+        closeAll();
+        if (!isOpen){
+          pop.classList.add("open");
+          pop.setAttribute("aria-hidden", "false");
         }
       });
     });
 
-    document.addEventListener("click", (e)=>{
-      if(e.target.matches(".modal-close")) return closeModal(e.target.closest(".modal"));
-      if(e.target.matches("[data-close]")) return closeModal(e.target.closest(".modal"));
-      if(e.target.classList.contains("modal")) return closeModal(e.target);
-    });
-
-    document.addEventListener("keydown", (e)=>{
-      if(e.key==="Escape"){
-        const active = document.querySelector(".modal.active");
-        if(active) closeModal(active);
+    // Close buttons
+    document.addEventListener("click", (e) => {
+      const closeId = e.target && e.target.getAttribute && e.target.getAttribute("data-close");
+      if (closeId && popovers.has(closeId)){
+        popovers.get(closeId).classList.remove("open");
+        popovers.get(closeId).setAttribute("aria-hidden","true");
+        e.stopPropagation();
+        return;
       }
+      closeAll();
     });
 
-    // ===== Hero eye follows pointer (SOLO dentro del hero) =====
-    const hero = document.getElementById("heroArea");
-    const pupil = document.getElementById("pupil");
-    const eyeWrap = document.getElementById("heroEye");
-
-    function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
-
-    hero.addEventListener("mousemove", (e)=>{
-      const r = hero.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width;   // 0..1
-      const y = (e.clientY - r.top)  / r.height;  // 0..1
-
-      // pupil micro-move
-      const px = (x - 0.5) * 10;   // -5..5 aprox
-      const py = (y - 0.5) * 10;
-
-      pupil.style.setProperty("--px", clamp(px, -6, 6) + "px");
-      pupil.style.setProperty("--py", clamp(py, -5, 5) + "px");
-
-      // move whole badge slightly (premium parallax)
-      const tx = (x - 0.5) * 14;
-      const ty = (y - 0.5) * 14;
-      eyeWrap.style.transform = `translate(${tx}px, ${ty}px)`;
+    // ESC to close
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeAll();
     });
 
-    hero.addEventListener("mouseleave", ()=>{
-      pupil.style.setProperty("--px", "0px");
-      pupil.style.setProperty("--py", "0px");
-      eyeWrap.style.transform = "translate(0,0)";
-    });
+    // Prevent click inside popover from closing immediately
+    for (const pop of popovers.values()){
+      pop.addEventListener("click", (e) => e.stopPropagation());
+    }
+  })();
   </script>
 </body>
 </html>
-
