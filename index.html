@@ -3,749 +3,389 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Observo — Seguridad observable para startups</title>
+  <title>Observo — Seguridad que se ve</title>
 
-  <meta name="description" content="Observo monitorea, analiza y alerta sobre la seguridad de tu plataforma. Ideal para startups: confianza visible, reportes claros y un flujo simple con Observo CLI." />
-  <meta name="theme-color" content="#0b0f1a" />
+  <!-- SEO básico -->
+  <meta name="description" content="Observo monitorea, observa y alerta sobre la seguridad de tu plataforma. Confianza real para startups y negocios digitales." />
 
+  <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --bg:#070a12;
-      --bg2:#0b1224;
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.04);
-      --border: rgba(255,255,255,.10);
-      --text:#e5e7eb;
-      --muted:#9ca3af;
-
-      --primary:#3b82f6;
-      --primary2:#0ea5e9;
-      --good:#22c55e;
-      --warn:#f59e0b;
-
-      --r:16px;
-      --shadow: 0 18px 55px rgba(0,0,0,.45);
+    :root {
+      --bg: #0b0f1a;
+      --bg-soft: #12182a;
+      --primary: #3b82f6;
+      --primary-soft: rgba(59,130,246,0.15);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: rgba(255,255,255,0.08);
+      --radius: 16px;
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:
-        radial-gradient(1100px 520px at 18% -12%, rgba(59,130,246,.22), transparent),
-        radial-gradient(900px 480px at 85% -6%, rgba(14,165,233,.18), transparent),
-        radial-gradient(700px 420px at 50% 120%, rgba(59,130,246,.10), transparent),
-        linear-gradient(180deg, var(--bg), var(--bg2));
-      color:var(--text);
-      line-height:1.6;
-      overflow-x:hidden;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    ::selection{background: rgba(59,130,246,.28);}
-    a{color:inherit;text-decoration:none}
 
-    .container{width:min(1120px, 92%); margin:0 auto;}
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(59,130,246,0.15), transparent),
+                  radial-gradient(1000px 500px at 80% 0%, rgba(14,165,233,0.12), transparent),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
 
-    /* Topbar */
-    header{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(12px);
-      background: rgba(7,10,18,.55);
-      border-bottom: 1px solid rgba(255,255,255,.06);
+    a {
+      color: inherit;
+      text-decoration: none;
     }
-    .top{
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 16px 0;
-      gap: 18px;
+
+    /* ---------- Layout ---------- */
+
+    header {
+      padding: 28px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-      font-weight:800; letter-spacing:.2px;
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 800;
+      font-size: 1.25rem;
     }
-    .brand svg{width:42px;height:42px; flex: 0 0 auto; filter: drop-shadow(0 0 18px rgba(59,130,246,.35));}
-    nav{display:flex; align-items:center; gap:18px; flex-wrap:wrap;}
-    nav a{
+
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--primary), #0ea5e9);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      color: #fff;
+      box-shadow: 0 0 25px rgba(59,130,246,0.6);
+    }
+
+    nav a {
+      margin-left: 28px;
+      font-weight: 500;
       color: var(--muted);
-      font-weight:600;
-      font-size:.95rem;
-      padding:10px 10px;
-      border-radius:999px;
-      transition: background .2s ease, color .2s ease, transform .2s ease;
     }
-    nav a:hover{color:var(--text); background: rgba(255,255,255,.06); transform: translateY(-1px);}
-    .nav-cta{
-      padding:10px 14px !important;
-      background: linear-gradient(135deg, rgba(59,130,246,.95), rgba(14,165,233,.95));
-      color:#fff !important;
-    }
-    .nav-cta:hover{background: linear-gradient(135deg, rgba(59,130,246,1), rgba(14,165,233,1));}
 
-    /* Hero */
-    .hero{
-      padding: 70px 0 20px;
+    nav a:hover {
+      color: var(--text);
     }
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 42px;
-      align-items:center;
+
+    /* ---------- Hero ---------- */
+
+    .hero {
+      padding: 90px 6% 80px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 60px;
+      align-items: center;
     }
-    .kicker{
-      display:inline-flex; align-items:center; gap:10px;
-      padding: 8px 12px;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:999px;
-      background: rgba(255,255,255,.05);
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 4vw, 3.5rem);
+      line-height: 1.1;
+      margin-bottom: 22px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
       color: var(--muted);
-      font-size:.9rem;
-      margin-bottom:16px;
+      max-width: 520px;
+      margin-bottom: 34px;
     }
-    .kdot{width:8px;height:8px;border-radius:50%;background: var(--good); box-shadow:0 0 12px rgba(34,197,94,.7);}
-    h1{
-      font-size: clamp(2.3rem, 4.2vw, 3.55rem);
-      line-height:1.05;
-      letter-spacing:-.02em;
-      margin-bottom:18px;
+
+    .cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
     }
-    .lead{
+
+    .btn {
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), #0ea5e9);
+      color: #fff;
+      border: none;
+      box-shadow: 0 10px 40px rgba(59,130,246,0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 60px rgba(59,130,246,0.55);
+    }
+
+    .btn-ghost:hover {
+      background: var(--primary-soft);
+    }
+
+    /* ---------- Hero Visual ---------- */
+
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-card h3 {
+      margin-bottom: 16px;
+      font-size: 1.1rem;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: rgba(0,0,0,0.25);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 10px #22c55e;
+      margin-right: 10px;
+    }
+
+    .status-left {
+      display: flex;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+
+    /* ---------- Sections ---------- */
+
+    section {
+      padding: 90px 6%;
+    }
+
+    .section-title {
+      text-align: center;
+      max-width: 620px;
+      margin: 0 auto 60px;
+    }
+
+    .section-title h2 {
+      font-size: 2.2rem;
+      margin-bottom: 14px;
+    }
+
+    .section-title p {
       color: var(--muted);
-      font-size: 1.08rem;
-      max-width: 58ch;
-      margin-bottom: 26px;
     }
-    .cta{
-      display:flex; gap:12px; flex-wrap:wrap;
-      align-items:center;
+
+    /* ---------- Features ---------- */
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 26px;
+    }
+
+    .card {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    }
+
+    .icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: var(--primary-soft);
+      display: grid;
+      place-items: center;
+      font-size: 1.3rem;
       margin-bottom: 18px;
     }
-    .btn{
+
+    .card h3 {
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* ---------- Badges ---------- */
+
+    .badges {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 26px;
+    }
+
+    .badge {
+      padding: 8px 14px;
       border-radius: 999px;
-      padding: 14px 18px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      font-weight: 700;
-      cursor:pointer;
-      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-      display:inline-flex; align-items:center; gap:10px;
-    }
-    .btn:hover{transform: translateY(-2px); background: rgba(255,255,255,.08);}
-    .btn-primary{
-      border:none;
-      background: linear-gradient(135deg, rgba(59,130,246,1), rgba(14,165,233,1));
-      color:#fff;
-      box-shadow: 0 16px 60px rgba(59,130,246,.38);
-    }
-    .btn-primary:hover{box-shadow: 0 22px 80px rgba(59,130,246,.55);}
-
-    .subproof{
-      display:flex; gap:14px; flex-wrap:wrap;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      font-size: 0.85rem;
       color: var(--muted);
-      font-size:.95rem;
-    }
-    .pill{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      padding: 10px 12px;
-      border-radius: 999px;
-      display:flex; align-items:center; gap:8px;
-    }
-    .check{
-      width:18px; height:18px; border-radius: 6px;
-      background: rgba(34,197,94,.18);
-      border: 1px solid rgba(34,197,94,.35);
-      display:grid; place-items:center;
-      color: rgba(34,197,94,1);
-      font-weight:900;
-      font-size:.9rem;
     }
 
-    /* Right card */
-    .panel{
-      border:1px solid rgba(255,255,255,.10);
-      border-radius: var(--r);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      box-shadow: var(--shadow);
-      padding: 18px;
-    }
-    .panel-top{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; margin-bottom: 12px;
-    }
-    .panel-title{font-weight:800;}
-    .tag{
-      font-size:.85rem;
+    /* ---------- Footer ---------- */
+
+    footer {
+      padding: 50px 6%;
+      border-top: 1px solid var(--border);
+      text-align: center;
       color: var(--muted);
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      padding: 6px 10px;
-      border-radius:999px;
-      white-space:nowrap;
-    }
-    .status{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:14px;
-      padding: 12px 12px;
-      border-radius: 12px;
-      background: rgba(0,0,0,.22);
-      border:1px solid rgba(255,255,255,.10);
-      margin-bottom:10px;
-    }
-    .sleft{display:flex; align-items:center; gap:10px; color: var(--muted); font-weight:600;}
-    .dot{width:10px;height:10px;border-radius:50%;}
-    .dot.good{background: var(--good); box-shadow:0 0 14px rgba(34,197,94,.75);}
-    .dot.warn{background: var(--warn); box-shadow:0 0 14px rgba(245,158,11,.55);}
-    .sright{font-weight:800;}
-    .mini{
-      margin-top: 14px;
-      border-radius: 12px;
-      padding: 14px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.09);
-      color: var(--muted);
-      font-size: .92rem;
-    }
-    .mini strong{color: var(--text);}
-    code{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: .93rem;
+      font-size: 0.9rem;
     }
 
-    /* Sections */
-    section{padding: 84px 0;}
-    .title{
-      text-align:center;
-      max-width: 720px;
-      margin: 0 auto 42px;
-    }
-    .title h2{
-      font-size: clamp(1.9rem, 2.8vw, 2.4rem);
-      letter-spacing:-.02em;
-      margin-bottom: 12px;
-    }
-    .title p{color: var(--muted);}
+    /* ---------- Responsive ---------- */
 
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 18px;
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 60px;
+      }
     }
-    .card{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      border-radius: var(--r);
-      padding: 22px;
-      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
-    }
-    .card:hover{transform: translateY(-6px); box-shadow: var(--shadow); background: rgba(255,255,255,.07);}
-    .ic{
-      width:48px;height:48px;border-radius: 14px;
-      display:grid; place-items:center;
-      background: rgba(59,130,246,.16);
-      border: 1px solid rgba(59,130,246,.25);
-      margin-bottom: 14px;
-      font-size: 1.35rem;
-    }
-    .card h3{margin-bottom: 8px;}
-    .card p{color: var(--muted); font-size: .97rem;}
-
-    /* CLI block */
-    .two{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      align-items: stretch;
-    }
-    .codeblock{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.30);
-      border-radius: var(--r);
-      padding: 18px;
-      overflow:auto;
-      box-shadow: var(--shadow);
-    }
-    .codeblock pre{white-space:pre; color: #d1d5db; font-size: .92rem; line-height: 1.55;}
-    .kbd{
-      display:inline-flex; align-items:center;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      padding: 2px 8px;
-      border-radius: 8px;
-      font-weight:700;
-      color: var(--text);
-    }
-
-    /* Pricing */
-    .pricing{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
-      align-items: stretch;
-    }
-    .plan{
-      position:relative;
-      padding: 22px;
-      border-radius: var(--r);
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      box-shadow: var(--shadow);
-    }
-    .plan.featured{
-      border: 1px solid rgba(59,130,246,.45);
-      background: linear-gradient(180deg, rgba(59,130,246,.16), rgba(255,255,255,.04));
-    }
-    .ribbon{
-      position:absolute; top: 14px; right: 14px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(59,130,246,.22);
-      border: 1px solid rgba(59,130,246,.35);
-      color: var(--text);
-      font-weight: 800;
-      font-size: .82rem;
-    }
-    .plan h3{margin-bottom: 6px;}
-    .price{
-      font-size: 2.1rem;
-      font-weight: 900;
-      letter-spacing:-.03em;
-      margin: 12px 0 8px;
-    }
-    .per{color: var(--muted); font-weight: 700; font-size:.95rem;}
-    .list{margin-top: 14px; display:grid; gap: 10px;}
-    .li{display:flex; gap:10px; color: var(--muted); font-weight:600;}
-    .li .ok{
-      width:20px;height:20px;border-radius:8px;
-      background: rgba(34,197,94,.18);
-      border: 1px solid rgba(34,197,94,.33);
-      display:grid; place-items:center;
-      color: rgba(34,197,94,1);
-      font-weight: 900;
-      flex:0 0 auto;
-    }
-    .plan .btn{width:100%; justify-content:center; margin-top: 18px;}
-    .fine{color: var(--muted); font-size:.9rem; margin-top: 10px;}
-
-    /* Testimonials */
-    .quote{
-      display:flex; flex-direction:column; gap: 12px;
-      padding: 22px;
-      border-radius: var(--r);
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-    }
-    .qtext{color: #d1d5db; font-weight: 600;}
-    .who{display:flex; align-items:center; gap: 10px; color: var(--muted); font-weight: 700;}
-    .avatar{
-      width:38px;height:38px;border-radius: 50%;
-      background: radial-gradient(circle at 30% 20%, rgba(59,130,246,.8), rgba(14,165,233,.35));
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 10px 25px rgba(0,0,0,.35);
-    }
-
-    /* Big CTA */
-    .cta-big{
-      border-radius: calc(var(--r) + 6px);
-      padding: 34px 22px;
-      background: linear-gradient(135deg, rgba(59,130,246,.22), rgba(14,165,233,.16));
-      border: 1px solid rgba(59,130,246,.25);
-      box-shadow: var(--shadow);
-      text-align:center;
-    }
-    .cta-big h2{font-size: clamp(1.8rem, 2.6vw, 2.3rem); margin-bottom: 10px;}
-    .cta-big p{color: var(--muted); max-width: 72ch; margin: 0 auto 18px;}
-    .cta-big .cta{justify-content:center;}
-
-    /* Footer */
-    footer{
-      padding: 50px 0;
-      border-top: 1px solid rgba(255,255,255,.08);
-      color: var(--muted);
-      font-size:.92rem;
-    }
-    .foot{
-      display:flex; align-items:flex-start; justify-content:space-between;
-      gap: 16px; flex-wrap:wrap;
-    }
-    .small{max-width: 70ch;}
-    .links{display:flex; gap:14px; flex-wrap:wrap;}
-    .links a{color: var(--muted); font-weight:700;}
-    .links a:hover{color: var(--text);}
-
-    /* Responsive */
-    @media (max-width: 920px){
-      .hero-grid{grid-template-columns: 1fr; gap: 18px;}
-      .two{grid-template-columns:1fr;}
-      nav{display:none;}
-    }
-
-    /* Simple reveal (no libs) */
-    .reveal{opacity:0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease;}
-    .reveal.on{opacity:1; transform: translateY(0);}
   </style>
 </head>
 
 <body>
 
-<header>
-  <div class="container top">
-    <a class="brand" href="#top" aria-label="Observo Home">
-      <!-- Escudo + Ojo (SVG real, editable) -->
-      <svg viewBox="0 0 64 64" role="img" aria-label="Observo Shield Eye Logo" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#3b82f6"/>
-            <stop offset="1" stop-color="#0ea5e9"/>
-          </linearGradient>
-          <radialGradient id="rg" cx="30%" cy="20%" r="80%">
-            <stop offset="0" stop-color="rgba(255,255,255,.55)"/>
-            <stop offset="1" stop-color="rgba(255,255,255,0)"/>
-          </radialGradient>
-        </defs>
-
-        <!-- Shield -->
-        <path d="M32 5c10 7 20 7 20 7v18c0 15-9.8 24.1-20 29C21.8 54.1 12 45 12 30V12s10 0 20-7z"
-              fill="url(#g)" opacity="0.98"/>
-        <path d="M32 9c8.7 5.8 17.4 6 17.4 6v15c0 12.8-8.3 21-17.4 25.2C22.9 51 14.6 42.8 14.6 30V15s8.7-.2 17.4-6z"
-              fill="rgba(0,0,0,.22)" />
-
-        <!-- Eye -->
-        <path d="M16.5 33c4.6-6.8 9.8-10.2 15.5-10.2S42.9 26.2 47.5 33c-4.6 6.8-9.8 10.2-15.5 10.2S21.1 39.8 16.5 33z"
-              fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.25)" stroke-width="1.2"/>
-        <circle cx="32" cy="33" r="6.6" fill="rgba(0,0,0,.35)" stroke="rgba(255,255,255,.22)" stroke-width="1.2"/>
-        <circle cx="32" cy="33" r="3.2" fill="rgba(255,255,255,.90)"/>
-        <circle cx="30.2" cy="31.6" r="1.1" fill="rgba(0,0,0,.25)"/>
-
-        <!-- highlight -->
-        <path d="M15 17c5.2-.4 11-2.4 17-7.2 6 4.8 11.8 6.8 17 7.2"
-              fill="none" stroke="url(#rg)" stroke-width="5" opacity=".55" stroke-linecap="round"/>
-      </svg>
-
-      <span>Observo</span>
-    </a>
-
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <div class="logo-mark">O</div>
+      Observo
+    </div>
     <nav>
-      <a href="#como">Cómo funciona</a>
-      <a href="#pricing">Precios</a>
-      <a href="#testimonios">Testimonios</a>
-      <a href="#faq">FAQ</a>
-      <a class="nav-cta" href="#contacto">Pedir demo</a>
+      <a href="#features">Qué hace</a>
+      <a href="#confianza">Confianza</a>
+      <a href="#contacto">Contacto</a>
     </nav>
-  </div>
-</header>
+  </header>
 
-<main id="top">
-
-  <!-- HERO -->
+  <!-- Hero -->
   <section class="hero">
-    <div class="container hero-grid">
-      <div class="reveal">
-        <div class="kicker"><span class="kdot"></span> Seguridad observable para startups y negocios digitales</div>
-        <h1>Confianza visible.<br>Riesgo bajo control.</h1>
-        <p class="lead">
-          Observo te ayuda a <strong>mostrar seguridad real</strong>: monitorea tu dominio, detecta cambios importantes y genera señales claras
-          para clientes, partners y equipo.
-        </p>
-
-        <div class="cta">
-          <a class="btn btn-primary" href="#contacto">Solicitar demo</a>
-          <a class="btn" href="#pricing">Ver precios</a>
-          <a class="btn" href="#como">Ver Observo CLI</a>
-        </div>
-
-        <div class="subproof">
-          <div class="pill"><span class="check">✓</span> Reportes claros</div>
-          <div class="pill"><span class="check">✓</span> Señales sin ruido</div>
-          <div class="pill"><span class="check">✓</span> Integrable a tu stack</div>
-        </div>
-      </div>
-
-      <div class="panel reveal" aria-label="Panel de estado">
-        <div class="panel-top">
-          <div class="panel-title">Estado de seguridad</div>
-          <div class="tag">Resumen ejecutivo</div>
-        </div>
-
-        <div class="status">
-          <div class="sleft"><span class="dot good"></span> Dominio monitoreado</div>
-          <div class="sright">Activo</div>
-        </div>
-        <div class="status">
-          <div class="sleft"><span class="dot good"></span> Certificado TLS</div>
-          <div class="sright">Válido</div>
-        </div>
-        <div class="status">
-          <div class="sleft"><span class="dot warn"></span> Hallazgos críticos</div>
-          <div class="sright">0</div>
-        </div>
-
-        <div class="mini">
-          <strong>Idea clave:</strong> Observo no es “más herramientas”.
-          Es una forma simple de <strong>demostrar</strong> que tu plataforma está vigilada.
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURES -->
-  <section id="features">
-    <div class="container">
-      <div class="title reveal">
-        <h2>¿Qué vende Observo?</h2>
-        <p>Seguridad que el cliente entiende: señales claras, acciones concretas y evidencia de control.</p>
-      </div>
-
-      <div class="grid">
-        <div class="card reveal">
-          <div class="ic">👁️</div>
-          <h3>Observación continua</h3>
-          <p>Vigilancia constante sobre tu superficie pública: dominio, headers críticos, TLS, cambios y señales de riesgo.</p>
-        </div>
-
-        <div class="card reveal">
-          <div class="ic">🧾</div>
-          <h3>Evidencia para confiar</h3>
-          <p>Entregables listos para mostrar: resultados, comparaciones (baseline vs now) y mensajes entendibles.</p>
-        </div>
-
-        <div class="card reveal">
-          <div class="ic">⚡</div>
-          <h3>Acción sin ruido</h3>
-          <p>Alertas sólo cuando importa: cambios relevantes, expiración TLS, diferencias en baseline o degradación de posture.</p>
-        </div>
-
-        <div class="card reveal">
-          <div class="ic">🔗</div>
-          <h3>Complementario a tu stack</h3>
-          <p>Observo no compite con tu SIEM/monitoring: lo hace demostrable, entendible y “vendible”.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS + CLI -->
-  <section id="como">
-    <div class="container">
-      <div class="title reveal">
-        <h2>Cómo funciona (Observo CLI)</h2>
-        <p>
-          Un flujo simple: <span class="kbd">scan</span> para observar, <span class="kbd">baseline</span> para comparar,
-          <span class="kbd">watch</span> para vigilar en el tiempo.
-        </p>
-      </div>
-
-      <div class="two">
-        <div class="card reveal">
-          <div class="ic">🧠</div>
-          <h3>Flujo de valor</h3>
-          <p>
-            Observo traduce datos técnicos a señales vendibles: “activo”, “válido”, “cambió”, “riesgo”.
-            Ideal para startups que necesitan <strong>confianza</strong> sin volverse un equipo gigante de seguridad.
-          </p>
-          <div class="list" style="margin-top:14px">
-            <div class="li"><span class="ok">✓</span> <strong>Scan</strong>: fotografía del estado actual</div>
-            <div class="li"><span class="ok">✓</span> <strong>Baseline</strong>: “esta es mi normalidad”</div>
-            <div class="li"><span class="ok">✓</span> <strong>Watch</strong>: alertas cuando cambie lo importante</div>
-          </div>
-        </div>
-
-        <div class="codeblock reveal" aria-label="Ejemplo Observo CLI">
-<pre><code># Observo CLI (ejemplos)
-observo scan example.com --out output/
-observo scan example.com --out output/ --baseline
-
-# Guardar una línea base (baseline) y comparar luego
-observo baseline save example.com output/result.json
-observo baseline diff example.com output/nuevo_result.json
-
-# Vigilancia continua (cada 6 horas por ejemplo)
-observo watch example.com --every 6h --out output/
-
-# Tip: lo vendible es el resultado:
-# - reportes claros
-# - cambios detectados
-# - señales de confianza</code></pre>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRICING -->
-  <section id="pricing">
-    <div class="container">
-      <div class="title reveal">
-        <h2>Precios simples</h2>
-        <p>Para partir rápido. Sin humo. Tú eliges cuánto necesitas observar.</p>
-      </div>
-
-      <div class="pricing">
-        <div class="plan reveal">
-          <h3>Starter</h3>
-          <div class="price">$29<span class="per">/mes</span></div>
-          <p class="fine">Para MVPs y founders que quieren señales claras.</p>
-
-          <div class="list">
-            <div class="li"><span class="ok">✓</span> 1 dominio</div>
-            <div class="li"><span class="ok">✓</span> Scan + reportes básicos</div>
-            <div class="li"><span class="ok">✓</span> Alertas críticas</div>
-            <div class="li"><span class="ok">✓</span> Baseline mensual</div>
-          </div>
-
-          <a class="btn" href="#contacto">Empezar</a>
-        </div>
-
-        <div class="plan featured reveal">
-          <div class="ribbon">Más elegido</div>
-          <h3>Growth</h3>
-          <div class="price">$79<span class="per">/mes</span></div>
-          <p class="fine">Para startups con tracción que necesitan demostrar confianza.</p>
-
-          <div class="list">
-            <div class="li"><span class="ok">✓</span> 3 dominios</div>
-            <div class="li"><span class="ok">✓</span> Baseline + diff automatizado</div>
-            <div class="li"><span class="ok">✓</span> Watch programable</div>
-            <div class="li"><span class="ok">✓</span> Reporte “cliente-friendly”</div>
-            <div class="li"><span class="ok">✓</span> Soporte por correo</div>
-          </div>
-
-          <a class="btn btn-primary" href="#contacto">Pedir demo</a>
-        </div>
-
-        <div class="plan reveal">
-          <h3>Business</h3>
-          <div class="price">$199<span class="per">/mes</span></div>
-          <p class="fine">Para equipos que quieren evidencia y continuidad operacional.</p>
-
-          <div class="list">
-            <div class="li"><span class="ok">✓</span> 10 dominios</div>
-            <div class="li"><span class="ok">✓</span> Reportes avanzados</div>
-            <div class="li"><span class="ok">✓</span> Alertas + canales</div>
-            <div class="li"><span class="ok">✓</span> Exportación para auditoría</div>
-            <div class="li"><span class="ok">✓</span> Onboarding</div>
-          </div>
-
-          <a class="btn" href="#contacto">Hablar con ventas</a>
-        </div>
-      </div>
-
-      <p class="fine reveal" style="text-align:center; margin-top:14px;">
-        *Precios referenciales para la landing. Se ajustan según alcance real (dominios, frecuencia y reportes).
+    <div>
+      <h1>Seguridad que se ve.<br>Confianza que se siente.</h1>
+      <p>
+        Observo monitorea, analiza y alerta sobre la seguridad de tu plataforma.
+        Diseñado para startups que necesitan demostrar confianza real a sus clientes.
       </p>
-    </div>
-  </section>
 
-  <!-- TESTIMONIALS -->
-  <section id="testimonios">
-    <div class="container">
-      <div class="title reveal">
-        <h2>Lo que dicen (realista, estilo startup)</h2>
-        <p>Testimonios “tipo mercado”: cortos, creíbles, orientados a valor.</p>
-      </div>
-
-      <div class="grid">
-        <div class="quote reveal">
-          <div class="qtext">“Nos sirvió para mostrar a clientes que no estamos ‘a ciegas’. El reporte es simple y se entiende.”</div>
-          <div class="who"><span class="avatar"></span> Valentina P. — COO, SaaS B2B</div>
-        </div>
-
-        <div class="quote reveal">
-          <div class="qtext">“El baseline/diff nos ahorró discusiones internas: cuando algo cambia, hay evidencia.”</div>
-          <div class="who"><span class="avatar"></span> Diego M. — Tech Lead, Marketplace</div>
-        </div>
-
-        <div class="quote reveal">
-          <div class="qtext">“No queríamos un SIEM gigante. Queríamos señales claras. Observo calzó perfecto.”</div>
-          <div class="who"><span class="avatar"></span> Camila R. — Founder, Fintech</div>
-        </div>
-
-        <div class="quote reveal">
-          <div class="qtext">“Lo vendible: ‘esto está monitoreado’. Eso cambia la conversación con partners y ventas.”</div>
-          <div class="who"><span class="avatar"></span> Andrés L. — Growth, Startup eCommerce</div>
-        </div>
+      <div class="cta">
+        <a class="btn btn-primary" href="#contacto">Solicitar demo</a>
+        <a class="btn btn-ghost" href="#features">Ver cómo funciona</a>
       </div>
     </div>
-  </section>
 
-  <!-- FAQ -->
-  <section id="faq">
-    <div class="container">
-      <div class="title reveal">
-        <h2>FAQ</h2>
-        <p>Las dudas típicas antes de comprar.</p>
+    <div class="hero-card">
+      <h3>Estado de seguridad</h3>
+
+      <div class="status">
+        <div class="status-left">
+          <span class="dot"></span>
+          Dominio monitoreado
+        </div>
+        <strong>Activo</strong>
       </div>
 
-      <div class="grid">
-        <div class="card reveal">
-          <h3>¿Esto reemplaza un SIEM?</h3>
-          <p>No. Observo es una capa de <strong>observabilidad vendible</strong>: señales claras, evidencia y continuidad. Complementa lo que ya tengas.</p>
+      <div class="status">
+        <div class="status-left">
+          <span class="dot"></span>
+          Certificado TLS
         </div>
-        <div class="card reveal">
-          <h3>¿Qué es “baseline” y por qué importa?</h3>
-          <p>Es tu “normalidad”. Con baseline puedes comparar y detectar cambios relevantes sin depender sólo de memoria o percepción.</p>
+        <strong>Válido</strong>
+      </div>
+
+      <div class="status">
+        <div class="status-left">
+          <span class="dot"></span>
+          Cambios detectados
         </div>
-        <div class="card reveal">
-          <h3>¿Cuánto se demora en empezar?</h3>
-          <p>Minutos. La gracia del flujo CLI es que es directo: scan → baseline → watch.</p>
-        </div>
-        <div class="card reveal">
-          <h3>¿Qué gana el cliente final?</h3>
-          <p>Tranquilidad. Ve evidencia de que la plataforma está vigilada, y eso reduce fricción al comprar/usar tu producto.</p>
-        </div>
+        <strong>0</strong>
       </div>
     </div>
   </section>
 
-  <!-- BIG CTA -->
-  <section id="contacto">
-    <div class="container">
-      <div class="cta-big reveal">
-        <h2>Haz que tu seguridad se note</h2>
-        <p>
-          Si tu startup vende online, la confianza importa. Observo te da un discurso con evidencia:
-          monitoreo activo, cambios detectados y reportes entendibles.
-        </p>
+  <!-- Features -->
+  <section id="features">
+    <div class="section-title">
+      <h2>¿Qué hace Observo?</h2>
+      <p>Una capa de observabilidad de seguridad simple, clara y accionable.</p>
+    </div>
 
-        <div class="cta">
-          <a class="btn btn-primary" href="mailto:ventas@observo.app?subject=Demo%20Observo&body=Hola%2C%20quiero%20una%20demo%20de%20Observo.%0A%0ADominio%3A%20%0APlan%20de%20inter%C3%A9s%3A%20Starter%2FGrowth%2FBusiness%0A%0AGracias.">
-            Solicitar demo por email
-          </a>
-          <a class="btn" href="#como">Ver Observo CLI</a>
-        </div>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">👁️</div>
+        <h3>Observación continua</h3>
+        <p>Monitorea dominios, certificados y cambios críticos en el tiempo.</p>
+      </div>
 
-        <p class="fine">Tip: cambia <code>ventas@observo.app</code> por tu correo real.</p>
+      <div class="card">
+        <div class="icon">🛡️</div>
+        <h3>Confianza visible</h3>
+        <p>Demuestra a tus clientes que tu plataforma está siendo vigilada.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">⚡</div>
+        <h3>Alertas claras</h3>
+        <p>Detecta cambios relevantes sin ruido ni complejidad innecesaria.</p>
       </div>
     </div>
   </section>
 
-</main>
+  <!-- Trust -->
+  <section id="confianza">
+    <div class="section-title">
+      <h2>Construido para generar confianza</h2>
+      <p>No es solo seguridad. Es percepción, respaldo y tranquilidad.</p>
 
-<footer>
-  <div class="container foot">
-    <div class="small">
-      <strong>Observo</strong> — Seguridad observable para negocios reales.<br>
-      <span style="color:var(--muted)">© 2025 — Landing estática lista para desplegar.</span>
+      <div class="badges">
+        <span class="badge">Monitoreo real</span>
+        <span class="badge">Sin humo</span>
+        <span class="badge">Ideal para startups</span>
+        <span class="badge">Complementario a tu stack</span>
+      </div>
     </div>
-    <div class="links">
-      <a href="#features">Producto</a>
-      <a href="#pricing">Precios</a>
-      <a href="#testimonios">Testimonios</a>
-      <a href="#contacto">Demo</a>
-    </div>
-  </div>
-</footer>
+  </section>
 
-<script>
-  // Reveal on scroll (lightweight)
-  const els = Array.from(document.querySelectorAll('.reveal'));
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) e.target.classList.add('on');
-    });
-  }, { threshold: 0.12 });
-  els.forEach(el => io.observe(el));
-</script>
+  <!-- Footer -->
+  <footer id="contacto">
+    © 2025 Observo — Seguridad observable para negocios reales
+  </footer>
 
 </body>
 </html>
