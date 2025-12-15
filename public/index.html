@@ -288,28 +288,34 @@
                 <button type="button"
                         class="glass feature-card w-full text-left rounded-2xl px-4 py-4 border border-white/10"
                         data-popover="pop-readonly">
+
                   <div class="font-semibold">Read-only</div>
                   <div class="text-sm text-white/70">Sin credenciales.</div>
                 </button>
 
-                <div id="pop-readonly" class="popover glass rounded-2xl p-4 border border-white/10">
-                  <div class="flex items-start justify-between gap-4">
-                    <div>
-                      <div class="text-sm font-semibold">Read-only (sin credenciales)</div>
-                      <p class="mt-1 text-sm text-white/70">
-                        Observo analiza señales públicas del sitio (TLS, headers, exposición) sin pedir accesos.
-                        Ideal para demostrar postura de seguridad sin fricción.
-                      </p>
-                      <ul class="mt-3 text-sm text-white/70 space-y-1">
-                        <li>• No necesita usuario/contraseña.</li>
-                        <li>• No modifica tu sistema.</li>
-                        <li>• Menos riesgo operacional.</li>
-                      </ul>
-                    </div>
-                    <button class="text-white/60 hover:text-white" data-close="pop-readonly" aria-label="Cerrar">✕</button>
-                  </div>
-                </div>
-              </div>
+                <div id="pop-readonly" class="popover rounded-2xl border border-white/10">
+  <div class="glass p-4">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <div class="text-sm font-semibold">Read-only (sin credenciales)</div>
+        <p class="mt-1 text-sm text-white/70">
+          Observo analiza señales públicas del sitio (TLS, headers, exposición)
+          sin pedir accesos. Ideal para demostrar postura de seguridad sin fricción.
+        </p>
+        <ul class="mt-3 text-sm text-white/70 space-y-1">
+          <li>• No necesita usuario/contraseña.</li>
+          <li>• No modifica tu sistema.</li>
+          <li>• Menos riesgo operacional.</li>
+        </ul>
+      </div>
+
+      <button class="text-white/60 hover:text-white"
+              data-close="pop-readonly"
+              aria-label="Cerrar">✕</button>
+    </div>
+  </div>
+</div>
+
 
               <!-- Baseline -->
 <div>
