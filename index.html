@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Observo Security — Seguridad visible, sin ruido</title>
+  <title>Observo — Seguridad visible, sin ruido</title>
   <meta name="description" content="Observo entrega visibilidad de seguridad web: baseline, cambios y reportes claros para convertir seguridad en confianza." />
   <meta name="theme-color" content="#070B14" />
 
@@ -18,18 +18,19 @@
     html{ scroll-behavior:smooth; }
     body{
       background:
-        radial-gradient(900px 520px at 18% -10%, rgba(102,227,255,.16), transparent 55%),
-        radial-gradient(980px 560px at 85% 0%, rgba(124,92,255,.14), transparent 55%),
-        radial-gradient(980px 560px at 50% 115%, rgba(39,232,167,.10), transparent 60%),
+        radial-gradient(900px 520px at 18% -10%, rgba(102,227,255,.14), transparent 55%),
+        radial-gradient(980px 560px at 85% 0%, rgba(124,92,255,.12), transparent 55%),
+        radial-gradient(980px 560px at 50% 115%, rgba(39,232,167,.08), transparent 60%),
         var(--bg);
     }
 
-    /* Glass calm: sin blur global (evita "nube blanca") */
+    /* Cards calm (sin blur global) */
     .glass{
       background: linear-gradient(to bottom, rgba(255,255,255,.06), rgba(255,255,255,.035));
       border: 1px solid rgba(255,255,255,.10);
       box-shadow: var(--shadow);
     }
+
     /* Blur SOLO en la barra superior */
     .glass-nav{
       background: linear-gradient(to bottom, rgba(10,14,26,.72), rgba(10,14,26,.50));
@@ -44,14 +45,14 @@
     /* Emblema flotante (no molesta clics) */
     .emblem{
       position: fixed;
-      left: 18px;
-      bottom: 18px;
-      width: 64px;
-      height: 64px;
+      left: 16px;
+      bottom: 16px;
+      width: 66px;
+      height: 66px;
       z-index: 40;
       pointer-events: none;
-      opacity: .92;
-      filter: drop-shadow(0 20px 45px rgba(0,0,0,.55));
+      opacity: .95;
+      filter: drop-shadow(0 18px 45px rgba(0,0,0,.60));
     }
     @media (max-width: 640px){
       .emblem{ width: 54px; height: 54px; left: 12px; bottom: 12px; }
@@ -60,45 +61,32 @@
 </head>
 
 <body class="text-white">
-  <!-- Emblema (escudo + ojo que sigue puntero) -->
+  <!-- Emblema flotante (escudo + ojo que sigue el puntero) -->
   <svg class="emblem" viewBox="0 0 120 120" aria-hidden="true">
     <defs>
       <linearGradient id="g1" x1="0" x2="1">
-        <stop offset="0" stop-color="#38BDF8" stop-opacity="0.95"/>
-        <stop offset="0.5" stop-color="#6366F1" stop-opacity="0.95"/>
-        <stop offset="1" stop-color="#D946EF" stop-opacity="0.95"/>
+        <stop offset="0" stop-color="#38BDF8"/>
+        <stop offset="0.5" stop-color="#6366F1"/>
+        <stop offset="1" stop-color="#D946EF"/>
       </linearGradient>
       <radialGradient id="g2" cx="30%" cy="30%" r="80%">
-        <stop offset="0" stop-color="#ffffff" stop-opacity="0.18"/>
+        <stop offset="0" stop-color="#ffffff" stop-opacity="0.16"/>
         <stop offset="1" stop-color="#ffffff" stop-opacity="0.04"/>
       </radialGradient>
     </defs>
 
-    <!-- Shield -->
-    <path d="M60 8
-             C78 18, 92 18, 104 22
-             C104 62, 90 92, 60 112
-             C30 92, 16 62, 16 22
-             C28 18, 42 18, 60 8Z"
+    <path d="M60 8 C78 18, 92 18, 104 22 C104 62, 90 92, 60 112 C30 92, 16 62, 16 22 C28 18, 42 18, 60 8Z"
           fill="url(#g2)" stroke="url(#g1)" stroke-width="3" opacity="0.98"/>
-    <path d="M60 16
-             C76 25, 88 25, 98 28
-             C98 62, 86 86, 60 103
-             C34 86, 22 62, 22 28
-             C32 25, 44 25, 60 16Z"
+
+    <path d="M60 16 C76 25, 88 25, 98 28 C98 62, 86 86, 60 103 C34 86, 22 62, 22 28 C32 25, 44 25, 60 16Z"
           fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
 
-    <!-- Eye -->
-    <g id="eyeGroup" transform="translate(0,0)">
-      <path d="M30 62
-               C40 48, 52 40, 60 40
-               C68 40, 80 48, 90 62
-               C80 76, 68 84, 60 84
-               C52 84, 40 76, 30 62Z"
+    <g class="ob-eye">
+      <path d="M30 62 C40 48,52 40,60 40 C68 40,80 48,90 62 C80 76,68 84,60 84 C52 84,40 76,30 62Z"
             fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
-      <circle id="iris" cx="60" cy="62" r="14" fill="rgba(56,189,248,0.18)" stroke="rgba(56,189,248,0.45)" stroke-width="2"/>
-      <circle id="pupil" cx="60" cy="62" r="6" fill="rgba(255,255,255,0.92)"/>
-      <circle cx="66" cy="56" r="3" fill="rgba(255,255,255,0.35)"/>
+      <circle class="ob-iris" cx="60" cy="62" r="14" fill="rgba(56,189,248,0.18)" stroke="rgba(56,189,248,0.45)" stroke-width="2"/>
+      <circle class="ob-pupil" cx="60" cy="62" r="6" fill="rgba(255,255,255,0.92)"/>
+      <circle cx="66" cy="56" r="3" fill="rgba(255,255,255,0.30)"/>
     </g>
   </svg>
 
@@ -118,7 +106,6 @@
         </nav>
 
         <div class="flex items-center gap-3">
-          <!-- SOLO 1 CTA de precios (como pediste) -->
           <a href="/pricing.html" class="btn hidden sm:inline-flex px-4 py-2 rounded-xl glass text-sm text-white/90 hover:text-white">
             Ver planes
           </a>
@@ -131,7 +118,7 @@
   </header>
 
   <main id="top" class="mx-auto max-w-6xl px-4">
-    <!-- HERO (calm, potente, no saturado) -->
+    <!-- HERO -->
     <section class="pt-10 pb-8">
       <div class="glass rounded-3xl p-10 md:p-12">
         <div class="inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full bg-white/10 text-white/80 border border-white/10">
@@ -140,6 +127,7 @@
         </div>
 
         <div class="mt-7 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          <!-- Izquierda -->
           <div class="lg:col-span-7">
             <h1 class="text-3xl md:text-5xl font-semibold tracking-tight leading-tight">
               Seguridad que se entiende.<br class="hidden md:block"/>
@@ -151,7 +139,6 @@
               Sin jerga innecesaria y sin “ruido”.
             </p>
 
-            <!-- Micro-beneficios (solo 3, relajante) -->
             <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-white/70">
               <div class="glass rounded-2xl px-4 py-3">
                 <div class="font-semibold text-white/90">Read-only</div>
@@ -168,42 +155,72 @@
             </div>
           </div>
 
-          <!-- Panel derecho minimal (no grita) -->
+          <!-- Derecha: Manifiesto + ojo -->
           <div class="lg:col-span-5">
             <div class="glass rounded-3xl p-6">
               <div class="flex items-center justify-between">
-                <div class="text-sm text-white/70">Vista rápida</div>
-                <div class="text-xs px-2 py-1 rounded-full bg-white/10 border border-white/10 text-white/70">Ejemplo</div>
+                <div class="text-sm text-white/70">Manifiesto</div>
+                <div class="text-xs px-2 py-1 rounded-full bg-white/10 border border-white/10 text-white/70">
+                  Startup
+                </div>
+              </div>
+
+              <div class="mt-5 glass rounded-2xl p-5 flex items-center gap-4">
+                <svg viewBox="0 0 120 120" width="62" height="62" aria-hidden="true" class="shrink-0">
+                  <defs>
+                    <linearGradient id="g1m" x1="0" x2="1">
+                      <stop offset="0" stop-color="#38BDF8"/>
+                      <stop offset="0.5" stop-color="#6366F1"/>
+                      <stop offset="1" stop-color="#D946EF"/>
+                    </linearGradient>
+                  </defs>
+
+                  <path d="M60 8 C78 18, 92 18, 104 22 C104 62, 90 92, 60 112 C30 92, 16 62, 16 22 C28 18, 42 18, 60 8Z"
+                        fill="rgba(255,255,255,0.04)" stroke="url(#g1m)" stroke-width="3"/>
+
+                  <g class="ob-eye">
+                    <path d="M30 62 C40 48,52 40,60 40 C68 40,80 48,90 62 C80 76,68 84,60 84 C52 84,40 76,30 62Z"
+                          fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
+                    <circle class="ob-iris" cx="60" cy="62" r="14"
+                            fill="rgba(56,189,248,0.18)" stroke="rgba(56,189,248,0.45)" stroke-width="2"/>
+                    <circle class="ob-pupil" cx="60" cy="62" r="6" fill="rgba(255,255,255,0.92)"/>
+                    <circle cx="66" cy="56" r="3" fill="rgba(255,255,255,0.30)"/>
+                  </g>
+                </svg>
+
+                <div>
+                  <div class="text-sm font-semibold">Startup ayudando startups</div>
+                  <div class="text-xs text-white/60 mt-1">
+                    Convertimos señales técnicas en confianza que se puede explicar y mostrar.
+                  </div>
+                </div>
               </div>
 
               <div class="mt-5 space-y-3">
                 <div class="glass rounded-2xl p-4">
-                  <div class="flex items-center justify-between">
-                    <div class="text-sm font-semibold">Postura general</div>
-                    <div class="text-sm text-emerald-300 font-semibold">Buena</div>
-                  </div>
-                  <div class="mt-2 text-xs text-white/60">
-                    Señales externas: TLS, headers y consistencia.
+                  <div class="text-xs tracking-widest text-white/50">MISIÓN</div>
+                  <div class="mt-1 text-sm text-white/80">
+                    Ayudar a startups a demostrar seguridad real con evidencia clara, sin burocracia.
                   </div>
                 </div>
 
                 <div class="glass rounded-2xl p-4">
-                  <div class="text-sm font-semibold">Cambios detectados</div>
-                  <div class="mt-2 text-xs text-white/60">
-                    Variaciones relevantes con explicación simple.
+                  <div class="text-xs tracking-widest text-white/50">VISIÓN</div>
+                  <div class="mt-1 text-sm text-white/80">
+                    Que vender online no sea “confiar a ciegas”: que la seguridad se vea y se entienda.
                   </div>
                 </div>
 
                 <div class="glass rounded-2xl p-4">
-                  <div class="text-sm font-semibold">Reporte exportable</div>
-                  <div class="mt-2 text-xs text-white/60">
-                    Resumen ejecutivo + evidencia.
+                  <div class="text-xs tracking-widest text-white/50">PROMESA</div>
+                  <div class="mt-1 text-sm text-white/80">
+                    Menos ruido. Más claridad. Reportes listos para clientes, partners y equipo.
                   </div>
                 </div>
               </div>
 
               <p class="mt-5 text-xs text-white/50">
-                Observo es visibilidad & reporting (no pentesting).
+                Observo es visibilidad & reporting (no pentesting). Read-only, sin credenciales.
               </p>
             </div>
           </div>
@@ -211,7 +228,7 @@
       </div>
     </section>
 
-    <!-- CÓMO FUNCIONA (PRO, tranquilo) -->
+    <!-- CÓMO FUNCIONA -->
     <section id="como" class="py-8">
       <div class="glass rounded-2xl p-10">
         <h2 class="text-2xl md:text-3xl font-semibold">Cómo funciona</h2>
@@ -247,14 +264,12 @@
       </div>
     </section>
 
-    <!-- INCLUYE + REPORTES (calm, no saturado) -->
+    <!-- INCLUYE + REPORTES -->
     <section class="py-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div id="incluye" class="glass rounded-2xl p-10">
           <h2 class="text-2xl md:text-3xl font-semibold">Qué incluye</h2>
-          <p class="mt-2 text-white/70">
-            Lo esencial para “seguridad visible”, sin ruido.
-          </p>
+          <p class="mt-2 text-white/70">Lo esencial para “seguridad visible”, sin ruido.</p>
 
           <ul class="mt-6 space-y-3 text-sm text-white/75">
             <li class="glass rounded-xl px-4 py-3">✔ Verificación HTTPS/TLS y expiración</li>
@@ -266,37 +281,29 @@
 
         <div id="reportes" class="glass rounded-2xl p-10">
           <h2 class="text-2xl md:text-3xl font-semibold">Reportes</h2>
-          <p class="mt-2 text-white/70">
-            Hechos para que un cliente entienda y confíe.
-          </p>
+          <p class="mt-2 text-white/70">Hechos para que un cliente entienda y confíe.</p>
 
           <div class="mt-6 space-y-4">
             <div class="glass rounded-xl p-4">
               <h4 class="font-semibold">Resumen ejecutivo</h4>
-              <p class="text-sm text-white/70 mt-1">
-                Qué está bien, qué cambió y qué acción conviene.
-              </p>
+              <p class="text-sm text-white/70 mt-1">Qué está bien, qué cambió y qué acción conviene.</p>
             </div>
 
             <div class="glass rounded-xl p-4">
               <h4 class="font-semibold">Evidencia simple</h4>
-              <p class="text-sm text-white/70 mt-1">
-                Checks y explicación humana, sin jerga.
-              </p>
+              <p class="text-sm text-white/70 mt-1">Checks + explicación humana, sin jerga.</p>
             </div>
 
             <div class="glass rounded-xl p-4">
               <h4 class="font-semibold">Historial de cambios</h4>
-              <p class="text-sm text-white/70 mt-1">
-                Lo que hoy está bien, mañana puede degradarse: queda trazado.
-              </p>
+              <p class="text-sm text-white/70 mt-1">Trazabilidad del estado de seguridad en el tiempo.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- DEMO (solo CTA demo; precios solo en la barra) -->
+    <!-- DEMO -->
     <section id="demo" class="py-8 pb-14">
       <div class="glass rounded-2xl p-10">
         <h2 class="text-2xl md:text-3xl font-semibold">Pedir demo</h2>
@@ -309,6 +316,7 @@
              class="btn inline-flex justify-center px-5 py-3 rounded-2xl font-semibold bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
             Pedir demo por email
           </a>
+
           <a href="#top" class="btn inline-flex justify-center px-5 py-3 rounded-2xl glass text-white/90">
             Volver arriba
           </a>
@@ -325,10 +333,13 @@
     </section>
   </main>
 
+  <!-- Script PRO: mueve TODOS los ojos (emblema + panel) -->
   <script>
   (function(){
     const eyes = Array.from(document.querySelectorAll(".ob-eye"));
     if (!eyes.length) return;
+
+    const MAX_R = 6.5;
 
     function moveEye(eye, clientX, clientY){
       const iris  = eye.querySelector(".ob-iris");
@@ -336,8 +347,8 @@
       if (!iris || !pupil) return;
 
       const rect = iris.getBoundingClientRect();
-      const cx = rect.left + rect.width/2;
-      const cy = rect.top + rect.height/2;
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top  + rect.height / 2;
 
       const dx = clientX - cx;
       const dy = clientY - cy;
@@ -346,9 +357,7 @@
       const nx = dx / dist;
       const ny = dy / dist;
 
-      const maxR = 6.5;
-      const r = Math.min(maxR, dist / 40);
-
+      const r = Math.min(MAX_R, dist / 40);
       const x = 60 + nx * r;
       const y = 62 + ny * r;
 
@@ -356,15 +365,16 @@
       pupil.setAttribute("cy", y.toFixed(2));
     }
 
-    function moveAll(x,y){ eyes.forEach(e => moveEye(e,x,y)); }
+    function moveAll(x, y){
+      eyes.forEach(eye => moveEye(eye, x, y));
+    }
 
-    window.addEventListener("mousemove", (e) => moveAll(e.clientX, e.clientY), { passive:true });
+    window.addEventListener("mousemove", (e) => moveAll(e.clientX, e.clientY), { passive: true });
     window.addEventListener("touchmove", (e) => {
       if (!e.touches || !e.touches[0]) return;
       moveAll(e.touches[0].clientX, e.touches[0].clientY);
-    }, { passive:true });
+    }, { passive: true });
   })();
-</script>
-
+  </script>
 </body>
 </html>
