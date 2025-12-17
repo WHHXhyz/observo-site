@@ -61,32 +61,7 @@
       background: radial-gradient(520px 190px at 30% 10%, rgba(56,189,248,.10), transparent 60%);
       pointer-events:none;
     }
-
-    /* Unified NAV (from index) */
-/* Glass PRO */
-    .glass{background:
-        radial-gradient(900px 260px at 20% 0%, rgba(255,255,255,.10), transparent 55%),
-        linear-gradient(to bottom, rgba(255,255,255,.07), rgba(255,255,255,.03));
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow:
-        0 18px 60px rgba(0,0,0,.55),
-        inset 0 1px 0 rgba(255,255,255,.08);}
-/* Barra superior */
-    .glass-nav{background: linear-gradient(to bottom, rgba(10,14,26,.78), rgba(10,14,26,.55));
-      border: 1px solid rgba(255,255,255,.15);
-      backdrop-filter: blur(12px);
-      box-shadow: var(--shadow);}
-.btn{transition: transform .15s ease, filter .15s ease;}
-.btn:hover{transform: translateY(-1px); filter: brightness(1.07);}
-.navlink{color: rgba(255,255,255,.72);
-      transition: color .15s ease, text-shadow .15s ease;}
-.navlink:hover{color: rgba(255,255,255,.96);
-      text-shadow: 0 0 18px rgba(99,102,241,.25);}
-/* Popover sólido (sin transparencia) */
-.popover .glass{background: #141923 !important; /* sólido */
-  border: 1px solid rgba(255,255,255,.14);
-  box-shadow: 0 18px 60px rgba(0,0,0,.65);}
-</style>
+  </style>
 </head>
 
 <body class="text-white">
@@ -94,46 +69,67 @@
   <!-- NAV (Unified) -->
 <header class="sticky top-0 z-50">
   <div class="mx-auto max-w-6xl px-4">
-    <div class="mt-4 glass-nav rounded-2xl px-4 py-3 flex items-center justify-between">
+    <div class="mt-4 glass-nav rounded-2xl px-4 py-3 flex items-center justify-between relative">
 
-   
-<!-- Observosec Logo -->
-<a href="/index.html" class="flex items-center gap-3 group select-none">
-  <!-- Icon -->
-  <div class="relative h-9 w-9">
-    <!-- Glow -->
-    <div class="absolute inset-0 rounded-xl blur-md opacity-0
-                bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500
-                group-hover:opacity-60 transition-opacity"></div>
+      <!-- Logo -->
+      <a href="/index.html" class="flex items-center gap-3 group select-none">
+        <div class="relative h-9 w-9">
+          <div class="absolute inset-0 rounded-xl blur-md opacity-0
+                      bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500
+                      group-hover:opacity-60 transition-opacity"></div>
 
-    <!-- Shield -->
-    <div class="relative h-9 w-9 rounded-xl
-                bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500
-                flex items-center justify-center">
-      <!-- Eye -->
-      <div class="w-4.5 h-3 rounded-full bg-white/95 flex items-center justify-center">
-        <div class="w-1.5 h-1.5 rounded-full bg-indigo-600"></div>
-      </div>
-    </div>
-  </div>
+          <!-- Shield + eye -->
+          <svg class="relative h-9 w-9" viewBox="0 0 64 64" aria-hidden="true">
+            <defs>
+              <linearGradient id="obg" x1="0" x2="1">
+                <stop offset="0" stop-color="#38BDF8"/>
+                <stop offset="0.55" stop-color="#6366F1"/>
+                <stop offset="1" stop-color="#D946EF"/>
+              </linearGradient>
+              <radialGradient id="obw" cx="30%" cy="25%" r="70%">
+                <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/>
+                <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.05"/>
+              </radialGradient>
+            </defs>
 
-  <!-- Text -->
-  <div class="leading-tight">
-    <div class="text-sm font-semibold tracking-tight text-white">
-      Observosec
-    </div>
-    <div class="text-[11px] text-white/60 tracking-wide">
-      Cyber risk visibility
-    </div>
-  </div>
-</a>
+            <path d="M32 4
+                     C40 9 48 10 56 12
+                     V33
+                     C56 48 45 57 32 61
+                     C19 57 8 48 8 33
+                     V12
+                     C16 10 24 9 32 4 Z"
+                  fill="url(#obw)" stroke="url(#obg)" stroke-width="2.4" />
 
+            <path d="M32 9
+                     C39 13 46 14 52 16
+                     V33
+                     C52 45 43 52 32 56
+                     C21 52 12 45 12 33
+                     V16
+                     C18 14 25 13 32 9 Z"
+                  fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.10)" stroke-width="1.6"/>
 
+            <!-- Eye -->
+            <path d="M16 33 C22 25, 27 21, 32 21 C37 21, 42 25, 48 33
+                     C42 41, 37 45, 32 45 C27 45, 22 41, 16 33Z"
+                  fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.14)" stroke-width="1.6"/>
 
+            <circle cx="32" cy="33" r="7.6" fill="rgba(56,189,248,0.18)" stroke="rgba(56,189,248,0.45)" stroke-width="1.6"/>
+            <circle cx="32" cy="33" r="3.2" fill="rgba(255,255,255,0.92)"/>
+            <circle cx="35.4" cy="29.8" r="1.6" fill="rgba(255,255,255,0.26)"/>
+          </svg>
+        </div>
 
-      <!-- Navegación -->
+        <div class="leading-tight">
+          <div class="text-sm font-semibold tracking-tight text-white">Observosec</div>
+          <div class="text-[11px] text-white/60 tracking-wide">Cyber risk visibility</div>
+        </div>
+      </a>
+
+      <!-- Links -->
       <nav class="hidden md:flex items-center gap-6 text-sm">
-          <a class="navlink" href="/index.html">Inicio</a>
+        <a class="navlink" href="/index.html">Inicio</a>
         <a class="navlink" href="/index.html#como">Cómo funciona</a>
         <a class="navlink" href="/index.html#incluye">Visibilidad</a>
         <a class="navlink" href="/reporte-ejemplo.html">Reportes</a>
@@ -152,43 +148,11 @@
           Pedir demo
         </a>
       </div>
-
     </div>
   </div>
 </header>
-<!-- NAV -->
-  <header class="sticky top-0 z-50">
-    <div class="mx-auto max-w-6xl px-4">
-      <div class="mt-4 glass-nav rounded-2xl px-4 py-3 flex items-center justify-between">
-        <a href="/index.html" class="flex items-center gap-3 group">
-          <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500"></div>
-          <span class="font-semibold tracking-tight">Observo</span>
-        </a>
 
-        <nav class="hidden md:flex items-center gap-6 text-sm">
-          <a class="navlink" href="/index.html#como">Cómo funciona</a>
-          <a class="navlink" href="/index.html#incluye">Qué incluye</a>
-          <a class="navlink" href="/index.html#reportes">Reportes</a>
-          <a class="navlink" href="/pricing.html">Precios</a>
-          <a class="navlink" href="#top">Seguridad & Alcance</a>
-        </nav>
-
-        <div class="flex items-center gap-3">
-          <a href="/pricing.html"
-             class="btn hidden sm:inline-flex px-4 py-2 rounded-xl glass text-sm text-white/90 hover:text-white">
-            Ver planes
-          </a>
-          <a href="/index.html#demo"
-             class="btn inline-flex px-4 py-2 rounded-xl text-sm font-semibold
-                    bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
-            Pedir demo
-          </a>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main id="top" class="mx-auto max-w-6xl px-4">
+<main id="top" class="mx-auto max-w-6xl px-4">
     <!-- HERO -->
     <section class="pt-10 pb-6">
       <div class="glass rounded-3xl p-10 md:p-12 border border-white/10">
