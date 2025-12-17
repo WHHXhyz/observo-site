@@ -131,7 +131,7 @@
       .emblem{ width: 54px; height: 54px; left: 12px; bottom: 12px; }
     }
 
-    /* Popover */
+    /* Popover (se mantiene, pero ya NO se abre; lo usaremos como “fuente” del contenido) */
     .popover{
       position: absolute;
       left: 0;
@@ -141,6 +141,91 @@
       display: none;
     }
     .popover.open{ display:block; }
+
+    /* ===========================
+       MODAL (SOLO para los 3 recuadros)
+       =========================== */
+    .ob-modal-backdrop{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 16px;
+      background: rgba(0,0,0,.68);          /* fondo oscuro real */
+      backdrop-filter: blur(10px);
+    }
+    .ob-modal{
+      width: min(560px, 96vw);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(10,14,26,.96);      /* sólido (no transparente) */
+      box-shadow: 0 30px 90px rgba(0,0,0,.75);
+      position:relative;
+      overflow:hidden;
+    }
+    .ob-modal::before{
+      content:"";
+      position:absolute;
+      left:18px; right:18px; top:12px;
+      height:2px;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(56,189,248,.75), rgba(99,102,241,.65), rgba(217,70,239,.70));
+      opacity:.85;
+    }
+    .ob-modal-inner{
+      padding: 22px 20px 18px;
+    }
+    .ob-modal-close{
+      position:absolute;
+      top:10px;
+      right:10px;
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.75);
+      cursor:pointer;
+      transition: filter .15s ease, transform .15s ease;
+    }
+    .ob-modal-close:hover{
+      filter: brightness(1.15);
+      transform: translateY(-1px);
+      color: rgba(255,255,255,.95);
+    }
+    .ob-modal-title{
+      margin-top: 6px;
+      font-weight: 700;
+      font-size: 16px;
+      color: rgba(255,255,255,.92);
+    }
+    .ob-modal-body{
+      margin-top: 8px;
+      color: rgba(255,255,255,.72);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .ob-modal-actions{
+      margin-top: 16px;
+      display:flex;
+      justify-content:flex-end;
+      gap: 10px;
+    }
+    .ob-modal-btn{
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.9);
+      cursor:pointer;
+      transition: filter .15s ease, transform .15s ease;
+    }
+    .ob-modal-btn:hover{
+      filter: brightness(1.12);
+      transform: translateY(-1px);
+    }
   </style>
 </head>
 
@@ -175,37 +260,72 @@
     </g>
   </svg>
 
-  <!-- NAV -->
-  <header class="sticky top-0 z-50">
-    <div class="mx-auto max-w-6xl px-4">
-      <div class="mt-4 glass-nav rounded-2xl px-4 py-3 flex items-center justify-between">
-        <a href="#top" class="flex items-center gap-3 group">
-          <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500"></div>
-          <span class="font-semibold tracking-tight">Observo</span>
-        </a>
+<!-- NAV -->
+<header class="sticky top-0 z-50">
+  <div class="mx-auto max-w-6xl px-4">
+    <div class="mt-4 glass-nav rounded-2xl px-4 py-3 flex items-center justify-between">
 
-        <nav class="hidden md:flex items-center gap-6 text-sm">
-          <a class="navlink" href="#como">Cómo funciona</a>
-          <a class="navlink" href="#incluye">Qué incluye</a>
-          <a class="navlink" href="#reportes">Reportes</a>
-        </nav>
+   
+<!-- Observosec Logo -->
+<a href="/" class="flex items-center gap-3 group select-none">
+  <!-- Icon -->
+  <div class="relative h-9 w-9">
+    <!-- Glow -->
+    <div class="absolute inset-0 rounded-xl blur-md opacity-0
+                bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500
+                group-hover:opacity-60 transition-opacity"></div>
 
-        <div class="flex items-center gap-3">
-          <a href="/pricing.html"
-             class="btn hidden sm:inline-flex px-4 py-2 rounded-xl glass text-sm text-white/90 hover:text-white">
-            Ver planes
-          </a>
-          <a href="#demo"
-             class="btn inline-flex px-4 py-2 rounded-xl text-sm font-semibold
-                    bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
-            Pedir demo
-          </a>
-        </div>
+    <!-- Shield -->
+    <div class="relative h-9 w-9 rounded-xl
+                bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500
+                flex items-center justify-center">
+      <!-- Eye -->
+      <div class="w-4.5 h-3 rounded-full bg-white/95 flex items-center justify-center">
+        <div class="w-1.5 h-1.5 rounded-full bg-indigo-600"></div>
       </div>
     </div>
-  </header>
+  </div>
 
-  <main id="top" class="mx-auto max-w-6xl px-4">
+  <!-- Text -->
+  <div class="leading-tight">
+    <div class="text-sm font-semibold tracking-tight text-white">
+      Observosec
+    </div>
+    <div class="text-[11px] text-white/60 tracking-wide">
+      Cyber risk visibility
+    </div>
+  </div>
+</a>
+
+
+
+
+      <!-- Navegación -->
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a class="navlink" href="/index.html#como">Cómo funciona</a>
+        <a class="navlink" href="/index.html#incluye">Qué incluye</a>
+        <a class="navlink" href="/reporte-ejemplo.html">Reportes</a>
+        <a class="navlink" href="/seguridad.html">Seguridad</a>
+      </nav>
+
+      <!-- CTAs -->
+      <div class="flex items-center gap-3">
+        <a href="/pricing.html"
+           class="btn hidden sm:inline-flex px-4 py-2 rounded-xl glass text-sm text-white/90 hover:text-white">
+          Ver planes
+        </a>
+        <a href="/index.html#demo"
+           class="btn inline-flex px-4 py-2 rounded-xl text-sm font-semibold
+                  bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
+          Pedir demo
+        </a>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<main id="top" class="mx-auto max-w-6xl px-4">
 
     <!-- HERO -->
     <section class="pt-10 pb-8">
@@ -257,8 +377,7 @@
                   </div>
                 </div>
               </div>
-	    </div>
-	   </div>		
+
               <!-- Baseline -->
               <div class="relative">
                 <button type="button"
@@ -295,6 +414,7 @@
                   <div class="font-semibold">Reportes</div>
                   <div class="text-sm text-white/70">Para clientes.</div>
                 </button>
+
                 <div id="pop-reportes" class="popover glass rounded-2xl p-4 border border-white/10">
                   <div class="flex items-start justify-between gap-4">
                     <div>
@@ -313,42 +433,9 @@
                   </div>
                 </div>
               </div>
-            
-          
-
- <!-- ACOMPANAMIENTO Y ASESORIA -->
-              <div class="relative">
-                <button type="button"
-                        class="glass feature-card w-full text-left rounded-2xl px-4 py-4 border border-white/10"
-                        data-popover="pop-reportes">
-                  <div class="font-semibold">Asesoria</div>
-                  <div class="text-sm text-white/70">Para clientes.</div>
-                </button>
-
-                <div id="pop-reportes" class="popover glass rounded-2xl p-4 border border-white/10">
-                  <div class="flex items-start justify-between gap-4">
-                    <div>
-                      <div class="text-sm font-semibold">Asesoria profesional en lenguaje hibrido</div>
-                      <p class="mt-1 text-sm text-white/70">
-                        Entendiendo los resultados, te brindamos asesoria tecnica profesional, en leguaje hibrido.
-                      </p>
-                      <ul class="mt-3 text-sm text-white/70 space-y-1">
-                        <li>• Te brindamos consultoria.</li>
-                        <li>• Entregamos charlas de concientizacion par el equipo.</li>
-                        <li>• Aumentamos la cultura de cibeserguridad y seguridad de la informacion</li>
-                      </ul>
-                    </div>
-                    <button class="text-white/60 hover:text-white" data-close="pop-reportes" aria-label="Cerrar">✕</button>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
-         </div>
-	</div>
-	</div>
-	</div>
-	
+
           <!-- Derecha: Manifiesto -->
           <div class="lg:col-span-5">
             <div class="glass rounded-3xl p-6 border border-white/10">
@@ -533,7 +620,7 @@
 
   </main>
 
-  <!-- Scripts: ojo + popovers -->
+  <!-- Scripts: ojo + (SOLO) modales para los 3 recuadros -->
   <script>
   // Ojo sigue el puntero (todos los ojos)
   (function(){
@@ -577,58 +664,104 @@
     }, { passive: true });
   })();
 
-  // Popovers (features)
+  // MODALES (solo Read-only / Baseline / Reportes)
   (function(){
     const triggers = Array.from(document.querySelectorAll("[data-popover]"));
-    const popovers = new Map();
-
-    function closeAll(){
-      for (const el of popovers.values()){
-        el.classList.remove("open");
-        el.setAttribute("aria-hidden", "true");
-      }
-    }
+    const sources = new Map();
 
     triggers.forEach(btn => {
       const id = btn.getAttribute("data-popover");
       const pop = document.getElementById(id);
+      if (id && pop) sources.set(id, pop);
+    });
+
+    function closeModal(){
+      const existing = document.querySelector(".ob-modal-backdrop");
+      if (existing) existing.remove();
+      document.documentElement.style.overflow = "";
+    }
+
+    function openFromPopover(pop){
+      // Toma el contenido YA escrito en tu popover (sin inventar nada)
+      const titleEl = pop.querySelector(".text-sm.font-semibold");
+      const bodyP = pop.querySelector("p");
+      const list = pop.querySelector("ul");
+
+      const title = titleEl ? titleEl.textContent.trim() : "Detalle";
+      const body = `
+        ${bodyP ? bodyP.outerHTML : ""}
+        ${list ? list.outerHTML : ""}
+      `;
+
+      closeModal();
+
+      const backdrop = document.createElement("div");
+      backdrop.className = "ob-modal-backdrop";
+      backdrop.innerHTML = `
+        <div class="ob-modal" role="dialog" aria-modal="true">
+          <button class="ob-modal-close" type="button" aria-label="Cerrar">✕</button>
+          <div class="ob-modal-inner">
+            <div class="ob-modal-title">${escapeHtml(title)}</div>
+            <div class="ob-modal-body">${body}</div>
+            <div class="ob-modal-actions">
+              <button class="ob-modal-btn" type="button">Entendido</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(backdrop);
+      document.documentElement.style.overflow = "hidden";
+
+      const closeBtn = backdrop.querySelector(".ob-modal-close");
+      const okBtn = backdrop.querySelector(".ob-modal-btn");
+
+      closeBtn.addEventListener("click", closeModal);
+      okBtn.addEventListener("click", closeModal);
+
+      backdrop.addEventListener("click", (e) => {
+        if (e.target === backdrop) closeModal();
+      });
+
+      const onKey = (e) => {
+        if (e.key === "Escape") {
+          closeModal();
+          document.removeEventListener("keydown", onKey);
+        }
+      };
+      document.addEventListener("keydown", onKey);
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    // Intercepta SOLO los 3 botones, y abre modal
+    triggers.forEach(btn => {
+      const id = btn.getAttribute("data-popover");
+      const pop = sources.get(id);
       if (!pop) return;
 
-      popovers.set(id, pop);
-      pop.setAttribute("aria-hidden", "true");
-
       btn.addEventListener("click", (e) => {
+        e.preventDefault();
         e.stopPropagation();
-        const isOpen = pop.classList.contains("open");
-        closeAll();
-        if (!isOpen){
-          pop.classList.add("open");
-          pop.setAttribute("aria-hidden", "false");
-        }
+        openFromPopover(pop);
       });
     });
 
-    // Close buttons
+    // Por si alguien cierra con los botones antiguos dentro del popover (aunque ya no se abrirá)
     document.addEventListener("click", (e) => {
       const closeId = e.target && e.target.getAttribute && e.target.getAttribute("data-close");
-      if (closeId && popovers.has(closeId)){
-        popovers.get(closeId).classList.remove("open");
-        popovers.get(closeId).setAttribute("aria-hidden","true");
+      if (closeId) {
+        e.preventDefault();
         e.stopPropagation();
-        return;
+        closeModal();
       }
-      closeAll();
     });
-
-    // ESC to close
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeAll();
-    });
-
-    // Prevent click inside popover from closing immediately
-    for (const pop of popovers.values()){
-      pop.addEventListener("click", (e) => e.stopPropagation());
-    }
   })();
   </script>
 </body>
