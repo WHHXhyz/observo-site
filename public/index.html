@@ -2,1096 +2,749 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Observosec — Seguridad clara para negocios que crecen.</title>
-  <meta name="description" content="Observosec analiza tu sitio web, guarda evidencia del estado de seguridad y detecta cambios relevantes con el tiempo. Visibilidad, evidencia, cambios y acompañamiento." />
-  <meta name="theme-color" content="#070B14" />
-
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aegis8 — Consultora y proyecto social de ciberseguridad</title>
+  <meta name="description" content="Aegis8 es una consultora y proyecto educativo-social de ciberseguridad para personas, startups y pequeñas organizaciones. Gobernanza, cultura y hardening con criterio claro." />
+  <meta name="theme-color" content="#0B2A5B" />
 
   <style>
     :root{
-      --bg:#070B14;
-      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --bg: #F7FBFF;
+      --card: #FFFFFF;
+      --text: #0B1B34;
+      --muted:#4B5E7B;
+      --line:#DCEBFF;
+      --blue:#0B2A5B;
+      --sky:#2FA9FF;
+      --sky2:#8FD3FF;
+      --shadow: 0 18px 45px rgba(11,42,91,.10);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 1080px;
     }
-    html{ scroll-behavior:smooth; }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
       background:
-        radial-gradient(900px 520px at 18% -10%, rgba(102,227,255,.14), transparent 55%),
-        radial-gradient(980px 560px at 85% 0%, rgba(124,92,255,.12), transparent 55%),
-        radial-gradient(980px 560px at 50% 115%, rgba(39,232,167,.08), transparent 60%),
-        var(--bg);
+        radial-gradient(900px 420px at 20% -10%, rgba(47,169,255,.25), transparent 60%),
+        radial-gradient(900px 420px at 90% 0%, rgba(143,211,255,.25), transparent 60%),
+        linear-gradient(180deg, #FFFFFF 0%, var(--bg) 100%);
+      line-height:1.45;
     }
 
-    /* Glass PRO */
-    .glass{
-      background:
-        radial-gradient(900px 260px at 20% 0%, rgba(255,255,255,.10), transparent 55%),
-        linear-gradient(to bottom, rgba(255,255,255,.07), rgba(255,255,255,.03));
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow:
-        0 18px 60px rgba(0,0,0,.55),
-        inset 0 1px 0 rgba(255,255,255,.08);
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ width:min(var(--max), 100% - 40px); margin:0 auto; }
+    .center{ text-align:center; }
+    .muted{ color:var(--muted); }
+    .pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.8);
+      border-radius:999px;
+      box-shadow: 0 8px 25px rgba(11,42,91,.06);
+      backdrop-filter: blur(8px);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, var(--sky2), var(--sky));
+      box-shadow: 0 0 0 4px rgba(47,169,255,.12);
     }
 
-    /* Barra superior */
-    .glass-nav{
-      background: linear-gradient(to bottom, rgba(10,14,26,.78), rgba(10,14,26,.55));
-      border: 1px solid rgba(255,255,255,.15);
-      backdrop-filter: blur(12px);
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50;
+      background: rgba(255,255,255,.75);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(220,235,255,.75);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:16px;
+    }
+    .brand{ display:flex; align-items:center; gap:12px; min-width: 180px; }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background: linear-gradient(135deg, var(--blue), #0D3B85);
+      position:relative;
+      box-shadow: 0 14px 30px rgba(11,42,91,.18);
+    }
+    /* simple "shield-ish" mark */
+    .logo:before{
+      content:"";
+      position:absolute; inset:9px 11px 9px 11px;
+      border-radius:10px 10px 14px 14px;
+      background: linear-gradient(135deg, rgba(143,211,255,.95), rgba(47,169,255,.85));
+      clip-path: polygon(50% 0%, 92% 18%, 92% 55%, 50% 100%, 8% 55%, 8% 18%);
+      opacity:.95;
+    }
+    .brand strong{ font-size:16px; letter-spacing:.2px; }
+    .brand span{ font-size:12px; color:var(--muted); display:block; margin-top:2px; }
+
+    nav ul{
+      list-style:none; padding:0; margin:0;
+      display:flex; align-items:center; gap:18px;
+    }
+    nav a{
+      font-size:14px;
+      color: rgba(11,27,52,.85);
+      padding:10px 10px;
+      border-radius: 12px;
+      transition: background .15s ease, color .15s ease;
+      white-space: nowrap;
+    }
+    nav a:hover{ background: rgba(220,235,255,.55); color: var(--blue); }
+
+    .nav-right{ display:flex; align-items:center; gap:10px; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:11px 14px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.9);
+      color: var(--blue);
+      font-weight:600;
+      box-shadow: 0 12px 30px rgba(11,42,91,.08);
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 18px 40px rgba(11,42,91,.12); }
+    .btn.primary{
+      border-color: rgba(47,169,255,.35);
+      background: linear-gradient(135deg, rgba(47,169,255,.15), rgba(143,211,255,.25));
+      color: var(--blue);
+    }
+
+    /* Mobile nav */
+    .menu-btn{
+      display:none;
+      width:44px; height:44px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.9);
+      box-shadow: 0 12px 30px rgba(11,42,91,.08);
+      cursor:pointer;
+      align-items:center; justify-content:center;
+    }
+    .menu-lines{
+      width:18px; height:12px; position:relative;
+    }
+    .menu-lines span{
+      position:absolute; left:0; right:0; height:2px; border-radius:99px;
+      background: rgba(11,42,91,.8);
+      transition: transform .15s ease, top .15s ease, opacity .15s ease;
+    }
+    .menu-lines span:nth-child(1){ top:0; }
+    .menu-lines span:nth-child(2){ top:5px; }
+    .menu-lines span:nth-child(3){ top:10px; }
+    .mobile-panel{
+      display:none;
+      padding: 0 0 14px 0;
+    }
+    .mobile-panel a{
+      display:block;
+      padding:12px 12px;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.85);
+      margin:10px 0;
+      font-weight:600;
+      color: rgba(11,27,52,.9);
+    }
+    .mobile-panel a:hover{ background: rgba(220,235,255,.55); color: var(--blue); }
+
+    /* Sections */
+    main{ padding: 34px 0 70px; }
+    .hero{
+      padding: 34px 0 28px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:28px;
+      align-items:stretch;
+      margin-top: 18px;
+    }
+    h1{
+      font-size: clamp(32px, 4vw, 46px);
+      line-height: 1.08;
+      margin: 14px 0 12px;
+      letter-spacing: -0.6px;
+    }
+    .lead{
+      font-size: clamp(16px, 1.35vw, 18px);
+      color: var(--muted);
+      margin: 0 0 18px;
+      max-width: 62ch;
+    }
+    .hero-cta{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+
+    .card{
+      background: rgba(255,255,255,.9);
+      border:1px solid var(--line);
+      border-radius: var(--radius2);
       box-shadow: var(--shadow);
     }
-
-    .btn{ transition: transform .15s ease, filter .15s ease; }
-
-
-/* Hero badge + highlights */
-.hero-badge{
-  background: linear-gradient(to bottom, rgba(255,255,255,.09), rgba(255,255,255,.04));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
-}
-.badge-dot{
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, rgba(56,189,248,.95), rgba(99,102,241,.95), rgba(217,70,239,.95));
-  box-shadow: 0 0 0 4px rgba(99,102,241,.16);
-  display:inline-block;
-}
-.sep{ color: rgba(255,255,255,.35); }
-
-.hl{
-  background: linear-gradient(90deg, rgba(56,189,248,.95), rgba(99,102,241,.95), rgba(217,70,239,.95));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.hl2{
-  color: rgba(255,255,255,.92);
-  font-weight: 600;
-}
-    .btn:hover{ transform: translateY(-1px); filter: brightness(1.07); }
-
-    .navlink{
-  position: relative;
-  padding: 4px 2px;
-  color: rgba(255,255,255,.72);
-  transition: color .15s ease, text-shadow .15s ease;
-}
-.navlink::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  bottom:-8px;
-  width:0;
-  height:2px;
-  border-radius:999px;
-  background: linear-gradient(90deg, rgba(56,189,248,.85), rgba(99,102,241,.85), rgba(217,70,239,.85));
-  transform: translateX(-50%);
-  transition: width .18s ease;
-  opacity:.95;
-}
-.navlink:hover{
-  color: rgba(255,255,255,.96);
-  text-shadow: 0 0 18px rgba(99,102,241,.25);
-}
-.navlink:hover::after{ width: 70%; }
-
-.navlink.active{
-  color: rgba(255,255,255,.96);
-}
-.navlink.active::after{ width: 70%; }
-
-.nav-divider{
-  position:absolute;
-  left:16px;
-  right:16px;
-  bottom:-1px;
-  height:1px;
-  background: linear-gradient(90deg, transparent, rgba(99,102,241,.35), transparent);
-  opacity:.6;
-  pointer-events:none;
-}
-
-    /* Cards “Cómo funciona” con acento */
-    .step-card{
-      position: relative;
-      overflow: hidden;
-      transition: transform .18s ease, filter .18s ease, border-color .18s ease;
-    }
-    .step-card::before{
-      content:"";
-      position:absolute;
-      left:14px;
-      right:14px;
-      top:12px;
-      height:2px;
-      border-radius:999px;
-      background: linear-gradient(90deg, rgba(56,189,248,.75), rgba(99,102,241,.65), rgba(217,70,239,.70));
-      opacity:.60;
-    }
-    .step-card::after{
-      content:"";
-      position:absolute;
-      inset:-1px;
-      background: radial-gradient(520px 190px at 30% 10%, rgba(56,189,248,.10), transparent 60%);
-      pointer-events:none;
-    }
-    .step-card:hover{
-      transform: translateY(-2px);
-      filter: brightness(1.06);
-      border-color: rgba(255,255,255,.18);
-    }
-
-    /* Feature cards (Read-only/Baseline/Reportes) igual al estilo de las cards */
-    .feature-card{
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform .18s ease, filter .18s ease, border-color .18s ease;
-    }
-    .feature-card::before{
-      content:"";
-      position:absolute;
-      left:14px;
-      right:14px;
-      top:12px;
-      height:2px;
-      border-radius:999px;
-      background: linear-gradient(90deg, rgba(56,189,248,.75), rgba(99,102,241,.65), rgba(217,70,239,.70));
-      opacity:.60;
-    }
-    .feature-card::after{
-      content:"";
-      position:absolute;
-      inset:-1px;
-      background: radial-gradient(520px 190px at 30% 10%, rgba(56,189,248,.10), transparent 60%);
-      pointer-events:none;
-    }
-    .feature-card:hover{
-      transform: translateY(-2px);
-      filter: brightness(1.06);
-      border-color: rgba(255,255,255,.18);
-    }
-
-    /* Principles cards (Misión/Visión/Promesa) — más vivos */
-    .principle-card{
-      position: relative;
-      overflow: hidden;
-      transition: transform .18s ease, filter .18s ease, border-color .18s ease;
-    }
-    .principle-card::before{
-      content:"";
-      position:absolute;
-      left:14px;
-      right:14px;
-      top:12px;
-      height:2px;
-      border-radius:999px;
-      background: linear-gradient(90deg, rgba(39,232,167,.65), rgba(56,189,248,.65), rgba(217,70,239,.60));
-      opacity:.70;
-    }
-    .principle-card::after{
-      content:"";
-      position:absolute;
-      inset:-1px;
-      background:
-        radial-gradient(520px 220px at 20% 10%, rgba(39,232,167,.10), transparent 60%),
-        radial-gradient(520px 220px at 80% 0%, rgba(99,102,241,.10), transparent 60%);
-      pointer-events:none;
-    }
-    .principle-card:hover{
-      transform: translateY(-2px);
-      filter: brightness(1.06);
-      border-color: rgba(255,255,255,.18);
-    }
-    .principle-tag{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      color: rgba(255,255,255,.70);
-      font-size: 11px;
-      letter-spacing: .22em;
-    }
-
-    /* Emblema flotante */
-    .emblem{
-      position: fixed;
-      left: 16px;
-      bottom: 16px;
-      width: 66px;
-      height: 66px;
-      z-index: 40;
-      pointer-events: none;
-      opacity: .95;
-      filter: drop-shadow(0 18px 45px rgba(0,0,0,.60));
-    }
-    @media (max-width: 640px){
-      .emblem{ width: 54px; height: 54px; left: 12px; bottom: 12px; }
-    }
-
-    /* Popover (se mantiene, pero ya NO se abre; lo usaremos como “fuente” del contenido) */
-    .popover{
-      position: absolute;
-      left: 0;
-      top: calc(100% + 10px);
-      width: min(420px, 92vw);
-      z-index: 60;
-      display: none;
-    }
-    .popover.open{ display:block; }
-
-    /* ===========================
-       MODAL (SOLO para los 3 recuadros)
-       =========================== */
-    .ob-modal-backdrop{
-      position:fixed;
-      inset:0;
-      z-index:9999;
+    .hero-card{
+      padding: 18px;
       display:flex;
-      align-items:center;
-      justify-content:center;
+      flex-direction:column;
+      justify-content:space-between;
+      min-height: 100%;
+    }
+    .stat{
+      display:flex; gap:14px; align-items:flex-start;
+      padding:14px;
+      border-radius: var(--radius);
+      border:1px solid rgba(220,235,255,.85);
+      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      margin-top: 12px;
+    }
+    .ico{
+      width:40px; height:40px; border-radius: 14px;
+      background: rgba(11,42,91,.08);
+      border:1px solid rgba(220,235,255,.95);
+      display:grid; place-items:center;
+      color: var(--blue);
+      font-weight:800;
+    }
+    .stat strong{ display:block; font-size:14px; }
+    .stat span{ display:block; font-size:13px; color: var(--muted); margin-top:4px; }
+
+    section{
+      padding: 52px 0;
+    }
+    .sec-head{
+      display:flex; flex-direction:column; gap:8px;
+      margin-bottom: 18px;
+    }
+    .sec-head h2{
+      margin:0;
+      font-size: clamp(22px, 2.3vw, 30px);
+      letter-spacing: -0.3px;
+    }
+    .grid-2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:18px;
+    }
+    .grid-4{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:14px;
+    }
+    .tile{
       padding: 16px;
-      background: rgba(0,0,0,.68);          /* fondo oscuro real */
-      backdrop-filter: blur(10px);
+      border-radius: var(--radius2);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 14px 40px rgba(11,42,91,.08);
+      min-height: 160px;
     }
-    .ob-modal{
-      width: min(560px, 96vw);
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(10,14,26,.96);      /* sólido (no transparente) */
-      box-shadow: 0 30px 90px rgba(0,0,0,.75);
-      position:relative;
-      overflow:hidden;
-    }
-    .ob-modal::before{
-      content:"";
-      position:absolute;
-      left:18px; right:18px; top:12px;
-      height:2px;
-      border-radius:999px;
-      background: linear-gradient(90deg, rgba(56,189,248,.75), rgba(99,102,241,.65), rgba(217,70,239,.70));
-      opacity:.85;
-    }
-    .ob-modal-inner{
-      padding: 22px 20px 18px;
-    }
-    .ob-modal-close{
-      position:absolute;
-      top:10px;
-      right:10px;
-      width:38px;
-      height:38px;
-      border-radius:12px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: rgba(255,255,255,.75);
-      cursor:pointer;
-      transition: filter .15s ease, transform .15s ease;
-    }
-    .ob-modal-close:hover{
-      filter: brightness(1.15);
-      transform: translateY(-1px);
-      color: rgba(255,255,255,.95);
-    }
-    .ob-modal-title{
-      margin-top: 6px;
-      font-weight: 700;
+    .tile h3{
+      margin: 10px 0 8px;
       font-size: 16px;
-      color: rgba(255,255,255,.92);
+      letter-spacing: -0.1px;
     }
-    .ob-modal-body{
-      margin-top: 8px;
-      color: rgba(255,255,255,.72);
+    .tile p{
+      margin: 0;
+      color: var(--muted);
       font-size: 14px;
-      line-height: 1.55;
     }
-    .ob-modal-actions{
-      margin-top: 16px;
-      display:flex;
-      justify-content:flex-end;
-      gap: 10px;
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(220,235,255,.9);
+      background: rgba(47,169,255,.08);
+      color: rgba(11,42,91,.88);
+      font-weight:700;
+      font-size: 12px;
     }
-    .ob-modal-btn{
-      padding: 10px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: rgba(255,255,255,.9);
-      cursor:pointer;
-      transition: filter .15s ease, transform .15s ease;
+
+    .values{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      align-items:start;
     }
-    .ob-modal-btn:hover{
-      filter: brightness(1.12);
-      transform: translateY(-1px);
+    .list{
+      margin:0; padding:0; list-style:none;
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .list li{
+      display:flex; gap:10px; align-items:flex-start;
+      padding: 12px 12px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.92);
+    }
+    .check{
+      width:26px; height:26px; border-radius: 10px;
+      background: linear-gradient(135deg, rgba(47,169,255,.20), rgba(143,211,255,.35));
+      border:1px solid rgba(47,169,255,.25);
+      display:grid; place-items:center;
+      color: var(--blue);
+      font-weight:900;
+      flex: 0 0 auto;
+    }
+    .list strong{ display:block; font-size:14px; }
+    .list span{ display:block; font-size:13px; color: var(--muted); margin-top:2px; }
+
+    .social{
+      padding: 18px;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(47,169,255,.25);
+      background: linear-gradient(135deg, rgba(47,169,255,.12), rgba(143,211,255,.22));
+      box-shadow: 0 18px 45px rgba(11,42,91,.10);
+    }
+
+    footer{
+      padding: 28px 0 40px;
+      border-top: 1px solid rgba(220,235,255,.9);
+      background: rgba(255,255,255,.55);
+    }
+    .foot{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:18px;
+      flex-wrap:wrap;
+    }
+    .foot small{ color: var(--muted); }
+    .foot a{ text-decoration: underline; text-underline-offset: 3px; }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .grid-4{ grid-template-columns: repeat(2, 1fr); }
+      .values{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px){
+      nav ul{ display:none; }
+      .menu-btn{ display:inline-flex; }
+      .grid-2{ grid-template-columns: 1fr; }
+      .grid-4{ grid-template-columns: 1fr; }
+      .wrap{ width:min(var(--max), 100% - 28px); }
+      .hero{ padding-top: 22px; }
+      .hero-card{ padding: 16px; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ scroll-behavior:auto !important; transition:none !important; }
     }
   </style>
 </head>
 
-<body class="text-white">
-
-  <!-- Emblema flotante -->
-  <svg class="emblem" viewBox="0 0 120 120" aria-hidden="true">
-    <defs>
-      <linearGradient id="g1" x1="0" x2="1">
-        <stop offset="0" stop-color="#38BDF8"/>
-        <stop offset="0.5" stop-color="#6366F1"/>
-        <stop offset="1" stop-color="#D946EF"/>
-      </linearGradient>
-      <radialGradient id="g2" cx="30%" cy="30%" r="80%">
-        <stop offset="0" stop-color="#ffffff" stop-opacity="0.16"/>
-        <stop offset="1" stop-color="#ffffff" stop-opacity="0.04"/>
-      </radialGradient>
-    </defs>
-
-    <path d="M60 8 C78 18,92 18,104 22 C104 62,90 92,60 112 C30 92,16 62,16 22 C28 18,42 18,60 8Z"
-          fill="url(#g2)" stroke="url(#g1)" stroke-width="3" opacity="0.98"/>
-
-    <path d="M60 16 C76 25,88 25,98 28 C98 62,86 86,60 103 C34 86,22 62,22 28 C32 25,44 25,60 16Z"
-          fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
-
-    <g class="ob-eye">
-      <path d="M30 62 C40 48,52 40,60 40 C68 40,80 48,90 62 C80 76,68 84,60 84 C52 84,40 76,30 62Z"
-            fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
-      <circle class="ob-iris" cx="60" cy="62" r="14" fill="rgba(56,189,248,0.18)" stroke="rgba(56,189,248,0.45)" stroke-width="2"/>
-      <circle class="ob-pupil" cx="60" cy="62" r="6" fill="rgba(255,255,255,0.92)"/>
-      <circle cx="66" cy="56" r="3" fill="rgba(255,255,255,0.30)"/>
-    </g>
-  </svg>
-
-<!-- NAV -->
-<header class="sticky top-0 z-50">
-  <div class="mx-auto max-w-6xl px-4">
-    <div class="mt-4 glass-nav rounded-2xl px-4 py-3 flex items-center justify-between relative">
-
-   
-<!-- Observosec Logo -->
-<a href="/" class="flex items-center gap-3 group select-none">
-  <!-- Icon (Shield + Eye) -->
-  <div class="relative h-9 w-9">
-    <div class="absolute inset-0 rounded-xl blur-md opacity-0
-                bg-gradient-to-br from-sky-400 via-indigo-500 to-fuchsia-500
-                group-hover:opacity-60 transition-opacity"></div>
-
-    <svg class="relative h-9 w-9" viewBox="0 0 64 64" aria-hidden="true">
-      <defs>
-        <linearGradient id="obg" x1="0" x2="1">
-          <stop offset="0" stop-color="#38BDF8"/>
-          <stop offset="0.55" stop-color="#6366F1"/>
-          <stop offset="1" stop-color="#D946EF"/>
-        </linearGradient>
-        <radialGradient id="obw" cx="30%" cy="25%" r="70%">
-          <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/>
-          <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.05"/>
-        </radialGradient>
-      </defs>
-
-      <!-- Shield -->
-      <path d="M32 4
-               C40 9 48 10 56 12
-               V33
-               C56 48 45 57 32 61
-               C19 57 8 48 8 33
-               V12
-               C16 10 24 9 32 4 Z"
-            fill="url(#obw)" stroke="url(#obg)" stroke-width="2.4" />
-
-      <!-- Inner -->
-      <path d="M32 9
-               C39 13 46 14 52 16
-               V33
-               C52 45 43 52 32 56
-               C21 52 12 45 12 33
-               V16
-               C18 14 25 13 32 9 Z"
-            fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.10)" stroke-width="1.6"/>
-
-      <!-- Eye -->
-      <path d="M17 33
-               C21 26 26 22 32 22
-               C38 22 43 26 47 33
-               C43 40 38 44 32 44
-               C26 44 21 40 17 33 Z"
-            fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.16)" stroke-width="1.6"/>
-      <circle cx="32" cy="33" r="7" fill="rgba(56,189,248,0.18)" stroke="rgba(56,189,248,0.45)" stroke-width="1.6"/>
-      <circle cx="32" cy="33" r="3.2" fill="rgba(255,255,255,0.92)"/>
-      <circle cx="35" cy="30" r="1.5" fill="rgba(255,255,255,0.34)"/>
-    </svg>
-  </div>
-
-  <!-- Text -->
-  <div class="leading-tight">
-    <div class="text-sm font-semibold tracking-tight text-white">
-      Observosec
-    </div>
-    <div class="text-[11px] text-white/60 tracking-wide">
-      Cyber risk visibility
-    </div>
-  </div>
-</a>
-
-
-
-
-      <!-- Navegación -->
-      <nav class="hidden md:flex items-center gap-6 text-sm">
-        <a class="navlink" href="#como">Cómo funciona</a>
-        <a class="navlink" href="#incluye">Visibilidad</a>
-        <a class="navlink" href="/seguridad.html">Reportes</a>
-        <a class="navlink" href="/seguridad.html">Seguridad</a>
-      </nav>
-
-      <!-- CTAs -->
-      <div class="flex items-center gap-3">
-        <a href="/pricing.html"
-           class="btn hidden sm:inline-flex px-4 py-2 rounded-xl glass text-sm text-white/90 hover:text-white">
-          Ver planes
-        </a>
-        <a href="#demo"
-           class="btn inline-flex px-4 py-2 rounded-xl text-sm font-semibold
-                  bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
-          Pedir demo
-        </a>
-      </div>
-
-      <div class="nav-divider"></div>
-    </div>
-  </div>
-</header>
-
-<main id="top" class="mx-auto max-w-6xl px-4">
-
-    <!-- HERO -->
-    <section class="pt-10 pb-14">
-      <div class="glass rounded-3xl p-10 md:p-12 border border-white/10">
-        <div class="hero-badge inline-flex flex-wrap items-center gap-x-2 gap-y-1 text-xs px-3 py-2 rounded-full border border-white/10 text-white/80">
-  <span class="badge-dot" aria-hidden="true"></span>
-  <span class="font-medium">Visibilidad</span><span class="sep" aria-hidden="true">•</span>
-  <span class="font-medium">Evidencia</span><span class="sep" aria-hidden="true">•</span>
-  <span class="font-medium">Cambios</span><span class="sep" aria-hidden="true">•</span>
-  <span class="font-medium">Acompañamiento</span>
-</div>
-
-        <div class="mt-7 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <!-- Izquierda -->
-          <div class="lg:col-span-7">
-            <h1 class="text-3xl md:text-5xl font-semibold tracking-tight leading-tight">
-  Seguridad clara para <span class="hl">negocios que crecen</span>.
-</h1>
-
-            <p class="mt-4 text-white/70 text-base md:text-lg leading-relaxed max-w-2xl">
-  <span class="hl2">Observosec</span> analiza tu sitio web, guarda evidencia del estado de <span class="hl2">seguridad</span> y detecta cambios relevantes con el tiempo.
-  <br class="hidden sm:block"/>
-  Si algo importa, <span class="hl2">te lo decimos</span>. Si algo cambia, <span class="hl2">lo ves</span>.
-  Y si necesitas decidir, <span class="hl2">te acompañamos</span> con criterio técnico claro y accionable.
-</p>
-
-            <!-- Feature cards (como la imagen 2 + popover) -->
-            <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 items-stretch max-w-2xl">
-              <!-- Read-only -->
-              <div class="relative">
-                <button type="button"
-                        class="glass feature-card w-full text-left rounded-2xl px-4 py-4 border border-white/10 min-h-[92px] flex flex-col justify-center"
-                        data-popover="pop-readonly">
-                  <div class="flex items-start gap-3">
-                    <div class="mt-0.5"><svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-white/80" aria-hidden="true">
-  <path fill="currentColor" d="M12 1a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v9a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-9a2 2 0 0 0-2-2h-1V6a5 5 0 0 0-5-5Zm-3 8V6a3 3 0 1 1 6 0v3H9Z"/>
-</svg></div>
-                    <div class="min-w-0">
-                      <div class="font-semibold leading-tight">Read-only</div>
-                      <div class="text-xs text-white/70 mt-1">Sin credenciales.</div>
-                    </div>
-                  </div>
-        </button>
-
-                <div id="pop-readonly" class="popover glass rounded-2xl p-4 border border-white/10">
-                  <div class="flex items-start justify-between gap-4">
-                    <div>
-                      <div class="text-sm font-semibold">Read-only (sin credenciales)</div>
-                      <p class="mt-1 text-sm text-white/70">
-                        Observo analiza señales públicas del sitio (TLS, headers, exposición) sin pedir accesos.
-                        Ideal para demostrar postura de seguridad sin fricción.
-                      </p>
-                      <ul class="mt-3 text-sm text-white/70 space-y-1">
-                        <li>• No necesita usuario/contraseña.</li>
-                        <li>• No modifica tu sistema.</li>
-                        <li>• Menos riesgo operacional.</li>
-                      </ul>
-                    </div>
-                    <button class="text-white/60 hover:text-white" data-close="pop-readonly" aria-label="Cerrar">✕</button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Baseline -->
-              <div class="relative">
-                <button type="button"
-                        class="glass feature-card w-full text-left rounded-2xl px-4 py-4 border border-white/10 min-h-[92px] flex flex-col justify-center"
-                        data-popover="pop-baseline">
-                  <div class="flex items-start gap-3">
-                    <div class="mt-0.5"><svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-white/80" aria-hidden="true">
-  <path fill="currentColor" d="M4 19h16v2H2V3h2v16Zm4-2V9h2v8H8Zm4 0V5h2v12h-2Zm4 0v-6h2v6h-2Z"/>
-</svg></div>
-                    <div class="min-w-0">
-                      <div class="font-semibold leading-tight">Baseline</div>
-                      <div class="text-xs text-white/70 mt-1">Comparación real.</div>
-                    </div>
-                  </div>
-        </button>
-
-                <div id="pop-baseline" class="popover glass rounded-2xl p-4 border border-white/10">
-                  <div class="flex items-start justify-between gap-4">
-                    <div>
-                      <div class="text-sm font-semibold">Baseline (foto del “hoy”)</div>
-                      <p class="mt-1 text-sm text-white/70">
-                        Guardamos una referencia del estado actual y luego comparamos para detectar cambios relevantes
-                        (configuración, headers, comportamientos visibles).
-                      </p>
-                      <ul class="mt-3 text-sm text-white/70 space-y-1">
-                        <li>• Detecta degradaciones con el tiempo.</li>
-                        <li>• Justifica cambios con evidencia.</li>
-                        <li>• Útil para cambios de equipo/infra.</li>
-                      </ul>
-                    </div>
-                    <button class="text-white/60 hover:text-white" data-close="pop-baseline" aria-label="Cerrar">✕</button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Reportes -->
-              <div class="relative">
-                <button type="button"
-                        class="glass feature-card w-full text-left rounded-2xl px-4 py-4 border border-white/10 min-h-[92px] flex flex-col justify-center"
-                        data-popover="pop-reportes">
-                  <div class="flex items-start gap-3">
-                    <div class="mt-0.5"><svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-white/80" aria-hidden="true">
-  <path fill="currentColor" d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm8 1v5h5"/>
-  <path fill="currentColor" d="M7 12h10v2H7v-2Zm0 4h10v2H7v-2Zm0-8h6v2H7V8Z"/>
-</svg></div>
-                    <div class="min-w-0">
-                      <div class="font-semibold leading-tight">Reportes</div>
-                      <div class="text-xs text-white/70 mt-1">Para tu empresa.</div>
-                    </div>
-                  </div>
-        </button>
-
-                <div id="pop-reportes" class="popover glass rounded-2xl p-4 border border-white/10">
-                  <div class="flex items-start justify-between gap-4">
-                    <div>
-                      <div class="text-sm font-semibold">Reportes listos para compartir</div>
-                      <p class="mt-1 text-sm text-white/70">
-                        Entregamos un resumen ejecutivo y evidencia simple para que tu equipo (y stakeholders) entiendan qué está bien, qué falta y qué hacer ahora.
-                      </p>
-                      <ul class="mt-3 text-sm text-white/70 space-y-1">
-                        <li>• Resumen ejecutivo + findings.</li>
-                        <li>• Evidencia simple (checks).</li>
-                        <li>• Comunicación sin jerga.</li>
-                      </ul>
-                    </div>
-                    <button class="text-white/60 hover:text-white" data-close="pop-reportes" aria-label="Cerrar">✕</button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Acompañamiento -->
-              <div class="relative">
-                <button type="button"
-                        class="glass feature-card w-full text-left rounded-2xl px-4 py-4 border border-white/10 min-h-[92px] flex flex-col justify-center"
-                        data-popover="pop-acompanamiento">
-                  <div class="flex items-start gap-3">
-                    <div class="mt-0.5"><svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-white/80" aria-hidden="true">
-  <path fill="currentColor" d="M16 11c1.66 0 3-1.57 3-3.5S17.66 4 16 4s-3 1.57-3 3.5S14.34 11 16 11Zm-8 0c1.66 0 3-1.57 3-3.5S9.66 4 8 4 5 5.57 5 7.5 6.34 11 8 11Zm8 2c-1.67 0-5 0-5 2.5V20h10v-4.5c0-2.5-3.33-2.5-5-2.5ZM8 13c-.35 0-.77.02-1.22.08C5.2 13.3 3 14 3 16v4h6v-4.5c0-1.7.8-2.7 1.9-3.35C10.1 13.35 9 13 8 13Z"/>
-</svg></div>
-                    <div class="min-w-0">
-                      <div class="font-semibold leading-tight">Acompañamiento</div>
-                      <div class="text-xs text-white/70 mt-1">Consultoría post-scan.</div>
-                    </div>
-                  </div>
-        </button>
-
-                <div id="pop-acompanamiento" class="popover glass rounded-2xl p-4 border border-white/10">
-                  <div class="flex items-start justify-between gap-4">
-                    <div>
-                      <div class="text-sm font-semibold">Acompañamiento (consultoría)</div>
-                      <p class="mt-1 text-sm text-white/70">
-                        Después del escaneo y el reporte, puedes contratarnos para guiar la remediación:
-                        priorizamos tareas, revisamos configuraciones y validamos los fixes con evidencia.
-                      </p>
-                      <ul class="mt-3 text-sm text-white/70 space-y-1">
-                        <li>• Plan por sprints (qué hacer primero).</li>
-                        <li>• Revisión de hardening (TLS, headers, exposición).</li>
-                        <li>• Validación antes/después con re-scan.</li>
-                      </ul>
-                    </div>
-                    <button class="text-white/60 hover:text-white" data-close="pop-acompanamiento" aria-label="Cerrar">✕</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Derecha: Manifiesto -->
-          <div class="lg:col-span-5">
-            <div class="glass rounded-3xl p-6 border border-white/10">
-              
-              <div class="text-center">
-                <div class="inline-flex items-center justify-center gap-2 text-xs tracking-[0.22em] uppercase text-white/70">
-                  <span class="badge-dot" aria-hidden="true"></span>
-                  <span>Principios</span>
-                </div>
-                <div class="mt-2 text-xs text-white/55">
-                  Lo que guía cada análisis y recomendación.
-                </div>
-              </div>
-
-              <div class="mt-5 glass rounded-2xl p-5 flex items-center gap-4 border border-white/10">
-                <svg viewBox="0 0 120 120" width="62" height="62" aria-hidden="true" class="shrink-0">
-                  <defs>
-                    <linearGradient id="g1m" x1="0" x2="1">
-                      <stop offset="0" stop-color="#38BDF8"/>
-                      <stop offset="0.5" stop-color="#6366F1"/>
-                      <stop offset="1" stop-color="#D946EF"/>
-                    </linearGradient>
-                    <radialGradient id="g2m" cx="30%" cy="30%" r="80%">
-                      <stop offset="0" stop-color="#ffffff" stop-opacity="0.14"/>
-                      <stop offset="1" stop-color="#ffffff" stop-opacity="0.04"/>
-                    </radialGradient>
-                  </defs>
-
-                  <path d="M60 8 C78 18,92 18,104 22 C104 62,90 92,60 112 C30 92,16 62,16 22 C28 18,42 18,60 8Z"
-                        fill="url(#g2m)" stroke="url(#g1m)" stroke-width="3"/>
-
-                  <g class="ob-eye">
-                    <path d="M30 62 C40 48,52 40,60 40 C68 40,80 48,90 62 C80 76,68 84,60 84 C52 84,40 76,30 62Z"
-                          fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
-                    <circle class="ob-iris" cx="60" cy="62" r="14"
-                            fill="rgba(56,189,248,0.18)" stroke="rgba(56,189,248,0.45)" stroke-width="2"/>
-                    <circle class="ob-pupil" cx="60" cy="62" r="6" fill="rgba(255,255,255,0.92)"/>
-                    <circle cx="66" cy="56" r="3" fill="rgba(255,255,255,0.30)"/>
-                  </g>
-                </svg>
-
-                <div>
-                  <div class="text-sm font-semibold">Startup ayudando startups</div>
-                  <div class="text-xs text-white/60 mt-1">
-                    Convertimos señales técnicas en confianza que se puede explicar y mostrar.
-                  </div>
-                </div>
-              </div>
-
-              <div class="mt-5 space-y-3">
-                <div class="glass principle-card rounded-2xl p-4 border border-white/10">
-                  <div class="principle-tag"><span class="badge-dot" aria-hidden="true"></span>MISIÓN</div>
-                  <div class="mt-1 text-sm text-white/80">
-                    Ayudar a startups a demostrar seguridad real con evidencia clara, sin burocracia.
-                  </div>
-                </div>
-
-                <div class="glass principle-card rounded-2xl p-4 border border-white/10">
-                  <div class="principle-tag"><span class="badge-dot" aria-hidden="true"></span>VISIÓN</div>
-                  <div class="mt-1 text-sm text-white/80">
-                    Que vender online no sea “confiar a ciegas”: que la seguridad se vea y se entienda.
-                  </div>
-                </div>
-
-                <div class="glass principle-card rounded-2xl p-4 border border-white/10">
-                  <div class="principle-tag"><span class="badge-dot" aria-hidden="true"></span>PROMESA</div>
-                  <div class="mt-1 text-sm text-white/80">
-                    Menos ruido. Más claridad. Reportes listos para tu equipo, partners y procesos de ventas/auditoría.
-                  </div>
-                </div>
-              </div>
-
-              <p class="mt-5 text-xs text-white/50">
-                Observo es visibilidad & reporting (no pentesting). Read-only, sin credenciales.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CÓMO FUNCIONA -->
-    <section id="como" class="py-8">
-      <div class="glass rounded-2xl p-10 border border-white/10">
-        <h2 class="text-2xl md:text-3xl font-semibold">Cómo funciona</h2>
-        <p class="mt-2 text-white/70 max-w-2xl">
-          Un flujo simple en 4 pasos. Claro, breve y sin jerga técnica.
-        </p>
-
-        
-        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="glass step-card rounded-2xl p-6 border border-white/10">
-            <div class="flex items-center gap-3">
-              <div class="h-10 w-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center">
-                <!-- Icon: lupa -->
-                <svg viewBox="0 0 24 24" class="h-5 w-5 text-white/80" aria-hidden="true">
-                  <path fill="currentColor" d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2Zm0 2a6 6 0 110 12 6 6 0 010-12Z"/>
-                </svg>
-              </div>
-              <div class="text-xs tracking-widest text-white/50">PASO 01</div>
-            </div>
-            <h3 class="mt-3 font-semibold text-lg">Diagnóstico claro</h3>
-            <p class="mt-2 text-sm text-white/70">
-              Revisamos tu sitio como lo vería un cliente: señales de confianza, configuraciones clave y puntos que podrían generar dudas.
-            </p>
-          </div>
-
-          <div class="glass step-card rounded-2xl p-6 border border-white/10">
-            <div class="flex items-center gap-3">
-              <div class="h-10 w-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center">
-                <!-- Icon: cámara/snapshot -->
-                <svg viewBox="0 0 24 24" class="h-5 w-5 text-white/80" aria-hidden="true">
-                  <path fill="currentColor" d="M9 3l1.5 2H14l1.5-2H19a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h4Zm3 6a5 5 0 100 10 5 5 0 000-10Zm0 2a3 3 0 110 6 3 3 0 010-6Z"/>
-                </svg>
-              </div>
-              <div class="text-xs tracking-widest text-white/50">PASO 02</div>
-            </div>
-            <h3 class="mt-3 font-semibold text-lg">Baseline confiable</h3>
-            <p class="mt-2 text-sm text-white/70">
-              Guardamos una referencia del “hoy” para que puedas demostrar el estado y compararlo en el tiempo.
-            </p>
-          </div>
-
-          <div class="glass step-card rounded-2xl p-6 border border-white/10">
-            <div class="flex items-center gap-3">
-              <div class="h-10 w-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center">
-                <!-- Icon: cambios/diff -->
-                <svg viewBox="0 0 24 24" class="h-5 w-5 text-white/80" aria-hidden="true">
-                  <path fill="currentColor" d="M7 7h8V5l4 4-4 4v-2H7V7Zm10 10H9v2l-4-4 4-4v2h8v4Z"/>
-                </svg>
-              </div>
-              <div class="text-xs tracking-widest text-white/50">PASO 03</div>
-            </div>
-            <h3 class="mt-3 font-semibold text-lg">Cambios y reportes</h3>
-            <p class="mt-2 text-sm text-white/70">
-              Si algo cambia, lo ves. Si algo importa, te lo marcamos con claridad para decidir rápido.
-            </p>
-          </div>
-
-          <div class="glass step-card rounded-2xl p-6 border border-white/10">
-            <div class="flex items-center gap-3">
-              <div class="h-10 w-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center">
-                <!-- Icon: acompañamiento -->
-                <svg viewBox="0 0 24 24" class="h-5 w-5 text-white/80" aria-hidden="true">
-                  <path fill="currentColor" d="M12 12a4 4 0 10-4-4 4 4 0 004 4Zm0 2c-4.418 0-8 2.239-8 5v1h16v-1c0-2.761-3.582-5-8-5Z"/>
-                </svg>
-              </div>
-              <div class="text-xs tracking-widest text-white/50">PASO 04</div>
-            </div>
-            <h3 class="mt-3 font-semibold text-lg">Acompañamiento</h3>
-            <p class="mt-2 text-sm text-white/70">
-              Si necesitas decidir o ejecutar mejoras, te guiamos con criterio técnico accionable (sin abrumarte).
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- INCLUYE -->
-    <section id="incluye" class="py-8">
-      <div class="glass rounded-2xl p-10 border border-white/10">
-        <div class="flex items-start justify-between gap-6 flex-wrap">
+<body>
+  <header>
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="#top" aria-label="Aegis8 Home">
+          <div class="logo" aria-hidden="true"></div>
           <div>
-            <h2 class="text-2xl md:text-3xl font-semibold">Visibilidad</h2>
-            <p class="mt-2 text-white/70 max-w-2xl">Señales clave para entender el estado de tu seguridad web.</p>
+            <strong>Aegis8</strong>
+            <span>Consultora y proyecto social</span>
           </div>
-          <div class="flex items-center gap-2 text-xs text-white/70">
-            <span class="inline-flex items-center gap-2 px-3 py-2 rounded-full border border-white/10 bg-white/5">
-              <span class="badge-dot" aria-hidden="true"></span>
-              <span>Estado</span>
-            </span>
-            <span class="inline-flex items-center gap-2 px-3 py-2 rounded-full border border-white/10 bg-white/5">
-              <span class="badge-dot" aria-hidden="true"></span>
-              <span>Evidencia</span>
-            </span>
-            <span class="inline-flex items-center gap-2 px-3 py-2 rounded-full border border-white/10 bg-white/5">
-              <span class="badge-dot" aria-hidden="true"></span>
-              <span>Cambios</span>
-            </span>
-          </div>
+        </a>
+
+        <nav aria-label="Navegación principal">
+          <ul>
+            <li><a href="#quienes">Quiénes somos</a></li>
+            <li><a href="#quehacemos">Qué hacemos</a></li>
+            <li><a href="#valores">Valores</a></li>
+            <li><a href="#social">Proyecto social</a></li>
+          </ul>
+        </nav>
+
+        <div class="nav-right">
+          <a class="btn" href="#contacto">Contacto</a>
+          <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobilePanel">
+            <div class="menu-lines" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+          </button>
         </div>
-
-        <div class="mt-7 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="glass step-card rounded-2xl p-6 border border-white/10">
-            <div class="flex items-start gap-3">
-              <div class="h-10 w-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center">
-                <!-- Icon: escudo -->
-                <svg viewBox="0 0 24 24" class="h-5 w-5 text-white/80" aria-hidden="true">
-                  <path fill="currentColor" d="M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6l7-4Zm0 3.2L7 7v5c0 3.8 2 6.9 5 7.9 3-1 5-4.1 5-7.9V7l-5-1.8Z"/>
-                </svg>
-              </div>
-              <div class="min-w-0">
-                <div class="font-semibold leading-tight">Señales de confianza</div>
-                <div class="text-sm text-white/70 mt-1">Lo mínimo que debería verse “bien” al mirar tu sitio.</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="glass step-card rounded-2xl p-6 border border-white/10">
-            <div class="flex items-start gap-3">
-              <div class="h-10 w-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center">
-                <!-- Icon: documento -->
-                <svg viewBox="0 0 24 24" class="h-5 w-5 text-white/80" aria-hidden="true">
-                  <path fill="currentColor" d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm8 1v5h5"/>
-                  <path fill="currentColor" d="M7 12h10v2H7v-2Zm0 4h10v2H7v-2Zm0-8h6v2H7V8Z"/>
-                </svg>
-              </div>
-              <div class="min-w-0">
-                <div class="font-semibold leading-tight">Evidencia clara</div>
-                <div class="text-sm text-white/70 mt-1">Un respaldo simple para que tu equipo decida con confianza.</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="glass step-card rounded-2xl p-6 border border-white/10">
-            <div class="flex items-start gap-3">
-              <div class="h-10 w-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center">
-                <!-- Icon: baseline / snapshot -->
-                <svg viewBox="0 0 24 24" class="h-5 w-5 text-white/80" aria-hidden="true">
-                  <path fill="currentColor" d="M9 3l1.5 2H14l1.5-2H19a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h4Zm3 6a5 5 0 100 10 5 5 0 000-10Zm0 2a3 3 0 110 6 3 3 0 010-6Z"/>
-                </svg>
-              </div>
-              <div class="min-w-0">
-                <div class="font-semibold leading-tight">Baseline del “hoy”</div>
-                <div class="text-sm text-white/70 mt-1">Una foto del estado actual para comparar después.</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="glass step-card rounded-2xl p-6 border border-white/10">
-            <div class="flex items-start gap-3">
-              <div class="h-10 w-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center">
-                <!-- Icon: cambios -->
-                <svg viewBox="0 0 24 24" class="h-5 w-5 text-white/80" aria-hidden="true">
-                  <path fill="currentColor" d="M7 7h8V5l4 4-4 4v-2H7V7Zm10 10H9v2l-4-4 4-4v2h8v4Z"/>
-                </svg>
-              </div>
-              <div class="min-w-0">
-                <div class="font-semibold leading-tight">Detección de cambios</div>
-                <div class="text-sm text-white/70 mt-1">Cuando algo se mueve, lo ves y entiendes por qué importa.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <p class="mt-6 text-xs text-white/55">
-          Nota: Observo es visibilidad & reporting (no pentesting). Read-only, sin credenciales.
-        </p>
-      </div>
-    </section>
-
-    <!-- DEMO -->
-    <section id="demo" class="py-8 pb-14">
-      <div class="glass rounded-2xl p-10 border border-white/10">
-        <h2 class="text-2xl md:text-3xl font-semibold">Pedir demo</h2>
-        <p class="mt-2 text-white/70 max-w-2xl">
-          Envíanos tu dominio y el objetivo. Te mostramos cómo se vería tu reporte.
-        </p>
-
-        <div class="mt-6 flex flex-col sm:flex-row gap-3">
-          <a href="mailto:ventas@observo.app?subject=Demo%20Observo&body=Hola%2C%20quiero%20una%20demo%20de%20Observo.%0A%0ADominio%3A%20%0AObjetivo%3A%20%0A"
-             class="btn inline-flex justify-center px-5 py-3 rounded-2xl font-semibold
-                    bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-lg shadow-fuchsia-500/20">
-            Pedir demo por email
-          </a>
-
-          <a href="#top" class="btn inline-flex justify-center px-5 py-3 rounded-2xl glass text-white/90 border border-white/10">
-            Volver arriba
-          </a>
-        </div>
-
-        <p class="mt-6 text-xs text-white/50">
-          Nota: Observo es “security visibility & reporting”, no pentesting. No explota vulnerabilidades ni solicita credenciales.
-        </p>
       </div>
 
-      <footer class="mt-8 pb-6 text-xs text-white/45 text-center">
-        © 2025 Observo — Seguridad que se entiende.
-      </footer>
-    </section>
+      <div class="mobile-panel" id="mobilePanel" aria-label="Menú móvil">
+        <a href="#quienes">Quiénes somos</a>
+        <a href="#quehacemos">Qué hacemos</a>
+        <a href="#valores">Valores</a>
+        <a href="#social">Proyecto social</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+    </div>
+  </header>
 
+  <main id="top">
+    <div class="wrap">
+      <!-- HERO -->
+      <section class="hero">
+        <div class="center">
+          <div class="pill" role="note" aria-label="Enfoque">
+            <span class="dot" aria-hidden="true"></span>
+            <span><strong>Enfoque:</strong> claridad, criterio técnico y educación</span>
+          </div>
+
+          <h1>Ciberseguridad clara para personas, startups y pequeñas organizaciones.</h1>
+
+          <p class="lead">
+            Aegis8 es una consultora y proyecto educativo-social de ciberseguridad.
+            Acompañamos a quienes no tienen un SOC ni presupuesto enterprise a construir
+            <strong>gobernanza, cultura</strong> y <strong>fortalecimiento técnico</strong> con acciones realistas.
+          </p>
+
+          <div class="hero-cta center">
+            <a class="btn primary" href="#contacto">Conversemos</a>
+            <a class="btn" href="#quehacemos">Conoce nuestro enfoque</a>
+          </div>
+        </div>
+
+        <div class="hero-grid">
+          <div class="card hero-card">
+            <div>
+              <span class="badge">Cómo trabajamos</span>
+              <p class="muted" style="margin:12px 0 0;">
+                No vendemos miedo ni soluciones cerradas. Usamos herramientas y buenas prácticas para
+                <strong>explicar</strong>, <strong>priorizar</strong> y <strong>fortalecer</strong> de forma progresiva.
+              </p>
+
+              <div class="stat">
+                <div class="ico" aria-hidden="true">1</div>
+                <div>
+                  <strong>Diagnóstico entendido</strong>
+                  <span>Revisión inicial + explicación de riesgos reales en tu contexto.</span>
+                </div>
+              </div>
+
+              <div class="stat">
+                <div class="ico" aria-hidden="true">2</div>
+                <div>
+                  <strong>Fortalecimiento progresivo</strong>
+                  <span>Hardening, accesos, prácticas operativas y evidencia de mejoras.</span>
+                </div>
+              </div>
+
+              <div class="stat">
+                <div class="ico" aria-hidden="true">3</div>
+                <div>
+                  <strong>Autonomía del cliente</strong>
+                  <span>Transferencia de conocimiento: tu equipo aprende y decide con criterio.</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+              <span class="badge">Observo</span>
+              <span class="badge">PBD Toolkit</span>
+              <span class="badge">Gobernanza</span>
+              <span class="badge">Educación</span>
+            </div>
+          </div>
+
+          <div class="card hero-card">
+            <div>
+              <span class="badge">A quién ayudamos</span>
+              <p class="muted" style="margin:12px 0 0;">
+                Organizaciones y personas que quieren crecer con seguridad, sin complejidad innecesaria.
+              </p>
+
+              <div class="stat">
+                <div class="ico" aria-hidden="true">★</div>
+                <div>
+                  <strong>Startups</strong>
+                  <span>Decisiones correctas desde el inicio: accesos, TLS, backups, roles.</span>
+                </div>
+              </div>
+
+              <div class="stat">
+                <div class="ico" aria-hidden="true">✓</div>
+                <div>
+                  <strong>Pequeñas empresas</strong>
+                  <span>Orden y control: políticas mínimas, hábitos, hardening y prevención.</span>
+                </div>
+              </div>
+
+              <div class="stat">
+                <div class="ico" aria-hidden="true">⟡</div>
+                <div>
+                  <strong>Personas y comunidad</strong>
+                  <span>Educación práctica para reducir riesgos cotidianos y brechas.</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:14px;">
+              <a class="btn primary" href="#social" style="width:100%;">Ver el proyecto social</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUIÉNES SOMOS -->
+      <section id="quienes">
+        <div class="sec-head">
+          <h2>Quiénes somos</h2>
+          <p class="muted" style="margin:0; max-width:80ch;">
+            Aegis8 nace como un proyecto social y técnico orientado a reducir la brecha de ciberseguridad
+            en personas, startups y pequeñas organizaciones. Creemos que la seguridad no debe depender del
+            tamaño del presupuesto, sino del acceso a conocimiento claro y acompañamiento honesto.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="tile">
+            <span class="badge">Nuestra postura</span>
+            <h3>Seguridad sin humo</h3>
+            <p>
+              Priorizamos lo que realmente importa. Explicamos el “por qué” detrás de cada recomendación
+              y evitamos el lenguaje intimidante o exagerado.
+            </p>
+          </div>
+          <div class="tile">
+            <span class="badge">Nuestro rol</span>
+            <h3>Guía + criterio + práctica</h3>
+            <p>
+              Acompañamos decisiones: arquitectura, DNS, TLS, accesos, backups, hardening y cultura.
+              Buscamos que el cliente entienda y se vuelva más autónomo.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUÉ HACEMOS -->
+      <section id="quehacemos">
+        <div class="sec-head">
+          <h2>Qué hacemos</h2>
+          <p class="muted" style="margin:0; max-width:80ch;">
+            Combinamos consultoría, educación y fortalecimiento técnico. Usamos herramientas propias como apoyo,
+            pero el valor principal está en el análisis, la explicación y el acompañamiento.
+          </p>
+        </div>
+
+        <div class="grid-4">
+          <div class="tile">
+            <span class="badge">Gobernanza</span>
+            <h3>Gobernanza de ciberseguridad</h3>
+            <p>
+              Definimos prioridades, roles, políticas mínimas y criterios de decisión.
+              Traducimos NIST/ISO a acciones aplicables.
+            </p>
+          </div>
+
+          <div class="tile">
+            <span class="badge">Cultura</span>
+            <h3>Educación y cultura</h3>
+            <p>
+              Charlas y talleres prácticos para equipos pequeños y comunidades.
+              Concientización basada en casos reales, sin “fear marketing”.
+            </p>
+          </div>
+
+          <div class="tile">
+            <span class="badge">Hardening</span>
+            <h3>Fortalecimiento técnico</h3>
+            <p>
+              Hardening progresivo: accesos, configuración, superficie expuesta, hábitos operativos y evidencia
+              de mejoras implementadas.
+            </p>
+          </div>
+
+          <div class="tile">
+            <span class="badge">Herramientas</span>
+            <h3>Observo + PBD Toolkit</h3>
+            <p>
+              Herramientas internas para revisión “read-only” y checklists de fortalecimiento.
+              Complementan el proceso, no reemplazan el criterio humano.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- VALORES -->
+      <section id="valores">
+        <div class="sec-head">
+          <h2>Valores</h2>
+          <p class="muted" style="margin:0; max-width:80ch;">
+            Nuestro trabajo se construye sobre ética, claridad y transferencia real de conocimiento.
+          </p>
+        </div>
+
+        <div class="values">
+          <ul class="list" aria-label="Lista de valores">
+            <li>
+              <div class="check" aria-hidden="true">✓</div>
+              <div>
+                <strong>Transparencia</strong>
+                <span>Explicamos qué hacemos, cómo y por qué.</span>
+              </div>
+            </li>
+            <li>
+              <div class="check" aria-hidden="true">✓</div>
+              <div>
+                <strong>Educación primero</strong>
+                <span>La seguridad se aprende y se construye, no se “compra”.</span>
+              </div>
+            </li>
+            <li>
+              <div class="check" aria-hidden="true">✓</div>
+              <div>
+                <strong>Autonomía del cliente</strong>
+                <span>Buscamos que tu equipo tome mejores decisiones sin dependencia.</span>
+              </div>
+            </li>
+            <li>
+              <div class="check" aria-hidden="true">✓</div>
+              <div>
+                <strong>Ética profesional</strong>
+                <span>No explotamos, no invadimos, no exageramos riesgos.</span>
+              </div>
+            </li>
+          </ul>
+
+          <div class="social">
+            <span class="badge">En pocas palabras</span>
+            <h3 style="margin:10px 0 8px;">Seguridad como capacidad compartida</h3>
+            <p class="muted" style="margin:0;">
+              Creemos que la ciberseguridad debe ser accesible. Por eso nuestro enfoque combina consultoría con
+              educación y comunidad. Menos humo, más criterio.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROYECTO SOCIAL -->
+      <section id="social">
+        <div class="sec-head">
+          <h2>Proyecto social y educativo</h2>
+          <p class="muted" style="margin:0; max-width:85ch;">
+            Aegis8 también es un proyecto social. Parte de nuestro trabajo está orientado a compartir conocimiento,
+            generar cultura y apoyar a quienes no tendrían acceso a acompañamiento especializado.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="tile">
+            <span class="badge">Impacto</span>
+            <h3>Acceso a educación práctica</h3>
+            <p>
+              Talleres, charlas y materiales diseñados para ser útiles sin jerga innecesaria.
+              Seguridad aplicada a la vida real y al crecimiento de organizaciones pequeñas.
+            </p>
+          </div>
+          <div class="tile">
+            <span class="badge">Herramientas en mejora</span>
+            <h3>Observo y PBD evolucionan</h3>
+            <p>
+              Mantenemos herramientas y guías como apoyo para revisiones y hardening. Nuestra meta es que
+              puedan ser entendibles, auditables y aprovechables por equipos pequeños.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACTO -->
+      <section id="contacto">
+        <div class="sec-head">
+          <h2>Contacto</h2>
+          <p class="muted" style="margin:0; max-width:85ch;">
+            Cuéntanos tu contexto (persona, startup o pequeña empresa) y qué quieres lograr. Te respondemos con
+            pasos claros y realistas.
+          </p>
+        </div>
+
+        <div class="card" style="padding:18px;">
+          <div class="grid-2" style="align-items:start;">
+            <div class="tile" style="box-shadow:none;">
+              <span class="badge">Escríbenos</span>
+              <h3>Conversemos</h3>
+              <p>
+                Puedes reemplazar este correo por el definitivo cuando tengas tu dominio y mail corporativo.
+              </p>
+              <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+                <a class="btn primary" href="mailto:contacto@aegis8.org?subject=Contacto%20Aegis8&body=Hola%20Aegis8%2C%0A%0AContexto%3A%20(persona%2Fstartup%2Fpyme)%0AObjetivo%3A%20%0ADominio%2FPlataforma%3A%20%0A%0AGracias.">Enviar email</a>
+                <a class="btn" href="#top">Volver arriba</a>
+              </div>
+            </div>
+
+            <div class="tile" style="box-shadow:none;">
+              <span class="badge">Lo que pedimos</span>
+              <h3>Información mínima</h3>
+              <p class="muted" style="margin:0;">
+                Para ayudarte rápido, incluye:
+              </p>
+              <ul class="muted" style="margin:10px 0 0; padding-left: 18px;">
+                <li>Tipo de organización (persona/startup/pyme)</li>
+                <li>Dominio o plataforma</li>
+                <li>Objetivo (ej. “ordenar accesos”, “mejorar TLS”, “crear políticas mínimas”)</li>
+                <li>Restricciones (tiempo, presupuesto, stack)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
 
-  <!-- Scripts: ojo + (SOLO) modales para los 3 recuadros -->
-  <script>
-  // Ojo sigue el puntero (todos los ojos)
-  (function(){
-    const eyes = Array.from(document.querySelectorAll(".ob-eye"));
-    if (!eyes.length) return;
-
-    const MAX_R = 6.5;
-
-    function moveEye(eye, clientX, clientY){
-      const iris  = eye.querySelector(".ob-iris");
-      const pupil = eye.querySelector(".ob-pupil");
-      if (!iris || !pupil) return;
-
-      const rect = iris.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top  + rect.height / 2;
-
-      const dx = clientX - cx;
-      const dy = clientY - cy;
-
-      const dist = Math.sqrt(dx*dx + dy*dy) || 1;
-      const nx = dx / dist;
-      const ny = dy / dist;
-
-      const r = Math.min(MAX_R, dist / 40);
-      const x = 60 + nx * r;
-      const y = 62 + ny * r;
-
-      pupil.setAttribute("cx", x.toFixed(2));
-      pupil.setAttribute("cy", y.toFixed(2));
-    }
-
-    function moveAll(x, y){
-      eyes.forEach(eye => moveEye(eye, x, y));
-    }
-
-    window.addEventListener("mousemove", (e) => moveAll(e.clientX, e.clientY), { passive: true });
-    window.addEventListener("touchmove", (e) => {
-      if (!e.touches || !e.touches[0]) return;
-      moveAll(e.touches[0].clientX, e.touches[0].clientY);
-    }, { passive: true });
-  })();
-
-  // MODALES (solo Read-only / Baseline / Reportes)
-  (function(){
-    const triggers = Array.from(document.querySelectorAll("[data-popover]"));
-    const sources = new Map();
-
-    triggers.forEach(btn => {
-      const id = btn.getAttribute("data-popover");
-      const pop = document.getElementById(id);
-      if (id && pop) sources.set(id, pop);
-    });
-
-    function closeModal(){
-      const existing = document.querySelector(".ob-modal-backdrop");
-      if (existing) existing.remove();
-      document.documentElement.style.overflow = "";
-    }
-
-    function openFromPopover(pop){
-      // Toma el contenido YA escrito en tu popover (sin inventar nada)
-      const titleEl = pop.querySelector(".text-sm.font-semibold");
-      const bodyP = pop.querySelector("p");
-      const list = pop.querySelector("ul");
-
-      const title = titleEl ? titleEl.textContent.trim() : "Detalle";
-      const body = `
-        ${bodyP ? bodyP.outerHTML : ""}
-        ${list ? list.outerHTML : ""}
-      `;
-
-      closeModal();
-
-      const backdrop = document.createElement("div");
-      backdrop.className = "ob-modal-backdrop";
-      backdrop.innerHTML = `
-        <div class="ob-modal" role="dialog" aria-modal="true">
-          <button class="ob-modal-close" type="button" aria-label="Cerrar">✕</button>
-          <div class="ob-modal-inner">
-            <div class="ob-modal-title">${escapeHtml(title)}</div>
-            <div class="ob-modal-body">${body}</div>
-            <div class="ob-modal-actions">
-              <button class="ob-modal-btn" type="button">Entendido</button>
-            </div>
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div class="brand" aria-label="Aegis8">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>Aegis8</strong>
+            <span>Claridad • Criterio • Comunidad</span>
           </div>
         </div>
-      `;
-      document.body.appendChild(backdrop);
-      document.documentElement.style.overflow = "hidden";
 
-      const closeBtn = backdrop.querySelector(".ob-modal-close");
-      const okBtn = backdrop.querySelector(".ob-modal-btn");
+        <div style="max-width: 64ch;">
+          <small>
+            © <span id="year"></span> Aegis8. Consultora y proyecto educativo-social de ciberseguridad.
+            <br/>
+            <span class="muted">Este sitio es un punto de partida. Ajusta textos, correo y enlaces cuando termines tu migración de dominio.</span>
+          </small>
+        </div>
+      </div>
+    </div>
+  </footer>
 
-      closeBtn.addEventListener("click", closeModal);
-      okBtn.addEventListener("click", closeModal);
+  <script>
+    // Año automático
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-      backdrop.addEventListener("click", (e) => {
-        if (e.target === backdrop) closeModal();
-      });
+    // Menú móvil
+    const btn = document.getElementById("menuBtn");
+    const panel = document.getElementById("mobilePanel");
 
-      const onKey = (e) => {
-        if (e.key === "Escape") {
-          closeModal();
-          document.removeEventListener("keydown", onKey);
-        }
-      };
-      document.addEventListener("keydown", onKey);
+    function closeMobileMenu(){
+      panel.style.display = "none";
+      btn.setAttribute("aria-expanded", "false");
     }
-
-    function escapeHtml(str){
-      return String(str)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-
-    // Intercepta SOLO los 3 botones, y abre modal
-    triggers.forEach(btn => {
-      const id = btn.getAttribute("data-popover");
-      const pop = sources.get(id);
-      if (!pop) return;
-
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        openFromPopover(pop);
-      });
-    });
-
-    // Por si alguien cierra con los botones antiguos dentro del popover (aunque ya no se abrirá)
-    document.addEventListener("click", (e) => {
-      const closeId = e.target && e.target.getAttribute && e.target.getAttribute("data-close");
-      if (closeId) {
-        e.preventDefault();
-        e.stopPropagation();
-        closeModal();
+    function toggleMobileMenu(){
+      const isOpen = btn.getAttribute("aria-expanded") === "true";
+      if(isOpen){
+        closeMobileMenu();
+      }else{
+        panel.style.display = "block";
+        btn.setAttribute("aria-expanded", "true");
       }
-    });
-  })();
-// NAV: estado activo por sección (si los anchors existen en ESTA página)
-(function(){
-  const links = Array.from(document.querySelectorAll("a.navlink"));
-  if(!links.length) return;
-
-  // Solo considera anchors que apunten a IDs presentes en la página actual
-  const pairs = links.map(a => {
-    const href = a.getAttribute("href") || "";
-    const hashIndex = href.indexOf("#");
-    if(hashIndex === -1) return null;
-    const id = href.slice(hashIndex + 1);
-    if(!id) return null;
-    const el = document.getElementById(id);
-    if(!el) return null;
-    return { a, el };
-  }).filter(Boolean);
-
-  if(!pairs.length) return;
-
-  function refresh(){
-    const y = window.scrollY + 140;
-    let current = null;
-    for(const p of pairs){
-      if(p.el.offsetTop <= y) current = p;
     }
-    links.forEach(l => l.classList.remove("active"));
-    if(current) current.a.classList.add("active");
-  }
 
-  window.addEventListener("scroll", refresh, {passive:true});
-  refresh();
-})();
+    btn.addEventListener("click", toggleMobileMenu);
+
+    // Cerrar menú al hacer click en un link
+    panel.querySelectorAll("a").forEach(a => {
+      a.addEventListener("click", closeMobileMenu);
+    });
+
+    // Cerrar menú al cambiar a desktop
+    window.addEventListener("resize", () => {
+      if(window.innerWidth > 760) closeMobileMenu();
+    });
   </script>
 </body>
 </html>
