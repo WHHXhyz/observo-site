@@ -44,7 +44,7 @@
     .center{ text-align:center; }
     .muted{ color:var(--muted); }
     .prose-center{max-width:72ch;margin:0 auto;text-align:center;}
-    .prose-center p{margin:0 0 14px;}
+    .prose-center p{margin:0 0 10px;}
     .prose-center p:last-child{margin-bottom:0;}
 
     .pill{
@@ -347,7 +347,7 @@
 .lead{
       font-size: clamp(16px, 1.35vw, 18px);
       color: var(--muted);
-      margin: 16px auto 22px;
+      margin: 14px auto 18px;
       max-width: 62ch;
       text-align: center;
     }
@@ -609,7 +609,7 @@ footer{
   
 
     /* Make sections feel concentrated and centered */
-    section{ padding: 56px 0; }
+    section{ padding: 46px 0; }
     .sec-head{ align-items:center; text-align:center; }
     .sec-head p{ margin-left:auto !important; margin-right:auto !important; }
 
@@ -643,11 +643,22 @@ footer{
       .grid-3{ grid-template-columns: repeat(2, minmax(0, 340px)); }
     }
     @media (max-width: 760px){
-      section{ padding: 44px 0; }
+      section{ padding: 38px 0; }
       .grid-4, .grid-3, .grid-2{ grid-template-columns: 1fr; }
       .tile, .card{ max-width: 560px; }
       .emblem-img{ width: 210px; }
     }
+
+.sec-sub{
+margin: 0 auto;
+      max-width: 64ch;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14.5px;
+      line-height: 1.55;
+}
+/* Compact stacked paragraphs in section headers */
+    .sec-head .sec-sub + .sec-sub{ margin-top: 6px !important; }
 </style>
 </head>
 
@@ -782,12 +793,12 @@ footer{
             con sentido, propósito y responsabilidad.
           </p>
 
-          <p class="sec-sub" style="margin-top:10px;">
+          <p class="sec-sub">
             No reemplazamos equipos ni replicamos modelos enterprise. <strong>Enseñamos</strong>, <strong>ordenamos</strong> y <strong>generamos cultura</strong>,
             apoyando desde el primer paso para que la seguridad sea clara, útil y sostenible en el tiempo, tanto a nivel organizacional como social.
           </p>
 
-          <p class="sec-sub" style="margin-top:10px;">
+          <p class="sec-sub">
             Acompañamos a personas y organizaciones a aprender, definir gobernanza y reforzar capacidades técnicas, partiendo desde cero o fortaleciendo lo que ya han construido.
           </p>
 
