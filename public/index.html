@@ -24,7 +24,7 @@
       --shadow: 0 18px 45px rgba(11,42,91,.10);
       --radius: 18px;
       --radius2: 26px;
-      --max: 1080px;
+      --max: 980px;
     }
 
     *{ box-sizing:border-box; }
@@ -103,7 +103,7 @@
     .sec-head{ margin-bottom: 22px; }
     .sec-head h2{ font-weight: 800; }
     .sec-sub{
-      margin:0;
+      margin:0 auto;
       max-width: 86ch;
       color: var(--muted);
       font-size: 15.5px;
@@ -135,7 +135,9 @@
       border-bottom: 1px solid rgba(220,235,255,.75);
     }
     .nav{
-      display:flex; align-items:center; justify-content:space-between;
+      display:grid;
+      grid-template-columns: auto 1fr auto;
+      align-items:center;
       padding:14px 0;
       gap:16px;
     }
@@ -158,9 +160,11 @@
     .brand strong{ font-size:16px; letter-spacing:.2px; }
     .brand span{ font-size:12px; color:var(--muted); display:block; margin-top:2px; }
 
+    nav{ justify-self:center; }
+
     nav ul{
       list-style:none; padding:0; margin:0;
-      display:flex; align-items:center; gap:18px;
+      display:flex; align-items:center; justify-content:center; gap:18px;
     }
     nav a{
       font-size:14px;
@@ -251,7 +255,7 @@
     .lead{
       font-size: clamp(16px, 1.35vw, 18px);
       color: var(--muted);
-      margin: 0 0 18px;
+      margin: 0 auto 18px;
       max-width: 62ch;
     }
     .hero-cta{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
@@ -292,8 +296,10 @@
       padding: 52px 0;
     }
     .sec-head{
-      display:flex; flex-direction:column; gap:8px;
+      display:flex; flex-direction:column; gap:10px;
       margin-bottom: 18px;
+      text-align:center;
+      align-items:center;
     }
     .sec-head h2{
       margin:0;
@@ -416,7 +422,7 @@
       min-height: 160px;
     }
     .tile h3{
-      margin: 10px 0 8px;
+      margin: 6px 0 8px;
       font-size: 16px;
       letter-spacing: -0.1px;
     }
@@ -435,6 +441,30 @@
       font-weight:700;
       font-size: 12px;
     }
+    .tile-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 8px;
+    }
+    .mini-ico{
+      width:36px; height:36px;
+      border-radius: 14px;
+      display:grid; place-items:center;
+      border:1px solid rgba(220,235,255,.95);
+      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      box-shadow: 0 10px 25px rgba(11,42,91,.08);
+      flex: 0 0 auto;
+    }
+    .mini-ico svg{
+      width:18px; height:18px;
+      stroke: rgba(11,42,91,.9);
+      stroke-width: 2;
+      fill: none;
+      opacity: .9;
+    }
+
 
     .values{
       display:grid;
@@ -528,10 +558,13 @@
             <li><a href="#como-trabajamos">Cómo trabajamos</a></li>
             <li><a href="#a-quien-ayudamos">A quién ayudamos</a></li>
             <li><a href="#quienes">Quiénes somos</a></li>
+            <li><a href="/proyecto-social.html">Proyecto social</a></li>
+            <li><a href="/contacto.html">Contáctanos</a></li>
           </ul>
         </nav>
 
         <div class="nav-right">
+          <a class="btn primary" href="/contacto.html">Contáctanos</a>
           <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobilePanel">
             <div class="menu-lines" aria-hidden="true">
               <span></span><span></span><span></span>
@@ -545,6 +578,8 @@
         <a href="#como-trabajamos">Cómo trabajamos</a>
         <a href="#a-quien-ayudamos">A quién ayudamos</a>
         <a href="#quienes">Quiénes somos</a>
+        <a href="/proyecto-social.html">Proyecto social</a>
+        <a href="/contacto.html">Contáctanos</a>
       </div>
     </div>
   </header>
@@ -589,7 +624,7 @@
 
         <div class="grid-3">
           <button class="tile tile-btn" type="button" data-modal="m-diagnostico" aria-haspopup="dialog">
-            <span class="badge">Paso 1</span>
+            <div class="tile-top"><span class="badge">Paso 1</span><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-3.5-3.5"></path></svg></span></div>
             <h3>Diagnóstico entendido</h3>
             <p>
               Revisión inicial + explicación de riesgos reales en tu contexto.
@@ -598,7 +633,7 @@
           </button>
 
           <button class="tile tile-btn" type="button" data-modal="m-fortalecimiento" aria-haspopup="dialog">
-            <span class="badge">Paso 2</span>
+            <div class="tile-top"><span class="badge">Paso 2</span><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 9-8 11C7.5 22 4 18 4 13V7l8-4z"></path><path d="M9 12l2 2 4-5"></path></svg></span></div>
             <h3>Fortalecimiento progresivo</h3>
             <p>
               Hardening, accesos, prácticas operativas y evidencia de mejoras.
@@ -607,7 +642,7 @@
           </button>
 
           <button class="tile tile-btn" type="button" data-modal="m-autonomia" aria-haspopup="dialog">
-            <span class="badge">Paso 3</span>
+            <div class="tile-top"><span class="badge">Paso 3</span><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 8l10-5 10 5-10 5-10-5z"></path><path d="M6 11v5c0 1 3 3 6 3s6-2 6-3v-5"></path></svg></span></div>
             <h3>Autonomía del cliente</h3>
             <p>
               Transferencia de conocimiento: tu equipo aprende, documenta y decide con criterio.
@@ -629,7 +664,7 @@
 
         <div class="grid-3">
           <button class="tile tile-btn" type="button" data-modal="m-startups" aria-haspopup="dialog">
-            <span class="badge">Startups</span>
+            <div class="tile-top"><span class="badge">Startups</span><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 4c4 1 6 5 6 5-1 4-5 6-5 6l-4-4s2-4 3-7z"></path><path d="M9 15l-3 3 4 1 1-4-2 0z"></path><path d="M10 8l6 6"></path><circle cx="15" cy="9" r="1.2"></circle></svg></span></div>
             <h3>Seguridad desde el inicio</h3>
             <p>
               Decisiones correctas temprano: accesos, TLS, backups, procesos y cultura.
@@ -638,7 +673,7 @@
           </button>
 
           <button class="tile tile-btn" type="button" data-modal="m-pymes" aria-haspopup="dialog">
-            <span class="badge">Pequeñas empresas</span>
+            <div class="tile-top"><span class="badge">Pequeñas empresas</span><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 21V3h10v18"></path><path d="M14 8h6v13"></path><path d="M8 7h2"></path><path d="M8 11h2"></path><path d="M8 15h2"></path><path d="M16 12h2"></path><path d="M16 16h2"></path></svg></span></div>
             <h3>Orden y control</h3>
             <p>
               Priorizamos lo esencial: cuentas, correo, endpoints, backups y hábitos.
@@ -647,7 +682,7 @@
           </button>
 
           <button class="tile tile-btn" type="button" data-modal="m-personas" aria-haspopup="dialog">
-            <span class="badge">Personas</span>
+            <div class="tile-top"><span class="badge">Personas</span><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0"></path><circle cx="12" cy="9" r="4"></circle></svg></span></div>
             <h3>Aprender para protegerse</h3>
             <p>
               Educación práctica para reducir riesgos cotidianos: cuentas, phishing, privacidad y hábitos.
@@ -670,7 +705,7 @@
 
         <div class="grid-2">
           <div class="tile">
-            <span class="badge">Nuestra postura</span>
+            <div class="tile-top"><span class="badge">Nuestra postura</span><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M14.5 9.5l-2 6-6 2 2-6 6-2z"></path></svg></span></div>
             <h3>Seguridad sin humo</h3>
             <p>
               Priorizamos lo que realmente importa. Explicamos el “por qué” detrás de cada recomendación
@@ -678,7 +713,7 @@
             </p>
           </div>
           <div class="tile">
-            <span class="badge">Nuestro rol</span>
+            <div class="tile-top"><span class="badge">Nuestro rol</span><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 21v-9"></path><path d="M11 21V8"></path><path d="M15 21v-6"></path><path d="M19 21v-10"></path><path d="M5 12c0-2 2-3 4-2"></path></svg></span></div>
             <h3>Guía + criterio + práctica</h3>
             <p>
               Acompañamos decisiones: arquitectura, DNS, TLS, accesos, backups, hardening y cultura.
