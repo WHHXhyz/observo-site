@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Aegis8 — Proyecto social</title>
-  <meta name="description" content="Proyecto social Aegis8: educación, cultura de ciberseguridad y herramientas prácticas para personas, startups y pequeñas organizaciones." />
+  <meta name="description" content="Aegis8 nace como un proyecto social educativo y técnico orientado a reducir la brecha de ciberseguridad en personas, startups y pequeñas organizaciones." />
   <meta name="theme-color" content="#0B2A5B" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,559 +13,373 @@
 
   <style>
     :root{
-      --bg: #F7FBFF;
-      --card: #FFFFFF;
-      --text: #0B1B34;
+      --bg:#F7FBFF;
+      --card:#FFFFFF;
+      --text:#0B1B34;
       --muted:#4B5E7B;
       --line:#DCEBFF;
       --blue:#0B2A5B;
       --sky:#2FA9FF;
       --sky2:#8FD3FF;
-      --shadow: 0 18px 45px rgba(11,42,91,.10);
-      --radius: 18px;
-      --radius2: 26px;
-      --max: 1080px;
+      --shadow:0 18px 45px rgba(11,42,91,.10);
+      --radius:18px;
+      --radius2:26px;
+      --max:1080px;
     }
-
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family:"Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color:var(--text);
       background:
         radial-gradient(900px 420px at 20% -10%, rgba(47,169,255,.25), transparent 60%),
         radial-gradient(900px 420px at 90% 0%, rgba(143,211,255,.25), transparent 60%),
-        linear-gradient(180deg, #FFFFFF 0%, var(--bg) 100%);
+        linear-gradient(180deg,#FFFFFF 0%, var(--bg) 100%);
       line-height:1.45;
-      overflow-x: hidden;
+      overflow-x:hidden;
     }
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(var(--max), 100% - 40px);margin:0 auto}
+    .muted{color:var(--muted)}
+    .center{text-align:center}
 
-    a{ color:inherit; text-decoration:none; }
-    .wrap{ width:min(var(--max), 100% - 40px); margin:0 auto; }
-    .center{ text-align:center; }
-    .muted{ color:var(--muted); }
-
-    .pill{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:8px 12px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.8);
-      border-radius:999px;
-      box-shadow: 0 8px 25px rgba(11,42,91,.06);
-      backdrop-filter: blur(8px);
-    }
-    .dot{
-      width:10px; height:10px; border-radius:999px;
-      background: radial-gradient(circle at 30% 30%, var(--sky2), var(--sky));
-      box-shadow: 0 0 0 4px rgba(47,169,255,.12);
-    }
-    .k{
-      background: linear-gradient(135deg, rgba(47,169,255,.22), rgba(143,211,255,.35));
-      border: 1px solid rgba(47,169,255,.25);
-      padding: 0 .45em;
-      border-radius: .65em;
-      box-decoration-break: clone;
-      -webkit-box-decoration-break: clone;
-      color: rgba(11,42,91,.92);
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .gradline{
-      height: 1px;
-      width: min(560px, 100%);
-      margin: 14px auto 0;
-      border-radius: 99px;
-      background: linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.55), rgba(143,211,255,.65), rgba(47,169,255,.55), rgba(47,169,255,0));
-      position: relative;
-      overflow: hidden;
-    }
-    .gradline:after{
-      content:"";
-      position:absolute;
-      top:0; bottom:0;
-      width: 160px;
-      left: -180px;
-      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.75), rgba(255,255,255,0));
-      filter: blur(1px);
-      animation: shine 2.8s ease-in-out infinite;
-    }
-    @keyframes shine{
-      0%{ transform: translateX(0); opacity:.0; }
-      15%{ opacity:.8; }
-      50%{ opacity:.9; }
-      85%{ opacity:.8; }
-      100%{ transform: translateX(900px); opacity:0; }
+    /* Top progress */
+    .progress{
+      position:fixed;top:0;left:0;height:3px;width:0%;
+      background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.92), rgba(143,211,255,.95));
+      z-index:9999;
+      box-shadow:0 8px 20px rgba(47,169,255,.22);
     }
 
     header{
-      position:sticky; top:0; z-index:50;
-      background: rgba(255,255,255,.75);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(220,235,255,.75);
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.78);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(220,235,255,.85);
     }
     .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0;
-      gap:16px;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 0;gap:16px;
     }
-    .brand{ display:flex; align-items:center; gap:12px; min-width: 180px; }
+    .brand{display:flex;align-items:center;gap:12px;min-width:210px}
     .logo{
-      width:38px; height:38px; border-radius:12px;
-      background: linear-gradient(135deg, var(--blue), #0D3B85);
+      width:38px;height:38px;border-radius:12px;
+      background:linear-gradient(135deg,var(--blue),#0D3B85);
       position:relative;
-      box-shadow: 0 14px 30px rgba(11,42,91,.18);
+      box-shadow:0 14px 30px rgba(11,42,91,.18);
+      flex:0 0 auto;
     }
     .logo:before{
       content:"";
-      position:absolute; inset:9px 11px 9px 11px;
+      position:absolute;inset:9px 11px 9px 11px;
       border-radius:10px 10px 14px 14px;
-      background: linear-gradient(135deg, rgba(143,211,255,.95), rgba(47,169,255,.85));
-      clip-path: polygon(50% 0%, 92% 18%, 92% 55%, 50% 100%, 8% 55%, 8% 18%);
+      background:linear-gradient(135deg, rgba(143,211,255,.95), rgba(47,169,255,.85));
+      clip-path:polygon(50% 0%, 92% 18%, 92% 55%, 50% 100%, 8% 55%, 8% 18%);
       opacity:.95;
     }
-    .brand strong{ font-size:16px; letter-spacing:.2px; }
-    .brand span{ font-size:12px; color:var(--muted); display:block; margin-top:2px; }
-
+    .brand strong{font-size:16px;letter-spacing:.2px}
+    .brand span{display:block;margin-top:2px;font-size:12px;color:var(--muted)}
     nav ul{
-      list-style:none; padding:0; margin:0;
-      display:flex; align-items:center; gap:18px;
+      list-style:none;padding:0;margin:0;
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
     }
     nav a{
       font-size:14px;
-      color: rgba(11,27,52,.85);
-      padding:10px 10px;
-      border-radius: 12px;
-      transition: background .15s ease, color .15s ease;
-      white-space: nowrap;
+      color:rgba(11,27,52,.86);
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.78);
+      box-shadow:0 10px 24px rgba(11,42,91,.06);
+      transition:transform .12s ease, background .12s ease, box-shadow .12s ease, border-color .12s ease;
+      white-space:nowrap;
     }
-    nav a:hover{ background: rgba(220,235,255,.55); color: var(--blue); }
-
-    .nav-right{ display:flex; align-items:center; gap:10px; }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
-      padding:11px 14px;
-      border-radius: 14px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.9);
-      color: var(--blue);
-      font-weight:600;
-      box-shadow: 0 12px 30px rgba(11,42,91,.08);
-      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
-      cursor:pointer;
+    nav a:hover{
+      transform:translateY(-1px);
+      background:rgba(220,235,255,.55);
+      border-color:rgba(47,169,255,.35);
+      box-shadow:0 14px 34px rgba(11,42,91,.10);
+      color:var(--blue);
     }
-    .btn:hover{ transform: translateY(-1px); box-shadow: 0 18px 40px rgba(11,42,91,.12); }
-    .btn.primary{
-      border-color: rgba(47,169,255,.35);
-      background: linear-gradient(135deg, rgba(47,169,255,.15), rgba(143,211,255,.25));
-      color: var(--blue);
+    nav a.active{
+      border-color:rgba(47,169,255,.45);
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
+      color:var(--blue);
+      font-weight:800;
     }
 
-    /* Mobile nav */
     .menu-btn{
-      display:none;
-      width:44px; height:44px;
-      border-radius: 14px;
+      display:none;width:44px;height:44px;border-radius:14px;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.9);
-      box-shadow: 0 12px 30px rgba(11,42,91,.08);
-      cursor:pointer;
-      align-items:center; justify-content:center;
+      background:rgba(255,255,255,.9);
+      box-shadow:0 12px 30px rgba(11,42,91,.08);
+      cursor:pointer;align-items:center;justify-content:center;
     }
-    .menu-lines{ width:18px; height:12px; position:relative; }
-    .menu-lines span{
-      position:absolute; left:0; right:0; height:2px; border-radius:99px;
-      background: rgba(11,42,91,.8);
-      transition: transform .15s ease, top .15s ease, opacity .15s ease;
-    }
-    .menu-lines span:nth-child(1){ top:0; }
-    .menu-lines span:nth-child(2){ top:5px; }
-    .menu-lines span:nth-child(3){ top:10px; }
-    .mobile-panel{ display:none; padding: 0 0 14px 0; }
+    .menu-lines{width:18px;height:12px;position:relative}
+    .menu-lines span{position:absolute;left:0;right:0;height:2px;border-radius:99px;background:rgba(11,42,91,.8)}
+    .menu-lines span:nth-child(1){top:0}
+    .menu-lines span:nth-child(2){top:5px}
+    .menu-lines span:nth-child(3){top:10px}
+    .mobile-panel{display:none;padding:0 0 14px 0}
     .mobile-panel a{
-      display:block;
-      padding:12px 12px;
+      display:block;padding:12px 12px;margin:10px 0;
       border:1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(255,255,255,.85);
-      margin:10px 0;
-      font-weight:600;
-      color: rgba(11,27,52,.9);
+      border-radius:14px;
+      background:rgba(255,255,255,.85);
+      font-weight:700;color:rgba(11,27,52,.9);
     }
-    .mobile-panel a:hover{ background: rgba(220,235,255,.55); color: var(--blue); }
+    .mobile-panel a:hover{background:rgba(220,235,255,.55);color:var(--blue)}
+    .right{display:flex;align-items:center;gap:10px}
 
-    main{ padding: 34px 0 70px; }
-    section{ padding: 52px 0; }
-    section + section{ border-top: 1px solid rgba(220,235,255,.75); }
+    main{padding:30px 0 70px}
+    section{padding:54px 0}
+    section + section{border-top:1px solid rgba(220,235,255,.75)}
 
     h1{
-      font-size: clamp(32px, 4vw, 46px);
-      line-height: 1.08;
-      margin: 14px 0 12px;
-      letter-spacing: -0.6px;
+      font-size:clamp(32px, 4vw, 48px);
+      line-height:1.06;
+      margin:14px 0 10px;
+      letter-spacing:-.7px;
     }
     .lead{
-      font-size: clamp(16px, 1.35vw, 18px);
-      color: var(--muted);
-      margin: 0 0 18px;
-      max-width: 70ch;
+      font-size:clamp(16px, 1.35vw, 18px);
+      color:var(--muted);
+      margin:0 auto 18px;
+      max-width:78ch;
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:8px 12px;border:1px solid var(--line);
+      background:rgba(255,255,255,.82);border-radius:999px;
+      box-shadow:0 8px 25px rgba(11,42,91,.06);
+      backdrop-filter:blur(8px);
+    }
+    .dot{width:10px;height:10px;border-radius:999px;background:radial-gradient(circle at 30% 30%, var(--sky2), var(--sky));box-shadow:0 0 0 4px rgba(47,169,255,.12)}
+    .k{
+      background:linear-gradient(135deg, rgba(47,169,255,.22), rgba(143,211,255,.35));
+      border:1px solid rgba(47,169,255,.25);
+      padding:0 .45em;border-radius:.65em;
+      color:rgba(11,42,91,.92);
+      font-weight:800;white-space:nowrap;
+    }
+    .gradline{
+      height:1px;width:min(640px,100%);margin:14px auto 0;border-radius:99px;
+      background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.55), rgba(143,211,255,.65), rgba(47,169,255,.55), rgba(47,169,255,0));
+      position:relative;overflow:hidden;
+    }
+    .gradline:after{
+      content:"";position:absolute;top:0;bottom:0;width:160px;left:-180px;
+      background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.75), rgba(255,255,255,0));
+      filter:blur(1px);animation:shine 2.8s ease-in-out infinite;
+    }
+    @keyframes shine{
+      0%{transform:translateX(0);opacity:0}
+      15%{opacity:.8}
+      50%{opacity:.9}
+      85%{opacity:.8}
+      100%{transform:translateX(900px);opacity:0}
     }
 
-    .sec-head{ display:flex; flex-direction:column; gap:8px; margin-bottom: 18px; }
-    .sec-head h2{ margin:0; font-weight:800; font-size: clamp(22px, 2.3vw, 30px); letter-spacing:-0.3px; }
-    .sec-sub{ margin:0; max-width: 88ch; color: var(--muted); font-size: 15.5px; }
+    .sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+    .sec-head h2{margin:0;font-weight:900;font-size:clamp(22px, 2.3vw, 32px);letter-spacing:-.35px}
+    .sec-sub{margin:0;max-width:92ch;color:var(--muted);font-size:15.5px}
 
     .card{
-      background: rgba(255,255,255,.9);
+      background:rgba(255,255,255,.92);
       border:1px solid var(--line);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
+      border-radius:var(--radius2);
+      box-shadow:var(--shadow);
     }
-
-    .grid-3{ display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; }
-    .grid-2{ display:grid; grid-template-columns: 1fr 1fr; gap:18px; }
-
-    .tile{
-      position: relative;
-      overflow:hidden;
-      padding: 16px;
-      border-radius: var(--radius2);
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.92);
-      box-shadow: 0 14px 40px rgba(11,42,91,.08);
-      min-height: 168px;
-    }
-    .tile:before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(520px 220px at 15% 10%, rgba(47,169,255,.12), transparent 60%),
-                  radial-gradient(520px 220px at 90% 0%, rgba(143,211,255,.14), transparent 55%);
-      opacity: .9;
-      pointer-events:none;
-    }
-    .tile > *{ position: relative; }
-
-    .badge{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(220,235,255,.9);
-      background: rgba(47,169,255,.08);
-      color: rgba(11,42,91,.88);
-      font-weight:700;
-      font-size: 12px;
-    }
-    .tile h3{ margin: 10px 0 8px; font-size:16px; letter-spacing:-0.1px; }
-    .tile p{ margin:0; color: var(--muted); font-size: 14px; }
-
-    .tile-btn{
-      text-align:left;
-      cursor:pointer;
-      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-    }
-    .tile-btn:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 18px 50px rgba(11,42,91,.12);
-      border-color: rgba(47,169,255,.35);
-    }
-    .tile-btn:focus-visible{
-      outline: 3px solid rgba(47,169,255,.35);
-      outline-offset: 3px;
-    }
-
-    /* Icons */
-    .mini-ico{
-      width:42px; height:42px; border-radius: 16px;
-      border:1px solid rgba(220,235,255,.95);
-      background: rgba(11,42,91,.06);
-      display:grid; place-items:center;
-      box-shadow: 0 12px 30px rgba(11,42,91,.08);
-    }
-    .mini-ico svg{ width:22px; height:22px; }
-    .mini-ico path, .mini-ico circle, .mini-ico line, .mini-ico polyline{
-      stroke: rgba(11,42,91,.85);
-    }
-
-    /* Hero visual */
     .hero-grid{
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap:18px;
-      align-items:stretch;
-      margin-top: 18px;
+      display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:stretch;margin-top:18px;
     }
     .hero-card{
-      padding: 18px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      min-height: 100%;
-      position:relative;
-      overflow:hidden;
+      padding:18px;position:relative;overflow:hidden;min-height:100%;
     }
     .hero-card:before{
-      content:"";
-      position:absolute; inset:-2px;
+      content:"";position:absolute;inset:-2px;
       background:
         radial-gradient(700px 360px at 15% 10%, rgba(47,169,255,.18), transparent 60%),
         radial-gradient(700px 360px at 90% 0%, rgba(143,211,255,.20), transparent 55%);
-      opacity:.95;
-      pointer-events:none;
+      opacity:.95;pointer-events:none;
     }
-    .hero-card > *{ position:relative; }
+    .hero-card>*{position:relative}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 
-    .impact{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-      margin-top: 14px;
+    /* Feature tiles */
+    .tile{
+      position:relative;overflow:hidden;
+      padding:16px;border-radius:var(--radius2);
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.92);
+      box-shadow:0 14px 40px rgba(11,42,91,.08);
+      min-height:164px;
     }
-    .impact .stat{
-      border-radius: var(--radius);
-      border:1px solid rgba(220,235,255,.85);
-      background: rgba(255,255,255,.82);
-      padding: 12px 12px;
+    .tile:before{
+      content:"";position:absolute;inset:-2px;
+      background:
+        radial-gradient(520px 220px at 15% 10%, rgba(47,169,255,.12), transparent 60%),
+        radial-gradient(520px 220px at 90% 0%, rgba(143,211,255,.14), transparent 55%);
+      opacity:.9;pointer-events:none;
     }
-    .impact .stat strong{
-      display:block;
-      font-size: 18px;
-      letter-spacing:-0.2px;
-      color: var(--blue);
+    .tile>*{position:relative}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.9);
+      background:rgba(47,169,255,.08);
+      color:rgba(11,42,91,.88);
+      font-weight:800;font-size:12px;
     }
-    .impact .stat span{
-      display:block;
-      margin-top: 2px;
-      font-size: 12.5px;
-      color: var(--muted);
-    }
+    .tile h3{margin:10px 0 8px;font-size:16px;letter-spacing:-.12px}
+    .tile p{margin:0;color:var(--muted);font-size:14px}
 
-    .illus{
-      display:grid;
-      place-items:center;
-      padding: 18px;
+    .tile-btn{
+      text-align:left;cursor:pointer;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
     }
-    .illus svg{ width: min(420px, 100%); height:auto; }
-    .illus .ring{
-      transform-origin: 50% 50%;
-      animation: slowSpin 14s linear infinite;
-      opacity:.9;
-    }
-    @keyframes slowSpin{ from{ transform: rotate(0deg);} to{ transform: rotate(360deg);} }
+    .tile-btn:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
+    .tile-btn:focus-visible{outline:3px solid rgba(47,169,255,.35);outline-offset:3px}
 
-    /* Timeline */
-    .timeline{
-      border: 1px solid rgba(220,235,255,.9);
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.9);
-      box-shadow: 0 14px 40px rgba(11,42,91,.08);
-      overflow:hidden;
+    .mini-ico{
+      width:42px;height:42px;border-radius:16px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(11,42,91,.06);
+      display:grid;place-items:center;
+      box-shadow:0 12px 30px rgba(11,42,91,.08);
     }
-    .t-row{
-      display:grid;
-      grid-template-columns: 160px 1fr;
-      gap: 0;
-      border-top: 1px solid rgba(220,235,255,.9);
+    .mini-ico svg{width:22px;height:22px}
+    .mini-ico path, .mini-ico circle, .mini-ico line, .mini-ico polyline{stroke:rgba(11,42,91,.85)}
+
+    /* Diagrams */
+    .diagram{
+      padding:16px;
+      display:grid;place-items:center;
     }
-    .t-row:first-child{ border-top:none; }
-    .t-left{
-      padding: 14px 14px;
-      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.16));
-      border-right: 1px solid rgba(220,235,255,.9);
-      color: rgba(11,42,91,.9);
-      font-weight:800;
-      font-size: 13px;
-      display:flex; align-items:center; gap:10px;
+    .diagram svg{width:min(520px,100%);height:auto}
+    .pulse{transform-origin:50% 50%;animation:pulse 2.8s ease-in-out infinite}
+    @keyframes pulse{
+      0%,100%{transform:scale(1);opacity:.85}
+      50%{transform:scale(1.04);opacity:1}
     }
-    .t-right{
-      padding: 14px 14px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-    .t-right strong{ color: rgba(11,27,52,.92); }
+    .softSpin{transform-origin:50% 50%;animation:spin 14s linear infinite;opacity:.9}
+    @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 
     /* Accordion */
     .acc{
       border:1px solid rgba(220,235,255,.9);
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.92);
+      border-radius:var(--radius2);
+      background:rgba(255,255,255,.92);
       overflow:hidden;
-      box-shadow: 0 14px 40px rgba(11,42,91,.08);
+      box-shadow:0 14px 40px rgba(11,42,91,.08);
     }
     .acc button{
-      width:100%;
-      text-align:left;
-      padding: 14px 14px;
-      border:0;
-      background: rgba(255,255,255,.92);
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      font-weight:800;
-      color: rgba(11,42,91,.92);
-      border-top: 1px solid rgba(220,235,255,.9);
+      width:100%;text-align:left;padding:14px 14px;border:0;
+      background:rgba(255,255,255,.92);
+      cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;
+      font-weight:900;color:rgba(11,42,91,.92);
+      border-top:1px solid rgba(220,235,255,.9);
     }
-    .acc button:first-child{ border-top:none; }
-    .acc button:hover{ background: rgba(220,235,255,.35); }
-    .acc .panel{
-      display:none;
-      padding: 0 14px 14px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.55;
-    }
+    .acc button:first-child{border-top:none}
+    .acc button:hover{background:rgba(220,235,255,.35)}
+    .acc .panel{display:none;padding:0 14px 14px;color:var(--muted);font-size:14px;line-height:1.55}
     .chev{
-      width:36px; height:36px; border-radius: 14px;
+      width:36px;height:36px;border-radius:14px;
       border:1px solid rgba(220,235,255,.95);
-      background: rgba(11,42,91,.06);
-      display:grid; place-items:center;
-      transition: transform .15s ease;
-      flex: 0 0 auto;
+      background:rgba(11,42,91,.06);
+      display:grid;place-items:center;transition:transform .15s ease;flex:0 0 auto;
     }
-    .chev svg{ width:16px; height:16px; }
-    .acc button[aria-expanded="true"] .chev{ transform: rotate(180deg); }
+    .chev svg{width:16px;height:16px}
+    .acc button[aria-expanded="true"] .chev{transform:rotate(180deg)}
 
     /* Form */
-    .form{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
+    .form{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     .input{
-      flex: 1 1 240px;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.92);
-      font: inherit;
-      color: rgba(11,27,52,.95);
-      outline:none;
-      box-shadow: 0 12px 30px rgba(11,42,91,.06);
+      flex:1 1 240px;padding:12px 12px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.92);font:inherit;color:rgba(11,27,52,.95);
+      outline:none;box-shadow:0 12px 30px rgba(11,42,91,.06);
     }
-    .input:focus{
-      border-color: rgba(47,169,255,.45);
-      box-shadow: 0 18px 40px rgba(11,42,91,.10);
+    .input:focus{border-color:rgba(47,169,255,.45);box-shadow:0 18px 40px rgba(11,42,91,.10)}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:11px 14px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.92);color:var(--blue);font-weight:800;
+      box-shadow:0 12px 30px rgba(11,42,91,.08);
+      transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+      cursor:pointer;
+    }
+    .btn:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(11,42,91,.12)}
+    .btn.primary{
+      border-color:rgba(47,169,255,.35);
+      background:linear-gradient(135deg, rgba(47,169,255,.15), rgba(143,211,255,.25));
+      color:var(--blue);
     }
 
     /* Reveal */
-    .reveal{
-      opacity:0;
-      transform: translateY(10px);
-      transition: opacity .55s ease, transform .55s ease;
-    }
-    .reveal.on{
-      opacity:1;
-      transform:none;
-    }
+    .reveal{opacity:0;transform:translateY(10px);transition:opacity .55s ease, transform .55s ease}
+    .reveal.on{opacity:1;transform:none}
 
     /* Modal */
     .modal{
-      position:fixed; inset:0; z-index:1000;
-      display:none;
-      padding: 18px;
-      background: rgba(11,27,52,.55);
-      backdrop-filter: blur(6px);
+      position:fixed;inset:0;z-index:1000;display:none;padding:18px;
+      background:rgba(11,27,52,.55);backdrop-filter:blur(6px);
     }
-    .modal.show{ display:grid; place-items:center; }
+    .modal.show{display:grid;place-items:center}
     .modal-dialog{
-      width: min(820px, 100%);
-      background: rgba(255,255,255,.96);
-      border: 1px solid rgba(220,235,255,.95);
-      border-radius: 22px;
-      box-shadow: 0 28px 70px rgba(11,42,91,.22);
-      overflow:hidden;
-      animation: modalIn .18s ease-out;
-    }
-    @keyframes modalIn{
-      from{ transform: translateY(8px) scale(.99); opacity:.0; }
-      to{ transform: none; opacity:1; }
-    }
-    .modal-head{
-      padding: 16px 16px 12px;
-      border-bottom: 1px solid rgba(220,235,255,.9);
-      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
-      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
-    }
-    .modal-title{
-      margin:0;
-      font-size: 18px;
-      letter-spacing: -0.2px;
-      color: var(--blue);
-    }
-    .modal-close{
-      width:42px; height:42px;
-      border-radius: 14px;
+      width:min(840px,100%);
+      background:rgba(255,255,255,.97);
       border:1px solid rgba(220,235,255,.95);
-      background: rgba(255,255,255,.9);
-      cursor:pointer;
-      display:grid; place-items:center;
-      color: rgba(11,42,91,.85);
-      box-shadow: 0 12px 30px rgba(11,42,91,.10);
+      border-radius:22px;
+      box-shadow:0 28px 70px rgba(11,42,91,.22);
+      overflow:hidden;
+      animation:modalIn .18s ease-out;
     }
-    .modal-body{ padding: 14px 16px 16px; color: rgba(11,27,52,.92); }
-    .modal-body p{ margin: 0 0 10px; color: var(--muted); }
-    .modal-body ul{ margin: 10px 0 0; padding-left: 18px; color: var(--muted); }
-    .modal-body li{ margin: 7px 0; }
+    @keyframes modalIn{from{transform:translateY(8px) scale(.99);opacity:0}to{transform:none;opacity:1}}
+    .modal-head{
+      padding:16px 16px 12px;border-bottom:1px solid rgba(220,235,255,.9);
+      background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+    }
+    .modal-title{margin:0;font-size:18px;letter-spacing:-.2px;color:var(--blue)}
+    .modal-close{
+      width:42px;height:42px;border-radius:14px;border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.92);cursor:pointer;display:grid;place-items:center;
+      color:rgba(11,42,91,.85);box-shadow:0 12px 30px rgba(11,42,91,.10);
+    }
+    .modal-body{padding:14px 16px 16px;color:rgba(11,27,52,.92)}
+    .modal-body p{margin:0 0 10px;color:var(--muted)}
+    .modal-body ul{margin:10px 0 0;padding-left:18px;color:var(--muted)}
+    .modal-body li{margin:7px 0}
     .callout{
-      margin-top: 12px;
-      padding: 12px 12px;
-      border-radius: var(--radius);
-      border: 1px solid rgba(47,169,255,.25);
-      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
-      color: rgba(11,42,91,.9);
-      font-weight:700;
-      font-size: 13px;
+      margin-top:12px;padding:12px 12px;border-radius:var(--radius);
+      border:1px solid rgba(47,169,255,.25);
+      background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      color:rgba(11,42,91,.9);font-weight:900;font-size:13px;
     }
-    .mini{
-      font-size: 12.5px;
-      color: var(--muted);
-    }
+    .mini{font-size:12.5px;color:var(--muted)}
 
     footer{
-      padding: 28px 0 40px;
-      border-top: 1px solid rgba(220,235,255,.9);
-      background: rgba(255,255,255,.55);
+      padding:28px 0 40px;
+      border-top:1px solid rgba(220,235,255,.9);
+      background:rgba(255,255,255,.55);
     }
-    .foot{
-      display:flex; align-items:flex-start; justify-content:space-between; gap:18px;
-      flex-wrap:wrap;
-    }
-    .foot small{ color: var(--muted); }
-    .foot a{ text-decoration: underline; text-underline-offset: 3px; }
-
-    /* Scroll progress */
-    .progress{
-      position: fixed;
-      top: 0; left: 0;
-      height: 3px;
-      width: 0%;
-      background: linear-gradient(90deg, rgba(47,169,255,.0), rgba(47,169,255,.9), rgba(143,211,255,.95));
-      z-index: 9999;
-      box-shadow: 0 8px 20px rgba(47,169,255,.22);
-    }
+    .foot{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}
 
     /* Responsive */
     @media (max-width: 980px){
-      .hero-grid{ grid-template-columns: 1fr; }
-      .grid-3{ grid-template-columns: 1fr; }
-      .grid-2{ grid-template-columns: 1fr; }
-      .t-row{ grid-template-columns: 1fr; }
-      .t-left{ border-right:none; border-bottom:1px solid rgba(220,235,255,.9); }
+      .hero-grid{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+      .grid-2{grid-template-columns:1fr}
     }
     @media (max-width: 760px){
-      nav ul{ display:none; }
-      .menu-btn{ display:inline-flex; }
-      .wrap{ width:min(var(--max), 100% - 28px); }
-      .impact{ grid-template-columns: 1fr; }
+      nav ul{display:none}
+      .menu-btn{display:inline-flex}
+      .wrap{width:min(var(--max), 100% - 28px)}
     }
-
-    /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
-      *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+      *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
     }
   </style>
 </head>
@@ -584,30 +398,30 @@
           </div>
         </a>
 
+        <!-- Banner superior: SOLO lo que pediste -->
         <nav aria-label="Navegación principal">
           <ul>
-            <li><a href="#mision">Misión</a></li>
-            <li><a href="#programas">Programas</a></li>
-            <li><a href="#ruta">Ruta</a></li>
-            <li><a href="#unete">Únete</a></li>
+            <li><a href="como-trabajamos.html">Cómo trabajamos</a></li>
+            <li><a href="a-quienes-ayudamos.html">A quiénes ayudamos</a></li>
+            <li><a href="quienes-somos.html">Quiénes somos</a></li>
+            <li><a class="active" href="psocial.html" aria-current="page">Proyecto social</a></li>
+            <li><a href="#contacto">Contáctanos</a></li>
           </ul>
         </nav>
 
-        <div class="nav-right">
-          <a class="btn" href="index.html" aria-label="Volver al inicio">← Inicio</a>
+        <div class="right">
           <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobilePanel">
-            <div class="menu-lines" aria-hidden="true">
-              <span></span><span></span><span></span>
-            </div>
+            <div class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></div>
           </button>
         </div>
       </div>
 
       <div class="mobile-panel" id="mobilePanel" aria-label="Menú móvil">
-        <a href="#mision">Misión</a>
-        <a href="#programas">Programas</a>
-        <a href="#ruta">Ruta</a>
-        <a href="#unete">Únete</a>
+        <a href="como-trabajamos.html">Cómo trabajamos</a>
+        <a href="a-quienes-ayudamos.html">A quiénes ayudamos</a>
+        <a href="quienes-somos.html">Quiénes somos</a>
+        <a href="psocial.html">Proyecto social</a>
+        <a href="#contacto">Contáctanos</a>
       </div>
     </div>
   </header>
@@ -618,38 +432,601 @@
       <!-- HERO -->
       <section class="hero">
         <div class="center">
-          <div class="pill" role="note" aria-label="Propuesta social">
+          <div class="pill reveal" role="note" aria-label="Propuesta social">
             <span class="dot" aria-hidden="true"></span>
-            <span><strong>Proyecto social:</strong> educación + cultura + herramientas prácticas</span>
+            <span><strong>Columna de Aegis8:</strong> educación + cultura + acompañamiento honesto</span>
           </div>
 
-          <h1>Seguridad como acceso, no como privilegio.</h1>
+          <h1 class="reveal">Seguridad como acceso, no como privilegio.</h1>
 
-          <p class="lead">
-            En Aegis8 impulsamos un proyecto educativo-social para que más personas, startups y pequeñas organizaciones
-            puedan construir <span class="k">hábitos</span>, <span class="k">criterio</span> y <span class="k">fortalecimiento real</span>
-            sin depender de presupuesto enterprise.
+          <p class="lead reveal">
+            Aegis8 nace como un proyecto social educativo y técnico orientado a reducir la brecha de ciberseguridad en
+            <span class="k">personas</span>, <span class="k">startups</span> y <span class="k">pequeñas organizaciones</span>.
+            Creemos que la seguridad no debe depender del tamaño del presupuesto, sino del acceso a conocimiento claro y
+            acompañamiento honesto.
           </p>
 
-          <div class="center" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+          <!-- Eliminado: los “recuadros” tipo botones de arriba que te estorbaban (dejamos solo CTA minimal) -->
+          <div class="center reveal" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
             <a class="btn primary" href="#programas">Ver programas</a>
-            <button class="btn" type="button" data-modal="m-donar" aria-haspopup="dialog">Donar / apoyar</button>
+            <button class="btn" type="button" data-modal="m-apoyar" aria-haspopup="dialog">Apoyar el proyecto</button>
           </div>
         </div>
 
         <div class="gradline" aria-hidden="true"></div>
 
         <div class="hero-grid" style="margin-top:20px;">
-          <div class="card hero-card">
-            <div class="sec-head" style="margin-bottom:10px;">
-              <h2 style="margin:0;">Impacto que buscamos</h2>
-              <p class="sec-sub">Medible, simple y directo: menos incidentes comunes, más autonomía y cultura.</p>
+          <div class="card hero-card reveal">
+            <div class="sec-head" style="margin-bottom:12px;">
+              <h2 style="margin:0;">La necesidad de crear cultura de ciberseguridad</h2>
+              <p class="sec-sub">
+                La tecnología cambia, las amenazas también. Lo único que escala de verdad es una cultura continua:
+                hábitos simples, verificación, aprendizaje y respuesta. Sin cultura, los controles se vuelven “checklists”
+                que nadie sostiene.
+              </p>
             </div>
 
-            <div class="impact">
-              <div class="stat">
-                <strong><span data-count="120" data-suffix="+">0</span></strong>
-                <span>personas capacitadas (meta anual)</span>
+            <div class="grid-2" style="margin-top:14px;">
+              <div class="tile">
+                <span class="badge">Problema</span>
+                <h3>Brecha de conocimiento + fatiga</h3>
+                <p>
+                  La mayoría de incidentes comunes (phishing, cuentas robadas, pérdida de datos) ocurren por pasos básicos
+                  no internalizados: MFA, verificación, backups probados, permisos mínimos.
+                </p>
               </div>
-              <div class="stat">
-                <strong><span data-count="40
+              <div class="tile">
+                <span class="badge">Respuesta</span>
+                <h3>Claridad + acompañamiento</h3>
+                <p>
+                  Aegis8 traduce “seguridad” a acciones concretas: qué hacer, por qué importa, cómo medir progreso y cómo
+                  mantenerlo sin depender de héroes técnicos.
+                </p>
+              </div>
+            </div>
+
+            <div class="callout">
+              Cultura = <strong>continuidad</strong>. No es un curso “una vez”, es una práctica que se vuelve parte del trabajo y la vida diaria.
+            </div>
+          </div>
+
+          <div class="card hero-card diagram reveal" aria-label="Diagrama: ciclo de cultura">
+            <svg viewBox="0 0 560 420" role="img" aria-label="Ciclo continuo de cultura de ciberseguridad">
+              <defs>
+                <linearGradient id="dg" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="#2FA9FF" stop-opacity="0.20"/>
+                  <stop offset="1" stop-color="#8FD3FF" stop-opacity="0.34"/>
+                </linearGradient>
+                <linearGradient id="dg2" x1="0" x2="1" y1="1" y2="0">
+                  <stop offset="0" stop-color="#0B2A5B" stop-opacity="0.10"/>
+                  <stop offset="1" stop-color="#0B2A5B" stop-opacity="0.04"/>
+                </linearGradient>
+              </defs>
+
+              <circle class="softSpin" cx="280" cy="205" r="150" fill="none" stroke="rgba(47,169,255,.35)" stroke-width="2" stroke-dasharray="8 10"/>
+              <circle class="softSpin" cx="280" cy="205" r="110" fill="none" stroke="rgba(143,211,255,.45)" stroke-width="2" stroke-dasharray="6 10" style="animation-duration:20s;"/>
+
+              <rect x="70" y="64" width="420" height="280" rx="28" fill="url(#dg)" stroke="rgba(220,235,255,.95)"/>
+
+              <!-- nodes -->
+              <g>
+                <circle class="pulse" cx="190" cy="160" r="32" fill="rgba(255,255,255,.78)" stroke="rgba(11,42,91,.55)" stroke-width="2"/>
+                <circle class="pulse" cx="370" cy="160" r="32" fill="rgba(255,255,255,.78)" stroke="rgba(11,42,91,.55)" stroke-width="2" style="animation-delay:.3s"/>
+                <circle class="pulse" cx="280" cy="270" r="32" fill="rgba(255,255,255,.78)" stroke="rgba(11,42,91,.55)" stroke-width="2" style="animation-delay:.6s"/>
+
+                <path d="M222 160 C250 130 310 130 338 160" fill="none" stroke="rgba(11,42,91,.25)" stroke-width="3" stroke-linecap="round"/>
+                <path d="M360 190 C350 230 320 248 298 256" fill="none" stroke="rgba(11,42,91,.25)" stroke-width="3" stroke-linecap="round"/>
+                <path d="M262 256 C235 246 210 225 200 192" fill="none" stroke="rgba(11,42,91,.25)" stroke-width="3" stroke-linecap="round"/>
+
+                <text x="190" y="165" text-anchor="middle" font-size="12" fill="rgba(11,42,91,.86)" font-weight="800">Aprender</text>
+                <text x="370" y="165" text-anchor="middle" font-size="12" fill="rgba(11,42,91,.86)" font-weight="800">Aplicar</text>
+                <text x="280" y="275" text-anchor="middle" font-size="12" fill="rgba(11,42,91,.86)" font-weight="800">Reforzar</text>
+              </g>
+
+              <!-- caption bar -->
+              <rect x="105" y="325" width="350" height="36" rx="18" fill="url(#dg2)" stroke="rgba(220,235,255,.95)"/>
+              <text x="280" y="349" text-anchor="middle" font-size="13" fill="rgba(11,42,91,.82)" font-weight="800">
+                cultura continua (no un evento)
+              </text>
+            </svg>
+
+            <div class="mini" style="margin-top:10px; text-align:center;">
+              Interactivo: pasa el mouse por los módulos del proyecto para ver detalles.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROPUESTA: 3 PILARES -->
+      <section id="pilares">
+        <div class="sec-head reveal">
+          <h2>Los 3 pilares del proyecto social</h2>
+          <p class="sec-sub">
+            Lo hacemos simple: enseñamos lo esencial, lo aterrizamos con herramientas y acompañamos para que se sostenga.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <button class="tile tile-btn reveal" type="button" data-modal="m-educacion" aria-haspopup="dialog">
+            <span class="badge">1) Educación</span>
+            <h3>Conocimiento claro</h3>
+            <p>Conceptos sin jerga, con ejemplos reales y guías cortas para decidir mejor.</p>
+          </button>
+
+          <button class="tile tile-btn reveal" type="button" data-modal="m-cultura" aria-haspopup="dialog">
+            <span class="badge">2) Cultura</span>
+            <h3>Hábitos que se repiten</h3>
+            <p>Rutinas simples: verificación, backups, mínimos de acceso y respuesta.</p>
+          </button>
+
+          <button class="tile tile-btn reveal" type="button" data-modal="m-tecnico" aria-haspopup="dialog">
+            <span class="badge">3) Fortalecimiento</span>
+            <h3>Herramientas + evidencia</h3>
+            <p>Checklists y acompañamiento para implementar y mostrar progreso (antes/después).</p>
+          </button>
+        </div>
+      </section>
+
+      <!-- PROGRAMAS (con “vida”) -->
+      <section id="programas">
+        <div class="sec-head reveal">
+          <h2>Programas (clickeables)</h2>
+          <p class="sec-sub">
+            Cada programa tiene un formato concreto, entregables y una forma de medir avance.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <button class="tile tile-btn reveal" type="button" data-modal="m-talleres" aria-haspopup="dialog">
+            <span class="badge">Talleres</span>
+            <div style="display:flex;align-items:center;gap:12px;margin-top:10px;">
+              <div class="mini-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M4 6h16M7 10h10M6 14h12M8 18h8" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <h3 style="margin:0;">Aprender haciendo</h3>
+                <p style="margin-top:6px;">Phishing, MFA, backups, hardening básico, privacidad y seguridad móvil.</p>
+              </div>
+            </div>
+          </button>
+
+          <button class="tile tile-btn reveal" type="button" data-modal="m-kit" aria-haspopup="dialog">
+            <span class="badge">Kit mínimo</span>
+            <div style="display:flex;align-items:center;gap:12px;margin-top:10px;">
+              <div class="mini-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M7 7h10v10H7z" stroke-width="2"/>
+                  <path d="M4 10V6a2 2 0 0 1 2-2h4" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M20 14v4a2 2 0 0 1-2 2h-4" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <h3 style="margin:0;">Checklist + plantillas</h3>
+                <p style="margin-top:6px;">Inventario, accesos, DNS/TLS, endpoints, backups y continuidad.</p>
+              </div>
+            </div>
+          </button>
+
+          <button class="tile tile-btn reveal" type="button" data-modal="m-mentoria" aria-haspopup="dialog">
+            <span class="badge">Mentoría</span>
+            <div style="display:flex;align-items:center;gap:12px;margin-top:10px;">
+              <div class="mini-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="8" r="3" stroke-width="2"/>
+                  <path d="M5 20c1.5-4 12.5-4 14 0" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <h3 style="margin:0;">Acompañamiento honesto</h3>
+                <p style="margin-top:6px;">Implementación guiada + evidencia antes/después + sostener hábitos.</p>
+              </div>
+            </div>
+          </button>
+
+          <div class="tile reveal" aria-label="Diagrama: flujo Aegis8">
+            <span class="badge">Cómo se ve en la práctica</span>
+            <h3>De “no sé por dónde empezar” a “lo tengo controlado”</h3>
+            <div class="diagram" style="padding:10px 0 0;">
+              <svg viewBox="0 0 560 180" role="img" aria-label="Flujo de fortalecimiento">
+                <defs>
+                  <linearGradient id="f1" x1="0" x2="1" y1="0" y2="0">
+                    <stop offset="0" stop-color="#2FA9FF" stop-opacity="0.22"/>
+                    <stop offset="1" stop-color="#8FD3FF" stop-opacity="0.32"/>
+                  </linearGradient>
+                </defs>
+                <rect x="26" y="40" width="150" height="84" rx="18" fill="rgba(255,255,255,.82)" stroke="rgba(220,235,255,.95)"/>
+                <rect x="205" y="40" width="150" height="84" rx="18" fill="rgba(255,255,255,.82)" stroke="rgba(220,235,255,.95)"/>
+                <rect x="384" y="40" width="150" height="84" rx="18" fill="url(#f1)" stroke="rgba(220,235,255,.95)"/>
+
+                <path d="M176 82 H205" stroke="rgba(11,42,91,.25)" stroke-width="3" stroke-linecap="round"/>
+                <path d="M355 82 H384" stroke="rgba(11,42,91,.25)" stroke-width="3" stroke-linecap="round"/>
+
+                <circle cx="188" cy="82" r="5" fill="rgba(47,169,255,.55)"/>
+                <circle cx="368" cy="82" r="5" fill="rgba(47,169,255,.55)"/>
+
+                <text x="101" y="74" text-anchor="middle" font-size="12" fill="rgba(11,42,91,.86)" font-weight="900">Entender</text>
+                <text x="101" y="96" text-anchor="middle" font-size="12" fill="rgba(11,42,91,.60)" font-weight="700">riesgo real</text>
+
+                <text x="280" y="74" text-anchor="middle" font-size="12" fill="rgba(11,42,91,.86)" font-weight="900">Implementar</text>
+                <text x="280" y="96" text-anchor="middle" font-size="12" fill="rgba(11,42,91,.60)" font-weight="700">mínimos</text>
+
+                <text x="459" y="74" text-anchor="middle" font-size="12" fill="rgba(11,42,91,.86)" font-weight="900">Sostener</text>
+                <text x="459" y="96" text-anchor="middle" font-size="12" fill="rgba(11,42,91,.60)" font-weight="700">cultura</text>
+              </svg>
+            </div>
+            <p style="margin-top:8px;">
+              Medimos progreso con acciones simples: MFA activo, backups probados, accesos ordenados, mínimos de endpoint y verificación.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq">
+        <div class="sec-head reveal">
+          <h2>Preguntas rápidas</h2>
+          <p class="sec-sub">Respuestas cortas para que la idea se entienda reflejada en acciones.</p>
+        </div>
+
+        <div class="acc reveal" id="accordion">
+          <button type="button" aria-expanded="false">
+            <span>¿Por qué “proyecto social” y no solo consultoría?</span>
+            <span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="rgba(11,42,91,.75)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </button>
+          <div class="panel">
+            Porque el foco es reducir brecha: <strong>hacer accesible</strong> lo esencial y acompañar la implementación.
+            La consultoría puede existir, pero la columna es educación + cultura para que más gente esté mejor preparada.
+          </div>
+
+          <button type="button" aria-expanded="false">
+            <span>¿Qué problemas buscan reducir primero?</span>
+            <span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="rgba(11,42,91,.75)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </button>
+          <div class="panel">
+            Incidentes comunes y evitables: phishing/robo de cuentas, pérdida de información por falta de backups,
+            permisos excesivos, secretos expuestos y endpoints sin mínimos.
+          </div>
+
+          <button type="button" aria-expanded="false">
+            <span>¿Cómo se ve el “acompañamiento honesto”?</span>
+            <span class="chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="rgba(11,42,91,.75)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </button>
+          <div class="panel">
+            Priorizamos lo que realmente reduce riesgo (alto impacto / bajo esfuerzo), explicamos trade-offs y dejamos
+            pasos concretos para sostenerlo: checklist, “ritual” mensual y medición mínima.
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACTO -->
+      <section id="contacto">
+        <div class="sec-head reveal">
+          <h2>Contáctanos</h2>
+          <p class="sec-sub">
+            Si quieres participar, sumar una comunidad, proponer un taller o apoyar becas/cupos: escríbenos.
+          </p>
+        </div>
+
+        <div class="card reveal" style="padding:18px;">
+          <div class="form">
+            <input class="input" id="email" type="email" placeholder="tu@correo.com" autocomplete="email" />
+            <button class="btn primary" id="joinBtn" type="button">Quiero participar</button>
+            <a class="btn" href="mailto:contacto@aegis8.org?subject=Aegis8%20-%20Proyecto%20Social">Enviar correo</a>
+          </div>
+          <div class="mini" id="joinMsg" style="margin-top:10px;"></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- MODALS -->
+  <div class="modal" id="m-educacion" role="dialog" aria-modal="true" aria-labelledby="t-educacion">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-educacion">Pilar 1: Educación</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Menos jerga, más claridad.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Contenido breve, directo y utilizable: “qué es”, “por qué importa”, “qué hago hoy”.</p>
+        <ul>
+          <li>Guías de 1 página + checklist.</li>
+          <li>Ejemplos reales: phishing, MFA, backups, privacidad, cuentas y permisos.</li>
+          <li>Enfoque: criterio para decidir y priorizar.</li>
+        </ul>
+        <div class="callout">Objetivo: que cualquiera entienda y pueda accionar sin depender de un “experto” al lado.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-cultura" role="dialog" aria-modal="true" aria-labelledby="t-cultura">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-cultura">Pilar 2: Cultura</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Continuidad: hábitos que se repiten.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Cultura es lo que pasa “cuando nadie está mirando”. Diseñamos rutinas simples.</p>
+        <ul>
+          <li>Ritual mensual: revisar accesos, backups, alertas básicas y dominios.</li>
+          <li>Verificación por defecto: links, códigos, identidades y cambios.</li>
+          <li>Aprendizaje continuo: micro-acciones, no mega-proyectos.</li>
+        </ul>
+        <div class="callout">Objetivo: que la seguridad no dependa de heroicidad, sino de práctica.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-tecnico" role="dialog" aria-modal="true" aria-labelledby="t-tecnico">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-tecnico">Pilar 3: Fortalecimiento técnico</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Implementación + evidencia.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Lo técnico entra para sostener hábitos y reducir riesgo en lo cotidiano.</p>
+        <ul>
+          <li>Checklist mínimo: MFA, backups probados, permisos, DNS/TLS, endpoints.</li>
+          <li>Plantillas: inventario, roles, continuidad, “qué hacer si pasa X”.</li>
+          <li>Evidencia antes/después para demostrar avance sin burocracia.</li>
+        </ul>
+        <div class="callout">Objetivo: progreso visible y sostenido.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-talleres" role="dialog" aria-modal="true" aria-labelledby="t-talleres">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-talleres">Talleres prácticos</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Aprender haciendo.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Formato simple: 60–90 minutos con ejercicios guiados y un “qué hago mañana”.</p>
+        <ul>
+          <li><strong>Temas:</strong> phishing, MFA, contraseñas, backups, privacidad, seguridad móvil.</li>
+          <li><strong>Entregables:</strong> checklist + guía breve + recursos.</li>
+          <li><strong>Enfoque:</strong> reducir incidentes comunes y mejorar hábitos.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-kit" role="dialog" aria-modal="true" aria-labelledby="t-kit">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-kit">Kit de hardening mínimo</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Plantillas + checklists.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Un set de “mínimos” para elevar postura sin entrar en burocracia.</p>
+        <ul>
+          <li>Inventario, accesos/roles, DNS/TLS, endpoints, backups/restore y continuidad.</li>
+          <li>Modo: descargable + explicación clara.</li>
+          <li>Objetivo: que cualquiera pueda sostenerlo.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-mentoria" role="dialog" aria-modal="true" aria-labelledby="t-mentoria">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-mentoria">Mentoría a startups/pymes</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Acompañamiento honesto.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Sesiones enfocadas en decisiones clave y aplicación práctica.</p>
+        <ul>
+          <li>Dolores típicos: cuentas compartidas, sin MFA, backups sin prueba, secretos expuestos.</li>
+          <li>Entregables: plan corto + checklist + evidencia antes/después.</li>
+          <li>Resultado: autonomía del equipo y reducción led de incidentes comunes.</li>
+        </ul>
+        <div class="callout">Aquí puedes conectar “Observo/PBD” como herramientas internas, sin eclipsar el proyecto social.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-apoyar" role="dialog" aria-modal="true" aria-labelledby="t-apoyar">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-apoyar">Apoyar el proyecto social</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Becas, cupos, materiales y continuidad.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Por ahora es una maqueta (sin pagos). Cuando definas el método, lo conectamos.</p>
+        <ul>
+          <li><strong>Uso:</strong> becas/cupos, materiales, logística de talleres, hosting.</li>
+          <li><strong>Transparencia:</strong> metas y reportes simples de avance.</li>
+        </ul>
+        <div class="callout">Si quieres, sumamos un bloque “Sponsors” con logos minimalistas en gris/azul.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div class="brand" aria-label="Aegis8">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>Aegis8</strong>
+            <span>Claridad • Criterio • Comunidad</span>
+          </div>
+        </div>
+
+        <div style="max-width: 64ch;">
+          <small class="muted">
+            © <span id="year"></span> Aegis8. Proyecto educativo-social de ciberseguridad.
+            <br/>Esta página es estática: cuando definas un formulario real, lo conectamos (Formspree/Tally/Google Forms).
+          </small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Año
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Menú móvil
+    const btn = document.getElementById("menuBtn");
+    const panel = document.getElementById("mobilePanel");
+    function closeMobileMenu(){ panel.style.display="none"; btn.setAttribute("aria-expanded","false"); }
+    function toggleMobileMenu(){
+      const isOpen = btn.getAttribute("aria-expanded")==="true";
+      if(isOpen) closeMobileMenu();
+      else{ panel.style.display="block"; btn.setAttribute("aria-expanded","true"); }
+    }
+    btn.addEventListener("click", toggleMobileMenu);
+    panel.querySelectorAll("a").forEach(a=>a.addEventListener("click", closeMobileMenu));
+    window.addEventListener("resize", ()=>{ if(window.innerWidth>760) closeMobileMenu(); });
+
+    // Scroll progress
+    const progress = document.getElementById("progress");
+    function onScroll(){
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+      progress.style.width = `${Math.max(0, Math.min(1, scrolled)) * 100}%`;
+    }
+    window.addEventListener("scroll", onScroll, { passive:true });
+    onScroll();
+
+    // Smooth anchor
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener("click",(e)=>{
+        const id = a.getAttribute("href");
+        const el = document.querySelector(id);
+        if(!el) return;
+        e.preventDefault();
+        closeMobileMenu();
+        const y = el.getBoundingClientRect().top + window.scrollY - 84;
+        window.scrollTo({ top:y, behavior:"smooth" });
+      });
+    });
+
+    // Reveal
+    const reveals = Array.from(document.querySelectorAll(".reveal, .sec-head, .tile, .card"));
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add("on");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold:0.12 });
+    reveals.forEach(el=>io.observe(el));
+
+    // Modals
+    const modals = Array.from(document.querySelectorAll(".modal"));
+    let lastFocus = null;
+
+    function openModal(id){
+      const modal = document.getElementById(id);
+      if(!modal) return;
+      lastFocus = document.activeElement;
+      modal.classList.add("show");
+      document.body.style.overflow="hidden";
+      const closeBtn = modal.querySelector(".modal-close");
+      if(closeBtn) closeBtn.focus();
+    }
+    function closeModal(modal){
+      modal.classList.remove("show");
+      document.body.style.overflow="";
+      if(lastFocus && typeof lastFocus.focus==="function") lastFocus.focus();
+    }
+    function closeAll(){ modals.forEach(m=>m.classList.contains("show") && closeModal(m)); }
+
+    document.addEventListener("click",(e)=>{
+      const trigger = e.target.closest("[data-modal]");
+      if(trigger) openModal(trigger.getAttribute("data-modal"));
+
+      const backdrop = e.target.classList && e.target.classList.contains("modal");
+      if(backdrop) closeModal(e.target);
+
+      const closeBtn = e.target.closest(".modal-close");
+      if(closeBtn) closeModal(closeBtn.closest(".modal"));
+    });
+
+    document.addEventListener("keydown",(e)=>{
+      if(e.key==="Escape") closeAll();
+
+      const activeModal = modals.find(m=>m.classList.contains("show"));
+      if(!activeModal) return;
+
+      if(e.key==="Tab"){
+        const focusables = Array.from(activeModal.querySelectorAll('button, a, input, textarea, select, [tabindex]:not([tabindex="-1"])'))
+          .filter(el=>!el.hasAttribute("disabled"));
+        if(focusables.length===0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length-1];
+        if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+        else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+      }
+    });
+
+    // Accordion
+    const acc = document.getElementById("accordion");
+    if(acc){
+      const buttons = Array.from(acc.querySelectorAll("button"));
+      buttons.forEach((b)=>{
+        b.addEventListener("click",()=>{
+          const expanded = b.getAttribute("aria-expanded")==="true";
+          buttons.forEach(x=>{
+            x.setAttribute("aria-expanded","false");
+            const p = x.nextElementSibling;
+            if(p && p.classList.contains("panel")) p.style.display="none";
+          });
+          if(!expanded){
+            b.setAttribute("aria-expanded","true");
+            const panel = b.nextElementSibling;
+            if(panel && panel.classList.contains("panel")) panel.style.display="block";
+          }
+        });
+      });
+    }
+
+    // Join demo interaction
+    const joinBtn = document.getElementById("joinBtn");
+    const email = document.getElementById("email");
+    const joinMsg = document.getElementById("joinMsg");
+    function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v||"").trim()); }
+
+    joinBtn.addEventListener("click",()=>{
+      const v = email.value.trim();
+      if(!validEmail(v)){
+        joinMsg.textContent = "Escribe un correo válido para poder avisarte talleres y guías.";
+        joinMsg.style.color = "rgba(180,40,40,.85)";
+        email.focus();
+        return;
+      }
+      joinMsg.textContent = "Listo ✨ (demo). Luego lo conectamos a un formulario real y guardamos el registro.";
+      joinMsg.style.color = "rgba(11,42,91,.85)";
+      email.value = "";
+    });
+  </script>
+</body>
+</html>

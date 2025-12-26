@@ -23,7 +23,7 @@
       --shadow: 0 18px 45px rgba(11,42,91,.10);
       --radius: 18px;
       --radius2: 26px;
-      --max: 1080px;
+      --max: 980px;
     }
 
     *{ box-sizing:border-box; }
@@ -43,6 +43,10 @@
     .wrap{ width:min(var(--max), 100% - 40px); margin:0 auto; }
     .center{ text-align:center; }
     .muted{ color:var(--muted); }
+    .prose-center{max-width:72ch;margin:0 auto;text-align:center;}
+    .prose-center p{margin:0 0 14px;}
+    .prose-center p:last-child{margin-bottom:0;}
+
     .pill{
       display:inline-flex; align-items:center; gap:10px;
       padding:8px 12px;
@@ -169,7 +173,7 @@
     /* Sections */
     main{ padding: 34px 0 70px; }
     .hero{
-      padding: 34px 0 28px;
+      padding: 44px 0 34px;
     }
     .hero-grid{
       display:grid;
@@ -181,7 +185,7 @@
     h1{
       font-size: clamp(32px, 4vw, 46px);
       line-height: 1.08;
-      margin: 14px 0 12px;
+      margin:  14px 0 12px;
       letter-spacing: -0.6px;
     }
     
@@ -213,6 +217,7 @@
 
     /* Hero emblem */
     .hero-emblem{
+      margin-top: 14px;
       position: relative;
       width: 130px;
       height: 130px;
@@ -341,8 +346,8 @@
 .lead{
       font-size: clamp(16px, 1.35vw, 18px);
       color: var(--muted);
-      margin: 0 auto 18px;
-      max-width: 70ch;
+      margin: 16px auto 22px;
+      max-width: 62ch;
       text-align: center;
     }
     .hero-cta{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
@@ -610,7 +615,7 @@ footer{
           <div class="logo" aria-hidden="true"></div>
           <div>
             <strong>Aegis8</strong>
-            <span>Consultora con enfoque educativo y social</span>
+            <span>Consultora y proyecto social</span>
           </div>
         </a>
 
@@ -659,19 +664,19 @@ footer{
 <h1>Ciberseguridad clara para personas, startups y pequeñas organizaciones.</h1>
 
           <p class="lead">
-            Aegis8 es una consultora de ciberseguridad con enfoque tecnico, social y educativo.
-            Acompañamos a quienes inician sus proyectos, personas y startups a construir 
-            <strong>gobernanza, generar cultura</strong> y <strong>fortalecer capacidades técnicas</strong> mediante acctiones realistas, comprensibles y sostenibless.
+            Aegis8 es una consultora y proyecto educativo-social de ciberseguridad.
+            Acompañamos a quienes no tienen un SOC ni presupuesto enterprise a construir
+            <strong>gobernanza, cultura</strong> y <strong>fortalecimiento técnico</strong> con acciones realistas.
           </p>
 
           
           <div class="hero-emblem" aria-hidden="true">
+            <!-- Logo: coloca tu archivo en /public/ (por ejemplo /aegis8-logo.png). Si el nombre difiere, cambia el src -->
   <!-- Reemplaza el nombre del archivo si tu logo tiene otro nombre -->
   <img class="emblem-img"
-       src="/assets/aegis8-logo.png"
-       alt="Aegis8"
-       loading="lazy"
-       onerror="this.style.display='none'; document.getElementById('emblemFallback').style.display='block';" />
+     src="/assets/aegislogo.png"
+     alt="Aegis8"
+     loading="lazy" />
   <div id="emblemFallback" style="display:none">
     <svg class="emblem-svg" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
