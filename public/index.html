@@ -227,6 +227,14 @@
       filter: drop-shadow(0 24px 55px rgba(47,169,255,.18));
       animation: floaty 3.8s ease-in-out infinite;
     }
+    .emblem-img{
+      width: 130px;
+      height: 130px;
+      object-fit: contain;
+      display:block;
+      filter: drop-shadow(0 24px 55px rgba(47,169,255,.18));
+      animation: floaty 3.8s ease-in-out infinite;
+    }
     .emblem-glow{
       position:absolute;
       inset: 22px;
@@ -333,8 +341,9 @@
 .lead{
       font-size: clamp(16px, 1.35vw, 18px);
       color: var(--muted);
-      margin: 0 0 18px;
-      max-width: 62ch;
+      margin: 0 auto 18px;
+      max-width: 70ch;
+      text-align: center;
     }
     .hero-cta{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
 
@@ -601,7 +610,7 @@ footer{
           <div class="logo" aria-hidden="true"></div>
           <div>
             <strong>Aegis8</strong>
-            <span>Consultora y proyecto social</span>
+            <span>Consultora con enfoque educativo y social</span>
           </div>
         </a>
 
@@ -642,50 +651,60 @@ footer{
       <!-- HERO -->
       <section class="hero">
         <div class="center">
-          <div class="pill" role="note" aria-label="Enfoque">
-            <span class="dot" aria-hidden="true"></span>
-            <span><strong>Enfoque:</strong> claridad, criterio técnico y educación</span>
-          </div>
+          <div class="pill" role="note" aria-label="Pilares">
+  <span class="dot" aria-hidden="true"></span>
+  <span><strong>Claridad</strong> • <strong>Criterio técnico</strong> • <strong>Educación</strong></span>
+</div>
 
-          <h1>Ciberseguridad clara para personas, startups y pequeñas organizaciones.</h1>
+<h1>Ciberseguridad clara para personas, startups y pequeñas organizaciones.</h1>
 
           <p class="lead">
-            Aegis8 es una consultora y proyecto educativo-social de ciberseguridad.
-            Acompañamos a quienes no tienen un SOC ni presupuesto enterprise a construir
-            <strong>gobernanza, cultura</strong> y <strong>fortalecimiento técnico</strong> con acciones realistas.
+            Aegis8 es una consultora de ciberseguridad con enfoque tecnico, social y educativo.
+            Acompañamos a quienes inician sus proyectos, personas y startups a construir 
+            <strong>gobernanza, generar cultura</strong> y <strong>fortalecer capacidades técnicas</strong> mediante acctiones realistas, comprensibles y sostenibless.
           </p>
 
           
           <div class="hero-emblem" aria-hidden="true">
-            <svg class="emblem-svg" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="g1" x1="0" y1="0" x2="160" y2="160" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#0B2A5B"/>
-                  <stop offset="0.55" stop-color="#2FA9FF"/>
-                  <stop offset="1" stop-color="#8FD3FF"/>
-                </linearGradient>
-                <linearGradient id="g2" x1="20" y1="20" x2="140" y2="140" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#2FA9FF" stop-opacity="0.12"/>
-                  <stop offset="1" stop-color="#8FD3FF" stop-opacity="0.28"/>
-                </linearGradient>
-              </defs>
+  <!-- Reemplaza el nombre del archivo si tu logo tiene otro nombre -->
+  <img class="emblem-img"
+       src="/assets/aegis8-logo.png"
+       alt="Aegis8"
+       loading="lazy"
+       onerror="this.style.display='none'; document.getElementById('emblemFallback').style.display='block';" />
+  <div id="emblemFallback" style="display:none">
+    <svg class="emblem-svg" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="160" y2="160" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#0B2A5B"/>
+          <stop offset="0.55" stop-color="#2FA9FF"/>
+          <stop offset="1" stop-color="#8FD3FF"/>
+        </linearGradient>
+        <linearGradient id="g2" x1="20" y1="20" x2="140" y2="140" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#2FA9FF" stop-opacity="0.12"/>
+          <stop offset="1" stop-color="#8FD3FF" stop-opacity="0.28"/>
+        </linearGradient>
+      </defs>
 
-              <!-- shield -->
-              <path d="M80 14C58 26 40 28 28 30v54c0 34 23 54 52 62c29-8 52-28 52-62V30c-12-2-30-4-52-16Z"
-                    stroke="url(#g1)" stroke-width="3.5" stroke-linejoin="round"/>
-              <path d="M80 22C61 32 46 34 36 35v48c0 28 19 45 44 52c25-7 44-24 44-52V35c-10-1-25-3-44-13Z"
-                    fill="url(#g2)" stroke="rgba(47,169,255,.25)" stroke-width="1.5" stroke-linejoin="round"/>
+      <!-- shield -->
+      <path d="M80 14C58 26 40 28 28 30v54c0 34 23 54 52 62c29-8 52-28 52-62V30c-12-2-30-4-52-16Z"
+            stroke="url(#g1)" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M80 22C61 32 46 34 36 35v48c0 28 19 45 44 52c25-7 44-24 44-52V35c-10-1-25-3-44-13Z"
+            fill="url(#g2)" stroke="rgba(47,169,255,.25)" stroke-width="1.5" stroke-linejoin="round"/>
 
-              <!-- labyrinth/book hybrid: maze lines -->
-              <path d="M52 54h56M52 54v18h18v-9h20v18H70v-9H52v18h56v18H52"
-                    stroke="url(#g1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+      <!-- labyrinth/book hybrid: maze lines -->
+      <path d="M52 54h56M52 54v18h18v-9h20v18H70v-9H52v18h56v18H52"
+            stroke="url(#g1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
 
-              <!-- small 'book' hint -->
-              <path d="M64 108c6-4 12-4 16 0c4-4 10-4 16 0"
-                    stroke="rgba(11,42,91,.85)" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
-            </svg>
-            <div class="emblem-glow"></div>
-          </div>
+      <!-- small 'book' hint -->
+      <path d="M64 108c6-4 12-4 16 0c4-4 10-4 16 0"
+            stroke="rgba(11,42,91,.85)" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
+    </svg>
+  </div>
+  <div class="emblem-glow"></div>
+</div>
+
+</div>
 
           <div class="principle-strip" role="note" aria-label="Principio Aegis8">
             <div class="p-ico" aria-hidden="true">
