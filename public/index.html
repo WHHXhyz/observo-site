@@ -431,6 +431,79 @@
       color: var(--muted);
       font-size: 14px;
     }
+
+    .tile-action{
+      text-align:left;
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
+      transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease;
+    }
+    .tile-action:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(500px 120px at 15% 0%, rgba(47,169,255,.18), transparent 55%),
+                  radial-gradient(500px 120px at 85% 20%, rgba(143,211,255,.20), transparent 55%);
+      opacity:0;
+      transition: opacity .18s ease;
+      pointer-events:none;
+    }
+    .tile-action:hover{
+      transform: translateY(-2px);
+      border-color: rgba(47,169,255,.35);
+      box-shadow: 0 22px 55px rgba(11,42,91,.12);
+    }
+    .tile-action:hover:before{ opacity:1; }
+
+    .tile-ico{
+      position:absolute;
+      top:14px; right:14px;
+      width:42px; height:42px;
+      border-radius: 14px;
+      border:1px solid rgba(220,235,255,.95);
+      background: rgba(47,169,255,.10);
+      display:grid; place-items:center;
+      color: rgba(11,42,91,.85);
+    }
+    .tile-ico svg{ width:20px; height:20px; }
+
+    .tile-hint{
+      display:inline-flex;
+      margin-top: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(11,42,91,.78);
+      opacity: .85;
+    }
+
+    .quote{
+      display:flex; gap:14px; align-items:flex-start;
+      padding: 14px 14px;
+      border-radius: var(--radius2);
+      border:1px solid rgba(47,169,255,.22);
+      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      box-shadow: 0 16px 40px rgba(11,42,91,.10);
+    }
+    .quote-line{
+      width:10px; border-radius: 999px;
+      background: linear-gradient(180deg, var(--sky), var(--sky2));
+      box-shadow: 0 0 0 5px rgba(47,169,255,.10);
+      flex: 0 0 auto;
+    }
+    .quote-kicker{
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .3px;
+      color: rgba(11,42,91,.75);
+      text-transform: uppercase;
+    }
+    .quote-text{
+      margin-top: 4px;
+      font-size: 14px;
+      color: rgba(11,27,52,.88);
+    }
+
+
     .badge{
       display:inline-flex; align-items:center; gap:8px;
       padding: 8px 10px;
@@ -603,16 +676,75 @@
           </p>
 
           <div class="hero-cta center">
-
-            <a class="btn primary" href="#como-trabajamos">Cómo trabajamos</a>
-            <a class="btn" href="#a-quien-ayudamos">A quién ayudamos</a>
+            <a class="btn primary" href="#quienes">Conócenos</a>
+            <a class="btn" href="/contacto.html">Contáctanos</a>
           </div>
         </div>
 
         <div class="gradline" aria-hidden="true"></div>
       </section>
 
-      <!-- CÓMO TRABAJAMOS -->
+      
+
+<!-- QUIÉNES SOMOS -->
+      <section id="quienes">
+        <div class="sec-head">
+          <h2>Quiénes somos</h2>
+          
+          <p class="muted" style="margin:0; max-width:90ch;">
+  Aegis8 acompaña a quienes comienzan su camino en ciberseguridad, incluso cuando no existen grandes presupuestos ni estructuras complejas. Ayudamos a entender, construir y fortalecer la seguridad desde la base, con sentido, propósito y responsabilidad.
+</p>
+<p class="muted" style="margin:12px 0 0; max-width:90ch;">
+  No reemplazamos equipos ni replicamos modelos enterprise. Enseñamos, ordenamos y generamos cultura, apoyando desde el primer paso para que la seguridad sea clara, útil y sostenible en el tiempo, tanto a nivel organizacional como social.
+</p>
+<p class="muted" style="margin:12px 0 0; max-width:90ch;">
+  Acompañamos a personas y organizaciones a aprender, definir gobernanza y reforzar capacidades técnicas, partiendo desde cero o fortaleciendo lo que ya han construido.
+</p>
+<div class="quote" style="margin-top:16px;">
+  <span class="quote-line" aria-hidden="true"></span>
+  <div>
+    <div class="quote-kicker">Principio</div>
+    <div class="quote-text">La seguridad no se delega: <strong>se aprende</strong>, <strong>se entiende</strong> y <strong>se hace propia</strong>.</div>
+  </div>
+</div>
+        </div>
+
+        <div class="grid-2">
+  <button class="tile tile-action" type="button" data-modal="m-quienes-postura" aria-label="Abrir detalles: Seguridad sin humo">
+    <span class="badge">Nuestra postura</span>
+    <div class="tile-ico" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M12 3l7 4v6c0 5-3 8-7 8s-7-3-7-8V7l7-4z" stroke="currentColor" stroke-width="1.7" />
+        <path d="M9.5 12.2l1.8 1.8 3.6-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h3>Seguridad sin humo</h3>
+    <p>
+      Priorizamos lo que realmente importa. Explicamos el “por qué” detrás de cada recomendación y evitamos el lenguaje intimidante o exagerado.
+    </p>
+    <span class="tile-hint">Ver detalles</span>
+  </button>
+
+  <button class="tile tile-action" type="button" data-modal="m-quienes-rol" aria-label="Abrir detalles: Guía + criterio + práctica">
+    <span class="badge">Nuestro rol</span>
+    <div class="tile-ico" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M4.5 7.5h15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        <path d="M4.5 12h15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        <path d="M4.5 16.5h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        <path d="M17.5 15.5l2 1.5-2 1.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h3>Guía + criterio + práctica</h3>
+    <p>
+      Acompañamos decisiones: arquitectura, DNS, TLS, accesos, backups, hardening y cultura. Buscamos que el cliente entienda y se vuelva más autónomo.
+    </p>
+    <span class="tile-hint">Ver detalles</span>
+  </button>
+</div>
+    
+
+<!-- CÓMO TRABAJAMOS -->
       <section id="como-trabajamos">
         <div class="sec-head">
           <h2>Cómo trabajamos</h2>
@@ -692,38 +824,78 @@
         </div>
       </section>
 
-      <!-- QUIÉNES SOMOS -->
-      <section id="quienes">
-        <div class="sec-head">
-          <h2>Quiénes somos</h2>
-          <p class="sec-sub">
-            Aegis8 nace como un proyecto social y técnico orientado a reducir la brecha de ciberseguridad
-            en personas, startups y pequeñas organizaciones. Creemos que la seguridad no debe depender del
-            tamaño del presupuesto, sino del acceso a conocimiento claro y acompañamiento honesto.
-          </p>
-        </div>
+      </div>
+  
 
-        <div class="grid-2">
-          <div class="tile">
-            <div class="tile-top"><span class="badge">Nuestra postura</span><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M14.5 9.5l-2 6-6 2 2-6 6-2z"></path></svg></span></div>
-            <h3>Seguridad sin humo</h3>
-            <p>
-              Priorizamos lo que realmente importa. Explicamos el “por qué” detrás de cada recomendación
-              y evitamos el lenguaje intimidante o exagerado.
-            </p>
-          </div>
-          <div class="tile">
-            <div class="tile-top"><span class="badge">Nuestro rol</span><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 21v-9"></path><path d="M11 21V8"></path><path d="M15 21v-6"></path><path d="M19 21v-10"></path><path d="M5 12c0-2 2-3 4-2"></path></svg></span></div>
-            <h3>Guía + criterio + práctica</h3>
-            <p>
-              Acompañamos decisiones: arquitectura, DNS, TLS, accesos, backups, hardening y cultura.
-              Buscamos que el cliente entienda y se vuelva más autónomo.
-            </p>
-          </div>
-        </div>
-      </section>
+<!-- QUIÉNES SOMOS: MODALES -->
+<div class="modal" id="m-quienes-postura" role="dialog" aria-modal="true" aria-labelledby="m-quienes-postura-title" aria-hidden="true">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-card" role="document">
+    <button class="modal-x" type="button" data-close aria-label="Cerrar">×</button>
+    <h3 id="m-quienes-postura-title">Nuestra postura: Seguridad sin humo</h3>
+    <div class="muted" style="font-size:14px; margin-top:6px;">
+      Seguridad práctica, explicada y priorizada. Sin intimidación, sin exagerar riesgos.
     </div>
-  </main>
+
+    <div class="modal-body">
+      <h4>Qué significa en la práctica</h4>
+      <ul>
+        <li><strong>Prioridad por impacto</strong>: partimos por lo que reduce más riesgo con menor fricción (accesos, backups, TLS, cuentas).</li>
+        <li><strong>Explicación transparente</strong>: cada recomendación incluye el “por qué”, el “cómo” y qué evidencia esperar.</li>
+        <li><strong>Decisiones realistas</strong>: ajustamos el plan al tamaño del equipo, tiempo disponible y presupuesto.</li>
+      </ul>
+
+      <h4>Cómo evitamos “humo”</h4>
+      <ul>
+        <li>No usamos puntajes vacíos sin contexto.</li>
+        <li>No vendemos miedo ni urgencias artificiales.</li>
+        <li>No proponemos herramientas enterprise cuando no corresponden.</li>
+      </ul>
+
+      <h4>Entregables típicos</h4>
+      <ul>
+        <li>Resumen ejecutivo claro (qué importa, qué no, y por qué).</li>
+        <li>Lista priorizada de acciones con esfuerzo estimado.</li>
+        <li>Checklists aplicables (hardening, accesos, correo, backups).</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="m-quienes-rol" role="dialog" aria-modal="true" aria-labelledby="m-quienes-rol-title" aria-hidden="true">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-card" role="document">
+    <button class="modal-x" type="button" data-close aria-label="Cerrar">×</button>
+    <h3 id="m-quienes-rol-title">Nuestro rol: Guía + criterio + práctica</h3>
+    <div class="muted" style="font-size:14px; margin-top:6px;">
+      Acompañamos decisiones técnicas y construimos autonomía: menos dependencia, más madurez.
+    </div>
+
+    <div class="modal-body">
+      <h4>En qué ayudamos</h4>
+      <ul>
+        <li><strong>Orden</strong>: roles, responsabilidades, hábitos, políticas mínimas.</li>
+        <li><strong>Decisiones técnicas</strong>: DNS, TLS, accesos, backups, hardening, exposición pública.</li>
+        <li><strong>Cultura</strong>: formación breve y práctica para que el equipo entienda lo esencial.</li>
+      </ul>
+
+      <h4>Lo que NO hacemos</h4>
+      <ul>
+        <li>No reemplazamos a tu equipo ni instalamos “un SOC” de imitación.</li>
+        <li>No convertimos tu operación en un proyecto interminable.</li>
+      </ul>
+
+      <h4>Resultado esperado</h4>
+      <ul>
+        <li>Tu organización entiende su postura de seguridad.</li>
+        <li>Hay un plan claro, priorizado y sostenible.</li>
+        <li>El equipo sabe qué vigilar y cómo mejorar con el tiempo.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</main>
 
   <!-- MODALS -->
   <div class="modal" id="m-diagnostico" role="dialog" aria-modal="true" aria-labelledby="t-diagnostico">
