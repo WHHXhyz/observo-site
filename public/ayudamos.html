@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aegis8 — A quién ayudamos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;font-family:"Space Grotesk",system-ui;background:#F7FBFF;color:#0B1B34}
+    a{text-decoration:none;color:inherit}
+    .wrap{max-width:920px;margin:0 auto;padding:0 20px}
+    header{position:sticky;top:0;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);border-bottom:1px solid #DCEBFF}
+    .nav{display:grid;grid-template-columns:1fr auto;align-items:center;padding:14px 0}
+    nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0}
+    nav a{padding:10px 12px;border-radius:12px}
+    nav a:hover{background:#EAF4FF}
+    h1{margin:48px 0 12px;text-align:center;font-size:36px}
+    p{max-width:70ch;margin:0 auto 28px;text-align:center;color:#4B5E7B}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:#fff;border:1px solid #DCEBFF;border-radius:18px;padding:18px}
+    .card h3{margin-top:0}
+    footer{margin-top:60px;padding:30px 0;border-top:1px solid #DCEBFF;text-align:center;color:#4B5E7B}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <strong>Aegis8</strong>
+    <nav>
+      <ul>
+        <li><a href="comotrabajamos.html">Cómo trabajamos</a></li>
+        <li><a href="recursos.html">Recursos y guías</a></li>
+        <li><a href="ayudamos.html">A quiénes ayudamos</a></li>
+        <li><a href="index.html#quienes">Quiénes somos</a></li>
+        <li><a href="psocial.html">Proyecto social</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>A quién ayudamos</h1>
+  <p>Trabajamos con quienes necesitan claridad, acompañamiento práctico y decisiones de seguridad realistas.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Startups</h3>
+      <p>Decisiones tempranas correctas: accesos, TLS, backups, procesos y cultura desde el inicio.</p>
+    </div>
+    <div class="card">
+      <h3>Pequeñas empresas</h3>
+      <p>Orden y control en lo esencial: cuentas, correo, endpoints y continuidad operativa.</p>
+    </div>
+    <div class="card">
+      <h3>Personas</h3>
+      <p>Educación práctica para reducir riesgos cotidianos y fortalecer hábitos digitales.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  © <script>document.write(new Date().getFullYear())</script> Aegis8
+</footer>
+</body>
+</html>
