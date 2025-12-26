@@ -1,0 +1,1370 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aegis8 — Recursos & Guías</title>
+  <meta name="description" content="Recursos y guías prácticas de Aegis8 para personas, startups y pequeñas organizaciones. Checklists, plantillas, mini guías y un test didáctico." />
+  <meta name="theme-color" content="#0B2A5B" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#F7FBFF;
+      --card:#FFFFFF;
+      --text:#0B1B34;
+      --muted:#4B5E7B;
+      --line:#DCEBFF;
+      --blue:#0B2A5B;
+      --sky:#2FA9FF;
+      --sky2:#8FD3FF;
+      --shadow:0 18px 45px rgba(11,42,91,.10);
+      --radius:18px;
+      --radius2:26px;
+      --max:1080px;
+      --danger:#B42828;
+      --ok:#0B5B3A;
+      --warn:#8A5A0B;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(900px 420px at 20% -10%, rgba(47,169,255,.25), transparent 60%),
+        radial-gradient(900px 420px at 90% 0%, rgba(143,211,255,.25), transparent 60%),
+        linear-gradient(180deg,#FFFFFF 0%, var(--bg) 100%);
+      line-height:1.45;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(var(--max), 100% - 40px);margin:0 auto}
+    .muted{color:var(--muted)}
+    .center{text-align:center}
+
+    /* Top progress */
+    .progress{
+      position:fixed;top:0;left:0;height:3px;width:0%;
+      background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.92), rgba(143,211,255,.95));
+      z-index:9999;
+      box-shadow:0 8px 20px rgba(47,169,255,.22);
+    }
+
+    header{
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.78);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(220,235,255,.85);
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 0;gap:16px;
+    }
+    .brand{display:flex;align-items:center;gap:12px;min-width:210px}
+    .logo{
+      width:38px;height:38px;border-radius:12px;
+      background:linear-gradient(135deg,var(--blue),#0D3B85);
+      position:relative;
+      box-shadow:0 14px 30px rgba(11,42,91,.18);
+      flex:0 0 auto;
+    }
+    .logo:before{
+      content:"";
+      position:absolute;inset:9px 11px 9px 11px;
+      border-radius:10px 10px 14px 14px;
+      background:linear-gradient(135deg, rgba(143,211,255,.95), rgba(47,169,255,.85));
+      clip-path:polygon(50% 0%, 92% 18%, 92% 55%, 50% 100%, 8% 55%, 8% 18%);
+      opacity:.95;
+    }
+    .brand strong{font-size:16px;letter-spacing:.2px}
+    .brand span{display:block;margin-top:2px;font-size:12px;color:var(--muted)}
+
+    nav ul{
+      list-style:none;padding:0;margin:0;
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    }
+    nav a{
+      font-size:14px;
+      color:rgba(11,27,52,.86);
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.78);
+      box-shadow:0 10px 24px rgba(11,42,91,.06);
+      transition:transform .12s ease, background .12s ease, box-shadow .12s ease, border-color .12s ease;
+      white-space:nowrap;
+    }
+    nav a:hover{
+      transform:translateY(-1px);
+      background:rgba(220,235,255,.55);
+      border-color:rgba(47,169,255,.35);
+      box-shadow:0 14px 34px rgba(11,42,91,.10);
+      color:var(--blue);
+    }
+    nav a.active{
+      border-color:rgba(47,169,255,.45);
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
+      color:var(--blue);
+      font-weight:800;
+    }
+
+    .menu-btn{
+      display:none;width:44px;height:44px;border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.9);
+      box-shadow:0 12px 30px rgba(11,42,91,.08);
+      cursor:pointer;align-items:center;justify-content:center;
+    }
+    .menu-lines{width:18px;height:12px;position:relative}
+    .menu-lines span{position:absolute;left:0;right:0;height:2px;border-radius:99px;background:rgba(11,42,91,.8)}
+    .menu-lines span:nth-child(1){top:0}
+    .menu-lines span:nth-child(2){top:5px}
+    .menu-lines span:nth-child(3){top:10px}
+    .mobile-panel{display:none;padding:0 0 14px 0}
+    .mobile-panel a{
+      display:block;padding:12px 12px;margin:10px 0;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,.85);
+      font-weight:700;color:rgba(11,27,52,.9);
+    }
+    .mobile-panel a:hover{background:rgba(220,235,255,.55);color:var(--blue)}
+    .right{display:flex;align-items:center;gap:10px}
+
+    main{padding:30px 0 70px}
+    section{padding:54px 0}
+    section + section{border-top:1px solid rgba(220,235,255,.75)}
+
+    h1{
+      font-size:clamp(32px, 4vw, 48px);
+      line-height:1.06;
+      margin:14px 0 10px;
+      letter-spacing:-.7px;
+    }
+    .lead{
+      font-size:clamp(16px, 1.35vw, 18px);
+      color:var(--muted);
+      margin:0 auto 18px;
+      max-width:84ch;
+    }
+
+    .pill{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:8px 12px;border:1px solid var(--line);
+      background:rgba(255,255,255,.82);border-radius:999px;
+      box-shadow:0 8px 25px rgba(11,42,91,.06);
+      backdrop-filter:blur(8px);
+    }
+    .dot{width:10px;height:10px;border-radius:999px;background:radial-gradient(circle at 30% 30%, var(--sky2), var(--sky));box-shadow:0 0 0 4px rgba(47,169,255,.12)}
+    .k{
+      background:linear-gradient(135deg, rgba(47,169,255,.22), rgba(143,211,255,.35));
+      border:1px solid rgba(47,169,255,.25);
+      padding:0 .45em;border-radius:.65em;
+      color:rgba(11,42,91,.92);
+      font-weight:800;white-space:nowrap;
+    }
+
+    .gradline{
+      height:1px;width:min(640px,100%);margin:14px auto 0;border-radius:99px;
+      background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.55), rgba(143,211,255,.65), rgba(47,169,255,.55), rgba(47,169,255,0));
+      position:relative;overflow:hidden;
+    }
+    .gradline:after{
+      content:"";position:absolute;top:0;bottom:0;width:160px;left:-180px;
+      background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.75), rgba(255,255,255,0));
+      filter:blur(1px);animation:shine 2.8s ease-in-out infinite;
+    }
+    @keyframes shine{
+      0%{transform:translateX(0);opacity:0}
+      15%{opacity:.8}
+      50%{opacity:.9}
+      85%{opacity:.8}
+      100%{transform:translateX(900px);opacity:0}
+    }
+
+    .sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+    .sec-head h2{margin:0;font-weight:900;font-size:clamp(22px, 2.3vw, 32px);letter-spacing:-.35px}
+    .sec-sub{margin:0;max-width:92ch;color:var(--muted);font-size:15.5px}
+
+    .card{
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      border-radius:var(--radius2);
+      box-shadow:var(--shadow);
+    }
+
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+
+    /* Tiles */
+    .tile{
+      position:relative;overflow:hidden;
+      padding:16px;border-radius:var(--radius2);
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.92);
+      box-shadow:0 14px 40px rgba(11,42,91,.08);
+      min-height:168px;
+    }
+    .tile:before{
+      content:"";position:absolute;inset:-2px;
+      background:
+        radial-gradient(520px 220px at 15% 10%, rgba(47,169,255,.12), transparent 60%),
+        radial-gradient(520px 220px at 90% 0%, rgba(143,211,255,.14), transparent 55%);
+      opacity:.9;pointer-events:none;
+    }
+    .tile>*{position:relative}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.9);
+      background:rgba(47,169,255,.08);
+      color:rgba(11,42,91,.88);
+      font-weight:800;font-size:12px;
+      white-space:nowrap;
+    }
+    .tile h3{margin:10px 0 8px;font-size:16px;letter-spacing:-.12px}
+    .tile p{margin:0;color:var(--muted);font-size:14px}
+    .tile-btn{
+      text-align:left;cursor:pointer;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.92);
+    }
+    .tile-btn:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
+    .tile-btn:focus-visible{outline:3px solid rgba(47,169,255,.35);outline-offset:3px}
+
+    .mini-ico{
+      width:42px;height:42px;border-radius:16px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(11,42,91,.06);
+      display:grid;place-items:center;
+      box-shadow:0 12px 30px rgba(11,42,91,.08);
+      flex:0 0 auto;
+    }
+    .mini-ico svg{width:22px;height:22px}
+    .mini-ico path, .mini-ico circle, .mini-ico line, .mini-ico polyline{stroke:rgba(11,42,91,.85)}
+
+    /* Controls */
+    .controls{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+      margin:12px 0 0;
+    }
+    .chips{display:flex;gap:10px;flex-wrap:wrap}
+    .chip{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 12px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.85);
+      box-shadow:0 10px 24px rgba(11,42,91,.06);
+      cursor:pointer;font-weight:900;font-size:13px;color:rgba(11,42,91,.86);
+      transition:transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+    }
+    .chip:hover{transform:translateY(-1px);border-color:rgba(47,169,255,.35);background:rgba(220,235,255,.55)}
+    .chip.on{
+      border-color:rgba(47,169,255,.45);
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
+      color:var(--blue);
+    }
+    .search{
+      flex:1 1 240px;
+      display:flex;align-items:center;gap:10px;
+      padding:10px 12px;border-radius:14px;border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.90);
+      box-shadow:0 12px 30px rgba(11,42,91,.06);
+    }
+    .search input{
+      border:0;outline:none;background:transparent;
+      font:inherit;color:rgba(11,27,52,.95);
+      width:100%;
+    }
+    .hint{font-size:12.5px;color:var(--muted)}
+
+    /* Buttons */
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:11px 14px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.92);color:var(--blue);font-weight:800;
+      box-shadow:0 12px 30px rgba(11,42,91,.08);
+      transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(11,42,91,.12)}
+    .btn.primary{
+      border-color:rgba(47,169,255,.35);
+      background:linear-gradient(135deg, rgba(47,169,255,.15), rgba(143,211,255,.25));
+      color:var(--blue);
+    }
+    .btn.ghost{background:rgba(255,255,255,.78)}
+    .btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+
+    /* Library list */
+    .library{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+    }
+    .item{
+      position:relative;overflow:hidden;
+      border-radius:var(--radius2);
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.92);
+      box-shadow:0 14px 40px rgba(11,42,91,.08);
+      padding:16px;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      cursor:pointer;
+      min-height:176px;
+    }
+    .item:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
+    .item:before{
+      content:"";position:absolute;inset:-2px;
+      background:
+        radial-gradient(520px 220px at 15% 10%, rgba(47,169,255,.11), transparent 60%),
+        radial-gradient(520px 220px at 90% 0%, rgba(143,211,255,.12), transparent 55%);
+      opacity:.9;pointer-events:none;
+    }
+    .item>*{position:relative}
+    .meta{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .type{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.85);
+      font-weight:900;font-size:12px;color:rgba(11,42,91,.86);
+      white-space:nowrap;
+    }
+    .lvl{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(47,169,255,.06);
+      font-weight:900;font-size:12px;color:rgba(11,42,91,.86);
+      white-space:nowrap;
+    }
+    .item h3{margin:10px 0 8px;font-size:16px;letter-spacing:-.12px}
+    .item p{margin:0;color:var(--muted);font-size:14px}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .tag{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.9);
+      background:rgba(255,255,255,.78);
+      color:rgba(11,42,91,.78);
+      font-weight:900;font-size:12px;
+      white-space:nowrap;
+    }
+
+    /* Modal */
+    .modal{
+      position:fixed;inset:0;z-index:1000;display:none;padding:18px;
+      background:rgba(11,27,52,.55);backdrop-filter:blur(6px);
+    }
+    .modal.show{display:grid;place-items:center}
+    .modal-dialog{
+      width:min(920px,100%);
+      background:rgba(255,255,255,.97);
+      border:1px solid rgba(220,235,255,.95);
+      border-radius:22px;
+      box-shadow:0 28px 70px rgba(11,42,91,.22);
+      overflow:hidden;
+      animation:modalIn .18s ease-out;
+    }
+    @keyframes modalIn{from{transform:translateY(8px) scale(.99);opacity:0}to{transform:none;opacity:1}}
+    .modal-head{
+      padding:16px 16px 12px;border-bottom:1px solid rgba(220,235,255,.9);
+      background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+    }
+    .modal-title{margin:0;font-size:18px;letter-spacing:-.2px;color:var(--blue)}
+    .modal-close{
+      width:42px;height:42px;border-radius:14px;border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.92);cursor:pointer;display:grid;place-items:center;
+      color:rgba(11,42,91,.85);box-shadow:0 12px 30px rgba(11,42,91,.10);
+    }
+    .modal-body{padding:14px 16px 16px;color:rgba(11,27,52,.92)}
+    .modal-body p{margin:0 0 10px;color:var(--muted)}
+    .modal-body ul{margin:10px 0 0;padding-left:18px;color:var(--muted)}
+    .modal-body li{margin:7px 0}
+    .callout{
+      margin-top:12px;padding:12px 12px;border-radius:var(--radius);
+      border:1px solid rgba(47,169,255,.25);
+      background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      color:rgba(11,42,91,.9);font-weight:900;font-size:13px;
+    }
+    .dl{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      padding:12px 12px;border-radius:18px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.92);
+      box-shadow:0 12px 24px rgba(11,42,91,.06);
+      margin-top:10px;
+    }
+    .dl small{color:var(--muted)}
+    .dl .btn{padding:10px 12px;border-radius:12px}
+
+    /* Changelog */
+    .log{
+      border-left:2px solid rgba(47,169,255,.25);
+      padding-left:12px;
+      margin:0;
+    }
+    .log li{margin:8px 0;color:var(--muted)}
+    .log strong{color:rgba(11,42,91,.9)}
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(10px);transition:opacity .55s ease, transform .55s ease}
+    .reveal.on{opacity:1;transform:none}
+
+    footer{
+      padding:28px 0 40px;
+      border-top:1px solid rgba(220,235,255,.9);
+      background:rgba(255,255,255,.55);
+    }
+    .foot{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}
+
+    @media (max-width: 980px){
+      .grid-2{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+      .library{grid-template-columns:1fr}
+    }
+    @media (max-width: 760px){
+      nav ul{display:none}
+      .menu-btn{display:inline-flex}
+      .wrap{width:min(var(--max), 100% - 28px)}
+    }
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="index.html" aria-label="Aegis8 Home">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>Aegis8</strong>
+            <span>Recursos & Guías</span>
+          </div>
+        </a>
+
+        <nav aria-label="Navegación principal">
+          <ul>
+            <li><a href="como-trabajamos.html">Cómo trabajamos</a></li>
+            <li><a href="a-quienes-ayudamos.html">A quiénes ayudamos</a></li>
+            <li><a href="quienes-somos.html">Quiénes somos</a></li>
+            <li><a href="psocial.html">Proyecto social</a></li>
+            <li><a href="contactanos.html">Contáctanos</a></li>
+          </ul>
+        </nav>
+
+        <div class="right">
+          <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobilePanel">
+            <div class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></div>
+          </button>
+        </div>
+      </div>
+
+      <div class="mobile-panel" id="mobilePanel" aria-label="Menú móvil">
+        <a href="como-trabajamos.html">Cómo trabajamos</a>
+        <a href="a-quienes-ayudamos.html">A quiénes ayudamos</a>
+        <a href="quienes-somos.html">Quiénes somos</a>
+        <a href="psocial.html">Proyecto social</a>
+        <a href="contactanos.html">Contáctanos</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="wrap">
+
+      <!-- HERO -->
+      <section class="hero">
+        <div class="center">
+          <div class="pill reveal" role="note" aria-label="Recursos Aegis8">
+            <span class="dot" aria-hidden="true"></span>
+            <span><strong>Recursos</strong> para aprender y aplicar hoy (sin humo).</span>
+          </div>
+
+          <h1 class="reveal">Recursos & guías prácticas.</h1>
+
+          <p class="lead reveal">
+            Aegis8 existe para reducir la brecha: <span class="k">conocimiento claro</span>, checklists sostenibles y acompañamiento honesto.
+            Esta biblioteca se puede actualizar <span class="k">mensualmente</span> sin rehacer el sitio.
+          </p>
+
+          <div class="center reveal" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+            <a class="btn primary" href="#novedades">Ver novedades del mes</a>
+            <a class="btn" href="#biblioteca">Abrir biblioteca</a>
+            <button class="btn ghost" type="button" data-modal="m-como-actualizar" aria-haspopup="dialog">¿Cómo se actualiza?</button>
+          </div>
+        </div>
+
+        <div class="gradline" aria-hidden="true"></div>
+
+        <div class="grid-3" style="margin-top:18px;">
+          <a class="tile tile-btn reveal" href="test_ciberseguridad_aegis8.html" aria-label="Ir al test de ciberseguridad">
+            <span class="badge">Test interactivo</span>
+            <h3>¿Cuánto sabes de ciberseguridad?</h3>
+            <p>3 minutos + feedback claro. Ideal para partir sin vergüenza y con hábitos.</p>
+          </a>
+
+          <button class="tile tile-btn reveal" type="button" data-modal="m-minimos" aria-haspopup="dialog">
+            <span class="badge">Mínimos</span>
+            <h3>Plan de 30 días</h3>
+            <p>Un camino simple: MFA → backups probados → accesos → endpoints → DNS/TLS.</p>
+          </button>
+
+          <button class="tile tile-btn reveal" type="button" data-modal="m-news" aria-haspopup="dialog">
+            <span class="badge">Comunidad</span>
+            <h3>Novedades 1–2/mes</h3>
+            <p>Recursos cortos, checklists y avisos de talleres. Sin spam.</p>
+          </button>
+        </div>
+      </section>
+
+      <!-- NOVEDADES -->
+      <section id="novedades">
+        <div class="sec-head reveal">
+          <h2>Novedades del mes</h2>
+          <p class="sec-sub">
+            Cada mes destacamos 3 recursos. Edita el bloque <span class="k">MONTH_HIGHLIGHTS</span> en el JS y listo.
+          </p>
+        </div>
+
+        <div class="grid-3" id="highlights"></div>
+
+        <div class="hint" style="margin-top:10px;">
+          Tip: si quieres “tema del mes”, cambia el texto del <span class="k">badge</span> y la fecha en el changelog.
+        </div>
+      </section>
+
+      <!-- BIBLIOTECA -->
+      <section id="biblioteca">
+        <div class="sec-head reveal">
+          <h2>Biblioteca</h2>
+          <p class="sec-sub">
+            Filtra por público (Personas / Startups / Pymes / Comunidad) y busca por palabras. Cada recurso abre detalle.
+          </p>
+        </div>
+
+        <div class="card reveal" style="padding:16px;">
+          <div class="controls">
+            <div class="chips" aria-label="Filtros">
+              <div class="chip on" data-filter="all">Todo</div>
+              <div class="chip" data-filter="personas">Personas</div>
+              <div class="chip" data-filter="startups">Startups</div>
+              <div class="chip" data-filter="pymes">Pymes</div>
+              <div class="chip" data-filter="comunidad">Comunidad</div>
+            </div>
+
+            <div class="search" aria-label="Buscar recursos">
+              <span class="muted" style="font-weight:900;">⌕</span>
+              <input id="search" type="search" placeholder="Buscar: MFA, backups, phishing, DNS, roles..." />
+            </div>
+
+            <button class="btn ghost" type="button" id="resetBtn">Reset</button>
+          </div>
+
+          <div class="hint" style="margin-top:10px;">
+            Este bloque se genera desde el arreglo <span class="k">RESOURCES</span>. Puedes agregar enlaces a PDFs, Drive, Notion o páginas internas.
+          </div>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="library" id="library"></div>
+      </section>
+
+      <!-- HERRAMIENTAS -->
+      <section id="herramientas">
+        <div class="sec-head reveal">
+          <h2>Herramientas Aegis8</h2>
+          <p class="sec-sub">Herramientas de apoyo (sin eclipsar el foco social). Úsalas como complemento.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card reveal" style="padding:18px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div class="mini-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6l7-4Z" stroke-width="2"/>
+                  <path d="M8 12h8" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M10 9h4" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <div class="badge">Observo (apoyo)</div>
+                <h3 style="margin:10px 0 6px;">Señales públicas del sitio</h3>
+                <p class="muted" style="margin:0;">
+                  Headers, TLS, exposición básica, evidencias y cambios relevantes. Ideal para empezar sin credenciales.
+                </p>
+                <div class="btn-row">
+                  <button class="btn primary" type="button" data-modal="m-observo" aria-haspopup="dialog">Ver cómo se usa</button>
+                  <a class="btn" href="contactanos.html">Pedir guía</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card reveal" style="padding:18px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div class="mini-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M6 3h12v18H6V3Z" stroke-width="2"/>
+                  <path d="M8 7h8" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M8 11h8" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M8 15h6" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <div class="badge">PBD (apoyo)</div>
+                <h3 style="margin:10px 0 6px;">Toolkit de mínimos</h3>
+                <p class="muted" style="margin:0;">
+                  Plantillas, checklist de hardening y hábitos. Para ordenar “qué hacemos primero” y evidenciar avances.
+                </p>
+                <div class="btn-row">
+                  <button class="btn primary" type="button" data-modal="m-pbd" aria-haspopup="dialog">Ver plantilla</button>
+                  <a class="btn" href="#biblioteca">Ir a recursos</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHANGELOG -->
+      <section id="changelog">
+        <div class="sec-head reveal">
+          <h2>Changelog</h2>
+          <p class="sec-sub">Transparencia: qué se agregó/actualizó. Edita el arreglo <span class="k">CHANGELOG</span>.</p>
+        </div>
+
+        <div class="card reveal" style="padding:18px;">
+          <ul class="log" id="log"></ul>
+          <div class="callout">Sugerencia: actualiza una vez al mes (o cuando subas una guía nueva).</div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section id="cta">
+        <div class="sec-head reveal">
+          <h2>¿Quieres un “mínimo” para tu caso?</h2>
+          <p class="sec-sub">Una página: 5 acciones, 30 días, sin humo. Adaptado a persona/startup/pyme.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card reveal" style="padding:18px;">
+            <div class="badge">Rápido</div>
+            <h3 style="margin:10px 0 8px;">Te orientamos con 2–3 preguntas</h3>
+            <p class="muted" style="margin:0;">Objetivo, stack (si aplica) y urgencia. Luego te devolvemos un plan simple.</p>
+            <div class="btn-row">
+              <a class="btn primary" href="contactanos.html">Ir a Contáctanos</a>
+              <a class="btn" href="psocial.html">Ver Proyecto social</a>
+            </div>
+          </div>
+
+          <div class="card reveal" style="padding:18px;">
+            <div class="badge">Didáctico</div>
+            <h3 style="margin:10px 0 8px;">Haz el test y parte por lo básico</h3>
+            <p class="muted" style="margin:0;">Ideal para equipos nuevos, comunidades y personas que quieren empezar sin miedo.</p>
+            <div class="btn-row">
+              <a class="btn primary" href="test_ciberseguridad_aegis8.html">Hacer el test</a>
+              <button class="btn ghost" type="button" data-modal="m-que-es-mfa" aria-haspopup="dialog">¿Qué es MFA?</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- MODALS -->
+  <div class="modal" id="m-resource" role="dialog" aria-modal="true" aria-labelledby="t-resource">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-resource">Recurso</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;" id="t-resource-sub">—</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body" id="resourceBody"></div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-news" role="dialog" aria-modal="true" aria-labelledby="t-news">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-news">Novedades (demo)</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">1–2 correos al mes. Sin relleno.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Esto es demo (sin backend). Cuando quieras, lo conectamos a un formulario real (Mailchimp/Brevo/ConvertKit o Google Forms).</p>
+        <div class="dl">
+          <div>
+            <div style="font-weight:900;color:rgba(11,42,91,.9);">Suscripción rápida</div>
+            <small>Por ahora: envíanos un correo con asunto “Suscripción Aegis8”.</small>
+          </div>
+          <a class="btn primary" href="mailto:contacto@aegis8.org?subject=Suscripci%C3%B3n%20Aegis8&body=Hola%20Aegis8%2C%20quiero%20recibir%20recursos%20y%20novedades%20(1%E2%80%932%20al%20mes).">Enviar correo</a>
+        </div>
+        <div class="callout">Transparencia: nunca pedimos credenciales. Nunca mandes datos sensibles por correo.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-como-actualizar" role="dialog" aria-modal="true" aria-labelledby="t-upd">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-upd">Actualizar esta página (simple)</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Editas 3 arreglos en el JS y listo.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Dentro del HTML encontrarás 3 bloques:</p>
+        <ul>
+          <li><strong>MONTH_HIGHLIGHTS</strong>: 3 destacados del mes (se muestran arriba).</li>
+          <li><strong>RESOURCES</strong>: toda la biblioteca (cards + modal).</li>
+          <li><strong>CHANGELOG</strong>: “qué cambió” (una línea por actualización).</li>
+        </ul>
+        <div class="callout">Regla Aegis8: mejor 1 actualización buena al mes que 10 recursos mediocres.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-minimos" role="dialog" aria-modal="true" aria-labelledby="t-min">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-min">Plan de 30 días (mínimos)</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Orden sugerido (ajustable por contexto).</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li><strong>Semana 1:</strong> MFA en correo + cuentas críticas (dominio/repos/cloud/banca).</li>
+          <li><strong>Semana 2:</strong> backups + prueba de restauración (aunque sea parcial).</li>
+          <li><strong>Semana 3:</strong> accesos/roles (mínimo privilegio), cuentas compartidas fuera.</li>
+          <li><strong>Semana 4:</strong> endpoints y actualizaciones + higiene de dispositivos.</li>
+          <li><strong>Continuo:</strong> phishing y hábitos (ritual mensual).</li>
+        </ul>
+        <div class="callout">Si necesitas, te lo dejamos en 1 hoja con responsables y checklist.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-observo" role="dialog" aria-modal="true" aria-labelledby="t-ob">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-ob">Observo (apoyo)</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Señales públicas, sin credenciales.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Úsalo para evidenciar postura base:</p>
+        <ul>
+          <li>TLS, headers, exposición superficial, cambios en el tiempo.</li>
+          <li>Ideal para reportes simples y educación.</li>
+        </ul>
+        <div class="callout">Primero hábitos (MFA/backups/roles). Después herramientas.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-pbd" role="dialog" aria-modal="true" aria-labelledby="t-pbd">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-pbd">PBD (apoyo)</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Plantilla de mínimos (ejemplo).</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Estructura sugerida para un “mínimo”:</p>
+        <ul>
+          <li><strong>Objetivo</strong> (qué estamos protegiendo)</li>
+          <li><strong>Activos</strong> (correo, dominio, repos, endpoints)</li>
+          <li><strong>Mínimos</strong> (MFA, backups probados, roles)</li>
+          <li><strong>Ritual mensual</strong> (30 minutos)</li>
+        </ul>
+        <div class="callout">Si quieres, lo convertimos en un PDF/plantilla descargable con el mismo diseño.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-que-es-mfa" role="dialog" aria-modal="true" aria-labelledby="t-mfa">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-mfa">MFA (2FA) en simple</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Una capa extra contra robo de contraseñas.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>MFA significa “más de un factor” para entrar. Ejemplos:</p>
+        <ul>
+          <li>Contraseña + app autenticadora</li>
+          <li>Contraseña + llave física</li>
+          <li>Contraseña + código (idealmente no SMS)</li>
+        </ul>
+        <div class="callout">Prioriza: correo + dominio + repos + cloud + banca.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div class="brand" aria-label="Aegis8">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>Aegis8</strong>
+            <span>Claridad • Criterio • Comunidad</span>
+          </div>
+        </div>
+
+        <div style="max-width: 66ch;">
+          <small class="muted">
+            © <span id="year"></span> Aegis8. Página estática. La biblioteca se mantiene editando arreglos en el JS (sin backend).
+            <br/>Si quieres, lo conectamos a un repositorio + releases mensuales (PDF/ZIP) para que quede impecable.
+          </small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Año
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Menú móvil
+    const btn = document.getElementById("menuBtn");
+    const panel = document.getElementById("mobilePanel");
+    function closeMobileMenu(){ panel.style.display="none"; btn.setAttribute("aria-expanded","false"); }
+    function toggleMobileMenu(){
+      const isOpen = btn.getAttribute("aria-expanded")==="true";
+      if(isOpen) closeMobileMenu();
+      else{ panel.style.display="block"; btn.setAttribute("aria-expanded","true"); }
+    }
+    btn.addEventListener("click", toggleMobileMenu);
+    panel.querySelectorAll("a").forEach(a=>a.addEventListener("click", closeMobileMenu));
+    window.addEventListener("resize", ()=>{ if(window.innerWidth>760) closeMobileMenu(); });
+
+    // Scroll progress
+    const progress = document.getElementById("progress");
+    function onScroll(){
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+      progress.style.width = `${Math.max(0, Math.min(1, scrolled)) * 100}%`;
+    }
+    window.addEventListener("scroll", onScroll, { passive:true });
+    onScroll();
+
+    // Reveal
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add("on");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold:0.12 });
+    document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+    // -----------------------------
+    //  EDITABLE MONTHLY CONTENT
+    // -----------------------------
+    // 1) 3 destacados del mes (cambia títulos, textos, links y acciones)
+    const MONTH_HIGHLIGHTS = [
+      {
+        badge:"Checklist",
+        title:"MFA en 15 minutos (sin excusas)",
+        desc:"Qué activar primero y cómo evitar quedar fuera (códigos de respaldo).",
+        topic:"MFA",
+        level:"Base",
+        actions:[
+          { label:"Abrir detalle", type:"modal", payload:{ id:"hl-mfa" } }
+        ],
+        detail:{
+          why:"MFA baja muchísimo el riesgo por robo de contraseñas. Prioriza correo + dominio + repos + cloud + banca.",
+          steps:[
+            "Activa MFA en tu correo.",
+            "Activa MFA en el registrador del dominio/DNS.",
+            "Guarda códigos de respaldo (offline).",
+            "Revisa ‘sesiones activas’ y cierra las que no reconozcas."
+          ],
+          download:{ label:"Plantilla (próximo)", note:"Cuando lo quieras, lo convertimos en PDF descargable." }
+        }
+      },
+      {
+        badge:"Guía",
+        title:"Backups que sí sirven (y cómo probarlos)",
+        desc:"Backup sin prueba es esperanza. Te dejamos un ritual corto.",
+        topic:"Backups",
+        level:"Base",
+        actions:[
+          { label:"Abrir detalle", type:"modal", payload:{ id:"hl-backups" } }
+        ],
+        detail:{
+          why:"El objetivo es restaurar: archivos o servicio. La prueba de restauración evita sorpresas.",
+          steps:[
+            "Define qué es crítico (documentos, repos, configs, fotos, facturación).",
+            "Haz backup (idealmente 3-2-1).",
+            "Prueba restaurar una carpeta/archivo al mes (10–15 min).",
+            "Documenta dónde están y quién puede restaurar."
+          ],
+          download:{ label:"Checklist (próximo)", note:"Se agrega como archivo cuando lo definas." }
+        }
+      },
+      {
+        badge:"Mini guía",
+        title:"Phishing: 5 señales y 1 regla",
+        desc:"La regla es simple: no entrar por el link. Entra por tu ruta habitual.",
+        topic:"Phishing",
+        level:"Base",
+        actions:[
+          { label:"Hacer el test", type:"link", payload:{ href:"test_ciberseguridad_aegis8.html" } },
+          { label:"Abrir detalle", type:"modal", payload:{ id:"hl-phish" } }
+        ],
+        detail:{
+          why:"El phishing funciona por presión y urgencia. La defensa es hábito + verificación por canal oficial.",
+          steps:[
+            "Señal 1: urgencia (hoy, ya, suspendida).",
+            "Señal 2: link raro o acortado.",
+            "Señal 3: solicita credenciales o códigos.",
+            "Señal 4: errores de idioma/formato.",
+            "Señal 5: remitente y dominio no calzan.",
+            "Regla: NO uses el enlace. Entra por app/bookmark y verifica."
+          ],
+          download:{ label:"Tarjeta (próximo)", note:"Podemos hacer un PNG/afiche para comunidad." }
+        }
+      }
+    ];
+
+    // 2) Biblioteca completa (puedes agregar/editar aquí)
+    // type: guia | checklist | plantilla | taller | test
+    // audience: personas | startups | pymes | comunidad
+    const RESOURCES = [
+      {
+        id:"r-test",
+        title:"Test: ¿Cuánto sabes de ciberseguridad?",
+        type:"test",
+        level:"Base",
+        topic:"Cultura",
+        audience:["personas","startups","pymes","comunidad"],
+        summary:"3 minutos + feedback claro. Perfecto para iniciar una conversación sin vergüenza.",
+        tags:["didáctico","rápido","feedback"],
+        link:{ href:"test_ciberseguridad_aegis8.html", label:"Abrir test" },
+        body:[
+          "Úsalo como punto de partida con tu equipo/comunidad.",
+          "Después del test: aplica 2 mínimos (MFA + backups probados) y repite en 30 días."
+        ],
+        todo:"Qué hacer hoy: comparte el test con 1 persona y conversen 10 minutos sobre los resultados."
+      },
+      {
+        id:"r-mfa",
+        title:"Checklist: MFA en cuentas críticas",
+        type:"checklist",
+        level:"Base",
+        topic:"MFA",
+        audience:["personas","startups","pymes"],
+        summary:"Prioridad: correo → dominio/DNS → repos → cloud → banca. Incluye códigos de respaldo.",
+        tags:["accesos","cuentas","prioridad"],
+        body:[
+          "MFA primero en correo (porque resetea todo).",
+          "Luego registrador de dominio/DNS.",
+          "Luego repos (GitHub/GitLab), cloud (AWS/GCP/Azure), herramientas (Vercel, CRM).",
+          "Guarda códigos de respaldo y revisa métodos de recuperación."
+        ],
+        todo:"Qué hacer hoy: activa MFA en tu correo y guarda códigos offline."
+      },
+      {
+        id:"r-backups",
+        title:"Guía: backups probados (ritual mensual)",
+        type:"guia",
+        level:"Base",
+        topic:"Backups",
+        audience:["personas","startups","pymes"],
+        summary:"Cómo pasar de “tengo copia” a “puedo restaurar” (en 30 minutos al mes).",
+        tags:["restauración","3-2-1","ritual"],
+        body:[
+          "Define activos críticos.",
+          "Implementa 3-2-1 si es posible (3 copias, 2 medios, 1 fuera).",
+          "Prueba restauración parcial mensual.",
+          "Documenta responsable y ruta."
+        ],
+        todo:"Qué hacer hoy: elige 1 carpeta crítica y practica restaurarla."
+      },
+      {
+        id:"r-phish",
+        title:"Mini guía: phishing para personas y equipos",
+        type:"guia",
+        level:"Base",
+        topic:"Phishing",
+        audience:["personas","startups","pymes","comunidad"],
+        summary:"Señales típicas + regla de oro + cómo reportarlo sin culpa.",
+        tags:["correo","urgencia","hábitos"],
+        body:[
+          "La regla: no entres por el enlace. Entra por tu ruta habitual.",
+          "Reporta sin vergüenza: al equipo/administrador o a tu propio ‘ritual mensual’.",
+          "Activa MFA y reduce impacto."
+        ],
+        todo:"Qué hacer hoy: revisa 10 correos y marca 1 patrón sospechoso."
+      },
+      {
+        id:"r-dns",
+        title:"Checklist: proteger dominio y DNS",
+        type:"checklist",
+        level:"Intermedio",
+        topic:"Dominio/DNS",
+        audience:["startups","pymes"],
+        summary:"MFA + roles + revisión de cambios. Evita secuestro de tráfico y correos.",
+        tags:["dominio","dns","mfa","roles"],
+        body:[
+          "Activa MFA en el registrador.",
+          "Evita cuentas compartidas: cada persona con su usuario.",
+          "Deja 1–2 administradores, resto permisos mínimos.",
+          "Activa alertas de cambios si el proveedor lo permite.",
+          "Revisa registros críticos: MX, SPF, DKIM, DMARC."
+        ],
+        todo:"Qué hacer hoy: revisa quién tiene admin del dominio."
+      },
+      {
+        id:"r-roles",
+        title:"Plantilla: mínimo privilegio (roles y accesos)",
+        type:"plantilla",
+        level:"Intermedio",
+        topic:"Accesos",
+        audience:["startups","pymes"],
+        summary:"Ordena permisos sin burocracia: qué tiene cada rol, y por qué.",
+        tags:["roles","permisos","blast radius"],
+        body:[
+          "Lista herramientas (correo, repos, cloud, DNS, Vercel, CRM).",
+          "Define roles (admin, dev, ops, ventas, externo).",
+          "Asigna permisos mínimos por rol.",
+          "Revisión mensual rápida + offboarding claro."
+        ],
+        todo:"Qué hacer hoy: identifica 1 cuenta compartida y elimínala."
+      },
+      {
+        id:"r-endpoints",
+        title:"Guía: higiene de dispositivos (endpoints)",
+        type:"guia",
+        level:"Base",
+        topic:"Dispositivos",
+        audience:["personas","startups","pymes"],
+        summary:"Actualizaciones, cifrado, bloqueo, copias, y hábitos para bajar riesgo sin gastar.",
+        tags:["actualizaciones","cifrado","bloqueo"],
+        body:[
+          "Actualiza sistema y apps.",
+          "Activa bloqueo con PIN/biometría + cifrado.",
+          "Separación trabajo/personal si aplica.",
+          "Evita instalar “lo que sea” y revisa permisos."
+        ],
+        todo:"Qué hacer hoy: activa bloqueo automático a 1 minuto."
+      },
+      {
+        id:"r-ritual",
+        title:"Checklist: ritual mensual de 30 minutos",
+        type:"checklist",
+        level:"Base",
+        topic:"Cultura",
+        audience:["personas","startups","pymes","comunidad"],
+        summary:"Un hábito que sostiene todo: revisar sesiones, backups, actualizaciones y permisos.",
+        tags:["cultura","mensual","hábitos"],
+        body:[
+          "Revisa sesiones activas (correo + herramientas).",
+          "Prueba restauración parcial.",
+          "Actualiza sistema/apps.",
+          "Revisa permisos admin y cuentas nuevas.",
+          "Revisa dominios: cambios recientes."
+        ],
+        todo:"Qué hacer hoy: agenda el ritual mensual en calendario."
+      }
+    ];
+
+    // 3) Changelog
+    const CHANGELOG = [
+      { date:"2025-12-26", text:"Publicación inicial de Recursos & Guías + test didáctico." },
+      { date:"2026-01-XX", text:"(Plan) Agregar PDF: Checklist MFA + Tarjeta anti-phishing." }
+    ];
+
+    // -----------------------------
+    //  UI RENDER
+    // -----------------------------
+    const highlightsEl = document.getElementById("highlights");
+    const libraryEl = document.getElementById("library");
+    const logEl = document.getElementById("log");
+    const searchEl = document.getElementById("search");
+    const resetBtn = document.getElementById("resetBtn");
+
+    const modalResource = document.getElementById("m-resource");
+    const resourceBody = document.getElementById("resourceBody");
+    const modalTitle = document.getElementById("t-resource");
+    const modalSub = document.getElementById("t-resource-sub");
+
+    function esc(s){
+      return String(s||"").replace(/[&<>"']/g, (m)=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
+    }
+
+    function typeLabel(t){
+      const m = { guia:"Guía", checklist:"Checklist", plantilla:"Plantilla", taller:"Taller", test:"Test" };
+      return m[t] || "Recurso";
+    }
+
+    function badgeHTML(text){
+      return `<span class="badge">${esc(text)}</span>`;
+    }
+
+    function makeActions(actions){
+      if(!actions || !actions.length) return "";
+      const btns = actions.map(a=>{
+        if(a.type==="link"){
+          return `<a class="btn primary" href="${esc(a.payload.href)}">${esc(a.label)}</a>`;
+        }
+        return `<button class="btn ${a.type==="modal" ? "ghost" : ""}" type="button" data-openhl="${esc(a.payload.id)}">${esc(a.label)}</button>`;
+      }).join("");
+      return `<div class="btn-row">${btns}</div>`;
+    }
+
+    function openResourceModal({title, sub, bodyHTML}){
+      modalTitle.textContent = title || "Recurso";
+      modalSub.textContent = sub || "";
+      resourceBody.innerHTML = bodyHTML || "";
+      openModal("m-resource");
+    }
+
+    function renderHighlights(){
+      highlightsEl.innerHTML = MONTH_HIGHLIGHTS.map((h, i)=>{
+        const icon = i===0 ? "MFA" : i===1 ? "Backups" : "Phishing";
+        const actions = makeActions(h.actions);
+        return `
+          <div class="tile reveal" style="min-height: 190px;">
+            ${badgeHTML(h.badge)}
+            <h3>${esc(h.title)}</h3>
+            <p>${esc(h.desc)}</p>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">${esc(h.topic)}</span>
+              <span class="tag">Nivel: ${esc(h.level)}</span>
+              <span class="tag">${esc(icon)}</span>
+            </div>
+            ${actions}
+          </div>
+        `;
+      }).join("");
+      // Add reveals created dynamically
+      document.querySelectorAll("#highlights .reveal").forEach(el=>io.observe(el));
+    }
+
+    function resourceToCard(r){
+      const aud = (r.audience||[]).map(a=>a[0].toUpperCase()+a.slice(1)).join(" · ");
+      const tags = (r.tags||[]).slice(0,4).map(t=>`<span class="tag">${esc(t)}</span>`).join("");
+      return `
+        <div class="item reveal" data-id="${esc(r.id)}" tabindex="0" role="button" aria-label="Abrir recurso ${esc(r.title)}">
+          <div class="meta">
+            <span class="type">${esc(typeLabel(r.type))}</span>
+            <span class="lvl">Nivel: ${esc(r.level||"Base")}</span>
+          </div>
+          <h3>${esc(r.title)}</h3>
+          <p>${esc(r.summary||"")}</p>
+          <div class="tags">
+            <span class="tag">${esc(r.topic||"Tema")}</span>
+            <span class="tag">${esc(aud || "—")}</span>
+            ${tags}
+          </div>
+        </div>
+      `;
+    }
+
+    function buildResourceModalHTML(r){
+      const body = (r.body||[]).map(x=>`<li>${esc(x)}</li>`).join("");
+      const tags = (r.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join("");
+      const link = r.link?.href ? `
+        <div class="dl">
+          <div>
+            <div style="font-weight:900;color:rgba(11,42,91,.9);">${esc(r.link.label || "Abrir recurso")}</div>
+            <small>${esc(r.link.note || "Se abre en la misma pestaña.")}</small>
+          </div>
+          <a class="btn primary" href="${esc(r.link.href)}">${esc(r.link.label || "Abrir")}</a>
+        </div>
+      ` : "";
+
+      return `
+        <p><strong>Tipo:</strong> ${esc(typeLabel(r.type))} • <strong>Nivel:</strong> ${esc(r.level||"Base")} • <strong>Tema:</strong> ${esc(r.topic||"—")}</p>
+        ${tags ? `<div class="tags" style="margin:10px 0 0">${tags}</div>` : ""}
+        ${r.summary ? `<p style="margin-top:10px">${esc(r.summary)}</p>` : ""}
+        ${body ? `<ul>${body}</ul>` : ""}
+        ${r.todo ? `<div class="callout">${esc(r.todo)}</div>` : `<div class="callout">Qué hacer hoy: aplica un mínimo (MFA + backups probados + roles).</div>`}
+        ${link}
+      `;
+    }
+
+    let activeFilter = "all";
+
+    function applyFilters(){
+      const q = String(searchEl.value||"").trim().toLowerCase();
+      const filtered = RESOURCES.filter(r=>{
+        const okFilter = activeFilter==="all" ? true : (r.audience||[]).includes(activeFilter);
+        const hay = [
+          r.title, r.type, r.level, r.topic, r.summary,
+          ...(r.tags||[]), ...(r.body||[])
+        ].join(" ").toLowerCase();
+        const okSearch = q ? hay.includes(q) : true;
+        return okFilter && okSearch;
+      });
+
+      libraryEl.innerHTML = filtered.map(resourceToCard).join("") || `
+        <div class="card" style="padding:18px;grid-column:1/-1;">
+          <div class="badge">Sin resultados</div>
+          <h3 style="margin:10px 0 8px;">No encontramos coincidencias</h3>
+          <p class="muted" style="margin:0;">Prueba con otra palabra (ej: <span class="k">MFA</span>, <span class="k">backups</span>, <span class="k">DNS</span>).</p>
+        </div>
+      `;
+
+      document.querySelectorAll("#library .reveal").forEach(el=>io.observe(el));
+    }
+
+    function renderLog(){
+      logEl.innerHTML = CHANGELOG.map(x=>`<li><strong>${esc(x.date)}:</strong> ${esc(x.text)}</li>`).join("");
+    }
+
+    // Click handlers for highlights and resources
+    document.addEventListener("click",(e)=>{
+      const hl = e.target.closest("[data-openhl]");
+      if(hl){
+        const id = hl.getAttribute("data-openhl");
+        const h = MONTH_HIGHLIGHTS.find(x=>x.actions?.some(a=>a.payload?.id===id)) || null;
+        if(h){
+          const steps = (h.detail?.steps||[]).map(s=>`<li>${esc(s)}</li>`).join("");
+          const bodyHTML = `
+            <p><strong>Tema:</strong> ${esc(h.topic)} • <strong>Nivel:</strong> ${esc(h.level)}</p>
+            <p>${esc(h.detail?.why || "")}</p>
+            ${steps ? `<ul>${steps}</ul>` : ""}
+            <div class="callout">Qué hacer hoy: elige 1 paso y ejecútalo en 15 minutos.</div>
+            <div class="dl">
+              <div>
+                <div style="font-weight:900;color:rgba(11,42,91,.9);">${esc(h.detail?.download?.label || "Descarga")}</div>
+                <small>${esc(h.detail?.download?.note || "—")}</small>
+              </div>
+              <button class="btn ghost" type="button" data-modal="m-news" aria-haspopup="dialog">Quiero el PDF</button>
+            </div>
+          `;
+          openResourceModal({ title:h.title, sub:h.desc, bodyHTML });
+        }
+      }
+
+      const item = e.target.closest(".item");
+      if(item){
+        const rid = item.getAttribute("data-id");
+        const r = RESOURCES.find(x=>x.id===rid);
+        if(r){
+          openResourceModal({ title:r.title, sub:`${typeLabel(r.type)} • ${r.topic} • Nivel: ${r.level}`, bodyHTML: buildResourceModalHTML(r) });
+        }
+      }
+    });
+
+    // Keyboard open on resource cards
+    document.addEventListener("keydown",(e)=>{
+      if(e.key!=="Enter" && e.key!==" ") return;
+      const focused = document.activeElement;
+      if(focused && focused.classList.contains("item")){
+        e.preventDefault();
+        focused.click();
+      }
+    });
+
+    // Filters
+    document.querySelectorAll(".chip").forEach(ch=>{
+      ch.addEventListener("click", ()=>{
+        document.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));
+        ch.classList.add("on");
+        activeFilter = ch.getAttribute("data-filter") || "all";
+        applyFilters();
+      });
+    });
+
+    searchEl.addEventListener("input", applyFilters);
+    resetBtn.addEventListener("click", ()=>{
+      searchEl.value = "";
+      activeFilter = "all";
+      document.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));
+      document.querySelector('.chip[data-filter="all"]').classList.add("on");
+      applyFilters();
+      searchEl.focus();
+    });
+
+    // -----------------------------
+    //  MODALS infra (same as others)
+    // -----------------------------
+    const modals = Array.from(document.querySelectorAll(".modal"));
+    let lastFocus = null;
+
+    function openModal(id){
+      const modal = document.getElementById(id);
+      if(!modal) return;
+      lastFocus = document.activeElement;
+      modal.classList.add("show");
+      document.body.style.overflow="hidden";
+      const closeBtn = modal.querySelector(".modal-close");
+      if(closeBtn) closeBtn.focus();
+    }
+    function closeModal(modal){
+      modal.classList.remove("show");
+      document.body.style.overflow="";
+      if(lastFocus && typeof lastFocus.focus==="function") lastFocus.focus();
+    }
+    function closeAll(){ modals.forEach(m=>m.classList.contains("show") && closeModal(m)); }
+
+    document.addEventListener("click",(e)=>{
+      const trigger = e.target.closest("[data-modal]");
+      if(trigger) openModal(trigger.getAttribute("data-modal"));
+
+      const backdrop = e.target.classList && e.target.classList.contains("modal");
+      if(backdrop) closeModal(e.target);
+
+      const closeBtn = e.target.closest(".modal-close");
+      if(closeBtn) closeModal(closeBtn.closest(".modal"));
+    });
+
+    document.addEventListener("keydown",(e)=>{
+      if(e.key==="Escape") closeAll();
+
+      const activeModal = modals.find(m=>m.classList.contains("show"));
+      if(!activeModal) return;
+
+      if(e.key==="Tab"){
+        const focusables = Array.from(activeModal.querySelectorAll('button, a, input, textarea, select, [tabindex]:not([tabindex="-1"])'))
+          .filter(el=>!el.hasAttribute("disabled"));
+        if(focusables.length===0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length-1];
+        if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+        else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+      }
+    });
+
+    // Initial render
+    renderHighlights();
+    renderLog();
+    applyFilters();
+  </script>
+</body>
+</html>
