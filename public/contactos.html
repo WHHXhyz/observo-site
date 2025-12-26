@@ -375,42 +375,50 @@
   <div class="progress" id="progress" aria-hidden="true"></div>
 
   <header>
-    <div class="wrap">
-      <div class="nav">
-        <a class="brand" href="index.html" aria-label="Aegis8 Home">
-          <div class="logo" aria-hidden="true"></div>
-          <div>
-            <strong>Aegis8</strong>
-            <span>Contáctanos</span>
-          </div>
-        </a>
-
-        <nav aria-label="Navegación principal">
-          <ul>
-            <li><a href="como-trabajamos.html">Cómo trabajamos</a></li>
-            <li><a href="a-quienes-ayudamos.html">A quiénes ayudamos</a></li>
-            <li><a href="quienes-somos.html">Quiénes somos</a></li>
-            <li><a href="psocial.html">Proyecto social</a></li>
-            <li><a class="active" href="contactanos.html" aria-current="page">Contáctanos</a></li>
-          </ul>
-        </nav>
-
-        <div class="right">
-          <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobilePanel">
-            <div class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></div>
-          </button>
+  <div class="wrap">
+    <div class="nav">
+      <a class="brand" href="index.html" aria-label="Aegis8 — Inicio">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <strong>Aegis8</strong>
+          <span>Ciberseguridad con sentido</span>
         </div>
-      </div>
+      </a>
 
-      <div class="mobile-panel" id="mobilePanel" aria-label="Menú móvil">
-        <a href="como-trabajamos.html">Cómo trabajamos</a>
-        <a href="a-quienes-ayudamos.html">A quiénes ayudamos</a>
-        <a href="quienes-somos.html">Quiénes somos</a>
-        <a href="psocial.html">Proyecto social</a>
-        <a href="contactanos.html">Contáctanos</a>
+      <button class="menu-btn" type="button" id="menuBtn" aria-label="Abrir menú">
+        <div class="menu-lines" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+      </button>
+
+      <nav aria-label="Navegación principal">
+        <ul id="navLinks">
+          <li></li>
+          <li><a href="comotrabajamos.html" data-page="comotrabajamos.html">Cómo trabajamos</a></li>
+          <li><a href="recursos.html" data-page="recursos.html">Recursos y guías</a></li>
+          <li><a href="index.html#ayudamos" data-hash="#ayudamos">A quiénes ayudamos</a></li>
+          <li><a href="index.html#quienes" data-hash="#quienes">Quiénes somos</a></li>
+          <li><a href="psocial.html" data-page="psocial.html">Proyecto social</a></li>
+          <li><a class="nav-cta" href="contactanos.html" data-page="contactanos.html"></a></li>
+        </ul>
+      </nav>
+
+      <div class="right nav-right">
+        <!-- espacio para CTA futuro -->
       </div>
     </div>
-  </header>
+
+    <div class="mobile-panel" id="mobilePanel" aria-label="Navegación móvil">
+      
+      <a href="comotrabajamos.html">Cómo trabajamos</a>
+      <a href="recursos.html">Recursos y guías</a>
+      <a href="index.html#ayudamos">A quiénes ayudamos</a>
+      <a href="index.html#quienes">Quiénes somos</a>
+      <a href="psocial.html">Proyecto social</a>
+      <a href="contactanos.html"></a>
+    </div>
+  </div>
+</header>
 
   <main id="top">
     <div class="wrap">
@@ -1049,5 +1057,31 @@ ${mensaje}
       status.className = "status ok";
     });
   </script>
+<script>
+(function(){
+  // Mobile menu toggle
+  const btn = document.getElementById('menuBtn');
+  const panel = document.getElementById('mobilePanel');
+  if(btn && panel){
+    btn.addEventListener('click', () => {
+      const open = panel.style.display === 'block';
+      panel.style.display = open ? 'none' : 'block';
+      btn.setAttribute('aria-expanded', String(!open));
+    });
+    // Close on click
+    panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { panel.style.display='none'; btn.setAttribute('aria-expanded','false'); }));
+  }
+
+  // Active link (by page or hash)
+  const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  const hash = (location.hash || '').toLowerCase();
+  document.querySelectorAll('#navLinks a').forEach(a => {
+    const page = (a.getAttribute('data-page') || '').toLowerCase();
+    const h = (a.getAttribute('data-hash') || '').toLowerCase();
+    if(page && page === path) a.classList.add('active');
+    if(h && hash && h === hash) a.classList.add('active');
+  });
+})();
+</script>
 </body>
 </html>
