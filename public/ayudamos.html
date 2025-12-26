@@ -3,66 +3,939 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Aegis8 — A quién ayudamos</title>
+  <title>Aegis8 — A quiénes ayudamos</title>
+  <meta name="description" content="Aegis8 ayuda a personas, startups y pequeñas organizaciones a reducir riesgos con claridad, mínimos sostenibles y acompañamiento honesto." />
+  <meta name="theme-color" content="#0B2A5B" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    body{margin:0;font-family:"Space Grotesk",system-ui;background:#F7FBFF;color:#0B1B34}
-    a{text-decoration:none;color:inherit}
-    .wrap{max-width:920px;margin:0 auto;padding:0 20px}
-    header{position:sticky;top:0;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);border-bottom:1px solid #DCEBFF}
-    .nav{display:grid;grid-template-columns:1fr auto;align-items:center;padding:14px 0}
-    nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0}
-    nav a{padding:10px 12px;border-radius:12px}
-    nav a:hover{background:#EAF4FF}
-    h1{margin:48px 0 12px;text-align:center;font-size:36px}
-    p{max-width:70ch;margin:0 auto 28px;text-align:center;color:#4B5E7B}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .card{background:#fff;border:1px solid #DCEBFF;border-radius:18px;padding:18px}
-    .card h3{margin-top:0}
-    footer{margin-top:60px;padding:30px 0;border-top:1px solid #DCEBFF;text-align:center;color:#4B5E7B}
-    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+    :root{
+      --bg:#F7FBFF;
+      --card:#FFFFFF;
+      --text:#0B1B34;
+      --muted:#4B5E7B;
+      --line:#DCEBFF;
+      --blue:#0B2A5B;
+      --sky:#2FA9FF;
+      --sky2:#8FD3FF;
+      --shadow:0 18px 45px rgba(11,42,91,.10);
+      --radius:18px;
+      --radius2:26px;
+      --max:1080px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(900px 420px at 15% -10%, rgba(47,169,255,.25), transparent 60%),
+        radial-gradient(900px 420px at 92% 0%, rgba(143,211,255,.25), transparent 60%),
+        linear-gradient(180deg,#FFFFFF 0%, var(--bg) 100%);
+      line-height:1.45;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(var(--max), 100% - 40px);margin:0 auto}
+    .muted{color:var(--muted)}
+    .center{text-align:center}
+
+    /* progress */
+    .progress{
+      position:fixed;top:0;left:0;height:3px;width:0%;
+      background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.92), rgba(143,211,255,.95));
+      z-index:9999;box-shadow:0 8px 20px rgba(47,169,255,.22);
+    }
+
+    header{
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.78);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(220,235,255,.85);
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 0;gap:16px;
+    }
+    .brand{display:flex;align-items:center;gap:12px;min-width:210px}
+    .logo{
+      width:38px;height:38px;border-radius:12px;
+      background:linear-gradient(135deg,var(--blue),#0D3B85);
+      position:relative;
+      box-shadow:0 14px 30px rgba(11,42,91,.18);
+      flex:0 0 auto;
+    }
+    .logo:before{
+      content:"";
+      position:absolute;inset:9px 11px 9px 11px;
+      border-radius:10px 10px 14px 14px;
+      background:linear-gradient(135deg, rgba(143,211,255,.95), rgba(47,169,255,.85));
+      clip-path:polygon(50% 0%, 92% 18%, 92% 55%, 50% 100%, 8% 55%, 8% 18%);
+      opacity:.95;
+    }
+    .brand strong{font-size:16px;letter-spacing:.2px}
+    .brand span{display:block;margin-top:2px;font-size:12px;color:var(--muted)}
+
+    nav ul{
+      list-style:none;padding:0;margin:0;
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    }
+    nav a{
+      font-size:14px;color:rgba(11,27,52,.86);
+      padding:10px 12px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.78);
+      box-shadow:0 10px 24px rgba(11,42,91,.06);
+      transition:transform .12s ease, background .12s ease, box-shadow .12s ease, border-color .12s ease;
+      white-space:nowrap;
+    }
+    nav a:hover{
+      transform:translateY(-1px);
+      background:rgba(220,235,255,.55);
+      border-color:rgba(47,169,255,.35);
+      box-shadow:0 14px 34px rgba(11,42,91,.10);
+      color:var(--blue);
+    }
+    nav a.active{
+      border-color:rgba(47,169,255,.45);
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
+      color:var(--blue);
+      font-weight:800;
+    }
+
+    .menu-btn{
+      display:none;width:44px;height:44px;border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.9);
+      box-shadow:0 12px 30px rgba(11,42,91,.08);
+      cursor:pointer;align-items:center;justify-content:center;
+    }
+    .menu-lines{width:18px;height:12px;position:relative}
+    .menu-lines span{position:absolute;left:0;right:0;height:2px;border-radius:99px;background:rgba(11,42,91,.8)}
+    .menu-lines span:nth-child(1){top:0}
+    .menu-lines span:nth-child(2){top:5px}
+    .menu-lines span:nth-child(3){top:10px}
+    .mobile-panel{display:none;padding:0 0 14px 0}
+    .mobile-panel a{
+      display:block;padding:12px 12px;margin:10px 0;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,.85);
+      font-weight:700;color:rgba(11,27,52,.9);
+    }
+    .mobile-panel a:hover{background:rgba(220,235,255,.55);color:var(--blue)}
+
+    main{padding:30px 0 70px}
+    section{padding:54px 0}
+    section + section{border-top:1px solid rgba(220,235,255,.75)}
+
+    h1{
+      font-size:clamp(32px, 4vw, 48px);
+      line-height:1.06;
+      margin:14px 0 10px;
+      letter-spacing:-.7px;
+    }
+    .lead{
+      font-size:clamp(16px, 1.35vw, 18px);
+      color:var(--muted);
+      margin:0 auto 18px;
+      max-width:88ch;
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:8px 12px;border:1px solid var(--line);
+      background:rgba(255,255,255,.82);border-radius:999px;
+      box-shadow:0 8px 25px rgba(11,42,91,.06);
+      backdrop-filter:blur(8px);
+    }
+    .dot{width:10px;height:10px;border-radius:999px;background:radial-gradient(circle at 30% 30%, var(--sky2), var(--sky));box-shadow:0 0 0 4px rgba(47,169,255,.12)}
+    .k{
+      background:linear-gradient(135deg, rgba(47,169,255,.22), rgba(143,211,255,.35));
+      border:1px solid rgba(47,169,255,.25);
+      padding:0 .45em;border-radius:.65em;
+      color:rgba(11,42,91,.92);
+      font-weight:800;white-space:nowrap;
+    }
+    .gradline{
+      height:1px;width:min(640px,100%);margin:14px auto 0;border-radius:99px;
+      background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.55), rgba(143,211,255,.65), rgba(47,169,255,.55), rgba(47,169,255,0));
+      position:relative;overflow:hidden;
+    }
+    .gradline:after{
+      content:"";position:absolute;top:0;bottom:0;width:160px;left:-180px;
+      background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.75), rgba(255,255,255,0));
+      filter:blur(1px);animation:shine 2.8s ease-in-out infinite;
+    }
+    @keyframes shine{
+      0%{transform:translateX(0);opacity:0}
+      15%{opacity:.8}
+      50%{opacity:.9}
+      85%{opacity:.8}
+      100%{transform:translateX(900px);opacity:0}
+    }
+
+    .sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+    .sec-head h2{margin:0;font-weight:900;font-size:clamp(22px, 2.3vw, 32px);letter-spacing:-.35px}
+    .sec-sub{margin:0;max-width:92ch;color:var(--muted);font-size:15.5px}
+
+    .card{
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      border-radius:var(--radius2);
+      box-shadow:var(--shadow);
+    }
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+    /* Personas cards */
+    .persona{
+      position:relative;
+      padding:16px;
+      text-align:left;
+      cursor:pointer;
+      overflow:hidden;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .persona:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
+    .tag{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.9);
+      background:rgba(47,169,255,.08);
+      color:rgba(11,42,91,.88);
+      font-weight:900;font-size:12px;
+      white-space:nowrap;
+    }
+    .persona h3{margin:10px 0 6px;font-size:18px;letter-spacing:-.14px}
+    .persona p{margin:0;color:var(--muted);font-size:14.2px}
+    .icon{
+      width:44px;height:44px;border-radius:16px;border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.9);
+      box-shadow:0 12px 30px rgba(11,42,91,.06);
+      display:grid;place-items:center;
+      position:absolute;top:14px;right:14px;
+    }
+    .persona:after{
+      content:"";position:absolute;inset:auto -80px -80px auto;
+      width:260px;height:260px;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, rgba(143,211,255,.35), rgba(47,169,255,.0) 70%);
+      transform:rotate(18deg);
+      opacity:.85;pointer-events:none;
+    }
+
+    /* Animated diagram: "Cómo apoyamos" */
+    .diagram{
+      position:relative;
+      padding:18px;
+      overflow:hidden;
+    }
+    .diagram:before{
+      content:"";position:absolute;inset:-2px;
+      background:
+        radial-gradient(560px 260px at 10% 10%, rgba(47,169,255,.12), transparent 60%),
+        radial-gradient(560px 260px at 95% 0%, rgba(143,211,255,.14), transparent 55%);
+      opacity:.95;pointer-events:none;
+    }
+    .diagram>*{position:relative}
+
+    .support{
+      display:grid;
+      grid-template-columns:1.05fr 1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    .steps{
+      display:grid;gap:10px;
+    }
+    .step{
+      padding:14px 14px;border-radius:22px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.92);
+      box-shadow:0 12px 30px rgba(11,42,91,.06);
+      cursor:pointer;
+      transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+      position:relative;overflow:hidden;
+    }
+    .step:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(11,42,91,.10);border-color:rgba(47,169,255,.35)}
+    .step .n{
+      display:inline-grid;place-items:center;
+      width:32px;height:32px;border-radius:12px;
+      border:1px solid rgba(47,169,255,.25);
+      background:linear-gradient(135deg, rgba(47,169,255,.12), rgba(143,211,255,.20));
+      font-weight:900;color:rgba(11,42,91,.92);
+      margin-right:8px;flex:0 0 auto;
+    }
+    .step .row{display:flex;align-items:center;gap:10px}
+    .step strong{display:block;font-size:14.8px}
+    .step span{display:block;color:var(--muted);font-size:13.8px;margin-top:4px}
+    .step:after{
+      content:"";position:absolute;inset:auto -90px -90px auto;
+      width:230px;height:230px;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, rgba(143,211,255,.26), rgba(47,169,255,.0) 70%);
+      opacity:.9;pointer-events:none;
+    }
+
+    .radar{
+      border-radius:22px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.92);
+      box-shadow:0 12px 30px rgba(11,42,91,.06);
+      overflow:hidden;
+      position:relative;
+      display:grid;place-items:center;
+      min-height:260px;
+    }
+    .radar svg{width:min(420px, 100%);height:auto;display:block}
+    .pulse{
+      transform-origin:50% 50%;
+      animation:pulse 2.4s ease-in-out infinite;
+      opacity:.55;
+    }
+    @keyframes pulse{
+      0%{transform:scale(.88);opacity:.15}
+      55%{transform:scale(1);opacity:.55}
+      100%{transform:scale(1.08);opacity:0}
+    }
+    .beam{
+      transform-origin:50% 52%;
+      animation:beam 3.2s ease-in-out infinite;
+      opacity:.45;
+    }
+    @keyframes beam{
+      0%{transform:rotate(-40deg);opacity:.15}
+      35%{opacity:.45}
+      60%{opacity:.35}
+      100%{transform:rotate(320deg);opacity:.15}
+    }
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:11px 14px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.92);color:var(--blue);font-weight:800;
+      box-shadow:0 12px 30px rgba(11,42,91,.08);
+      transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+      cursor:pointer;white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(11,42,91,.12)}
+    .btn.primary{
+      border-color:rgba(47,169,255,.35);
+      background:linear-gradient(135deg, rgba(47,169,255,.15), rgba(143,211,255,.25));
+      color:var(--blue);
+    }
+    .btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+
+    /* Modal */
+    .modal{
+      position:fixed;inset:0;z-index:1000;display:none;padding:18px;
+      background:rgba(11,27,52,.55);backdrop-filter:blur(6px);
+    }
+    .modal.show{display:grid;place-items:center}
+    .modal-dialog{
+      width:min(920px,100%);
+      background:rgba(255,255,255,.97);
+      border:1px solid rgba(220,235,255,.95);
+      border-radius:22px;
+      box-shadow:0 28px 70px rgba(11,42,91,.22);
+      overflow:hidden;
+      animation:modalIn .18s ease-out;
+    }
+    @keyframes modalIn{from{transform:translateY(8px) scale(.99);opacity:0}to{transform:none;opacity:1}}
+    .modal-head{
+      padding:16px 16px 12px;border-bottom:1px solid rgba(220,235,255,.9);
+      background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+    }
+    .modal-title{margin:0;font-size:18px;letter-spacing:-.2px;color:var(--blue)}
+    .modal-close{
+      width:42px;height:42px;border-radius:14px;border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.92);cursor:pointer;display:grid;place-items:center;
+      color:rgba(11,42,91,.85);box-shadow:0 12px 30px rgba(11,42,91,.10);
+    }
+    .modal-body{padding:14px 16px 16px;color:rgba(11,27,52,.92)}
+    .modal-body p{margin:0 0 10px;color:var(--muted)}
+    .modal-body ul{margin:10px 0 0;padding-left:18px;color:var(--muted)}
+    .modal-body li{margin:7px 0}
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(10px);transition:opacity .55s ease, transform .55s ease}
+    .reveal.on{opacity:1;transform:none}
+
+    footer{
+      padding:28px 0 40px;
+      border-top:1px solid rgba(220,235,255,.9);
+      background:rgba(255,255,255,.55);
+    }
+    .foot{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}
+
+    @media (max-width: 980px){
+      .grid-3{grid-template-columns:1fr}
+      .grid-2{grid-template-columns:1fr}
+      .support{grid-template-columns:1fr}
+      .radar{min-height:220px}
+    }
+    @media (max-width: 760px){
+      nav ul{display:none}
+      .menu-btn{display:inline-flex}
+      .wrap{width:min(var(--max), 100% - 28px)}
+    }
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
+      .pulse,.beam{animation:none !important}
+    }
   </style>
 </head>
+
 <body>
-<header>
-  <div class="wrap nav">
-    <strong>Aegis8</strong>
-    <nav>
-      <ul>
-        <li><a href="comotrabajamos.html">Cómo trabajamos</a></li>
-        <li><a href="recursos.html">Recursos y guías</a></li>
-        <li><a href="ayudamos.html">A quiénes ayudamos</a></li>
-        <li><a href="index.html#quienes">Quiénes somos</a></li>
-        <li><a href="psocial.html">Proyecto social</a></li>
-      </ul>
-    </nav>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="index.html" aria-label="Aegis8 Home">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>Aegis8</strong>
+            <span>Guía y acompañamiento</span>
+          </div>
+        </a>
+
+        <nav aria-label="Navegación principal">
+          <ul>
+            <li><a href="como-trabajamos.html">Cómo trabajamos</a></li>
+            <li><a class="active" href="a-quienes-ayudamos.html">A quiénes ayudamos</a></li>
+            <li><a href="quienes-somos.html">Quiénes somos</a></li>
+            <li><a href="psocial.html">Proyecto social</a></li>
+            <li><a href="contactanos.html">Contáctanos</a></li>
+          </ul>
+        </nav>
+
+        <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobilePanel">
+          <div class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></div>
+        </button>
+      </div>
+
+      <div class="mobile-panel" id="mobilePanel" aria-label="Menú móvil">
+        <a href="como-trabajamos.html">Cómo trabajamos</a>
+        <a href="a-quienes-ayudamos.html">A quiénes ayudamos</a>
+        <a href="quienes-somos.html">Quiénes somos</a>
+        <a href="psocial.html">Proyecto social</a>
+        <a href="contactanos.html">Contáctanos</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+
+      <!-- HERO -->
+      <section>
+        <div class="center">
+          <div class="pill reveal" role="note">
+            <span class="dot" aria-hidden="true"></span>
+            <span><strong>Enfoque</strong> — claridad + mínimos sostenibles</span>
+          </div>
+
+          <h1 class="reveal">A quiénes ayudamos</h1>
+
+          <p class="lead reveal">
+            Trabajamos con quienes necesitan claridad y acompañamiento práctico.
+            Cada bloque es clickable para ver casos típicos, dolores reales y cómo apoyamos.
+            <br><br>
+            La idea es simple: <span class="k">menos riesgo</span>, <span class="k">menos ruido</span> y decisiones que puedas sostener.
+          </p>
+
+          <div class="btn-row reveal" style="justify-content:center;">
+            <a class="btn primary" href="#perfiles">Ver perfiles</a>
+            <a class="btn" href="#como-apoyamos">Cómo apoyamos</a>
+            <a class="btn" href="contactanos.html">Contáctanos</a>
+          </div>
+        </div>
+
+        <div class="gradline" aria-hidden="true"></div>
+      </section>
+
+      <!-- PROFILES -->
+      <section id="perfiles">
+        <div class="sec-head reveal">
+          <h2>Perfiles principales</h2>
+          <p class="sec-sub">
+            No importa si eres 1 persona o un equipo pequeño: partimos por lo esencial (accesos, backups, roles, hábitos, superficie pública).
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <!-- Startups -->
+          <div class="card persona reveal" role="button" tabindex="0" data-modal="m-startups" aria-haspopup="dialog">
+            <span class="tag">Startups</span>
+            <div class="icon" aria-hidden="true">
+              <!-- Rocket -->
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M14.5 3.5c3.3.6 5.5 2.8 6 6l-6.9 6.9-3.6.6.6-3.6L14.5 3.5Z" stroke="rgba(11,42,91,.85)" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M10.6 7.4 6.8 8.3c-.8.2-1.5.9-1.7 1.7l-.8 3.8 4.4-1.3" stroke="rgba(11,42,91,.65)" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M16.6 13.4l1.3 4.4 3.8-.8c.8-.2 1.5-.9 1.7-1.7l.9-3.8-3.9 3.9" stroke="rgba(11,42,91,.65)" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M12.8 11.2a1.6 1.6 0 1 0 2.2-2.2 1.6 1.6 0 0 0-2.2 2.2Z" stroke="rgba(11,42,91,.85)" stroke-width="1.8"/>
+              </svg>
+            </div>
+            <h3>Seguridad desde el inicio</h3>
+            <p>Decisiones correctas temprano: accesos, TLS, backups, procesos y cultura. Crece con control, no con parches.</p>
+          </div>
+
+          <!-- Small businesses -->
+          <div class="card persona reveal" role="button" tabindex="0" data-modal="m-pymes" aria-haspopup="dialog">
+            <span class="tag">Pequeñas empresas</span>
+            <div class="icon" aria-hidden="true">
+              <!-- Building -->
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M4 20V6a2 2 0 0 1 2-2h8v16" stroke="rgba(11,42,91,.85)" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M14 10h4a2 2 0 0 1 2 2v8" stroke="rgba(11,42,91,.85)" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M7 8h3M7 11h3M7 14h3" stroke="rgba(11,42,91,.65)" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M10 20v-3H8v3" stroke="rgba(11,42,91,.65)" stroke-width="1.6" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Orden y control</h3>
+            <p>Priorizamos lo esencial: cuentas, correo, endpoints, backups y hábitos. Menos superficie expuesta, más continuidad.</p>
+          </div>
+
+          <!-- People -->
+          <div class="card persona reveal" role="button" tabindex="0" data-modal="m-personas" aria-haspopup="dialog">
+            <span class="tag">Personas</span>
+            <div class="icon" aria-hidden="true">
+              <!-- User -->
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="rgba(11,42,91,.85)" stroke-width="1.8"/>
+                <path d="M4.5 20.5a7.5 7.5 0 0 1 15 0" stroke="rgba(11,42,91,.65)" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Aprender para protegerse</h3>
+            <p>Educación práctica para reducir riesgos cotidianos: cuentas, phishing, privacidad y hábitos. Seguridad como habilidad.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOW WE SUPPORT -->
+      <section id="como-apoyamos">
+        <div class="sec-head reveal">
+          <h2>Cómo apoyamos</h2>
+          <p class="sec-sub">
+            Un camino simple: entender contexto → priorizar mínimos → acompañar decisiones → dejarlo documentado.
+            Haz clic en cada paso para ver qué incluye.
+          </p>
+        </div>
+
+        <div class="card diagram reveal">
+          <div class="support">
+            <div class="steps" aria-label="Pasos de apoyo">
+              <div class="step" role="button" tabindex="0" data-modal="m-paso1" aria-haspopup="dialog">
+                <div class="row">
+                  <div class="n">1</div>
+                  <div>
+                    <strong>Escuchamos el contexto</strong>
+                    <span>Qué estás protegiendo, urgencias, stack (si aplica) y límites reales.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="step" role="button" tabindex="0" data-modal="m-paso2" aria-haspopup="dialog">
+                <div class="row">
+                  <div class="n">2</div>
+                  <div>
+                    <strong>Priorizamos mínimos</strong>
+                    <span>MFA, backups, accesos, roles, higiene de correo y exposición pública.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="step" role="button" tabindex="0" data-modal="m-paso3" aria-haspopup="dialog">
+                <div class="row">
+                  <div class="n">3</div>
+                  <div>
+                    <strong>Plan de 30 días</strong>
+                    <span>Acciones concretas, ordenadas por impacto y esfuerzo.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="step" role="button" tabindex="0" data-modal="m-paso4" aria-haspopup="dialog">
+                <div class="row">
+                  <div class="n">4</div>
+                  <div>
+                    <strong>Dejamos evidencia</strong>
+                    <span>Checklist y documentación simple para sostener cambios.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="radar" aria-label="Diagrama animado">
+              <!-- Minimal animated radar/clarity -->
+              <svg viewBox="0 0 520 360" role="img" aria-label="Radar de claridad: menos ruido, más control">
+                <defs>
+                  <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="rgba(47,169,255,.55)"/>
+                    <stop offset="1" stop-color="rgba(143,211,255,.75)"/>
+                  </linearGradient>
+                  <linearGradient id="g2" x1="0" y1="1" x2="1" y2="0">
+                    <stop offset="0" stop-color="rgba(11,42,91,.9)"/>
+                    <stop offset="1" stop-color="rgba(11,42,91,.55)"/>
+                  </linearGradient>
+                </defs>
+
+                <!-- background grid -->
+                <g opacity=".55">
+                  <circle cx="260" cy="190" r="140" fill="none" stroke="rgba(220,235,255,.9)" stroke-width="2"/>
+                  <circle cx="260" cy="190" r="100" fill="none" stroke="rgba(220,235,255,.75)" stroke-width="2"/>
+                  <circle cx="260" cy="190" r="60" fill="none" stroke="rgba(220,235,255,.65)" stroke-width="2"/>
+                  <line x1="120" y1="190" x2="400" y2="190" stroke="rgba(220,235,255,.75)" stroke-width="2"/>
+                  <line x1="260" y1="50" x2="260" y2="330" stroke="rgba(220,235,255,.75)" stroke-width="2"/>
+                </g>
+
+                <!-- pulses -->
+                <circle class="pulse" cx="260" cy="190" r="60" fill="none" stroke="url(#g1)" stroke-width="10"/>
+                <circle class="pulse" cx="260" cy="190" r="100" fill="none" stroke="url(#g1)" stroke-width="10" style="animation-delay:.6s"/>
+                <circle class="pulse" cx="260" cy="190" r="140" fill="none" stroke="url(#g1)" stroke-width="10" style="animation-delay:1.2s"/>
+
+                <!-- beam -->
+                <g class="beam">
+                  <path d="M260 190 L420 150 Q392 210 420 270 Z" fill="rgba(47,169,255,.12)"/>
+                  <path d="M260 190 L420 150 Q392 210 420 270 Z" fill="none" stroke="rgba(47,169,255,.22)" stroke-width="3"/>
+                </g>
+
+                <!-- center -->
+                <circle cx="260" cy="190" r="10" fill="url(#g2)"/>
+                <circle cx="260" cy="190" r="24" fill="none" stroke="rgba(47,169,255,.22)" stroke-width="4"/>
+
+                <!-- labels -->
+                <g fill="rgba(11,42,91,.85)" font-size="14" font-weight="800">
+                  <text x="58" y="62">Ruido ↓</text>
+                  <text x="382" y="62">Control ↑</text>
+                  <text x="66" y="330" opacity=".75">Mínimos</text>
+                  <text x="370" y="330" opacity=".75">Sostenible</text>
+                </g>
+
+                <!-- points -->
+                <g>
+                  <circle cx="335" cy="145" r="7" fill="rgba(47,169,255,.8)"/>
+                  <circle cx="308" cy="265" r="7" fill="rgba(143,211,255,.9)"/>
+                  <circle cx="215" cy="120" r="7" fill="rgba(47,169,255,.55)"/>
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          <div class="btn-row" style="justify-content:center;margin-top:14px;">
+            <a class="btn primary" href="contactanos.html">Contáctanos</a>
+            <a class="btn" href="recursos_aegis8.html">Recursos & guías</a>
+            <a class="btn" href="test_ciberseguridad_aegis8.html">Hacer el test</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section id="cta">
+        <div class="sec-head reveal">
+          <h2>Si no sabes por dónde partir</h2>
+          <p class="sec-sub">Empieza por el test (10–15 min) y después revisa recursos según tu perfil.</p>
+        </div>
+        <div class="grid-2">
+          <div class="card reveal" style="padding:18px;">
+            <h3 style="margin:0 0 8px;">Ruta rápida</h3>
+            <p class="muted" style="margin:0;">Test → checklist de mínimos → plan de 30 días. Sin humo, sin pánico.</p>
+            <div class="btn-row">
+              <a class="btn primary" href="test_ciberseguridad_aegis8.html">Ir al test</a>
+              <a class="btn" href="recursos_aegis8.html">Ver recursos</a>
+            </div>
+          </div>
+          <div class="card reveal" style="padding:18px;">
+            <h3 style="margin:0 0 8px;">Si necesitas acompañamiento</h3>
+            <p class="muted" style="margin:0;">Cuéntanos tu contexto y objetivo. No envíes credenciales ni datos sensibles.</p>
+            <div class="btn-row">
+              <a class="btn primary" href="contactanos.html">Contáctanos</a>
+              <a class="btn" href="como_nos_sostenemos_aegis8.html">Cómo nos sostenemos</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- MODALS: Personas -->
+  <div class="modal" id="m-startups" role="dialog" aria-modal="true" aria-labelledby="t-startups">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-startups">Startups — Seguridad desde el inicio</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Evitar “deuda de seguridad” temprana.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Dolores típicos</strong></p>
+        <ul>
+          <li>crecimiento rápido sin roles ni control de accesos</li>
+          <li>infra “a la rápida” sin backups probados</li>
+          <li>exposición pública (subdominios, endpoints, paneles)</li>
+        </ul>
+        <p><strong>Cómo ayudamos</strong></p>
+        <ul>
+          <li>mínimos: MFA, backups, roles, TLS, llaves y secretos</li>
+          <li>higiene de correo y anti-phishing</li>
+          <li>plan de 30 días con prioridades y responsables</li>
+        </ul>
+      </div>
+    </div>
   </div>
-</header>
 
-<main class="wrap">
-  <h1>A quién ayudamos</h1>
-  <p>Trabajamos con quienes necesitan claridad, acompañamiento práctico y decisiones de seguridad realistas.</p>
-
-  <div class="grid">
-    <div class="card">
-      <h3>Startups</h3>
-      <p>Decisiones tempranas correctas: accesos, TLS, backups, procesos y cultura desde el inicio.</p>
-    </div>
-    <div class="card">
-      <h3>Pequeñas empresas</h3>
-      <p>Orden y control en lo esencial: cuentas, correo, endpoints y continuidad operativa.</p>
-    </div>
-    <div class="card">
-      <h3>Personas</h3>
-      <p>Educación práctica para reducir riesgos cotidianos y fortalecer hábitos digitales.</p>
+  <div class="modal" id="m-pymes" role="dialog" aria-modal="true" aria-labelledby="t-pymes">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-pymes">Pequeñas empresas — Orden y control</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Continuidad operativa con pasos simples.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Dolores típicos</strong></p>
+        <ul>
+          <li>contraseñas compartidas y cuentas sin MFA</li>
+          <li>backups inexistentes o no probados</li>
+          <li>equipos sin inventario ni hábitos</li>
+        </ul>
+        <p><strong>Cómo ayudamos</strong></p>
+        <ul>
+          <li>orden de cuentas, roles y accesos</li>
+          <li>rutina de backups y restauración</li>
+          <li>checklist de hábitos (correo, navegación, dispositivos)</li>
+        </ul>
+      </div>
     </div>
   </div>
-</main>
 
-<footer>
-  © <script>document.write(new Date().getFullYear())</script> Aegis8
-</footer>
+  <div class="modal" id="m-personas" role="dialog" aria-modal="true" aria-labelledby="t-personas">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-personas">Personas — Aprender para protegerse</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Seguridad como habilidad cotidiana.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Dolores típicos</strong></p>
+        <ul>
+          <li>phishing (correo, WhatsApp, redes)</li>
+          <li>cuentas sin MFA o contraseñas repetidas</li>
+          <li>privacidad y hábitos digitales</li>
+        </ul>
+        <p><strong>Cómo ayudamos</strong></p>
+        <ul>
+          <li>setup de MFA + gestor de contraseñas</li>
+          <li>checklist anti-phishing</li>
+          <li>prácticas simples para sostener hábitos</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALS: Steps -->
+  <div class="modal" id="m-paso1" role="dialog" aria-modal="true" aria-labelledby="t-p1">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-p1">Paso 1 — Escuchar contexto</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Sin contexto, solo hay suposiciones.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Definimos rápidamente:</p>
+        <ul>
+          <li>qué estás protegiendo (activos y datos)</li>
+          <li>riesgos reales (no “miedo”)</li>
+          <li>urgencias y límites de tiempo/presupuesto</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-paso2" role="dialog" aria-modal="true" aria-labelledby="t-p2">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-p2">Paso 2 — Mínimos de seguridad</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Lo que casi siempre baja riesgo.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Priorizamos lo esencial:</p>
+        <ul>
+          <li>MFA</li>
+          <li>backups + restauración</li>
+          <li>roles y accesos</li>
+          <li>higiene de correo</li>
+          <li>exposición pública</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-paso3" role="dialog" aria-modal="true" aria-labelledby="t-p3">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-p3">Paso 3 — Plan de 30 días</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Impacto primero, esfuerzo después.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Entregable típico:</p>
+        <ul>
+          <li>lista de acciones (priorizada)</li>
+          <li>qué se hace hoy / esta semana / este mes</li>
+          <li>qué es “nice to have” (sin urgencia)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-paso4" role="dialog" aria-modal="true" aria-labelledby="t-p4">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-p4">Paso 4 — Evidencia y continuidad</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Lo que no se documenta, se olvida.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Cerramos con:</p>
+        <ul>
+          <li>checklist simple (mantenible)</li>
+          <li>responsables (si hay equipo)</li>
+          <li>recomendaciones para sostener hábitos</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div class="brand" aria-label="Aegis8">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>Aegis8</strong>
+            <span>Claridad • Criterio • Comunidad</span>
+          </div>
+        </div>
+
+        <div style="max-width: 72ch;">
+          <small class="muted">
+            © <span id="year"></span> Aegis8. Acompañamiento práctico para personas, startups y pequeñas organizaciones.
+          </small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Mobile menu
+    const btn = document.getElementById("menuBtn");
+    const panel = document.getElementById("mobilePanel");
+    function closeMobileMenu(){ panel.style.display="none"; btn.setAttribute("aria-expanded","false"); }
+    function toggleMobileMenu(){
+      const isOpen = btn.getAttribute("aria-expanded")==="true";
+      if(isOpen) closeMobileMenu();
+      else{ panel.style.display="block"; btn.setAttribute("aria-expanded","true"); }
+    }
+    btn.addEventListener("click", toggleMobileMenu);
+    panel.querySelectorAll("a").forEach(a=>a.addEventListener("click", closeMobileMenu));
+    window.addEventListener("resize", ()=>{ if(window.innerWidth>760) closeMobileMenu(); });
+
+    // Scroll progress
+    const progress = document.getElementById("progress");
+    function onScroll(){
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+      progress.style.width = `${Math.max(0, Math.min(1, scrolled)) * 100}%`;
+    }
+    window.addEventListener("scroll", onScroll, { passive:true });
+    onScroll();
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add("on");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold:0.12 });
+    document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+    // Modal system
+    const modals = Array.from(document.querySelectorAll(".modal"));
+    let lastFocus = null;
+
+    function openModal(id){
+      const modal = document.getElementById(id);
+      if(!modal) return;
+      lastFocus = document.activeElement;
+      modal.classList.add("show");
+      document.body.style.overflow="hidden";
+      const closeBtn = modal.querySelector(".modal-close");
+      if(closeBtn) closeBtn.focus();
+    }
+    function closeModal(modal){
+      modal.classList.remove("show");
+      document.body.style.overflow="";
+      if(lastFocus && typeof lastFocus.focus==="function") lastFocus.focus();
+    }
+    function closeAll(){ modals.forEach(m=>m.classList.contains("show") && closeModal(m)); }
+
+    document.addEventListener("click",(e)=>{
+      const trigger = e.target.closest("[data-modal]");
+      if(trigger) openModal(trigger.getAttribute("data-modal"));
+
+      const backdrop = e.target.classList && e.target.classList.contains("modal");
+      if(backdrop) closeModal(e.target);
+
+      const closeBtn = e.target.closest(".modal-close");
+      if(closeBtn) closeModal(closeBtn.closest(".modal"));
+    });
+
+    // Keyboard open + escape
+    document.addEventListener("keydown",(e)=>{
+      if(e.key==="Escape") closeAll();
+
+      if((e.key==="Enter" || e.key===" ") && document.activeElement){
+        const el = document.activeElement;
+        const id = el.getAttribute && el.getAttribute("data-modal");
+        if(id){ e.preventDefault(); openModal(id); }
+      }
+
+      const activeModal = modals.find(m=>m.classList.contains("show"));
+      if(!activeModal) return;
+
+      if(e.key==="Tab"){
+        const focusables = Array.from(activeModal.querySelectorAll('button, a, input, textarea, select, [tabindex]:not([tabindex="-1"])'))
+          .filter(el=>!el.hasAttribute("disabled"));
+        if(focusables.length===0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length-1];
+        if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+        else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+      }
+    });
+  </script>
 </body>
 </html>

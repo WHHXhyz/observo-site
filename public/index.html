@@ -696,7 +696,7 @@ margin: 0 auto;
           <li></li>
           <li><a href="comotrabajamos.html" data-page="comotrabajamos.html">Cómo trabajamos</a></li>
           <li><a href="recursos.html" data-page="recursos.html">Recursos y guías</a></li>
-          <li><a href="index.html#ayudamos" data-hash="#ayudamos">A quiénes ayudamos</a></li>
+          <li><a href="ayudamos.html" data-page="ayudamos.html">A quiénes ayudamos</a></li>
           <li><a href="index.html#quienes" data-hash="#quienes">Quiénes somos</a></li>
           <li><a href="psocial.html" data-page="psocial.html">Proyecto social</a></li>
           <li><a class="nav-cta" href="contactanos.html" data-page="contactanos.html">Contáctanos</a></li>
@@ -712,7 +712,7 @@ margin: 0 auto;
       
       <a href="comotrabajamos.html">Cómo trabajamos</a>
       <a href="recursos.html">Recursos y guías</a>
-      <a href="index.html#ayudamos">A quiénes ayudamos</a>
+      <a href="ayudamos.html">A quiénes ayudamos</a>
       <a href="index.html#quienes">Quiénes somos</a>
       <a href="psocial.html">Proyecto social</a>
       <a href="contactanos.html">Contáctanos</a>
@@ -1145,37 +1145,6 @@ margin: 0 auto;
   <script>
     // Año automático
     document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Menú móvil
-    const btn = document.getElementById("menuBtn");
-    const panel = document.getElementById("mobilePanel");
-
-    function closeMobileMenu(){
-      panel.style.display = "none";
-      btn.setAttribute("aria-expanded", "false");
-    }
-    function toggleMobileMenu(){
-      const isOpen = btn.getAttribute("aria-expanded") === "true";
-      if(isOpen){
-        closeMobileMenu();
-      }else{
-        panel.style.display = "block";
-        btn.setAttribute("aria-expanded", "true");
-      }
-    }
-
-    btn.addEventListener("click", toggleMobileMenu);
-
-    // Cerrar menú al hacer click en un link
-    panel.querySelectorAll("a").forEach(a => {
-      a.addEventListener("click", closeMobileMenu);
-    });
-
-    // Cerrar menú al cambiar a desktop
-    window.addEventListener("resize", () => {
-      if(window.innerWidth > 760) closeMobileMenu();
-    });
-
     // Reveal on scroll
     const reveals = Array.from(document.querySelectorAll(".card, .tile, .stat, .pill"));
     reveals.forEach(el => el.classList.add("reveal"));
@@ -1252,27 +1221,51 @@ margin: 0 auto;
   </script>
 <script>
 (function(){
-  // Mobile menu toggle
   const btn = document.getElementById('menuBtn');
   const panel = document.getElementById('mobilePanel');
-  if(btn && panel){
-    btn.addEventListener('click', () => {
-      const open = panel.style.display === 'block';
-      panel.style.display = open ? 'none' : 'block';
-      btn.setAttribute('aria-expanded', String(!open));
-    });
-    // Close on click
-    panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { panel.style.display='none'; btn.setAttribute('aria-expanded','false'); }));
+
+  function closeMenu(){
+    if(!panel || !btn) return;
+    panel.style.display = 'none';
+    btn.setAttribute('aria-expanded','false');
+  }
+  function openMenu(){
+    if(!panel || !btn) return;
+    panel.style.display = 'block';
+    btn.setAttribute('aria-expanded','true');
+  }
+  function toggleMenu(){
+    if(!panel || !btn) return;
+    const isOpen = btn.getAttribute('aria-expanded') === 'true' || panel.style.display === 'block';
+    isOpen ? closeMenu() : openMenu();
   }
 
-  // Active link (by page or hash)
+  if(btn && panel){
+    btn.setAttribute('aria-expanded','false');
+    btn.addEventListener('click', (e) => { e.preventDefault(); toggleMenu(); });
+
+    // Close menu when clicking a link
+    panel.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if(panel.style.display !== 'block') return;
+      const inside = panel.contains(e.target) || btn.contains(e.target);
+      if(!inside) closeMenu();
+    });
+
+    // Close on Esc
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeMenu(); });
+
+    // Close when resizing to desktop
+    window.addEventListener('resize', () => { if(window.innerWidth > 760) closeMenu(); });
+  }
+
+  // Active link highlight by page
   const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  const hash = (location.hash || '').toLowerCase();
   document.querySelectorAll('#navLinks a').forEach(a => {
     const page = (a.getAttribute('data-page') || '').toLowerCase();
-    const h = (a.getAttribute('data-hash') || '').toLowerCase();
     if(page && page === path) a.classList.add('active');
-    if(h && hash && h === hash) a.classList.add('active');
   });
 })();
 </script>
