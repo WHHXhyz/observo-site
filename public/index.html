@@ -7,6 +7,10 @@
   <meta name="description" content="Aegis8 es una consultora y proyecto educativo-social de ciberseguridad para personas, startups y pequeñas organizaciones. Gobernanza, cultura y hardening con criterio claro." />
   <meta name="theme-color" content="#0B2A5B" />
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root{
       --bg: #F7FBFF;
@@ -27,7 +31,7 @@
     html,body{ height:100%; }
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       color:var(--text);
       background:
         radial-gradient(900px 420px at 20% -10%, rgba(47,169,255,.25), transparent 60%),
@@ -53,6 +57,74 @@
       width:10px; height:10px; border-radius:999px;
       background: radial-gradient(circle at 30% 30%, var(--sky2), var(--sky));
       box-shadow: 0 0 0 4px rgba(47,169,255,.12);
+    }
+
+    .k{ 
+      background: linear-gradient(135deg, rgba(47,169,255,.22), rgba(143,211,255,.35));
+      border: 1px solid rgba(47,169,255,.25);
+      padding: 0 .45em;
+      border-radius: .65em;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+      color: rgba(11,42,91,.92);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .gradline{
+      height: 1px;
+      width: min(560px, 100%);
+      margin: 14px auto 0;
+      border-radius: 99px;
+      background: linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.55), rgba(143,211,255,.65), rgba(47,169,255,.55), rgba(47,169,255,0));
+      position: relative;
+      overflow: hidden;
+    }
+    .gradline:after{
+      content:"";
+      position:absolute;
+      top:0; bottom:0;
+      width: 160px;
+      left: -180px;
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.75), rgba(255,255,255,0));
+      filter: blur(1px);
+      animation: shine 2.8s ease-in-out infinite;
+    }
+    @keyframes shine{
+      0%{ transform: translateX(0); opacity:.0; }
+      15%{ opacity:.8; }
+      50%{ opacity:.9; }
+      85%{ opacity:.8; }
+      100%{ transform: translateX(900px); opacity:0; }
+    }
+
+    /* Section polish */
+    section{ padding: 62px 0; }
+    section + section{ border-top: 1px solid rgba(220,235,255,.75); }
+    .sec-head{ margin-bottom: 22px; }
+    .sec-head h2{ font-weight: 800; }
+    .sec-sub{
+      margin:0;
+      max-width: 86ch;
+      color: var(--muted);
+      font-size: 15.5px;
+    }
+
+    /* Tiles: more minimal, better hover */
+    .tile{
+      position: relative;
+      overflow:hidden;
+    }
+    .tile:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(520px 220px at 15% 10%, rgba(47,169,255,.12), transparent 60%),
+                  radial-gradient(520px 220px at 90% 0%, rgba(143,211,255,.14), transparent 55%);
+      opacity: .9;
+      pointer-events:none;
+    }
+    .tile > *{ position: relative; }
+    .tile-btn:hover{
+      transform: translateY(-3px);
     }
 
     /* Header */
@@ -238,7 +310,104 @@
       grid-template-columns: repeat(4, 1fr);
       gap:14px;
     }
-    .tile{
+    
+
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+
+    /* Clickable cards */
+    .stat-btn, .tile-btn{
+      text-align:left;
+      cursor:pointer;
+    }
+    .stat-btn{
+      width:100%;
+      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+    }
+    .stat-btn:focus-visible, .tile-btn:focus-visible{
+      outline: 3px solid rgba(47,169,255,.35);
+      outline-offset: 3px;
+    }
+    .tile-btn{
+      background: rgba(255,255,255,.92);
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .tile-btn:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 50px rgba(11,42,91,.12);
+      border-color: rgba(47,169,255,.35);
+    }
+
+    /* Subtle entrance animation */
+    .reveal{
+      opacity:0;
+      transform: translateY(10px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .reveal.on{
+      opacity:1;
+      transform:none;
+    }
+
+    /* Modal */
+    .modal{
+      position:fixed; inset:0; z-index:1000;
+      display:none;
+      padding: 18px;
+      background: rgba(11,27,52,.55);
+      backdrop-filter: blur(6px);
+    }
+    .modal.show{ display:grid; place-items:center; }
+    .modal-dialog{
+      width: min(780px, 100%);
+      background: rgba(255,255,255,.96);
+      border: 1px solid rgba(220,235,255,.95);
+      border-radius: 22px;
+      box-shadow: 0 28px 70px rgba(11,42,91,.22);
+      overflow:hidden;
+      animation: modalIn .18s ease-out;
+    }
+    @keyframes modalIn{
+      from{ transform: translateY(8px) scale(.99); opacity:.0; }
+      to{ transform: none; opacity:1; }
+    }
+    .modal-head{
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid rgba(220,235,255,.9);
+      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+    }
+    .modal-title{
+      margin:0;
+      font-size: 18px;
+      letter-spacing: -0.2px;
+      color: var(--blue);
+    }
+    .modal-close{
+      width:42px; height:42px;
+      border-radius: 14px;
+      border:1px solid rgba(220,235,255,.95);
+      background: rgba(255,255,255,.9);
+      cursor:pointer;
+      display:grid; place-items:center;
+      color: rgba(11,42,91,.85);
+      box-shadow: 0 12px 30px rgba(11,42,91,.10);
+    }
+    .modal-body{
+      padding: 14px 16px 16px;
+      color: rgba(11,27,52,.92);
+    }
+    .modal-body p{ margin: 0 0 10px; color: var(--muted); }
+    .modal-body ul{
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+    .modal-body li{ margin: 7px 0; }
+.tile{
       padding: 16px;
       border-radius: var(--radius2);
       border:1px solid var(--line);
@@ -320,6 +489,7 @@
     @media (max-width: 980px){
       .hero-grid{ grid-template-columns: 1fr; }
       .grid-4{ grid-template-columns: repeat(2, 1fr); }
+      .grid-3{ grid-template-columns: 1fr; }
       .values{ grid-template-columns: 1fr; }
     }
     @media (max-width: 760px){
@@ -327,6 +497,7 @@
       .menu-btn{ display:inline-flex; }
       .grid-2{ grid-template-columns: 1fr; }
       .grid-4{ grid-template-columns: 1fr; }
+      .grid-3{ grid-template-columns: 1fr; }
       .wrap{ width:min(var(--max), 100% - 28px); }
       .hero{ padding-top: 22px; }
       .hero-card{ padding: 16px; }
@@ -353,15 +524,14 @@
 
         <nav aria-label="Navegación principal">
           <ul>
+
+            <li><a href="#como-trabajamos">Cómo trabajamos</a></li>
+            <li><a href="#a-quien-ayudamos">A quién ayudamos</a></li>
             <li><a href="#quienes">Quiénes somos</a></li>
-            <li><a href="#quehacemos">Qué hacemos</a></li>
-            <li><a href="#valores">Valores</a></li>
-            <li><a href="#social">Proyecto social</a></li>
           </ul>
         </nav>
 
         <div class="nav-right">
-          <a class="btn" href="#contacto">Contacto</a>
           <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobilePanel">
             <div class="menu-lines" aria-hidden="true">
               <span></span><span></span><span></span>
@@ -371,11 +541,10 @@
       </div>
 
       <div class="mobile-panel" id="mobilePanel" aria-label="Menú móvil">
+
+        <a href="#como-trabajamos">Cómo trabajamos</a>
+        <a href="#a-quien-ayudamos">A quién ayudamos</a>
         <a href="#quienes">Quiénes somos</a>
-        <a href="#quehacemos">Qué hacemos</a>
-        <a href="#valores">Valores</a>
-        <a href="#social">Proyecto social</a>
-        <a href="#contacto">Contacto</a>
       </div>
     </div>
   </header>
@@ -395,93 +564,96 @@
           <p class="lead">
             Aegis8 es una consultora y proyecto educativo-social de ciberseguridad.
             Acompañamos a quienes no tienen un SOC ni presupuesto enterprise a construir
-            <strong>gobernanza, cultura</strong> y <strong>fortalecimiento técnico</strong> con acciones realistas.
+            <span class="k">gobernanza</span>, <span class="k">cultura</span> y <span class="k">fortalecimiento técnico</span> con acciones realistas.
           </p>
 
           <div class="hero-cta center">
-            <a class="btn primary" href="#contacto">Conversemos</a>
-            <a class="btn" href="#quehacemos">Conoce nuestro enfoque</a>
+
+            <a class="btn primary" href="#como-trabajamos">Cómo trabajamos</a>
+            <a class="btn" href="#a-quien-ayudamos">A quién ayudamos</a>
           </div>
         </div>
 
-        <div class="hero-grid">
-          <div class="card hero-card">
-            <div>
-              <span class="badge">Cómo trabajamos</span>
-              <p class="muted" style="margin:12px 0 0;">
-                No vendemos miedo ni soluciones cerradas. Usamos herramientas y buenas prácticas para
-                <strong>explicar</strong>, <strong>priorizar</strong> y <strong>fortalecer</strong> de forma progresiva.
-              </p>
+        <div class="gradline" aria-hidden="true"></div>
+      </section>
 
-              <div class="stat">
-                <div class="ico" aria-hidden="true">1</div>
-                <div>
-                  <strong>Diagnóstico entendido</strong>
-                  <span>Revisión inicial + explicación de riesgos reales en tu contexto.</span>
-                </div>
-              </div>
+      <!-- CÓMO TRABAJAMOS -->
+      <section id="como-trabajamos">
+        <div class="sec-head">
+          <h2>Cómo trabajamos</h2>
+          <p class="sec-sub">
+            Nuestro enfoque es progresivo y transparente. Cada bloque es clickeable: verás detalles, ejemplos y
+            qué entregables puedes esperar (sin humo, sin miedo).
+          </p>
+        </div>
 
-              <div class="stat">
-                <div class="ico" aria-hidden="true">2</div>
-                <div>
-                  <strong>Fortalecimiento progresivo</strong>
-                  <span>Hardening, accesos, prácticas operativas y evidencia de mejoras.</span>
-                </div>
-              </div>
+        <div class="grid-3">
+          <button class="tile tile-btn" type="button" data-modal="m-diagnostico" aria-haspopup="dialog">
+            <span class="badge">Paso 1</span>
+            <h3>Diagnóstico entendido</h3>
+            <p>
+              Revisión inicial + explicación de riesgos reales en tu contexto.
+              Priorizamos acciones de alto impacto y bajo costo.
+            </p>
+          </button>
 
-              <div class="stat">
-                <div class="ico" aria-hidden="true">3</div>
-                <div>
-                  <strong>Autonomía del cliente</strong>
-                  <span>Transferencia de conocimiento: tu equipo aprende y decide con criterio.</span>
-                </div>
-              </div>
-            </div>
+          <button class="tile tile-btn" type="button" data-modal="m-fortalecimiento" aria-haspopup="dialog">
+            <span class="badge">Paso 2</span>
+            <h3>Fortalecimiento progresivo</h3>
+            <p>
+              Hardening, accesos, prácticas operativas y evidencia de mejoras.
+              Sin interrumpir tu operación.
+            </p>
+          </button>
 
-            <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
-              <span class="badge">Observo</span>
-              <span class="badge">PBD Toolkit</span>
-              <span class="badge">Gobernanza</span>
-              <span class="badge">Educación</span>
-            </div>
-          </div>
+          <button class="tile tile-btn" type="button" data-modal="m-autonomia" aria-haspopup="dialog">
+            <span class="badge">Paso 3</span>
+            <h3>Autonomía del cliente</h3>
+            <p>
+              Transferencia de conocimiento: tu equipo aprende, documenta y decide con criterio.
+              Menos dependencia, más madurez.
+            </p>
+          </button>
+        </div>
+      </section>
 
-          <div class="card hero-card">
-            <div>
-              <span class="badge">A quién ayudamos</span>
-              <p class="muted" style="margin:12px 0 0;">
-                Organizaciones y personas que quieren crecer con seguridad, sin complejidad innecesaria.
-              </p>
+      <!-- A QUIÉN AYUDAMOS -->
+      <section id="a-quien-ayudamos">
+        <div class="sec-head">
+          <h2>A quién ayudamos</h2>
+          <p class="sec-sub">
+            Trabajamos con quienes necesitan claridad y acompañamiento práctico.
+            Cada bloque es clickeable para ver casos típicos, dolores reales y cómo apoyamos.
+          </p>
+        </div>
 
-              <div class="stat">
-                <div class="ico" aria-hidden="true">★</div>
-                <div>
-                  <strong>Startups</strong>
-                  <span>Decisiones correctas desde el inicio: accesos, TLS, backups, roles.</span>
-                </div>
-              </div>
+        <div class="grid-3">
+          <button class="tile tile-btn" type="button" data-modal="m-startups" aria-haspopup="dialog">
+            <span class="badge">Startups</span>
+            <h3>Seguridad desde el inicio</h3>
+            <p>
+              Decisiones correctas temprano: accesos, TLS, backups, procesos y cultura.
+              Crece con control, no con parches.
+            </p>
+          </button>
 
-              <div class="stat">
-                <div class="ico" aria-hidden="true">✓</div>
-                <div>
-                  <strong>Pequeñas empresas</strong>
-                  <span>Orden y control: políticas mínimas, hábitos, hardening y prevención.</span>
-                </div>
-              </div>
+          <button class="tile tile-btn" type="button" data-modal="m-pymes" aria-haspopup="dialog">
+            <span class="badge">Pequeñas empresas</span>
+            <h3>Orden y control</h3>
+            <p>
+              Priorizamos lo esencial: cuentas, correo, endpoints, backups y hábitos.
+              Menos superficie expuesta, más continuidad.
+            </p>
+          </button>
 
-              <div class="stat">
-                <div class="ico" aria-hidden="true">⟡</div>
-                <div>
-                  <strong>Personas y comunidad</strong>
-                  <span>Educación práctica para reducir riesgos cotidianos y brechas.</span>
-                </div>
-              </div>
-            </div>
-
-            <div style="margin-top:14px;">
-              <a class="btn primary" href="#social" style="width:100%;">Ver el proyecto social</a>
-            </div>
-          </div>
+          <button class="tile tile-btn" type="button" data-modal="m-personas" aria-haspopup="dialog">
+            <span class="badge">Personas</span>
+            <h3>Aprender para protegerse</h3>
+            <p>
+              Educación práctica para reducir riesgos cotidianos: cuentas, phishing, privacidad y hábitos.
+              Seguridad como habilidad.
+            </p>
+          </button>
         </div>
       </section>
 
@@ -489,7 +661,7 @@
       <section id="quienes">
         <div class="sec-head">
           <h2>Quiénes somos</h2>
-          <p class="muted" style="margin:0; max-width:80ch;">
+          <p class="sec-sub">
             Aegis8 nace como un proyecto social y técnico orientado a reducir la brecha de ciberseguridad
             en personas, startups y pequeñas organizaciones. Creemos que la seguridad no debe depender del
             tamaño del presupuesto, sino del acceso a conocimiento claro y acompañamiento honesto.
@@ -515,180 +687,152 @@
           </div>
         </div>
       </section>
-
-      <!-- QUÉ HACEMOS -->
-      <section id="quehacemos">
-        <div class="sec-head">
-          <h2>Qué hacemos</h2>
-          <p class="muted" style="margin:0; max-width:80ch;">
-            Combinamos consultoría, educación y fortalecimiento técnico. Usamos herramientas propias como apoyo,
-            pero el valor principal está en el análisis, la explicación y el acompañamiento.
-          </p>
-        </div>
-
-        <div class="grid-4">
-          <div class="tile">
-            <span class="badge">Gobernanza</span>
-            <h3>Gobernanza de ciberseguridad</h3>
-            <p>
-              Definimos prioridades, roles, políticas mínimas y criterios de decisión.
-              Traducimos NIST/ISO a acciones aplicables.
-            </p>
-          </div>
-
-          <div class="tile">
-            <span class="badge">Cultura</span>
-            <h3>Educación y cultura</h3>
-            <p>
-              Charlas y talleres prácticos para equipos pequeños y comunidades.
-              Concientización basada en casos reales, sin “fear marketing”.
-            </p>
-          </div>
-
-          <div class="tile">
-            <span class="badge">Hardening</span>
-            <h3>Fortalecimiento técnico</h3>
-            <p>
-              Hardening progresivo: accesos, configuración, superficie expuesta, hábitos operativos y evidencia
-              de mejoras implementadas.
-            </p>
-          </div>
-
-          <div class="tile">
-            <span class="badge">Herramientas</span>
-            <h3>Observo + PBD Toolkit</h3>
-            <p>
-              Herramientas internas para revisión “read-only” y checklists de fortalecimiento.
-              Complementan el proceso, no reemplazan el criterio humano.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- VALORES -->
-      <section id="valores">
-        <div class="sec-head">
-          <h2>Valores</h2>
-          <p class="muted" style="margin:0; max-width:80ch;">
-            Nuestro trabajo se construye sobre ética, claridad y transferencia real de conocimiento.
-          </p>
-        </div>
-
-        <div class="values">
-          <ul class="list" aria-label="Lista de valores">
-            <li>
-              <div class="check" aria-hidden="true">✓</div>
-              <div>
-                <strong>Transparencia</strong>
-                <span>Explicamos qué hacemos, cómo y por qué.</span>
-              </div>
-            </li>
-            <li>
-              <div class="check" aria-hidden="true">✓</div>
-              <div>
-                <strong>Educación primero</strong>
-                <span>La seguridad se aprende y se construye, no se “compra”.</span>
-              </div>
-            </li>
-            <li>
-              <div class="check" aria-hidden="true">✓</div>
-              <div>
-                <strong>Autonomía del cliente</strong>
-                <span>Buscamos que tu equipo tome mejores decisiones sin dependencia.</span>
-              </div>
-            </li>
-            <li>
-              <div class="check" aria-hidden="true">✓</div>
-              <div>
-                <strong>Ética profesional</strong>
-                <span>No explotamos, no invadimos, no exageramos riesgos.</span>
-              </div>
-            </li>
-          </ul>
-
-          <div class="social">
-            <span class="badge">En pocas palabras</span>
-            <h3 style="margin:10px 0 8px;">Seguridad como capacidad compartida</h3>
-            <p class="muted" style="margin:0;">
-              Creemos que la ciberseguridad debe ser accesible. Por eso nuestro enfoque combina consultoría con
-              educación y comunidad. Menos humo, más criterio.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- PROYECTO SOCIAL -->
-      <section id="social">
-        <div class="sec-head">
-          <h2>Proyecto social y educativo</h2>
-          <p class="muted" style="margin:0; max-width:85ch;">
-            Aegis8 también es un proyecto social. Parte de nuestro trabajo está orientado a compartir conocimiento,
-            generar cultura y apoyar a quienes no tendrían acceso a acompañamiento especializado.
-          </p>
-        </div>
-
-        <div class="grid-2">
-          <div class="tile">
-            <span class="badge">Impacto</span>
-            <h3>Acceso a educación práctica</h3>
-            <p>
-              Talleres, charlas y materiales diseñados para ser útiles sin jerga innecesaria.
-              Seguridad aplicada a la vida real y al crecimiento de organizaciones pequeñas.
-            </p>
-          </div>
-          <div class="tile">
-            <span class="badge">Herramientas en mejora</span>
-            <h3>Observo y PBD evolucionan</h3>
-            <p>
-              Mantenemos herramientas y guías como apoyo para revisiones y hardening. Nuestra meta es que
-              puedan ser entendibles, auditables y aprovechables por equipos pequeños.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- CONTACTO -->
-      <section id="contacto">
-        <div class="sec-head">
-          <h2>Contacto</h2>
-          <p class="muted" style="margin:0; max-width:85ch;">
-            Cuéntanos tu contexto (persona, startup o pequeña empresa) y qué quieres lograr. Te respondemos con
-            pasos claros y realistas.
-          </p>
-        </div>
-
-        <div class="card" style="padding:18px;">
-          <div class="grid-2" style="align-items:start;">
-            <div class="tile" style="box-shadow:none;">
-              <span class="badge">Escríbenos</span>
-              <h3>Conversemos</h3>
-              <p>
-                Puedes reemplazar este correo por el definitivo cuando tengas tu dominio y mail corporativo.
-              </p>
-              <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-                <a class="btn primary" href="mailto:contacto@aegis8.org?subject=Contacto%20Aegis8&body=Hola%20Aegis8%2C%0A%0AContexto%3A%20(persona%2Fstartup%2Fpyme)%0AObjetivo%3A%20%0ADominio%2FPlataforma%3A%20%0A%0AGracias.">Enviar email</a>
-                <a class="btn" href="#top">Volver arriba</a>
-              </div>
-            </div>
-
-            <div class="tile" style="box-shadow:none;">
-              <span class="badge">Lo que pedimos</span>
-              <h3>Información mínima</h3>
-              <p class="muted" style="margin:0;">
-                Para ayudarte rápido, incluye:
-              </p>
-              <ul class="muted" style="margin:10px 0 0; padding-left: 18px;">
-                <li>Tipo de organización (persona/startup/pyme)</li>
-                <li>Dominio o plataforma</li>
-                <li>Objetivo (ej. “ordenar accesos”, “mejorar TLS”, “crear políticas mínimas”)</li>
-                <li>Restricciones (tiempo, presupuesto, stack)</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   </main>
+
+  <!-- MODALS -->
+  <div class="modal" id="m-diagnostico" role="dialog" aria-modal="true" aria-labelledby="t-diagnostico">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-diagnostico">Diagnóstico entendido</h3>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Lo primero es entender tu realidad, no “marcar checks”.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Partimos por una revisión inicial orientada a contexto. La meta es que el cliente entienda
+          qué riesgos son reales y cuáles son ruido, y que exista una lista de acciones priorizadas.
+        </p>
+        <ul>
+          <li><strong>Contexto:</strong> stack, exposición pública, equipo, modelo de negocio, dependencias críticas.</li>
+          <li><strong>Línea base:</strong> señales públicas (TLS/headers), accesos, dominios, correo, backups, hábitos operativos.</li>
+          <li><strong>Prioridad:</strong> “alto impacto / bajo esfuerzo” primero, sin bloquear operación.</li>
+          <li><strong>Entregable:</strong> resumen claro + checklist accionable + explicación (no solo un puntaje).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-fortalecimiento" role="dialog" aria-modal="true" aria-labelledby="t-fortalecimiento">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-fortalecimiento">Fortalecimiento progresivo</h3>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Mejoras pequeñas, sostenibles y medibles.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Implementamos mejoras por capas: primero lo que reduce incidentes comunes (cuentas, correo, accesos),
+          luego hardening y prácticas que sostienen el tiempo.
+        </p>
+        <ul>
+          <li><strong>Hardening:</strong> configuración segura, mínimos servicios, actualizaciones, TLS, headers.</li>
+          <li><strong>Accesos:</strong> MFA, separación de roles, llaves, rotación, mínimos privilegios.</li>
+          <li><strong>Operación:</strong> backups, restauración probada, inventario, registros básicos, continuidad.</li>
+          <li><strong>Evidencia:</strong> antes/después y guía simple de mantención.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-autonomia" role="dialog" aria-modal="true" aria-labelledby="t-autonomia">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-autonomia">Autonomía del cliente</h3>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Transferimos conocimiento para que el cliente se fortalezca.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>
+          La seguridad no funciona si queda en “la consultora”. Aegis8 trabaja para que tu equipo
+          entienda, documente y mantenga lo implementado.
+        </p>
+        <ul>
+          <li><strong>Documentación mínima:</strong> cómo operar, cómo actualizar, cómo responder ante incidentes.</li>
+          <li><strong>Capacitación:</strong> hábitos, phishing, contraseñas, accesos, higiene digital.</li>
+          <li><strong>Rutinas:</strong> checklist mensual y criterios simples para tomar decisiones.</li>
+          <li><strong>Objetivo:</strong> menos dependencia, más madurez y continuidad.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-startups" role="dialog" aria-modal="true" aria-labelledby="t-startups">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-startups">Startups</h3>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Crecer rápido, pero con bases seguras.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Las startups suelen fallar por “deuda de seguridad” temprana: accesos compartidos, secretos expuestos,
+          falta de backups, decisiones de infraestructura sin criterios.
+        </p>
+        <ul>
+          <li><strong>Dolores típicos:</strong> cuentas sin MFA, llaves en repos, ambientes mezclados, permisos excesivos.</li>
+          <li><strong>Qué aportamos:</strong> criterios de arquitectura, control de accesos, backups y hardening progresivo.</li>
+          <li><strong>Herramientas:</strong> Observo (línea base) + PBD Toolkit (checklists/hardening) como apoyo.</li>
+          <li><strong>Resultado:</strong> mejores decisiones, menos incidentes, más confianza para clientes e inversionistas.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-pymes" role="dialog" aria-modal="true" aria-labelledby="t-pymes">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-pymes">Pequeñas empresas</h3>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Ordenar lo esencial y reducir riesgos comunes.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>
+          En pymes, el riesgo suele venir de correo, endpoints, contraseñas, accesos de terceros
+          y falta de continuidad (backups/recuperación).
+        </p>
+        <ul>
+          <li><strong>Dolores típicos:</strong> phishing, cuentas reutilizadas, equipos sin parches, backups no probados.</li>
+          <li><strong>Qué aportamos:</strong> políticas mínimas, hábitos, hardening, inventario y recomendaciones claras.</li>
+          <li><strong>Enfoque:</strong> acciones realistas con impacto tangible, sin “enterprise overhead”.</li>
+          <li><strong>Resultado:</strong> menos incidentes, mejor continuidad operativa, más claridad para decidir.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-personas" role="dialog" aria-modal="true" aria-labelledby="t-personas">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-personas">Personas y comunidad</h3>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Seguridad como habilidad cotidiana.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>
+          El impacto social empieza por hábitos simples: cuentas seguras, privacidad, verificación,
+          y entender el riesgo real de estafas y filtraciones.
+        </p>
+        <ul>
+          <li><strong>Temas:</strong> phishing, MFA, contraseñas, privacidad, backups personales, higiene digital.</li>
+          <li><strong>Formato:</strong> charlas y guías prácticas, enfocadas en decisiones diarias.</li>
+          <li><strong>Objetivo:</strong> reducir brechas y empoderar, especialmente a quienes no tienen soporte técnico.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
   <footer>
     <div class="wrap">
@@ -744,6 +888,80 @@
     // Cerrar menú al cambiar a desktop
     window.addEventListener("resize", () => {
       if(window.innerWidth > 760) closeMobileMenu();
+    });
+
+    // Reveal on scroll
+    const reveals = Array.from(document.querySelectorAll(".pill, .hero h1, .hero .lead, .hero-cta, .sec-head, .tile, .stat"));
+    reveals.forEach(el => el.classList.add("reveal"));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          e.target.classList.add("on");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+
+    // Modals
+    const modals = Array.from(document.querySelectorAll(".modal"));
+    let lastFocus = null;
+
+    function openModal(id){
+      const modal = document.getElementById(id);
+      if(!modal) return;
+      lastFocus = document.activeElement;
+      modal.classList.add("show");
+      document.body.style.overflow = "hidden";
+      // focus close button
+      const closeBtn = modal.querySelector(".modal-close");
+      if(closeBtn) closeBtn.focus();
+    }
+    function closeModal(modal){
+      modal.classList.remove("show");
+      document.body.style.overflow = "";
+      if(lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+    }
+    function closeAll(){
+      modals.forEach(m => m.classList.contains("show") && closeModal(m));
+    }
+
+    // Open from any element with data-modal
+    document.addEventListener("click", (e) => {
+      const trigger = e.target.closest("[data-modal]");
+      if(trigger){
+        openModal(trigger.getAttribute("data-modal"));
+      }
+      // Close when clicking backdrop
+      const open = e.target.classList && e.target.classList.contains("modal");
+      if(open){
+        closeModal(e.target);
+      }
+      // Close button
+      const closeBtn = e.target.closest(".modal-close");
+      if(closeBtn){
+        closeModal(closeBtn.closest(".modal"));
+      }
+    });
+
+    // Escape closes
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape") closeAll();
+      // simple focus trap for open modal
+      const activeModal = modals.find(m => m.classList.contains("show"));
+      if(!activeModal) return;
+      if(e.key === "Tab"){
+        const focusables = Array.from(activeModal.querySelectorAll('button, a, input, textarea, select, [tabindex]:not([tabindex="-1"])'))
+          .filter(el => !el.hasAttribute("disabled"));
+        if(focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if(e.shiftKey && document.activeElement === first){
+          e.preventDefault(); last.focus();
+        } else if(!e.shiftKey && document.activeElement === last){
+          e.preventDefault(); first.focus();
+        }
+      }
     });
   </script>
 </body>
