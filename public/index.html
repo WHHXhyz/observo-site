@@ -3,13 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <title>Aegis8 — Consultora y proyecto social de ciberseguridad</title>
   <meta name="description" content="Aegis8 es una consultora y proyecto educativo-social de ciberseguridad para personas, startups y pequeñas organizaciones. Gobernanza, cultura y hardening con criterio claro." />
   <meta name="theme-color" content="#0B2A5B" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -24,14 +23,14 @@
       --shadow: 0 18px 45px rgba(11,42,91,.10);
       --radius: 18px;
       --radius2: 26px;
-      --max: 980px;
+      --max: 1080px;
     }
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
     body{
       margin:0;
-      font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       color:var(--text);
       background:
         radial-gradient(900px 420px at 20% -10%, rgba(47,169,255,.25), transparent 60%),
@@ -59,74 +58,6 @@
       box-shadow: 0 0 0 4px rgba(47,169,255,.12);
     }
 
-    .k{ 
-      background: linear-gradient(135deg, rgba(47,169,255,.22), rgba(143,211,255,.35));
-      border: 1px solid rgba(47,169,255,.25);
-      padding: 0 .45em;
-      border-radius: .65em;
-      box-decoration-break: clone;
-      -webkit-box-decoration-break: clone;
-      color: rgba(11,42,91,.92);
-      font-weight: 800;
-      white-space: nowrap;
-    }
-    .gradline{
-      height: 1px;
-      width: min(560px, 100%);
-      margin: 14px auto 0;
-      border-radius: 99px;
-      background: linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.55), rgba(143,211,255,.65), rgba(47,169,255,.55), rgba(47,169,255,0));
-      position: relative;
-      overflow: hidden;
-    }
-    .gradline:after{
-      content:"";
-      position:absolute;
-      top:0; bottom:0;
-      width: 160px;
-      left: -180px;
-      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.75), rgba(255,255,255,0));
-      filter: blur(1px);
-      animation: shine 2.8s ease-in-out infinite;
-    }
-    @keyframes shine{
-      0%{ transform: translateX(0); opacity:.0; }
-      15%{ opacity:.8; }
-      50%{ opacity:.9; }
-      85%{ opacity:.8; }
-      100%{ transform: translateX(900px); opacity:0; }
-    }
-
-    /* Section polish */
-    section{ padding: 62px 0; }
-    section + section{ border-top: 1px solid rgba(220,235,255,.75); }
-    .sec-head{ margin-bottom: 22px; }
-    .sec-head h2{ font-weight: 800; }
-    .sec-sub{
-      margin:0 auto;
-      max-width: 86ch;
-      color: var(--muted);
-      font-size: 15.5px;
-    }
-
-    /* Tiles: more minimal, better hover */
-    .tile{
-      position: relative;
-      overflow:hidden;
-    }
-    .tile:before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(520px 220px at 15% 10%, rgba(47,169,255,.12), transparent 60%),
-                  radial-gradient(520px 220px at 90% 0%, rgba(143,211,255,.14), transparent 55%);
-      opacity: .9;
-      pointer-events:none;
-    }
-    .tile > *{ position: relative; }
-    .tile-btn:hover{
-      transform: translateY(-3px);
-    }
-
     /* Header */
     header{
       position:sticky; top:0; z-index:50;
@@ -136,11 +67,14 @@
     }
     .nav{
       display:grid;
-      grid-template-columns: auto 1fr auto;
+      grid-template-columns: 1fr auto 1fr;
       align-items:center;
       padding:14px 0;
       gap:16px;
     }
+    .brand{ justify-self: start; }
+    header nav{ justify-self: center; }
+    .nav-right{ justify-self: end; }
     .brand{ display:flex; align-items:center; gap:12px; min-width: 180px; }
     .logo{
       width:38px; height:38px; border-radius:12px;
@@ -160,11 +94,9 @@
     .brand strong{ font-size:16px; letter-spacing:.2px; }
     .brand span{ font-size:12px; color:var(--muted); display:block; margin-top:2px; }
 
-    nav{ justify-self:center; }
-
     nav ul{
       list-style:none; padding:0; margin:0;
-      display:flex; align-items:center; justify-content:center; gap:18px;
+      display:flex; align-items:center; gap:18px;
     }
     nav a{
       font-size:14px;
@@ -252,10 +184,156 @@
       margin: 14px 0 12px;
       letter-spacing: -0.6px;
     }
-    .lead{
+    
+    /* Title styling: cyber gradient, not "dead" black */
+    h1, .sec-head h2{
+      font-weight: 900;
+      letter-spacing: -0.7px;
+      background: linear-gradient(90deg, rgba(11,42,91,1) 0%, rgba(47,169,255,1) 55%, rgba(143,211,255,1) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 14px 26px rgba(47,169,255,.10));
+    }
+    /* Keep paragraph text readable */
+    .sec-head h2{ letter-spacing: -0.35px; }
+
+    /* Nav CTA link */
+    .nav-cta{
+      position: relative;
+      padding: 10px 12px !important;
+      border: 1px solid rgba(47,169,255,.35);
+      background: linear-gradient(135deg, rgba(47,169,255,.12), rgba(143,211,255,.20));
+      box-shadow: 0 12px 28px rgba(11,42,91,.08);
+    }
+    .nav-cta:hover{
+      background: linear-gradient(135deg, rgba(47,169,255,.16), rgba(143,211,255,.26));
+      color: var(--blue) !important;
+    }
+
+    /* Hero emblem */
+    .hero-emblem{
+      position: relative;
+      width: 130px;
+      height: 130px;
+      margin: 18px auto 8px;
+      display:grid;
+      place-items:center;
+    }
+    .emblem-svg{
+      width: 130px;
+      height: 130px;
+      display:block;
+      filter: drop-shadow(0 24px 55px rgba(47,169,255,.18));
+      animation: floaty 3.8s ease-in-out infinite;
+    }
+    .emblem-glow{
+      position:absolute;
+      inset: 22px;
+      border-radius: 26px;
+      background: radial-gradient(circle at 30% 25%, rgba(143,211,255,.35), rgba(47,169,255,.10), transparent 70%);
+      filter: blur(10px);
+      z-index:-1;
+      animation: pulse 3.2s ease-in-out infinite;
+    }
+    @keyframes floaty{
+      0%,100%{ transform: translateY(0); }
+      50%{ transform: translateY(-6px); }
+    }
+    @keyframes pulse{
+      0%,100%{ opacity:.8; transform: scale(1); }
+      50%{ opacity:1; transform: scale(1.06); }
+    }
+
+    /* Principle strip (no "PRINCIPIO" label) */
+    .principle-strip{
+      margin: 14px auto 0;
+      width: min(820px, 100%);
+      border-radius: 18px;
+      border: 1px solid rgba(47,169,255,.28);
+      background:
+        linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.16)),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.0) 0, rgba(255,255,255,.0) 14px, rgba(47,169,255,.06) 15px, rgba(255,255,255,.0) 30px);
+      box-shadow: 0 22px 60px rgba(11,42,91,.10);
+      padding: 14px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 12px;
+      position: relative;
+      overflow:hidden;
+    }
+    .principle-strip:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(520px 180px at 20% 0%, rgba(47,169,255,.20), transparent 60%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .p-ico{
+      width: 34px; height: 34px;
+      border-radius: 14px;
+      border: 1px solid rgba(220,235,255,.95);
+      background: rgba(255,255,255,.75);
+      display:grid; place-items:center;
+      color: rgba(11,42,91,.92);
+      flex: 0 0 auto;
+      box-shadow: 0 14px 30px rgba(11,42,91,.06);
+    }
+    .p-ico svg{ width: 20px; height: 20px; }
+    .p-text{
+      position: relative;
+      color: rgba(11,27,52,.92);
+      font-weight: 700;
+      text-align:center;
+    }
+    .p-text strong{
+      background: linear-gradient(90deg, rgba(47,169,255,.25), rgba(143,211,255,.35));
+      border: 1px solid rgba(47,169,255,.25);
+      padding: 0 .35em;
+      border-radius: .65em;
+      white-space: nowrap;
+    }
+    .p-line{
+      position:absolute;
+      left: 10%;
+      right: 10%;
+      bottom: 8px;
+      height: 1px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.55), rgba(143,211,255,.70), rgba(47,169,255,.55), rgba(47,169,255,0));
+      opacity:.85;
+      animation: shimmer 2.6s ease-in-out infinite;
+    }
+    @keyframes shimmer{
+      0%,100%{ filter: blur(0px); opacity:.75; }
+      50%{ filter: blur(.3px); opacity:1; }
+    }
+
+    /* Tile icons */
+    .tile-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .tile-ico{
+      width: 38px; height: 38px;
+      border-radius: 14px;
+      border: 1px solid rgba(220,235,255,.95);
+      background: rgba(255,255,255,.72);
+      display:grid; place-items:center;
+      color: rgba(11,42,91,.90);
+      box-shadow: 0 14px 30px rgba(11,42,91,.06);
+    }
+    .tile-ico svg{ width: 20px; height: 20px; }
+
+.lead{
       font-size: clamp(16px, 1.35vw, 18px);
       color: var(--muted);
-      margin: 0 auto 18px;
+      margin: 0 0 18px;
       max-width: 62ch;
     }
     .hero-cta{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
@@ -296,10 +374,10 @@
       padding: 52px 0;
     }
     .sec-head{
-      display:flex; flex-direction:column; gap:10px;
+      display:flex; flex-direction:column; gap:8px;
       margin-bottom: 18px;
-      text-align:center;
       align-items:center;
+      text-align:center;
     }
     .sec-head h2{
       margin:0;
@@ -422,7 +500,7 @@
       min-height: 160px;
     }
     .tile h3{
-      margin: 6px 0 8px;
+      margin: 10px 0 8px;
       font-size: 16px;
       letter-spacing: -0.1px;
     }
@@ -431,79 +509,6 @@
       color: var(--muted);
       font-size: 14px;
     }
-
-    .tile-action{
-      text-align:left;
-      cursor:pointer;
-      position:relative;
-      overflow:hidden;
-      transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease;
-    }
-    .tile-action:before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(500px 120px at 15% 0%, rgba(47,169,255,.18), transparent 55%),
-                  radial-gradient(500px 120px at 85% 20%, rgba(143,211,255,.20), transparent 55%);
-      opacity:0;
-      transition: opacity .18s ease;
-      pointer-events:none;
-    }
-    .tile-action:hover{
-      transform: translateY(-2px);
-      border-color: rgba(47,169,255,.35);
-      box-shadow: 0 22px 55px rgba(11,42,91,.12);
-    }
-    .tile-action:hover:before{ opacity:1; }
-
-    .tile-ico{
-      position:absolute;
-      top:14px; right:14px;
-      width:42px; height:42px;
-      border-radius: 14px;
-      border:1px solid rgba(220,235,255,.95);
-      background: rgba(47,169,255,.10);
-      display:grid; place-items:center;
-      color: rgba(11,42,91,.85);
-    }
-    .tile-ico svg{ width:20px; height:20px; }
-
-    .tile-hint{
-      display:inline-flex;
-      margin-top: 12px;
-      font-size: 12px;
-      font-weight: 700;
-      color: rgba(11,42,91,.78);
-      opacity: .85;
-    }
-
-    .quote{
-      display:flex; gap:14px; align-items:flex-start;
-      padding: 14px 14px;
-      border-radius: var(--radius2);
-      border:1px solid rgba(47,169,255,.22);
-      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
-      box-shadow: 0 16px 40px rgba(11,42,91,.10);
-    }
-    .quote-line{
-      width:10px; border-radius: 999px;
-      background: linear-gradient(180deg, var(--sky), var(--sky2));
-      box-shadow: 0 0 0 5px rgba(47,169,255,.10);
-      flex: 0 0 auto;
-    }
-    .quote-kicker{
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: .3px;
-      color: rgba(11,42,91,.75);
-      text-transform: uppercase;
-    }
-    .quote-text{
-      margin-top: 4px;
-      font-size: 14px;
-      color: rgba(11,27,52,.88);
-    }
-
-
     .badge{
       display:inline-flex; align-items:center; gap:8px;
       padding: 8px 10px;
@@ -514,30 +519,6 @@
       font-weight:700;
       font-size: 12px;
     }
-    .tile-top{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom: 8px;
-    }
-    .mini-ico{
-      width:36px; height:36px;
-      border-radius: 14px;
-      display:grid; place-items:center;
-      border:1px solid rgba(220,235,255,.95);
-      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
-      box-shadow: 0 10px 25px rgba(11,42,91,.08);
-      flex: 0 0 auto;
-    }
-    .mini-ico svg{
-      width:18px; height:18px;
-      stroke: rgba(11,42,91,.9);
-      stroke-width: 2;
-      fill: none;
-      opacity: .9;
-    }
-
 
     .values{
       display:grid;
@@ -575,8 +556,7 @@
       background: linear-gradient(135deg, rgba(47,169,255,.12), rgba(143,211,255,.22));
       box-shadow: 0 18px 45px rgba(11,42,91,.10);
     }
-
-    footer{
+footer{
       padding: 28px 0 40px;
       border-top: 1px solid rgba(220,235,255,.9);
       background: rgba(255,255,255,.55);
@@ -627,17 +607,15 @@
 
         <nav aria-label="Navegación principal">
           <ul>
-
+            <li><a href="#quienes">Quiénes somos</a></li>
             <li><a href="#como-trabajamos">Cómo trabajamos</a></li>
             <li><a href="#a-quien-ayudamos">A quién ayudamos</a></li>
-            <li><a href="#quienes">Quiénes somos</a></li>
             <li><a href="/proyecto-social.html">Proyecto social</a></li>
-            <li><a href="/contacto.html">Contáctanos</a></li>
-          </ul>
+            <li><a class="nav-cta" href="mailto:contacto@aegis8.org?subject=Contacto%20Aegis8&body=Hola%20Aegis8%2C%0A%0AContexto%3A%20(persona%2Fstartup%2Fpyme)%0AObjetivo%3A%20%0ADominio%2FPlataforma%3A%20%0A%0AGracias.">Contáctanos</a></li>
+</ul>
         </nav>
 
         <div class="nav-right">
-          <a class="btn primary" href="/contacto.html">Contáctanos</a>
           <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobilePanel">
             <div class="menu-lines" aria-hidden="true">
               <span></span><span></span><span></span>
@@ -648,11 +626,13 @@
 
       <div class="mobile-panel" id="mobilePanel" aria-label="Menú móvil">
 
+        
+        <a href="#quienes">Quiénes somos</a>
         <a href="#como-trabajamos">Cómo trabajamos</a>
         <a href="#a-quien-ayudamos">A quién ayudamos</a>
-        <a href="#quienes">Quiénes somos</a>
         <a href="/proyecto-social.html">Proyecto social</a>
-        <a href="/contacto.html">Contáctanos</a>
+        <a href="mailto:contacto@aegis8.org?subject=Contacto%20Aegis8&body=Hola%20Aegis8%2C%0A%0AContexto%3A%20(persona%2Fstartup%2Fpyme)%0AObjetivo%3A%20%0ADominio%2FPlataforma%3A%20%0A%0AGracias.">Contáctanos</a>
+
       </div>
     </div>
   </header>
@@ -672,83 +652,111 @@
           <p class="lead">
             Aegis8 es una consultora y proyecto educativo-social de ciberseguridad.
             Acompañamos a quienes no tienen un SOC ni presupuesto enterprise a construir
-            <span class="k">gobernanza</span>, <span class="k">cultura</span> y <span class="k">fortalecimiento técnico</span> con acciones realistas.
+            <strong>gobernanza, cultura</strong> y <strong>fortalecimiento técnico</strong> con acciones realistas.
           </p>
 
-          <div class="hero-cta center">
-            <a class="btn primary" href="#quienes">Conócenos</a>
-            <a class="btn" href="/contacto.html">Contáctanos</a>
+          
+          <div class="hero-emblem" aria-hidden="true">
+            <svg class="emblem-svg" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="g1" x1="0" y1="0" x2="160" y2="160" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#0B2A5B"/>
+                  <stop offset="0.55" stop-color="#2FA9FF"/>
+                  <stop offset="1" stop-color="#8FD3FF"/>
+                </linearGradient>
+                <linearGradient id="g2" x1="20" y1="20" x2="140" y2="140" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#2FA9FF" stop-opacity="0.12"/>
+                  <stop offset="1" stop-color="#8FD3FF" stop-opacity="0.28"/>
+                </linearGradient>
+              </defs>
+
+              <!-- shield -->
+              <path d="M80 14C58 26 40 28 28 30v54c0 34 23 54 52 62c29-8 52-28 52-62V30c-12-2-30-4-52-16Z"
+                    stroke="url(#g1)" stroke-width="3.5" stroke-linejoin="round"/>
+              <path d="M80 22C61 32 46 34 36 35v48c0 28 19 45 44 52c25-7 44-24 44-52V35c-10-1-25-3-44-13Z"
+                    fill="url(#g2)" stroke="rgba(47,169,255,.25)" stroke-width="1.5" stroke-linejoin="round"/>
+
+              <!-- labyrinth/book hybrid: maze lines -->
+              <path d="M52 54h56M52 54v18h18v-9h20v18H70v-9H52v18h56v18H52"
+                    stroke="url(#g1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+
+              <!-- small 'book' hint -->
+              <path d="M64 108c6-4 12-4 16 0c4-4 10-4 16 0"
+                    stroke="rgba(11,42,91,.85)" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
+            </svg>
+            <div class="emblem-glow"></div>
+          </div>
+
+          <div class="principle-strip" role="note" aria-label="Principio Aegis8">
+            <div class="p-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 2l7 4v6c0 5-3.2 9.4-7 10c-3.8-.6-7-5-7-10V6l7-4Z" stroke="currentColor" stroke-width="1.8" />
+                <path d="M8 12h8M8 12v4h4v-2h4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/>
+              </svg>
+            </div>
+            <div class="p-text">
+              La seguridad no se delega: <strong>se aprende</strong>, <strong>se entiende</strong> y <strong>se hace propia</strong>.
+            </div>
+            <div class="p-line" aria-hidden="true"></div>
           </div>
         </div>
-
-        <div class="gradline" aria-hidden="true"></div>
       </section>
 
+      <!-- CÓMO TRABAJAMOS -->
       
-
-<!-- QUIÉNES SOMOS -->
+      <!-- QUIÉNES SOMOS -->
       <section id="quienes">
-        <div class="sec-head">
+        <div class="sec-head center">
           <h2>Quiénes somos</h2>
-          
-          <p class="muted" style="margin:0; max-width:90ch;">
-  Aegis8 acompaña a quienes comienzan su camino en ciberseguridad, incluso cuando no existen grandes presupuestos ni estructuras complejas. Ayudamos a entender, construir y fortalecer la seguridad desde la base, con sentido, propósito y responsabilidad.
-</p>
-<p class="muted" style="margin:12px 0 0; max-width:90ch;">
-  No reemplazamos equipos ni replicamos modelos enterprise. Enseñamos, ordenamos y generamos cultura, apoyando desde el primer paso para que la seguridad sea clara, útil y sostenible en el tiempo, tanto a nivel organizacional como social.
-</p>
-<p class="muted" style="margin:12px 0 0; max-width:90ch;">
-  Acompañamos a personas y organizaciones a aprender, definir gobernanza y reforzar capacidades técnicas, partiendo desde cero o fortaleciendo lo que ya han construido.
-</p>
-<div class="quote" style="margin-top:16px;">
-  <span class="quote-line" aria-hidden="true"></span>
-  <div>
-    <div class="quote-kicker">Principio</div>
-    <div class="quote-text">La seguridad no se delega: <strong>se aprende</strong>, <strong>se entiende</strong> y <strong>se hace propia</strong>.</div>
-  </div>
-</div>
+          <p class="sec-sub">
+            Aegis8 acompaña a quienes comienzan su camino en ciberseguridad, incluso cuando no existen grandes presupuestos ni estructuras complejas.
+            Ayudamos a <span class="k">entender</span>, <span class="k">construir</span> y <span class="k">fortalecer</span> la seguridad desde la base,
+            con sentido, propósito y responsabilidad.
+          </p>
+
+          <p class="sec-sub" style="margin-top:10px;">
+            No reemplazamos equipos ni replicamos modelos enterprise. <strong>Enseñamos</strong>, <strong>ordenamos</strong> y <strong>generamos cultura</strong>,
+            apoyando desde el primer paso para que la seguridad sea clara, útil y sostenible en el tiempo, tanto a nivel organizacional como social.
+          </p>
+
+          <p class="sec-sub" style="margin-top:10px;">
+            Acompañamos a personas y organizaciones a aprender, definir gobernanza y reforzar capacidades técnicas, partiendo desde cero o fortaleciendo lo que ya han construido.
+          </p>
+
+          <div class="gradline" aria-hidden="true"></div>
         </div>
 
-        <div class="grid-2">
-  <button class="tile tile-action" type="button" data-modal="m-quienes-postura" aria-label="Abrir detalles: Seguridad sin humo">
-    <span class="badge">Nuestra postura</span>
-    <div class="tile-ico" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none">
-        <path d="M12 3l7 4v6c0 5-3 8-7 8s-7-3-7-8V7l7-4z" stroke="currentColor" stroke-width="1.7" />
-        <path d="M9.5 12.2l1.8 1.8 3.6-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-    <h3>Seguridad sin humo</h3>
-    <p>
-      Priorizamos lo que realmente importa. Explicamos el “por qué” detrás de cada recomendación y evitamos el lenguaje intimidante o exagerado.
-    </p>
-    <span class="tile-hint">Ver detalles</span>
-  </button>
+        <div class="grid-2" style="margin-top:18px;">
+          <button class="tile tile-btn" type="button" data-modal="m-sinhumo" aria-haspopup="dialog">
+            <div class="tile-top">
+              <span class="badge">Nuestra postura</span>
+              <span class="tile-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22a10 10 0 1 0-0.01 0Z" stroke="currentColor" stroke-width="1.8"/><path d="M14.8 9.2l-1.7 5.6-5.6 1.7 1.7-5.6 5.6-1.7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 12h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
+            </div>
+            <h3>Seguridad sin humo</h3>
+            <p>
+              Priorizamos lo que realmente importa. Explicamos el “por qué” detrás de cada recomendación
+              y evitamos el lenguaje intimidante o exagerado.
+            </p>
+          </button>
 
-  <button class="tile tile-action" type="button" data-modal="m-quienes-rol" aria-label="Abrir detalles: Guía + criterio + práctica">
-    <span class="badge">Nuestro rol</span>
-    <div class="tile-ico" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none">
-        <path d="M4.5 7.5h15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-        <path d="M4.5 12h15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-        <path d="M4.5 16.5h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-        <path d="M17.5 15.5l2 1.5-2 1.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-    <h3>Guía + criterio + práctica</h3>
-    <p>
-      Acompañamos decisiones: arquitectura, DNS, TLS, accesos, backups, hardening y cultura. Buscamos que el cliente entienda y se vuelva más autónomo.
-    </p>
-    <span class="tile-hint">Ver detalles</span>
-  </button>
-</div>
-    
+          <button class="tile tile-btn" type="button" data-modal="m-rol" aria-haspopup="dialog">
+            <div class="tile-top">
+              <span class="badge">Nuestro rol</span>
+              <span class="tile-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l9 5-9 5-9-5 9-5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 12l9 5 9-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 16.5l9 5 9-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/></svg></span>
+            </div>
+            <h3>Guía + criterio + práctica</h3>
+            <p>
+              Acompañamos decisiones: arquitectura, DNS, TLS, accesos, backups, hardening y cultura.
+              Buscamos que el cliente entienda y se vuelva más autónomo.
+            </p>
+          </button>
+        </div>
+      </section>
 
-<!-- CÓMO TRABAJAMOS -->
-      <section id="como-trabajamos">
+<section id="como-trabajamos">
         <div class="sec-head">
           <h2>Cómo trabajamos</h2>
-          <p class="sec-sub">
+          <p class="muted" style="margin:0; max-width:85ch;">
             Nuestro enfoque es progresivo y transparente. Cada bloque es clickeable: verás detalles, ejemplos y
             qué entregables puedes esperar (sin humo, sin miedo).
           </p>
@@ -756,7 +764,7 @@
 
         <div class="grid-3">
           <button class="tile tile-btn" type="button" data-modal="m-diagnostico" aria-haspopup="dialog">
-            <div class="tile-top"><span class="badge">Paso 1</span><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-3.5-3.5"></path></svg></span></div>
+            <div class="tile-top"><span class="badge">Paso 1</span><span class="tile-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z" stroke="currentColor" stroke-width="1.8"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span></div>
             <h3>Diagnóstico entendido</h3>
             <p>
               Revisión inicial + explicación de riesgos reales en tu contexto.
@@ -765,7 +773,7 @@
           </button>
 
           <button class="tile tile-btn" type="button" data-modal="m-fortalecimiento" aria-haspopup="dialog">
-            <div class="tile-top"><span class="badge">Paso 2</span><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 9-8 11C7.5 22 4 18 4 13V7l8-4z"></path><path d="M9 12l2 2 4-5"></path></svg></span></div>
+            <div class="tile-top"><span class="badge">Paso 2</span><span class="tile-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M21 7a6 6 0 0 1-8 5.7L7.3 18.4a2 2 0 1 1-2.8-2.8l5.7-5.7A6 6 0 0 1 21 7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 8l-2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span></div>
             <h3>Fortalecimiento progresivo</h3>
             <p>
               Hardening, accesos, prácticas operativas y evidencia de mejoras.
@@ -774,7 +782,7 @@
           </button>
 
           <button class="tile tile-btn" type="button" data-modal="m-autonomia" aria-haspopup="dialog">
-            <div class="tile-top"><span class="badge">Paso 3</span><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 8l10-5 10 5-10 5-10-5z"></path><path d="M6 11v5c0 1 3 3 6 3s6-2 6-3v-5"></path></svg></span></div>
+            <div class="tile-top"><span class="badge">Paso 3</span><span class="tile-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l10 5-10 5L2 8l10-5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M6 11v5c0 2 3 4 6 4s6-2 6-4v-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M22 8v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".75"/></svg></span></div>
             <h3>Autonomía del cliente</h3>
             <p>
               Transferencia de conocimiento: tu equipo aprende, documenta y decide con criterio.
@@ -788,7 +796,7 @@
       <section id="a-quien-ayudamos">
         <div class="sec-head">
           <h2>A quién ayudamos</h2>
-          <p class="sec-sub">
+          <p class="muted" style="margin:0; max-width:85ch;">
             Trabajamos con quienes necesitan claridad y acompañamiento práctico.
             Cada bloque es clickeable para ver casos típicos, dolores reales y cómo apoyamos.
           </p>
@@ -796,7 +804,7 @@
 
         <div class="grid-3">
           <button class="tile tile-btn" type="button" data-modal="m-startups" aria-haspopup="dialog">
-            <div class="tile-top"><span class="badge">Startups</span><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 4c4 1 6 5 6 5-1 4-5 6-5 6l-4-4s2-4 3-7z"></path><path d="M9 15l-3 3 4 1 1-4-2 0z"></path><path d="M10 8l6 6"></path><circle cx="15" cy="9" r="1.2"></circle></svg></span></div>
+            <div class="tile-top"><span class="badge">Startups</span><span class="tile-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M14 4c3.5 0 6 2.5 6 6-2 6-7 10-12 12-1-2-2-4-2-6 0-5 4-10 8-12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 15l-2 2m5-5l2-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M13 10h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span></div>
             <h3>Seguridad desde el inicio</h3>
             <p>
               Decisiones correctas temprano: accesos, TLS, backups, procesos y cultura.
@@ -805,7 +813,7 @@
           </button>
 
           <button class="tile tile-btn" type="button" data-modal="m-pymes" aria-haspopup="dialog">
-            <div class="tile-top"><span class="badge">Pequeñas empresas</span><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 21V3h10v18"></path><path d="M14 8h6v13"></path><path d="M8 7h2"></path><path d="M8 11h2"></path><path d="M8 15h2"></path><path d="M16 12h2"></path><path d="M16 16h2"></path></svg></span></div>
+            <div class="tile-top"><span class="badge">Pequeñas empresas</span><span class="tile-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16" stroke="currentColor" stroke-width="1.8"/><path d="M8 7h4M8 11h4M8 15h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M18 9h2v12h-2" stroke="currentColor" stroke-width="1.8"/></svg></span></div>
             <h3>Orden y control</h3>
             <p>
               Priorizamos lo esencial: cuentas, correo, endpoints, backups y hábitos.
@@ -814,7 +822,7 @@
           </button>
 
           <button class="tile tile-btn" type="button" data-modal="m-personas" aria-haspopup="dialog">
-            <div class="tile-top"><span class="badge">Personas</span><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0"></path><circle cx="12" cy="9" r="4"></circle></svg></span></div>
+            <div class="tile-top"><span class="badge">Personas</span><span class="tile-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8"/><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8"/><path d="M22 21v-2a3.5 3.5 0 0 0-3-3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".75"/><path d="M16 3.2a4 4 0 0 1 0 7.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".75"/></svg></span></div>
             <h3>Aprender para protegerse</h3>
             <p>
               Educación práctica para reducir riesgos cotidianos: cuentas, phishing, privacidad y hábitos.
@@ -825,77 +833,7 @@
       </section>
 
       </div>
-  
-
-<!-- QUIÉNES SOMOS: MODALES -->
-<div class="modal" id="m-quienes-postura" role="dialog" aria-modal="true" aria-labelledby="m-quienes-postura-title" aria-hidden="true">
-  <div class="modal-backdrop" data-close></div>
-  <div class="modal-card" role="document">
-    <button class="modal-x" type="button" data-close aria-label="Cerrar">×</button>
-    <h3 id="m-quienes-postura-title">Nuestra postura: Seguridad sin humo</h3>
-    <div class="muted" style="font-size:14px; margin-top:6px;">
-      Seguridad práctica, explicada y priorizada. Sin intimidación, sin exagerar riesgos.
-    </div>
-
-    <div class="modal-body">
-      <h4>Qué significa en la práctica</h4>
-      <ul>
-        <li><strong>Prioridad por impacto</strong>: partimos por lo que reduce más riesgo con menor fricción (accesos, backups, TLS, cuentas).</li>
-        <li><strong>Explicación transparente</strong>: cada recomendación incluye el “por qué”, el “cómo” y qué evidencia esperar.</li>
-        <li><strong>Decisiones realistas</strong>: ajustamos el plan al tamaño del equipo, tiempo disponible y presupuesto.</li>
-      </ul>
-
-      <h4>Cómo evitamos “humo”</h4>
-      <ul>
-        <li>No usamos puntajes vacíos sin contexto.</li>
-        <li>No vendemos miedo ni urgencias artificiales.</li>
-        <li>No proponemos herramientas enterprise cuando no corresponden.</li>
-      </ul>
-
-      <h4>Entregables típicos</h4>
-      <ul>
-        <li>Resumen ejecutivo claro (qué importa, qué no, y por qué).</li>
-        <li>Lista priorizada de acciones con esfuerzo estimado.</li>
-        <li>Checklists aplicables (hardening, accesos, correo, backups).</li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="m-quienes-rol" role="dialog" aria-modal="true" aria-labelledby="m-quienes-rol-title" aria-hidden="true">
-  <div class="modal-backdrop" data-close></div>
-  <div class="modal-card" role="document">
-    <button class="modal-x" type="button" data-close aria-label="Cerrar">×</button>
-    <h3 id="m-quienes-rol-title">Nuestro rol: Guía + criterio + práctica</h3>
-    <div class="muted" style="font-size:14px; margin-top:6px;">
-      Acompañamos decisiones técnicas y construimos autonomía: menos dependencia, más madurez.
-    </div>
-
-    <div class="modal-body">
-      <h4>En qué ayudamos</h4>
-      <ul>
-        <li><strong>Orden</strong>: roles, responsabilidades, hábitos, políticas mínimas.</li>
-        <li><strong>Decisiones técnicas</strong>: DNS, TLS, accesos, backups, hardening, exposición pública.</li>
-        <li><strong>Cultura</strong>: formación breve y práctica para que el equipo entienda lo esencial.</li>
-      </ul>
-
-      <h4>Lo que NO hacemos</h4>
-      <ul>
-        <li>No reemplazamos a tu equipo ni instalamos “un SOC” de imitación.</li>
-        <li>No convertimos tu operación en un proyecto interminable.</li>
-      </ul>
-
-      <h4>Resultado esperado</h4>
-      <ul>
-        <li>Tu organización entiende su postura de seguridad.</li>
-        <li>Hay un plan claro, priorizado y sostenible.</li>
-        <li>El equipo sabe qué vigilar y cómo mejorar con el tiempo.</li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-</main>
+  </main>
 
   <!-- MODALS -->
   <div class="modal" id="m-diagnostico" role="dialog" aria-modal="true" aria-labelledby="t-diagnostico">
@@ -1040,6 +978,54 @@
       </div>
     </div>
   </div>
+  <div class="modal" id="m-sinhumo" role="dialog" aria-modal="true" aria-labelledby="t-sinhumo">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-sinhumo">Seguridad sin humo</h3>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Claridad primero: riesgos reales, acciones posibles.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>
+          En Aegis8 evitamos el lenguaje intimidante y el “fear marketing”. La seguridad funciona cuando se entiende,
+          cuando se prioriza bien y cuando se puede sostener en el tiempo.
+        </p>
+        <ul>
+          <li><strong>Priorización realista:</strong> partimos por lo que reduce incidentes comunes (cuentas, correo, accesos, backups).</li>
+          <li><strong>Transparencia:</strong> explicamos el “por qué” de cada decisión y qué trade-offs existen.</li>
+          <li><strong>Evidencia:</strong> dejamos trazabilidad de cambios y una línea base antes/después.</li>
+          <li><strong>Sin dependencia:</strong> entregamos guías simples para que el equipo mantenga lo implementado.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-rol" role="dialog" aria-modal="true" aria-labelledby="t-rol">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-rol">Guía + criterio + práctica</h3>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Acompañamiento desde el primer paso.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Aegis8 no reemplaza equipos ni replica modelos enterprise. Acompañamos para ordenar lo esencial, formar criterio
+          y fortalecer capacidades técnicas con enfoque progresivo.
+        </p>
+        <ul>
+          <li><strong>Decisiones:</strong> arquitectura, DNS, TLS, accesos, secretos, backups, roles.</li>
+          <li><strong>Gobernanza mínima:</strong> políticas simples, responsabilidades claras y hábitos sostenibles.</li>
+          <li><strong>Fortalecimiento:</strong> hardening y prácticas operativas que reducen superficie expuesta.</li>
+          <li><strong>Cultura:</strong> educación práctica para que la seguridad se vuelva propia.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
 
   <footer>
     <div class="wrap">
@@ -1098,7 +1084,7 @@
     });
 
     // Reveal on scroll
-    const reveals = Array.from(document.querySelectorAll(".pill, .hero h1, .hero .lead, .hero-cta, .sec-head, .tile, .stat"));
+    const reveals = Array.from(document.querySelectorAll(".card, .tile, .stat, .pill"));
     reveals.forEach(el => el.classList.add("reveal"));
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
