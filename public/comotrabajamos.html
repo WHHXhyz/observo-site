@@ -1,0 +1,1196 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aegis8 — Cómo trabajamos</title>
+  <meta name="description" content="Cómo trabajamos en Aegis8: claridad, criterio y acompañamiento. Un método simple para aprender, aplicar y sostener cultura de ciberseguridad." />
+  <meta name="theme-color" content="#0B2A5B" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#F7FBFF;
+      --card:#FFFFFF;
+      --text:#0B1B34;
+      --muted:#4B5E7B;
+      --line:#DCEBFF;
+      --blue:#0B2A5B;
+      --sky:#2FA9FF;
+      --sky2:#8FD3FF;
+      --shadow:0 18px 45px rgba(11,42,91,.10);
+      --radius:18px;
+      --radius2:26px;
+      --max:1080px;
+      --ok:#0B5B3A;
+      --warn:#8A5A0B;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(900px 420px at 20% -10%, rgba(47,169,255,.25), transparent 60%),
+        radial-gradient(900px 420px at 90% 0%, rgba(143,211,255,.25), transparent 60%),
+        linear-gradient(180deg,#FFFFFF 0%, var(--bg) 100%);
+      line-height:1.45;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(var(--max), 100% - 40px);margin:0 auto}
+    .muted{color:var(--muted)}
+    .center{text-align:center}
+
+    /* Top progress */
+    .progress{
+      position:fixed;top:0;left:0;height:3px;width:0%;
+      background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.92), rgba(143,211,255,.95));
+      z-index:9999;
+      box-shadow:0 8px 20px rgba(47,169,255,.22);
+    }
+
+    header{
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.78);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(220,235,255,.85);
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 0;gap:16px;
+    }
+    .brand{display:flex;align-items:center;gap:12px;min-width:210px}
+    .logo{
+      width:38px;height:38px;border-radius:12px;
+      background:linear-gradient(135deg,var(--blue),#0D3B85);
+      position:relative;
+      box-shadow:0 14px 30px rgba(11,42,91,.18);
+      flex:0 0 auto;
+    }
+    .logo:before{
+      content:"";
+      position:absolute;inset:9px 11px 9px 11px;
+      border-radius:10px 10px 14px 14px;
+      background:linear-gradient(135deg, rgba(143,211,255,.95), rgba(47,169,255,.85));
+      clip-path:polygon(50% 0%, 92% 18%, 92% 55%, 50% 100%, 8% 55%, 8% 18%);
+      opacity:.95;
+    }
+    .brand strong{font-size:16px;letter-spacing:.2px}
+    .brand span{display:block;margin-top:2px;font-size:12px;color:var(--muted)}
+
+    nav ul{
+      list-style:none;padding:0;margin:0;
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    }
+    nav a{
+      font-size:14px;
+      color:rgba(11,27,52,.86);
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.78);
+      box-shadow:0 10px 24px rgba(11,42,91,.06);
+      transition:transform .12s ease, background .12s ease, box-shadow .12s ease, border-color .12s ease;
+      white-space:nowrap;
+    }
+    nav a:hover{
+      transform:translateY(-1px);
+      background:rgba(220,235,255,.55);
+      border-color:rgba(47,169,255,.35);
+      box-shadow:0 14px 34px rgba(11,42,91,.10);
+      color:var(--blue);
+    }
+    nav a.active{
+      border-color:rgba(47,169,255,.45);
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
+      color:var(--blue);
+      font-weight:800;
+    }
+
+    .menu-btn{
+      display:none;width:44px;height:44px;border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.9);
+      box-shadow:0 12px 30px rgba(11,42,91,.08);
+      cursor:pointer;align-items:center;justify-content:center;
+    }
+    .menu-lines{width:18px;height:12px;position:relative}
+    .menu-lines span{position:absolute;left:0;right:0;height:2px;border-radius:99px;background:rgba(11,42,91,.8)}
+    .menu-lines span:nth-child(1){top:0}
+    .menu-lines span:nth-child(2){top:5px}
+    .menu-lines span:nth-child(3){top:10px}
+    .mobile-panel{display:none;padding:0 0 14px 0}
+    .mobile-panel a{
+      display:block;padding:12px 12px;margin:10px 0;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,.85);
+      font-weight:700;color:rgba(11,27,52,.9);
+    }
+    .mobile-panel a:hover{background:rgba(220,235,255,.55);color:var(--blue)}
+    .right{display:flex;align-items:center;gap:10px}
+
+    main{padding:30px 0 70px}
+    section{padding:54px 0}
+    section + section{border-top:1px solid rgba(220,235,255,.75)}
+
+    h1{
+      font-size:clamp(32px, 4vw, 48px);
+      line-height:1.06;
+      margin:14px 0 10px;
+      letter-spacing:-.7px;
+    }
+    .lead{
+      font-size:clamp(16px, 1.35vw, 18px);
+      color:var(--muted);
+      margin:0 auto 18px;
+      max-width:82ch;
+    }
+
+    .pill{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:8px 12px;border:1px solid var(--line);
+      background:rgba(255,255,255,.82);border-radius:999px;
+      box-shadow:0 8px 25px rgba(11,42,91,.06);
+      backdrop-filter:blur(8px);
+    }
+    .dot{width:10px;height:10px;border-radius:999px;background:radial-gradient(circle at 30% 30%, var(--sky2), var(--sky));box-shadow:0 0 0 4px rgba(47,169,255,.12)}
+    .k{
+      background:linear-gradient(135deg, rgba(47,169,255,.22), rgba(143,211,255,.35));
+      border:1px solid rgba(47,169,255,.25);
+      padding:0 .45em;border-radius:.65em;
+      color:rgba(11,42,91,.92);
+      font-weight:800;white-space:nowrap;
+    }
+
+    .gradline{
+      height:1px;width:min(640px,100%);margin:14px auto 0;border-radius:99px;
+      background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.55), rgba(143,211,255,.65), rgba(47,169,255,.55), rgba(47,169,255,0));
+      position:relative;overflow:hidden;
+    }
+    .gradline:after{
+      content:"";position:absolute;top:0;bottom:0;width:160px;left:-180px;
+      background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.75), rgba(255,255,255,0));
+      filter:blur(1px);animation:shine 2.8s ease-in-out infinite;
+    }
+    @keyframes shine{
+      0%{transform:translateX(0);opacity:0}
+      15%{opacity:.8}
+      50%{opacity:.9}
+      85%{opacity:.8}
+      100%{transform:translateX(900px);opacity:0}
+    }
+
+    .sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+    .sec-head h2{margin:0;font-weight:900;font-size:clamp(22px, 2.3vw, 32px);letter-spacing:-.35px}
+    .sec-sub{margin:0;max-width:92ch;color:var(--muted);font-size:15.5px}
+
+    .card{
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      border-radius:var(--radius2);
+      box-shadow:var(--shadow);
+    }
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+
+    .tile{
+      position:relative;overflow:hidden;
+      padding:16px;border-radius:var(--radius2);
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.92);
+      box-shadow:0 14px 40px rgba(11,42,91,.08);
+      min-height:164px;
+    }
+    .tile:before{
+      content:"";position:absolute;inset:-2px;
+      background:
+        radial-gradient(520px 220px at 15% 10%, rgba(47,169,255,.12), transparent 60%),
+        radial-gradient(520px 220px at 90% 0%, rgba(143,211,255,.14), transparent 55%);
+      opacity:.9;pointer-events:none;
+    }
+    .tile>*{position:relative}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.9);
+      background:rgba(47,169,255,.08);
+      color:rgba(11,42,91,.88);
+      font-weight:800;font-size:12px;
+    }
+    .tile h3{margin:10px 0 8px;font-size:16px;letter-spacing:-.12px}
+    .tile p{margin:0;color:var(--muted);font-size:14px}
+    .tile-btn{
+      text-align:left;cursor:pointer;border:0;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .tile-btn:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
+    .tile-btn:focus-visible{outline:3px solid rgba(47,169,255,.35);outline-offset:3px}
+
+    .mini-ico{
+      width:42px;height:42px;border-radius:16px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(11,42,91,.06);
+      display:grid;place-items:center;
+      box-shadow:0 12px 30px rgba(11,42,91,.08);
+      flex:0 0 auto;
+    }
+    .mini-ico svg{width:22px;height:22px}
+    .mini-ico path, .mini-ico circle, .mini-ico line, .mini-ico polyline{stroke:rgba(11,42,91,.85)}
+
+    /* Method switch */
+    .switch{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:12px;border-radius:var(--radius2);
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.86);
+      box-shadow:0 14px 40px rgba(11,42,91,.08);
+      margin-top:16px;
+    }
+    .tabs{display:flex;gap:10px;flex-wrap:wrap}
+    .tab{
+      padding:10px 12px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.88);
+      font-weight:900;color:rgba(11,42,91,.88);
+      cursor:pointer;
+      transition:transform .12s ease, background .12s ease, box-shadow .12s ease, border-color .12s ease;
+    }
+    .tab:hover{transform:translateY(-1px);box-shadow:0 16px 38px rgba(11,42,91,.10);border-color:rgba(47,169,255,.35)}
+    .tab.active{
+      border-color:rgba(47,169,255,.45);
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
+      color:var(--blue);
+    }
+    .tab small{display:block;font-weight:700;color:rgba(75,94,123,.9);margin-top:2px}
+
+    /* Diagram + animated flow */
+    .diagram{
+      padding:16px;display:grid;place-items:center;
+    }
+    .diagram svg{width:min(620px,100%);height:auto}
+    .softSpin{transform-origin:50% 50%;animation:spin 14s linear infinite;opacity:.9}
+    @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+    .pulse{transform-origin:50% 50%;animation:pulse 2.8s ease-in-out infinite}
+    @keyframes pulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.04);opacity:1}}
+
+    .flow{
+      display:flex;flex-direction:column;gap:10px;margin-top:12px;
+    }
+    .step{
+      position:relative;
+      padding:14px;border-radius:var(--radius2);
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.92);
+      box-shadow:0 12px 30px rgba(11,42,91,.08);
+      display:flex;gap:12px;align-items:flex-start;
+      cursor:pointer;
+      transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    }
+    .step:hover{transform:translateY(-1px);box-shadow:0 18px 44px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
+    .n{
+      width:38px;height:38px;border-radius:14px;
+      border:1px solid rgba(220,235,255,.95);
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.20));
+      display:grid;place-items:center;
+      font-weight:900;color:rgba(11,42,91,.9);
+      box-shadow:0 12px 26px rgba(11,42,91,.08);
+      flex:0 0 auto;
+    }
+    .step strong{display:block;margin-bottom:2px}
+    .meta{
+      display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;
+    }
+    .chip{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.85);
+      color:rgba(11,42,91,.86);
+      font-weight:900;font-size:12px;
+    }
+    .chip.ok{border-color:rgba(11,91,58,.22);background:rgba(11,91,58,.06);color:rgba(11,91,58,.95)}
+    .chip.warn{border-color:rgba(138,90,11,.22);background:rgba(138,90,11,.06);color:rgba(138,90,11,.95)}
+
+    /* Checklist */
+    .checklist{
+      display:grid;gap:10px;margin-top:12px;
+    }
+    .chk{
+      display:flex;align-items:flex-start;gap:12px;
+      padding:12px;border-radius:18px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.92);
+      box-shadow:0 12px 30px rgba(11,42,91,.06);
+      cursor:pointer;
+      transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    }
+    .chk:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(11,42,91,.10);border-color:rgba(47,169,255,.35)}
+    .box{
+      width:22px;height:22px;border-radius:8px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(11,42,91,.06);
+      display:grid;place-items:center;
+      flex:0 0 auto;
+    }
+    .box svg{width:14px;height:14px;opacity:0;transform:scale(.85);transition:opacity .12s ease, transform .12s ease}
+    .chk.done .box{background:linear-gradient(135deg, rgba(47,169,255,.16), rgba(143,211,255,.26));border-color:rgba(47,169,255,.35)}
+    .chk.done .box svg{opacity:1;transform:scale(1)}
+    .bar{
+      height:10px;border-radius:999px;border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.75);overflow:hidden;
+      box-shadow:0 12px 24px rgba(11,42,91,.06);
+      margin-top:12px;
+    }
+    .bar > div{
+      height:100%;width:0%;
+      background:linear-gradient(90deg, rgba(47,169,255,.75), rgba(143,211,255,.85));
+      transition:width .35s ease;
+    }
+    .mini{font-size:12.5px;color:var(--muted)}
+
+    /* Buttons */
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:11px 14px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.92);color:var(--blue);font-weight:800;
+      box-shadow:0 12px 30px rgba(11,42,91,.08);
+      transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+      cursor:pointer;
+    }
+    .btn:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(11,42,91,.12)}
+    .btn.primary{
+      border-color:rgba(47,169,255,.35);
+      background:linear-gradient(135deg, rgba(47,169,255,.15), rgba(143,211,255,.25));
+      color:var(--blue);
+    }
+    .btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(10px);transition:opacity .55s ease, transform .55s ease}
+    .reveal.on{opacity:1;transform:none}
+
+    /* Modal */
+    .modal{
+      position:fixed;inset:0;z-index:1000;display:none;padding:18px;
+      background:rgba(11,27,52,.55);backdrop-filter:blur(6px);
+    }
+    .modal.show{display:grid;place-items:center}
+    .modal-dialog{
+      width:min(900px,100%);
+      background:rgba(255,255,255,.97);
+      border:1px solid rgba(220,235,255,.95);
+      border-radius:22px;
+      box-shadow:0 28px 70px rgba(11,42,91,.22);
+      overflow:hidden;
+      animation:modalIn .18s ease-out;
+    }
+    @keyframes modalIn{from{transform:translateY(8px) scale(.99);opacity:0}to{transform:none;opacity:1}}
+    .modal-head{
+      padding:16px 16px 12px;border-bottom:1px solid rgba(220,235,255,.9);
+      background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+    }
+    .modal-title{margin:0;font-size:18px;letter-spacing:-.2px;color:var(--blue)}
+    .modal-close{
+      width:42px;height:42px;border-radius:14px;border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.92);cursor:pointer;display:grid;place-items:center;
+      color:rgba(11,42,91,.85);box-shadow:0 12px 30px rgba(11,42,91,.10);
+    }
+    .modal-body{padding:14px 16px 16px;color:rgba(11,27,52,.92)}
+    .modal-body p{margin:0 0 10px;color:var(--muted)}
+    .modal-body ul{margin:10px 0 0;padding-left:18px;color:var(--muted)}
+    .modal-body li{margin:7px 0}
+    .callout{
+      margin-top:12px;padding:12px 12px;border-radius:var(--radius);
+      border:1px solid rgba(47,169,255,.25);
+      background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      color:rgba(11,42,91,.9);font-weight:900;font-size:13px;
+    }
+
+    footer{
+      padding:28px 0 40px;
+      border-top:1px solid rgba(220,235,255,.9);
+      background:rgba(255,255,255,.55);
+    }
+    .foot{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}
+
+    @media (max-width: 980px){
+      .grid-3{grid-template-columns:1fr}
+      .grid-2{grid-template-columns:1fr}
+      .grid-4{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width: 760px){
+      nav ul{display:none}
+      .menu-btn{display:inline-flex}
+      .wrap{width:min(var(--max), 100% - 28px)}
+      .grid-4{grid-template-columns:1fr}
+    }
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="index.html" aria-label="Aegis8 Home">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>Aegis8</strong>
+            <span>Cómo trabajamos</span>
+          </div>
+        </a>
+
+        <nav aria-label="Navegación principal">
+          <ul>
+            <li><a class="active" href="como-trabajamos.html" aria-current="page">Cómo trabajamos</a></li>
+            <li><a href="a-quienes-ayudamos.html">A quiénes ayudamos</a></li>
+            <li><a href="quienes-somos.html">Quiénes somos</a></li>
+            <li><a href="psocial.html">Proyecto social</a></li>
+            <li><a href="contactanos.html">Contáctanos</a></li>
+          </ul>
+        </nav>
+
+        <div class="right">
+          <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobilePanel">
+            <div class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></div>
+          </button>
+        </div>
+      </div>
+
+      <div class="mobile-panel" id="mobilePanel" aria-label="Menú móvil">
+        <a href="como-trabajamos.html">Cómo trabajamos</a>
+        <a href="a-quienes-ayudamos.html">A quiénes ayudamos</a>
+        <a href="quienes-somos.html">Quiénes somos</a>
+        <a href="psocial.html">Proyecto social</a>
+        <a href="contactanos.html">Contáctanos</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="wrap">
+
+      <!-- HERO -->
+      <section class="hero">
+        <div class="center">
+          <div class="pill reveal" role="note" aria-label="Método Aegis8">
+            <span class="dot" aria-hidden="true"></span>
+            <span><strong>Método Aegis8:</strong> claridad → acción → cultura</span>
+          </div>
+
+          <h1 class="reveal">Trabajamos con un método simple que se sostiene.</h1>
+
+          <p class="lead reveal">
+            En Aegis8 evitamos “consultoría infinita”. Preferimos <span class="k">pasos concretos</span>,
+            <span class="k">entregables claros</span> y <span class="k">hábitos repetibles</span>.
+            El objetivo es que personas, startups y pequeñas organizaciones sepan <strong>qué hacer hoy</strong>,
+            y cómo mantenerlo mañana.
+          </p>
+
+          <div class="center reveal" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+            <a class="btn primary" href="#metodo">Ver el método</a>
+            <button class="btn" type="button" data-modal="m-que-es" aria-haspopup="dialog">¿Qué significa “acompañamiento honesto”?</button>
+          </div>
+        </div>
+
+        <div class="gradline" aria-hidden="true"></div>
+
+        <div class="switch reveal" aria-label="Selector de modo">
+          <div>
+            <div style="font-weight:900;color:rgba(11,42,91,.92);">Elige tu modo</div>
+            <div class="mini">Puedes cambiarlo cuando quieras. El contenido se adapta.</div>
+          </div>
+          <div class="tabs" role="tablist" aria-label="Modo del método">
+            <button class="tab active" id="tab-rapido" type="button" role="tab" aria-selected="true" data-mode="rapido">
+              Modo rápido
+              <small>para partir hoy</small>
+            </button>
+            <button class="tab" id="tab-pro" type="button" role="tab" aria-selected="false" data-mode="pro">
+              Modo profundo
+              <small>para equipos</small>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:16px;">
+          <div class="card reveal" style="padding:18px; position:relative; overflow:hidden;">
+            <div class="sec-head" style="margin-bottom:10px;">
+              <h2 style="margin:0;">El mapa del trabajo</h2>
+              <p class="sec-sub" id="mapSub">
+                En 4 pasos: entender, priorizar, implementar, sostener.
+              </p>
+            </div>
+
+            <div class="diagram" aria-label="Diagrama animado del método Aegis8">
+              <svg viewBox="0 0 660 360" role="img" aria-label="Método Aegis8 en ciclo">
+                <defs>
+                  <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+                    <stop offset="0" stop-color="#2FA9FF" stop-opacity="0.18"/>
+                    <stop offset="1" stop-color="#8FD3FF" stop-opacity="0.28"/>
+                  </linearGradient>
+                  <linearGradient id="g2" x1="0" x2="1" y1="1" y2="0">
+                    <stop offset="0" stop-color="#0B2A5B" stop-opacity="0.10"/>
+                    <stop offset="1" stop-color="#0B2A5B" stop-opacity="0.04"/>
+                  </linearGradient>
+                </defs>
+
+                <circle class="softSpin" cx="330" cy="178" r="150" fill="none" stroke="rgba(47,169,255,.35)" stroke-width="2" stroke-dasharray="8 10"/>
+                <circle class="softSpin" cx="330" cy="178" r="112" fill="none" stroke="rgba(143,211,255,.45)" stroke-width="2" stroke-dasharray="6 10" style="animation-duration:20s;"/>
+
+                <rect x="70" y="48" width="520" height="250" rx="28" fill="url(#g)" stroke="rgba(220,235,255,.95)"/>
+
+                <!-- 4 nodes -->
+                <g>
+                  <circle class="pulse" cx="210" cy="140" r="32" fill="rgba(255,255,255,.82)" stroke="rgba(11,42,91,.55)" stroke-width="2"/>
+                  <circle class="pulse" cx="450" cy="140" r="32" fill="rgba(255,255,255,.82)" stroke="rgba(11,42,91,.55)" stroke-width="2" style="animation-delay:.25s"/>
+                  <circle class="pulse" cx="210" cy="220" r="32" fill="rgba(255,255,255,.82)" stroke="rgba(11,42,91,.55)" stroke-width="2" style="animation-delay:.5s"/>
+                  <circle class="pulse" cx="450" cy="220" r="32" fill="rgba(255,255,255,.82)" stroke="rgba(11,42,91,.55)" stroke-width="2" style="animation-delay:.75s"/>
+
+                  <path d="M242 140 C300 92 360 92 418 140" fill="none" stroke="rgba(11,42,91,.25)" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M450 172 C450 188 450 200 450 220" fill="none" stroke="rgba(11,42,91,.20)" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M418 220 C360 268 300 268 242 220" fill="none" stroke="rgba(11,42,91,.20)" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M210 188 C210 172 210 156 210 140" fill="none" stroke="rgba(11,42,91,.20)" stroke-width="3" stroke-linecap="round"/>
+
+                  <text x="210" y="145" text-anchor="middle" font-size="12" fill="rgba(11,42,91,.86)" font-weight="900">Entender</text>
+                  <text x="450" y="145" text-anchor="middle" font-size="12" fill="rgba(11,42,91,.86)" font-weight="900">Priorizar</text>
+                  <text x="210" y="225" text-anchor="middle" font-size="12" fill="rgba(11,42,91,.86)" font-weight="900">Implementar</text>
+                  <text x="450" y="225" text-anchor="middle" font-size="12" fill="rgba(11,42,91,.86)" font-weight="900">Sostener</text>
+                </g>
+
+                <rect x="132" y="292" width="396" height="42" rx="18" fill="url(#g2)" stroke="rgba(220,235,255,.95)"/>
+                <text id="diagramCaption" x="330" y="318" text-anchor="middle" font-size="13" fill="rgba(11,42,91,.82)" font-weight="900">
+                  entregables claros + hábitos repetibles
+                </text>
+              </svg>
+            </div>
+
+            <div class="callout" id="calloutMain">
+              Regla Aegis8: si no se puede explicar en simple, no lo vamos a vender.
+            </div>
+          </div>
+
+          <div class="card reveal" style="padding:18px;">
+            <div class="sec-head" style="margin-bottom:10px;">
+              <h2 style="margin:0;">Los 4 pasos (clickeables)</h2>
+              <p class="sec-sub" id="stepsSub">
+                Abre cada paso y verás entregables y métricas simples.
+              </p>
+            </div>
+
+            <div class="flow" id="flow">
+              <div class="step" data-modal="m-entender" role="button" tabindex="0" aria-label="Abrir: Entender">
+                <div class="n">1</div>
+                <div>
+                  <strong>Entender (sin humo)</strong>
+                  <div class="muted">Contexto, activos y riesgos reales (no paranoia).</div>
+                  <div class="meta">
+                    <span class="chip ok">entregable: mapa simple</span>
+                    <span class="chip">duración: 30–60 min</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="step" data-modal="m-priorizar" role="button" tabindex="0" aria-label="Abrir: Priorizar">
+                <div class="n">2</div>
+                <div>
+                  <strong>Priorizar (alto impacto / bajo esfuerzo)</strong>
+                  <div class="muted">Elegimos 3–5 acciones que de verdad bajan riesgo.</div>
+                  <div class="meta">
+                    <span class="chip ok">entregable: plan 1 página</span>
+                    <span class="chip">métrica: checklist</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="step" data-modal="m-implementar" role="button" tabindex="0" aria-label="Abrir: Implementar">
+                <div class="n">3</div>
+                <div>
+                  <strong>Implementar (con acompañamiento)</strong>
+                  <div class="muted">Aplicamos mínimos: MFA, backups, accesos, DNS/TLS, endpoints.</div>
+                  <div class="meta">
+                    <span class="chip ok">entregable: evidencia</span>
+                    <span class="chip warn">evitamos “mega-proyectos”</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="step" data-modal="m-sostener" role="button" tabindex="0" aria-label="Abrir: Sostener">
+                <div class="n">4</div>
+                <div>
+                  <strong>Sostener (cultura continua)</strong>
+                  <div class="muted">Ritual mensual + verificación + aprendizaje corto.</div>
+                  <div class="meta">
+                    <span class="chip ok">entregable: ritual 20 min</span>
+                    <span class="chip">métrica: progreso</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <a class="btn primary" href="#check">Ver checklist</a>
+              <button class="btn" type="button" data-modal="m-ejemplo" aria-haspopup="dialog">Ver ejemplo real</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHECKLIST INTERACTIVA -->
+      <section id="check">
+        <div class="sec-head reveal">
+          <h2>Checklist mínimo (interactivo)</h2>
+          <p class="sec-sub">
+            Marca lo que ya tienes. Te mostramos progreso y los “mínimos” recomendados para arrancar.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card reveal" style="padding:18px;">
+            <div style="font-weight:900;color:rgba(11,42,91,.92);">Mínimos de partida</div>
+            <div class="mini" style="margin-top:4px;">Clic en cada ítem para marcarlo.</div>
+
+            <div class="checklist" id="checklist">
+              <div class="chk" data-key="mfa">
+                <div class="box" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="rgba(11,42,91,.85)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div>
+                  <strong>MFA activo</strong>
+                  <div class="muted">Cuentas clave con 2FA (correo, repos, cloud, banca, admin).</div>
+                </div>
+              </div>
+              <div class="chk" data-key="backups">
+                <div class="box" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="rgba(11,42,91,.85)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div>
+                  <strong>Backups probados</strong>
+                  <div class="muted">No solo “existe backup”: probaste restauración.</div>
+                </div>
+              </div>
+              <div class="chk" data-key="roles">
+                <div class="box" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="rgba(11,42,91,.85)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div>
+                  <strong>Accesos ordenados</strong>
+                  <div class="muted">Roles mínimos, sin cuentas compartidas, revocación clara.</div>
+                </div>
+              </div>
+              <div class="chk" data-key="dns">
+                <div class="box" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="rgba(11,42,91,.85)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div>
+                  <strong>DNS/TLS sano</strong>
+                  <div class="muted">HTTPS correcto, HSTS si aplica, registros DNS sin sorpresas.</div>
+                </div>
+              </div>
+              <div class="chk" data-key="endpoints">
+                <div class="box" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="rgba(11,42,91,.85)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div>
+                  <strong>Endpoints con mínimos</strong>
+                  <div class="muted">Actualizaciones, bloqueo, antivirus/EDR básico, cifrado si aplica.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bar" aria-label="Progreso"><div id="barFill"></div></div>
+            <div class="mini" style="margin-top:8px;"><span id="pct">0%</span> completado • <span id="nextHint">Sugerencia: empieza por MFA.</span></div>
+
+            <div class="btn-row">
+              <button class="btn primary" type="button" id="reset">Reiniciar</button>
+              <button class="btn" type="button" data-modal="m-por-que" aria-haspopup="dialog">¿Por qué estos mínimos?</button>
+            </div>
+          </div>
+
+          <div class="card reveal" style="padding:18px;">
+            <div class="sec-head" style="margin-bottom:10px;">
+              <h2 style="margin:0;">Entregables que dejamos</h2>
+              <p class="sec-sub">
+                Para que no quede “en conversación”, sino en pasos concretos.
+              </p>
+            </div>
+
+            <div class="grid-3">
+              <div class="tile">
+                <span class="badge">Documento</span>
+                <h3>Plan 1 página</h3>
+                <p>3–5 acciones priorizadas, responsables y fecha simple.</p>
+              </div>
+              <div class="tile">
+                <span class="badge">Checklist</span>
+                <h3>Mínimos</h3>
+                <p>Lo básico para reducir incidentes comunes.</p>
+              </div>
+              <div class="tile">
+                <span class="badge">Ritual</span>
+                <h3>20 minutos/mes</h3>
+                <p>Revisión corta: accesos, backups, cambios, señales.</p>
+              </div>
+            </div>
+
+            <div class="callout">
+              Si algo no se sostiene con el tiempo, lo consideramos “no implementado”.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section id="cta">
+        <div class="sec-head reveal">
+          <h2>¿Listo para partir?</h2>
+          <p class="sec-sub">
+            Puedes ir directo a contáctanos o ver el pilar social (la columna de Aegis8).
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="tile reveal">
+            <span class="badge">Contacto</span>
+            <h3>Conversemos en 10 minutos</h3>
+            <p>Te ayudamos a definir “qué hago hoy” sin venderte humo ni gasto innecesario.</p>
+            <div class="btn-row">
+              <a class="btn primary" href="contactanos.html">Ir a Contáctanos</a>
+              <button class="btn" type="button" data-modal="m-plantilla" aria-haspopup="dialog">Plantilla 1 minuto</button>
+            </div>
+          </div>
+
+          <div class="tile reveal">
+            <span class="badge">Proyecto social</span>
+            <h3>La columna de Aegis8</h3>
+            <p>Educación, cultura y acompañamiento para reducir la brecha de ciberseguridad.</p>
+            <div class="btn-row">
+              <a class="btn primary" href="psocial.html">Ver Proyecto social</a>
+              <button class="btn" type="button" data-modal="m-apoyar" aria-haspopup="dialog">Apoyar</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- MODALS -->
+  <div class="modal" id="m-que-es" role="dialog" aria-modal="true" aria-labelledby="t-que-es">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-que-es">Acompañamiento honesto</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Sin humo, sin miedo, sin “mega-proyectos”.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Significa tres cosas:</p>
+        <ul>
+          <li><strong>Claridad:</strong> explicamos qué pasa y qué conviene, sin jerga.</li>
+          <li><strong>Criterio:</strong> priorizamos lo que baja riesgo de verdad (alto impacto / bajo esfuerzo).</li>
+          <li><strong>Continuidad:</strong> dejamos hábitos y rituales simples para sostenerlo.</li>
+        </ul>
+        <div class="callout">Si algo no aporta valor real o no se sostiene, lo descartamos.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-entender" role="dialog" aria-modal="true" aria-labelledby="t-entender">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-entender">Paso 1: Entender</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Mapa simple del contexto.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Lo mínimo que necesitamos para orientar acciones:</p>
+        <ul>
+          <li>Activos clave (correo, dominio, web/app, repos, cloud, endpoints).</li>
+          <li>Riesgos reales (phishing, robo de cuentas, pérdida de datos, accesos).</li>
+          <li>Dolor principal: ¿qué te quita el sueño hoy?</li>
+        </ul>
+        <div class="callout">Entregable: “mapa simple” + primer set de recomendaciones.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-priorizar" role="dialog" aria-modal="true" aria-labelledby="t-priorizar">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-priorizar">Paso 2: Priorizar</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">3–5 acciones con impacto real.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Elegimos lo que reduce incidentes comunes más rápido:</p>
+        <ul>
+          <li>MFA (donde duele), recuperación de cuentas, controles de acceso.</li>
+          <li>Backups y restauración (evitar pérdida total).</li>
+          <li>Orden de secretos (tokens/llaves), DNS/TLS, y mínimos de endpoint.</li>
+        </ul>
+        <div class="callout">Entregable: plan de 1 página con responsables y fechas simples.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-implementar" role="dialog" aria-modal="true" aria-labelledby="t-impl">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-impl">Paso 3: Implementar</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Acompañamiento para ejecutar.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Implementamos con evidencias simples (sin burocracia):</p>
+        <ul>
+          <li>Capturas / checklist / verificación de configuración.</li>
+          <li>Antes/después (lo que cambia y por qué importa).</li>
+          <li>Documentación mínima para que el equipo lo sostenga.</li>
+        </ul>
+        <div class="callout">Entregable: evidencia + checklist actualizado.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-sostener" role="dialog" aria-modal="true" aria-labelledby="t-sost">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-sost">Paso 4: Sostener</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Cultura continua.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Dejamos un ritual simple (20 min/mes):</p>
+        <ul>
+          <li>Revisión de accesos (altas/bajas), MFA y recuperación.</li>
+          <li>Backups: prueba breve de restauración (aunque sea parcial).</li>
+          <li>Cambios en dominios/DNS y señales relevantes.</li>
+        </ul>
+        <div class="callout">Entregable: ritual + recordatorio (si quieres lo automatizamos en tu calendario).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-ejemplo" role="dialog" aria-modal="true" aria-labelledby="t-ej">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-ej">Ejemplo (cómo se vería)</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Simulación para entender el método.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Contexto:</strong> una startup con web en Vercel + correo + repos + pagos.</p>
+        <ul>
+          <li><strong>Entender:</strong> activos clave y “riesgo real” (phishing / cuentas / backups).</li>
+          <li><strong>Priorizar:</strong> activar MFA en correo/repos, orden de accesos, backups probados, DNS/TLS.</li>
+          <li><strong>Implementar:</strong> checklist + evidencia + cambios mínimos.</li>
+          <li><strong>Sostener:</strong> ritual mensual + verificación de cambios.</li>
+        </ul>
+        <div class="callout">Resultado: menos incidentes comunes, más claridad y hábito.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-por-que" role="dialog" aria-modal="true" aria-labelledby="t-por-que">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-por-que">¿Por qué estos mínimos?</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Porque bajan incidentes comunes.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Estos mínimos reducen riesgos típicos en personas, startups y pymes:</p>
+        <ul>
+          <li><strong>MFA:</strong> dificulta robo de cuentas (phishing/credenciales filtradas).</li>
+          <li><strong>Backups probados:</strong> evita pérdida total ante errores, ransomware o borrados.</li>
+          <li><strong>Accesos:</strong> reduce abuso por cuentas compartidas o permisos excesivos.</li>
+          <li><strong>DNS/TLS:</strong> reduce errores que abren puertas (mal redirect, spoofing, etc.).</li>
+          <li><strong>Endpoints:</strong> baja exposición por equipos desactualizados o sin bloqueo.</li>
+        </ul>
+        <div class="callout">Lo mínimo no es “lo único”, es el piso para construir cultura.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-plantilla" role="dialog" aria-modal="true" aria-labelledby="t-pl">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-pl">Plantilla (1 minuto)</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Copia/pega en Contáctanos.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Objetivo:</strong> (qué quieres lograr)</p>
+        <p><strong>Contexto:</strong> (persona/startup/pyme/comunidad, tamaño)</p>
+        <p><strong>Urgencia:</strong> (baja/media/alta + por qué)</p>
+        <p><strong>Activos:</strong> (correo, dominio, web/app, repos, cloud, endpoints)</p>
+        <div class="callout">No envíes credenciales ni datos sensibles. Acordamos canal seguro si hace falta.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-apoyar" role="dialog" aria-modal="true" aria-labelledby="t-ap">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-ap">Apoyar el proyecto social</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Becas, cupos y continuidad.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Si quieres apoyar, lo hacemos transparente:</p>
+        <ul>
+          <li>becas/cupos para talleres</li>
+          <li>materiales (guías, recursos, difusión)</li>
+          <li>infraestructura (hosting, dominios, herramientas)</li>
+        </ul>
+        <div class="callout">Cuando definas el método (donación/alianza), lo implementamos con claridad.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div class="brand" aria-label="Aegis8">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>Aegis8</strong>
+            <span>Claridad • Criterio • Comunidad</span>
+          </div>
+        </div>
+
+        <div style="max-width: 64ch;">
+          <small class="muted">
+            © <span id="year"></span> Aegis8. Página estática. Método enfocado en acciones sostenibles.
+          </small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Año
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Menú móvil
+    const btn = document.getElementById("menuBtn");
+    const panel = document.getElementById("mobilePanel");
+    function closeMobileMenu(){ panel.style.display="none"; btn.setAttribute("aria-expanded","false"); }
+    function toggleMobileMenu(){
+      const isOpen = btn.getAttribute("aria-expanded")==="true";
+      if(isOpen) closeMobileMenu();
+      else{ panel.style.display="block"; btn.setAttribute("aria-expanded","true"); }
+    }
+    btn.addEventListener("click", toggleMobileMenu);
+    panel.querySelectorAll("a").forEach(a=>a.addEventListener("click", closeMobileMenu));
+    window.addEventListener("resize", ()=>{ if(window.innerWidth>760) closeMobileMenu(); });
+
+    // Scroll progress
+    const progress = document.getElementById("progress");
+    function onScroll(){
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+      progress.style.width = `${Math.max(0, Math.min(1, scrolled)) * 100}%`;
+    }
+    window.addEventListener("scroll", onScroll, { passive:true });
+    onScroll();
+
+    // Smooth anchor
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener("click",(e)=>{
+        const id = a.getAttribute("href");
+        const el = document.querySelector(id);
+        if(!el) return;
+        e.preventDefault();
+        closeMobileMenu();
+        const y = el.getBoundingClientRect().top + window.scrollY - 84;
+        window.scrollTo({ top:y, behavior:"smooth" });
+      });
+    });
+
+    // Reveal
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add("on");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold:0.12 });
+    document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+    // Modals
+    const modals = Array.from(document.querySelectorAll(".modal"));
+    let lastFocus = null;
+    function openModal(id){
+      const modal = document.getElementById(id);
+      if(!modal) return;
+      lastFocus = document.activeElement;
+      modal.classList.add("show");
+      document.body.style.overflow="hidden";
+      const closeBtn = modal.querySelector(".modal-close");
+      if(closeBtn) closeBtn.focus();
+    }
+    function closeModal(modal){
+      modal.classList.remove("show");
+      document.body.style.overflow="";
+      if(lastFocus && typeof lastFocus.focus==="function") lastFocus.focus();
+    }
+    function closeAll(){ modals.forEach(m=>m.classList.contains("show") && closeModal(m)); }
+
+    document.addEventListener("click",(e)=>{
+      const trigger = e.target.closest("[data-modal]");
+      if(trigger) openModal(trigger.getAttribute("data-modal"));
+
+      const backdrop = e.target.classList && e.target.classList.contains("modal");
+      if(backdrop) closeModal(e.target);
+
+      const closeBtn = e.target.closest(".modal-close");
+      if(closeBtn) closeModal(closeBtn.closest(".modal"));
+    });
+
+    document.addEventListener("keydown",(e)=>{
+      if(e.key==="Escape") closeAll();
+
+      const activeModal = modals.find(m=>m.classList.contains("show"));
+      if(!activeModal) return;
+
+      if(e.key==="Enter"){
+        const clickable = document.activeElement?.closest?.(".step");
+        if(clickable && clickable.dataset.modal){
+          openModal(clickable.dataset.modal);
+        }
+      }
+
+      if(e.key==="Tab"){
+        const focusables = Array.from(activeModal.querySelectorAll('button, a, input, textarea, select, [tabindex]:not([tabindex="-1"])'))
+          .filter(el=>!el.hasAttribute("disabled"));
+        if(focusables.length===0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length-1];
+        if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+        else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+      }
+    });
+
+    // Mode switch (Rápido / Pro)
+    const tabs = Array.from(document.querySelectorAll(".tab"));
+    const mapSub = document.getElementById("mapSub");
+    const stepsSub = document.getElementById("stepsSub");
+    const diagramCaption = document.getElementById("diagramCaption");
+    const calloutMain = document.getElementById("calloutMain");
+    let mode = "rapido";
+
+    const MODE_TEXT = {
+      rapido: {
+        mapSub: "En 4 pasos: entender, priorizar, implementar, sostener (con mínimos).",
+        stepsSub: "Abre cada paso: verás entregables sencillos y métricas mínimas.",
+        caption: "partir hoy (mínimos)",
+        callout: "Regla Aegis8: 80% del riesgo baja con básicos bien hechos."
+      },
+      pro: {
+        mapSub: "Mismo ciclo, pero para equipos: roles, evidencia, ritual y continuidad.",
+        stepsSub: "Abre cada paso: verás entregables + responsables + continuidad.",
+        caption: "equipo + continuidad (sin burocracia)",
+        callout: "Regla Aegis8: lo que no se puede sostener, se simplifica."
+      }
+    };
+
+    function setMode(next){
+      mode = next;
+      tabs.forEach(t=>{
+        const on = t.dataset.mode===next;
+        t.classList.toggle("active", on);
+        t.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      mapSub.textContent = MODE_TEXT[next].mapSub;
+      stepsSub.textContent = MODE_TEXT[next].stepsSub;
+      diagramCaption.textContent = MODE_TEXT[next].caption;
+      calloutMain.textContent = MODE_TEXT[next].callout;
+
+      // subtle: update chips text for Pro
+      document.querySelectorAll(".step .chip").forEach(ch=>{
+        if(next==="pro" && ch.textContent.includes("duración")){
+          ch.textContent = "duración: 60–120 min";
+        } else if(next==="rapido" && ch.textContent.includes("duración")){
+          ch.textContent = "duración: 30–60 min";
+        }
+      });
+    }
+    tabs.forEach(t=>t.addEventListener("click", ()=>setMode(t.dataset.mode)));
+
+    // Checklist interactions
+    const checklist = document.getElementById("checklist");
+    const fill = document.getElementById("barFill");
+    const pct = document.getElementById("pct");
+    const nextHint = document.getElementById("nextHint");
+    const reset = document.getElementById("reset");
+
+    const items = Array.from(checklist.querySelectorAll(".chk"));
+    const order = ["mfa","backups","roles","dns","endpoints"];
+    const hints = {
+      mfa:"Sugerencia: empieza por MFA en correo y repos.",
+      backups:"Sugerencia: prueba restaurar un backup (aunque sea parcial).",
+      roles:"Sugerencia: elimina cuentas compartidas y ordena roles.",
+      dns:"Sugerencia: revisa DNS/TLS y redirecciones.",
+      endpoints:"Sugerencia: actualizaciones + bloqueo + cifrado si aplica."
+    };
+
+    function updateProgress(){
+      const done = items.filter(i=>i.classList.contains("done")).length;
+      const total = items.length;
+      const p = Math.round((done/total)*100);
+      fill.style.width = p + "%";
+      pct.textContent = p + "%";
+
+      // next hint: first not done in order
+      const next = order.find(k=>{
+        const el = items.find(x=>x.dataset.key===k);
+        return el && !el.classList.contains("done");
+      });
+      nextHint.textContent = next ? hints[next] : "¡Excelente! Ahora: ritual mensual y verificación continua.";
+    }
+
+    items.forEach(el=>{
+      el.addEventListener("click", ()=>{
+        el.classList.toggle("done");
+        updateProgress();
+      });
+    });
+    reset.addEventListener("click", ()=>{
+      items.forEach(i=>i.classList.remove("done"));
+      updateProgress();
+    });
+    updateProgress();
+  </script>
+</body>
+</html>
