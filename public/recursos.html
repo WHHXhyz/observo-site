@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Aegis8 — Recursos & Guías</title>
-  <meta name="description" content="Recursos y guías prácticas de Aegis8 para personas, startups y pequeñas organizaciones. Checklists, plantillas, mini guías y un test didáctico." />
+  <title>Aegis8 — Cápsulas & Biblioteca</title>
+  <meta name="description" content="Cápsulas visuales (tips y guías cortas) + biblioteca de recursos prácticos de Aegis8." />
   <meta name="theme-color" content="#0B2A5B" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,10 +24,7 @@
       --shadow:0 18px 45px rgba(11,42,91,.10);
       --radius:18px;
       --radius2:26px;
-      --max:1080px;
-      --danger:#B42828;
-      --ok:#0B5B3A;
-      --warn:#8A5A0B;
+      --max:1120px;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -47,7 +44,6 @@
     .muted{color:var(--muted)}
     .center{text-align:center}
 
-    /* Top progress */
     .progress{
       position:fixed;top:0;left:0;height:3px;width:0%;
       background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.92), rgba(143,211,255,.95));
@@ -112,6 +108,12 @@
       color:var(--blue);
       font-weight:800;
     }
+    .nav-cta{
+      border-color:rgba(47,169,255,.45) !important;
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.24)) !important;
+      color:var(--blue) !important;
+      font-weight:900 !important;
+    }
 
     .menu-btn{
       display:none;width:44px;height:44px;border-radius:14px;
@@ -134,14 +136,13 @@
       font-weight:700;color:rgba(11,27,52,.9);
     }
     .mobile-panel a:hover{background:rgba(220,235,255,.55);color:var(--blue)}
-    .right{display:flex;align-items:center;gap:10px}
 
-    main{padding:30px 0 70px}
+    main{padding:28px 0 70px}
     section{padding:54px 0}
     section + section{border-top:1px solid rgba(220,235,255,.75)}
 
     h1{
-      font-size:clamp(32px, 4vw, 48px);
+      font-size:clamp(30px, 4vw, 46px);
       line-height:1.06;
       margin:14px 0 10px;
       letter-spacing:-.7px;
@@ -149,8 +150,8 @@
     .lead{
       font-size:clamp(16px, 1.35vw, 18px);
       color:var(--muted);
-      margin:0 auto 18px;
-      max-width:84ch;
+      margin:0 auto 0;
+      max-width:92ch;
     }
 
     .pill{
@@ -170,7 +171,7 @@
     }
 
     .gradline{
-      height:1px;width:min(640px,100%);margin:14px auto 0;border-radius:99px;
+      height:1px;width:min(680px,100%);margin:16px auto 0;border-radius:99px;
       background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.55), rgba(143,211,255,.65), rgba(47,169,255,.55), rgba(47,169,255,0));
       position:relative;overflow:hidden;
     }
@@ -189,7 +190,7 @@
 
     .sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
     .sec-head h2{margin:0;font-weight:900;font-size:clamp(22px, 2.3vw, 32px);letter-spacing:-.35px}
-    .sec-sub{margin:0;max-width:92ch;color:var(--muted);font-size:15.5px}
+    .sec-sub{margin:0;max-width:100ch;color:var(--muted);font-size:15.5px}
 
     .card{
       background:rgba(255,255,255,.92);
@@ -198,61 +199,10 @@
       box-shadow:var(--shadow);
     }
 
-    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-
-    /* Tiles */
-    .tile{
-      position:relative;overflow:hidden;
-      padding:16px;border-radius:var(--radius2);
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.92);
-      box-shadow:0 14px 40px rgba(11,42,91,.08);
-      min-height:168px;
-    }
-    .tile:before{
-      content:"";position:absolute;inset:-2px;
-      background:
-        radial-gradient(520px 220px at 15% 10%, rgba(47,169,255,.12), transparent 60%),
-        radial-gradient(520px 220px at 90% 0%, rgba(143,211,255,.14), transparent 55%);
-      opacity:.9;pointer-events:none;
-    }
-    .tile>*{position:relative}
-    .badge{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 10px;border-radius:999px;
-      border:1px solid rgba(220,235,255,.9);
-      background:rgba(47,169,255,.08);
-      color:rgba(11,42,91,.88);
-      font-weight:800;font-size:12px;
-      white-space:nowrap;
-    }
-    .tile h3{margin:10px 0 8px;font-size:16px;letter-spacing:-.12px}
-    .tile p{margin:0;color:var(--muted);font-size:14px}
-    .tile-btn{
-      text-align:left;cursor:pointer;
-      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.92);
-    }
-    .tile-btn:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
-    .tile-btn:focus-visible{outline:3px solid rgba(47,169,255,.35);outline-offset:3px}
-
-    .mini-ico{
-      width:42px;height:42px;border-radius:16px;
-      border:1px solid rgba(220,235,255,.95);
-      background:rgba(11,42,91,.06);
-      display:grid;place-items:center;
-      box-shadow:0 12px 30px rgba(11,42,91,.08);
-      flex:0 0 auto;
-    }
-    .mini-ico svg{width:22px;height:22px}
-    .mini-ico path, .mini-ico circle, .mini-ico line, .mini-ico polyline{stroke:rgba(11,42,91,.85)}
-
-    /* Controls */
+    /* Chips / minimal intro */
     .controls{
       display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
-      margin:12px 0 0;
+      margin:10px 0 0;
     }
     .chips{display:flex;gap:10px;flex-wrap:wrap}
     .chip{
@@ -264,6 +214,7 @@
       cursor:pointer;font-weight:900;font-size:13px;color:rgba(11,42,91,.86);
       transition:transform .12s ease, background .12s ease, border-color .12s ease;
       user-select:none;
+      white-space:nowrap;
     }
     .chip:hover{transform:translateY(-1px);border-color:rgba(47,169,255,.35);background:rgba(220,235,255,.55)}
     .chip.on{
@@ -271,25 +222,30 @@
       background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
       color:var(--blue);
     }
-    .search{
-      flex:1 1 240px;
-      display:flex;align-items:center;gap:10px;
-      padding:10px 12px;border-radius:14px;border:1px solid rgba(220,235,255,.95);
+    .mini-intro{
+      flex:1 1 320px;
+      display:flex;align-items:flex-start;gap:12px;
+      padding:12px 14px;border-radius:18px;border:1px solid rgba(220,235,255,.95);
       background:rgba(255,255,255,.90);
       box-shadow:0 12px 30px rgba(11,42,91,.06);
     }
-    .search input{
-      border:0;outline:none;background:transparent;
-      font:inherit;color:rgba(11,27,52,.95);
-      width:100%;
+    .mini-icon{
+      width:42px;height:42px;border-radius:16px;
+      border:1px solid rgba(47,169,255,.28);
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.24));
+      display:grid;place-items:center;
+      color:rgba(11,42,91,.92);
+      font-weight:1000;
+      flex:0 0 auto;
     }
-    .hint{font-size:12.5px;color:var(--muted)}
+    .mini-intro p{margin:0;color:var(--muted);font-size:13.5px}
+    .mini-intro strong{color:rgba(11,42,91,.92)}
 
     /* Buttons */
     .btn{
       display:inline-flex;align-items:center;justify-content:center;gap:10px;
       padding:11px 14px;border-radius:14px;border:1px solid var(--line);
-      background:rgba(255,255,255,.92);color:var(--blue);font-weight:800;
+      background:rgba(255,255,255,.92);color:var(--blue);font-weight:900;
       box-shadow:0 12px 30px rgba(11,42,91,.08);
       transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
       cursor:pointer;
@@ -301,13 +257,66 @@
       background:linear-gradient(135deg, rgba(47,169,255,.15), rgba(143,211,255,.25));
       color:var(--blue);
     }
-    .btn.ghost{background:rgba(255,255,255,.78)}
     .btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
 
-    /* Library list */
-    .library{
-      display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.9);
+      background:rgba(47,169,255,.08);
+      color:rgba(11,42,91,.88);
+      font-weight:900;font-size:12px;
+      white-space:nowrap;
     }
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .tag{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.9);
+      background:rgba(255,255,255,.78);
+      color:rgba(11,42,91,.78);
+      font-weight:900;font-size:12px;
+      white-space:nowrap;
+    }
+
+    /* Capsules */
+    .caps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .caps{
+      position:relative;overflow:hidden;
+      border-radius:var(--radius2);
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.92);
+      box-shadow:0 14px 40px rgba(11,42,91,.08);
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      cursor:pointer;
+      min-height:310px;
+      display:flex;flex-direction:column;
+    }
+    .caps:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
+    .caps:before{
+      content:"";position:absolute;inset:-2px;
+      background:
+        radial-gradient(520px 220px at 15% 10%, rgba(47,169,255,.11), transparent 60%),
+        radial-gradient(520px 220px at 90% 0%, rgba(143,211,255,.12), transparent 55%);
+      opacity:.9;pointer-events:none;
+    }
+    .caps>*{position:relative}
+    .caps-media{
+      width:100%;
+      aspect-ratio: 16 / 9;
+      overflow:hidden;
+      border-bottom:1px solid rgba(220,235,255,.9);
+      background:linear-gradient(135deg, rgba(47,169,255,.12), rgba(143,211,255,.16));
+    }
+    .caps-media img{width:100%;height:100%;object-fit:cover;display:block}
+    .caps-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
+    .caps h3{margin:0;font-size:16px;letter-spacing:-.12px}
+    .caps p{margin:0;color:var(--muted);font-size:14px}
+    .caps-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .caps-cta{font-weight:900;color:rgba(11,42,91,.9);font-size:13px;display:inline-flex;align-items:center;gap:8px}
+
+    /* Library */
+    .library{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .item{
       position:relative;overflow:hidden;
       border-radius:var(--radius2);
@@ -347,45 +356,49 @@
     }
     .item h3{margin:10px 0 8px;font-size:16px;letter-spacing:-.12px}
     .item p{margin:0;color:var(--muted);font-size:14px}
-    .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-    .tag{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:7px 10px;border-radius:999px;
-      border:1px solid rgba(220,235,255,.9);
-      background:rgba(255,255,255,.78);
-      color:rgba(11,42,91,.78);
-      font-weight:900;font-size:12px;
-      white-space:nowrap;
-    }
 
-    /* Modal */
+    /* Modal (FIX: fits window + scrollable body + always visible close) */
     .modal{
-      position:fixed;inset:0;z-index:1000;display:none;padding:18px;
-      background:rgba(11,27,52,.55);backdrop-filter:blur(6px);
+      position:fixed;inset:0;z-index:1000;
+      display:none;padding:18px;
+      background:rgba(11,27,52,.55);
+      backdrop-filter:blur(6px);
+      overflow:auto; /* allow backdrop scroll if needed */
     }
     .modal.show{display:grid;place-items:center}
     .modal-dialog{
-      width:min(920px,100%);
+      width:min(980px,100%);
+      max-height:calc(100vh - 36px);
       background:rgba(255,255,255,.97);
       border:1px solid rgba(220,235,255,.95);
       border-radius:22px;
       box-shadow:0 28px 70px rgba(11,42,91,.22);
       overflow:hidden;
+      display:flex;flex-direction:column;
       animation:modalIn .18s ease-out;
     }
     @keyframes modalIn{from{transform:translateY(8px) scale(.99);opacity:0}to{transform:none;opacity:1}}
     .modal-head{
-      padding:16px 16px 12px;border-bottom:1px solid rgba(220,235,255,.9);
+      padding:16px 16px 12px;
+      border-bottom:1px solid rgba(220,235,255,.9);
       background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
       display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+      flex:0 0 auto;
     }
     .modal-title{margin:0;font-size:18px;letter-spacing:-.2px;color:var(--blue)}
     .modal-close{
       width:42px;height:42px;border-radius:14px;border:1px solid rgba(220,235,255,.95);
       background:rgba(255,255,255,.92);cursor:pointer;display:grid;place-items:center;
       color:rgba(11,42,91,.85);box-shadow:0 12px 30px rgba(11,42,91,.10);
+      flex:0 0 auto;
     }
-    .modal-body{padding:14px 16px 16px;color:rgba(11,27,52,.92)}
+    .modal-body{
+      padding:14px 16px 16px;
+      color:rgba(11,27,52,.92);
+      overflow:auto;
+      -webkit-overflow-scrolling:touch;
+      flex:1 1 auto;
+    }
     .modal-body p{margin:0 0 10px;color:var(--muted)}
     .modal-body ul{margin:10px 0 0;padding-left:18px;color:var(--muted)}
     .modal-body li{margin:7px 0}
@@ -395,27 +408,55 @@
       background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
       color:rgba(11,42,91,.9);font-weight:900;font-size:13px;
     }
-    .dl{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
-      padding:12px 12px;border-radius:18px;
+
+    /* Tabs */
+    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .tab{
+      padding:10px 12px;border-radius:999px;border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.85);
+      font-weight:900;font-size:13px;color:rgba(11,42,91,.86);
+      cursor:pointer;
+      transition:transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+    }
+    .tab:hover{transform:translateY(-1px);border-color:rgba(47,169,255,.35);background:rgba(220,235,255,.55)}
+    .tab.on{
+      border-color:rgba(47,169,255,.45);
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
+      color:var(--blue);
+    }
+
+    /* Diagram */
+    .diagram-wrap{
+      margin-top:12px;
+      border-radius:22px;
       border:1px solid rgba(220,235,255,.95);
       background:rgba(255,255,255,.92);
-      box-shadow:0 12px 24px rgba(11,42,91,.06);
-      margin-top:10px;
+      box-shadow:0 16px 40px rgba(11,42,91,.10);
+      overflow:hidden;
     }
-    .dl small{color:var(--muted)}
-    .dl .btn{padding:10px 12px;border-radius:12px}
-
-    /* Changelog */
-    .log{
-      border-left:2px solid rgba(47,169,255,.25);
-      padding-left:12px;
-      margin:0;
+    .diagram-head{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+      padding:12px 12px;border-bottom:1px solid rgba(220,235,255,.9);
+      background:linear-gradient(135deg, rgba(47,169,255,.08), rgba(143,211,255,.14));
     }
-    .log li{margin:8px 0;color:var(--muted)}
-    .log strong{color:rgba(11,42,91,.9)}
+    .steps{display:flex;gap:10px;flex-wrap:wrap}
+    .step{
+      padding:9px 10px;border-radius:999px;border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.85);
+      font-weight:900;font-size:12.5px;color:rgba(11,42,91,.86);
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .step.on{
+      border-color:rgba(47,169,255,.45);
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
+      color:var(--blue);
+    }
+    .diagram-body{padding:14px 14px 16px}
+    .diagram-note{margin:0;color:var(--muted);font-size:13px}
+    svg{max-width:100%;height:auto;display:block}
 
-    /* Reveal */
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .55s ease, transform .55s ease}
     .reveal.on{opacity:1;transform:none}
 
@@ -427,8 +468,7 @@
     .foot{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}
 
     @media (max-width: 980px){
-      .grid-2{grid-template-columns:1fr}
-      .grid-3{grid-template-columns:1fr}
+      .caps-grid{grid-template-columns:1fr}
       .library{grid-template-columns:1fr}
     }
     @media (max-width: 760px){
@@ -446,50 +486,42 @@
   <div class="progress" id="progress" aria-hidden="true"></div>
 
   <header>
-  <div class="wrap">
-    <div class="nav">
-      <a class="brand" href="index.html" aria-label="Aegis8 — Inicio">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <strong>Aegis8</strong>
-          <span>Ciberseguridad con sentido</span>
-        </div>
-      </a>
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="index.html" aria-label="Aegis8 — Inicio">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>Aegis8</strong>
+            <span>Ciberseguridad con sentido</span>
+          </div>
+        </a>
 
-      <button class="menu-btn" type="button" id="menuBtn" aria-label="Abrir menú">
-        <div class="menu-lines" aria-hidden="true">
-          <span></span><span></span><span></span>
-        </div>
-      </button>
+        <button class="menu-btn" type="button" id="menuBtn" aria-label="Abrir menú" aria-expanded="false">
+          <div class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></div>
+        </button>
 
-      <nav aria-label="Navegación principal">
-        <ul id="navLinks">
-          <li></li>
-          <li><a href="comotrabajamos.html" data-page="comotrabajamos.html">Cómo trabajamos</a></li>
-          <li><a href="recursos.html" data-page="recursos.html">Recursos y guías</a></li>
-          <li><a href="index.html#ayudamos" data-hash="#ayudamos">A quiénes ayudamos</a></li>
-          <li><a href="index.html#quienes" data-hash="#quienes">Quiénes somos</a></li>
-          <li><a href="psocial.html" data-page="psocial.html">Proyecto social</a></li>
-          <li><a class="nav-cta" href="contactanos.html" data-page="contactanos.html"></a></li>
-        </ul>
-      </nav>
+        <nav aria-label="Navegación principal">
+          <ul id="navLinks">
+            <li><a href="comotrabajamos.html" data-page="comotrabajamos.html">Cómo trabajamos</a></li>
+            <li><a href="recursos.html" data-page="recursos.html">Cápsulas</a></li>
+            <li><a href="index.html#ayudamos" data-hash="#ayudamos">A quiénes ayudamos</a></li>
+            <li><a href="index.html#quienes" data-hash="#quienes">Quiénes somos</a></li>
+            <li><a href="psocial.html" data-page="psocial.html">Proyecto social</a></li>
+            <li><a class="nav-cta" href="contactanos.html" data-page="contactanos.html">Contáctanos</a></li>
+          </ul>
+        </nav>
+      </div>
 
-      <div class="right nav-right">
-        <!-- espacio para CTA futuro -->
+      <div class="mobile-panel" id="mobilePanel" aria-label="Navegación móvil">
+        <a href="comotrabajamos.html">Cómo trabajamos</a>
+        <a href="recursos.html">Cápsulas</a>
+        <a href="index.html#ayudamos">A quiénes ayudamos</a>
+        <a href="index.html#quienes">Quiénes somos</a>
+        <a href="psocial.html">Proyecto social</a>
+        <a class="nav-cta" href="contactanos.html">Contáctanos</a>
       </div>
     </div>
-
-    <div class="mobile-panel" id="mobilePanel" aria-label="Navegación móvil">
-      
-      <a href="comotrabajamos.html">Cómo trabajamos</a>
-      <a href="recursos.html">Recursos y guías</a>
-      <a href="index.html#ayudamos">A quiénes ayudamos</a>
-      <a href="index.html#quienes">Quiénes somos</a>
-      <a href="psocial.html">Proyecto social</a>
-      <a href="contactanos.html"></a>
-    </div>
-  </div>
-</header>
+  </header>
 
   <main id="top">
     <div class="wrap">
@@ -499,195 +531,99 @@
         <div class="center">
           <div class="pill reveal" role="note" aria-label="Recursos Aegis8">
             <span class="dot" aria-hidden="true"></span>
-            <span><strong>Recursos</strong> para aprender y aplicar hoy (sin humo).</span>
+            <span><strong>Tips</strong> y <strong>guías cortas</strong> para bajar riesgo en el día a día.</span>
           </div>
 
-          <h1 class="reveal">Recursos & guías prácticas.</h1>
+          <h1 class="reveal">Cápsulas prácticas de seguridad</h1>
 
           <p class="lead reveal">
-            Aegis8 existe para reducir la brecha: <span class="k">conocimiento claro</span>, checklists sostenibles y acompañamiento honesto.
-            Esta biblioteca se puede actualizar <span class="k">mensualmente</span> sin rehacer el sitio.
+            Contenido claro para personas, familias y negocios que están creciendo.
+            <span class="k"></span> para entender el “cómo pasa” y el “qué hacer”.
           </p>
-
-          <div class="center reveal" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
-            <a class="btn primary" href="#novedades">Ver novedades del mes</a>
-            <a class="btn" href="#biblioteca">Abrir biblioteca</a>
-            <button class="btn ghost" type="button" data-modal="m-como-actualizar" aria-haspopup="dialog">¿Cómo se actualiza?</button>
-          </div>
         </div>
 
         <div class="gradline" aria-hidden="true"></div>
-
-        <div class="grid-3" style="margin-top:18px;">
-          <a class="tile tile-btn reveal" href="test_ciberseguridad_aegis8.html" aria-label="Ir al test de ciberseguridad">
-            <span class="badge">Test interactivo</span>
-            <h3>¿Cuánto sabes de ciberseguridad?</h3>
-            <p>3 minutos + feedback claro. Ideal para partir sin vergüenza y con hábitos.</p>
-          </a>
-
-          <button class="tile tile-btn reveal" type="button" data-modal="m-minimos" aria-haspopup="dialog">
-            <span class="badge">Mínimos</span>
-            <h3>Plan de 30 días</h3>
-            <p>Un camino simple: MFA → backups probados → accesos → endpoints → DNS/TLS.</p>
-          </button>
-
-          <button class="tile tile-btn reveal" type="button" data-modal="m-news" aria-haspopup="dialog">
-            <span class="badge">Comunidad</span>
-            <h3>Novedades 1–2/mes</h3>
-            <p>Recursos cortos, checklists y avisos de talleres. Sin spam.</p>
-          </button>
-        </div>
       </section>
 
-      <!-- NOVEDADES -->
-      <section id="novedades">
+      <!-- CAPSULAS -->
+      <section id="capsulas">
         <div class="sec-head reveal">
-          <h2>Novedades del mes</h2>
+          <h2>Cápsulas y tips visuales</h2>
           <p class="sec-sub">
-            Cada mes destacamos 3 recursos. Edita el bloque <span class="k">MONTH_HIGHLIGHTS</span> en el JS y listo.
-          </p>
-        </div>
-
-        <div class="grid-3" id="highlights"></div>
-
-        <div class="hint" style="margin-top:10px;">
-          Tip: si quieres “tema del mes”, cambia el texto del <span class="k">badge</span> y la fecha en el changelog.
-        </div>
-      </section>
-
-      <!-- BIBLIOTECA -->
-      <section id="biblioteca">
-        <div class="sec-head reveal">
-          <h2>Biblioteca</h2>
-          <p class="sec-sub">
-            Filtra por público (Personas / Startups / Pymes / Comunidad) y busca por palabras. Cada recurso abre detalle.
+            Micro contenidos aterrizados a acción. Haz clic en cualquier recuadro para ver el detalle y el diagrama.
           </p>
         </div>
 
         <div class="card reveal" style="padding:16px;">
           <div class="controls">
-            <div class="chips" aria-label="Filtros">
-              <div class="chip on" data-filter="all">Todo</div>
-              <div class="chip" data-filter="personas">Personas</div>
-              <div class="chip" data-filter="startups">Startups</div>
-              <div class="chip" data-filter="pymes">Pymes</div>
-              <div class="chip" data-filter="comunidad">Comunidad</div>
+            <div class="chips" aria-label="Filtros cápsulas">
+              <div class="chip on" data-capfilter="all">Capsulas educativas con temas de ciberseguridad blablabla</div>
             </div>
 
-            <div class="search" aria-label="Buscar recursos">
-              <span class="muted" style="font-weight:900;">⌕</span>
-              <input id="search" type="search" placeholder="Buscar: MFA, backups, phishing, DNS, roles..." />
+            <div class="mini-intro" aria-label="Cómo funciona esta sección">
+              <div class="mini-icon" aria-hidden="true">i</div>
+              <div>
+                <p>
+                  <strong>Tambien puedes revisarlas con mas detalles en nuesto instagram aegis8ciber</strong> 
+                </p>
+              </div>
             </div>
-
-            <button class="btn ghost" type="button" id="resetBtn">Reset</button>
-          </div>
-
-          <div class="hint" style="margin-top:10px;">
-            Este bloque se genera desde el arreglo <span class="k">RESOURCES</span>. Puedes agregar enlaces a PDFs, Drive, Notion o páginas internas.
           </div>
         </div>
 
         <div style="height:12px"></div>
+        <div class="caps-grid" id="capsGrid"></div>
+      </section>
 
+      <!-- BIBLIOTECA -->
+      <section id="biblioteca">
+        <div class="sec-head reveal">
+          <h2>Biblioteca (checklists y mini guías)</h2>
+          <p class="sec-sub">
+            Recursos “de aterrizaje”: checklists, plantillas y mini guías para implementar. Abre un recurso para ver pasos y un diagrama simple de implementación.
+          </p>
+        </div>
+
+        <div class="card reveal" style="padding:16px;">
+          <div class="controls">
+            <div class="chips" aria-label="Filtros biblioteca">
+              <div class="chip on" data-filter="all">Todo</div>
+              <div class="chip" data-filter="personas">Personas</div>
+              <div class="chip" data-filter="startups">Startups</div>
+              <div class="chip" data-filter="pymes">Pymes</div>
+              <div class="chip" data-filter="familia">Familia</div>
+            </div>
+
+            <div class="mini-intro" aria-label="Qué es la biblioteca">
+              <div class="mini-icon" aria-hidden="true">✓</div>
+              <div>
+                <p>
+                  <strong>Biblioteca:</strong> esto es para <strong>hacer</strong>, no para “leer por leer”.
+                  Cada recurso te deja pasos cortos y una acción de hoy.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:12px"></div>
         <div class="library" id="library"></div>
-      </section>
-
-      <!-- HERRAMIENTAS -->
-      <section id="herramientas">
-        <div class="sec-head reveal">
-          <h2>Herramientas Aegis8</h2>
-          <p class="sec-sub">Herramientas de apoyo (sin eclipsar el foco social). Úsalas como complemento.</p>
-        </div>
-
-        <div class="grid-2">
-          <div class="card reveal" style="padding:18px;">
-            <div style="display:flex;gap:12px;align-items:flex-start;">
-              <div class="mini-ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6l7-4Z" stroke-width="2"/>
-                  <path d="M8 12h8" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M10 9h4" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <div>
-                <div class="badge">Observo (apoyo)</div>
-                <h3 style="margin:10px 0 6px;">Señales públicas del sitio</h3>
-                <p class="muted" style="margin:0;">
-                  Headers, TLS, exposición básica, evidencias y cambios relevantes. Ideal para empezar sin credenciales.
-                </p>
-                <div class="btn-row">
-                  <button class="btn primary" type="button" data-modal="m-observo" aria-haspopup="dialog">Ver cómo se usa</button>
-                  <a class="btn" href="contactanos.html">Pedir guía</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card reveal" style="padding:18px;">
-            <div style="display:flex;gap:12px;align-items:flex-start;">
-              <div class="mini-ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M6 3h12v18H6V3Z" stroke-width="2"/>
-                  <path d="M8 7h8" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M8 11h8" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M8 15h6" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <div>
-                <div class="badge">PBD (apoyo)</div>
-                <h3 style="margin:10px 0 6px;">Toolkit de mínimos</h3>
-                <p class="muted" style="margin:0;">
-                  Plantillas, checklist de hardening y hábitos. Para ordenar “qué hacemos primero” y evidenciar avances.
-                </p>
-                <div class="btn-row">
-                  <button class="btn primary" type="button" data-modal="m-pbd" aria-haspopup="dialog">Ver plantilla</button>
-                  <a class="btn" href="#biblioteca">Ir a recursos</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CHANGELOG -->
-      <section id="changelog">
-        <div class="sec-head reveal">
-          <h2>Changelog</h2>
-          <p class="sec-sub">Transparencia: qué se agregó/actualizó. Edita el arreglo <span class="k">CHANGELOG</span>.</p>
-        </div>
-
-        <div class="card reveal" style="padding:18px;">
-          <ul class="log" id="log"></ul>
-          <div class="callout">Sugerencia: actualiza una vez al mes (o cuando subas una guía nueva).</div>
-        </div>
       </section>
 
       <!-- CTA -->
       <section id="cta">
         <div class="sec-head reveal">
-          <h2>¿Quieres un “mínimo” para tu caso?</h2>
-          <p class="sec-sub">Una página: 5 acciones, 30 días, sin humo. Adaptado a persona/startup/pyme.</p>
+          <h2>¿Quieres que esto sea “tu plan”?</h2>
+          <p class="sec-sub">Si me dices tu contexto (persona/familia/negocio), lo dejamos en 1 hoja con acciones reales y ordenadas.</p>
         </div>
 
-        <div class="grid-2">
-          <div class="card reveal" style="padding:18px;">
-            <div class="badge">Rápido</div>
-            <h3 style="margin:10px 0 8px;">Te orientamos con 2–3 preguntas</h3>
-            <p class="muted" style="margin:0;">Objetivo, stack (si aplica) y urgencia. Luego te devolvemos un plan simple.</p>
-            <div class="btn-row">
-              <a class="btn primary" href="contactanos.html">Ir a Contáctanos</a>
-              <a class="btn" href="psocial.html">Ver Proyecto social</a>
-            </div>
-          </div>
-
-          <div class="card reveal" style="padding:18px;">
-            <div class="badge">Didáctico</div>
-            <h3 style="margin:10px 0 8px;">Haz el test y parte por lo básico</h3>
-            <p class="muted" style="margin:0;">Ideal para equipos nuevos, comunidades y personas que quieren empezar sin miedo.</p>
-            <div class="btn-row">
-              <a class="btn primary" href="test_ciberseguridad_aegis8.html">Hacer el test</a>
-              <button class="btn ghost" type="button" data-modal="m-que-es-mfa" aria-haspopup="dialog">¿Qué es MFA?</button>
-            </div>
+        <div class="card reveal" style="padding:18px;">
+          <div class="badge">Simple</div>
+          <h3 style="margin:10px 0 8px;letter-spacing:-.2px;">Un plan mínimo, claro y aplicable</h3>
+          <p class="muted" style="margin:0;">Sin promesas enterprise: solo acciones que bajan riesgo y crean hábito.</p>
+          <div class="btn-row">
+            <a class="btn primary" href="contactanos.html">Ir a Contáctanos</a>
+            <a class="btn" href="#biblioteca">Ver biblioteca</a>
           </div>
         </div>
       </section>
@@ -695,145 +631,25 @@
     </div>
   </main>
 
-  <!-- MODALS -->
-  <div class="modal" id="m-resource" role="dialog" aria-modal="true" aria-labelledby="t-resource">
+  <!-- MODAL -->
+  <div class="modal" id="m-detail" role="dialog" aria-modal="true" aria-labelledby="t-detail">
     <div class="modal-dialog">
       <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-resource">Recurso</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;" id="t-resource-sub">—</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body" id="resourceBody"></div>
-    </div>
-  </div>
+        <div style="min-width:0;">
+          <h3 class="modal-title" id="t-detail">Detalle</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;" id="t-detail-sub">—</div>
 
-  <div class="modal" id="m-news" role="dialog" aria-modal="true" aria-labelledby="t-news">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-news">Novedades (demo)</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">1–2 correos al mes. Sin relleno.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p>Esto es demo (sin backend). Cuando quieras, lo conectamos a un formulario real (Mailchimp/Brevo/ConvertKit o Google Forms).</p>
-        <div class="dl">
-          <div>
-            <div style="font-weight:900;color:rgba(11,42,91,.9);">Suscripción rápida</div>
-            <small>Por ahora: envíanos un correo con asunto “Suscripción Aegis8”.</small>
+          <div class="tabs" aria-label="Pestañas">
+            <button class="tab on" type="button" data-tab="resumen">Resumen</button>
+            <button class="tab" type="button" data-tab="diagrama">Diagrama</button>
           </div>
-          <a class="btn primary" href="mailto:contacto@aegis8.org?subject=Suscripci%C3%B3n%20Aegis8&body=Hola%20Aegis8%2C%20quiero%20recibir%20recursos%20y%20novedades%20(1%E2%80%932%20al%20mes).">Enviar correo</a>
-        </div>
-        <div class="callout">Transparencia: nunca pedimos credenciales. Nunca mandes datos sensibles por correo.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="m-como-actualizar" role="dialog" aria-modal="true" aria-labelledby="t-upd">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-upd">Actualizar esta página (simple)</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Editas 3 arreglos en el JS y listo.</div>
         </div>
         <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
       </div>
-      <div class="modal-body">
-        <p>Dentro del HTML encontrarás 3 bloques:</p>
-        <ul>
-          <li><strong>MONTH_HIGHLIGHTS</strong>: 3 destacados del mes (se muestran arriba).</li>
-          <li><strong>RESOURCES</strong>: toda la biblioteca (cards + modal).</li>
-          <li><strong>CHANGELOG</strong>: “qué cambió” (una línea por actualización).</li>
-        </ul>
-        <div class="callout">Regla Aegis8: mejor 1 actualización buena al mes que 10 recursos mediocres.</div>
-      </div>
-    </div>
-  </div>
 
-  <div class="modal" id="m-minimos" role="dialog" aria-modal="true" aria-labelledby="t-min">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-min">Plan de 30 días (mínimos)</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Orden sugerido (ajustable por contexto).</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
       <div class="modal-body">
-        <ul>
-          <li><strong>Semana 1:</strong> MFA en correo + cuentas críticas (dominio/repos/cloud/banca).</li>
-          <li><strong>Semana 2:</strong> backups + prueba de restauración (aunque sea parcial).</li>
-          <li><strong>Semana 3:</strong> accesos/roles (mínimo privilegio), cuentas compartidas fuera.</li>
-          <li><strong>Semana 4:</strong> endpoints y actualizaciones + higiene de dispositivos.</li>
-          <li><strong>Continuo:</strong> phishing y hábitos (ritual mensual).</li>
-        </ul>
-        <div class="callout">Si necesitas, te lo dejamos en 1 hoja con responsables y checklist.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="m-observo" role="dialog" aria-modal="true" aria-labelledby="t-ob">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-ob">Observo (apoyo)</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Señales públicas, sin credenciales.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p>Úsalo para evidenciar postura base:</p>
-        <ul>
-          <li>TLS, headers, exposición superficial, cambios en el tiempo.</li>
-          <li>Ideal para reportes simples y educación.</li>
-        </ul>
-        <div class="callout">Primero hábitos (MFA/backups/roles). Después herramientas.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="m-pbd" role="dialog" aria-modal="true" aria-labelledby="t-pbd">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-pbd">PBD (apoyo)</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Plantilla de mínimos (ejemplo).</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p>Estructura sugerida para un “mínimo”:</p>
-        <ul>
-          <li><strong>Objetivo</strong> (qué estamos protegiendo)</li>
-          <li><strong>Activos</strong> (correo, dominio, repos, endpoints)</li>
-          <li><strong>Mínimos</strong> (MFA, backups probados, roles)</li>
-          <li><strong>Ritual mensual</strong> (30 minutos)</li>
-        </ul>
-        <div class="callout">Si quieres, lo convertimos en un PDF/plantilla descargable con el mismo diseño.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="m-que-es-mfa" role="dialog" aria-modal="true" aria-labelledby="t-mfa">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-mfa">MFA (2FA) en simple</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Una capa extra contra robo de contraseñas.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p>MFA significa “más de un factor” para entrar. Ejemplos:</p>
-        <ul>
-          <li>Contraseña + app autenticadora</li>
-          <li>Contraseña + llave física</li>
-          <li>Contraseña + código (idealmente no SMS)</li>
-        </ul>
-        <div class="callout">Prioriza: correo + dominio + repos + cloud + banca.</div>
+        <div id="tab-resumen"></div>
+        <div id="tab-diagrama" style="display:none;"></div>
       </div>
     </div>
   </div>
@@ -849,10 +665,9 @@
           </div>
         </div>
 
-        <div style="max-width: 66ch;">
+        <div style="max-width: 70ch;">
           <small class="muted">
-            © <span id="year"></span> Aegis8. Página estática. La biblioteca se mantiene editando arreglos en el JS (sin backend).
-            <br/>Si quieres, lo conectamos a un repositorio + releases mensuales (PDF/ZIP) para que quede impecable.
+            © <span id="year"></span> Aegis8. Página estática: se actualiza editando arreglos en el JS (sin backend).
           </small>
         </div>
       </div>
@@ -897,296 +712,310 @@
     }, { threshold:0.12 });
     document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 
+    // Active link
+    (function(){
+      const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+      const hash = (location.hash || '').toLowerCase();
+      document.querySelectorAll('#navLinks a').forEach(a => {
+        const page = (a.getAttribute('data-page') || '').toLowerCase();
+        const h = (a.getAttribute('data-hash') || '').toLowerCase();
+        if(page && page === path) a.classList.add('active');
+        if(h && hash && h === hash) a.classList.add('active');
+      });
+    })();
+
     // -----------------------------
-    //  EDITABLE MONTHLY CONTENT
+    // SOBRE INSTAGRAM (seguridad)
     // -----------------------------
-    // 1) 3 destacados del mes (cambia títulos, textos, links y acciones)
-    const MONTH_HIGHLIGHTS = [
+    // No usamos "embed.js" de Instagram para evitar scripts de terceros (tracking/cookies).
+    // Si quieres, cada cápsula puede tener un botón "Ver en Instagram" que abre un link en otra pestaña
+    // con rel="noopener noreferrer" (sin acceso al window del sitio).
+    // Esto no "infecta" tu página, pero sí puede exponer al visitante a cookies/tracking de IG al visitar ese link.
+
+    // -----------------------------
+    // EDITABLE CONTENT
+    // -----------------------------
+    // Rutas correctas: public/assets -> "assets/archivo.png"
+    const CAPSULES = [
       {
-        badge:"Checklist",
-        title:"MFA en 15 minutos (sin excusas)",
-        desc:"Qué activar primero y cómo evitar quedar fuera (códigos de respaldo).",
-        topic:"MFA",
+        id:"cap-mitm",
+        title:"Man-in-the-Middle (MITM)",
+        desc:"Cómo te pueden interceptar en redes abiertas y qué hábitos bajan riesgo.",
+        category:"redes",
         level:"Base",
-        actions:[
-          { label:"Abrir detalle", type:"modal", payload:{ id:"hl-mfa" } }
+        image:"assets/mym.png",
+        instagramUrl:"", // opcional: pega aquí el link al post/reel
+        resumen:[
+          "Un MITM ocurre cuando alguien se pone “en medio” entre tú y el sitio/servicio: ve, altera o redirige tráfico.",
+          "Suele explotar Wi‑Fi público, equipos comprometidos o configuraciones inseguras."
         ],
-        detail:{
-          why:"MFA baja muchísimo el riesgo por robo de contraseñas. Prioriza correo + dominio + repos + cloud + banca.",
+        hacer:[
+          "Evita loguearte desde enlaces en Wi‑Fi público: entra por tu ruta habitual (app/bookmark).",
+          "Activa MFA en correo/cuentas críticas.",
+          "Prefiere red móvil o VPN si vas a hacer algo sensible."
+        ],
+        diagram:{
+          title:"Flujo MITM (intercepción)",
           steps:[
-            "Activa MFA en tu correo.",
-            "Activa MFA en el registrador del dominio/DNS.",
-            "Guarda códigos de respaldo (offline).",
-            "Revisa ‘sesiones activas’ y cierra las que no reconozcas."
-          ],
-          download:{ label:"Plantilla (próximo)", note:"Cuando lo quieras, lo convertimos en PDF descargable." }
+            { id:"s1", label:"Conexión", note:"Tú intentas entrar a un sitio desde una red no confiable." },
+            { id:"s2", label:"Intercepción", note:"Un atacante se posiciona en medio (AP falso, ARP spoofing, etc.)." },
+            { id:"s3", label:"Robo/alteración", note:"Puede ver credenciales o redirigir a una página falsa." },
+            { id:"s4", label:"Mitigación", note:"Hábito: rutas habituales, MFA, y evitar redes abiertas para cosas sensibles." }
+          ]
         }
       },
       {
-        badge:"Guía",
-        title:"Backups que sí sirven (y cómo probarlos)",
-        desc:"Backup sin prueba es esperanza. Te dejamos un ritual corto.",
-        topic:"Backups",
+        id:"cap-hijos",
+        title:"Seguridad digital para hijos",
+        desc:"Rutinas simples: privacidad, conversaciones y límites que sí se sostienen.",
+        category:"familia",
         level:"Base",
-        actions:[
-          { label:"Abrir detalle", type:"modal", payload:{ id:"hl-backups" } }
+        image:"assets/hijos.png",
+        instagramUrl:"",
+        resumen:[
+          "La seguridad para niños no es solo ‘bloquear’: es acompañar y enseñar criterio.",
+          "El objetivo: reducir riesgo sin romper la confianza."
         ],
-        detail:{
-          why:"El objetivo es restaurar: archivos o servicio. La prueba de restauración evita sorpresas.",
+        hacer:[
+          "Activa control parental básico + revisa privacidad de cuentas.",
+          "Acuerden regla: no compartir datos personales ni ubicación.",
+          "Crea un canal seguro: si algo incomoda, te lo cuentan sin culpa."
+        ],
+        diagram:{
+          title:"Rutina familiar (3 capas)",
           steps:[
-            "Define qué es crítico (documentos, repos, configs, fotos, facturación).",
-            "Haz backup (idealmente 3-2-1).",
-            "Prueba restaurar una carpeta/archivo al mes (10–15 min).",
-            "Documenta dónde están y quién puede restaurar."
-          ],
-          download:{ label:"Checklist (próximo)", note:"Se agrega como archivo cuando lo definas." }
+            { id:"s1", label:"Conversar", note:"Acordar reglas claras y por qué existen." },
+            { id:"s2", label:"Configurar", note:"Privacidad + controles + cuentas con MFA donde aplique." },
+            { id:"s3", label:"Acompañar", note:"Revisiones cortas semanales, sin invasión." },
+            { id:"s4", label:"Repetir", note:"Si cambian apps, se ajusta la rutina (no la confianza)." }
+          ]
         }
       },
       {
-        badge:"Mini guía",
-        title:"Phishing: 5 señales y 1 regla",
-        desc:"La regla es simple: no entrar por el link. Entra por tu ruta habitual.",
-        topic:"Phishing",
+        id:"cap-vacaciones",
+        title:"Seguridad en vacaciones",
+        desc:"Menos ansiedad, más hábitos: conexiones seguras, backups y cuidado de datos.",
+        category:"vacaciones",
         level:"Base",
-        actions:[
-          { label:"Hacer el test", type:"link", payload:{ href:"test_ciberseguridad_aegis8.html" } },
-          { label:"Abrir detalle", type:"modal", payload:{ id:"hl-phish" } }
+        image:"assets/vacaciones.png",
+        instagramUrl:"",
+        resumen:[
+          "En vacaciones aumentan Wi‑Fi público, dispositivos fuera de casa y compras rápidas.",
+          "Pequeños hábitos reducen mucho el riesgo."
         ],
-        detail:{
-          why:"El phishing funciona por presión y urgencia. La defensa es hábito + verificación por canal oficial.",
+        hacer:[
+          "Antes de salir: actualiza sistema/apps y deja backup probado.",
+          "Evita compras/banca en Wi‑Fi público.",
+          "Activa ‘Encontrar mi dispositivo’ y bloqueo automático."
+        ],
+        diagram:{
+          title:"Checklist viaje (antes / durante / después)",
           steps:[
-            "Señal 1: urgencia (hoy, ya, suspendida).",
-            "Señal 2: link raro o acortado.",
-            "Señal 3: solicita credenciales o códigos.",
-            "Señal 4: errores de idioma/formato.",
-            "Señal 5: remitente y dominio no calzan.",
-            "Regla: NO uses el enlace. Entra por app/bookmark y verifica."
-          ],
-          download:{ label:"Tarjeta (próximo)", note:"Podemos hacer un PNG/afiche para comunidad." }
+            { id:"s1", label:"Antes", note:"Actualizar + backup + revisar accesos críticos." },
+            { id:"s2", label:"Durante", note:"Evitar Wi‑Fi para cosas sensibles, cuidado con enlaces." },
+            { id:"s3", label:"Incidente", note:"Si pierdes equipo: bloquear, localizar, cambiar contraseñas." },
+            { id:"s4", label:"Después", note:"Revisar sesiones activas y permisos." }
+          ]
+        }
+      },
+      {
+        id:"cap-puertas",
+        title:"Cerrar puertas digitales",
+        desc:"Lo básico que casi nadie hace: sesiones abiertas, apps, permisos y cuentas.",
+        category:"habitos",
+        level:"Base",
+        image:"assets/puertas.png",
+        instagramUrl:"",
+        resumen:[
+          "Muchas filtraciones no son ‘hackeo’: son cuentas sin MFA, sesiones abiertas o permisos de más.",
+          "Cerrar puertas es reducir superficie de ataque."
+        ],
+        hacer:[
+          "Cierra sesiones activas en correo/redes y revoca dispositivos desconocidos.",
+          "Elimina apps que ya no usas y revisa permisos.",
+          "Reduce administradores y evita cuentas compartidas."
+        ],
+        diagram:{
+          title:"Puertas típicas (y cómo cerrarlas)",
+          steps:[
+            { id:"s1", label:"Sesiones", note:"Revisar sesiones activas y cerrar lo sospechoso." },
+            { id:"s2", label:"Permisos", note:"Eliminar apps/permisos excesivos y cuentas compartidas." },
+            { id:"s3", label:"MFA", note:"Activar MFA en correo y cuentas críticas." },
+            { id:"s4", label:"Rutina", note:"Repetir una vez al mes (30 min)." }
+          ]
+        }
+      },
+      {
+        id:"cap-fiestas",
+        title:"Seguridad en estas fiestas",
+        desc:"Compras, regalos, enlaces y estafas: lo que sube en diciembre y cómo evitarlo.",
+        category:"fiestas",
+        level:"Base",
+        image:"assets/fiestas.png",
+        instagramUrl:"",
+        resumen:[
+          "En fechas de alta demanda suben las estafas: links, marketplaces falsos y ‘urgencias’.",
+          "Regla de oro: no uses el enlace: entra por tu ruta habitual."
+        ],
+        hacer:[
+          "Verifica URL y reputación (no compres desde anuncios raros).",
+          "No compartas códigos SMS ni ‘confirmaciones’ por chat.",
+          "Usa un medio con protección y activa notificaciones."
+        ],
+        diagram:{
+          title:"Ruta segura de compra",
+          steps:[
+            { id:"s1", label:"Origen", note:"No abrir links de terceros/anuncios extraños." },
+            { id:"s2", label:"Ruta", note:"Entrar por app o bookmark (ruta habitual)." },
+            { id:"s3", label:"Pago", note:"Usar medio con protección + notificaciones." },
+            { id:"s4", label:"Revisión", note:"Monitorear cargos y cerrar sesión en equipos ajenos." }
+          ]
         }
       }
     ];
 
-    // 2) Biblioteca completa (puedes agregar/editar aquí)
-    // type: guia | checklist | plantilla | taller | test
-    // audience: personas | startups | pymes | comunidad
-    const RESOURCES = [
+    const LIBRARY = [
       {
-        id:"r-test",
-        title:"Test: ¿Cuánto sabes de ciberseguridad?",
-        type:"test",
-        level:"Base",
-        topic:"Cultura",
-        audience:["personas","startups","pymes","comunidad"],
-        summary:"3 minutos + feedback claro. Perfecto para iniciar una conversación sin vergüenza.",
-        tags:["didáctico","rápido","feedback"],
-        link:{ href:"test_ciberseguridad_aegis8.html", label:"Abrir test" },
-        body:[
-          "Úsalo como punto de partida con tu equipo/comunidad.",
-          "Después del test: aplica 2 mínimos (MFA + backups probados) y repite en 30 días."
-        ],
-        todo:"Qué hacer hoy: comparte el test con 1 persona y conversen 10 minutos sobre los resultados."
-      },
-      {
-        id:"r-mfa",
+        id:"lib-mfa",
         title:"Checklist: MFA en cuentas críticas",
         type:"checklist",
         level:"Base",
-        topic:"MFA",
-        audience:["personas","startups","pymes"],
-        summary:"Prioridad: correo → dominio/DNS → repos → cloud → banca. Incluye códigos de respaldo.",
-        tags:["accesos","cuentas","prioridad"],
+        topic:"Accesos",
+        audience:["personas","startups","pymes","familia"],
+        summary:"Prioriza correo → dominio/DNS → repos → cloud → banca. Incluye códigos de respaldo.",
+        tags:["mfa","cuentas","prioridad"],
         body:[
-          "MFA primero en correo (porque resetea todo).",
-          "Luego registrador de dominio/DNS.",
-          "Luego repos (GitHub/GitLab), cloud (AWS/GCP/Azure), herramientas (Vercel, CRM).",
-          "Guarda códigos de respaldo y revisa métodos de recuperación."
+          "Correo primero (resetea todo).",
+          "Luego dominio/DNS (control de tráfico y correo).",
+          "Luego repos y plataformas (Vercel, GitHub, CRM).",
+          "Guardar códigos de respaldo offline."
         ],
-        todo:"Qué hacer hoy: activa MFA en tu correo y guarda códigos offline."
+        todo:"Qué hacer hoy: activa MFA en tu correo y guarda códigos de respaldo."
       },
       {
-        id:"r-backups",
-        title:"Guía: backups probados (ritual mensual)",
+        id:"lib-backups",
+        title:"Mini guía: backups que sí sirven",
         type:"guia",
         level:"Base",
-        topic:"Backups",
+        topic:"Resiliencia",
         audience:["personas","startups","pymes"],
-        summary:"Cómo pasar de “tengo copia” a “puedo restaurar” (en 30 minutos al mes).",
-        tags:["restauración","3-2-1","ritual"],
+        summary:"Backup sin prueba es esperanza. Ritual mensual: restauración parcial.",
+        tags:["backup","restauración","3-2-1"],
         body:[
           "Define activos críticos.",
-          "Implementa 3-2-1 si es posible (3 copias, 2 medios, 1 fuera).",
-          "Prueba restauración parcial mensual.",
-          "Documenta responsable y ruta."
+          "Copia fuera del equipo (y si puedes, fuera de casa/oficina).",
+          "Prueba restaurar 1 cosa al mes."
         ],
-        todo:"Qué hacer hoy: elige 1 carpeta crítica y practica restaurarla."
+        todo:"Qué hacer hoy: prueba restaurar un archivo o carpeta crítica."
       },
       {
-        id:"r-phish",
-        title:"Mini guía: phishing para personas y equipos",
+        id:"lib-phish",
+        title:"Guía: phishing sin culpa",
         type:"guia",
         level:"Base",
-        topic:"Phishing",
-        audience:["personas","startups","pymes","comunidad"],
-        summary:"Señales típicas + regla de oro + cómo reportarlo sin culpa.",
-        tags:["correo","urgencia","hábitos"],
+        topic:"Hábitos",
+        audience:["personas","startups","pymes","familia"],
+        summary:"Señales típicas + regla de oro + cómo reportar y aprender sin vergüenza.",
+        tags:["phishing","correo","urgencia"],
         body:[
-          "La regla: no entres por el enlace. Entra por tu ruta habitual.",
-          "Reporta sin vergüenza: al equipo/administrador o a tu propio ‘ritual mensual’.",
-          "Activa MFA y reduce impacto."
+          "Regla de oro: NO uses el enlace; entra por tu ruta habitual.",
+          "Reporta y aprende: el objetivo es hábito, no culpa.",
+          "MFA reduce impacto."
         ],
-        todo:"Qué hacer hoy: revisa 10 correos y marca 1 patrón sospechoso."
+        todo:"Qué hacer hoy: identifica 1 patrón sospechoso en tu correo."
       },
       {
-        id:"r-dns",
+        id:"lib-dominio",
         title:"Checklist: proteger dominio y DNS",
         type:"checklist",
         level:"Intermedio",
-        topic:"Dominio/DNS",
+        topic:"Infra",
         audience:["startups","pymes"],
         summary:"MFA + roles + revisión de cambios. Evita secuestro de tráfico y correos.",
-        tags:["dominio","dns","mfa","roles"],
+        tags:["dns","dominio","roles"],
         body:[
-          "Activa MFA en el registrador.",
-          "Evita cuentas compartidas: cada persona con su usuario.",
-          "Deja 1–2 administradores, resto permisos mínimos.",
-          "Activa alertas de cambios si el proveedor lo permite.",
-          "Revisa registros críticos: MX, SPF, DKIM, DMARC."
+          "MFA en el registrador.",
+          "Usuarios individuales (no compartidos).",
+          "1–2 admins; resto mínimo privilegio.",
+          "Revisar MX/SPF/DKIM/DMARC."
         ],
         todo:"Qué hacer hoy: revisa quién tiene admin del dominio."
       },
       {
-        id:"r-roles",
-        title:"Plantilla: mínimo privilegio (roles y accesos)",
+        id:"lib-familia",
+        title:"Rutina familiar: privacidad y confianza",
         type:"plantilla",
-        level:"Intermedio",
-        topic:"Accesos",
-        audience:["startups","pymes"],
-        summary:"Ordena permisos sin burocracia: qué tiene cada rol, y por qué.",
-        tags:["roles","permisos","blast radius"],
-        body:[
-          "Lista herramientas (correo, repos, cloud, DNS, Vercel, CRM).",
-          "Define roles (admin, dev, ops, ventas, externo).",
-          "Asigna permisos mínimos por rol.",
-          "Revisión mensual rápida + offboarding claro."
-        ],
-        todo:"Qué hacer hoy: identifica 1 cuenta compartida y elimínala."
-      },
-      {
-        id:"r-endpoints",
-        title:"Guía: higiene de dispositivos (endpoints)",
-        type:"guia",
         level:"Base",
-        topic:"Dispositivos",
-        audience:["personas","startups","pymes"],
-        summary:"Actualizaciones, cifrado, bloqueo, copias, y hábitos para bajar riesgo sin gastar.",
-        tags:["actualizaciones","cifrado","bloqueo"],
+        topic:"Familia",
+        audience:["familia","personas"],
+        summary:"Plantilla de acuerdos simples: datos personales, horarios, contenido y reportes.",
+        tags:["niños","privacidad","hábitos"],
         body:[
-          "Actualiza sistema y apps.",
-          "Activa bloqueo con PIN/biometría + cifrado.",
-          "Separación trabajo/personal si aplica.",
-          "Evita instalar “lo que sea” y revisa permisos."
+          "Regla: nada de datos personales (colegio, dirección, rut, ubicación).",
+          "Si algo incomoda: se habla, no se castiga.",
+          "Revisión corta semanal: apps nuevas y permisos."
         ],
-        todo:"Qué hacer hoy: activa bloqueo automático a 1 minuto."
-      },
-      {
-        id:"r-ritual",
-        title:"Checklist: ritual mensual de 30 minutos",
-        type:"checklist",
-        level:"Base",
-        topic:"Cultura",
-        audience:["personas","startups","pymes","comunidad"],
-        summary:"Un hábito que sostiene todo: revisar sesiones, backups, actualizaciones y permisos.",
-        tags:["cultura","mensual","hábitos"],
-        body:[
-          "Revisa sesiones activas (correo + herramientas).",
-          "Prueba restauración parcial.",
-          "Actualiza sistema/apps.",
-          "Revisa permisos admin y cuentas nuevas.",
-          "Revisa dominios: cambios recientes."
-        ],
-        todo:"Qué hacer hoy: agenda el ritual mensual en calendario."
+        todo:"Qué hacer hoy: acuerden 2 reglas y anótenlas."
       }
     ];
 
-    // 3) Changelog
-    const CHANGELOG = [
-      { date:"2025-12-26", text:"Publicación inicial de Recursos & Guías + test didáctico." },
-      { date:"2026-01-XX", text:"(Plan) Agregar PDF: Checklist MFA + Tarjeta anti-phishing." }
-    ];
-
     // -----------------------------
-    //  UI RENDER
+    // RENDER
     // -----------------------------
-    const highlightsEl = document.getElementById("highlights");
+    const capsGridEl = document.getElementById("capsGrid");
     const libraryEl = document.getElementById("library");
-    const logEl = document.getElementById("log");
-    const searchEl = document.getElementById("search");
-    const resetBtn = document.getElementById("resetBtn");
-
-    const modalResource = document.getElementById("m-resource");
-    const resourceBody = document.getElementById("resourceBody");
-    const modalTitle = document.getElementById("t-resource");
-    const modalSub = document.getElementById("t-resource-sub");
 
     function esc(s){
       return String(s||"").replace(/[&<>"']/g, (m)=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
     }
-
     function typeLabel(t){
-      const m = { guia:"Guía", checklist:"Checklist", plantilla:"Plantilla", taller:"Taller", test:"Test" };
+      const m = { guia:"Guía", checklist:"Checklist", plantilla:"Plantilla" };
       return m[t] || "Recurso";
     }
 
-    function badgeHTML(text){
-      return `<span class="badge">${esc(text)}</span>`;
-    }
-
-    function makeActions(actions){
-      if(!actions || !actions.length) return "";
-      const btns = actions.map(a=>{
-        if(a.type==="link"){
-          return `<a class="btn primary" href="${esc(a.payload.href)}">${esc(a.label)}</a>`;
-        }
-        return `<button class="btn ${a.type==="modal" ? "ghost" : ""}" type="button" data-openhl="${esc(a.payload.id)}">${esc(a.label)}</button>`;
-      }).join("");
-      return `<div class="btn-row">${btns}</div>`;
-    }
-
-    function openResourceModal({title, sub, bodyHTML}){
-      modalTitle.textContent = title || "Recurso";
-      modalSub.textContent = sub || "";
-      resourceBody.innerHTML = bodyHTML || "";
-      openModal("m-resource");
-    }
-
-    function renderHighlights(){
-      highlightsEl.innerHTML = MONTH_HIGHLIGHTS.map((h, i)=>{
-        const icon = i===0 ? "MFA" : i===1 ? "Backups" : "Phishing";
-        const actions = makeActions(h.actions);
-        return `
-          <div class="tile reveal" style="min-height: 190px;">
-            ${badgeHTML(h.badge)}
-            <h3>${esc(h.title)}</h3>
-            <p>${esc(h.desc)}</p>
-            <div class="tags" style="margin-top:12px;">
-              <span class="tag">${esc(h.topic)}</span>
-              <span class="tag">Nivel: ${esc(h.level)}</span>
-              <span class="tag">${esc(icon)}</span>
+    // Capsules UI
+    let activeCapFilter = "all";
+    function capCard(c){
+      return `
+        <div class="caps reveal" role="button" tabindex="0" data-capid="${esc(c.id)}" aria-label="Abrir cápsula ${esc(c.title)}">
+          <div class="caps-media"><img src="${esc(c.image)}" alt="${esc(c.title)}"></div>
+          <div class="caps-body">
+            <div class="badge">Cápsula • Nivel: ${esc(c.level||"Base")}</div>
+            <h3>${esc(c.title)}</h3>
+            <p>${esc(c.desc)}</p>
+            <div class="caps-foot">
+              <div class="tags" style="margin:0;">
+                <span class="tag">${esc(c.category)}</span>
+              </div>
+              <span class="caps-cta">Abrir detalle <span aria-hidden="true">→</span></span>
             </div>
-            ${actions}
           </div>
-        `;
-      }).join("");
-      // Add reveals created dynamically
-      document.querySelectorAll("#highlights .reveal").forEach(el=>io.observe(el));
+        </div>
+      `;
     }
+    function applyCaps(){
+      const filtered = CAPSULES.filter(c=>{
+        return activeCapFilter==="all" ? true : (String(c.category||"").toLowerCase()===activeCapFilter);
+      });
+      capsGridEl.innerHTML = filtered.map(capCard).join("");
+      document.querySelectorAll("#capsGrid .reveal").forEach(el=>io.observe(el));
+    }
+    document.querySelectorAll('.chip[data-capfilter]').forEach(ch=>{
+      ch.addEventListener("click", ()=>{
+        document.querySelectorAll('.chip[data-capfilter]').forEach(x=>x.classList.remove("on"));
+        ch.classList.add("on");
+        activeCapFilter = ch.getAttribute("data-capfilter") || "all";
+        applyCaps();
+      });
+    });
 
-    function resourceToCard(r){
+    // Library UI
+    let activeFilter = "all";
+    function resourceCard(r){
       const aud = (r.audience||[]).map(a=>a[0].toUpperCase()+a.slice(1)).join(" · ");
       const tags = (r.tags||[]).slice(0,4).map(t=>`<span class="tag">${esc(t)}</span>`).join("");
       return `
-        <div class="item reveal" data-id="${esc(r.id)}" tabindex="0" role="button" aria-label="Abrir recurso ${esc(r.title)}">
+        <div class="item reveal" data-resid="${esc(r.id)}" tabindex="0" role="button" aria-label="Abrir recurso ${esc(r.title)}">
           <div class="meta">
             <span class="type">${esc(typeLabel(r.type))}</span>
             <span class="lvl">Nivel: ${esc(r.level||"Base")}</span>
@@ -1201,165 +1030,261 @@
         </div>
       `;
     }
-
-    function buildResourceModalHTML(r){
-      const body = (r.body||[]).map(x=>`<li>${esc(x)}</li>`).join("");
-      const tags = (r.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join("");
-      const link = r.link?.href ? `
-        <div class="dl">
-          <div>
-            <div style="font-weight:900;color:rgba(11,42,91,.9);">${esc(r.link.label || "Abrir recurso")}</div>
-            <small>${esc(r.link.note || "Se abre en la misma pestaña.")}</small>
-          </div>
-          <a class="btn primary" href="${esc(r.link.href)}">${esc(r.link.label || "Abrir")}</a>
-        </div>
-      ` : "";
-
-      return `
-        <p><strong>Tipo:</strong> ${esc(typeLabel(r.type))} • <strong>Nivel:</strong> ${esc(r.level||"Base")} • <strong>Tema:</strong> ${esc(r.topic||"—")}</p>
-        ${tags ? `<div class="tags" style="margin:10px 0 0">${tags}</div>` : ""}
-        ${r.summary ? `<p style="margin-top:10px">${esc(r.summary)}</p>` : ""}
-        ${body ? `<ul>${body}</ul>` : ""}
-        ${r.todo ? `<div class="callout">${esc(r.todo)}</div>` : `<div class="callout">Qué hacer hoy: aplica un mínimo (MFA + backups probados + roles).</div>`}
-        ${link}
-      `;
-    }
-
-    let activeFilter = "all";
-
-    function applyFilters(){
-      const q = String(searchEl.value||"").trim().toLowerCase();
-      const filtered = RESOURCES.filter(r=>{
-        const okFilter = activeFilter==="all" ? true : (r.audience||[]).includes(activeFilter);
-        const hay = [
-          r.title, r.type, r.level, r.topic, r.summary,
-          ...(r.tags||[]), ...(r.body||[])
-        ].join(" ").toLowerCase();
-        const okSearch = q ? hay.includes(q) : true;
-        return okFilter && okSearch;
+    function applyLibrary(){
+      const filtered = LIBRARY.filter(r=>{
+        return activeFilter==="all" ? true : (r.audience||[]).includes(activeFilter);
       });
-
-      libraryEl.innerHTML = filtered.map(resourceToCard).join("") || `
-        <div class="card" style="padding:18px;grid-column:1/-1;">
-          <div class="badge">Sin resultados</div>
-          <h3 style="margin:10px 0 8px;">No encontramos coincidencias</h3>
-          <p class="muted" style="margin:0;">Prueba con otra palabra (ej: <span class="k">MFA</span>, <span class="k">backups</span>, <span class="k">DNS</span>).</p>
-        </div>
-      `;
-
+      libraryEl.innerHTML = filtered.map(resourceCard).join("");
       document.querySelectorAll("#library .reveal").forEach(el=>io.observe(el));
     }
-
-    function renderLog(){
-      logEl.innerHTML = CHANGELOG.map(x=>`<li><strong>${esc(x.date)}:</strong> ${esc(x.text)}</li>`).join("");
-    }
-
-    // Click handlers for highlights and resources
-    document.addEventListener("click",(e)=>{
-      const hl = e.target.closest("[data-openhl]");
-      if(hl){
-        const id = hl.getAttribute("data-openhl");
-        const h = MONTH_HIGHLIGHTS.find(x=>x.actions?.some(a=>a.payload?.id===id)) || null;
-        if(h){
-          const steps = (h.detail?.steps||[]).map(s=>`<li>${esc(s)}</li>`).join("");
-          const bodyHTML = `
-            <p><strong>Tema:</strong> ${esc(h.topic)} • <strong>Nivel:</strong> ${esc(h.level)}</p>
-            <p>${esc(h.detail?.why || "")}</p>
-            ${steps ? `<ul>${steps}</ul>` : ""}
-            <div class="callout">Qué hacer hoy: elige 1 paso y ejecútalo en 15 minutos.</div>
-            <div class="dl">
-              <div>
-                <div style="font-weight:900;color:rgba(11,42,91,.9);">${esc(h.detail?.download?.label || "Descarga")}</div>
-                <small>${esc(h.detail?.download?.note || "—")}</small>
-              </div>
-              <button class="btn ghost" type="button" data-modal="m-news" aria-haspopup="dialog">Quiero el PDF</button>
-            </div>
-          `;
-          openResourceModal({ title:h.title, sub:h.desc, bodyHTML });
-        }
-      }
-
-      const item = e.target.closest(".item");
-      if(item){
-        const rid = item.getAttribute("data-id");
-        const r = RESOURCES.find(x=>x.id===rid);
-        if(r){
-          openResourceModal({ title:r.title, sub:`${typeLabel(r.type)} • ${r.topic} • Nivel: ${r.level}`, bodyHTML: buildResourceModalHTML(r) });
-        }
-      }
-    });
-
-    // Keyboard open on resource cards
-    document.addEventListener("keydown",(e)=>{
-      if(e.key!=="Enter" && e.key!==" ") return;
-      const focused = document.activeElement;
-      if(focused && focused.classList.contains("item")){
-        e.preventDefault();
-        focused.click();
-      }
-    });
-
-    // Filters
-    document.querySelectorAll(".chip").forEach(ch=>{
+    document.querySelectorAll('.chip[data-filter]').forEach(ch=>{
       ch.addEventListener("click", ()=>{
-        document.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));
+        document.querySelectorAll('.chip[data-filter]').forEach(x=>x.classList.remove("on"));
         ch.classList.add("on");
         activeFilter = ch.getAttribute("data-filter") || "all";
-        applyFilters();
+        applyLibrary();
       });
     });
 
-    searchEl.addEventListener("input", applyFilters);
-    resetBtn.addEventListener("click", ()=>{
-      searchEl.value = "";
-      activeFilter = "all";
-      document.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));
-      document.querySelector('.chip[data-filter="all"]').classList.add("on");
-      applyFilters();
-      searchEl.focus();
-    });
-
     // -----------------------------
-    //  MODALS infra (same as others)
+    // MODAL (one for both capsule/resource)
     // -----------------------------
-    const modals = Array.from(document.querySelectorAll(".modal"));
+    const modal = document.getElementById("m-detail");
+    const modalTitle = document.getElementById("t-detail");
+    const modalSub = document.getElementById("t-detail-sub");
+    const tabResumen = document.getElementById("tab-resumen");
+    const tabDiagrama = document.getElementById("tab-diagrama");
     let lastFocus = null;
 
-    function openModal(id){
-      const modal = document.getElementById(id);
-      if(!modal) return;
+    function openModal(){
       lastFocus = document.activeElement;
       modal.classList.add("show");
       document.body.style.overflow="hidden";
       const closeBtn = modal.querySelector(".modal-close");
       if(closeBtn) closeBtn.focus();
     }
-    function closeModal(modal){
+    function closeModal(){
       modal.classList.remove("show");
       document.body.style.overflow="";
       if(lastFocus && typeof lastFocus.focus==="function") lastFocus.focus();
     }
-    function closeAll(){ modals.forEach(m=>m.classList.contains("show") && closeModal(m)); }
 
+    function setTab(name){
+      document.querySelectorAll(".tab").forEach(t=>t.classList.remove("on"));
+      const t = document.querySelector(`.tab[data-tab="${name}"]`);
+      if(t) t.classList.add("on");
+      tabResumen.style.display = name==="resumen" ? "" : "none";
+      tabDiagrama.style.display = name==="diagrama" ? "" : "none";
+    }
+
+    function buildList(title, arr){
+      if(!arr || !arr.length) return "";
+      const items = arr.map(x=>`<li>${esc(x)}</li>`).join("");
+      return `<p style="margin:0 0 8px;"><strong>${esc(title)}</strong></p><ul>${items}</ul>`;
+    }
+
+    function diagramSVG(title, steps, activeIndex){
+      const width = 920, height = 220;
+      const margin = 40;
+      const n = steps.length;
+      const gap = (width - margin*2) / (n-1);
+      const r = 20;
+
+      const nodes = steps.map((s, i)=>{
+        const x = margin + gap*i;
+        const y = 90;
+        const active = i === activeIndex;
+        const fill = active ? "rgba(47,169,255,.25)" : "rgba(255,255,255,.9)";
+        const stroke = active ? "rgba(47,169,255,.75)" : "rgba(220,235,255,.95)";
+        const textColor = "rgba(11,42,91,.92)";
+        return `
+          <g>
+            <circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="3"></circle>
+            <text x="${x}" y="${y+5}" text-anchor="middle" font-size="13" font-weight="900" fill="${textColor}">${i+1}</text>
+            <text x="${x}" y="${y+46}" text-anchor="middle" font-size="12.5" font-weight="800" fill="rgba(11,42,91,.86)">${esc(steps[i].label)}</text>
+          </g>
+        `;
+      }).join("");
+
+      const arrows = steps.map((_, i)=>{
+        if(i===steps.length-1) return "";
+        const x1 = margin + gap*i + r;
+        const x2 = margin + gap*(i+1) - r;
+        const y = 90;
+        return `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="rgba(47,169,255,.45)" stroke-width="3" stroke-linecap="round"></line>
+                <polygon points="${x2},${y} ${x2-10},${y-6} ${x2-10},${y+6}" fill="rgba(47,169,255,.45)"></polygon>`;
+      }).join("");
+
+      return `
+        <div class="diagram-wrap">
+          <div class="diagram-head">
+            <div>
+              <div style="font-weight:900;color:rgba(11,42,91,.92);">${esc(title)}</div>
+              <div class="diagram-note">Elige un paso para ver el detalle.</div>
+            </div>
+            <div class="steps" id="stepBtns">
+              ${steps.map((s,i)=>`<button class="step ${i===activeIndex?'on':''}" type="button" data-step="${i}">${i+1}. ${esc(s.label)}</button>`).join("")}
+            </div>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(title)}">
+              <rect x="12" y="16" width="${width-24}" height="${height-32}" rx="22" fill="rgba(47,169,255,.05)" stroke="rgba(220,235,255,.95)"></rect>
+              ${arrows}
+              ${nodes}
+            </svg>
+            <div class="callout" id="stepCallout">${esc(steps[activeIndex]?.note || "")}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function openCapsule(c){
+      modalTitle.textContent = c.title;
+      modalSub.textContent = `Cápsula • ${c.category} • Nivel: ${c.level || "Base"}`;
+
+      const igBtn = (c.instagramUrl && c.instagramUrl.trim().length)
+        ? `<a class="btn" href="${esc(c.instagramUrl)}" target="_blank" rel="noopener noreferrer">Ver en Instagram</a>`
+        : "";
+
+      tabResumen.innerHTML = `
+        <div class="badge">Resumen</div>
+        <div style="height:10px"></div>
+        <div class="card" style="padding:14px;border-radius:22px;">
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+            <div style="width:min(260px,100%);border-radius:18px;overflow:hidden;border:1px solid rgba(220,235,255,.95);background:rgba(47,169,255,.06);">
+              <img src="${esc(c.image)}" alt="${esc(c.title)}" style="width:100%;height:auto;display:block;">
+            </div>
+            <div style="flex:1;min-width:240px;">
+              <p style="margin:0 0 10px;color:rgba(11,42,91,.92);font-weight:900;">¿De qué trata?</p>
+              <p style="margin:0;color:var(--muted);">${esc(c.desc)}</p>
+              <div class="tags">
+                <span class="tag">${esc(c.category)}</span>
+                <span class="tag">Nivel: ${esc(c.level||"Base")}</span>
+              </div>
+              ${igBtn ? `<div class="btn-row">${igBtn}</div>` : ""}
+              <p class="muted" style="margin-top:10px;font-size:12.5px;">
+                Nota: abrir Instagram puede implicar cookies/tracking de terceros. Por eso aquí solo ponemos un link (sin embed).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:12px"></div>
+        <div class="card" style="padding:14px;border-radius:22px;">
+          ${buildList("Qué es / por qué importa", c.resumen)}
+          <div style="height:10px"></div>
+          ${buildList("Qué hacer (acciones simples)", c.hacer)}
+        </div>
+      `;
+
+      const steps = c.diagram?.steps || [];
+      let activeIndex = 0;
+
+      function renderDiagram(){
+        tabDiagrama.innerHTML = diagramSVG(c.diagram?.title || "Diagrama", steps, activeIndex);
+        tabDiagrama.querySelectorAll(".step").forEach(b=>{
+          b.addEventListener("click", ()=>{
+            activeIndex = Number(b.getAttribute("data-step")) || 0;
+            renderDiagram();
+          });
+        });
+      }
+      renderDiagram();
+
+      setTab("resumen");
+      openModal();
+    }
+
+    function openResource(r){
+      modalTitle.textContent = r.title;
+      modalSub.textContent = `${typeLabel(r.type)} • ${r.topic} • Nivel: ${r.level || "Base"}`;
+
+      tabResumen.innerHTML = `
+        <div class="badge">${esc(typeLabel(r.type))}</div>
+        <div style="height:10px"></div>
+        <p style="margin:0 0 10px;color:var(--muted);">${esc(r.summary||"")}</p>
+        <div class="tags">${(r.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join("")}</div>
+        <div style="height:12px"></div>
+        <div class="card" style="padding:14px;border-radius:22px;">
+          ${buildList("Pasos", r.body)}
+        </div>
+        <div class="callout">${esc(r.todo || "Qué hacer hoy: elige 1 acción y ejecútala en 15 minutos.")}</div>
+      `;
+
+      tabDiagrama.innerHTML = `
+        <div class="diagram-wrap">
+          <div class="diagram-head">
+            <div>
+              <div style="font-weight:900;color:rgba(11,42,91,.92);">Diagrama simple (implementación)</div>
+              <div class="diagram-note">Una vista rápida del flujo “aprender → aplicar → revisar”.</div>
+            </div>
+            <div class="steps">
+              <button class="step on" type="button" data-step="0">1. Preparar</button>
+              <button class="step" type="button" data-step="1">2. Implementar</button>
+              <button class="step" type="button" data-step="2">3. Verificar</button>
+              <button class="step" type="button" data-step="3">4. Repetir</button>
+            </div>
+          </div>
+          <div class="diagram-body" id="resFlow"></div>
+        </div>
+      `;
+
+      const steps = [
+        {label:"Preparar", note:"Define alcance: cuentas/dispositivos/herramientas involucradas."},
+        {label:"Implementar", note:"Aplica el cambio paso a paso (sin mezclar 10 cosas)."},
+        {label:"Verificar", note:"Comprueba que funciona y que hay recuperación/documentación."},
+        {label:"Repetir", note:"Mantener hábito vale más que el ‘gran proyecto’."},
+      ];
+      let active = 0;
+      function renderFlow(){
+        const body = tabDiagrama.querySelector("#resFlow");
+        body.innerHTML = diagramSVG("Flujo de implementación", steps, active);
+        body.querySelectorAll(".step").forEach(b=>{
+          b.addEventListener("click", ()=>{
+            active = Number(b.getAttribute("data-step")) || 0;
+            renderFlow();
+          });
+        });
+      }
+      renderFlow();
+
+      setTab("resumen");
+      openModal();
+    }
+
+    // Click handlers
     document.addEventListener("click",(e)=>{
-      const trigger = e.target.closest("[data-modal]");
-      if(trigger) openModal(trigger.getAttribute("data-modal"));
-
-      const backdrop = e.target.classList && e.target.classList.contains("modal");
-      if(backdrop) closeModal(e.target);
-
+      const cap = e.target.closest(".caps");
+      if(cap){
+        const id = cap.getAttribute("data-capid");
+        const c = CAPSULES.find(x=>x.id===id);
+        if(c) openCapsule(c);
+      }
+      const item = e.target.closest(".item");
+      if(item){
+        const id = item.getAttribute("data-resid");
+        const r = LIBRARY.find(x=>x.id===id);
+        if(r) openResource(r);
+      }
+      if(e.target.classList && e.target.classList.contains("modal")) closeModal();
       const closeBtn = e.target.closest(".modal-close");
-      if(closeBtn) closeModal(closeBtn.closest(".modal"));
+      if(closeBtn) closeModal();
+      const tab = e.target.closest(".tab");
+      if(tab) setTab(tab.getAttribute("data-tab"));
     });
 
+    // Keyboard
     document.addEventListener("keydown",(e)=>{
-      if(e.key==="Escape") closeAll();
-
-      const activeModal = modals.find(m=>m.classList.contains("show"));
-      if(!activeModal) return;
-
-      if(e.key==="Tab"){
-        const focusables = Array.from(activeModal.querySelectorAll('button, a, input, textarea, select, [tabindex]:not([tabindex="-1"])'))
+      if(e.key==="Escape") closeModal();
+      if((e.key==="Enter" || e.key===" ") && document.activeElement){
+        const el = document.activeElement;
+        if(el.classList.contains("caps") || el.classList.contains("item")){
+          e.preventDefault();
+          el.click();
+        }
+      }
+      if(e.key==="Tab" && modal.classList.contains("show")){
+        const focusables = Array.from(modal.querySelectorAll('button, a, input, textarea, select, [tabindex]:not([tabindex="-1"])'))
           .filter(el=>!el.hasAttribute("disabled"));
         if(focusables.length===0) return;
         const first = focusables[0];
@@ -1369,36 +1294,9 @@
       }
     });
 
-    // Initial render
-    renderHighlights();
-    renderLog();
-    applyFilters();
+    // Init
+    applyCaps();
+    applyLibrary();
   </script>
-<script>
-(function(){
-  // Mobile menu toggle
-  const btn = document.getElementById('menuBtn');
-  const panel = document.getElementById('mobilePanel');
-  if(btn && panel){
-    btn.addEventListener('click', () => {
-      const open = panel.style.display === 'block';
-      panel.style.display = open ? 'none' : 'block';
-      btn.setAttribute('aria-expanded', String(!open));
-    });
-    // Close on click
-    panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { panel.style.display='none'; btn.setAttribute('aria-expanded','false'); }));
-  }
-
-  // Active link (by page or hash)
-  const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  const hash = (location.hash || '').toLowerCase();
-  document.querySelectorAll('#navLinks a').forEach(a => {
-    const page = (a.getAttribute('data-page') || '').toLowerCase();
-    const h = (a.getAttribute('data-hash') || '').toLowerCase();
-    if(page && page === path) a.classList.add('active');
-    if(h && hash && h === hash) a.classList.add('active');
-  });
-})();
-</script>
 </body>
 </html>
