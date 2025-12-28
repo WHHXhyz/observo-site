@@ -62,6 +62,38 @@
       box-shadow: 0 0 0 4px rgba(47,169,255,.12);
     }
 
+    
+    .hero-logo-row{
+      margin: -28px auto -46px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position: relative;
+    }
+    
+    .hero-logo-img{
+      width: 520px;
+      max-width: 96%;
+      height:auto;
+      object-fit: contain;
+      filter: drop-shadow(0 18px 40px rgba(47,169,255,.18));
+    }
+
+    @media (max-width: 760px){
+      .hero-logo-img{
+      width: 520px;
+      max-width: 96%;
+      height:auto;
+      object-fit: contain;
+      filter: drop-shadow(0 18px 40px rgba(47,169,255,.18));
+    }
+    }
+
+    
+
+    }
+
+
     /* Header */
     header{
       position:sticky; top:0; z-index:50;
@@ -171,23 +203,19 @@
     .mobile-panel a:hover{ background: rgba(220,235,255,.55); color: var(--blue); }
 
     /* Sections */
-    main{ padding: 34px 0 70px; }
-    .hero{
-      padding: 44px 0 34px;
-    
-      text-align:center;}
+    main{ padding: 0px 0 60px; }
+    .hero{ padding: 0px 0 6px; text-align:center; }
     .hero-grid{
       display:grid;
       grid-template-columns: 1.15fr .85fr;
       gap:28px;
       align-items:stretch;
-      margin-top: 18px;
+      margin-top: 10px;
     }
     h1{
       font-size: clamp(32px, 4vw, 46px);
-      line-height: 1.12;          /* deja respirar descendentes como la 'g' */
-      margin:  18px 0 14px;       /* baja el título apenas */
-      padding-top: 4px;           /* micro-ajuste para evitar corte visual */
+      line-height: 1.05;
+      margin: -14px 0 22px;
       letter-spacing: -0.6px;
     }
     
@@ -263,15 +291,15 @@
 
     /* Principle strip (no "PRINCIPIO" label) */
     .principle-strip{
-      margin: 14px auto 0;
-      width: min(820px, 100%);
+      margin: 10px auto 0;
+      width: min(900px, 100%);
       border-radius: 18px;
       border: 1px solid rgba(47,169,255,.28);
       background:
         linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.16)),
         repeating-linear-gradient(90deg, rgba(255,255,255,.0) 0, rgba(255,255,255,.0) 14px, rgba(47,169,255,.06) 15px, rgba(255,255,255,.0) 30px);
       box-shadow: 0 22px 60px rgba(11,42,91,.10);
-      padding: 14px 14px;
+      padding: 16px 16px;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -356,7 +384,7 @@
 .lead{
       font-size: clamp(16px, 1.35vw, 18px);
       color: var(--muted);
-      margin: 14px auto 18px;
+      margin: 0px auto 14px;
       max-width: 62ch;
       text-align: center;
     }
@@ -639,8 +667,7 @@ footer{
       .grid-4{ grid-template-columns: 1fr; }
       .grid-3{ grid-template-columns: 1fr; }
       .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 14px; }
-      .hero{ padding-top: 22px; 
-      text-align:center;}
+      .hero{ padding-top: 0px; text-align:center; }
       .hero-card{ padding: 16px; }
     }
 
@@ -656,9 +683,7 @@ footer{
     .sec-head p{ margin-left:auto !important; margin-right:auto !important; }
 
     /* Constrain long copy */
-    .lead{ max-width: 62ch; margin: 16px auto 18px; text-align:center; }
-
-    /* Cards: keep them smaller and centered */
+/* Cards: keep them smaller and centered */
     .grid-2, .grid-3, .grid-4{
       justify-content: center;
     }
@@ -895,60 +920,17 @@ margin: 0 auto;
       <!-- HERO -->
       <section class="hero">
         <div class="center">
-          <div class="pill" role="note" aria-label="Pilares">
-  <span class="dot" aria-hidden="true"></span>
-  <span><strong>Claridad</strong> • <strong>Criterio técnico</strong> • <strong>Educación</strong></span>
+          <div class="hero-logo-row" aria-label="Aegis8">
+  <img class="hero-logo-img" src="assets/aegislogo.png" alt="Aegis8" loading="eager" decoding="async" />
 </div>
 
 <h1>Ciberseguridad clara para personas, startups y pequeñas organizaciones.</h1>
 
           <p class="lead">
             Aegis8 es una consultora y proyecto educativo-social de ciberseguridad.
-            Acompañamos a startups, pymes y proyectos independientes a 
-            <strong>construir gobernanza, cultura</strong> y <strong>fortalecimiento técnico</strong> con acciones realistas y sostenibles.
+            Acompañamos a quienes no tienen un SOC ni presupuesto enterprise a construir
+            <strong>gobernanza, cultura</strong> y <strong>fortalecimiento técnico</strong> con acciones realistas.
           </p>
-
-          
-          <div class="hero-emblem" aria-hidden="true">
-            <!-- Logo: coloca tu archivo en /public/ (por ejemplo /aegis8-logo.png). Si el nombre difiere, cambia el src -->
-  <!-- Reemplaza el nombre del archivo si tu logo tiene otro nombre -->
-  <img class="emblem-img"
-     src="/assets/aegislogo.png"
-     alt="Aegis8"
-     loading="lazy" />
-  <div id="emblemFallback" style="display:none">
-    <svg class="emblem-svg" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="g1" x1="0" y1="0" x2="160" y2="160" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#0B2A5B"/>
-          <stop offset="0.55" stop-color="#2FA9FF"/>
-          <stop offset="1" stop-color="#8FD3FF"/>
-        </linearGradient>
-        <linearGradient id="g2" x1="20" y1="20" x2="140" y2="140" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#2FA9FF" stop-opacity="0.12"/>
-          <stop offset="1" stop-color="#8FD3FF" stop-opacity="0.28"/>
-        </linearGradient>
-      </defs>
-
-      <!-- shield -->
-      <path d="M80 14C58 26 40 28 28 30v54c0 34 23 54 52 62c29-8 52-28 52-62V30c-12-2-30-4-52-16Z"
-            stroke="url(#g1)" stroke-width="3.5" stroke-linejoin="round"/>
-      <path d="M80 22C61 32 46 34 36 35v48c0 28 19 45 44 52c25-7 44-24 44-52V35c-10-1-25-3-44-13Z"
-            fill="url(#g2)" stroke="rgba(47,169,255,.25)" stroke-width="1.5" stroke-linejoin="round"/>
-
-      <!-- labyrinth/book hybrid: maze lines -->
-      <path d="M52 54h56M52 54v18h18v-9h20v18H70v-9H52v18h56v18H52"
-            stroke="url(#g1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
-
-      <!-- small 'book' hint -->
-      <path d="M64 108c6-4 12-4 16 0c4-4 10-4 16 0"
-            stroke="rgba(11,42,91,.85)" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
-    </svg>
-  </div>
-  <div class="emblem-glow"></div>
-</div>
-
-</div>
 
           <div class="principle-strip" role="note" aria-label="Principio Aegis8">
             <div class="p-ico" aria-hidden="true">
@@ -976,8 +958,9 @@ margin: 0 auto;
             <div class="qs-stage">
               <article class="qs-panel is-active" data-step="0">
                 <p class="sec-sub qs-text">
-                 Aegis8 acompaña a startups, pequeñas organizaciones y personas entusiastas que buscan seguridad real, incluso sin grandes presupuestos ni estructuras complejas.
-Ayudamos a entender, construir y fortalecer la seguridad desde la base, con sentido, propósito y responsabilidad.
+                  Aegis8 acompaña a quienes comienzan su camino en ciberseguridad, incluso cuando no existen grandes presupuestos ni estructuras complejas.
+            Ayudamos a <span class="k">entender</span>, <span class="k">construir</span> y <span class="k">fortalecer</span> la seguridad desde la base,
+            con sentido, propósito y responsabilidad.
                 </p>
                 <div class="qs-illus" aria-hidden="true">
                   <img src="assets/quienes1.png" alt="Aegis8 acompaña desde la base" loading="lazy" decoding="async" />
