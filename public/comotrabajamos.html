@@ -9,9 +9,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
     :root{
       --bg:#F7FBFF;
       --card:#FFFFFF;
@@ -32,7 +31,7 @@
     html,body{height:100%}
     body{
       margin:0;
-      font-family:"Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      font-family:"Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       color:var(--text);
       background:
         radial-gradient(900px 420px at 20% -10%, rgba(47,169,255,.25), transparent 60%),
@@ -145,6 +144,20 @@
       margin:14px 0 10px;
       letter-spacing:-.7px;
     }
+    
+    /* Title styling synced with index */
+    h1, .sec-head h2, .persona h3{
+      font-weight: 900;
+      letter-spacing: -0.7px;
+      background: linear-gradient(90deg, rgba(11,42,91,1) 0%, rgba(47,169,255,1) 55%, rgba(143,211,255,1) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 14px 26px rgba(47,169,255,.10));
+    }
+    .sec-head h2{ letter-spacing: -0.35px; }
+    .persona h3{ letter-spacing: -0.14px; }
+
     .lead{
       font-size:clamp(16px, 1.35vw, 18px);
       color:var(--muted);
@@ -319,39 +332,174 @@
     .chip.warn{border-color:rgba(138,90,11,.22);background:rgba(138,90,11,.06);color:rgba(138,90,11,.95)}
 
     /* Checklist */
+
+    /* Checklist (vivid) */
     .checklist{
-      display:grid;gap:10px;margin-top:12px;
+      display:grid;
+      gap:10px;
+      margin-top:12px;
     }
-    .chk{
-      display:flex;align-items:flex-start;gap:12px;
-      padding:12px;border-radius:18px;
+
+    /* Card header for checklist */
+    .check-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 12px 10px;
+      border-radius:18px;
       border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.92);
+      background:
+        radial-gradient(520px 220px at 15% 0%, rgba(47,169,255,.10), transparent 62%),
+        radial-gradient(520px 220px at 95% 0%, rgba(143,211,255,.14), transparent 55%),
+        rgba(255,255,255,.92);
+      box-shadow:0 14px 34px rgba(11,42,91,.07);
+      margin-top:10px;
+    }
+    .check-head .left{
+      display:flex;align-items:center;gap:10px;
+      min-width:0;
+    }
+    .check-badge{
+      width:42px;height:42px;border-radius:16px;
+      border:1px solid rgba(220,235,255,.95);
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
+      box-shadow:0 14px 30px rgba(11,42,91,.10);
+      display:grid;place-items:center;
+      color:rgba(11,42,91,.88);
+      flex:0 0 auto;
+    }
+    .check-badge svg{width:22px;height:22px}
+    .check-title{
+      font-weight:900;
+      color:rgba(11,42,91,.92);
+      letter-spacing:-.25px;
+      margin:0;
+      line-height:1.05;
+    }
+    .check-sub{
+      margin:2px 0 0;
+      font-size:12.8px;
+      color:var(--muted);
+    }
+    .check-micro{
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;
+    }
+    .spark{
+      height:10px;width:140px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.7);
+      overflow:hidden;
+      box-shadow:0 10px 22px rgba(11,42,91,.06);
+    }
+    .spark > i{
+      display:block;height:100%;width:35%;
+      background:linear-gradient(90deg, rgba(47,169,255,.0), rgba(47,169,255,.75), rgba(143,211,255,.85), rgba(47,169,255,.0));
+      transform:translateX(-120%);
+      animation:spark 2.7s ease-in-out infinite;
+      opacity:.9;
+    }
+    @keyframes spark{
+      0%{transform:translateX(-120%);opacity:0}
+      18%{opacity:.9}
+      55%{opacity:.9}
+      100%{transform:translateX(260%);opacity:0}
+    }
+
+    .chk{
+      position:relative;
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      padding:13px 14px;
+      border-radius:20px;
+      border:1px solid rgba(220,235,255,.95);
+      background:
+        radial-gradient(520px 220px at 10% 0%, rgba(47,169,255,.07), transparent 60%),
+        rgba(255,255,255,.92);
       box-shadow:0 12px 30px rgba(11,42,91,.06);
       cursor:pointer;
-      transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+      transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease, background .12s ease;
+      overflow:hidden;
     }
-    .chk:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(11,42,91,.10);border-color:rgba(47,169,255,.35)}
+    .chk:before{
+      content:"";
+      position:absolute;left:0;top:0;bottom:0;width:6px;
+      background:linear-gradient(180deg, rgba(47,169,255,.55), rgba(143,211,255,.55));
+      opacity:.55;
+    }
+    .chk:hover{
+      transform:translateY(-1px);
+      box-shadow:0 18px 44px rgba(11,42,91,.10);
+      border-color:rgba(47,169,255,.42);
+      background:
+        radial-gradient(520px 220px at 10% 0%, rgba(47,169,255,.11), transparent 60%),
+        rgba(255,255,255,.94);
+    }
+
     .box{
-      width:22px;height:22px;border-radius:8px;
+      width:24px;height:24px;border-radius:9px;
       border:1px solid rgba(220,235,255,.95);
       background:rgba(11,42,91,.06);
       display:grid;place-items:center;
       flex:0 0 auto;
+      box-shadow:0 10px 22px rgba(11,42,91,.06);
     }
-    .box svg{width:14px;height:14px;opacity:0;transform:scale(.85);transition:opacity .12s ease, transform .12s ease}
-    .chk.done .box{background:linear-gradient(135deg, rgba(47,169,255,.16), rgba(143,211,255,.26));border-color:rgba(47,169,255,.35)}
+    .box svg{width:14px;height:14px;opacity:0;transform:scale(.85);transition:opacity .14s ease, transform .14s ease}
+    .chk strong{display:block;margin:0 0 2px}
+    .chk .muted{font-size:14px}
+
+    .chk.done{
+      border-color:rgba(47,169,255,.55);
+      background:
+        radial-gradient(520px 220px at 10% 0%, rgba(47,169,255,.12), transparent 60%),
+        linear-gradient(135deg, rgba(47,169,255,.06), rgba(143,211,255,.14)),
+        rgba(255,255,255,.96);
+      box-shadow:0 20px 54px rgba(11,42,91,.12);
+    }
+    .chk.done:before{
+      opacity:1;
+      background:linear-gradient(180deg, rgba(11,42,91,.85), rgba(47,169,255,.75));
+    }
+    .chk.done .box{
+      background:linear-gradient(135deg, rgba(47,169,255,.20), rgba(143,211,255,.32));
+      border-color:rgba(47,169,255,.55);
+    }
     .chk.done .box svg{opacity:1;transform:scale(1)}
+
     .bar{
-      height:10px;border-radius:999px;border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.75);overflow:hidden;
-      box-shadow:0 12px 24px rgba(11,42,91,.06);
+      height:11px;
+      border-radius:999px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.75);
+      overflow:hidden;
+      box-shadow:0 14px 30px rgba(11,42,91,.07);
       margin-top:12px;
+      position:relative;
+    }
+    .bar:after{
+      content:"";
+      position:absolute;inset:-2px;
+      background:
+        radial-gradient(420px 160px at 20% 0%, rgba(47,169,255,.18), transparent 60%),
+        radial-gradient(420px 160px at 90% 0%, rgba(143,211,255,.16), transparent 60%);
+      pointer-events:none;opacity:.9;
     }
     .bar > div{
-      height:100%;width:0%;
-      background:linear-gradient(90deg, rgba(47,169,255,.75), rgba(143,211,255,.85));
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg, rgba(11,42,91,.85), rgba(47,169,255,.78), rgba(143,211,255,.88));
       transition:width .35s ease;
+      box-shadow:0 0 0 1px rgba(47,169,255,.18) inset, 0 10px 24px rgba(47,169,255,.18);
+      position:relative;
+    }
+    .bar > div:after{
+      content:"";
+      position:absolute;top:0;bottom:0;width:140px;right:-160px;
+      background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.60), rgba(255,255,255,0));
+      filter:blur(1px);
+      animation:shine 2.4s ease-in-out infinite;
+      opacity:.55;
     }
     .mini{font-size:12.5px;color:var(--muted)}
 
@@ -371,6 +519,42 @@
       color:var(--blue);
     }
     .btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+
+    /* Hero spacing + actions (closer to index) */
+    section.hero{padding-top:36px;padding-bottom:46px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;align-items:center;margin-top:14px}
+    .btn.ghost{
+      background:rgba(255,255,255,.72);
+      border-color:rgba(220,235,255,.95);
+      color:rgba(11,42,91,.92);
+    }
+    .btn.ghost:hover{background:rgba(220,235,255,.55)}
+    
+    /* Vivid blocks */
+    .step{overflow:hidden}
+    .step:before{
+      content:"";
+      position:absolute;left:0;top:0;bottom:0;width:6px;
+      background:linear-gradient(180deg, rgba(47,169,255,.85), rgba(143,211,255,.75));
+      opacity:.9;
+    }
+    .step[data-modal="m-entender"]:before{background:linear-gradient(180deg, rgba(47,169,255,.9), rgba(143,211,255,.65))}
+    .step[data-modal="m-priorizar"]:before{background:linear-gradient(180deg, rgba(11,42,91,.9), rgba(47,169,255,.70))}
+    .step[data-modal="m-implementar"]:before{background:linear-gradient(180deg, rgba(47,169,255,.85), rgba(11,91,58,.45))}
+    .step[data-modal="m-sostener"]:before{background:linear-gradient(180deg, rgba(143,211,255,.85), rgba(138,90,11,.40))}
+    .step:hover .n{transform:translateY(-1px)}
+    .n{transition:transform .12s ease}
+    
+    .tile{min-height:170px}
+    .tile.grad:before{opacity:1}
+    .tile.grad{
+      border-color:rgba(47,169,255,.26);
+      background:
+        radial-gradient(520px 260px at 20% 0%, rgba(47,169,255,.14), transparent 60%),
+        radial-gradient(520px 260px at 90% 10%, rgba(143,211,255,.18), transparent 62%),
+        rgba(255,255,255,.94);
+    }
+    .badge{background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18))}
 
     /* Reveal */
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .55s ease, transform .55s ease}
@@ -460,13 +644,12 @@
 
       <nav aria-label="Navegación principal">
         <ul id="navLinks">
-          <li></li>
           <li><a href="comotrabajamos.html" data-page="comotrabajamos.html">Cómo trabajamos</a></li>
           <li><a href="recursos.html" data-page="recursos.html">Recursos y guías</a></li>
           <li><a href="index.html#ayudamos" data-hash="#ayudamos">A quiénes ayudamos</a></li>
           <li><a href="index.html#quienes" data-hash="#quienes">Quiénes somos</a></li>
           <li><a href="psocial.html" data-page="psocial.html">Proyecto social</a></li>
-          <li><a class="nav-cta" href="contactanos.html" data-page="contactanos.html"></a></li>
+          <li><a class="nav-cta" href="contactanos.html" data-page="contactanos.html" style="display:none;">Contáctanos</a></li>
         </ul>
       </nav>
 
@@ -482,7 +665,7 @@
       <a href="index.html#ayudamos">A quiénes ayudamos</a>
       <a href="index.html#quienes">Quiénes somos</a>
       <a href="psocial.html">Proyecto social</a>
-      <a href="contactanos.html"></a>
+      
     </div>
   </div>
 </header>
@@ -498,20 +681,16 @@
             <span><strong>Método Aegis8:</strong> claridad → acción → cultura</span>
           </div>
 
-          <h1 class="reveal">Trabajamos con un método simple que se sostiene.</h1>
+          <h1 class="reveal">Cómo trabajamos (sin humo y con método).</h1>
 
+          
           <p class="lead reveal">
-            En Aegis8 evitamos “consultoría infinita”. Preferimos <span class="k">pasos concretos</span>,
-            <span class="k">entregables claros</span> y <span class="k">hábitos repetibles</span>.
-            El objetivo es que personas, startups y pequeñas organizaciones sepan <strong>qué hacer hoy</strong>,
-            y cómo mantenerlo mañana.
+            En Aegis8 convertimos “seguridad” en <span class="k">acciones claras</span> y <span class="k">hábitos sostenibles</span>.
+            No te llenamos de reuniones ni de jerga: te ayudamos a decidir <strong>qué hacer primero</strong>, ejecutarlo con evidencia,
+            y dejar un ritmo simple para que no se pierda con el tiempo.
           </p>
 
-          <div class="center reveal" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
-            <a class="btn primary" href="#metodo">Ver el método</a>
-            <button class="btn" type="button" data-modal="m-que-es" aria-haspopup="dialog">¿Qué significa “acompañamiento honesto”?</button>
           </div>
-        </div>
 
         <div class="gradline" aria-hidden="true"></div>
 
@@ -532,8 +711,8 @@
           </div>
         </div>
 
-        <div class="grid-2" style="margin-top:16px;">
-          <div class="card reveal" style="padding:18px; position:relative; overflow:hidden;">
+        <div class="grid-2" id="metodo" style="margin-top:16px;">
+          <div class="card persona reveal" style="padding:18px; position:relative; overflow:hidden;">
             <div class="sec-head" style="margin-bottom:10px;">
               <h2 style="margin:0;">El mapa del trabajo</h2>
               <p class="sec-sub" id="mapSub">
@@ -589,7 +768,7 @@
             </div>
           </div>
 
-          <div class="card reveal" style="padding:18px;">
+          <div class="card persona reveal" style="padding:18px;">
             <div class="sec-head" style="margin-bottom:10px;">
               <h2 style="margin:0;">Los 4 pasos (clickeables)</h2>
               <p class="sec-sub" id="stepsSub">
@@ -626,7 +805,7 @@
                 <div class="n">3</div>
                 <div>
                   <strong>Implementar (con acompañamiento)</strong>
-                  <div class="muted">Aplicamos mínimos: MFA, backups, accesos, DNS/TLS, endpoints.</div>
+                  <div class="muted">Aplicamos mínimos que se notan: cuentas seguras, accesos ordenados, respaldos y revisión básica de tu web.</div>
                   <div class="meta">
                     <span class="chip ok">entregable: evidencia</span>
                     <span class="chip warn">evitamos “mega-proyectos”</span>
@@ -666,8 +845,23 @@
 
         <div class="grid-2">
           <div class="card reveal" style="padding:18px;">
-            <div style="font-weight:900;color:rgba(11,42,91,.92);">Mínimos de partida</div>
-            <div class="mini" style="margin-top:4px;">Clic en cada ítem para marcarlo.</div>
+            <div class="check-head" aria-label="Encabezado de mínimos">
+              <div class="left">
+                <div class="check-badge" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 3l7 4v6c0 5-3 8-7 9-4-1-7-4-7-9V7l7-4z"/>
+                    <path d="M9 12l2 2 4-5"/>
+                  </svg>
+                </div>
+                <div style="min-width:0;">
+                  <div class="check-title">Mínimos de partida</div>
+                  <div class="check-sub">Marca lo que ya tienes. Verás progreso y una sugerencia clara.</div>
+                </div>
+              </div>
+              <div class="check-micro" aria-hidden="true">
+                <div class="spark"><i></i></div>
+              </div>
+            </div>
 
             <div class="checklist" id="checklist">
               <div class="chk" data-key="mfa">
@@ -702,8 +896,8 @@
                   <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="rgba(11,42,91,.85)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
                 <div>
-                  <strong>DNS/TLS sano</strong>
-                  <div class="muted">HTTPS correcto, HSTS si aplica, registros DNS sin sorpresas.</div>
+                  <strong>Web y dominio en orden</strong>
+                  <div class="muted">HTTPS bien configurado, redirecciones claras y dominio sin configuraciones raras.</div>
                 </div>
               </div>
               <div class="chk" data-key="endpoints">
@@ -711,8 +905,8 @@
                   <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="rgba(11,42,91,.85)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
                 <div>
-                  <strong>Endpoints con mínimos</strong>
-                  <div class="muted">Actualizaciones, bloqueo, antivirus/EDR básico, cifrado si aplica.</div>
+                  <strong>Equipos con mínimos</strong>
+                  <div class="muted">Actualizaciones, bloqueo de pantalla y protección básica (lo que sea realista para tu contexto).</div>
                 </div>
               </div>
             </div>
@@ -735,17 +929,17 @@
             </div>
 
             <div class="grid-3">
-              <div class="tile">
+              <div class="tile grad">
                 <span class="badge">Documento</span>
                 <h3>Plan 1 página</h3>
                 <p>3–5 acciones priorizadas, responsables y fecha simple.</p>
               </div>
-              <div class="tile">
+              <div class="tile grad">
                 <span class="badge">Checklist</span>
                 <h3>Mínimos</h3>
                 <p>Lo básico para reducir incidentes comunes.</p>
               </div>
-              <div class="tile">
+              <div class="tile grad">
                 <span class="badge">Ritual</span>
                 <h3>20 minutos/mes</h3>
                 <p>Revisión corta: accesos, backups, cambios, señales.</p>
@@ -1200,31 +1394,5 @@
     });
     updateProgress();
   </script>
-<script>
-(function(){
-  // Mobile menu toggle
-  const btn = document.getElementById('menuBtn');
-  const panel = document.getElementById('mobilePanel');
-  if(btn && panel){
-    btn.addEventListener('click', () => {
-      const open = panel.style.display === 'block';
-      panel.style.display = open ? 'none' : 'block';
-      btn.setAttribute('aria-expanded', String(!open));
-    });
-    // Close on click
-    panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { panel.style.display='none'; btn.setAttribute('aria-expanded','false'); }));
-  }
-
-  // Active link (by page or hash)
-  const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  const hash = (location.hash || '').toLowerCase();
-  document.querySelectorAll('#navLinks a').forEach(a => {
-    const page = (a.getAttribute('data-page') || '').toLowerCase();
-    const h = (a.getAttribute('data-hash') || '').toLowerCase();
-    if(page && page === path) a.classList.add('active');
-    if(h && hash && h === hash) a.classList.add('active');
-  });
-})();
-</script>
 </body>
 </html>
