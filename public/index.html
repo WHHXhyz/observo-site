@@ -750,6 +750,96 @@ margin: 0 auto;
     }
 
     
+
+/* === Quiénes somos: texto en 3 pasos + imagen === */
+.qs{ margin-top: 10px; }
+.qs-stage{ position:relative; min-height: 0; }
+.qs-panel{
+  display:none;
+  padding-top: 4px;
+  animation: qsIn .18s ease-out;
+}
+.qs-panel.is-active{ display:block; }
+@keyframes qsIn{
+  from{ opacity:0; transform: translateY(6px); }
+  to{ opacity:1; transform:none; }
+}
+.qs-text{ margin-top: 6px !important; }
+.qs-illus{
+  margin: 14px auto 0;
+  width: min(560px, 100%);
+  border-radius: 22px;
+  overflow:hidden;
+  box-shadow: 0 18px 55px rgba(11,42,91,.10);
+}
+.qs-illus svg, .qs-illus img{ width:100%; height:auto; display:block; }
+
+.qs-nav{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 14px;
+  margin-top: 14px;
+}
+.qs-btn{
+  width: 52px;
+  height: 52px;
+  border-radius: 18px;
+  border: 1px solid rgba(47,169,255,.35);
+  background: rgba(255,255,255,.86);
+  box-shadow: 0 14px 36px rgba(11,42,91,.10);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  position:relative;
+}
+.qs-btn:hover{ transform: translateY(-1px); box-shadow: 0 18px 45px rgba(11,42,91,.14); }
+.qs-btn:disabled{
+  opacity: .45;
+  cursor: not-allowed;
+  transform:none;
+  box-shadow: 0 10px 26px rgba(11,42,91,.08);
+}
+.qs-btn-shield{
+  position:absolute;
+  inset: 12px;
+  display:grid;
+  place-items:center;
+  color: rgba(11,42,91,.88);
+}
+.qs-btn-shield svg{ width: 100%; height: 100%; }
+.qs-arrow{
+  position:absolute;
+  font-weight: 900;
+  font-size: 18px;
+  color: rgba(47,169,255,.95);
+  text-shadow: 0 12px 26px rgba(47,169,255,.18);
+}
+.qs-dots{
+  display:flex;
+  gap: 8px;
+  align-items:center;
+  justify-content:center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border:1px solid rgba(220,235,255,.9);
+  background: rgba(255,255,255,.75);
+  box-shadow: 0 10px 24px rgba(11,42,91,.06);
+}
+.qs-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(47,169,255,.45);
+  background: rgba(47,169,255,.12);
+  cursor:pointer;
+}
+.qs-dot.is-on{
+  background: linear-gradient(135deg, rgba(47,169,255,.55), rgba(143,211,255,.85));
+  border-color: rgba(47,169,255,.0);
+}
+
 </style>
 </head>
 
@@ -881,20 +971,67 @@ margin: 0 auto;
       <section id="quienes">
         <div class="sec-head center">
           <h2>Quiénes somos</h2>
-          <p class="sec-sub">
-            Aegis8 acompaña a quienes comienzan su camino en ciberseguridad, incluso cuando no existen grandes presupuestos ni estructuras complejas.
+
+          <div class="qs" data-qs>
+            <div class="qs-stage">
+              <article class="qs-panel is-active" data-step="0">
+                <p class="sec-sub qs-text">
+                  Aegis8 acompaña a quienes comienzan su camino en ciberseguridad, incluso cuando no existen grandes presupuestos ni estructuras complejas.
             Ayudamos a <span class="k">entender</span>, <span class="k">construir</span> y <span class="k">fortalecer</span> la seguridad desde la base,
             con sentido, propósito y responsabilidad.
-          </p>
+                </p>
+                <div class="qs-illus" aria-hidden="true">
+                  <img src="assets/quienes1.png" alt="Aegis8 acompaña desde la base" loading="lazy" decoding="async" />
+                </div>
+              </article>
 
-          <p class="sec-sub">
-            No reemplazamos equipos ni replicamos modelos enterprise. <strong>Enseñamos</strong>, <strong>ordenamos</strong> y <strong>generamos cultura</strong>,
+              <article class="qs-panel" data-step="1">
+                <p class="sec-sub qs-text">
+                  No reemplazamos equipos ni replicamos modelos enterprise. <strong>Enseñamos</strong>, <strong>ordenamos</strong> y <strong>generamos cultura</strong>,
             apoyando desde el primer paso para que la seguridad sea clara, útil y sostenible en el tiempo, tanto a nivel organizacional como social.
-          </p>
+                </p>
+                <div class="qs-illus" aria-hidden="true">
+                  <img src="assets/quienes2.png" alt="Aegis8 enseña, ordena y genera cultura" loading="lazy" decoding="async" />
+                </div>
+              </article>
 
-          <p class="sec-sub">
-            Acompañamos a personas y organizaciones a aprender, definir gobernanza y reforzar capacidades técnicas, partiendo desde cero o fortaleciendo lo que ya han construido.
-          </p>
+              <article class="qs-panel" data-step="2">
+                <p class="sec-sub qs-text">
+                  Acompañamos a personas y organizaciones a aprender, definir gobernanza y reforzar capacidades técnicas, partiendo desde cero o fortaleciendo lo que ya han construido.
+                </p>
+                <div class="qs-illus" aria-hidden="true">
+                  <img src="assets/quienes3.png" alt="Aegis8 refuerza gobernanza y capacidades técnicas" loading="lazy" decoding="async" />
+                </div>
+              </article>
+            </div>
+
+            <div class="qs-nav" aria-label="Navegación de Quiénes somos">
+              <button class="qs-btn" type="button" data-qs-prev aria-label="Anterior" disabled>
+                <span class="qs-btn-shield" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2l7 4v6c0 5-3.2 9.4-7 10c-3.8-.6-7-5-7-10V6l7-4Z" stroke="currentColor" stroke-width="1.8" />
+                  </svg>
+                </span>
+                <span class="qs-arrow" aria-hidden="true">←</span>
+              </button>
+
+              <div class="qs-dots" role="tablist" aria-label="Pasos">
+                <button class="qs-dot is-on" type="button" role="tab" aria-selected="true" aria-label="Paso 1" data-qs-dot="0"></button>
+                <button class="qs-dot" type="button" role="tab" aria-selected="false" aria-label="Paso 2" data-qs-dot="1"></button>
+                <button class="qs-dot" type="button" role="tab" aria-selected="false" aria-label="Paso 3" data-qs-dot="2"></button>
+              </div>
+
+              <button class="qs-btn" type="button" data-qs-next aria-label="Siguiente">
+                <span class="qs-btn-shield" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2l7 4v6c0 5-3.2 9.4-7 10c-3.8-.6-7-5-7-10V6l7-4Z" stroke="currentColor" stroke-width="1.8" />
+                  </svg>
+                </span>
+                <span class="qs-arrow" aria-hidden="true">→</span>
+              </button>
+            </div>
+          </div>
+
 
           <div class="gradline" aria-hidden="true"></div>
         </div>
@@ -1349,5 +1486,48 @@ margin: 0 auto;
   });
 })();
 </script>
+
+<script>
+(function(){
+  const root = document.querySelector('[data-qs]');
+  if(!root) return;
+
+  const panels = Array.from(root.querySelectorAll('.qs-panel'));
+  const prevBtn = root.querySelector('[data-qs-prev]');
+  const nextBtn = root.querySelector('[data-qs-next]');
+  const dots = Array.from(root.querySelectorAll('[data-qs-dot]'));
+
+  let step = 0;
+
+  function setStep(n){
+    step = Math.max(0, Math.min(panels.length - 1, n));
+
+    panels.forEach((p, i) => p.classList.toggle('is-active', i === step));
+
+    if(prevBtn) prevBtn.disabled = (step === 0);
+    if(nextBtn) nextBtn.disabled = (step === panels.length - 1);
+
+    dots.forEach((d, i) => {
+      const on = i === step;
+      d.classList.toggle('is-on', on);
+      d.setAttribute('aria-selected', on ? 'true' : 'false');
+      d.setAttribute('tabindex', on ? '0' : '-1');
+    });
+  }
+
+  if(prevBtn) prevBtn.addEventListener('click', () => setStep(step - 1));
+  if(nextBtn) nextBtn.addEventListener('click', () => setStep(step + 1));
+  dots.forEach(d => d.addEventListener('click', () => setStep(parseInt(d.getAttribute('data-qs-dot'), 10) || 0)));
+
+  // Keyboard support (left/right)
+  root.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowLeft'){ setStep(step - 1); }
+    if(e.key === 'ArrowRight'){ setStep(step + 1); }
+  });
+
+  setStep(0);
+})();
+</script>
+
 </body>
 </html>
