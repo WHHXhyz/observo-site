@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Aegis8 — A quiénes ayudamos</title>
-  <meta name="description" content="Aegis8 ayuda a personas, startups y pequeñas organizaciones a reducir riesgos con claridad, mínimos sostenibles y acompañamiento honesto." />
+  <title>Aegis8 — Cápsulas & Biblioteca</title>
+  <meta name="description" content="Cápsulas visuales (tips y guías cortas) + biblioteca de recursos prácticos de Aegis8." />
   <meta name="theme-color" content="#0B2A5B" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +24,7 @@
       --shadow:0 18px 45px rgba(11,42,91,.10);
       --radius:18px;
       --radius2:26px;
-      --max:1080px;
+      --max:1120px;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -33,8 +33,8 @@
       font-family:"Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color:var(--text);
       background:
-        radial-gradient(900px 420px at 15% -10%, rgba(47,169,255,.25), transparent 60%),
-        radial-gradient(900px 420px at 92% 0%, rgba(143,211,255,.25), transparent 60%),
+        radial-gradient(900px 420px at 20% -10%, rgba(47,169,255,.25), transparent 60%),
+        radial-gradient(900px 420px at 90% 0%, rgba(143,211,255,.25), transparent 60%),
         linear-gradient(180deg,#FFFFFF 0%, var(--bg) 100%);
       line-height:1.45;
       overflow-x:hidden;
@@ -44,11 +44,11 @@
     .muted{color:var(--muted)}
     .center{text-align:center}
 
-    /* progress */
     .progress{
       position:fixed;top:0;left:0;height:3px;width:0%;
       background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.92), rgba(143,211,255,.95));
-      z-index:9999;box-shadow:0 8px 20px rgba(47,169,255,.22);
+      z-index:9999;
+      box-shadow:0 8px 20px rgba(47,169,255,.22);
     }
 
     header{
@@ -85,8 +85,10 @@
       display:flex;align-items:center;gap:10px;flex-wrap:wrap;
     }
     nav a{
-      font-size:14px;color:rgba(11,27,52,.86);
-      padding:10px 12px;border-radius:999px;
+      font-size:14px;
+      color:rgba(11,27,52,.86);
+      padding:10px 12px;
+      border-radius:999px;
       border:1px solid rgba(220,235,255,.95);
       background:rgba(255,255,255,.78);
       box-shadow:0 10px 24px rgba(11,42,91,.06);
@@ -105,6 +107,12 @@
       background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
       color:var(--blue);
       font-weight:800;
+    }
+    .nav-cta{
+      border-color:rgba(47,169,255,.45) !important;
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.24)) !important;
+      color:var(--blue) !important;
+      font-weight:900 !important;
     }
 
     .menu-btn{
@@ -129,12 +137,12 @@
     }
     .mobile-panel a:hover{background:rgba(220,235,255,.55);color:var(--blue)}
 
-    main{padding:30px 0 70px}
+    main{padding:28px 0 70px}
     section{padding:54px 0}
     section + section{border-top:1px solid rgba(220,235,255,.75)}
 
     h1{
-      font-size:clamp(32px, 4vw, 48px);
+      font-size:clamp(30px, 4vw, 46px);
       line-height:1.06;
       margin:14px 0 10px;
       letter-spacing:-.7px;
@@ -142,9 +150,10 @@
     .lead{
       font-size:clamp(16px, 1.35vw, 18px);
       color:var(--muted);
-      margin:0 auto 18px;
-      max-width:88ch;
+      margin:0 auto 0;
+      max-width:92ch;
     }
+
     .pill{
       display:inline-flex;align-items:center;gap:10px;
       padding:8px 12px;border:1px solid var(--line);
@@ -160,8 +169,9 @@
       color:rgba(11,42,91,.92);
       font-weight:800;white-space:nowrap;
     }
+
     .gradline{
-      height:1px;width:min(640px,100%);margin:14px auto 0;border-radius:99px;
+      height:1px;width:min(680px,100%);margin:16px auto 0;border-radius:99px;
       background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.55), rgba(143,211,255,.65), rgba(47,169,255,.55), rgba(47,169,255,0));
       position:relative;overflow:hidden;
     }
@@ -180,7 +190,7 @@
 
     .sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
     .sec-head h2{margin:0;font-weight:900;font-size:clamp(22px, 2.3vw, 32px);letter-spacing:-.35px}
-    .sec-sub{margin:0;max-width:92ch;color:var(--muted);font-size:15.5px}
+    .sec-sub{margin:0;max-width:100ch;color:var(--muted);font-size:15.5px}
 
     .card{
       background:rgba(255,255,255,.92);
@@ -188,137 +198,58 @@
       border-radius:var(--radius2);
       box-shadow:var(--shadow);
     }
-    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 
-    /* Personas cards */
-    .persona{
-      position:relative;
-      padding:16px;
-      text-align:left;
-      cursor:pointer;
-      overflow:hidden;
-      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    /* Chips / minimal intro */
+    .controls{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+      margin:10px 0 0;
     }
-    .persona:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
-    .tag{
+    .chips{display:flex;gap:10px;flex-wrap:wrap}
+    .chip{
       display:inline-flex;align-items:center;gap:8px;
-      padding:8px 10px;border-radius:999px;
-      border:1px solid rgba(220,235,255,.9);
-      background:rgba(47,169,255,.08);
-      color:rgba(11,42,91,.88);
-      font-weight:900;font-size:12px;
+      padding:10px 12px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.85);
+      box-shadow:0 10px 24px rgba(11,42,91,.06);
+      cursor:pointer;font-weight:900;font-size:13px;color:rgba(11,42,91,.86);
+      transition:transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
       white-space:nowrap;
     }
-    .persona h3{margin:10px 0 6px;font-size:18px;letter-spacing:-.14px}
-    .persona p{margin:0;color:var(--muted);font-size:14.2px}
-    .icon{
-      width:44px;height:44px;border-radius:16px;border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.9);
+    .chip:hover{transform:translateY(-1px);border-color:rgba(47,169,255,.35);background:rgba(220,235,255,.55)}
+    .chip.on{
+      border-color:rgba(47,169,255,.45);
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
+      color:var(--blue);
+    }
+    .mini-intro{
+      flex:1 1 320px;
+      display:flex;align-items:flex-start;gap:12px;
+      padding:12px 14px;border-radius:18px;border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.90);
       box-shadow:0 12px 30px rgba(11,42,91,.06);
+    }
+    .mini-icon{
+      width:42px;height:42px;border-radius:16px;
+      border:1px solid rgba(47,169,255,.28);
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.24));
       display:grid;place-items:center;
-      position:absolute;top:14px;right:14px;
+      color:rgba(11,42,91,.92);
+      font-weight:1000;
+      flex:0 0 auto;
     }
-    .persona:after{
-      content:"";position:absolute;inset:auto -80px -80px auto;
-      width:260px;height:260px;border-radius:50%;
-      background:radial-gradient(circle at 30% 30%, rgba(143,211,255,.35), rgba(47,169,255,.0) 70%);
-      transform:rotate(18deg);
-      opacity:.85;pointer-events:none;
-    }
+    .mini-intro p{margin:0;color:var(--muted);font-size:13.5px}
+    .mini-intro strong{color:rgba(11,42,91,.92)}
 
-    /* Animated diagram: "Cómo apoyamos" */
-    .diagram{
-      position:relative;
-      padding:18px;
-      overflow:hidden;
-    }
-    .diagram:before{
-      content:"";position:absolute;inset:-2px;
-      background:
-        radial-gradient(560px 260px at 10% 10%, rgba(47,169,255,.12), transparent 60%),
-        radial-gradient(560px 260px at 95% 0%, rgba(143,211,255,.14), transparent 55%);
-      opacity:.95;pointer-events:none;
-    }
-    .diagram>*{position:relative}
-
-    .support{
-      display:grid;
-      grid-template-columns:1.05fr 1fr;
-      gap:14px;
-      align-items:stretch;
-    }
-    .steps{
-      display:grid;gap:10px;
-    }
-    .step{
-      padding:14px 14px;border-radius:22px;
-      border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.92);
-      box-shadow:0 12px 30px rgba(11,42,91,.06);
-      cursor:pointer;
-      transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-      position:relative;overflow:hidden;
-    }
-    .step:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(11,42,91,.10);border-color:rgba(47,169,255,.35)}
-    .step .n{
-      display:inline-grid;place-items:center;
-      width:32px;height:32px;border-radius:12px;
-      border:1px solid rgba(47,169,255,.25);
-      background:linear-gradient(135deg, rgba(47,169,255,.12), rgba(143,211,255,.20));
-      font-weight:900;color:rgba(11,42,91,.92);
-      margin-right:8px;flex:0 0 auto;
-    }
-    .step .row{display:flex;align-items:center;gap:10px}
-    .step strong{display:block;font-size:14.8px}
-    .step span{display:block;color:var(--muted);font-size:13.8px;margin-top:4px}
-    .step:after{
-      content:"";position:absolute;inset:auto -90px -90px auto;
-      width:230px;height:230px;border-radius:50%;
-      background:radial-gradient(circle at 30% 30%, rgba(143,211,255,.26), rgba(47,169,255,.0) 70%);
-      opacity:.9;pointer-events:none;
-    }
-
-    .radar{
-      border-radius:22px;
-      border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.92);
-      box-shadow:0 12px 30px rgba(11,42,91,.06);
-      overflow:hidden;
-      position:relative;
-      display:grid;place-items:center;
-      min-height:260px;
-    }
-    .radar svg{width:min(420px, 100%);height:auto;display:block}
-    .pulse{
-      transform-origin:50% 50%;
-      animation:pulse 2.4s ease-in-out infinite;
-      opacity:.55;
-    }
-    @keyframes pulse{
-      0%{transform:scale(.88);opacity:.15}
-      55%{transform:scale(1);opacity:.55}
-      100%{transform:scale(1.08);opacity:0}
-    }
-    .beam{
-      transform-origin:50% 52%;
-      animation:beam 3.2s ease-in-out infinite;
-      opacity:.45;
-    }
-    @keyframes beam{
-      0%{transform:rotate(-40deg);opacity:.15}
-      35%{opacity:.45}
-      60%{opacity:.35}
-      100%{transform:rotate(320deg);opacity:.15}
-    }
-
+    /* Buttons */
     .btn{
       display:inline-flex;align-items:center;justify-content:center;gap:10px;
       padding:11px 14px;border-radius:14px;border:1px solid var(--line);
-      background:rgba(255,255,255,.92);color:var(--blue);font-weight:800;
+      background:rgba(255,255,255,.92);color:var(--blue);font-weight:900;
       box-shadow:0 12px 30px rgba(11,42,91,.08);
       transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
-      cursor:pointer;white-space:nowrap;
+      cursor:pointer;
+      white-space:nowrap;
     }
     .btn:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(11,42,91,.12)}
     .btn.primary{
@@ -328,39 +259,212 @@
     }
     .btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
 
-    /* Modal */
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.9);
+      background:rgba(47,169,255,.08);
+      color:rgba(11,42,91,.88);
+      font-weight:900;font-size:12px;
+      white-space:nowrap;
+    }
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .tag{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.9);
+      background:rgba(255,255,255,.78);
+      color:rgba(11,42,91,.78);
+      font-weight:900;font-size:12px;
+      white-space:nowrap;
+    }
+
+    /* Capsules */
+
+    /* Keep cápsulas centered (avoid edge-to-edge feel) */
+    .caps-zone{width:100%;display:flex;justify-content:center}
+    .caps-zone .caps-grid{width:min(var(--max), 100%);}
+    @media (min-width: 1200px){
+      .caps-zone .caps-grid{max-width:1120px}
+    }
+
+    .caps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .caps{
+      position:relative;overflow:hidden;
+      border-radius:var(--radius2);
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.92);
+      box-shadow:0 14px 40px rgba(11,42,91,.08);
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      cursor:pointer;
+      min-height:310px;
+      display:flex;flex-direction:column;
+    }
+    .caps:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
+    .caps:before{
+      content:"";position:absolute;inset:-2px;
+      background:
+        radial-gradient(520px 220px at 15% 10%, rgba(47,169,255,.11), transparent 60%),
+        radial-gradient(520px 220px at 90% 0%, rgba(143,211,255,.12), transparent 55%);
+      opacity:.9;pointer-events:none;
+    }
+    .caps>*{position:relative}
+    .caps-media{
+      width:100%;
+      aspect-ratio: 16 / 9;
+      overflow:hidden;
+      border-bottom:1px solid rgba(220,235,255,.9);
+      background:linear-gradient(135deg, rgba(47,169,255,.12), rgba(143,211,255,.16));
+    }
+    .caps-media img{width:100%;height:100%;object-fit:cover;display:block}
+    .caps-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
+    .caps h3{margin:0;font-size:16px;letter-spacing:-.12px}
+    .caps p{margin:0;color:var(--muted);font-size:14px}
+    .caps-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .caps-cta{font-weight:900;color:rgba(11,42,91,.9);font-size:13px;display:inline-flex;align-items:center;gap:8px}
+
+    /* Library */
+    .library{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .item{
+      position:relative;overflow:hidden;
+      border-radius:var(--radius2);
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.92);
+      box-shadow:0 14px 40px rgba(11,42,91,.08);
+      padding:16px;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      cursor:pointer;
+      min-height:176px;
+    }
+    .item:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
+    .item:before{
+      content:"";position:absolute;inset:-2px;
+      background:
+        radial-gradient(520px 220px at 15% 10%, rgba(47,169,255,.11), transparent 60%),
+        radial-gradient(520px 220px at 90% 0%, rgba(143,211,255,.12), transparent 55%);
+      opacity:.9;pointer-events:none;
+    }
+    .item>*{position:relative}
+    .meta{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .type{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.85);
+      font-weight:900;font-size:12px;color:rgba(11,42,91,.86);
+      white-space:nowrap;
+    }
+    .lvl{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(47,169,255,.06);
+      font-weight:900;font-size:12px;color:rgba(11,42,91,.86);
+      white-space:nowrap;
+    }
+    .item h3{margin:10px 0 8px;font-size:16px;letter-spacing:-.12px}
+    .item p{margin:0;color:var(--muted);font-size:14px}
+
+    /* Modal (FIX: fits window + scrollable body + always visible close) */
     .modal{
-      position:fixed;inset:0;z-index:1000;display:none;padding:18px;
-      background:rgba(11,27,52,.55);backdrop-filter:blur(6px);
+      position:fixed;inset:0;z-index:1000;
+      display:none;padding:18px;
+      background:rgba(11,27,52,.55);
+      backdrop-filter:blur(6px);
+      overflow:auto; /* allow backdrop scroll if needed */
     }
     .modal.show{display:grid;place-items:center}
     .modal-dialog{
-      width:min(920px,100%);
+      width:min(980px,100%);
+      max-height:calc(100vh - 36px);
       background:rgba(255,255,255,.97);
       border:1px solid rgba(220,235,255,.95);
       border-radius:22px;
       box-shadow:0 28px 70px rgba(11,42,91,.22);
       overflow:hidden;
+      display:flex;flex-direction:column;
       animation:modalIn .18s ease-out;
     }
     @keyframes modalIn{from{transform:translateY(8px) scale(.99);opacity:0}to{transform:none;opacity:1}}
     .modal-head{
-      padding:16px 16px 12px;border-bottom:1px solid rgba(220,235,255,.9);
+      padding:16px 16px 12px;
+      border-bottom:1px solid rgba(220,235,255,.9);
       background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
       display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+      flex:0 0 auto;
     }
     .modal-title{margin:0;font-size:18px;letter-spacing:-.2px;color:var(--blue)}
     .modal-close{
       width:42px;height:42px;border-radius:14px;border:1px solid rgba(220,235,255,.95);
       background:rgba(255,255,255,.92);cursor:pointer;display:grid;place-items:center;
       color:rgba(11,42,91,.85);box-shadow:0 12px 30px rgba(11,42,91,.10);
+      flex:0 0 auto;
     }
-    .modal-body{padding:14px 16px 16px;color:rgba(11,27,52,.92)}
+    .modal-body{
+      padding:14px 16px 16px;
+      color:rgba(11,27,52,.92);
+      overflow:auto;
+      -webkit-overflow-scrolling:touch;
+      flex:1 1 auto;
+    }
     .modal-body p{margin:0 0 10px;color:var(--muted)}
     .modal-body ul{margin:10px 0 0;padding-left:18px;color:var(--muted)}
     .modal-body li{margin:7px 0}
+    .callout{
+      margin-top:12px;padding:12px 12px;border-radius:var(--radius);
+      border:1px solid rgba(47,169,255,.25);
+      background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      color:rgba(11,42,91,.9);font-weight:900;font-size:13px;
+    }
 
-    /* Reveal */
+    /* Tabs */
+    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .tab{
+      padding:10px 12px;border-radius:999px;border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.85);
+      font-weight:900;font-size:13px;color:rgba(11,42,91,.86);
+      cursor:pointer;
+      transition:transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+    }
+    .tab:hover{transform:translateY(-1px);border-color:rgba(47,169,255,.35);background:rgba(220,235,255,.55)}
+    .tab.on{
+      border-color:rgba(47,169,255,.45);
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
+      color:var(--blue);
+    }
+
+    /* Diagram */
+    .diagram-wrap{
+      margin-top:12px;
+      border-radius:22px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.92);
+      box-shadow:0 16px 40px rgba(11,42,91,.10);
+      overflow:hidden;
+    }
+    .diagram-head{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+      padding:12px 12px;border-bottom:1px solid rgba(220,235,255,.9);
+      background:linear-gradient(135deg, rgba(47,169,255,.08), rgba(143,211,255,.14));
+    }
+    .steps{display:flex;gap:10px;flex-wrap:wrap}
+    .step{
+      padding:9px 10px;border-radius:999px;border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.85);
+      font-weight:900;font-size:12.5px;color:rgba(11,42,91,.86);
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .step.on{
+      border-color:rgba(47,169,255,.45);
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
+      color:var(--blue);
+    }
+    .diagram-body{padding:14px 14px 16px}
+    .diagram-note{margin:0;color:var(--muted);font-size:13px}
+    svg{max-width:100%;height:auto;display:block}
+
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .55s ease, transform .55s ease}
     .reveal.on{opacity:1;transform:none}
 
@@ -372,10 +476,8 @@
     .foot{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}
 
     @media (max-width: 980px){
-      .grid-3{grid-template-columns:1fr}
-      .grid-2{grid-template-columns:1fr}
-      .support{grid-template-columns:1fr}
-      .radar{min-height:220px}
+      .caps-grid{grid-template-columns:1fr}
+      .library{grid-template-columns:1fr}
     }
     @media (max-width: 760px){
       nav ul{display:none}
@@ -384,9 +486,53 @@
     }
     @media (prefers-reduced-motion: reduce){
       *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
-      .pulse,.beam{animation:none !important}
     }
-  </style>
+  
+    /* === Info strip (clean, aligned with index) === */
+    .info-strip{
+      flex:1 1 320px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:14px 16px;
+      border-radius:18px;
+      border:1px solid rgba(47,169,255,.28);
+      background:
+        linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      box-shadow:0 14px 34px rgba(11,42,91,.08);
+    }
+    .info-icon{
+      width:42px;height:42px;border-radius:16px;
+      display:grid;place-items:center;
+      background:rgba(255,255,255,.85);
+      border:1px solid rgba(220,235,255,.95);
+      color:rgba(11,42,91,.9);
+      font-weight:900;
+      box-shadow:0 12px 30px rgba(11,42,91,.08);
+      flex:0 0 auto;
+    }
+    .info-strip p{
+      margin:0;
+      font-size:14px;
+      color:var(--muted);
+    }
+    .info-strip strong{
+      color:var(--blue);
+      font-weight:900;
+    }
+
+    /* === Force titles to use index gradient === */
+    h1, h2, h3{
+      background: linear-gradient(90deg,
+        rgba(11,42,91,1) 0%,
+        rgba(47,169,255,1) 55%,
+        rgba(143,211,255,1) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+</style>
 </head>
 
 <body>
@@ -395,267 +541,143 @@
   <header>
     <div class="wrap">
       <div class="nav">
-        <a class="brand" href="index.html" aria-label="Aegis8 Home">
+        <a class="brand" href="index.html" aria-label="Aegis8 — Inicio">
           <div class="logo" aria-hidden="true"></div>
           <div>
             <strong>Aegis8</strong>
-            <span>Guía y acompañamiento</span>
+            <span>Ciberseguridad con sentido</span>
           </div>
         </a>
 
-        <nav aria-label="Navegación principal">
-          <ul>
-            <li><a href="como-trabajamos.html">Cómo trabajamos</a></li>
-            <li><a class="active" href="a-quienes-ayudamos.html">A quiénes ayudamos</a></li>
-            <li><a href="quienes-somos.html">Quiénes somos</a></li>
-            <li><a href="psocial.html">Proyecto social</a></li>
-            <li><a href="contactanos.html">Contáctanos</a></li>
-          </ul>
-        </nav>
-
-        <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobilePanel">
+        <button class="menu-btn" type="button" id="menuBtn" aria-label="Abrir menú" aria-expanded="false">
           <div class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></div>
         </button>
+
+        <nav aria-label="Navegación principal">
+          <ul id="navLinks">
+            <li><a href="comotrabajamos.html" data-page="comotrabajamos.html">Cómo trabajamos</a></li>
+            <li><a href="recursos.html" data-page="recursos.html">Cápsulas</a></li>
+            <li><a href="ayudamos.html" data-page="ayudamos.html">A quiénes ayudamos</a></li>
+            <li><a href="index.html#quienes" data-hash="#quienes">Quiénes somos</a></li>
+            <li><a href="psocial.html" data-page="psocial.html">Proyecto social</a></li>
+            <li><a class="nav-cta" href="contactanos.html" data-page="contactanos.html">Contáctanos</a></li>
+          </ul>
+        </nav>
       </div>
 
-      <div class="mobile-panel" id="mobilePanel" aria-label="Menú móvil">
-        <a href="como-trabajamos.html">Cómo trabajamos</a>
-        <a href="a-quienes-ayudamos.html">A quiénes ayudamos</a>
-        <a href="quienes-somos.html">Quiénes somos</a>
+      <div class="mobile-panel" id="mobilePanel" aria-label="Navegación móvil">
+        <a href="comotrabajamos.html">Cómo trabajamos</a>
+        <a href="recursos.html">Cápsulas</a>
+        <a href="ayudamos.html">A quiénes ayudamos</a>
+        <a href="index.html#quienes">Quiénes somos</a>
         <a href="psocial.html">Proyecto social</a>
-        <a href="contactanos.html">Contáctanos</a>
+        <a class="nav-cta" href="contactanos.html">Contáctanos</a>
       </div>
     </div>
   </header>
 
-  <main>
+  <main id="top">
     <div class="wrap">
 
       <!-- HERO -->
-      <section>
+      <section class="hero">
         <div class="center">
-          <div class="pill reveal" role="note">
+          <div class="pill reveal" role="note" aria-label="Recursos Aegis8">
             <span class="dot" aria-hidden="true"></span>
-            <span><strong>Enfoque</strong> — claridad + mínimos sostenibles</span>
+            <span><strong>Tips</strong> y <strong>guías cortas</strong> para bajar riesgo en el día a día.</span>
           </div>
 
-          <h1 class="reveal">A quiénes ayudamos</h1>
+          <h1 class="reveal">Cápsulas prácticas de seguridad</h1>
 
           <p class="lead reveal">
-            Trabajamos con quienes necesitan claridad y acompañamiento práctico.
-            Cada bloque es clickable para ver casos típicos, dolores reales y cómo apoyamos.
-            <br><br>
-            La idea es simple: <span class="k">menos riesgo</span>, <span class="k">menos ruido</span> y decisiones que puedas sostener.
+            Contenido claro para personas, familias y negocios que están creciendo.
+             para entender el “cómo pasa” y el “qué hacer”.
           </p>
-
-          <div class="btn-row reveal" style="justify-content:center;">
-            <a class="btn primary" href="#perfiles">Ver perfiles</a>
-            <a class="btn" href="#como-apoyamos">Cómo apoyamos</a>
-            <a class="btn" href="contactanos.html">Contáctanos</a>
-          </div>
         </div>
 
         <div class="gradline" aria-hidden="true"></div>
       </section>
 
-      <!-- PROFILES -->
-      <section id="perfiles">
+      <!-- CAPSULAS -->
+      <section id="capsulas">
         <div class="sec-head reveal">
-          <h2>Perfiles principales</h2>
+          <h2>Cápsulas y tips</h2>
           <p class="sec-sub">
-            No importa si eres 1 persona o un equipo pequeño: partimos por lo esencial (accesos, backups, roles, hábitos, superficie pública).
+            Revisa nuestras cápsulas y enterate de novedades y acciones para protegerte.
           </p>
         </div>
 
-        <div class="grid-3">
-          <!-- Startups -->
-          <div class="card persona reveal" role="button" tabindex="0" data-modal="m-startups" aria-haspopup="dialog">
-            <span class="tag">Startups</span>
-            <div class="icon" aria-hidden="true">
-              <!-- Rocket -->
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <path d="M14.5 3.5c3.3.6 5.5 2.8 6 6l-6.9 6.9-3.6.6.6-3.6L14.5 3.5Z" stroke="rgba(11,42,91,.85)" stroke-width="1.8" stroke-linejoin="round"/>
-                <path d="M10.6 7.4 6.8 8.3c-.8.2-1.5.9-1.7 1.7l-.8 3.8 4.4-1.3" stroke="rgba(11,42,91,.65)" stroke-width="1.6" stroke-linejoin="round"/>
-                <path d="M16.6 13.4l1.3 4.4 3.8-.8c.8-.2 1.5-.9 1.7-1.7l.9-3.8-3.9 3.9" stroke="rgba(11,42,91,.65)" stroke-width="1.6" stroke-linejoin="round"/>
-                <path d="M12.8 11.2a1.6 1.6 0 1 0 2.2-2.2 1.6 1.6 0 0 0-2.2 2.2Z" stroke="rgba(11,42,91,.85)" stroke-width="1.8"/>
-              </svg>
+        
+        <div class="card reveal" style="padding:16px;">
+          <div class="controls">
+            <div class="chips" aria-label="Filtros cápsulas">
+              <div class="chip on" data-capfilter="all">Analiza, practica, repite</div>
             </div>
-            <h3>Seguridad desde el inicio</h3>
-            <p>Decisiones correctas temprano: accesos, TLS, backups, procesos y cultura. Crece con control, no con parches.</p>
-          </div>
 
-          <!-- Small businesses -->
-          <div class="card persona reveal" role="button" tabindex="0" data-modal="m-pymes" aria-haspopup="dialog">
-            <span class="tag">Pequeñas empresas</span>
-            <div class="icon" aria-hidden="true">
-              <!-- Building -->
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <path d="M4 20V6a2 2 0 0 1 2-2h8v16" stroke="rgba(11,42,91,.85)" stroke-width="1.8" stroke-linejoin="round"/>
-                <path d="M14 10h4a2 2 0 0 1 2 2v8" stroke="rgba(11,42,91,.85)" stroke-width="1.8" stroke-linejoin="round"/>
-                <path d="M7 8h3M7 11h3M7 14h3" stroke="rgba(11,42,91,.65)" stroke-width="1.6" stroke-linecap="round"/>
-                <path d="M10 20v-3H8v3" stroke="rgba(11,42,91,.65)" stroke-width="1.6" stroke-linejoin="round"/>
-              </svg>
+            <div class="info-strip" aria-label="Instagram Aegis8">
+              <div class="info-icon" aria-hidden="true">✦</div>
+              <p>
+                También compartimos cápsulas en Instagram:
+                <strong>@aegis8ciber</strong>
+              </p>
             </div>
-            <h3>Orden y control</h3>
-            <p>Priorizamos lo esencial: cuentas, correo, endpoints, backups y hábitos. Menos superficie expuesta, más continuidad.</p>
-          </div>
-
-          <!-- People -->
-          <div class="card persona reveal" role="button" tabindex="0" data-modal="m-personas" aria-haspopup="dialog">
-            <span class="tag">Personas</span>
-            <div class="icon" aria-hidden="true">
-              <!-- User -->
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="rgba(11,42,91,.85)" stroke-width="1.8"/>
-                <path d="M4.5 20.5a7.5 7.5 0 0 1 15 0" stroke="rgba(11,42,91,.65)" stroke-width="1.6" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h3>Aprender para protegerse</h3>
-            <p>Educación práctica para reducir riesgos cotidianos: cuentas, phishing, privacidad y hábitos. Seguridad como habilidad.</p>
           </div>
         </div>
+
+
+        <div style="height:12px"></div>
+        <div class="caps-zone"><div class="caps-grid" id="capsGrid"></div></div>
       </section>
 
-      <!-- HOW WE SUPPORT -->
-      <section id="como-apoyamos">
+      <!-- BIBLIOTECA -->
+      <section id="biblioteca">
         <div class="sec-head reveal">
-          <h2>Cómo apoyamos</h2>
+          <h2>Biblioteca, checklists y mini guías</h2>
           <p class="sec-sub">
-            Un camino simple: entender contexto → priorizar mínimos → acompañar decisiones → dejarlo documentado.
-            Haz clic en cada paso para ver qué incluye.
+            Recursos “de aterrizaje”: checklists, plantillas y mini guías para implementar. Abre un recurso para ver pasos y un diagrama simple de implementación.
           </p>
         </div>
 
-        <div class="card diagram reveal">
-          <div class="support">
-            <div class="steps" aria-label="Pasos de apoyo">
-              <div class="step" role="button" tabindex="0" data-modal="m-paso1" aria-haspopup="dialog">
-                <div class="row">
-                  <div class="n">1</div>
-                  <div>
-                    <strong>Escuchamos el contexto</strong>
-                    <span>Qué estás protegiendo, urgencias, stack (si aplica) y límites reales.</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="step" role="button" tabindex="0" data-modal="m-paso2" aria-haspopup="dialog">
-                <div class="row">
-                  <div class="n">2</div>
-                  <div>
-                    <strong>Priorizamos mínimos</strong>
-                    <span>MFA, backups, accesos, roles, higiene de correo y exposición pública.</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="step" role="button" tabindex="0" data-modal="m-paso3" aria-haspopup="dialog">
-                <div class="row">
-                  <div class="n">3</div>
-                  <div>
-                    <strong>Plan de 30 días</strong>
-                    <span>Acciones concretas, ordenadas por impacto y esfuerzo.</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="step" role="button" tabindex="0" data-modal="m-paso4" aria-haspopup="dialog">
-                <div class="row">
-                  <div class="n">4</div>
-                  <div>
-                    <strong>Dejamos evidencia</strong>
-                    <span>Checklist y documentación simple para sostener cambios.</span>
-                  </div>
-                </div>
-              </div>
+        <div class="card reveal" style="padding:16px;">
+          <div class="controls">
+            <div class="chips" aria-label="Filtros biblioteca">
+              <div class="chip on" data-filter="all">Todo</div>
+              <div class="chip" data-filter="personas">Personas</div>
+              <div class="chip" data-filter="startups">Startups</div>
+              <div class="chip" data-filter="pymes">Pymes</div>
+              <div class="chip" data-filter="familia">Familia</div>
             </div>
 
-            <div class="radar" aria-label="Diagrama animado">
-              <!-- Minimal animated radar/clarity -->
-              <svg viewBox="0 0 520 360" role="img" aria-label="Radar de claridad: menos ruido, más control">
-                <defs>
-                  <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stop-color="rgba(47,169,255,.55)"/>
-                    <stop offset="1" stop-color="rgba(143,211,255,.75)"/>
-                  </linearGradient>
-                  <linearGradient id="g2" x1="0" y1="1" x2="1" y2="0">
-                    <stop offset="0" stop-color="rgba(11,42,91,.9)"/>
-                    <stop offset="1" stop-color="rgba(11,42,91,.55)"/>
-                  </linearGradient>
-                </defs>
-
-                <!-- background grid -->
-                <g opacity=".55">
-                  <circle cx="260" cy="190" r="140" fill="none" stroke="rgba(220,235,255,.9)" stroke-width="2"/>
-                  <circle cx="260" cy="190" r="100" fill="none" stroke="rgba(220,235,255,.75)" stroke-width="2"/>
-                  <circle cx="260" cy="190" r="60" fill="none" stroke="rgba(220,235,255,.65)" stroke-width="2"/>
-                  <line x1="120" y1="190" x2="400" y2="190" stroke="rgba(220,235,255,.75)" stroke-width="2"/>
-                  <line x1="260" y1="50" x2="260" y2="330" stroke="rgba(220,235,255,.75)" stroke-width="2"/>
-                </g>
-
-                <!-- pulses -->
-                <circle class="pulse" cx="260" cy="190" r="60" fill="none" stroke="url(#g1)" stroke-width="10"/>
-                <circle class="pulse" cx="260" cy="190" r="100" fill="none" stroke="url(#g1)" stroke-width="10" style="animation-delay:.6s"/>
-                <circle class="pulse" cx="260" cy="190" r="140" fill="none" stroke="url(#g1)" stroke-width="10" style="animation-delay:1.2s"/>
-
-                <!-- beam -->
-                <g class="beam">
-                  <path d="M260 190 L420 150 Q392 210 420 270 Z" fill="rgba(47,169,255,.12)"/>
-                  <path d="M260 190 L420 150 Q392 210 420 270 Z" fill="none" stroke="rgba(47,169,255,.22)" stroke-width="3"/>
-                </g>
-
-                <!-- center -->
-                <circle cx="260" cy="190" r="10" fill="url(#g2)"/>
-                <circle cx="260" cy="190" r="24" fill="none" stroke="rgba(47,169,255,.22)" stroke-width="4"/>
-
-                <!-- labels -->
-                <g fill="rgba(11,42,91,.85)" font-size="14" font-weight="800">
-                  <text x="58" y="62">Ruido ↓</text>
-                  <text x="382" y="62">Control ↑</text>
-                  <text x="66" y="330" opacity=".75">Mínimos</text>
-                  <text x="370" y="330" opacity=".75">Sostenible</text>
-                </g>
-
-                <!-- points -->
-                <g>
-                  <circle cx="335" cy="145" r="7" fill="rgba(47,169,255,.8)"/>
-                  <circle cx="308" cy="265" r="7" fill="rgba(143,211,255,.9)"/>
-                  <circle cx="215" cy="120" r="7" fill="rgba(47,169,255,.55)"/>
-                </g>
-              </svg>
+            <div class="mini-intro" aria-label="Qué es la biblioteca">
+              <div class="mini-icon" aria-hidden="true"></div>
+              <div>
+                <p>
+                  <strong>Biblioteca:</strong> esto es para <strong>hacer</strong>, no para “leer por leer”.
+                  Cada recurso te deja pasos cortos y una acción de hoy.
+                </p>
+              </div>
             </div>
-          </div>
-
-          <div class="btn-row" style="justify-content:center;margin-top:14px;">
-            <a class="btn primary" href="contactanos.html">Contáctanos</a>
-            <a class="btn" href="recursos_aegis8.html">Recursos & guías</a>
-            <a class="btn" href="test_ciberseguridad_aegis8.html">Hacer el test</a>
           </div>
         </div>
+
+        <div style="height:12px"></div>
+        <div class="library" id="library"></div>
       </section>
 
       <!-- CTA -->
       <section id="cta">
         <div class="sec-head reveal">
-          <h2>Si no sabes por dónde partir</h2>
-          <p class="sec-sub">Empieza por el test (10–15 min) y después revisa recursos según tu perfil.</p>
+          <h2>¿Quieres que esto sea “tu plan”?</h2>
+          <p class="sec-sub">Si me dices tu contexto (persona/familia/negocio), lo dejamos en 1 hoja con acciones reales y ordenadas.</p>
         </div>
-        <div class="grid-2">
-          <div class="card reveal" style="padding:18px;">
-            <h3 style="margin:0 0 8px;">Ruta rápida</h3>
-            <p class="muted" style="margin:0;">Test → checklist de mínimos → plan de 30 días. Sin humo, sin pánico.</p>
-            <div class="btn-row">
-              <a class="btn primary" href="test_ciberseguridad_aegis8.html">Ir al test</a>
-              <a class="btn" href="recursos_aegis8.html">Ver recursos</a>
-            </div>
-          </div>
-          <div class="card reveal" style="padding:18px;">
-            <h3 style="margin:0 0 8px;">Si necesitas acompañamiento</h3>
-            <p class="muted" style="margin:0;">Cuéntanos tu contexto y objetivo. No envíes credenciales ni datos sensibles.</p>
-            <div class="btn-row">
-              <a class="btn primary" href="contactanos.html">Contáctanos</a>
-              <a class="btn" href="como_nos_sostenemos_aegis8.html">Cómo nos sostenemos</a>
-            </div>
+
+        <div class="card reveal" style="padding:18px;">
+          <div class="badge">Simple</div>
+          <h3 style="margin:10px 0 8px;letter-spacing:-.2px;">Un plan mínimo, claro y aplicable</h3>
+          <p class="muted" style="margin:0;">Sin promesas enterprise: solo acciones que bajan riesgo y crean hábito.</p>
+          <div class="btn-row">
+            <a class="btn primary" href="contactanos.html">Ir a Contáctanos</a>
+            <a class="btn" href="#biblioteca">Ver biblioteca</a>
           </div>
         </div>
       </section>
@@ -663,164 +685,25 @@
     </div>
   </main>
 
-  <!-- MODALS: Personas -->
-  <div class="modal" id="m-startups" role="dialog" aria-modal="true" aria-labelledby="t-startups">
+  <!-- MODAL -->
+  <div class="modal" id="m-detail" role="dialog" aria-modal="true" aria-labelledby="t-detail">
     <div class="modal-dialog">
       <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-startups">Startups — Seguridad desde el inicio</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Evitar “deuda de seguridad” temprana.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p><strong>Dolores típicos</strong></p>
-        <ul>
-          <li>crecimiento rápido sin roles ni control de accesos</li>
-          <li>infra “a la rápida” sin backups probados</li>
-          <li>exposición pública (subdominios, endpoints, paneles)</li>
-        </ul>
-        <p><strong>Cómo ayudamos</strong></p>
-        <ul>
-          <li>mínimos: MFA, backups, roles, TLS, llaves y secretos</li>
-          <li>higiene de correo y anti-phishing</li>
-          <li>plan de 30 días con prioridades y responsables</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+        <div style="min-width:0;">
+          <h3 class="modal-title" id="t-detail">Detalle</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;" id="t-detail-sub">—</div>
 
-  <div class="modal" id="m-pymes" role="dialog" aria-modal="true" aria-labelledby="t-pymes">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-pymes">Pequeñas empresas — Orden y control</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Continuidad operativa con pasos simples.</div>
+          <div class="tabs" aria-label="Pestañas">
+            <button class="tab on" type="button" data-tab="resumen">Resumen</button>
+            <button class="tab" type="button" data-tab="diagrama">Diagrama</button>
+          </div>
         </div>
         <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
       </div>
-      <div class="modal-body">
-        <p><strong>Dolores típicos</strong></p>
-        <ul>
-          <li>contraseñas compartidas y cuentas sin MFA</li>
-          <li>backups inexistentes o no probados</li>
-          <li>equipos sin inventario ni hábitos</li>
-        </ul>
-        <p><strong>Cómo ayudamos</strong></p>
-        <ul>
-          <li>orden de cuentas, roles y accesos</li>
-          <li>rutina de backups y restauración</li>
-          <li>checklist de hábitos (correo, navegación, dispositivos)</li>
-        </ul>
-      </div>
-    </div>
-  </div>
 
-  <div class="modal" id="m-personas" role="dialog" aria-modal="true" aria-labelledby="t-personas">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-personas">Personas — Aprender para protegerse</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Seguridad como habilidad cotidiana.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
       <div class="modal-body">
-        <p><strong>Dolores típicos</strong></p>
-        <ul>
-          <li>phishing (correo, WhatsApp, redes)</li>
-          <li>cuentas sin MFA o contraseñas repetidas</li>
-          <li>privacidad y hábitos digitales</li>
-        </ul>
-        <p><strong>Cómo ayudamos</strong></p>
-        <ul>
-          <li>setup de MFA + gestor de contraseñas</li>
-          <li>checklist anti-phishing</li>
-          <li>prácticas simples para sostener hábitos</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODALS: Steps -->
-  <div class="modal" id="m-paso1" role="dialog" aria-modal="true" aria-labelledby="t-p1">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-p1">Paso 1 — Escuchar contexto</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Sin contexto, solo hay suposiciones.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p>Definimos rápidamente:</p>
-        <ul>
-          <li>qué estás protegiendo (activos y datos)</li>
-          <li>riesgos reales (no “miedo”)</li>
-          <li>urgencias y límites de tiempo/presupuesto</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="m-paso2" role="dialog" aria-modal="true" aria-labelledby="t-p2">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-p2">Paso 2 — Mínimos de seguridad</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Lo que casi siempre baja riesgo.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p>Priorizamos lo esencial:</p>
-        <ul>
-          <li>MFA</li>
-          <li>backups + restauración</li>
-          <li>roles y accesos</li>
-          <li>higiene de correo</li>
-          <li>exposición pública</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="m-paso3" role="dialog" aria-modal="true" aria-labelledby="t-p3">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-p3">Paso 3 — Plan de 30 días</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Impacto primero, esfuerzo después.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p>Entregable típico:</p>
-        <ul>
-          <li>lista de acciones (priorizada)</li>
-          <li>qué se hace hoy / esta semana / este mes</li>
-          <li>qué es “nice to have” (sin urgencia)</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="m-paso4" role="dialog" aria-modal="true" aria-labelledby="t-p4">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-p4">Paso 4 — Evidencia y continuidad</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Lo que no se documenta, se olvida.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p>Cerramos con:</p>
-        <ul>
-          <li>checklist simple (mantenible)</li>
-          <li>responsables (si hay equipo)</li>
-          <li>recomendaciones para sostener hábitos</li>
-        </ul>
+        <div id="tab-resumen"></div>
+        <div id="tab-diagrama" style="display:none;"></div>
       </div>
     </div>
   </div>
@@ -836,9 +719,9 @@
           </div>
         </div>
 
-        <div style="max-width: 72ch;">
+        <div style="max-width: 70ch;">
           <small class="muted">
-            © <span id="year"></span> Aegis8. Acompañamiento práctico para personas, startups y pequeñas organizaciones.
+            © <span id="year"></span> Aegis8. Página estática: se actualiza editando arreglos en el JS (sin backend).
           </small>
         </div>
       </div>
@@ -846,9 +729,10 @@
   </footer>
 
   <script>
+    // Año
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Mobile menu
+    // Menú móvil
     const btn = document.getElementById("menuBtn");
     const panel = document.getElementById("mobilePanel");
     function closeMobileMenu(){ panel.style.display="none"; btn.setAttribute("aria-expanded","false"); }
@@ -871,7 +755,7 @@
     window.addEventListener("scroll", onScroll, { passive:true });
     onScroll();
 
-    // Reveal on scroll
+    // Reveal
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
         if(e.isIntersecting){
@@ -882,52 +766,579 @@
     }, { threshold:0.12 });
     document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 
-    // Modal system
-    const modals = Array.from(document.querySelectorAll(".modal"));
+    // Active link
+    (function(){
+      const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+      const hash = (location.hash || '').toLowerCase();
+      document.querySelectorAll('#navLinks a').forEach(a => {
+        const page = (a.getAttribute('data-page') || '').toLowerCase();
+        const h = (a.getAttribute('data-hash') || '').toLowerCase();
+        if(page && page === path) a.classList.add('active');
+        if(h && hash && h === hash) a.classList.add('active');
+      });
+    })();
+
+    // -----------------------------
+    // SOBRE INSTAGRAM (seguridad)
+    // -----------------------------
+    // No usamos "embed.js" de Instagram para evitar scripts de terceros (tracking/cookies).
+    // Si quieres, cada cápsula puede tener un botón "Ver en Instagram" que abre un link en otra pestaña
+    // con rel="noopener noreferrer" (sin acceso al window del sitio).
+    // Esto no "infecta" tu página, pero sí puede exponer al visitante a cookies/tracking de IG al visitar ese link.
+
+    // -----------------------------
+    // EDITABLE CONTENT
+    // -----------------------------
+    // Rutas correctas: public/assets -> "assets/archivo.png"
+    const CAPSULES = [
+      {
+        id:"cap-mitm",
+        title:"Man-in-the-Middle (MITM)",
+        desc:"Cómo te pueden interceptar en redes abiertas y qué hábitos bajan riesgo.",
+        category:"redes",
+        level:"Base",
+        image:"assets/mym.png",
+        instagramUrl:"", // opcional: pega aquí el link al post/reel
+        resumen:[
+          "Un MITM ocurre cuando alguien se pone “en medio” entre tú y el sitio/servicio: ve, altera o redirige tráfico.",
+          "Suele explotar Wi‑Fi público, equipos comprometidos o configuraciones inseguras."
+        ],
+        hacer:[
+          "Evita loguearte desde enlaces en Wi‑Fi público: entra por tu ruta habitual (app/bookmark).",
+          "Activa MFA en correo/cuentas críticas.",
+          "Prefiere red móvil o VPN si vas a hacer algo sensible."
+        ],
+        diagram:{
+          title:"Flujo MITM (intercepción)",
+          steps:[
+            { id:"s1", label:"Conexión", note:"Tú intentas entrar a un sitio desde una red no confiable." },
+            { id:"s2", label:"Intercepción", note:"Un atacante se posiciona en medio (AP falso, ARP spoofing, etc.)." },
+            { id:"s3", label:"Robo/alteración", note:"Puede ver credenciales o redirigir a una página falsa." },
+            { id:"s4", label:"Mitigación", note:"Hábito: rutas habituales, MFA, y evitar redes abiertas para cosas sensibles." }
+          ]
+        }
+      },
+      {
+        id:"cap-hijos",
+        title:"Seguridad digital para hijos",
+        desc:"Rutinas simples: privacidad, conversaciones y límites que sí se sostienen.",
+        category:"familia",
+        level:"Base",
+        image:"assets/hijos.png",
+        instagramUrl:"",
+        resumen:[
+          "La seguridad para niños no es solo ‘bloquear’: es acompañar y enseñar criterio.",
+          "El objetivo: reducir riesgo sin romper la confianza."
+        ],
+        hacer:[
+          "Activa control parental básico + revisa privacidad de cuentas.",
+          "Acuerden regla: no compartir datos personales ni ubicación.",
+          "Crea un canal seguro: si algo incomoda, te lo cuentan sin culpa."
+        ],
+        diagram:{
+          title:"Rutina familiar (3 capas)",
+          steps:[
+            { id:"s1", label:"Conversar", note:"Acordar reglas claras y por qué existen." },
+            { id:"s2", label:"Configurar", note:"Privacidad + controles + cuentas con MFA donde aplique." },
+            { id:"s3", label:"Acompañar", note:"Revisiones cortas semanales, sin invasión." },
+            { id:"s4", label:"Repetir", note:"Si cambian apps, se ajusta la rutina (no la confianza)." }
+          ]
+        }
+      },
+      {
+        id:"cap-vacaciones",
+        title:"Seguridad en vacaciones",
+        desc:"Menos ansiedad, más hábitos: conexiones seguras, backups y cuidado de datos.",
+        category:"vacaciones",
+        level:"Base",
+        image:"assets/vacaciones.png",
+        instagramUrl:"",
+        resumen:[
+          "En vacaciones aumentan Wi‑Fi público, dispositivos fuera de casa y compras rápidas.",
+          "Pequeños hábitos reducen mucho el riesgo."
+        ],
+        hacer:[
+          "Antes de salir: actualiza sistema/apps y deja backup probado.",
+          "Evita compras/banca en Wi‑Fi público.",
+          "Activa ‘Encontrar mi dispositivo’ y bloqueo automático."
+        ],
+        diagram:{
+          title:"Checklist viaje (antes / durante / después)",
+          steps:[
+            { id:"s1", label:"Antes", note:"Actualizar + backup + revisar accesos críticos." },
+            { id:"s2", label:"Durante", note:"Evitar Wi‑Fi para cosas sensibles, cuidado con enlaces." },
+            { id:"s3", label:"Incidente", note:"Si pierdes equipo: bloquear, localizar, cambiar contraseñas." },
+            { id:"s4", label:"Después", note:"Revisar sesiones activas y permisos." }
+          ]
+        }
+      },
+      {
+        id:"cap-puertas",
+        title:"Cerrar puertas digitales",
+        desc:"Lo básico que casi nadie hace: sesiones abiertas, apps, permisos y cuentas.",
+        category:"habitos",
+        level:"Base",
+        image:"assets/puertas.png",
+        instagramUrl:"",
+        resumen:[
+          "Muchas filtraciones no son ‘hackeo’: son cuentas sin MFA, sesiones abiertas o permisos de más.",
+          "Cerrar puertas es reducir superficie de ataque."
+        ],
+        hacer:[
+          "Cierra sesiones activas en correo/redes y revoca dispositivos desconocidos.",
+          "Elimina apps que ya no usas y revisa permisos.",
+          "Reduce administradores y evita cuentas compartidas."
+        ],
+        diagram:{
+          title:"Puertas típicas (y cómo cerrarlas)",
+          steps:[
+            { id:"s1", label:"Sesiones", note:"Revisar sesiones activas y cerrar lo sospechoso." },
+            { id:"s2", label:"Permisos", note:"Eliminar apps/permisos excesivos y cuentas compartidas." },
+            { id:"s3", label:"MFA", note:"Activar MFA en correo y cuentas críticas." },
+            { id:"s4", label:"Rutina", note:"Repetir una vez al mes (30 min)." }
+          ]
+        }
+      },
+      {
+        id:"cap-fiestas",
+        title:"Seguridad en estas fiestas",
+        desc:"Compras, regalos, enlaces y estafas: lo que sube en diciembre y cómo evitarlo.",
+        category:"fiestas",
+        level:"Base",
+        image:"assets/fiestas.png",
+        instagramUrl:"",
+        resumen:[
+          "En fechas de alta demanda suben las estafas: links, marketplaces falsos y ‘urgencias’.",
+          "Regla de oro: no uses el enlace: entra por tu ruta habitual."
+        ],
+        hacer:[
+          "Verifica URL y reputación (no compres desde anuncios raros).",
+          "No compartas códigos SMS ni ‘confirmaciones’ por chat.",
+          "Usa un medio con protección y activa notificaciones."
+        ],
+        diagram:{
+          title:"Ruta segura de compra",
+          steps:[
+            { id:"s1", label:"Origen", note:"No abrir links de terceros/anuncios extraños." },
+            { id:"s2", label:"Ruta", note:"Entrar por app o bookmark (ruta habitual)." },
+            { id:"s3", label:"Pago", note:"Usar medio con protección + notificaciones." },
+            { id:"s4", label:"Revisión", note:"Monitorear cargos y cerrar sesión en equipos ajenos." }
+          ]
+        }
+      }
+    ];
+
+    const LIBRARY = [
+      {
+        id:"lib-mfa",
+        title:"Checklist: MFA en cuentas críticas",
+        type:"checklist",
+        level:"Base",
+        topic:"Accesos",
+        audience:["personas","startups","pymes","familia"],
+        summary:"Prioriza correo → dominio/DNS → repos → cloud → banca. Incluye códigos de respaldo.",
+        tags:["mfa","cuentas","prioridad"],
+        body:[
+          "Correo primero (resetea todo).",
+          "Luego dominio/DNS (control de tráfico y correo).",
+          "Luego repos y plataformas (Vercel, GitHub, CRM).",
+          "Guardar códigos de respaldo offline."
+        ],
+        todo:"Qué hacer hoy: activa MFA en tu correo y guarda códigos de respaldo."
+      },
+      {
+        id:"lib-backups",
+        title:"Mini guía: backups que sí sirven",
+        type:"guia",
+        level:"Base",
+        topic:"Resiliencia",
+        audience:["personas","startups","pymes"],
+        summary:"Backup sin prueba es esperanza. Ritual mensual: restauración parcial.",
+        tags:["backup","restauración","3-2-1"],
+        body:[
+          "Define activos críticos.",
+          "Copia fuera del equipo (y si puedes, fuera de casa/oficina).",
+          "Prueba restaurar 1 cosa al mes."
+        ],
+        todo:"Qué hacer hoy: prueba restaurar un archivo o carpeta crítica."
+      },
+      {
+        id:"lib-phish",
+        title:"Guía: phishing sin culpa",
+        type:"guia",
+        level:"Base",
+        topic:"Hábitos",
+        audience:["personas","startups","pymes","familia"],
+        summary:"Señales típicas + regla de oro + cómo reportar y aprender sin vergüenza.",
+        tags:["phishing","correo","urgencia"],
+        body:[
+          "Regla de oro: NO uses el enlace; entra por tu ruta habitual.",
+          "Reporta y aprende: el objetivo es hábito, no culpa.",
+          "MFA reduce impacto."
+        ],
+        todo:"Qué hacer hoy: identifica 1 patrón sospechoso en tu correo."
+      },
+      {
+        id:"lib-dominio",
+        title:"Checklist: proteger dominio y DNS",
+        type:"checklist",
+        level:"Intermedio",
+        topic:"Infra",
+        audience:["startups","pymes"],
+        summary:"MFA + roles + revisión de cambios. Evita secuestro de tráfico y correos.",
+        tags:["dns","dominio","roles"],
+        body:[
+          "MFA en el registrador.",
+          "Usuarios individuales (no compartidos).",
+          "1–2 admins; resto mínimo privilegio.",
+          "Revisar MX/SPF/DKIM/DMARC."
+        ],
+        todo:"Qué hacer hoy: revisa quién tiene admin del dominio."
+      },
+      {
+        id:"lib-familia",
+        title:"Rutina familiar: privacidad y confianza",
+        type:"plantilla",
+        level:"Base",
+        topic:"Familia",
+        audience:["familia","personas"],
+        summary:"Plantilla de acuerdos simples: datos personales, horarios, contenido y reportes.",
+        tags:["niños","privacidad","hábitos"],
+        body:[
+          "Regla: nada de datos personales (colegio, dirección, rut, ubicación).",
+          "Si algo incomoda: se habla, no se castiga.",
+          "Revisión corta semanal: apps nuevas y permisos."
+        ],
+        todo:"Qué hacer hoy: acuerden 2 reglas y anótenlas."
+      }
+    ];
+
+    // -----------------------------
+    // RENDER
+    // -----------------------------
+    const capsGridEl = document.getElementById("capsGrid");
+    const libraryEl = document.getElementById("library");
+
+    function esc(s){
+      return String(s||"").replace(/[&<>"']/g, (m)=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
+    }
+    function typeLabel(t){
+      const m = { guia:"Guía", checklist:"Checklist", plantilla:"Plantilla" };
+      return m[t] || "Recurso";
+    }
+
+    // Capsules UI
+    let activeCapFilter = "all";
+    function capCard(c){
+      return `
+        <div class="caps reveal" role="button" tabindex="0" data-capid="${esc(c.id)}" aria-label="Abrir cápsula ${esc(c.title)}">
+          <div class="caps-media"><img src="${esc(c.image)}" alt="${esc(c.title)}"></div>
+          <div class="caps-body">
+            <div class="badge">Cápsula • Nivel: ${esc(c.level||"Base")}</div>
+            <h3>${esc(c.title)}</h3>
+            <p>${esc(c.desc)}</p>
+            <div class="caps-foot">
+              <div class="tags" style="margin:0;">
+                <span class="tag">${esc(c.category)}</span>
+              </div>
+              <span class="caps-cta">Abrir detalle <span aria-hidden="true">→</span></span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    function applyCaps(){
+      const filtered = CAPSULES.filter(c=>{
+        return activeCapFilter==="all" ? true : (String(c.category||"").toLowerCase()===activeCapFilter);
+      });
+      capsGridEl.innerHTML = filtered.map(capCard).join("");
+      document.querySelectorAll("#capsGrid .reveal").forEach(el=>io.observe(el));
+    }
+    document.querySelectorAll('.chip[data-capfilter]').forEach(ch=>{
+      ch.addEventListener("click", ()=>{
+        document.querySelectorAll('.chip[data-capfilter]').forEach(x=>x.classList.remove("on"));
+        ch.classList.add("on");
+        activeCapFilter = ch.getAttribute("data-capfilter") || "all";
+        applyCaps();
+      });
+    });
+
+    // Library UI
+    let activeFilter = "all";
+    function resourceCard(r){
+      const aud = (r.audience||[]).map(a=>a[0].toUpperCase()+a.slice(1)).join(" · ");
+      const tags = (r.tags||[]).slice(0,4).map(t=>`<span class="tag">${esc(t)}</span>`).join("");
+      return `
+        <div class="item reveal" data-resid="${esc(r.id)}" tabindex="0" role="button" aria-label="Abrir recurso ${esc(r.title)}">
+          <div class="meta">
+            <span class="type">${esc(typeLabel(r.type))}</span>
+            <span class="lvl">Nivel: ${esc(r.level||"Base")}</span>
+          </div>
+          <h3>${esc(r.title)}</h3>
+          <p>${esc(r.summary||"")}</p>
+          <div class="tags">
+            <span class="tag">${esc(r.topic||"Tema")}</span>
+            <span class="tag">${esc(aud || "—")}</span>
+            ${tags}
+          </div>
+        </div>
+      `;
+    }
+    function applyLibrary(){
+      const filtered = LIBRARY.filter(r=>{
+        return activeFilter==="all" ? true : (r.audience||[]).includes(activeFilter);
+      });
+      libraryEl.innerHTML = filtered.map(resourceCard).join("");
+      document.querySelectorAll("#library .reveal").forEach(el=>io.observe(el));
+    }
+    document.querySelectorAll('.chip[data-filter]').forEach(ch=>{
+      ch.addEventListener("click", ()=>{
+        document.querySelectorAll('.chip[data-filter]').forEach(x=>x.classList.remove("on"));
+        ch.classList.add("on");
+        activeFilter = ch.getAttribute("data-filter") || "all";
+        applyLibrary();
+      });
+    });
+
+    // -----------------------------
+    // MODAL (one for both capsule/resource)
+    // -----------------------------
+    const modal = document.getElementById("m-detail");
+    const modalTitle = document.getElementById("t-detail");
+    const modalSub = document.getElementById("t-detail-sub");
+    const tabResumen = document.getElementById("tab-resumen");
+    const tabDiagrama = document.getElementById("tab-diagrama");
     let lastFocus = null;
 
-    function openModal(id){
-      const modal = document.getElementById(id);
-      if(!modal) return;
+    function openModal(){
       lastFocus = document.activeElement;
       modal.classList.add("show");
       document.body.style.overflow="hidden";
       const closeBtn = modal.querySelector(".modal-close");
       if(closeBtn) closeBtn.focus();
     }
-    function closeModal(modal){
+    function closeModal(){
       modal.classList.remove("show");
       document.body.style.overflow="";
       if(lastFocus && typeof lastFocus.focus==="function") lastFocus.focus();
     }
-    function closeAll(){ modals.forEach(m=>m.classList.contains("show") && closeModal(m)); }
 
+    function setTab(name){
+      document.querySelectorAll(".tab").forEach(t=>t.classList.remove("on"));
+      const t = document.querySelector(`.tab[data-tab="${name}"]`);
+      if(t) t.classList.add("on");
+      tabResumen.style.display = name==="resumen" ? "" : "none";
+      tabDiagrama.style.display = name==="diagrama" ? "" : "none";
+    }
+
+    function buildList(title, arr){
+      if(!arr || !arr.length) return "";
+      const items = arr.map(x=>`<li>${esc(x)}</li>`).join("");
+      return `<p style="margin:0 0 8px;"><strong>${esc(title)}</strong></p><ul>${items}</ul>`;
+    }
+
+    function diagramSVG(title, steps, activeIndex){
+      const width = 920, height = 220;
+      const margin = 40;
+      const n = steps.length;
+      const gap = (width - margin*2) / (n-1);
+      const r = 20;
+
+      const nodes = steps.map((s, i)=>{
+        const x = margin + gap*i;
+        const y = 90;
+        const active = i === activeIndex;
+        const fill = active ? "rgba(47,169,255,.25)" : "rgba(255,255,255,.9)";
+        const stroke = active ? "rgba(47,169,255,.75)" : "rgba(220,235,255,.95)";
+        const textColor = "rgba(11,42,91,.92)";
+        return `
+          <g>
+            <circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="3"></circle>
+            <text x="${x}" y="${y+5}" text-anchor="middle" font-size="13" font-weight="900" fill="${textColor}">${i+1}</text>
+            <text x="${x}" y="${y+46}" text-anchor="middle" font-size="12.5" font-weight="800" fill="rgba(11,42,91,.86)">${esc(steps[i].label)}</text>
+          </g>
+        `;
+      }).join("");
+
+      const arrows = steps.map((_, i)=>{
+        if(i===steps.length-1) return "";
+        const x1 = margin + gap*i + r;
+        const x2 = margin + gap*(i+1) - r;
+        const y = 90;
+        return `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="rgba(47,169,255,.45)" stroke-width="3" stroke-linecap="round"></line>
+                <polygon points="${x2},${y} ${x2-10},${y-6} ${x2-10},${y+6}" fill="rgba(47,169,255,.45)"></polygon>`;
+      }).join("");
+
+      return `
+        <div class="diagram-wrap">
+          <div class="diagram-head">
+            <div>
+              <div style="font-weight:900;color:rgba(11,42,91,.92);">${esc(title)}</div>
+              <div class="diagram-note">Elige un paso para ver el detalle.</div>
+            </div>
+            <div class="steps" id="stepBtns">
+              ${steps.map((s,i)=>`<button class="step ${i===activeIndex?'on':''}" type="button" data-step="${i}">${i+1}. ${esc(s.label)}</button>`).join("")}
+            </div>
+          </div>
+          <div class="diagram-body">
+            <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(title)}">
+              <rect x="12" y="16" width="${width-24}" height="${height-32}" rx="22" fill="rgba(47,169,255,.05)" stroke="rgba(220,235,255,.95)"></rect>
+              ${arrows}
+              ${nodes}
+            </svg>
+            <div class="callout" id="stepCallout">${esc(steps[activeIndex]?.note || "")}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function openCapsule(c){
+      modalTitle.textContent = c.title;
+      modalSub.textContent = `Cápsula • ${c.category} • Nivel: ${c.level || "Base"}`;
+
+      const igBtn = (c.instagramUrl && c.instagramUrl.trim().length)
+        ? `<a class="btn" href="${esc(c.instagramUrl)}" target="_blank" rel="noopener noreferrer">Ver en Instagram</a>`
+        : "";
+
+      tabResumen.innerHTML = `
+        <div class="badge">Resumen</div>
+        <div style="height:10px"></div>
+        <div class="card" style="padding:14px;border-radius:22px;">
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+            <div style="width:min(260px,100%);border-radius:18px;overflow:hidden;border:1px solid rgba(220,235,255,.95);background:rgba(47,169,255,.06);">
+              <img src="${esc(c.image)}" alt="${esc(c.title)}" style="width:100%;height:auto;display:block;">
+            </div>
+            <div style="flex:1;min-width:240px;">
+              <p style="margin:0 0 10px;color:rgba(11,42,91,.92);font-weight:900;">¿De qué trata?</p>
+              <p style="margin:0;color:var(--muted);">${esc(c.desc)}</p>
+              <div class="tags">
+                <span class="tag">${esc(c.category)}</span>
+                <span class="tag">Nivel: ${esc(c.level||"Base")}</span>
+              </div>
+              ${igBtn ? `<div class="btn-row">${igBtn}</div>` : ""}
+              <p class="muted" style="margin-top:10px;font-size:12.5px;">
+                Nota: abrir Instagram puede implicar cookies/tracking de terceros. Por eso aquí solo ponemos un link (sin embed).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:12px"></div>
+        <div class="card" style="padding:14px;border-radius:22px;">
+          ${buildList("Qué es / por qué importa", c.resumen)}
+          <div style="height:10px"></div>
+          ${buildList("Qué hacer (acciones simples)", c.hacer)}
+        </div>
+      `;
+
+      const steps = c.diagram?.steps || [];
+      let activeIndex = 0;
+
+      function renderDiagram(){
+        tabDiagrama.innerHTML = diagramSVG(c.diagram?.title || "Diagrama", steps, activeIndex);
+        tabDiagrama.querySelectorAll(".step").forEach(b=>{
+          b.addEventListener("click", ()=>{
+            activeIndex = Number(b.getAttribute("data-step")) || 0;
+            renderDiagram();
+          });
+        });
+      }
+      renderDiagram();
+
+      setTab("resumen");
+      openModal();
+    }
+
+    function openResource(r){
+      modalTitle.textContent = r.title;
+      modalSub.textContent = `${typeLabel(r.type)} • ${r.topic} • Nivel: ${r.level || "Base"}`;
+
+      tabResumen.innerHTML = `
+        <div class="badge">${esc(typeLabel(r.type))}</div>
+        <div style="height:10px"></div>
+        <p style="margin:0 0 10px;color:var(--muted);">${esc(r.summary||"")}</p>
+        <div class="tags">${(r.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join("")}</div>
+        <div style="height:12px"></div>
+        <div class="card" style="padding:14px;border-radius:22px;">
+          ${buildList("Pasos", r.body)}
+        </div>
+        <div class="callout">${esc(r.todo || "Qué hacer hoy: elige 1 acción y ejecútala en 15 minutos.")}</div>
+      `;
+
+      tabDiagrama.innerHTML = `
+        <div class="diagram-wrap">
+          <div class="diagram-head">
+            <div>
+              <div style="font-weight:900;color:rgba(11,42,91,.92);">Diagrama simple (implementación)</div>
+              <div class="diagram-note">Una vista rápida del flujo “aprender → aplicar → revisar”.</div>
+            </div>
+            <div class="steps">
+              <button class="step on" type="button" data-step="0">1. Preparar</button>
+              <button class="step" type="button" data-step="1">2. Implementar</button>
+              <button class="step" type="button" data-step="2">3. Verificar</button>
+              <button class="step" type="button" data-step="3">4. Repetir</button>
+            </div>
+          </div>
+          <div class="diagram-body" id="resFlow"></div>
+        </div>
+      `;
+
+      const steps = [
+        {label:"Preparar", note:"Define alcance: cuentas/dispositivos/herramientas involucradas."},
+        {label:"Implementar", note:"Aplica el cambio paso a paso (sin mezclar 10 cosas)."},
+        {label:"Verificar", note:"Comprueba que funciona y que hay recuperación/documentación."},
+        {label:"Repetir", note:"Mantener hábito vale más que el ‘gran proyecto’."},
+      ];
+      let active = 0;
+      function renderFlow(){
+        const body = tabDiagrama.querySelector("#resFlow");
+        body.innerHTML = diagramSVG("Flujo de implementación", steps, active);
+        body.querySelectorAll(".step").forEach(b=>{
+          b.addEventListener("click", ()=>{
+            active = Number(b.getAttribute("data-step")) || 0;
+            renderFlow();
+          });
+        });
+      }
+      renderFlow();
+
+      setTab("resumen");
+      openModal();
+    }
+
+    // Click handlers
     document.addEventListener("click",(e)=>{
-      const trigger = e.target.closest("[data-modal]");
-      if(trigger) openModal(trigger.getAttribute("data-modal"));
-
-      const backdrop = e.target.classList && e.target.classList.contains("modal");
-      if(backdrop) closeModal(e.target);
-
+      const cap = e.target.closest(".caps");
+      if(cap){
+        const id = cap.getAttribute("data-capid");
+        const c = CAPSULES.find(x=>x.id===id);
+        if(c) openCapsule(c);
+      }
+      const item = e.target.closest(".item");
+      if(item){
+        const id = item.getAttribute("data-resid");
+        const r = LIBRARY.find(x=>x.id===id);
+        if(r) openResource(r);
+      }
+      if(e.target.classList && e.target.classList.contains("modal")) closeModal();
       const closeBtn = e.target.closest(".modal-close");
-      if(closeBtn) closeModal(closeBtn.closest(".modal"));
+      if(closeBtn) closeModal();
+      const tab = e.target.closest(".tab");
+      if(tab) setTab(tab.getAttribute("data-tab"));
     });
 
-    // Keyboard open + escape
+    // Keyboard
     document.addEventListener("keydown",(e)=>{
-      if(e.key==="Escape") closeAll();
-
+      if(e.key==="Escape") closeModal();
       if((e.key==="Enter" || e.key===" ") && document.activeElement){
         const el = document.activeElement;
-        const id = el.getAttribute && el.getAttribute("data-modal");
-        if(id){ e.preventDefault(); openModal(id); }
+        if(el.classList.contains("caps") || el.classList.contains("item")){
+          e.preventDefault();
+          el.click();
+        }
       }
-
-      const activeModal = modals.find(m=>m.classList.contains("show"));
-      if(!activeModal) return;
-
-      if(e.key==="Tab"){
-        const focusables = Array.from(activeModal.querySelectorAll('button, a, input, textarea, select, [tabindex]:not([tabindex="-1"])'))
+      if(e.key==="Tab" && modal.classList.contains("show")){
+        const focusables = Array.from(modal.querySelectorAll('button, a, input, textarea, select, [tabindex]:not([tabindex="-1"])'))
           .filter(el=>!el.hasAttribute("disabled"));
         if(focusables.length===0) return;
         const first = focusables[0];
@@ -936,6 +1347,10 @@
         else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
       }
     });
+
+    // Init
+    applyCaps();
+    applyLibrary();
   </script>
 </body>
 </html>
