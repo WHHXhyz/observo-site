@@ -280,6 +280,14 @@
     }
 
     /* Capsules */
+
+    /* Keep cápsulas centered (avoid edge-to-edge feel) */
+    .caps-zone{width:100%;display:flex;justify-content:center}
+    .caps-zone .caps-grid{width:min(var(--max), 100%);}
+    @media (min-width: 1200px){
+      .caps-zone .caps-grid{max-width:1120px}
+    }
+
     .caps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .caps{
       position:relative;overflow:hidden;
@@ -479,7 +487,52 @@
     @media (prefers-reduced-motion: reduce){
       *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
     }
-  </style>
+  
+    /* === Info strip (clean, aligned with index) === */
+    .info-strip{
+      flex:1 1 320px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:14px 16px;
+      border-radius:18px;
+      border:1px solid rgba(47,169,255,.28);
+      background:
+        linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      box-shadow:0 14px 34px rgba(11,42,91,.08);
+    }
+    .info-icon{
+      width:42px;height:42px;border-radius:16px;
+      display:grid;place-items:center;
+      background:rgba(255,255,255,.85);
+      border:1px solid rgba(220,235,255,.95);
+      color:rgba(11,42,91,.9);
+      font-weight:900;
+      box-shadow:0 12px 30px rgba(11,42,91,.08);
+      flex:0 0 auto;
+    }
+    .info-strip p{
+      margin:0;
+      font-size:14px;
+      color:var(--muted);
+    }
+    .info-strip strong{
+      color:var(--blue);
+      font-weight:900;
+    }
+
+    /* === Force titles to use index gradient === */
+    h1, h2, h3{
+      background: linear-gradient(90deg,
+        rgba(11,42,91,1) 0%,
+        rgba(47,169,255,1) 55%,
+        rgba(143,211,255,1) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+</style>
 </head>
 
 <body>
@@ -554,25 +607,26 @@
           </p>
         </div>
 
+        
         <div class="card reveal" style="padding:16px;">
           <div class="controls">
             <div class="chips" aria-label="Filtros cápsulas">
-              <div class="chip on" data-capfilter="all"></div>✓
+              <div class="chip on" data-capfilter="all">Analiza, practica, repite</div>
             </div>
 
-            <div class="mini-intro" aria-label="Cómo funciona esta sección">
-              <div class="mini-icon" aria-hidden="true">!</div>
-              <div>
-                <p>
-                 También puedes revisar y seguirnos en nuestro instagram  <strong>aegis8ciber</strong>  
-                </p>
-              </div>
+            <div class="info-strip" aria-label="Instagram Aegis8">
+              <div class="info-icon" aria-hidden="true">✦</div>
+              <p>
+                También compartimos cápsulas en Instagram:
+                <strong>@aegis8ciber</strong>
+              </p>
             </div>
           </div>
         </div>
 
+
         <div style="height:12px"></div>
-        <div class="caps-grid" id="capsGrid"></div>
+        <div class="caps-zone"><div class="caps-grid" id="capsGrid"></div></div>
       </section>
 
       <!-- BIBLIOTECA -->
@@ -595,7 +649,7 @@
             </div>
 
             <div class="mini-intro" aria-label="Qué es la biblioteca">
-              <div class="mini-icon" aria-hidden="true">✓</div>
+              <div class="mini-icon" aria-hidden="true"></div>
               <div>
                 <p>
                   <strong>Biblioteca:</strong> esto es para <strong>hacer</strong>, no para “leer por leer”.
