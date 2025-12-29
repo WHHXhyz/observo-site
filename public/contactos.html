@@ -368,6 +368,23 @@
     @media (prefers-reduced-motion: reduce){
       *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
     }
+      /* === Aegis8: header without logo/brand === */
+    .brand{display:none !important;}
+    header .nav{justify-content:center !important; position:relative;}
+    /* Keep mobile menu button accessible on the right without stealing centering */
+    header .right, header .nav-right{
+      position:absolute !important;
+      right:0 !important;
+      top:50% !important;
+      transform:translateY(-50%) !important;
+    }
+    @media (max-width: 760px){
+      header .right, header .nav-right{
+        top:auto !important;
+        transform:none !important;
+      }
+    }
+    
   </style>
 </head>
 
@@ -377,15 +394,7 @@
   <header>
   <div class="wrap">
     <div class="nav">
-      <a class="brand" href="index.html" aria-label="Aegis8 — Inicio">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <strong>Aegis8</strong>
-          <span>Ciberseguridad con sentido</span>
-        </div>
-      </a>
-
-      <button class="menu-btn" type="button" id="menuBtn" aria-label="Abrir menú">
+<button class="menu-btn" type="button" id="menuBtn" aria-label="Abrir menú">
         <div class="menu-lines" aria-hidden="true">
           <span></span><span></span><span></span>
         </div>
