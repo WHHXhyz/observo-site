@@ -681,10 +681,11 @@ nav a:focus-visible,
       box-shadow: 0 18px 45px rgba(11,42,91,.10);
     }
 footer{
-      padding: 28px 0 40px;
-      border-top: 1px solid rgba(220,235,255,.9);
-      background: rgba(255,255,255,.55);
-    }
+  padding: 26px 0 30px;
+  border-top: 1px solid rgba(220,235,255,.9);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.75), rgba(247,251,255,.95));
+}
     .foot{
       display:flex; align-items:flex-start; justify-content:space-between; gap:18px;
       flex-wrap:wrap;
@@ -1351,26 +1352,15 @@ margin: 0 auto;
 
 
   <footer>
-    <div class="wrap">
-      <div class="foot">
-        <div class="brand" aria-label="Aegis8">
-          <div class="logo" aria-hidden="true"></div>
-          <div>
-            <strong>Aegis8</strong>
-            <span>Generando cultura de ciberseguridad</span>
-          </div>
-        </div>
-
-        <div style="max-width: 64ch;">
-          <small>
-            © <span id="year"></span> Aegis8. Consultora y proyecto educativo-social de ciberseguridad.
-            <br/>
-            <span class="muted">.</span>
-          </small>
-        </div>
-      </div>
+  <div class="wrap">
+    <div class="foot" style="justify-content:center; text-align:center;">
+      <small>
+        © <span id="year"></span> <strong>Aegis8</strong> · Consultora y proyecto educativo‑social de ciberseguridad.<br/>
+        <span class="muted">Seguridad clara, sin humo y con sentido.</span>
+      </small>
     </div>
-  </footer>
+  </div>
+</footer>
 
   <script>
     // Año automático
