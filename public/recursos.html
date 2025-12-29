@@ -532,14 +532,6 @@
       color: transparent;
     }
 
-
-footer{
-  padding: 26px 0 30px;
-  border-top: 1px solid rgba(220,235,255,.9);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.75), rgba(247,251,255,.95));
-}
-
 </style>
 </head>
 
@@ -640,55 +632,18 @@ footer{
       <!-- BIBLIOTECA -->
       <section id="biblioteca">
         <div class="sec-head reveal">
-          <h2>Biblioteca, checklists y mini guías</h2>
+          <h2>Guías esenciales para el día a día</h2>
           <p class="sec-sub">
-            Recursos “de aterrizaje”: checklists, plantillas y mini guías para implementar. Abre un recurso para ver pasos y un diagrama simple de implementación.
+            Contenido pensado para personas, familias y pequeños negocios: leyes, conceptos clave y hábitos simples
+            que realmente reducen riesgo.
           </p>
         </div>
 
-        <div class="card reveal" style="padding:16px;">
-          <div class="controls">
-            <div class="chips" aria-label="Filtros biblioteca">
-              <div class="chip on" data-filter="all">Todo</div>
-              <div class="chip" data-filter="personas">Personas</div>
-              <div class="chip" data-filter="startups">Startups</div>
-              <div class="chip" data-filter="pymes">Pymes</div>
-              <div class="chip" data-filter="familia">Familia</div>
-            </div>
-
-            <div class="mini-intro" aria-label="Qué es la biblioteca">
-              <div class="mini-icon" aria-hidden="true"></div>
-              <div>
-                <p>
-                  <strong>Biblioteca:</strong> esto es para <strong>hacer</strong>, no para “leer por leer”.
-                  Cada recurso te deja pasos cortos y una acción de hoy.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div style="height:12px"></div>
         <div class="library" id="library"></div>
       </section>
 
       <!-- CTA -->
-      <section id="cta">
-        <div class="sec-head reveal">
-          <h2>¿Quieres que esto sea “tu plan”?</h2>
-          <p class="sec-sub">Si me dices tu contexto (persona/familia/negocio), lo dejamos en 1 hoja con acciones reales y ordenadas.</p>
-        </div>
-
-        <div class="card reveal" style="padding:18px;">
-          <div class="badge">Simple</div>
-          <h3 style="margin:10px 0 8px;letter-spacing:-.2px;">Un plan mínimo, claro y aplicable</h3>
-          <p class="muted" style="margin:0;">Sin promesas enterprise: solo acciones que bajan riesgo y crean hábito.</p>
-          <div class="btn-row">
-            <a class="btn primary" href="contactanos.html">Ir a Contáctanos</a>
-            <a class="btn" href="#biblioteca">Ver biblioteca</a>
-          </div>
-        </div>
-      </section>
+      
 
     </div>
   </main>
@@ -716,21 +671,25 @@ footer{
     </div>
   </div>
 
-  
-<footer>
-  <div class="wrap">
-    <div class="foot" style="justify-content:center; text-align:center;">
-      <small>
-        © <span id="year"></span> <strong>Aegis8</strong> · Consultora y proyecto educativo-social de ciberseguridad.<br/>
-        <span class="muted">Seguridad clara, sin humo y con sentido.</span>
-      </small>
-    </div>
-  </div>
-</footer>
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div class="brand" aria-label="Aegis8">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>Aegis8</strong>
+            <span>Claridad • Criterio • Comunidad</span>
+          </div>
+        </div>
 
+        <div style="max-width: 70ch;">
+          <small class="muted">
+            © <span id="year"></span> Aegis8. Página estática: se actualiza editando arreglos en el JS (sin backend).
+          </small>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script>
     // Año
@@ -934,86 +893,100 @@ footer{
 
     const LIBRARY = [
       {
-        id:"lib-mfa",
-        title:"Checklist: MFA en cuentas críticas",
-        type:"checklist",
-        level:"Base",
-        topic:"Accesos",
-        audience:["personas","startups","pymes","familia"],
-        summary:"Prioriza correo → dominio/DNS → repos → cloud → banca. Incluye códigos de respaldo.",
-        tags:["mfa","cuentas","prioridad"],
-        body:[
-          "Correo primero (resetea todo).",
-          "Luego dominio/DNS (control de tráfico y correo).",
-          "Luego repos y plataformas (Vercel, GitHub, CRM).",
-          "Guardar códigos de respaldo offline."
-        ],
-        todo:"Qué hacer hoy: activa MFA en tu correo y guarda códigos de respaldo."
-      },
-      {
-        id:"lib-backups",
-        title:"Mini guía: backups que sí sirven",
+        id:"lib-ley-marco",
+        title:"Ley Marco de Ciberseguridad (Chile)",
         type:"guia",
         level:"Base",
-        topic:"Resiliencia",
-        audience:["personas","startups","pymes"],
-        summary:"Backup sin prueba es esperanza. Ritual mensual: restauración parcial.",
-        tags:["backup","restauración","3-2-1"],
+        topic:"Marco legal",
+        audience:["personas","familia","pymes","startups"],
+        summary:"Qué es, a quién aplica y por qué importa para organizaciones y ciudadanos.",
+        tags:["ley","ciberseguridad","chile"],
         body:[
-          "Define activos críticos.",
-          "Copia fuera del equipo (y si puedes, fuera de casa/oficina).",
-          "Prueba restaurar 1 cosa al mes."
+          "Define obligaciones mínimas de seguridad.",
+          "Establece responsabilidades ante incidentes.",
+          "Busca proteger servicios esenciales y datos."
         ],
-        todo:"Qué hacer hoy: prueba restaurar un archivo o carpeta crítica."
+        todo:"Qué hacer hoy: identifica si tu organización presta un servicio crítico."
       },
       {
-        id:"lib-phish",
-        title:"Guía: phishing sin culpa",
+        id:"lib-datos-personales",
+        title:"Ley de Protección de Datos Personales",
         type:"guia",
         level:"Base",
-        topic:"Hábitos",
-        audience:["personas","startups","pymes","familia"],
-        summary:"Señales típicas + regla de oro + cómo reportar y aprender sin vergüenza.",
-        tags:["phishing","correo","urgencia"],
+        topic:"Privacidad",
+        audience:["personas","familia","pymes"],
+        summary:"Regula el uso de datos personales y crea la Agencia de Protección de Datos.",
+        tags:["datos","privacidad","derechos"],
         body:[
-          "Regla de oro: NO uses el enlace; entra por tu ruta habitual.",
-          "Reporta y aprende: el objetivo es hábito, no culpa.",
-          "MFA reduce impacto."
+          "Derechos de las personas sobre sus datos.",
+          "Obligaciones de quienes tratan información.",
+          "Sanciones por mal uso o filtraciones."
         ],
-        todo:"Qué hacer hoy: identifica 1 patrón sospechoso en tu correo."
+        todo:"Qué hacer hoy: revisa qué datos tuyos entregas al registrarte en servicios."
       },
       {
-        id:"lib-dominio",
-        title:"Checklist: proteger dominio y DNS",
-        type:"checklist",
-        level:"Intermedio",
-        topic:"Infra",
-        audience:["startups","pymes"],
-        summary:"MFA + roles + revisión de cambios. Evita secuestro de tráfico y correos.",
-        tags:["dns","dominio","roles"],
-        body:[
-          "MFA en el registrador.",
-          "Usuarios individuales (no compartidos).",
-          "1–2 admins; resto mínimo privilegio.",
-          "Revisar MX/SPF/DKIM/DMARC."
-        ],
-        todo:"Qué hacer hoy: revisa quién tiene admin del dominio."
-      },
-      {
-        id:"lib-familia",
-        title:"Rutina familiar: privacidad y confianza",
-        type:"plantilla",
+        id:"lib-csirt",
+        title:"¿Qué es un CSIRT?",
+        type:"guia",
         level:"Base",
-        topic:"Familia",
-        audience:["familia","personas"],
-        summary:"Plantilla de acuerdos simples: datos personales, horarios, contenido y reportes.",
-        tags:["niños","privacidad","hábitos"],
+        topic:"Incidentes",
+        audience:["personas","familia","pymes"],
+        summary:"Equipos que previenen, detectan y responden a incidentes de ciberseguridad.",
+        tags:["csirt","incidentes","respuesta"],
         body:[
-          "Regla: nada de datos personales (colegio, dirección, rut, ubicación).",
-          "Si algo incomoda: se habla, no se castiga.",
-          "Revisión corta semanal: apps nuevas y permisos."
+          "Reciben reportes de incidentes.",
+          "Analizan amenazas y vulnerabilidades.",
+          "Apoyan la recuperación tras un ataque."
         ],
-        todo:"Qué hacer hoy: acuerden 2 reglas y anótenlas."
+        todo:"Qué hacer hoy: identifica el CSIRT de tu país u organización."
+      },
+      {
+        id:"lib-passwords",
+        title:"Contraseñas robustas y hábitos sanos",
+        type:"guia",
+        level:"Base",
+        topic:"Credenciales",
+        audience:["personas","familia","pymes"],
+        summary:"Cómo crear y mantener contraseñas seguras sin depender de la memoria.",
+        tags:["contraseñas","mfa","hábitos"],
+        body:[
+          "Usa frases largas y únicas.",
+          "No reutilices contraseñas.",
+          "Apóyate en gestores y MFA."
+        ],
+        todo:"Qué hacer hoy: cambia una contraseña reutilizada por una única."
+      },
+      {
+        id:"lib-soc",
+        title:"¿Qué es un SOC?",
+        type:"guia",
+        level:"Base",
+        topic:"Monitoreo",
+        audience:["pymes","startups","personas"],
+        summary:"Un SOC (Security Operations Center) es un equipo (o servicio) que monitorea, detecta y responde a alertas de seguridad.",
+        tags:["soc","monitoreo","incidentes"],
+        body:[
+          "Centraliza alertas (logs) y prioriza lo importante.",
+          "Investiga señales de ataque (phishing, accesos raros, malware).",
+          "Coordina respuesta: contener, recuperar y aprender."
+        ],
+        todo:"Qué hacer hoy: aunque no tengas SOC, define 1 bandeja y 1 rutina semanal para revisar alertas (correo, accesos, respaldo)."
+      },
+      {
+        id:"lib-anci",
+        title:"¿Qué es la ANCI?",
+        type:"guia",
+        level:"Base",
+        topic:"Instituciones",
+        audience:["personas","familia","pymes","startups"],
+        summary:"La ANCI es la Agencia Nacional de Ciberseguridad (Chile): coordina y promueve la ciberseguridad a nivel país, especialmente en infraestructura y servicios críticos.",
+        tags:["anci","chile","gobernanza"],
+        body:[
+          "Impulsa coordinación ante incidentes y lineamientos.",
+          "Promueve buenas prácticas y estándares.",
+          "Apoya el fortalecimiento del ecosistema de ciberseguridad."
+        ],
+        todo:"Qué hacer hoy: si eres pyme o emprendimiento, alinea tus hábitos con buenas prácticas (MFA, backups, actualizaciones) y documenta lo mínimo."
       }
     ];
 
