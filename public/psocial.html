@@ -208,21 +208,23 @@
     .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 
-    /* Feature tiles */
+    /* Feature tiles (Aegis8 index-like cards) */
     .tile{
       position:relative;overflow:hidden;
-      padding:16px;border-radius:var(--radius2);
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.92);
+      padding:18px;border-radius:var(--radius2);
+      border:1px solid rgba(220,235,255,.95);
+      background:
+        radial-gradient(650px 260px at 15% 10%, rgba(47,169,255,.14), transparent 60%),
+        radial-gradient(650px 260px at 90% 0%, rgba(143,211,255,.16), transparent 55%),
+        rgba(255,255,255,.92);
       box-shadow:0 14px 40px rgba(11,42,91,.08);
-      min-height:164px;
+      min-height:168px;
     }
     .tile:before{
       content:"";position:absolute;inset:-2px;
-      background:
-        radial-gradient(520px 220px at 15% 10%, rgba(47,169,255,.12), transparent 60%),
-        radial-gradient(520px 220px at 90% 0%, rgba(143,211,255,.14), transparent 55%);
-      opacity:.9;pointer-events:none;
+      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.14));
+      opacity:.55;pointer-events:none;
+      mask-image: radial-gradient(420px 220px at 25% 20%, #000 0%, transparent 62%);
     }
     .tile>*{position:relative}
     .badge{
@@ -231,16 +233,24 @@
       border:1px solid rgba(220,235,255,.9);
       background:rgba(47,169,255,.08);
       color:rgba(11,42,91,.88);
-      font-weight:800;font-size:12px;
+      font-weight:900;font-size:12px;
     }
-    .tile h3{margin:10px 0 8px;font-size:16px;letter-spacing:-.12px}
+    .tile h3{margin:10px 0 8px;font-size:16px;letter-spacing:-.14px;color:rgba(11,27,52,.92)}
     .tile p{margin:0;color:var(--muted);font-size:14px}
 
     .tile-btn{
       text-align:left;cursor:pointer;
-      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
     }
-    .tile-btn:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
+    .tile-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 20px 55px rgba(11,42,91,.12);
+      border-color:rgba(47,169,255,.38);
+      background:
+        radial-gradient(650px 260px at 15% 10%, rgba(47,169,255,.18), transparent 60%),
+        radial-gradient(650px 260px at 90% 0%, rgba(143,211,255,.20), transparent 55%),
+        rgba(255,255,255,.94);
+    }
     .tile-btn:focus-visible{outline:3px solid rgba(47,169,255,.35);outline-offset:3px}
 
     .mini-ico{
@@ -382,11 +392,10 @@
       *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
     }
   
-footer{
-  padding: 26px 0 30px;
-  border-top: 1px solid rgba(220,235,255,.9);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.75), rgba(247,251,255,.95));
+/* === Títulos unificados (mismo estilo que index) === */
+h1, h2, h3{
+  color: var(--blue);
+  font-weight: 900;
 }
 
 </style>
@@ -414,7 +423,7 @@ footer{
 
       <nav aria-label="Navegación principal">
         <ul id="navLinks">
-          <li></li>
+          
           <li><a href="comotrabajamos.html" data-page="comotrabajamos.html">Cómo trabajamos</a></li>
           <li><a href="recursos.html" data-page="recursos.html">Recursos y guías</a></li>
           <li><a href="index.html#ayudamos" data-hash="#ayudamos">A quiénes ayudamos</a></li>
@@ -452,7 +461,7 @@ footer{
             <span><strong>Columna de Aegis8:</strong> educación + cultura + acompañamiento honesto</span>
           </div>
 
-          <h1 class="reveal">Seguridad como acceso, no como privilegio.</h1>
+          <h1 class="reveal">Ciberseguridad clara para personas, startups y pequeñas organizaciones.</h1>
 
           <p class="lead reveal">
             Aegis8 nace como un proyecto social educativo y técnico orientado a reducir la brecha de ciberseguridad en
@@ -461,19 +470,46 @@ footer{
             acompañamiento honesto.
           </p>
 
-          <!-- Eliminado: los “recuadros” tipo botones de arriba que te estorbaban (dejamos solo CTA minimal) -->
-          <div class="center reveal" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
-            <a class="btn primary" href="#programas">Ver programas</a>
-            <button class="btn" type="button" data-modal="m-apoyar" aria-haspopup="dialog">Apoyar el proyecto</button>
           </div>
-        </div>
 
         <div class="gradline" aria-hidden="true"></div>
 
-        <div class="hero-grid" style="margin-top:20px;">
+        
+
+        <!-- PROPUESTA: 3 PILARES -->
+      <section id="pilares">
+        <div class="sec-head reveal">
+          <h2>Nuestros 3 pilares</h2>
+          <p class="sec-sub">
+            Este es el corazón del proyecto social: educación clara, cultura que se sostiene y fortalecimiento técnico realista.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <button class="tile tile-btn reveal" type="button" data-modal="m-educacion" aria-haspopup="dialog">
+            <span class="badge">1) Educación</span>
+            <h3>Conocimiento claro</h3>
+            <p>Conceptos sin jerga, con ejemplos reales y guías cortas para decidir mejor.</p>
+          </button>
+
+          <button class="tile tile-btn reveal" type="button" data-modal="m-cultura" aria-haspopup="dialog">
+            <span class="badge">2) Cultura</span>
+            <h3>Hábitos que se repiten</h3>
+            <p>Rutinas simples: verificación, backups, mínimos de acceso y respuesta.</p>
+          </button>
+
+          <button class="tile tile-btn reveal" type="button" data-modal="m-tecnico" aria-haspopup="dialog">
+            <span class="badge">3) Fortalecimiento</span>
+            <h3>Herramientas + evidencia</h3>
+            <p>Checklists y acompañamiento para implementar y mostrar progreso (antes/después).</p>
+          </button>
+        </div>
+      </section>
+
+<div class="hero-grid" style="margin-top:20px;">
           <div class="card hero-card reveal">
             <div class="sec-head" style="margin-bottom:12px;">
-              <h2 style="margin:0;">La necesidad de crear cultura de ciberseguridad</h2>
+              <h2>La necesidad de crear cultura de ciberseguridad</h2>
               <p class="sec-sub">
                 La tecnología cambia, las amenazas también. Lo único que escala de verdad es una cultura continua:
                 hábitos simples, verificación, aprendizaje y respuesta. Sin cultura, los controles se vuelven “checklists”
@@ -552,42 +588,14 @@ footer{
         </div>
       </section>
 
-      <!-- PROPUESTA: 3 PILARES -->
-      <section id="pilares">
-        <div class="sec-head reveal">
-          <h2>Los 3 pilares del proyecto social</h2>
-          <p class="sec-sub">
-            Lo hacemos simple: enseñamos lo esencial, lo aterrizamos con herramientas y acompañamos para que se sostenga.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <button class="tile tile-btn reveal" type="button" data-modal="m-educacion" aria-haspopup="dialog">
-            <span class="badge">1) Educación</span>
-            <h3>Conocimiento claro</h3>
-            <p>Conceptos sin jerga, con ejemplos reales y guías cortas para decidir mejor.</p>
-          </button>
-
-          <button class="tile tile-btn reveal" type="button" data-modal="m-cultura" aria-haspopup="dialog">
-            <span class="badge">2) Cultura</span>
-            <h3>Hábitos que se repiten</h3>
-            <p>Rutinas simples: verificación, backups, mínimos de acceso y respuesta.</p>
-          </button>
-
-          <button class="tile tile-btn reveal" type="button" data-modal="m-tecnico" aria-haspopup="dialog">
-            <span class="badge">3) Fortalecimiento</span>
-            <h3>Herramientas + evidencia</h3>
-            <p>Checklists y acompañamiento para implementar y mostrar progreso (antes/después).</p>
-          </button>
-        </div>
-      </section>
+      
 
       <!-- PROGRAMAS (con “vida”) -->
       <section id="programas">
         <div class="sec-head reveal">
-          <h2>Programas (clickeables)</h2>
+          <h2>Cómo lo llevamos a la práctica</h2>
           <p class="sec-sub">
-            Cada programa tiene un formato concreto, entregables y una forma de medir avance.
+            Formatos simples con entregables claros. Todo está pensado para personas, familias, startups y pequeñas empresas.
           </p>
         </div>
 
@@ -718,7 +726,7 @@ footer{
       <!-- CONTACTO -->
       <section id="contacto">
         <div class="sec-head reveal">
-          <h2></h2>
+          <h2>Participa y sumemos comunidad</h2>
           <p class="sec-sub">
             Si quieres participar, sumar una comunidad, proponer un taller o apoyar becas/cupos: escríbenos.
           </p>
@@ -882,21 +890,26 @@ footer{
     </div>
   </div>
 
-  
-<footer>
-  <div class="wrap">
-    <div class="foot" style="justify-content:center; text-align:center;">
-      <small>
-        © <span id="year"></span> <strong>Aegis8</strong> · Consultora y proyecto educativo-social de ciberseguridad.<br/>
-        <span class="muted">Seguridad clara, sin humo y con sentido.</span>
-      </small>
-    </div>
-  </div>
-</footer>
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div class="brand" aria-label="Aegis8">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>Aegis8</strong>
+            <span>Claridad • Criterio • Comunidad</span>
+          </div>
+        </div>
 
+        <div style="max-width: 64ch;">
+          <small class="muted">
+            © <span id="year"></span> Aegis8. Proyecto educativo-social de ciberseguridad.
+            <br/>Esta página es estática: cuando definas un formulario real, lo conectamos (Formspree/Tally/Google Forms).
+          </small>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script>
     // Año

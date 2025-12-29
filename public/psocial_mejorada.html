@@ -208,21 +208,23 @@
     .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 
-    /* Feature tiles */
+    /* Feature tiles (Aegis8 index-like cards) */
     .tile{
       position:relative;overflow:hidden;
-      padding:16px;border-radius:var(--radius2);
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.92);
+      padding:18px;border-radius:var(--radius2);
+      border:1px solid rgba(220,235,255,.95);
+      background:
+        radial-gradient(650px 260px at 15% 10%, rgba(47,169,255,.14), transparent 60%),
+        radial-gradient(650px 260px at 90% 0%, rgba(143,211,255,.16), transparent 55%),
+        rgba(255,255,255,.92);
       box-shadow:0 14px 40px rgba(11,42,91,.08);
-      min-height:164px;
+      min-height:168px;
     }
     .tile:before{
       content:"";position:absolute;inset:-2px;
-      background:
-        radial-gradient(520px 220px at 15% 10%, rgba(47,169,255,.12), transparent 60%),
-        radial-gradient(520px 220px at 90% 0%, rgba(143,211,255,.14), transparent 55%);
-      opacity:.9;pointer-events:none;
+      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.14));
+      opacity:.55;pointer-events:none;
+      mask-image: radial-gradient(420px 220px at 25% 20%, #000 0%, transparent 62%);
     }
     .tile>*{position:relative}
     .badge{
@@ -231,16 +233,24 @@
       border:1px solid rgba(220,235,255,.9);
       background:rgba(47,169,255,.08);
       color:rgba(11,42,91,.88);
-      font-weight:800;font-size:12px;
+      font-weight:900;font-size:12px;
     }
-    .tile h3{margin:10px 0 8px;font-size:16px;letter-spacing:-.12px}
+    .tile h3{margin:10px 0 8px;font-size:16px;letter-spacing:-.14px;color:rgba(11,27,52,.92)}
     .tile p{margin:0;color:var(--muted);font-size:14px}
 
     .tile-btn{
       text-align:left;cursor:pointer;
-      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
     }
-    .tile-btn:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
+    .tile-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 20px 55px rgba(11,42,91,.12);
+      border-color:rgba(47,169,255,.38);
+      background:
+        radial-gradient(650px 260px at 15% 10%, rgba(47,169,255,.18), transparent 60%),
+        radial-gradient(650px 260px at 90% 0%, rgba(143,211,255,.20), transparent 55%),
+        rgba(255,255,255,.94);
+    }
     .tile-btn:focus-visible{outline:3px solid rgba(47,169,255,.35);outline-offset:3px}
 
     .mini-ico{
@@ -252,24 +262,6 @@
     }
     .mini-ico svg{width:22px;height:22px}
     .mini-ico path, .mini-ico circle, .mini-ico line, .mini-ico polyline{stroke:rgba(11,42,91,.85)}
-
-
-    /* Tile visual */
-    .tile-top{
-      display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
-      margin-top:10px;
-    }
-    .tile-copy{min-width:0;flex:1}
-    .tile-visual{
-      width:92px;height:76px;flex:0 0 auto;
-      border-radius:18px;
-      border:1px solid rgba(220,235,255,.95);
-      background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
-      box-shadow:0 12px 30px rgba(11,42,91,.08);
-      display:grid;place-items:center;
-      overflow:hidden;
-    }
-    .tile-visual svg{width:96px;height:80px}
 
     /* Diagrams */
     .diagram{
@@ -334,115 +326,6 @@
       background:linear-gradient(135deg, rgba(47,169,255,.15), rgba(143,211,255,.25));
       color:var(--blue);
     }
-
-
-    /* Cycle explainer */
-    .cycle-help{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns:1fr;
-      gap:12px;
-    }
-    .cycle-mini{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:10px;
-    }
-    .cycle-card{
-      border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.90);
-      border-radius:18px;
-      box-shadow:0 14px 40px rgba(11,42,91,.08);
-      padding:12px 12px;
-      min-height:88px;
-      position:relative;
-      overflow:hidden;
-    }
-    .cycle-card:before{
-      content:"";
-      position:absolute;inset:-2px;
-      background:
-        radial-gradient(420px 180px at 20% 10%, rgba(47,169,255,.10), transparent 60%),
-        radial-gradient(420px 180px at 90% 0%, rgba(143,211,255,.12), transparent 55%);
-      opacity:.95;pointer-events:none;
-    }
-    .cycle-card > *{position:relative}
-    .cycle-top{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      margin-bottom:6px;
-    }
-    .cycle-tag{
-      font-size:12px;font-weight:900;color:rgba(11,42,91,.9);
-      padding:7px 9px;border-radius:999px;
-      border:1px solid rgba(220,235,255,.95);
-      background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
-      white-space:nowrap;
-    }
-    .cycle-icon{
-      width:34px;height:34px;border-radius:14px;
-      border:1px solid rgba(220,235,255,.95);
-      background:rgba(11,42,91,.05);
-      display:grid;place-items:center;
-    }
-    .cycle-icon svg{width:18px;height:18px}
-    .cycle-card p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.45}
-    .cycle-explain{
-      border:1px solid rgba(47,169,255,.22);
-      background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
-      border-radius:18px;
-      padding:12px 12px;
-      color:rgba(11,42,91,.92);
-      box-shadow:0 14px 40px rgba(11,42,91,.08);
-    }
-    .cycle-explain strong{font-weight:950}
-    .cycle-explain .mini{margin:6px 0 0}
-
-    /* Hover affordance on nodes */
-    .cycle-node{cursor:pointer}
-    .cycle-node:hover{filter:drop-shadow(0 10px 22px rgba(47,169,255,.35))}
-
-    /* Pillars: more serious / more contrast */
-    #pilares .grid-3{gap:16px}
-    #pilares .tile-btn{
-      min-height:190px;
-      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
-      border-color:rgba(220,235,255,.98);
-      box-shadow:0 18px 55px rgba(11,42,91,.10);
-    }
-    #pilares .tile-btn:before{
-      background:
-        radial-gradient(540px 260px at 20% 10%, rgba(47,169,255,.14), transparent 60%),
-        radial-gradient(540px 260px at 90% 0%, rgba(143,211,255,.14), transparent 55%);
-      opacity:1;
-    }
-    .pillar-head{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      margin-top:8px;
-    }
-    .pillar-title{margin:0;font-size:17px;letter-spacing:-.15px}
-    .pillar-sub{margin:8px 0 0;color:var(--muted);font-size:14px;line-height:1.5}
-    .pillar-list{
-      margin:10px 0 0;
-      padding-left:18px;
-      color:rgba(11,42,91,.80);
-      font-size:13.5px;
-    }
-    .pillar-list li{margin:6px 0}
-    .pillar-impact{
-      margin-top:12px;
-      padding:10px 10px;
-      border-radius:16px;
-      border:1px solid rgba(47,169,255,.22);
-      background:linear-gradient(135deg, rgba(11,42,91,.03), rgba(47,169,255,.10));
-      color:rgba(11,42,91,.92);
-      font-weight:900;
-      font-size:13px;
-    }
-
-    @media (max-width: 980px){
-      .cycle-mini{grid-template-columns:1fr}
-    }
-
 
     /* Reveal */
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .55s ease, transform .55s ease}
@@ -533,7 +416,7 @@
 
       <nav aria-label="Navegación principal">
         <ul id="navLinks">
-          <li></li>
+          
           <li><a href="comotrabajamos.html" data-page="comotrabajamos.html">Cómo trabajamos</a></li>
           <li><a href="recursos.html" data-page="recursos.html">Recursos y guías</a></li>
           <li><a href="index.html#ayudamos" data-hash="#ayudamos">A quiénes ayudamos</a></li>
@@ -580,19 +463,46 @@
             acompañamiento honesto.
           </p>
 
-          <!-- Eliminado: los “recuadros” tipo botones de arriba que te estorbaban (dejamos solo CTA minimal) -->
-          <div class="center reveal" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
-            <a class="btn primary" href="#programas">Ver programas</a>
-            <button class="btn" type="button" data-modal="m-apoyar" aria-haspopup="dialog">Apoyar el proyecto</button>
           </div>
-        </div>
 
         <div class="gradline" aria-hidden="true"></div>
 
-        <div class="hero-grid" style="margin-top:20px;">
+        
+
+        <!-- PROPUESTA: 3 PILARES -->
+      <section id="pilares">
+        <div class="sec-head reveal">
+          <h2>Nuestros 3 pilares</h2>
+          <p class="sec-sub">
+            Este es el corazón del proyecto social: educación clara, cultura que se sostiene y fortalecimiento técnico realista.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <button class="tile tile-btn reveal" type="button" data-modal="m-educacion" aria-haspopup="dialog">
+            <span class="badge">1) Educación</span>
+            <h3>Conocimiento claro</h3>
+            <p>Conceptos sin jerga, con ejemplos reales y guías cortas para decidir mejor.</p>
+          </button>
+
+          <button class="tile tile-btn reveal" type="button" data-modal="m-cultura" aria-haspopup="dialog">
+            <span class="badge">2) Cultura</span>
+            <h3>Hábitos que se repiten</h3>
+            <p>Rutinas simples: verificación, backups, mínimos de acceso y respuesta.</p>
+          </button>
+
+          <button class="tile tile-btn reveal" type="button" data-modal="m-tecnico" aria-haspopup="dialog">
+            <span class="badge">3) Fortalecimiento</span>
+            <h3>Herramientas + evidencia</h3>
+            <p>Checklists y acompañamiento para implementar y mostrar progreso (antes/después).</p>
+          </button>
+        </div>
+      </section>
+
+<div class="hero-grid" style="margin-top:20px;">
           <div class="card hero-card reveal">
             <div class="sec-head" style="margin-bottom:12px;">
-              <h2 style="margin:0;">La necesidad de crear cultura de ciberseguridad</h2>
+              <h2>La necesidad de crear cultura de ciberseguridad</h2>
               <p class="sec-sub">
                 La tecnología cambia, las amenazas también. Lo único que escala de verdad es una cultura continua:
                 hábitos simples, verificación, aprendizaje y respuesta. Sin cultura, los controles se vuelven “checklists”
@@ -644,9 +554,9 @@
 
               <!-- nodes -->
               <g>
-                <circle class="pulse cycle-node" data-node="aprender" cx="190" cy="160" r="32" fill="rgba(255,255,255,.78)" stroke="rgba(11,42,91,.55)" stroke-width="2"/>
-                <circle class="pulse cycle-node" data-node="aplicar" cx="370" cy="160" r="32" fill="rgba(255,255,255,.78)" stroke="rgba(11,42,91,.55)" stroke-width="2" style="animation-delay:.3s"/>
-                <circle class="pulse cycle-node" data-node="reforzar" cx="280" cy="270" r="32" fill="rgba(255,255,255,.78)" stroke="rgba(11,42,91,.55)" stroke-width="2" style="animation-delay:.6s"/>
+                <circle class="pulse" cx="190" cy="160" r="32" fill="rgba(255,255,255,.78)" stroke="rgba(11,42,91,.55)" stroke-width="2"/>
+                <circle class="pulse" cx="370" cy="160" r="32" fill="rgba(255,255,255,.78)" stroke="rgba(11,42,91,.55)" stroke-width="2" style="animation-delay:.3s"/>
+                <circle class="pulse" cx="280" cy="270" r="32" fill="rgba(255,255,255,.78)" stroke="rgba(11,42,91,.55)" stroke-width="2" style="animation-delay:.6s"/>
 
                 <path d="M222 160 C250 130 310 130 338 160" fill="none" stroke="rgba(11,42,91,.25)" stroke-width="3" stroke-linecap="round"/>
                 <path d="M360 190 C350 230 320 248 298 256" fill="none" stroke="rgba(11,42,91,.25)" stroke-width="3" stroke-linecap="round"/>
@@ -664,146 +574,21 @@
               </text>
             </svg>
 
-<div class="cycle-help">
-  <div class="cycle-explain" id="cycleExplain" role="note" aria-live="polite">
-    <strong>Cómo leer este ciclo:</strong> <span class="muted">tres acciones simples que se repiten. Pasa el mouse (o toca) sobre cada nodo para ver qué significa.</span>
-    <div class="mini">Objetivo: que la seguridad se convierta en hábito (no en “proyecto eterno”).</div>
-  </div>
-
-  <div class="cycle-mini" aria-label="Resumen de los 3 pasos">
-    <div class="cycle-card" data-focus="aprender" tabindex="0">
-      <div class="cycle-top">
-        <span class="cycle-tag">Aprender</span>
-        <span class="cycle-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M7 10h10M6 14h12M8 18h8" stroke="rgba(11,42,91,.75)" stroke-width="2" stroke-linecap="round"/></svg>
-        </span>
-      </div>
-      <p>Entender lo esencial: riesgos reales, señales típicas y cómo priorizar sin jerga.</p>
-    </div>
-
-    <div class="cycle-card" data-focus="aplicar" tabindex="0">
-      <div class="cycle-top">
-        <span class="cycle-tag">Aplicar</span>
-        <span class="cycle-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M20 7L10 17l-5-5" stroke="rgba(11,42,91,.75)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-      </div>
-      <p>Convertirlo en acción: MFA, backups probados, accesos mínimos, verificación de cambios.</p>
-    </div>
-
-    <div class="cycle-card" data-focus="reforzar" tabindex="0">
-      <div class="cycle-top">
-        <span class="cycle-tag">Reforzar</span>
-        <span class="cycle-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M12 6v6l4 2" stroke="rgba(11,42,91,.75)" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="rgba(11,42,91,.55)" stroke-width="2"/></svg>
-        </span>
-      </div>
-      <p>Repetición mensual: revisar accesos, probar restore, actualizar hábitos y medir avance.</p>
-    </div>
-  </div>
-</div>
+            <div class="mini" style="margin-top:10px; text-align:center;">
+              Interactivo: pasa el mouse por los módulos del proyecto para ver detalles.
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- PROPUESTA: 3 PILARES -->
-      <section id="pilares">
-        <div class="sec-head reveal">
-          <h2>Los 3 pilares del proyecto social</h2>
-          <p class="sec-sub">
-            Lo hacemos simple: enseñamos lo esencial, lo aterrizamos con herramientas y acompañamos para que se sostenga.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <button class="tile tile-btn reveal" type="button" data-modal="m-educacion" aria-haspopup="dialog">
-            <div class="tile-top"><div class="tile-copy"><span class="badge">1) Educación</span>
-            <h3>Conocimiento claro</h3>
-            <p>Conceptos sin jerga, con ejemplos reales y guías cortas para decidir mejor.</p>
-<ul class="pillar-list">
-  <li>Micro-guías: “qué es / por qué importa / qué hago hoy”.</li>
-  <li>Ejemplos reales (sin humo) y decisiones de prioridad.</li>
-</ul>
-<div class="pillar-impact">Impacto: menos errores repetidos, más criterio para decidir.</div>
-</div>
-<div class="tile-visual" aria-hidden="true">
-<svg viewBox="0 0 120 100" fill="none">
-  <defs>
-    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#2FA9FF" stop-opacity=".25"/>
-      <stop offset="1" stop-color="#8FD3FF" stop-opacity=".35"/>
-    </linearGradient>
-  </defs>
-  <rect x="10" y="18" width="78" height="56" rx="16" fill="url(#g1)" stroke="rgba(220,235,255,.95)"/>
-  <rect x="22" y="30" width="54" height="10" rx="5" fill="rgba(11,42,91,.10)"/>
-  <rect x="22" y="46" width="44" height="8" rx="4" fill="rgba(11,42,91,.10)"/>
-  <rect x="22" y="58" width="36" height="8" rx="4" fill="rgba(11,42,91,.10)"/>
-  <circle cx="96" cy="62" r="16" fill="rgba(47,169,255,.18)" stroke="rgba(47,169,255,.35)"/>
-  <path d="M90 62h12M96 56v12" stroke="rgba(11,42,91,.55)" stroke-width="2" stroke-linecap="round"/>
-</svg>
-</div></div>
-          </button>
-
-          <button class="tile tile-btn reveal" type="button" data-modal="m-cultura" aria-haspopup="dialog">
-            <div class="tile-top"><div class="tile-copy"><span class="badge">2) Cultura</span>
-            <h3>Hábitos que se repiten</h3>
-            <p>Rutinas simples: verificación, backups, mínimos de acceso y respuesta.</p>
-<ul class="pillar-list">
-  <li>Ritual mensual: accesos, backups, dominios y señales de phishing.</li>
-  <li>Hábitos por defecto: verificar antes de confiar.</li>
-</ul>
-<div class="pillar-impact">Impacto: la seguridad se sostiene sin depender de “héroes”.</div>
-</div>
-<div class="tile-visual" aria-hidden="true">
-<svg viewBox="0 0 120 100" fill="none">
-  <defs>
-    <linearGradient id="g2" x1="0" y1="1" x2="1" y2="0">
-      <stop offset="0" stop-color="#2FA9FF" stop-opacity=".22"/>
-      <stop offset="1" stop-color="#8FD3FF" stop-opacity=".32"/>
-    </linearGradient>
-  </defs>
-  <circle cx="48" cy="52" r="24" fill="url(#g2)" stroke="rgba(220,235,255,.95)"/>
-  <path d="M48 35v17l12 7" stroke="rgba(11,42,91,.55)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <rect x="76" y="26" width="30" height="52" rx="16" fill="rgba(47,169,255,.10)" stroke="rgba(220,235,255,.95)"/>
-  <path d="M88 40h6M86 52h10M88 64h6" stroke="rgba(11,42,91,.35)" stroke-width="3" stroke-linecap="round"/>
-</svg>
-</div></div>
-          </button>
-
-          <button class="tile tile-btn reveal" type="button" data-modal="m-tecnico" aria-haspopup="dialog">
-            <div class="tile-top"><div class="tile-copy"><span class="badge">3) Fortalecimiento</span>
-            <h3>Herramientas + evidencia</h3>
-            <p>Checklists y acompañamiento para implementar y mostrar progreso (antes/después).</p>
-<ul class="pillar-list">
-  <li>Mínimos técnicos: MFA, backups, permisos, DNS/TLS, endpoints.</li>
-  <li>Evidencia antes/después para mostrar progreso real.</li>
-</ul>
-<div class="pillar-impact">Impacto: postura más fuerte con acciones realistas.</div>
-</div>
-<div class="tile-visual" aria-hidden="true">
-<svg viewBox="0 0 120 100" fill="none">
-  <defs>
-    <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#2FA9FF" stop-opacity=".22"/>
-      <stop offset="1" stop-color="#8FD3FF" stop-opacity=".34"/>
-    </linearGradient>
-  </defs>
-  <path d="M62 22l28 12v22c0 18-14 30-28 34-14-4-28-16-28-34V34l28-12z" fill="url(#g3)" stroke="rgba(220,235,255,.95)"/>
-  <path d="M52 54l6 6 14-16" stroke="rgba(11,42,91,.55)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="22" cy="70" r="12" fill="rgba(47,169,255,.12)" stroke="rgba(47,169,255,.30)"/>
-  <path d="M18 70h8" stroke="rgba(11,42,91,.45)" stroke-width="3" stroke-linecap="round"/>
-</svg>
-</div></div>
-          </button>
-        </div>
-      </section>
+      
 
       <!-- PROGRAMAS (con “vida”) -->
       <section id="programas">
         <div class="sec-head reveal">
-          <h2>Programas (clickeables)</h2>
+          <h2>Cómo lo llevamos a la práctica</h2>
           <p class="sec-sub">
-            Cada programa tiene un formato concreto, entregables y una forma de medir avance.
+            Formatos simples con entregables claros. Todo está pensado para personas, familias, startups y pequeñas empresas.
           </p>
         </div>
 
@@ -820,20 +605,6 @@
                 <h3 style="margin:0;">Aprender haciendo</h3>
                 <p style="margin-top:6px;">Phishing, MFA, backups, hardening básico, privacidad y seguridad móvil.</p>
               </div>
-            <div class="tile-visual" aria-hidden="true">
-<svg viewBox="0 0 120 100" fill="none">
-  <defs>
-    <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#2FA9FF" stop-opacity=".22"/>
-      <stop offset="1" stop-color="#8FD3FF" stop-opacity=".34"/>
-    </linearGradient>
-  </defs>
-  <rect x="16" y="26" width="72" height="48" rx="16" fill="url(#g4)" stroke="rgba(220,235,255,.95)"/>
-  <path d="M30 44h44M30 56h30" stroke="rgba(11,42,91,.35)" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="98" cy="62" r="14" fill="rgba(47,169,255,.12)" stroke="rgba(47,169,255,.30)"/>
-  <path d="M92 62l4 4 8-10" stroke="rgba(11,42,91,.55)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-</div>
             </div>
           </button>
 
@@ -851,20 +622,6 @@
                 <h3 style="margin:0;">Checklist + plantillas</h3>
                 <p style="margin-top:6px;">Inventario, accesos, DNS/TLS, endpoints, backups y continuidad.</p>
               </div>
-            <div class="tile-visual" aria-hidden="true">
-<svg viewBox="0 0 120 100" fill="none">
-  <defs>
-    <linearGradient id="g5" x1="0" y1="1" x2="1" y2="0">
-      <stop offset="0" stop-color="#2FA9FF" stop-opacity=".22"/>
-      <stop offset="1" stop-color="#8FD3FF" stop-opacity=".34"/>
-    </linearGradient>
-  </defs>
-  <rect x="18" y="24" width="54" height="54" rx="18" fill="url(#g5)" stroke="rgba(220,235,255,.95)"/>
-  <path d="M34 44h22M34 56h26M34 68h18" stroke="rgba(11,42,91,.35)" stroke-width="3" stroke-linecap="round"/>
-  <rect x="78" y="34" width="28" height="34" rx="14" fill="rgba(47,169,255,.12)" stroke="rgba(47,169,255,.30)"/>
-  <path d="M92 42v18" stroke="rgba(11,42,91,.45)" stroke-width="3" stroke-linecap="round"/>
-</svg>
-</div>
             </div>
           </button>
 
@@ -881,42 +638,11 @@
                 <h3 style="margin:0;">Acompañamiento honesto</h3>
                 <p style="margin-top:6px;">Implementación guiada + evidencia antes/después + sostener hábitos.</p>
               </div>
-            <div class="tile-visual" aria-hidden="true">
-<svg viewBox="0 0 120 100" fill="none">
-  <defs>
-    <linearGradient id="g6" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#2FA9FF" stop-opacity=".22"/>
-      <stop offset="1" stop-color="#8FD3FF" stop-opacity=".34"/>
-    </linearGradient>
-  </defs>
-  <circle cx="44" cy="44" r="20" fill="url(#g6)" stroke="rgba(220,235,255,.95)"/>
-  <path d="M24 78c4-14 36-14 40 0" fill="rgba(47,169,255,.10)" stroke="rgba(220,235,255,.95)"/>
-  <circle cx="92" cy="52" r="14" fill="rgba(47,169,255,.12)" stroke="rgba(47,169,255,.30)"/>
-  <path d="M86 52h12" stroke="rgba(11,42,91,.45)" stroke-width="3" stroke-linecap="round"/>
-  <path d="M92 46v12" stroke="rgba(11,42,91,.45)" stroke-width="3" stroke-linecap="round"/>
-</svg>
-</div>
             </div>
           </button>
 
           <div class="tile reveal" aria-label="Diagrama: flujo Aegis8">
-            <div class="tile-top">
-              <div class="tile-copy"><span class="badge">Cómo se ve en la práctica</span></div>
-              <div class="tile-visual" aria-hidden="true">
-<svg viewBox="0 0 120 100" fill="none">
-  <defs>
-    <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#2FA9FF" stop-opacity=".22"/>
-      <stop offset="1" stop-color="#8FD3FF" stop-opacity=".34"/>
-    </linearGradient>
-  </defs>
-  <path d="M62 22l28 12v22c0 18-14 30-28 34-14-4-28-16-28-34V34l28-12z" fill="url(#g3)" stroke="rgba(220,235,255,.95)"/>
-  <path d="M52 54l6 6 14-16" stroke="rgba(11,42,91,.55)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="22" cy="70" r="12" fill="rgba(47,169,255,.12)" stroke="rgba(47,169,255,.30)"/>
-  <path d="M18 70h8" stroke="rgba(11,42,91,.45)" stroke-width="3" stroke-linecap="round"/>
-</svg>
-</div>
-            </div>
+            <span class="badge">Cómo se ve en la práctica</span>
             <h3>De “no sé por dónde empezar” a “lo tengo controlado”</h3>
             <div class="diagram" style="padding:10px 0 0;">
               <svg viewBox="0 0 560 180" role="img" aria-label="Flujo de fortalecimiento">
@@ -993,7 +719,7 @@
       <!-- CONTACTO -->
       <section id="contacto">
         <div class="sec-head reveal">
-          <h2></h2>
+          <h2>Participa y sumemos comunidad</h2>
           <p class="sec-sub">
             Si quieres participar, sumar una comunidad, proponer un taller o apoyar becas/cupos: escríbenos.
           </p>
@@ -1298,53 +1024,6 @@
         });
       });
     }
-
-    
-    // Cycle explainer interactions
-    (function(){
-      const box = document.getElementById("cycleExplain");
-      if(!box) return;
-
-      const copy = {
-        aprender: {
-          title: "Aprender",
-          text: "Identificar riesgos reales (phishing, cuentas robadas, pérdida de datos) y entender qué señales mirar. Sin jerga: lo suficiente para decidir bien."
-        },
-        aplicar: {
-          title: "Aplicar",
-          text: "Acciones concretas de alto impacto: activar MFA, ordenar accesos, revisar dominios/correos, y preferir rutas seguras (apps/bookmarks) en vez de links."
-        },
-        reforzar: {
-          title: "Reforzar",
-          text: "Hábito mensual: probar restore, revisar permisos, rotar claves si corresponde, y medir progreso con evidencia simple (antes/después)."
-        }
-      };
-
-      function setExplain(key){
-        const c = copy[key];
-        if(!c) return;
-        box.innerHTML = '<strong>['+c.title+']</strong> ' + c.text + '<div class="mini">Tip: esto es repetición, no perfección. Mejor 1% cada mes que 0% “algún día”.</div>';
-      }
-
-      // SVG nodes
-      document.querySelectorAll(".cycle-node").forEach(n=>{
-        const k = n.getAttribute("data-node");
-        n.addEventListener("mouseenter", ()=>setExplain(k));
-        n.addEventListener("click", ()=>setExplain(k));
-      });
-
-      // Cards (keyboard friendly)
-      document.querySelectorAll(".cycle-card").forEach(card=>{
-        const k = card.getAttribute("data-focus");
-        card.addEventListener("mouseenter", ()=>setExplain(k));
-        card.addEventListener("focus", ()=>setExplain(k));
-        card.addEventListener("click", ()=>setExplain(k));
-        card.addEventListener("keydown",(e)=>{
-          if(e.key==="Enter" || e.key===" "){ e.preventDefault(); setExplain(k); }
-        });
-      });
-    })();
-
 
     // Join demo interaction
     const joinBtn = document.getElementById("joinBtn");
