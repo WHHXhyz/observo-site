@@ -132,14 +132,14 @@
     .mobile-panel a:hover{background:rgba(220,235,255,.55);color:var(--blue)}
     .right{display:flex;align-items:center;gap:10px}
 
-    main{padding:30px 0 70px}
+    main{padding:18px 0 70px}
     section{padding:54px 0}
     section + section{border-top:1px solid rgba(220,235,255,.75)}
 
     h1{
       font-size:clamp(32px, 4vw, 48px);
       line-height:1.06;
-      margin:14px 0 10px;
+      margin:4px 0 10px;
       letter-spacing:-.7px;
     }
     .lead{
@@ -398,6 +398,18 @@ h1, h2, h3{
   font-weight: 900;
 }
 
+
+    /* HERO image */
+    section.hero{padding-top:34px;padding-bottom:54px;border-top:none}
+    .hero-illust{width:100%;max-width:980px;margin:14px auto 12px}
+    .hero-illust img{
+      width:100%;height:auto;display:block;
+      border-radius:22px;
+      border:1px solid rgba(220,235,255,.95);
+      box-shadow:0 22px 60px rgba(11,42,91,.14);
+      background:rgba(255,255,255,.65);
+    }
+
 </style>
 </head>
 
@@ -456,14 +468,14 @@ h1, h2, h3{
       <!-- HERO -->
       <section class="hero">
         <div class="center">
-          <div class="pill reveal" role="note" aria-label="Propuesta social">
-            <span class="dot" aria-hidden="true"></span>
-            <span><strong>Columna de Aegis8:</strong> educación + cultura + acompañamiento honesto</span>
+<h1 class="reveal">Ciberseguridad clara para personas, startups y pequeñas organizaciones.</h1>
+
+          
+
+          <div class="hero-illust reveal" aria-label="Ilustración del proyecto social">
+            <img src="social.png" alt="Proyecto social de ciberseguridad: personas, startups y pequeñas empresas" loading="lazy" />
           </div>
-
-          <h1 class="reveal">Ciberseguridad clara para personas, startups y pequeñas organizaciones.</h1>
-
-          <p class="lead reveal">
+<p class="lead reveal">
             Aegis8 nace como un proyecto social educativo y técnico orientado a reducir la brecha de ciberseguridad en
             <span class="k">personas</span>, <span class="k">startups</span> y <span class="k">pequeñas organizaciones</span>.
             Creemos que la seguridad no debe depender del tamaño del presupuesto, sino del acceso a conocimiento claro y
