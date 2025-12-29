@@ -1,0 +1,924 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aegis8 — Cómo nos sostenemos</title>
+  <meta name="description" content="Transparencia Aegis8: cómo sostenemos el proyecto social educativo y el acompañamiento profesional sin depender de vender software." />
+  <meta name="theme-color" content="#0B2A5B" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#F7FBFF;
+      --card:#FFFFFF;
+      --text:#0B1B34;
+      --muted:#4B5E7B;
+      --line:#DCEBFF;
+      --blue:#0B2A5B;
+      --sky:#2FA9FF;
+      --sky2:#8FD3FF;
+      --shadow:0 18px 45px rgba(11,42,91,.10);
+      --radius:18px;
+      --radius2:26px;
+      --max:1080px;
+      --ok:#0B5B3A;
+      --warn:#8A5A0B;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(900px 420px at 20% -10%, rgba(47,169,255,.25), transparent 60%),
+        radial-gradient(900px 420px at 90% 0%, rgba(143,211,255,.25), transparent 60%),
+        linear-gradient(180deg,#FFFFFF 0%, var(--bg) 100%);
+      line-height:1.45;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(var(--max), 100% - 40px);margin:0 auto}
+    .muted{color:var(--muted)}
+    .center{text-align:center}
+
+    /* Top progress */
+    .progress{
+      position:fixed;top:0;left:0;height:3px;width:0%;
+      background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.92), rgba(143,211,255,.95));
+      z-index:9999;
+      box-shadow:0 8px 20px rgba(47,169,255,.22);
+    }
+
+    header{
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.78);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(220,235,255,.85);
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 0;gap:16px;
+    }
+    .brand{display:flex;align-items:center;gap:12px;min-width:210px}
+    .logo{
+      width:38px;height:38px;border-radius:12px;
+      background:linear-gradient(135deg,var(--blue),#0D3B85);
+      position:relative;
+      box-shadow:0 14px 30px rgba(11,42,91,.18);
+      flex:0 0 auto;
+    }
+    .logo:before{
+      content:"";
+      position:absolute;inset:9px 11px 9px 11px;
+      border-radius:10px 10px 14px 14px;
+      background:linear-gradient(135deg, rgba(143,211,255,.95), rgba(47,169,255,.85));
+      clip-path:polygon(50% 0%, 92% 18%, 92% 55%, 50% 100%, 8% 55%, 8% 18%);
+      opacity:.95;
+    }
+    .brand strong{font-size:16px;letter-spacing:.2px}
+    .brand span{display:block;margin-top:2px;font-size:12px;color:var(--muted)}
+
+    nav ul{
+      list-style:none;padding:0;margin:0;
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    }
+    nav a{
+      font-size:14px;
+      color:rgba(11,27,52,.86);
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.78);
+      box-shadow:0 10px 24px rgba(11,42,91,.06);
+      transition:transform .12s ease, background .12s ease, box-shadow .12s ease, border-color .12s ease;
+      white-space:nowrap;
+    }
+    nav a:hover{
+      transform:translateY(-1px);
+      background:rgba(220,235,255,.55);
+      border-color:rgba(47,169,255,.35);
+      box-shadow:0 14px 34px rgba(11,42,91,.10);
+      color:var(--blue);
+    }
+    nav a.active{
+      border-color:rgba(47,169,255,.45);
+      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
+      color:var(--blue);
+      font-weight:800;
+    }
+
+    .menu-btn{
+      display:none;width:44px;height:44px;border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.9);
+      box-shadow:0 12px 30px rgba(11,42,91,.08);
+      cursor:pointer;align-items:center;justify-content:center;
+    }
+    .menu-lines{width:18px;height:12px;position:relative}
+    .menu-lines span{position:absolute;left:0;right:0;height:2px;border-radius:99px;background:rgba(11,42,91,.8)}
+    .menu-lines span:nth-child(1){top:0}
+    .menu-lines span:nth-child(2){top:5px}
+    .menu-lines span:nth-child(3){top:10px}
+    .mobile-panel{display:none;padding:0 0 14px 0}
+    .mobile-panel a{
+      display:block;padding:12px 12px;margin:10px 0;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,.85);
+      font-weight:700;color:rgba(11,27,52,.9);
+    }
+    .mobile-panel a:hover{background:rgba(220,235,255,.55);color:var(--blue)}
+    .right{display:flex;align-items:center;gap:10px}
+
+    main{padding:30px 0 70px}
+    section{padding:54px 0}
+    section + section{border-top:1px solid rgba(220,235,255,.75)}
+
+    h1{
+      font-size:clamp(32px, 4vw, 48px);
+      line-height:1.06;
+      margin:14px 0 10px;
+      letter-spacing:-.7px;
+    }
+    .lead{
+      font-size:clamp(16px, 1.35vw, 18px);
+      color:var(--muted);
+      margin:0 auto 18px;
+      max-width:86ch;
+    }
+
+    .pill{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:8px 12px;border:1px solid var(--line);
+      background:rgba(255,255,255,.82);border-radius:999px;
+      box-shadow:0 8px 25px rgba(11,42,91,.06);
+      backdrop-filter:blur(8px);
+    }
+    .dot{width:10px;height:10px;border-radius:999px;background:radial-gradient(circle at 30% 30%, var(--sky2), var(--sky));box-shadow:0 0 0 4px rgba(47,169,255,.12)}
+    .k{
+      background:linear-gradient(135deg, rgba(47,169,255,.22), rgba(143,211,255,.35));
+      border:1px solid rgba(47,169,255,.25);
+      padding:0 .45em;border-radius:.65em;
+      color:rgba(11,42,91,.92);
+      font-weight:800;white-space:nowrap;
+    }
+
+    .gradline{
+      height:1px;width:min(640px,100%);margin:14px auto 0;border-radius:99px;
+      background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.55), rgba(143,211,255,.65), rgba(47,169,255,.55), rgba(47,169,255,0));
+      position:relative;overflow:hidden;
+    }
+    .gradline:after{
+      content:"";position:absolute;top:0;bottom:0;width:160px;left:-180px;
+      background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.75), rgba(255,255,255,0));
+      filter:blur(1px);animation:shine 2.8s ease-in-out infinite;
+    }
+    @keyframes shine{
+      0%{transform:translateX(0);opacity:0}
+      15%{opacity:.8}
+      50%{opacity:.9}
+      85%{opacity:.8}
+      100%{transform:translateX(900px);opacity:0}
+    }
+
+    .sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+    .sec-head h2{margin:0;font-weight:900;font-size:clamp(22px, 2.3vw, 32px);letter-spacing:-.35px}
+    .sec-sub{margin:0;max-width:92ch;color:var(--muted);font-size:15.5px}
+
+    .card{
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      border-radius:var(--radius2);
+      box-shadow:var(--shadow);
+    }
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+
+    /* Diagram */
+    .diagram{
+      position:relative;
+      padding:18px;
+      overflow:hidden;
+    }
+    .diagram:before{
+      content:"";position:absolute;inset:-2px;
+      background:
+        radial-gradient(560px 260px at 10% 10%, rgba(47,169,255,.12), transparent 60%),
+        radial-gradient(560px 260px at 95% 0%, rgba(143,211,255,.14), transparent 55%);
+      opacity:.95;pointer-events:none;
+    }
+    .diagram>*{position:relative}
+    .flow{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      align-items:stretch;
+    }
+    .node{
+      position:relative;
+      padding:14px 14px;
+      border-radius:22px;
+      border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.92);
+      box-shadow:0 14px 38px rgba(11,42,91,.08);
+      overflow:hidden;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      cursor:pointer;
+      min-height:150px;
+    }
+    .node:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
+    .node .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.9);
+      background:rgba(47,169,255,.08);
+      color:rgba(11,42,91,.88);
+      font-weight:900;font-size:12px;
+      white-space:nowrap;
+    }
+    .node h3{margin:10px 0 6px;font-size:16px;letter-spacing:-.12px}
+    .node p{margin:0;color:var(--muted);font-size:14px}
+    .node .mini{
+      margin-top:10px;
+      color:rgba(11,42,91,.82);
+      font-weight:900;
+      font-size:12.5px;
+    }
+    .node:after{
+      content:"";position:absolute;inset:auto -80px -80px auto;
+      width:220px;height:220px;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, rgba(143,211,255,.35), rgba(47,169,255,.0) 70%);
+      transform:rotate(18deg);
+      opacity:.8;pointer-events:none;
+    }
+    .arrowline{
+      height:1px;margin:12px 0 0;border-radius:99px;
+      background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.35), rgba(143,211,255,.45), rgba(47,169,255,.35), rgba(47,169,255,0));
+      position:relative;
+    }
+    .arrowdot{
+      width:10px;height:10px;border-radius:999px;
+      background:radial-gradient(circle at 30% 30%, var(--sky2), var(--sky));
+      box-shadow:0 0 0 5px rgba(47,169,255,.12);
+      position:absolute;top:-4.5px;left:2%;
+      animation:travel 4.2s ease-in-out infinite;
+    }
+    @keyframes travel{
+      0%{left:2%;opacity:.2}
+      12%{opacity:1}
+      50%{left:50%;opacity:1}
+      88%{opacity:1}
+      100%{left:98%;opacity:.2}
+    }
+
+    /* Callouts + buttons */
+    .callout{
+      margin-top:12px;padding:12px 12px;border-radius:var(--radius);
+      border:1px solid rgba(47,169,255,.25);
+      background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      color:rgba(11,42,91,.9);font-weight:900;font-size:13px;
+    }
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:11px 14px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.92);color:var(--blue);font-weight:800;
+      box-shadow:0 12px 30px rgba(11,42,91,.08);
+      transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(11,42,91,.12)}
+    .btn.primary{
+      border-color:rgba(47,169,255,.35);
+      background:linear-gradient(135deg, rgba(47,169,255,.15), rgba(143,211,255,.25));
+      color:var(--blue);
+    }
+    .btn.ghost{background:rgba(255,255,255,.78)}
+    .btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+
+    /* FAQ */
+    .faq{display:grid;gap:12px}
+    details{
+      border:1px solid rgba(220,235,255,.95);
+      border-radius:22px;
+      background:rgba(255,255,255,.92);
+      box-shadow:0 12px 30px rgba(11,42,91,.06);
+      overflow:hidden;
+    }
+    summary{
+      list-style:none;
+      padding:14px 14px;
+      cursor:pointer;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      font-weight:900;color:rgba(11,42,91,.92);
+    }
+    summary::-webkit-details-marker{display:none}
+    .chev{
+      width:36px;height:36px;border-radius:14px;border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.9);
+      display:grid;place-items:center;
+      box-shadow:0 10px 24px rgba(11,42,91,.06);
+      flex:0 0 auto;
+      transition:transform .18s ease;
+    }
+    details[open] .chev{transform:rotate(180deg)}
+    .faq-body{padding:0 14px 14px;color:var(--muted)}
+    .faq-body ul{margin:10px 0 0;padding-left:18px}
+    .faq-body li{margin:7px 0}
+
+    /* Modal */
+    .modal{
+      position:fixed;inset:0;z-index:1000;display:none;padding:18px;
+      background:rgba(11,27,52,.55);backdrop-filter:blur(6px);
+    }
+    .modal.show{display:grid;place-items:center}
+    .modal-dialog{
+      width:min(920px,100%);
+      background:rgba(255,255,255,.97);
+      border:1px solid rgba(220,235,255,.95);
+      border-radius:22px;
+      box-shadow:0 28px 70px rgba(11,42,91,.22);
+      overflow:hidden;
+      animation:modalIn .18s ease-out;
+    }
+    @keyframes modalIn{from{transform:translateY(8px) scale(.99);opacity:0}to{transform:none;opacity:1}}
+    .modal-head{
+      padding:16px 16px 12px;border-bottom:1px solid rgba(220,235,255,.9);
+      background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+    }
+    .modal-title{margin:0;font-size:18px;letter-spacing:-.2px;color:var(--blue)}
+    .modal-close{
+      width:42px;height:42px;border-radius:14px;border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.92);cursor:pointer;display:grid;place-items:center;
+      color:rgba(11,42,91,.85);box-shadow:0 12px 30px rgba(11,42,91,.10);
+    }
+    .modal-body{padding:14px 16px 16px;color:rgba(11,27,52,.92)}
+    .modal-body p{margin:0 0 10px;color:var(--muted)}
+    .modal-body ul{margin:10px 0 0;padding-left:18px;color:var(--muted)}
+    .modal-body li{margin:7px 0}
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(10px);transition:opacity .55s ease, transform .55s ease}
+    .reveal.on{opacity:1;transform:none}
+
+    footer{
+      padding:28px 0 40px;
+      border-top:1px solid rgba(220,235,255,.9);
+      background:rgba(255,255,255,.55);
+    }
+    .foot{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}
+
+    @media (max-width: 980px){
+      .grid-2{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+      .flow{grid-template-columns:1fr}
+      .arrowdot{display:none}
+    }
+    @media (max-width: 760px){
+      nav ul{display:none}
+      .menu-btn{display:inline-flex}
+      .wrap{width:min(var(--max), 100% - 28px)}
+    }
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
+      .arrowdot{display:none}
+    }
+  
+footer{
+  padding: 26px 0 30px;
+  border-top: 1px solid rgba(220,235,255,.9);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.75), rgba(247,251,255,.95));
+}
+
+</style>
+</head>
+
+<body>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="index.html" aria-label="Aegis8 Home">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>Aegis8</strong>
+            <span>Transparencia</span>
+          </div>
+        </a>
+
+        <nav aria-label="Navegación principal">
+          <ul>
+            <li><a href="como-trabajamos.html">Cómo trabajamos</a></li>
+            <li><a href="a-quienes-ayudamos.html">A quiénes ayudamos</a></li>
+            <li><a href="quienes-somos.html">Quiénes somos</a></li>
+            <li><a href="psocial.html">Proyecto social</a></li>
+            <li><a href="contactanos.html">Contáctanos</a></li>
+          </ul>
+        </nav>
+
+        <div class="right">
+          <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobilePanel">
+            <div class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></div>
+          </button>
+        </div>
+      </div>
+
+      <div class="mobile-panel" id="mobilePanel" aria-label="Menú móvil">
+        <a href="como-trabajamos.html">Cómo trabajamos</a>
+        <a href="a-quienes-ayudamos.html">A quiénes ayudamos</a>
+        <a href="quienes-somos.html">Quiénes somos</a>
+        <a href="psocial.html">Proyecto social</a>
+        <a href="contactanos.html">Contáctanos</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+
+      <!-- HERO -->
+      <section class="hero">
+        <div class="center">
+          <div class="pill reveal" role="note">
+            <span class="dot" aria-hidden="true"></span>
+            <span><strong>Transparencia</strong> — sin “pricing” forzado</span>
+          </div>
+
+          <h1 class="reveal">Cómo nos sostenemos.</h1>
+
+          <p class="lead reveal">
+            Aegis8 nace como un proyecto social, educativo y técnico. Creemos que la seguridad no debe depender del tamaño del presupuesto,
+            sino del acceso a <span class="k">conocimiento claro</span> y acompañamiento <span class="k">honesto</span>.
+            <br><br>
+            Para que esto sea sostenible, separamos con cuidado: lo que es <span class="k">educación abierta</span> (siempre gratis)
+            y lo que es <span class="k">acompañamiento profesional</span> (tiempo, responsabilidad y ejecución).
+          </p>
+
+          <div class="center reveal" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+            <a class="btn primary" href="#modelo">Ver el modelo</a>
+            <a class="btn" href="recursos_aegis8.html">Ir a Recursos</a>
+            <a class="btn ghost" href="contactanos.html">Contáctanos</a>
+          </div>
+        </div>
+
+        <div class="gradline" aria-hidden="true"></div>
+
+        <div class="grid-3" style="margin-top:18px;">
+          <button class="card reveal" type="button" data-modal="m-no-vendemos-software" aria-haspopup="dialog" style="padding:16px;text-align:left;cursor:pointer;">
+            <div style="font-weight:900;color:rgba(11,42,91,.92);">No vendemos software</div>
+            <div class="muted" style="margin-top:6px;">Usamos herramientas propias como apoyo. Lo central es el criterio.</div>
+          </button>
+          <button class="card reveal" type="button" data-modal="m-sin-contratos" aria-haspopup="dialog" style="padding:16px;text-align:left;cursor:pointer;">
+            <div style="font-weight:900;color:rgba(11,42,91,.92);">Sin contratos eternos</div>
+            <div class="muted" style="margin-top:6px;">Acompañamiento por alcance, contexto y sostenibilidad.</div>
+          </button>
+          <button class="card reveal" type="button" data-modal="m-sin-humo" aria-haspopup="dialog" style="padding:16px;text-align:left;cursor:pointer;">
+            <div style="font-weight:900;color:rgba(11,42,91,.92);">Sin humo</div>
+            <div class="muted" style="margin-top:6px;">Si no se puede sostener, se simplifica. Mínimos primero.</div>
+          </button>
+        </div>
+      </section>
+
+      <!-- MODEL -->
+      <section id="modelo">
+        <div class="sec-head reveal">
+          <h2>El modelo (3 capas)</h2>
+          <p class="sec-sub">
+            Esta estructura permite que el proyecto social viva y crezca, sin depender de vender “productos”.
+            Haz clic en cada capa para ver ejemplos.
+          </p>
+        </div>
+
+        <div class="card diagram reveal">
+          <div class="flow" aria-label="Modelo de 3 capas">
+            <div class="node" data-modal="m-capa1" aria-haspopup="dialog" role="button" tabindex="0">
+              <span class="badge">Capa 1 — Educación abierta</span>
+              <h3>Gratis, siempre</h3>
+              <p>Recursos, guías, checklists, test, talleres comunitarios y cultura de ciberseguridad.</p>
+              <div class="mini">Objetivo: acceso al conocimiento.</div>
+            </div>
+
+            <div class="node" data-modal="m-capa2" aria-haspopup="dialog" role="button" tabindex="0">
+              <span class="badge">Capa 2 — Acompañamiento accesible</span>
+              <h3>Tiempo profesional (justo)</h3>
+              <p>Diagnóstico guiado, priorización de mínimos, plan de 30 días y seguimiento breve.</p>
+              <div class="mini">Objetivo: ordenar y sostener.</div>
+            </div>
+
+            <div class="node" data-modal="m-capa3" aria-haspopup="dialog" role="button" tabindex="0">
+              <span class="badge">Capa 3 — Consultoría técnica</span>
+              <h3>Alcance definido</h3>
+              <p>Gobernanza, hardening guiado, revisiones técnicas y acompañamiento de incidentes.</p>
+              <div class="mini">Objetivo: reducir riesgo operativo.</div>
+            </div>
+          </div>
+
+          <div class="arrowline" aria-hidden="true">
+            <div class="arrowdot" aria-hidden="true"></div>
+          </div>
+
+          <div class="callout">
+            Regla Aegis8: lo educativo es abierto. Lo profesional se cobra por alcance y responsabilidad (no por licencias).
+          </div>
+        </div>
+      </section>
+
+      <!-- PRINCIPLES -->
+      <section id="principios">
+        <div class="sec-head reveal">
+          <h2>Principios de cobro (sin “pricing” agresivo)</h2>
+          <p class="sec-sub">Esto ayuda a mantener confianza sin ocultar cómo funciona.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card reveal" style="padding:18px;">
+            <h3 style="margin:0 0 8px;">1) Cobro por claridad y acompañamiento</h3>
+            <p class="muted" style="margin:0;">
+              Lo que pagas es <strong>tiempo, criterio, priorización y ejecución</strong>. Evitamos vender “herramientas” como si fueran la solución.
+            </p>
+            <div class="callout">Primero mínimos (MFA/backups/roles), después sofisticación.</div>
+          </div>
+
+          <div class="card reveal" style="padding:18px;">
+            <h3 style="margin:0 0 8px;">2) Alcance antes que precio</h3>
+            <p class="muted" style="margin:0;">
+              Antes de hablar de números, definimos qué se hará, qué no, y qué resultado es realista.
+            </p>
+            <div class="callout">Sin alcance claro, el precio siempre es injusto.</div>
+          </div>
+
+          <div class="card reveal" style="padding:18px;">
+            <h3 style="margin:0 0 8px;">3) Accesible cuando se puede</h3>
+            <p class="muted" style="margin:0;">
+              Para personas y equipos pequeños, priorizamos pasos sostenibles. Si el presupuesto es bajo, reducimos el plan, no la honestidad.
+            </p>
+            <div class="callout">La seguridad no se “compra”: se construye.</div>
+          </div>
+
+          <div class="card reveal" style="padding:18px;">
+            <h3 style="margin:0 0 8px;">4) Transparencia operacional</h3>
+            <p class="muted" style="margin:0;">
+              No pedimos credenciales por correo. No prometemos “seguridad total”. Documentamos lo que se hizo y por qué.
+            </p>
+            <div class="callout">Si algo no se puede sostener, se simplifica.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq">
+        <div class="sec-head reveal">
+          <h2>Preguntas comunes</h2>
+          <p class="sec-sub">Respuestas cortas para evitar malentendidos.</p>
+        </div>
+
+        <div class="faq reveal">
+          <details>
+            <summary>
+              ¿Por qué no ponen una tabla de precios fija?
+              <span class="chev" aria-hidden="true">⌄</span>
+            </summary>
+            <div class="faq-body">
+              <p>Porque cada contexto tiene una realidad distinta (personas, startups, pymes). Aegis8 prioriza:</p>
+              <ul>
+                <li><strong>Alcance</strong> (qué se hará) antes que una cifra.</li>
+                <li><strong>Sostenibilidad</strong> (qué se puede mantener).</li>
+                <li><strong>Transparencia</strong> (qué NO prometemos).</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              ¿Qué significa “acompañamiento accesible”?
+              <span class="chev" aria-hidden="true">⌄</span>
+            </summary>
+            <div class="faq-body">
+              <p>Que el foco es ordenar mínimos con pasos reales. En vez de “megaproyectos”, hacemos:</p>
+              <ul>
+                <li>Diagnóstico guiado</li>
+                <li>Plan de 30 días</li>
+                <li>Checklist y seguimiento breve</li>
+              </ul>
+              <p>Si el presupuesto es limitado, se reduce el plan, no el criterio.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              ¿Aegis8 vende Observo / PBD como producto?
+              <span class="chev" aria-hidden="true">⌄</span>
+            </summary>
+            <div class="faq-body">
+              <p>No. Son herramientas de apoyo. Lo central es el acompañamiento y la educación.</p>
+              <p>Si en el futuro publicamos versiones “descargables”, la idea es que sigan siendo un complemento, no el corazón del proyecto.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              ¿Cómo se inicia un trabajo pagado?
+              <span class="chev" aria-hidden="true">⌄</span>
+            </summary>
+            <div class="faq-body">
+              <p>Por una conversación corta:</p>
+              <ul>
+                <li>Objetivo</li>
+                <li>Qué estás protegiendo (activos)</li>
+                <li>Urgencias</li>
+                <li>Stack (si aplica)</li>
+              </ul>
+              <p>Luego te proponemos un alcance simple y sostenible.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section id="cta">
+        <div class="sec-head reveal">
+          <h2>¿Quieres que lo aterricemos a tu caso?</h2>
+          <p class="sec-sub">Si te sirve, partimos con un plan de mínimos (1 página) y pasos para 30 días.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card reveal" style="padding:18px;">
+            <div class="pill" style="display:inline-flex;"><span class="dot" aria-hidden="true"></span><strong>Antes de escribir</strong></div>
+            <p class="muted" style="margin:10px 0 0;">
+              Puedes partir por la biblioteca y el test. Luego, si necesitas ayuda, coordinamos un alcance realista.
+            </p>
+            <div class="btn-row">
+              <a class="btn primary" href="recursos_aegis8.html">Ir a Recursos</a>
+              <a class="btn" href="test_ciberseguridad_aegis8.html">Hacer el test</a>
+            </div>
+          </div>
+
+          <div class="card reveal" style="padding:18px;">
+            <div class="pill" style="display:inline-flex;"><span class="dot" aria-hidden="true"></span><strong>Contacto</strong></div>
+            <p class="muted" style="margin:10px 0 0;">
+              Cuéntanos tu contexto y objetivo. No mandes credenciales ni datos sensibles por correo.
+            </p>
+            <div class="btn-row">
+              <a class="btn primary" href="contactanos.html">Ir a Contáctanos</a>
+              <a class="btn ghost" href="mailto:contacto@aegis8.org?subject=Aegis8%20-%20Quiero%20orientaci%C3%B3n&body=Hola%20Aegis8%2C%0A%0AObjetivo%3A%0AContexto%20(persona%2Fstartup%2Fpyme)%3A%0AUrgencia%3A%0AHerramientas%20que%20uso%20(si%20aplica)%3A%0A%0AGracias.">Enviar correo</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- MODALS -->
+  <div class="modal" id="m-no-vendemos-software" role="dialog" aria-modal="true" aria-labelledby="t-nvs">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-nvs">No vendemos software</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">La herramienta es soporte, no el fin.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>En Aegis8 el valor está en:</p>
+        <ul>
+          <li>priorizar lo que realmente baja riesgo</li>
+          <li>hacerlo sostenible</li>
+          <li>documentarlo con claridad</li>
+        </ul>
+        <p>Las herramientas propias (Observo/PBD) son apoyo educativo y técnico, no un “producto” obligatorio.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-sin-contratos" role="dialog" aria-modal="true" aria-labelledby="t-sc">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-sc">Sin contratos eternos</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Ordenamos primero, después vemos continuidad.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Preferimos una relación sana:</p>
+        <ul>
+          <li>alcance corto y claro</li>
+          <li>entregables concretos</li>
+          <li>seguimiento cuando hace sentido</li>
+        </ul>
+        <p>Si tu contexto cambia, el plan se ajusta.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-sin-humo" role="dialog" aria-modal="true" aria-labelledby="t-sh">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-sh">Sin humo</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">No prometemos imposibles.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Nos guiamos por una regla:</p>
+        <ul>
+          <li>si no se puede sostener, se simplifica</li>
+          <li>si no baja riesgo, no se hace</li>
+          <li>si no es claro, se reescribe</li>
+        </ul>
+        <p>El objetivo no es “cumplir”, es reducir riesgo real.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-capa1" role="dialog" aria-modal="true" aria-labelledby="t-c1">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-c1">Capa 1 — Educación abierta</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Gratis, siempre.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Esto es el corazón social de Aegis8:</p>
+        <ul>
+          <li>recursos y guías prácticas</li>
+          <li>test didáctico</li>
+          <li>talleres y charlas comunitarias</li>
+          <li>material para startups y pymes pequeñas</li>
+        </ul>
+        <div class="callout">Objetivo: que cualquiera pueda partir, sin miedo y sin humo.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-capa2" role="dialog" aria-modal="true" aria-labelledby="t-c2">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-c2">Capa 2 — Acompañamiento accesible</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Tiempo profesional (justo).</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Ejemplos típicos:</p>
+        <ul>
+          <li>diagnóstico guiado (1–2 sesiones)</li>
+          <li>plan de mínimos (30 días)</li>
+          <li>checklist y responsables</li>
+          <li>seguimiento breve (si aplica)</li>
+        </ul>
+        <div class="callout">Objetivo: ordenar y que el plan se pueda mantener.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="m-capa3" role="dialog" aria-modal="true" aria-labelledby="t-c3">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-c3">Capa 3 — Consultoría técnica</h3>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Alcance definido.</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Para organizaciones que requieren acciones técnicas o de gobernanza más profundas:</p>
+        <ul>
+          <li>hardening guiado</li>
+          <li>gobernanza mínima (políticas, roles, evidencias)</li>
+          <li>acompañamiento a incidentes</li>
+          <li>revisión técnica por alcance</li>
+        </ul>
+        <div class="callout">Objetivo: reducir riesgo operativo con entregables claros.</div>
+      </div>
+    </div>
+  </div>
+
+  
+<footer>
+  <div class="wrap">
+    <div class="foot" style="justify-content:center; text-align:center;">
+      <small>
+        © <span id="year"></span> <strong>Aegis8</strong> · Consultora y proyecto educativo-social de ciberseguridad.<br/>
+        <span class="muted">Seguridad clara, sin humo y con sentido.</span>
+      </small>
+    </div>
+  </div>
+</footer>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+
+  <script>
+    // Año
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Menú móvil
+    const btn = document.getElementById("menuBtn");
+    const panel = document.getElementById("mobilePanel");
+    function closeMobileMenu(){ panel.style.display="none"; btn.setAttribute("aria-expanded","false"); }
+    function toggleMobileMenu(){
+      const isOpen = btn.getAttribute("aria-expanded")==="true";
+      if(isOpen) closeMobileMenu();
+      else{ panel.style.display="block"; btn.setAttribute("aria-expanded","true"); }
+    }
+    btn.addEventListener("click", toggleMobileMenu);
+    panel.querySelectorAll("a").forEach(a=>a.addEventListener("click", closeMobileMenu));
+    window.addEventListener("resize", ()=>{ if(window.innerWidth>760) closeMobileMenu(); });
+
+    // Scroll progress
+    const progress = document.getElementById("progress");
+    function onScroll(){
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+      progress.style.width = `${Math.max(0, Math.min(1, scrolled)) * 100}%`;
+    }
+    window.addEventListener("scroll", onScroll, { passive:true });
+    onScroll();
+
+    // Reveal
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add("on");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold:0.12 });
+    document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+    // Keyboard open for nodes
+    document.addEventListener("keydown",(e)=>{
+      if(e.key!=="Enter" && e.key!==" ") return;
+      const focused = document.activeElement;
+      if(focused && focused.classList.contains("node")){
+        e.preventDefault();
+        const id = focused.getAttribute("data-modal");
+        if(id) openModal(id);
+      }
+    });
+
+    // Modals infra
+    const modals = Array.from(document.querySelectorAll(".modal"));
+    let lastFocus = null;
+
+    function openModal(id){
+      const modal = document.getElementById(id);
+      if(!modal) return;
+      lastFocus = document.activeElement;
+      modal.classList.add("show");
+      document.body.style.overflow="hidden";
+      const closeBtn = modal.querySelector(".modal-close");
+      if(closeBtn) closeBtn.focus();
+    }
+    function closeModal(modal){
+      modal.classList.remove("show");
+      document.body.style.overflow="";
+      if(lastFocus && typeof lastFocus.focus==="function") lastFocus.focus();
+    }
+    function closeAll(){ modals.forEach(m=>m.classList.contains("show") && closeModal(m)); }
+
+    document.addEventListener("click",(e)=>{
+      const trigger = e.target.closest("[data-modal]");
+      if(trigger) openModal(trigger.getAttribute("data-modal"));
+
+      const backdrop = e.target.classList && e.target.classList.contains("modal");
+      if(backdrop) closeModal(e.target);
+
+      const closeBtn = e.target.closest(".modal-close");
+      if(closeBtn) closeModal(closeBtn.closest(".modal"));
+    });
+
+    document.addEventListener("keydown",(e)=>{
+      if(e.key==="Escape") closeAll();
+
+      const activeModal = modals.find(m=>m.classList.contains("show"));
+      if(!activeModal) return;
+
+      if(e.key==="Tab"){
+        const focusables = Array.from(activeModal.querySelectorAll('button, a, input, textarea, select, [tabindex]:not([tabindex="-1"])'))
+          .filter(el=>!el.hasAttribute("disabled"));
+        if(focusables.length===0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length-1];
+        if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+        else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -532,24 +532,15 @@
       color: transparent;
     }
 
-    /* === Aegis8: header without logo/brand === */
-    .brand{display:none !important;}
-    header .nav{justify-content:center !important; position:relative;}
-    /* Keep mobile menu button accessible on the right without stealing centering */
-    header .right, header .nav-right{
-      position:absolute !important;
-      right:0 !important;
-      top:50% !important;
-      transform:translateY(-50%) !important;
-    }
-    @media (max-width: 760px){
-      header .right, header .nav-right{
-        top:auto !important;
-        transform:none !important;
-      }
-    }
-    
-  </style>
+
+footer{
+  padding: 26px 0 30px;
+  border-top: 1px solid rgba(220,235,255,.9);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.75), rgba(247,251,255,.95));
+}
+
+</style>
 </head>
 
 <body>
@@ -558,7 +549,15 @@
   <header>
     <div class="wrap">
       <div class="nav">
-<button class="menu-btn" type="button" id="menuBtn" aria-label="Abrir menú" aria-expanded="false">
+        <a class="brand" href="index.html" aria-label="Aegis8 — Inicio">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>Aegis8</strong>
+            <span>Ciberseguridad con sentido</span>
+          </div>
+        </a>
+
+        <button class="menu-btn" type="button" id="menuBtn" aria-label="Abrir menú" aria-expanded="false">
           <div class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></div>
         </button>
 
@@ -717,25 +716,21 @@
     </div>
   </div>
 
-  <footer>
-    <div class="wrap">
-      <div class="foot">
-        <div class="brand" aria-label="Aegis8">
-          <div class="logo" aria-hidden="true"></div>
-          <div>
-            <strong>Aegis8</strong>
-            <span>Claridad • Criterio • Comunidad</span>
-          </div>
-        </div>
-
-        <div style="max-width: 70ch;">
-          <small class="muted">
-            © <span id="year"></span> Aegis8. Página estática: se actualiza editando arreglos en el JS (sin backend).
-          </small>
-        </div>
-      </div>
+  
+<footer>
+  <div class="wrap">
+    <div class="foot" style="justify-content:center; text-align:center;">
+      <small>
+        © <span id="year"></span> <strong>Aegis8</strong> · Consultora y proyecto educativo-social de ciberseguridad.<br/>
+        <span class="muted">Seguridad clara, sin humo y con sentido.</span>
+      </small>
     </div>
-  </footer>
+  </div>
+</footer>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
 
   <script>
     // Año

@@ -9,7 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -33,7 +33,7 @@
     html,body{height:100%}
     body{
       margin:0;
-      font-family:"Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      font-family:"Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color:var(--text);
       background:
         radial-gradient(900px 420px at 20% -10%, rgba(47,169,255,.25), transparent 60%),
@@ -348,190 +348,14 @@
       *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
     }
   
-    /* === Index-style titles (gradient + soft glow) === */
-    h1, .sec-head h2{
-      font-weight: 900;
-      letter-spacing: -0.7px;
-      background: linear-gradient(90deg, rgba(11,42,91,1) 0%, rgba(47,169,255,1) 55%, rgba(143,211,255,1) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 14px 26px rgba(47,169,255,.10));
-    }
-    .sec-head h2{ letter-spacing:-0.35px; }
+footer{
+  padding: 26px 0 30px;
+  border-top: 1px solid rgba(220,235,255,.9);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.75), rgba(247,251,255,.95));
+}
 
-    /* === Hero micro animation accents === */
-    .hero{ position:relative; }
-    .hero:before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(700px 260px at 30% 0%, rgba(47,169,255,.16), transparent 62%);
-      opacity:.9; pointer-events:none;
-    }
-    .hero > *{ position:relative; }
-
-    /* === Tiles / blocks to give life === */
-    .tile{
-      position:relative;
-      overflow:hidden;
-      padding: 16px 16px 14px;
-      border-radius: var(--radius2);
-      border: 1px solid rgba(140,198,255,.55);
-      background:
-        linear-gradient(135deg,
-          rgba(255,255,255,.96) 0%,
-          rgba(47,169,255,.07) 38%,
-          rgba(143,211,255,.18) 100%);
-      box-shadow: 0 18px 44px rgba(11,42,91,.10);
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-      min-height: 108px;
-    }
-    .tile:after{
-      content:"";
-      position:absolute;
-      top:-120px; right:-140px;
-      width: 340px; height: 340px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%,
-        rgba(47,169,255,.18) 0%,
-        rgba(143,211,255,.12) 35%,
-        rgba(143,211,255,0) 70%);
-      pointer-events:none;
-    }
-    .tile:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 26px 70px rgba(11,42,91,.14);
-      border-color: rgba(47,169,255,.70);
-    }
-    .badge{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(220,235,255,.9);
-      background: rgba(47,169,255,.08);
-      color: rgba(11,42,91,.88);
-      font-weight:900;
-      font-size:12px;
-      white-space:nowrap;
-    }
-    .tile h3{
-      margin:10px 0 6px;
-      font-size:16px;
-      letter-spacing:-.1px;
-      color: rgba(11,42,91,.96);
-    }
-    .tile p{
-      margin:0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    /* === Quiz transitions === */
-    .q{ transition: transform .22s ease, opacity .22s ease; }
-    .q.swap-out{ opacity:0; transform: translateY(6px); }
-    .q.swap-in{ opacity:1; transform:none; }
-
-    /* make correct/wrong state more didactic */
-    .ans{ position:relative; }
-    .ans:after{
-      content:"";
-      position:absolute; inset:-1px;
-      border-radius: 18px;
-      pointer-events:none;
-      opacity:0;
-      transition: opacity .18s ease;
-      background: radial-gradient(420px 120px at 20% 0%, rgba(47,169,255,.12), transparent 65%);
-    }
-    .ans:hover:after{ opacity:1; }
-
-    /* === Result screen === */
-    .results{
-      display:none;
-      margin-top: 18px;
-      padding: 18px;
-      border-radius: var(--radius2);
-      border:1px solid rgba(220,235,255,.95);
-      background: rgba(255,255,255,.92);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .results:before{
-      content:"";
-      position:absolute; inset:-2px;
-      background:
-        radial-gradient(520px 240px at 15% 10%, rgba(47,169,255,.14), transparent 60%),
-        radial-gradient(520px 240px at 90% 0%, rgba(143,211,255,.16), transparent 55%);
-      opacity:.9; pointer-events:none;
-    }
-    .results > *{ position:relative; }
-
-    .score-big{
-      font-size: clamp(28px, 3.2vw, 40px);
-      letter-spacing:-.6px;
-      margin: 6px 0 8px;
-      color: rgba(11,42,91,.96);
-    }
-    .chip{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 9px 11px;
-      border-radius: 999px;
-      border:1px solid rgba(220,235,255,.95);
-      background: rgba(255,255,255,.85);
-      box-shadow: 0 10px 24px rgba(11,42,91,.06);
-      font-weight:900;
-      color: rgba(11,42,91,.86);
-      font-size: 12.5px;
-      white-space:nowrap;
-    }
-    .chip b{ color: var(--blue); }
-    .chips-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 10px; }
-    .plan{
-      margin-top: 14px;
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 14px;
-      align-items: start;
-    }
-    .list{
-      list-style:none; margin:0; padding:0;
-      display:flex; flex-direction:column; gap:10px;
-    }
-    .list li{
-      display:flex; gap:10px; align-items:flex-start;
-      padding: 12px 12px;
-      border-radius: var(--radius);
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.92);
-    }
-    .check{
-      width:26px; height:26px; border-radius: 10px;
-      background: linear-gradient(135deg, rgba(47,169,255,.20), rgba(143,211,255,.35));
-      border:1px solid rgba(47,169,255,.25);
-      display:grid; place-items:center;
-      color: var(--blue);
-      font-weight:900;
-      flex: 0 0 auto;
-      margin-top: 1px;
-    }
-    .list strong{ display:block; font-size:14px; }
-    .list span{ display:block; font-size:13px; color: var(--muted); margin-top:2px; }
-    .aside{
-      padding: 14px;
-      border-radius: var(--radius2);
-      border:1px solid rgba(47,169,255,.25);
-      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
-      box-shadow: 0 18px 45px rgba(11,42,91,.10);
-    }
-    .aside h3{ margin:0 0 8px; font-size:16px; color: rgba(11,42,91,.96); }
-    .aside p{ margin:0; color: var(--muted); font-size: 13.5px; }
-    .aside .btn-row{ margin-top: 12px; }
-
-    @media (max-width: 980px){
-      .plan{ grid-template-columns: 1fr; }
-    }
-
-  </style>
+</style>
 </head>
 
 <body>
@@ -544,15 +368,15 @@
           <div class="logo" aria-hidden="true"></div>
           <div>
             <strong>Aegis8</strong>
-            <span>Ciberseguridad con sentido</span>
+            <span>Test didáctico</span>
           </div>
         </a>
 
         <nav aria-label="Navegación principal">
           <ul>
-            <li><a href="comotrabajamos.html">Cómo trabajamos</a></li>
-            <li><a href="ayudamos.html">A quiénes ayudamos</a></li>
-            <li><a href="index.html#quienes">Quiénes somos</a></li>
+            <li><a href="como-trabajamos.html">Cómo trabajamos</a></li>
+            <li><a href="a-quienes-ayudamos.html">A quiénes ayudamos</a></li>
+            <li><a href="quienes-somos.html">Quiénes somos</a></li>
             <li><a href="psocial.html">Proyecto social</a></li>
             <li><a href="contactanos.html">Contáctanos</a></li>
           </ul>
@@ -566,9 +390,9 @@
       </div>
 
       <div class="mobile-panel" id="mobilePanel" aria-label="Menú móvil">
-        <a href="comotrabajamos.html">Cómo trabajamos</a>
-        <a href="ayudamos.html">A quiénes ayudamos</a>
-        <a href="index.html#quienes">Quiénes somos</a>
+        <a href="como-trabajamos.html">Cómo trabajamos</a>
+        <a href="a-quienes-ayudamos.html">A quiénes ayudamos</a>
+        <a href="quienes-somos.html">Quiénes somos</a>
         <a href="psocial.html">Proyecto social</a>
         <a href="contactanos.html">Contáctanos</a>
       </div>
@@ -599,22 +423,18 @@
 
         <div class="gradline" aria-hidden="true"></div>
 
-        
         <div class="grid-3" style="margin-top:18px;">
-          <div class="tile reveal">
-            <span class="badge">Duración</span>
-            <h3>~3 minutos</h3>
-            <p>10 preguntas con feedback inmediato.</p>
+          <div class="card reveal" style="padding:16px;">
+            <div style="font-weight:900;color:rgba(11,42,91,.92);">Duración</div>
+            <div class="muted" style="margin-top:6px;">~3 minutos (10 preguntas).</div>
           </div>
-          <div class="tile reveal">
-            <span class="badge">Para quién</span>
-            <h3>Personas, startups y pymes</h3>
-            <p>Hábitos simples que bajan riesgo sin volverte loco.</p>
+          <div class="card reveal" style="padding:16px;">
+            <div style="font-weight:900;color:rgba(11,42,91,.92);">Nivel</div>
+            <div class="muted" style="margin-top:6px;">Personas, startups y pymes.</div>
           </div>
-          <div class="tile reveal">
-            <span class="badge">Resultado</span>
-            <h3>Plan por temas</h3>
-            <p>Te damos “qué hacer hoy” según tus respuestas.</p>
+          <div class="card reveal" style="padding:16px;">
+            <div style="font-weight:900;color:rgba(11,42,91,.92);">Resultado</div>
+            <div class="muted" style="margin-top:6px;">Recomendaciones por tema.</div>
           </div>
         </div>
       </section>
@@ -658,31 +478,6 @@
           </div>
         </div>
 
-
-        <div class="results reveal" id="results">
-          <div class="sec-head" style="margin-bottom:10px;">
-            <h2 style="margin:0;">Tu resultado</h2>
-            <p class="sec-sub" style="margin:0;">Un resumen claro + un plan de mínimos para empezar hoy.</p>
-          </div>
-
-          <div class="score-big" id="scoreBig">—</div>
-
-          <div class="chips-row" id="chipsRow" aria-label="Resumen por temas"></div>
-
-          <div class="plan">
-            <ul class="list" id="planList" aria-label="Plan de mínimos"></ul>
-            <div class="aside">
-              <h3>Didáctico, no punitivo</h3>
-              <p>Si algo salió mal, no es “fracaso”: es una pista de dónde empezar. Lo importante es que sea sostenible.</p>
-              <div class="btn-row">
-                <a class="btn primary" href="recursos.html">Ver recursos y guías</a>
-                <a class="btn" href="comotrabajamos.html">Cómo trabajamos</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
         <div class="grid-2" style="margin-top:18px;">
           <div class="card reveal" style="padding:16px;">
             <div style="font-weight:900;color:rgba(11,42,91,.92);">Siguiente paso (ideal)</div>
@@ -708,25 +503,21 @@
     </div>
   </main>
 
-  <footer>
-    <div class="wrap">
-      <div class="foot">
-        <div class="brand" aria-label="Aegis8">
-          <div class="logo" aria-hidden="true"></div>
-          <div>
-            <strong>Aegis8</strong>
-            <span>Claridad • Criterio • Comunidad</span>
-          </div>
-        </div>
-
-        <div style="max-width: 64ch;">
-          <small class="muted">
-            © <span id="year"></span> Aegis8. Página estática. El test se ejecuta 100% en tu navegador (sin backend).
-          </small>
-        </div>
-      </div>
+  
+<footer>
+  <div class="wrap">
+    <div class="foot" style="justify-content:center; text-align:center;">
+      <small>
+        © <span id="year"></span> <strong>Aegis8</strong> · Consultora y proyecto educativo-social de ciberseguridad.<br/>
+        <span class="muted">Seguridad clara, sin humo y con sentido.</span>
+      </small>
     </div>
-  </footer>
+  </div>
+</footer>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
 
   <script>
     // Year
@@ -1086,141 +877,6 @@
     // Initial render (not started yet uses base)
     QUESTIONS = QUESTIONS_BASE.slice();
     render();
-  
-    // === UX: animate question swaps ===
-    function animateSwap(){
-      const qEl = document.getElementById("question");
-      qEl.classList.add("swap-out");
-      setTimeout(()=>{
-        qEl.classList.remove("swap-out");
-        qEl.classList.add("swap-in");
-        setTimeout(()=> qEl.classList.remove("swap-in"), 220);
-      }, 120);
-    }
-
-    // === Results: build a friendly plan by topic ===
-    const TOPIC_HINTS = {
-      "Phishing": ["Revisa remitente y URL (sin apuro).", "Nunca entres por el link: entra por tu ruta habitual.", "Reporta y borra."],
-      "MFA": ["Activa MFA en correo y cuentas “llave”.", "Prefiere app autenticadora o passkeys.", "Guarda códigos de respaldo."],
-      "Backups": ["Ten 3 copias (incluye 1 offline).", "Prueba restauración (no basta con “existe backup”).", "Documenta dónde está."],
-      "Contraseñas": ["Usa gestor + contraseñas únicas.", "Passkeys cuando sea posible.", "Cambia credenciales compartidas."],
-      "Dispositivos": ["Actualiza SO y apps.", "Bloqueo de pantalla + cifrado.", "Antiphishing en navegador."],
-      "Accesos": ["Roles mínimos.", "Revoca accesos antiguos.", "Evita cuentas compartidas."],
-      "Redes": ["Wi‑Fi con clave fuerte y WPA2/3.", "Evita redes abiertas; usa hotspot/VPN si aplica.", "Cambia claves por defecto."],
-      "Navegación": ["Cuidado con extensiones.", "Verifica HTTPS y dominio.", "Desconfía de urgencias."],
-      "Privacidad": ["Revisa permisos de apps.", "No publiques datos sensibles.", "Separa correo personal/servicios."]
-    };
-
-    function buildResults(){
-      const resultsEl = document.getElementById("results");
-      const scoreBig = document.getElementById("scoreBig");
-      const chipsRow = document.getElementById("chipsRow");
-      const planList = document.getElementById("planList");
-
-      // Compute per-topic stats from state (answersGiven holds selected index per question)
-      const topicStats = {};
-      QUIZ.questions.forEach((qq, i)=>{
-        const t = qq.topic || "General";
-        if(!topicStats[t]) topicStats[t] = { ok:0, total:0 };
-        topicStats[t].total++;
-        const sel = QUIZ.answers[i];
-        if(sel === qq.correct) topicStats[t].ok++;
-      });
-
-      // Score summary
-      const pct = Math.round((QUIZ.score / QUIZ.questions.length) * 100);
-      let label = "Base";
-      if(pct >= 85) label = "Fuerte";
-      else if(pct >= 70) label = "Bien";
-      else if(pct >= 50) label = "En progreso";
-
-      scoreBig.textContent = `${QUIZ.score} / ${QUIZ.questions.length} — ${label} (${pct}%)`;
-
-      // Chips by topic
-      chipsRow.innerHTML = "";
-      Object.keys(topicStats).slice(0,8).forEach(t=>{
-        const s = topicStats[t];
-        const chip = document.createElement("div");
-        chip.className = "chip";
-        chip.innerHTML = `<b>${t}</b> · ${s.ok}/${s.total}`;
-        chipsRow.appendChild(chip);
-      });
-
-      // Plan list: pick lowest-performing topics first
-      const ranked = Object.entries(topicStats).sort((a,b)=> (a[1].ok/a[1].total) - (b[1].ok/b[1].total));
-      planList.innerHTML = "";
-      ranked.slice(0,5).forEach(([t, s])=>{
-        const li = document.createElement("li");
-        const hints = TOPIC_HINTS[t] || ["Define un mínimo y sosténlo 30 días.", "Reduce superficie: menos cuentas, menos permisos.", "Hazlo simple."];
-        li.innerHTML = `
-          <div class="check">✓</div>
-          <div>
-            <strong>${t}: mínimo para hoy</strong>
-            <span>${hints[0]} ${hints[1] ? "• " + hints[1] : ""}</span>
-          </div>`;
-        planList.appendChild(li);
-      });
-
-      resultsEl.style.display = "block";
-      // reveal it if not yet
-      resultsEl.classList.add("on");
-      resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    // === Hook into existing quiz flow without breaking it ===
-    // We wrap/extend existing functions by patching after they exist.
-    // If the page defines renderQuestion(), nextQuestion() etc, we can add swap anim + results at end.
-    function safePatch(){
-      if(typeof window.renderQuestion === "function" && !window.__aegisPatched){
-        const _render = window.renderQuestion;
-        window.renderQuestion = function(){
-          animateSwap();
-          return _render.apply(this, arguments);
-        };
-
-        const _next = window.nextQuestion;
-        if(typeof _next === "function"){
-          window.nextQuestion = function(){
-            const before = window.QUIZ?.index ?? 0;
-            const res = _next.apply(this, arguments);
-            const after = window.QUIZ?.index ?? 0;
-            // If we've just moved past last question, show results
-            if(window.QUIZ && after >= window.QUIZ.questions.length){
-              buildResults();
-            }
-            return res;
-          };
-        }
-
-        // Also show results when user finishes via manual navigation to end
-        const nextBtn = document.getElementById("nextBtn");
-        if(nextBtn){
-          nextBtn.addEventListener("click", ()=>{
-            if(window.QUIZ && window.QUIZ.index === window.QUIZ.questions.length-1 && window.QUIZ.locked){
-              // next click will go to results
-              setTimeout(()=>{
-                if(window.QUIZ && window.QUIZ.index >= window.QUIZ.questions.length){
-                  buildResults();
-                }
-              }, 120);
-            }
-          });
-        }
-
-        // Restart hides results
-        const restartBtn = document.getElementById("restartBtn");
-        if(restartBtn){
-          restartBtn.addEventListener("click", ()=>{
-            const resultsEl = document.getElementById("results");
-            if(resultsEl) resultsEl.style.display = "none";
-          });
-        }
-
-        window.__aegisPatched = true;
-      }
-    }
-    window.addEventListener("load", ()=> setTimeout(safePatch, 0));
-
   </script>
 </body>
 </html>
