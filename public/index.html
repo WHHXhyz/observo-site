@@ -88,112 +88,171 @@
 
     /* Header */
 
-    header{
-      position:sticky; top:0; z-index:50;
-      background: rgba(255,255,255,.75);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(220,235,255,.75);
-    }
-    .nav{
-      display:grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items:center;
-      padding:14px 0;
-      gap:16px;
-    }
-    .brand{ justify-self: start; }
-    header nav{ justify-self: center; }
-    .nav-right{ justify-self: end; }
-    .brand{ display:flex; align-items:center; gap:12px; min-width: 180px; }
-    .logo{
-      width:38px; height:38px; border-radius:12px;
-      background: linear-gradient(135deg, var(--blue), #0D3B85);
-      position:relative;
-      box-shadow: 0 14px 30px rgba(11,42,91,.18);
-    }
-    /* simple "shield-ish" mark */
-    .logo:before{
-      content:"";
-      position:absolute; inset:9px 11px 9px 11px;
-      border-radius:10px 10px 14px 14px;
-      background: linear-gradient(135deg, rgba(143,211,255,.95), rgba(47,169,255,.85));
-      clip-path: polygon(50% 0%, 92% 18%, 92% 55%, 50% 100%, 8% 55%, 8% 18%);
-      opacity:.95;
-    }
-    .brand strong{ font-size:16px; letter-spacing:.2px; }
-    .brand span{ font-size:12px; color:var(--muted); display:block; margin-top:2px; }
+header{
+  position:sticky; top:0; z-index:50;
+  background: rgba(255,255,255,.68);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(220,235,255,.78);
+}
 
-    nav ul{
-      list-style:none; padding:0; margin:0;
-      display:flex; align-items:center; gap:18px;
-    }
-    nav a{
-      font-size:14px;
-      color: rgba(11,27,52,.85);
-      padding:10px 10px;
-      border-radius: 12px;
-      transition: background .15s ease, color .15s ease;
-      white-space: nowrap;
-    }
-    nav a:hover{ background: rgba(220,235,255,.55); color: var(--blue); }
+/* a subtle "floating bar" inside the sticky header */
+.nav{
+  display:grid;
+  grid-template-columns: auto;
+  justify-content:center;
+  align-items:center;
+  padding:10px 0;
+  gap:14px;
+}
 
-    .nav-right{ display:flex; align-items:center; gap:10px; }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
-      padding:11px 14px;
-      border-radius: 14px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.9);
-      color: var(--blue);
-      font-weight:600;
-      box-shadow: 0 12px 30px rgba(11,42,91,.08);
-      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
-    }
-    .btn:hover{ transform: translateY(-1px); box-shadow: 0 18px 40px rgba(11,42,91,.12); }
-    .btn.primary{
-      border-color: rgba(47,169,255,.35);
-      background: linear-gradient(135deg, rgba(47,169,255,.15), rgba(143,211,255,.25));
-      color: var(--blue);
-    }
+.brand{ justify-self:start; display:flex; align-items:center; gap:12px; min-width: 190px; }
+header nav{ justify-self:center; }
+.nav-right{ display:none; }
 
-    /* Mobile nav */
-    .menu-btn{
-      display:none;
-      width:44px; height:44px;
-      border-radius: 14px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.9);
-      box-shadow: 0 12px 30px rgba(11,42,91,.08);
-      cursor:pointer;
-      align-items:center; justify-content:center;
-    }
-    .menu-lines{
-      width:18px; height:12px; position:relative;
-    }
-    .menu-lines span{
-      position:absolute; left:0; right:0; height:2px; border-radius:99px;
-      background: rgba(11,42,91,.8);
-      transition: transform .15s ease, top .15s ease, opacity .15s ease;
-    }
-    .menu-lines span:nth-child(1){ top:0; }
-    .menu-lines span:nth-child(2){ top:5px; }
-    .menu-lines span:nth-child(3){ top:10px; }
-    .mobile-panel{
-      display:none;
-      padding: 0 0 14px 0;
-    }
-    .mobile-panel a{
-      display:block;
-      padding:12px 12px;
-      border:1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(255,255,255,.85);
-      margin:10px 0;
-      font-weight:600;
-      color: rgba(11,27,52,.9);
-    }
-    .mobile-panel a:hover{ background: rgba(220,235,255,.55); color: var(--blue); }
+.logo{
+  width:40px; height:40px; border-radius:14px;
+  background: linear-gradient(135deg, var(--blue), #0D3B85);
+  position:relative;
+  box-shadow: 0 16px 34px rgba(11,42,91,.16);
+}
+.logo:before{
+  content:"";
+  position:absolute; inset:9px 11px;
+  border-radius:10px 10px 14px 14px;
+  background: linear-gradient(135deg, rgba(143,211,255,.95), rgba(47,169,255,.85));
+  clip-path: polygon(50% 0%, 92% 18%, 92% 55%, 50% 100%, 8% 55%, 8% 18%);
+  opacity:.95;
+}
+
+.brand strong{ font-size:16px; letter-spacing:.2px; line-height:1.05; }
+.brand span{ font-size:12px; color:var(--muted); display:block; margin-top:2px; line-height:1.2; }
+
+/* Desktop nav visibility */
+header nav{ display:block; }
+
+/* Desktop links */
+nav ul{
+  list-style:none; padding:0; margin:0;
+  display:flex; align-items:center; gap:8px;
+  padding:8px;
+  border-radius: 999px;
+  border: 1px solid rgba(220,235,255,.9);
+  background: rgba(255,255,255,.82);
+  box-shadow: 0 14px 34px rgba(11,42,91,.08);
+  backdrop-filter: blur(10px);
+}
+
+nav a{
+  font-size:13.5px;
+  color: rgba(11,27,52,.86);
+  padding:10px 12px;
+  border-radius: 999px;
+  transition: background .16s ease, color .16s ease, transform .12s ease;
+  white-space: nowrap;
+  position: relative;
+}
+nav a:hover{
+  background: rgba(220,235,255,.55);
+  color: var(--blue);
+  transform: translateY(-1px);
+}
+
+/* Active state (set by JS) */
+nav a.active{
+  color: var(--blue);
+  background: linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.24));
+  border: 1px solid rgba(47,169,255,.30);
+  box-shadow: 0 14px 32px rgba(11,42,91,.10);
+}
+
+/* Nav CTA link (Contáctanos) */
+.nav-cta{
+  border: 1px solid rgba(47,169,255,.35);
+  background: linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.26));
+  box-shadow: 0 14px 34px rgba(11,42,91,.10);
+}
+.nav-cta:hover{
+  background: linear-gradient(135deg, rgba(47,169,255,.18), rgba(143,211,255,.32));
+  color: var(--blue) !important;
+}
+
+/* Focus styles (keyboard friendly) */
+nav a:focus-visible,
+.menu-btn:focus-visible{
+  outline: 3px solid rgba(47,169,255,.35);
+  outline-offset: 3px;
+}
+
+/* Mobile nav button */
+.menu-btn{
+  display:none;
+  width:46px; height:46px;
+  border-radius: 16px;
+  border:1px solid rgba(220,235,255,.95);
+  background: rgba(255,255,255,.88);
+  box-shadow: 0 14px 34px rgba(11,42,91,.10);
+  cursor:pointer;
+  align-items:center; justify-content:center;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.menu-btn:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 18px 45px rgba(11,42,91,.14);
+}
+.menu-lines{ width:18px; height:12px; position:relative; }
+.menu-lines span{
+  position:absolute; left:0; right:0; height:2px; border-radius:99px;
+  background: rgba(11,42,91,.78);
+  transition: transform .18s ease, top .18s ease, opacity .18s ease;
+}
+.menu-lines span:nth-child(1){ top:0; }
+.menu-lines span:nth-child(2){ top:5px; }
+.menu-lines span:nth-child(3){ top:10px; }
+
+/* Burger to X when open */
+.menu-btn.is-open .menu-lines span:nth-child(1){ top:5px; transform: rotate(45deg); }
+.menu-btn.is-open .menu-lines span:nth-child(2){ opacity:0; }
+.menu-btn.is-open .menu-lines span:nth-child(3){ top:5px; transform: rotate(-45deg); }
+
+/* Mobile panel: animated dropdown */
+.mobile-panel{
+  display:block;            /* keep in layout for animation */
+  max-height: 0;
+  overflow:hidden;
+  transition: max-height .22s ease;
+  padding: 0 0 0 0;
+}
+.mobile-panel.is-open{
+  max-height: 520px;
+  padding: 0 0 14px 0;
+}
+.mobile-panel a{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:12px 12px;
+  border:1px solid rgba(220,235,255,.95);
+  border-radius: 16px;
+  background: rgba(255,255,255,.88);
+  margin:10px 0;
+  font-weight:700;
+  color: rgba(11,27,52,.9);
+  box-shadow: 0 12px 28px rgba(11,42,91,.08);
+}
+.mobile-panel a:hover{
+  background: rgba(220,235,255,.55);
+  color: var(--blue);
+}
+
+/* Responsive */
+@media (max-width: 760px){
+  nav ul{ display:none; }
+  .menu-btn{ display:inline-flex; }
+  .nav{ grid-template-columns: auto auto; justify-content:space-between; }
+  header nav{ display:none; }
+}
+
 
     /* Sections */
     main{ padding: 0px 0 60px; }
@@ -224,19 +283,6 @@
     }
     /* Keep paragraph text readable */
     .sec-head h2{ letter-spacing: -0.35px; }
-
-    /* Nav CTA link */
-    .nav-cta{
-      position: relative;
-      padding: 10px 12px !important;
-      border: 1px solid rgba(47,169,255,.35);
-      background: linear-gradient(135deg, rgba(47,169,255,.12), rgba(143,211,255,.20));
-      box-shadow: 0 12px 28px rgba(11,42,91,.08);
-    }
-    .nav-cta:hover{
-      background: linear-gradient(135deg, rgba(47,169,255,.16), rgba(143,211,255,.26));
-      color: var(--blue) !important;
-    }
 
     /* Hero emblem */
     .hero-emblem{
@@ -865,15 +911,7 @@ margin: 0 auto;
   <header>
   <div class="wrap">
     <div class="nav">
-      <a class="brand" href="index.html" aria-label="Aegis8 — Inicio">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <strong>Aegis8</strong>
-          <span>Ciberseguridad con sentido</span>
-        </div>
-      </a>
-
-      <button class="menu-btn" type="button" id="menuBtn" aria-label="Abrir menú">
+<button class="menu-btn" type="button" id="menuBtn" aria-label="Abrir menú">
         <div class="menu-lines" aria-hidden="true">
           <span></span><span></span><span></span>
         </div>
@@ -881,12 +919,11 @@ margin: 0 auto;
 
       <nav aria-label="Navegación principal">
         <ul id="navLinks">
-          <li></li>
+          
           <li><a href="comotrabajamos.html" data-page="comotrabajamos.html">Cómo trabajamos</a></li>
           <li><a href="recursos.html" data-page="recursos.html">Recursos y guías</a></li>
           <li><a href="ayudamos.html" data-page="ayudamos.html">A quiénes ayudamos</a></li>
-          
-          <li><a href="test-cta.html" data-page="test-cta.html">Test de seguridad</a></li>
+          <li><a href="index.html#quienes" data-hash="#quienes">Quiénes somos</a></li>
           <li><a href="psocial.html" data-page="psocial.html">Proyecto social</a></li>
           <li><a class="nav-cta" href="contactanos.html" data-page="contactanos.html">Contáctanos</a></li>
         </ul>
@@ -902,7 +939,7 @@ margin: 0 auto;
       <a href="comotrabajamos.html">Cómo trabajamos</a>
       <a href="recursos.html">Recursos y guías</a>
       <a href="ayudamos.html">A quiénes ayudamos</a>
-      <a href="test-cta.html">Test de seguridad</a>
+      <a href="index.html#quienes">Quiénes somos</a>
       <a href="psocial.html">Proyecto social</a>
       <a href="contactanos.html">Contáctanos</a>
     </div>
@@ -1417,48 +1454,52 @@ margin: 0 auto;
   const btn = document.getElementById('menuBtn');
   const panel = document.getElementById('mobilePanel');
 
-  function closeMenu(){
-    if(!panel || !btn) return;
-    panel.style.display = 'none';
-    btn.setAttribute('aria-expanded','false');
+  function setOpen(open){
+    if(!btn || !panel) return;
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.classList.toggle('is-open', open);
+    panel.classList.toggle('is-open', open);
   }
-  function openMenu(){
-    if(!panel || !btn) return;
-    panel.style.display = 'block';
-    btn.setAttribute('aria-expanded','true');
-  }
-  function toggleMenu(){
-    if(!panel || !btn) return;
-    const isOpen = btn.getAttribute('aria-expanded') === 'true' || panel.style.display === 'block';
-    isOpen ? closeMenu() : openMenu();
+
+  function toggle(){
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    setOpen(!open);
   }
 
   if(btn && panel){
     btn.setAttribute('aria-expanded','false');
-    btn.addEventListener('click', (e) => { e.preventDefault(); toggleMenu(); });
+    setOpen(false);
+
+    btn.addEventListener('click', (e) => { e.preventDefault(); toggle(); });
 
     // Close menu when clicking a link
-    panel.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+    panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
 
     // Close when clicking outside
     document.addEventListener('click', (e) => {
-      if(panel.style.display !== 'block') return;
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      if(!open) return;
       const inside = panel.contains(e.target) || btn.contains(e.target);
-      if(!inside) closeMenu();
+      if(!inside) setOpen(false);
     });
 
     // Close on Esc
-    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeMenu(); });
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') setOpen(false); });
 
     // Close when resizing to desktop
-    window.addEventListener('resize', () => { if(window.innerWidth > 760) closeMenu(); });
+    window.addEventListener('resize', () => { if(window.innerWidth > 760) setOpen(false); });
   }
 
-  // Active link highlight by page
+  // Active link highlight by page (and hash for the "Quiénes somos" anchor)
   const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  const hash = (location.hash || '').toLowerCase();
+
   document.querySelectorAll('#navLinks a').forEach(a => {
     const page = (a.getAttribute('data-page') || '').toLowerCase();
-    if(page && page === path) a.classList.add('active');
+    const h = (a.getAttribute('data-hash') || '').toLowerCase();
+    if((page && page === path) || (h && h === hash)){
+      a.classList.add('active');
+    }
   });
 })();
 </script>
