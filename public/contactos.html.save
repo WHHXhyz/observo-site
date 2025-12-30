@@ -1188,7 +1188,10 @@ textarea{min-height:140px;resize:vertical;}
               <div style="font-weight:900;color:rgba(11,42,91,.9);font-size:13px;margin-bottom:8px;">Verificación anti‑spam</div>
               <!-- REEMPLAZA TU_SITE_KEY por tu Site Key de Cloudflare Turnstile -->
               <div class="cf-turnstile" data-response-field-name="cf-turnstile-response"
-                   data-sitekey="0x4AAAAAACJsmBKJRuB4ux1A"
+                   data-sitekey="x-special/nautilus-clipboard
+copy
+file:///tmp/VMwareDnD/2rSa26/contactos_turnstile_fixed.html
+"
                    data-theme="light"
                    data-callback="onTurnstileSuccess"
                    data-expired-callback="onTurnstileExpired"
