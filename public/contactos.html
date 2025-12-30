@@ -1188,7 +1188,7 @@ textarea{min-height:140px;resize:vertical;}
               <div style="font-weight:900;color:rgba(11,42,91,.9);font-size:13px;margin-bottom:8px;">Verificación anti‑spam</div>
               <!-- REEMPLAZA TU_SITE_KEY por tu Site Key de Cloudflare Turnstile -->
               <div class="cf-turnstile"
-                   data-sitekey="0x4AAAAAACJsmBKJRuB4ux1A"
+                   data-sitekey="PASTE_YOUR_TURNSTILE_SITE_KEY_HERE"
                    data-theme="light"
                    data-callback="onTurnstileSuccess"
                    data-expired-callback="onTurnstileExpired"
@@ -1448,6 +1448,21 @@ window.onTurnstileError = function(){
   if(b) b.disabled = true;
   showToast('No se pudo verificar (intenta de nuevo)');
 };
+
+
+// Fallback: habilita/deshabilita el botón mirando el token real del widget (por si el callback no dispara)
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('submitBtn');
+  const getTokenEl = () => document.querySelector('[name="cf-turnstile-response"]');
+  const tick = () => {
+    const el = getTokenEl();
+    const ok = !!(el && typeof el.value === 'string' && el.value.length > 10);
+    window._turnstile_ok = ok;
+    if (btn) btn.disabled = !ok;
+  };
+  setInterval(tick, 500);
+  tick();
+});
 
 async function sendContact(payload){
   const res = await fetch('/api/contacto', {
