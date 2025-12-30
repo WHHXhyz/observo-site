@@ -980,7 +980,49 @@ textarea{min-height:140px;resize:vertical;}
 #contacto .card{ max-width: none !important; }
 #contacto .preview{ max-width: none !important; }
 
+
+/* === Turnstile + form status (security) === */
+.status{
+  padding:12px 14px;
+  border-radius:16px;
+  border:1px solid rgba(220,235,255,.95);
+  background: rgba(255,255,255,.9);
+  color: var(--muted);
+  box-shadow: 0 12px 30px rgba(11,42,91,.06);
+}
+.status.ok{
+  border-color: rgba(47,169,255,.45);
+  background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.16));
+  color: rgba(11,42,91,.92);
+  font-weight: 800;
+}
+.status.err{
+  border-color: rgba(255,77,109,.45);
+  background: linear-gradient(135deg, rgba(255,77,109,.10), rgba(255,255,255,.92));
+  color: rgba(11,27,52,.92);
+  font-weight: 800;
+}
+.turnstile-wrap{
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(220,235,255,.95);
+  background: rgba(255,255,255,.88);
+  box-shadow: 0 12px 30px rgba(11,42,91,.06);
+}
+.turnstile-note{
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.btn[disabled]{
+  opacity: .55;
+  cursor: not-allowed;
+  transform:none !important;
+}
+
 </style>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -1140,8 +1182,22 @@ textarea{min-height:140px;resize:vertical;}
               <div class="counter"><strong id="urgLabel">normal</strong></div>
             </div>
 
+
+            <!-- Cloudflare Turnstile (anti-spam) -->
+            <div class="turnstile-wrap" aria-label="Verificación anti-spam">
+              <div style="font-weight:900;color:rgba(11,42,91,.9);font-size:13px;margin-bottom:8px;">Verificación anti‑spam</div>
+              <!-- REEMPLAZA TU_SITE_KEY por tu Site Key de Cloudflare Turnstile -->
+              <div class="cf-turnstile"
+                   data-sitekey="0x4AAAAAACJsmBKJRuB4ux1A"
+                   data-theme="light"
+                   data-callback="onTurnstileSuccess"
+                   data-expired-callback="onTurnstileExpired"
+                   data-error-callback="onTurnstileError"></div>
+              <div class="turnstile-note">Esto bloquea bots. No guardamos datos sensibles.</div>
+            </div>
+
             <div class="btn-row" style="margin-top:14px;">
-              <button class="btn primary" type="submit">Enviar (demo)</button>
+              <button class="btn primary" id="submitBtn" type="submit" disabled>Enviar</button>
               <button class="btn" type="button" id="copyMsg">Copiar mensaje</button>
               <button class="btn ghost" type="button" id="resetForm">Limpiar</button>
             </div>
@@ -1374,12 +1430,106 @@ Lo que ya tengo (MFA / backups / accesos / correo):
 
   const form = document.getElementById('contactForm');
   const status = document.getElementById('status');
-  form.addEventListener('submit', (e)=>{
-    e.preventDefault();
-    status.className = 'status ok';
-    status.textContent = 'Listo ✅ (demo). Si luego conectas backend, lo dejamos production.';
-    showToast('Enviado (demo) ✨');
+  // === Turnstile callbacks (must be global functions for data-callback) ===
+window._turnstile_ok = false;
+window.onTurnstileSuccess = function(token){
+  window._turnstile_ok = true;
+  const b = document.getElementById('submitBtn');
+  if(b) b.disabled = false;
+};
+window.onTurnstileExpired = function(){
+  window._turnstile_ok = false;
+  const b = document.getElementById('submitBtn');
+  if(b) b.disabled = true;
+};
+window.onTurnstileError = function(){
+  window._turnstile_ok = false;
+  const b = document.getElementById('submitBtn');
+  if(b) b.disabled = true;
+  showToast('No se pudo verificar (intenta de nuevo)');
+};
+
+async function sendContact(payload){
+  const res = await fetch('/api/contacto', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
   });
+  let data = null;
+  try{ data = await res.json(); }catch(e){}
+  if(!res.ok){
+    const msg = (data && (data.error || data.message)) ? (data.error || data.message) : 'Error enviando. Intenta nuevamente.';
+    throw new Error(msg);
+  }
+  return data;
+}
+
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+
+  const btn = document.getElementById('submitBtn');
+  const nombre = document.getElementById('nombre').value.trim();
+  const correo = document.getElementById('correo').value.trim();
+  const perfil = elPerfil.value;
+  const motivo = elMotivo.value;
+  const mensaje = elMsg.value.trim();
+  const urgencia = urgToLabel(elUrg.value);
+
+  // Turnstile token is rendered as a hidden textarea by Cloudflare
+  const tokenEl = document.querySelector('textarea[name="cf-turnstile-response"]');
+  const token = tokenEl ? tokenEl.value.trim() : '';
+
+  // Basic client-side checks (server still validates everything)
+  if(!nombre || !correo || !correo.includes('@')){
+    status.className = 'status err';
+    status.textContent = 'Revisa nombre y correo.';
+    showToast('Falta info');
+    return;
+  }
+  if(!token){
+    status.className = 'status err';
+    status.textContent = 'Completa la verificación anti‑spam para enviar.';
+    showToast('Verificación pendiente');
+    return;
+  }
+
+  status.className = 'status';
+  status.textContent = 'Enviando…';
+  if(btn) btn.disabled = true;
+
+  try{
+    await sendContact({
+      nombre, correo, perfil, motivo, mensaje, urgencia,
+      turnstileToken: token,
+      page: location.href,
+      ts: new Date().toISOString()
+    });
+
+    status.className = 'status ok';
+    status.textContent = 'Enviado ✅ Te responderemos pronto.';
+    showToast('Enviado ✅');
+
+    // Reset form + Turnstile for next message
+    form.reset();
+    elUrg.value = 30;
+    render();
+    window._turnstile_ok = false;
+    if(typeof turnstile !== 'undefined'){
+      try{ turnstile.reset(); }catch(e){}
+    }
+    if(btn) btn.disabled = true;
+
+  }catch(err){
+    status.className = 'status err';
+    status.textContent = err && err.message ? err.message : 'Error enviando. Intenta nuevamente.';
+    showToast('Error');
+    window._turnstile_ok = false;
+    if(btn) btn.disabled = true;
+    if(typeof turnstile !== 'undefined'){
+      try{ turnstile.reset(); }catch(e){}
+    }
+  }
+});
 
   document.getElementById('resetForm').addEventListener('click', ()=>{
     form.reset();
