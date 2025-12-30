@@ -1447,6 +1447,11 @@ header .nav{ max-width: var(--max); margin: 0 auto; }
       background:rgba(255,255,255,.65);
     }
 
+
+/* === Fix: always show hero image on Propuesta === */
+.hero-illust{opacity:1 !important; transform:none !important;}
+.hero-illust img{opacity:1 !important; transform:none !important;}
+
 </style>
 
 <style>
@@ -1508,11 +1513,11 @@ header .nav{ max-width: var(--max); margin: 0 auto; }
         <div class="center">
 <h1 class="reveal">Propuesta de valor</h1>
 
-          <div class="hero-illust reveal" aria-label="Ilustración del proyecto social">
+          <div class="hero-illust" aria-label="Ilustración del proyecto social">
             <img src="/assets/social.png" alt="Proyecto social de ciberseguridad: personas, startups y pequeñas empresas" loading="lazy" />
           </div>
 
-          <p class="lead reveal">
+          <p class="lead">
             Aegis8 acompaña a personas, startups y pequeñas organizaciones a <strong>entender</strong> y <strong>fortalecer</strong> su seguridad con acciones
             realistas, lenguaje claro y entregables que se pueden sostener.
           </p>
