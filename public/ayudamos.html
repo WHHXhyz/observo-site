@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
 <!-- Google tag (gtag.js) -->
@@ -10,314 +10,1358 @@
 
   gtag('config', 'G-XNJT1V3G6T');
 </script>
-
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aegis8 · Propuesta de Valor</title>
-  <meta name="description" content="Propuesta de valor de Aegis8: a quiénes ayudamos, por qué lo hacemos, qué queremos lograr y qué nos diferencia.">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <title>Aegis8 — A quiénes ayudamos</title>
+  <meta name="description" content="Aegis8 acompaña a personas, startups y pequeñas organizaciones con ciberseguridad clara, realista y aplicable." />
+  <meta name="theme-color" content="#0B2A5B" />
   <style>
+
     :root{
-      --bg:#0b0d10;
-      --bg-soft:#12151c;
-      --card:#161a23;
-      --border:rgba(255,255,255,.08);
-      --text:#f2f4f8;
-      --muted:#b6bccb;
-      --accent:#ff2e2e;
-      --accent-soft:#ff5c5c;
+      --bg: #F7FBFF;
+      --card: #FFFFFF;
+      --text: #0B1B34;
+      --muted:#4B5E7B;
+      --line:#DCEBFF;
+      --blue:#0B2A5B;
+      --sky:#2FA9FF;
+      --sky2:#8FD3FF;
+      --shadow: 0 18px 45px rgba(11,42,91,.10);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 920px;
     }
 
-    *{box-sizing:border-box}
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
       margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell;
-      background:
-        radial-gradient(800px 400px at 10% -10%, rgba(255,46,46,.15), transparent 40%),
-        radial-gradient(600px 300px at 90% 10%, rgba(255,46,46,.08), transparent 45%),
-        var(--bg);
+      font-family: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       color:var(--text);
-      line-height:1.6;
+      background:
+        radial-gradient(900px 420px at 20% -10%, rgba(47,169,255,.25), transparent 60%),
+        radial-gradient(900px 420px at 90% 0%, rgba(143,211,255,.25), transparent 60%),
+        linear-gradient(180deg, #FFFFFF 0%, var(--bg) 100%);
+      line-height:1.45;
     }
 
-    header{
-      padding:80px 20px 60px;
-      text-align:center;
-      max-width:1100px;
-      margin:auto;
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+    .center{ text-align:center; }
+    .muted{ color:var(--muted); }
+    .prose-center{max-width:72ch;margin:0 auto;text-align:center;}
+    .prose-center p{margin:0 0 10px;}
+    .prose-center p:last-child{margin-bottom:0;}
+
+    .pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.8);
+      border-radius:999px;
+      box-shadow: 0 8px 25px rgba(11,42,91,.06);
+      backdrop-filter: blur(8px);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, var(--sky2), var(--sky));
+      box-shadow: 0 0 0 4px rgba(47,169,255,.12);
     }
 
-    header h1{
-      font-size:clamp(2.2rem,4vw,3.2rem);
-      margin:0 0 20px;
-      letter-spacing:.4px;
+    
+    
+    .hero-logo-row{
+      margin: -18px auto -22px; /* closer to header + closer to title */
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position: relative;
     }
 
-    header p{
-      max-width:760px;
-      margin:0 auto;
-      color:var(--muted);
-      font-size:1.05rem;
+    .hero-logo-img{
+      width: 520px;
+      max-width: 96%;
+      height:auto;
+      object-fit: contain;
+      filter: drop-shadow(0 18px 40px rgba(47,169,255,.18));
+      display:block;
     }
 
-    section{
-      max-width:1100px;
-      margin:0 auto 70px;
-      padding:0 20px;
+    @media (max-width: 760px){
+      .hero-logo-row{ margin: -10px auto -14px; }
+      .hero-logo-img{ width: 360px; }
     }
 
-    .grid{
+    /* Header */
+
+header{
+  position:sticky; top:0; z-index:50;
+  background: rgba(255,255,255,.68);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(220,235,255,.78);
+}
+
+/* a subtle "floating bar" inside the sticky header */
+.nav{
+  display:grid;
+  grid-template-columns: auto;
+  justify-content:center;
+  align-items:center;
+  padding:10px 0;
+  gap:14px;
+}
+
+.brand{ justify-self:start; display:flex; align-items:center; gap:12px; min-width: 190px; }
+header nav{ justify-self:center; }
+.nav-right{ display:none; }
+
+.logo{
+  width:40px; height:40px; border-radius:14px;
+  background: linear-gradient(135deg, var(--blue), #0D3B85);
+  position:relative;
+  box-shadow: 0 16px 34px rgba(11,42,91,.16);
+}
+.logo:before{
+  content:"";
+  position:absolute; inset:9px 11px;
+  border-radius:10px 10px 14px 14px;
+  background: linear-gradient(135deg, rgba(143,211,255,.95), rgba(47,169,255,.85));
+  clip-path: polygon(50% 0%, 92% 18%, 92% 55%, 50% 100%, 8% 55%, 8% 18%);
+  opacity:.95;
+}
+
+.brand strong{ font-size:16px; letter-spacing:.2px; line-height:1.05; }
+.brand span{ font-size:12px; color:var(--muted); display:block; margin-top:2px; line-height:1.2; }
+
+/* Desktop nav visibility */
+header nav{ display:block; }
+
+/* Desktop links */
+nav ul{
+  list-style:none; padding:0; margin:0;
+  display:flex; align-items:center; gap:8px;
+  padding:8px;
+  border-radius: 999px;
+  border: 1px solid rgba(220,235,255,.9);
+  background: rgba(255,255,255,.82);
+  box-shadow: 0 14px 34px rgba(11,42,91,.08);
+  backdrop-filter: blur(10px);
+}
+
+nav a{
+  font-size:13.5px;
+  color: rgba(11,27,52,.86);
+  padding:10px 12px;
+  border-radius: 999px;
+  transition: background .16s ease, color .16s ease, transform .12s ease;
+  white-space: nowrap;
+  position: relative;
+}
+nav a:hover{
+  background: rgba(220,235,255,.55);
+  color: var(--blue);
+  transform: translateY(-1px);
+}
+
+/* Active state (set by JS) */
+nav a.active{
+  color: var(--blue);
+  background: linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.24));
+  border: 1px solid rgba(47,169,255,.30);
+  box-shadow: 0 14px 32px rgba(11,42,91,.10);
+}
+
+/* Nav CTA link (Contáctanos) */
+.nav-cta{
+  border: 1px solid rgba(47,169,255,.35);
+  background: linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.26));
+  box-shadow: 0 14px 34px rgba(11,42,91,.10);
+}
+.nav-cta:hover{
+  background: linear-gradient(135deg, rgba(47,169,255,.18), rgba(143,211,255,.32));
+  color: var(--blue) !important;
+}
+
+/* Focus styles (keyboard friendly) */
+nav a:focus-visible,
+.menu-btn:focus-visible{
+  outline: 3px solid rgba(47,169,255,.35);
+  outline-offset: 3px;
+}
+
+/* Mobile nav button */
+.menu-btn{
+  display:none;
+  width:46px; height:46px;
+  border-radius: 16px;
+  border:1px solid rgba(220,235,255,.95);
+  background: rgba(255,255,255,.88);
+  box-shadow: 0 14px 34px rgba(11,42,91,.10);
+  cursor:pointer;
+  align-items:center; justify-content:center;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.menu-btn:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 18px 45px rgba(11,42,91,.14);
+}
+.menu-lines{ width:18px; height:12px; position:relative; }
+.menu-lines span{
+  position:absolute; left:0; right:0; height:2px; border-radius:99px;
+  background: rgba(11,42,91,.78);
+  transition: transform .18s ease, top .18s ease, opacity .18s ease;
+}
+.menu-lines span:nth-child(1){ top:0; }
+.menu-lines span:nth-child(2){ top:5px; }
+.menu-lines span:nth-child(3){ top:10px; }
+
+/* Burger to X when open */
+.menu-btn.is-open .menu-lines span:nth-child(1){ top:5px; transform: rotate(45deg); }
+.menu-btn.is-open .menu-lines span:nth-child(2){ opacity:0; }
+.menu-btn.is-open .menu-lines span:nth-child(3){ top:5px; transform: rotate(-45deg); }
+
+/* Mobile panel: animated dropdown */
+.mobile-panel{
+  display:block;            /* keep in layout for animation */
+  max-height: 0;
+  overflow:hidden;
+  transition: max-height .22s ease;
+  padding: 0 0 0 0;
+}
+.mobile-panel.is-open{
+  max-height: 520px;
+  padding: 0 0 14px 0;
+}
+.mobile-panel a{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:12px 12px;
+  border:1px solid rgba(220,235,255,.95);
+  border-radius: 16px;
+  background: rgba(255,255,255,.88);
+  margin:10px 0;
+  font-weight:700;
+  color: rgba(11,27,52,.9);
+  box-shadow: 0 12px 28px rgba(11,42,91,.08);
+}
+.mobile-panel a:hover{
+  background: rgba(220,235,255,.55);
+  color: var(--blue);
+}
+
+/* Responsive */
+@media (max-width: 760px){
+  nav ul{ display:none; }
+  .menu-btn{ display:inline-flex; }
+  .nav{ grid-template-columns: auto auto; justify-content:space-between; }
+  header nav{ display:none; }
+}
+
+
+    /* Sections */
+    main{ padding: 0px 0 60px; }
+    .hero{ padding: 4px 0 10px; text-align:center; }
+    .hero-grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-      gap:26px;
+      grid-template-columns: 1.15fr .85fr;
+      gap:28px;
+      align-items:stretch;
+      margin-top: 10px;
     }
+    h1{
+      font-size: clamp(32px, 4vw, 46px);
+      line-height: 1.08;
+      margin: 6px 0 26px;
+      letter-spacing: -0.6px;
+    }
+    
+    /* Title styling: cyber gradient, not "dead" black */
+    h1, .sec-head h2{
+      font-weight: 900;
+      letter-spacing: -0.7px;
+      background: linear-gradient(90deg, rgba(11,42,91,1) 0%, rgba(47,169,255,1) 55%, rgba(143,211,255,1) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 14px 26px rgba(47,169,255,.10));
+    }
+    /* Keep paragraph text readable */
+    .sec-head h2{ letter-spacing: -0.35px; }
+
+    /* Hero emblem */
+    .hero-emblem{
+      margin: 28px auto 18px;
+      position: relative;
+      width: 100%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+    .emblem-svg{
+      width: 130px;
+      height: 130px;
+      display:block;
+      filter: drop-shadow(0 24px 55px rgba(47,169,255,.18));
+      animation: floaty 3.8s ease-in-out infinite;
+    }
+    .emblem-img{
+      width: 360px;
+      max-width: 90%;
+      height: auto;
+      object-fit: contain;
+      display:block;
+      margin: 0 auto;
+      filter: drop-shadow(0 28px 65px rgba(47,169,255,.22));
+      animation: floaty 3.8s ease-in-out infinite;
+    }
+    .emblem-glow{
+      position:absolute;
+      inset: 22px;
+      border-radius: 26px;
+      background: radial-gradient(circle at 30% 25%, rgba(143,211,255,.35), rgba(47,169,255,.10), transparent 70%);
+      filter: blur(10px);
+      z-index:-1;
+      animation: pulse 3.2s ease-in-out infinite;
+    }
+    @keyframes floaty{
+      0%,100%{ transform: translateY(0); }
+      50%{ transform: translateY(-6px); }
+    }
+    @keyframes pulse{
+      0%,100%{ opacity:.8; transform: scale(1); }
+      50%{ opacity:1; transform: scale(1.06); }
+    }
+
+    /* Principle strip (no "PRINCIPIO" label) */
+    .principle-strip{
+      margin: 10px auto 0;
+      width: min(900px, 100%);
+      border-radius: 18px;
+      border: 1px solid rgba(47,169,255,.28);
+      background:
+        linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.16)),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.0) 0, rgba(255,255,255,.0) 14px, rgba(47,169,255,.06) 15px, rgba(255,255,255,.0) 30px);
+      box-shadow: 0 22px 60px rgba(11,42,91,.10);
+      padding: 16px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 12px;
+      position: relative;
+      overflow:hidden;
+    }
+    .principle-strip:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(520px 180px at 20% 0%, rgba(47,169,255,.20), transparent 60%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .p-ico{
+      width: 34px; height: 34px;
+      border-radius: 14px;
+      border: 1px solid rgba(220,235,255,.95);
+      background: rgba(255,255,255,.75);
+      display:grid; place-items:center;
+      color: rgba(11,42,91,.92);
+      flex: 0 0 auto;
+      box-shadow: 0 14px 30px rgba(11,42,91,.06);
+    }
+    .p-ico svg{ width: 20px; height: 20px; }
+    .p-text{
+      position: relative;
+      color: rgba(11,27,52,.92);
+      font-weight: 700;
+      text-align:center;
+    }
+    .p-text strong{
+      background: linear-gradient(90deg, rgba(47,169,255,.25), rgba(143,211,255,.35));
+      border: 1px solid rgba(47,169,255,.25);
+      padding: 0 .35em;
+      border-radius: .65em;
+      white-space: nowrap;
+    }
+    .p-line{
+      position:absolute;
+      left: 10%;
+      right: 10%;
+      bottom: 8px;
+      height: 1px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.55), rgba(143,211,255,.70), rgba(47,169,255,.55), rgba(47,169,255,0));
+      opacity:.85;
+      animation: shimmer 2.6s ease-in-out infinite;
+    }
+    @keyframes shimmer{
+      0%,100%{ filter: blur(0px); opacity:.75; }
+      50%{ filter: blur(.3px); opacity:1; }
+    }
+
+    /* Tile icons */
+    .tile-top{
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+      padding-right: 56px; /* espacio para el icono */
+    }
+    .tile-ico{
+      position:absolute;
+      top: 16px;
+      right: 16px;
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      border: 1px solid rgba(140,198,255,.55);
+      background: rgba(255,255,255,.78);
+      display:grid;
+      place-items:center;
+      color: rgba(11,42,91,.92);
+      box-shadow: 0 18px 44px rgba(11,42,91,.10);
+      backdrop-filter: blur(10px);
+    }
+    .tile-ico svg{ width: 20px; height: 20px; }
+
+.lead{
+      font-size: clamp(16px, 1.35vw, 18px);
+      color: var(--muted);
+      margin: 0px auto 18px;
+      max-width: 62ch;
+      text-align: center;
+    }
+    .hero-cta{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
 
     .card{
-      background:linear-gradient(180deg,var(--card),var(--bg-soft));
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:26px 24px;
-      position:relative;
-      transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      background: rgba(255,255,255,.9);
+      border:1px solid var(--line);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+    }
+    .hero-card{
+      padding: 18px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      min-height: 100%;
+    }
+    .stat{
+      display:flex; gap:14px; align-items:flex-start;
+      padding:14px;
+      border-radius: var(--radius);
+      border:1px solid rgba(220,235,255,.85);
+      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      margin-top: 12px;
+    }
+    .ico{
+      width:40px; height:40px; border-radius: 14px;
+      background: rgba(11,42,91,.08);
+      border:1px solid rgba(220,235,255,.95);
+      display:grid; place-items:center;
+      color: var(--blue);
+      font-weight:800;
+    }
+    .stat strong{ display:block; font-size:14px; }
+    .stat span{ display:block; font-size:13px; color: var(--muted); margin-top:4px; }
+
+    section{
+      padding: 52px 0;
+    }
+    .sec-head{
+      display:flex; flex-direction:column; gap:8px;
+      margin-bottom: 18px;
+      align-items:center;
+      text-align:center;
+    }
+    .sec-head h2{
+      margin:0;
+      font-size: clamp(22px, 2.3vw, 30px);
+      letter-spacing: -0.3px;
+    }
+    .grid-2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:18px;
+    }
+    .grid-4{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:14px;
+    }
+    
+
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
     }
 
-    .card::before{
+    /* Clickable cards */
+    .stat-btn, .tile-btn{
+      text-align:left;
+      cursor:pointer;
+    }
+    .stat-btn{
+      width:100%;
+      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+    }
+    .stat-btn:focus-visible, .tile-btn:focus-visible{
+      outline: 3px solid rgba(47,169,255,.35);
+      outline-offset: 3px;
+    }
+    .tile-btn{
+      background: rgba(255,255,255,.92);
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .tile-btn:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 50px rgba(11,42,91,.12);
+      border-color: rgba(47,169,255,.35);
+    }
+
+    /* Subtle entrance animation */
+    .reveal{
+      opacity:0;
+      transform: translateY(10px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .reveal.on{
+      opacity:1;
+      transform:none;
+    }
+
+    /* Modal */
+    .modal{
+      position:fixed; inset:0; z-index:1000;
+      display:none;
+      padding: 18px;
+      background: rgba(11,27,52,.55);
+      backdrop-filter: blur(6px);
+    }
+    .modal.show{ display:grid; place-items:center; }
+    .modal-dialog{
+      width: min(780px, 100%);
+      background: rgba(255,255,255,.96);
+      border: 1px solid rgba(220,235,255,.95);
+      border-radius: 22px;
+      box-shadow: 0 28px 70px rgba(11,42,91,.22);
+      overflow:hidden;
+      animation: modalIn .18s ease-out;
+    }
+    @keyframes modalIn{
+      from{ transform: translateY(8px) scale(.99); opacity:.0; }
+      to{ transform: none; opacity:1; }
+    }
+    .modal-head{
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid rgba(220,235,255,.9);
+      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+    }
+    .modal-title{
+      margin:0;
+      font-size: 18px;
+      letter-spacing: -0.2px;
+      color: var(--blue);
+    }
+    .modal-close{
+      width:42px; height:42px;
+      border-radius: 14px;
+      border:1px solid rgba(220,235,255,.95);
+      background: rgba(255,255,255,.9);
+      cursor:pointer;
+      display:grid; place-items:center;
+      color: rgba(11,42,91,.85);
+      box-shadow: 0 12px 30px rgba(11,42,91,.10);
+    }
+    .modal-body{
+      padding: 14px 16px 16px;
+      color: rgba(11,27,52,.92);
+    }
+    .modal-body p{ margin: 0 0 10px; color: var(--muted); }
+    .modal-body ul{
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+    .modal-body li{ margin: 7px 0; }
+.tile{
+      position: relative;
+      overflow: hidden;
+      padding: 18px 18px 16px;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(140, 198, 255, .55);
+      background:
+        linear-gradient(135deg,
+          rgba(255,255,255,.96) 0%,
+          rgba(47,169,255,.07) 38%,
+          rgba(143,211,255,.18) 100%);
+      box-shadow: 0 18px 44px rgba(11,42,91,.10);
+      min-height: 168px;
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    .tile::after{
+      content:"";
+      position:absolute;
+      top:-120px; right:-140px;
+      width: 340px; height: 340px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%,
+        rgba(47,169,255,.18) 0%,
+        rgba(143,211,255,.12) 35%,
+        rgba(143,211,255,0) 70%);
+      pointer-events:none;
+    }
+    .tile::before{
       content:"";
       position:absolute;
       inset:0;
-      border-radius:14px;
-      background:linear-gradient(120deg,transparent 40%,rgba(255,46,46,.12),transparent 60%);
-      opacity:0;
-      transition:opacity .25s ease;
+      background:
+        radial-gradient(900px 340px at 20% 0%,
+          rgba(47,169,255,.09), transparent 60%);
       pointer-events:none;
     }
-
-    .card:hover{
-      transform:translateY(-4px);
-      border-color:rgba(255,46,46,.35);
-      box-shadow:0 18px 40px rgba(0,0,0,.45);
+    .tile:hover{
+      transform: translateY(-3px);
+      box-shadow: 0 26px 70px rgba(11,42,91,.14);
+      border-color: rgba(47,169,255,.70);
+    }
+    .tile h3{
+      margin: 10px 0 8px;
+      font-size: 16px;
+      letter-spacing: -0.1px;
+    }
+    .tile p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(220,235,255,.9);
+      background: rgba(47,169,255,.08);
+      color: rgba(11,42,91,.88);
+      font-weight:700;
+      font-size: 12px;
     }
 
-    .card:hover::before{opacity:1}
+    .values{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      align-items:start;
+    }
+    .list{
+      margin:0; padding:0; list-style:none;
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .list li{
+      display:flex; gap:10px; align-items:flex-start;
+      padding: 12px 12px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.92);
+    }
+    .check{
+      width:26px; height:26px; border-radius: 10px;
+      background: linear-gradient(135deg, rgba(47,169,255,.20), rgba(143,211,255,.35));
+      border:1px solid rgba(47,169,255,.25);
+      display:grid; place-items:center;
+      color: var(--blue);
+      font-weight:900;
+      flex: 0 0 auto;
+    }
+    .list strong{ display:block; font-size:14px; }
+    .list span{ display:block; font-size:13px; color: var(--muted); margin-top:2px; }
 
-    .eyebrow{
-      color:var(--accent);
-      font-size:.75rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      margin-bottom:10px;
+    .social{
+      padding: 18px;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(47,169,255,.25);
+      background: linear-gradient(135deg, rgba(47,169,255,.12), rgba(143,211,255,.22));
+      box-shadow: 0 18px 45px rgba(11,42,91,.10);
+    }
+footer{
+  padding: 26px 0 30px;
+  border-top: 1px solid rgba(220,235,255,.9);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.75), rgba(247,251,255,.95));
+}
+    .foot{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:18px;
+      flex-wrap:wrap;
+    }
+    .foot small{ color: var(--muted); }
+    .foot a{ text-decoration: underline; text-underline-offset: 3px; }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .grid-4{ grid-template-columns: repeat(2, 1fr); }
+      .grid-3{ grid-template-columns: 1fr; }
+      .values{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px){
+      nav ul{ display:none; }
+      .menu-btn{ display:inline-flex; }
+      .grid-2{ grid-template-columns: 1fr; }
+      .grid-4{ grid-template-columns: 1fr; }
+      .grid-3{ grid-template-columns: 1fr; }
+      .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 14px; }
+      .hero{ padding-top: 0px; text-align:center; }
+      .hero-card{ padding: 16px; }
     }
 
-    h2{
-      font-size:1.6rem;
-      margin:0 0 18px;
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ scroll-behavior:auto !important; transition:none !important; }
+    }
+  
+
+    /* Make sections feel concentrated and centered */
+    section{ padding: 46px 0; }
+    .sec-head{ align-items:center; text-align:center; }
+    .sec-head p{ margin-left:auto !important; margin-right:auto !important; }
+
+    /* Constrain long copy */
+/* Cards: keep them smaller and centered */
+    .grid-2, .grid-3, .grid-4{
+      justify-content: center;
+    }
+    .grid-2{
+      grid-template-columns: repeat(2, minmax(0, 420px));
+      justify-content:center;
+    }
+    .grid-3{
+      grid-template-columns: repeat(3, minmax(0, 320px));
+      justify-content:center;
+    }
+    .grid-4{
+      grid-template-columns: repeat(4, minmax(0, 260px));
+      justify-content:center;
+    }
+    .tile, .card{
+      max-width: 420px;
+      margin-left:auto;
+      margin-right:auto;
     }
 
-    h3{
-      margin:6px 0 12px;
-      font-size:1.15rem;
+    @media (max-width: 980px){
+      .grid-4{ grid-template-columns: repeat(2, minmax(0, 320px)); }
+      .grid-3{ grid-template-columns: repeat(2, minmax(0, 340px)); }
+    }
+    @media (max-width: 760px){
+      section{ padding: 38px 0; }
+      .grid-4, .grid-3, .grid-2{ grid-template-columns: 1fr; }
+      .tile, .card{ max-width: 560px; }
+      .emblem-img{
+      width: 360px;
+      max-width: 90%;
+      height: auto;
+      object-fit: contain;
+      display:block;
+      margin: 0 auto;
+      filter: drop-shadow(0 28px 65px rgba(47,169,255,.22));
+      animation: floaty 3.8s ease-in-out infinite;
+    }
     }
 
-    p{margin:0 0 12px}
-    ul{padding-left:18px;margin:10px 0 0}
-    li{margin-bottom:8px;color:var(--muted)}
+.sec-sub{
+margin: 0 auto;
+      max-width: 64ch;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14.5px;
+      line-height: 1.55;
+}
+/* Compact stacked paragraphs in section headers */
+    .sec-head .sec-sub + .sec-sub{ margin-top: 6px !important; }
 
-    .highlight{
-      color:var(--accent-soft);
-      font-weight:600;
+
+/* === Cards style synced with A quiénes ayudamos === */
+/* Personas cards */
+    .persona{
+      position:relative;
+      padding:16px;
+      text-align:left;
+      cursor:pointer;
+      overflow:hidden;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .persona:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
+    .tag{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid rgba(220,235,255,.9);
+      background:rgba(47,169,255,.08);
+      color:rgba(11,42,91,.88);
+      font-weight:900;font-size:12px;
+      white-space:nowrap;
+    }
+    .persona h3{margin:10px 0 6px;font-size:18px;letter-spacing:-.14px}
+    .persona p{margin:0;color:var(--muted);font-size:14.2px}
+    .icon{
+      width:44px;height:44px;border-radius:16px;border:1px solid rgba(220,235,255,.95);
+      background:rgba(255,255,255,.9);
+      box-shadow:0 12px 30px rgba(11,42,91,.06);
+      display:grid;place-items:center;
+      position:absolute;top:14px;right:14px;
+    }
+    .persona:after{
+      content:"";position:absolute;inset:auto -80px -80px auto;
+      width:260px;height:260px;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, rgba(143,211,255,.35), rgba(47,169,255,.0) 70%);
+      transform:rotate(18deg);
+      opacity:.85;pointer-events:none;
     }
 
-    .goal{
-      font-size:1.05rem;
-      color:var(--muted);
-    }
+    
 
-    .cta{
-      text-align:center;
-      padding:70px 20px 90px;
-      background:
-        linear-gradient(180deg,transparent,rgba(255,46,46,.08));
-      border-top:1px solid var(--border);
-    }
+/* === Quiénes somos: texto en 3 pasos + imagen === */
+.qs{ margin-top: 10px; }
+.qs-stage{ position:relative; min-height: 0; }
+.qs-panel{
+  display:none;
+  padding-top: 4px;
+  animation: qsIn .18s ease-out;
+}
+.qs-panel.is-active{ display:block; }
+@keyframes qsIn{
+  from{ opacity:0; transform: translateY(6px); }
+  to{ opacity:1; transform:none; }
+}
+.qs-text{ margin-top: 6px !important; }
+.qs-illus{
+  margin: 14px auto 0;
+  width: min(560px, 100%);
+  border-radius: 22px;
+  overflow:hidden;
+  box-shadow: 0 18px 55px rgba(11,42,91,.10);
+}
+.qs-illus svg, .qs-illus img{ width:100%; height:auto; display:block; }
 
-    .cta h2{margin-bottom:18px}
+.qs-nav{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 14px;
+  margin-top: 14px;
+}
+.qs-btn{
+  width: 52px;
+  height: 52px;
+  border-radius: 18px;
+  border: 1px solid rgba(47,169,255,.35);
+  background: rgba(255,255,255,.86);
+  box-shadow: 0 14px 36px rgba(11,42,91,.10);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  position:relative;
+}
+.qs-btn:hover{ transform: translateY(-1px); box-shadow: 0 18px 45px rgba(11,42,91,.14); }
+.qs-btn:disabled{
+  opacity: .45;
+  cursor: not-allowed;
+  transform:none;
+  box-shadow: 0 10px 26px rgba(11,42,91,.08);
+}
+.qs-btn-shield{
+  position:absolute;
+  inset: 12px;
+  display:grid;
+  place-items:center;
+  color: rgba(11,42,91,.88);
+}
+.qs-btn-shield svg{ width: 100%; height: 100%; }
+.qs-arrow{
+  position:absolute;
+  font-weight: 900;
+  font-size: 18px;
+  color: rgba(47,169,255,.95);
+  text-shadow: 0 12px 26px rgba(47,169,255,.18);
+}
+.qs-dots{
+  display:flex;
+  gap: 8px;
+  align-items:center;
+  justify-content:center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border:1px solid rgba(220,235,255,.9);
+  background: rgba(255,255,255,.75);
+  box-shadow: 0 10px 24px rgba(11,42,91,.06);
+}
+.qs-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(47,169,255,.45);
+  background: rgba(47,169,255,.12);
+  cursor:pointer;
+}
+.qs-dot.is-on{
+  background: linear-gradient(135deg, rgba(47,169,255,.55), rgba(143,211,255,.85));
+  border-color: rgba(47,169,255,.0);
+}
 
-    .cta p{
-      max-width:720px;
-      margin:0 auto 30px;
-      color:var(--muted);
-    }
 
-    .btn{
-      display:inline-block;
-      padding:14px 28px;
-      border-radius:999px;
-      text-decoration:none;
-      color:white;
-      background:linear-gradient(135deg,var(--accent),var(--accent-soft));
-      font-weight:600;
-      letter-spacing:.4px;
-      box-shadow:0 0 0 rgba(255,46,46,.6);
-      transition:box-shadow .25s ease, transform .25s ease;
-    }
 
-    .btn:hover{
-      transform:translateY(-2px);
-      box-shadow:0 0 28px rgba(255,46,46,.65);
-    }
+/* Page: A quiénes ayudamos */
+.hero-mini{
+  padding: 18px 0 10px;
+  text-align:center;
+}
+.hero-mini h1{ margin: 8px 0 14px; }
+.hero-mini .lead{ margin-bottom: 0; }
 
-    footer{
-      padding:26px 20px;
-      text-align:center;
-      font-size:.85rem;
-      color:rgba(255,255,255,.45);
-      border-top:1px solid var(--border);
-      background:#0a0c11;
-    }
   </style>
 </head>
-<body>
 
+<body>
 <header>
-  <h1>Nuestra propuesta de valor</h1>
-  <p>
-    En Aegis8 creemos que la ciberseguridad no es un lujo ni un discurso técnico.
-    Es una <span class="highlight">responsabilidad compartida</span> que debe ser comprensible,
-    realista y aplicable desde el primer día.
-  </p>
+  <div class="wrap">
+    <div class="nav">
+<button class="menu-btn" type="button" id="menuBtn" aria-label="Abrir menú">
+        <div class="menu-lines" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+      </button>
+
+      <nav aria-label="Navegación principal">
+        <ul id="navLinks">
+          
+          <li><a href="comotrabajamos.html" data-page="comotrabajamos.html">Cómo trabajamos</a></li>
+          <li><a href="recursos.html" data-page="recursos.html">Recursos y guías</a></li>
+          <li><a href="propuesta.html" data-page="propuesta.html">Propuesta</a></li>
+          <li><a href="index.html#quienes" data-hash="#quienes">Quiénes somos</a></li>
+          <li><a href="psocial.html" data-page="psocial.html">Proyecto social</a></li>
+          <li><a class="nav-cta" href="contactanos.html" data-page="contactanos.html">Contáctanos</a></li>
+        </ul>
+      </nav>
+
+      <div class="right nav-right">
+        <!-- espacio para CTA futuro -->
+      </div>
+    </div>
+
+    <div class="mobile-panel" id="mobilePanel" aria-label="Navegación móvil">
+      
+      <a href="comotrabajamos.html">Cómo trabajamos</a>
+      <a href="recursos.html">Recursos y guías</a>
+      <a href="ayudamos.html">A quiénes ayudamos</a>
+      <a href="index.html#quienes">Quiénes somos</a>
+      <a href="psocial.html">Proyecto social</a>
+      <a href="contactanos.html">Contáctanos</a>
+    </div>
+  </div>
 </header>
 
-<section>
-  <div class="eyebrow">A quiénes ayudamos</div>
-  <div class="grid">
-    <div class="card">
+<main id="top">
+  <div class="wrap">
+    <section class="hero-mini">
+      <div class="center">
+        <div class="pill" aria-label="Aegis8">
+          <span class="dot" aria-hidden="true"></span>
+          <strong>A quiénes ayudamos</strong>
+        </div>
+        <h1>Seguridad clara para quienes necesitan avanzar sin ruido.</h1>
+        <p class="lead">
+          Trabajamos con personas, startups y pequeñas organizaciones que quieren orden, criterio y acciones realistas.
+          Cada bloque es clickeable: verás casos típicos y cómo apoyamos paso a paso.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <h2>Perfiles con los que trabajamos</h2>
+        <p class="sec-sub">
+          No necesitas “ser enterprise” para mejorar seguridad. Necesitas claridad, prioridades y hábitos que se sostengan.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        
+    <button class="tile tile-btn reveal" type="button" data-modal="m-personas" aria-haspopup="dialog">
+      <div class="tile-top">
+        <span class="badge">Personas</span>
+        <span class="tile-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l7 4v6c0 5-3.2 9.4-7 10c-3.8-.6-7-5-7-10V6l7-4Z" stroke="currentColor" stroke-width="1.8" />
+            <path d="M9 12h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".8"/>
+          </svg>
+        </span>
+      </div>
       <h3>Personas y familias</h3>
-      <p>
-        A quienes quieren proteger su información, su identidad digital
-        y su vida cotidiana conectada.
-      </p>
-      <ul>
-        <li>Uso seguro de internet y redes sociales</li>
-        <li>Contraseñas, fraudes y suplantaciones</li>
-        <li>Conciencia y hábitos digitales sanos</li>
-      </ul>
-    </div>
+      <p>Protección práctica para vida digital: cuentas, privacidad y hábitos simples que reducen riesgos reales.</p>
+    </button>
+    
 
-    <div class="card">
-      <h3>Startups y pequeños negocios</h3>
-      <p>
-        Proyectos que crecen rápido y necesitan orden, sin modelos
-        complejos ni costos innecesarios.
-      </p>
-      <ul>
-        <li>Seguridad desde el diseño</li>
-        <li>Priorización de riesgos reales</li>
-        <li>Decisiones técnicas con sentido</li>
-      </ul>
-    </div>
+    <button class="tile tile-btn reveal" type="button" data-modal="m-startups" aria-haspopup="dialog">
+      <div class="tile-top">
+        <span class="badge">Startups</span>
+        <span class="tile-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l7 4v6c0 5-3.2 9.4-7 10c-3.8-.6-7-5-7-10V6l7-4Z" stroke="currentColor" stroke-width="1.8" />
+            <path d="M9 12h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".8"/>
+          </svg>
+        </span>
+      </div>
+      <h3>Startups</h3>
+      <p>Decisiones correctas temprano: accesos, secretos, backups y mínimos controles para crecer con confianza.</p>
+    </button>
+    
 
-    <div class="card">
+    <button class="tile tile-btn reveal" type="button" data-modal="m-pymes" aria-haspopup="dialog">
+      <div class="tile-top">
+        <span class="badge">Pequeñas empresas</span>
+        <span class="tile-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l7 4v6c0 5-3.2 9.4-7 10c-3.8-.6-7-5-7-10V6l7-4Z" stroke="currentColor" stroke-width="1.8" />
+            <path d="M9 12h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".8"/>
+          </svg>
+        </span>
+      </div>
+      <h3>Pequeñas empresas</h3>
+      <p>Orden y continuidad operacional: correo, endpoints, accesos y procesos simples que se sostienen.</p>
+    </button>
+    
+
+    <button class="tile tile-btn reveal" type="button" data-modal="m-entusiastas" aria-haspopup="dialog">
+      <div class="tile-top">
+        <span class="badge">Entusiastas</span>
+        <span class="tile-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l7 4v6c0 5-3.2 9.4-7 10c-3.8-.6-7-5-7-10V6l7-4Z" stroke="currentColor" stroke-width="1.8" />
+            <path d="M9 12h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".8"/>
+          </svg>
+        </span>
+      </div>
       <h3>Emprendedores y entusiastas</h3>
-      <p>
-        Personas curiosas que quieren aprender, entender y construir
-        seguridad por cuenta propia.
-      </p>
-      <ul>
-        <li>Educación práctica y accesible</li>
-        <li>Lenguaje claro, sin miedo</li>
-        <li>Aprender haciendo</li>
-      </ul>
-    </div>
+      <p>Aprender haciendo: guía clara, práctica y sin humo para construir criterio y autonomía.</p>
+    </button>
+    
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <h2>Qué buscamos lograr</h2>
+        <p class="sec-sub">
+          Reducir incidentes comunes, mejorar decisiones técnicas y construir cultura de seguridad entendible.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="tile reveal">
+          <span class="badge">Impacto</span>
+          <h3>Prioridad a lo real</h3>
+          <p>Lo que reduce riesgo hoy: cuentas, accesos, correo, backups y exposición pública.</p>
+        </div>
+        <div class="tile reveal">
+          <span class="badge">Sostenible</span>
+          <h3>Rutinas simples</h3>
+          <p>Checklist y hábitos que no dependen de “héroes” ni de presupuestos gigantes.</p>
+        </div>
+        <div class="tile reveal">
+          <span class="badge">Autonomía</span>
+          <h3>Aprender para decidir</h3>
+          <p>Que el cliente entienda el porqué, y pueda mantener y mejorar sin humo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="social reveal">
+        <div class="sec-head" style="margin-bottom:10px;">
+          <h2 style="margin:0;">¿Te identificas con alguno?</h2>
+          <p class="sec-sub" style="margin:0;">
+            Podemos partir con un diagnóstico entendido y una lista de acciones priorizadas.
+          </p>
+        </div>
+        <div class="center" style="margin-top:14px;">
+          <a class="nav-cta" href="contactanos.html" style="display:inline-block; padding:12px 16px; border-radius:999px;">
+            Conversemos
+          </a>
+        </div>
+      </div>
+    </section>
+
   </div>
-</section>
-
-<section>
-  <div class="eyebrow">Por qué lo hacemos</div>
-  <div class="card">
-    <p>
-      Porque la ciberseguridad suele presentarse como algo lejano,
-      caro o reservado solo para grandes organizaciones.
-    </p>
-    <p>
-      En Aegis8 creemos que <span class="highlight">la falta de conocimiento
-      es el mayor riesgo</span>. Cuando las personas entienden qué protegen
-      y por qué, toman mejores decisiones.
-    </p>
-  </div>
-</section>
-
-<section>
-  <div class="eyebrow">Qué queremos lograr</div>
-  <div class="grid">
-    <div class="card">
-      <p class="goal">
-        Construir una cultura de seguridad clara, responsable y sostenible,
-        donde la tecnología sea una herramienta y no una barrera.
-      </p>
-    </div>
-    <div class="card">
-      <p class="goal">
-        Ayudar a que más personas y organizaciones pequeñas
-        entiendan sus riesgos y los gestionen con criterio.
-      </p>
-    </div>
-    <div class="card">
-      <p class="goal">
-        Demostrar que la ciberseguridad puede ser ética,
-        humana y cercana.
-      </p>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="eyebrow">Qué nos diferencia</div>
-  <div class="grid">
-    <div class="card">
-      <h3>Sin miedo ni exageración</h3>
-      <p>
-        No vendemos pánico. Explicamos riesgos reales
-        y cómo abordarlos paso a paso.
-      </p>
-    </div>
-
-    <div class="card">
-      <h3>Lenguaje humano</h3>
-      <p>
-        Traducimos lo técnico a decisiones comprensibles
-        para personas reales.
-      </p>
-    </div>
-
-    <div class="card">
-      <h3>Acciones realistas</h3>
-      <p>
-        Propuestas acordes a cada contexto, sin copiar
-        modelos que no aplican.
-      </p>
-    </div>
-
-    <div class="card">
-      <h3>Propósito social</h3>
-      <p>
-        La seguridad no se delega: se aprende,
-        se entiende y se hace propia.
-      </p>
-    </div>
-  </div>
-</section>
-
-<div class="cta">
-  <h2>La seguridad comienza entendiendo</h2>
-  <p>
-    Aegis8 acompaña, explica y construye.
-    Sin humo. Sin miedo. Con sentido.
-  </p>
-  <a href="contacto.html" class="btn">Conversemos</a>
-</div>
+</main>
 
 <footer>
-  © 2025 Aegis8 · Ciberseguridad con sentido
+  <div class="wrap">
+    <div class="foot" style="justify-content:center; text-align:center;">
+      <small>
+        © <span id="year"></span> <strong>Aegis8</strong> · Consultora y proyecto educativo‑social de ciberseguridad.<br/>
+        <span class="muted">Seguridad clara, sin humo y con sentido.</span>
+      </small>
+    </div>
+  </div>
 </footer>
+
+
+  <div class="modal" id="m-personas" role="dialog" aria-modal="true" aria-labelledby="t-m-personas">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-m-personas">Personas y familias</h3>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Qué dolores vemos y cómo apoyamos (sin humo).</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Protección práctica para vida digital: cuentas, privacidad y hábitos simples que reducen riesgos reales.</p>
+        <ul>
+          <li>Phishing, fraudes y suplantación: cómo reconocerlos y reaccionar.</li><li>Contraseñas y gestores: orden sin complicarse.</li><li>MFA, recuperación de cuentas y configuración segura.</li><li>Privacidad básica: permisos, redes sociales y dispositivos.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+    
+
+  <div class="modal" id="m-startups" role="dialog" aria-modal="true" aria-labelledby="t-m-startups">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-m-startups">Startups</h3>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Qué dolores vemos y cómo apoyamos (sin humo).</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Decisiones correctas temprano: accesos, secretos, backups y mínimos controles para crecer con confianza.</p>
+        <ul>
+          <li>MFA + roles + mínimos privilegios desde el día 1.</li><li>Gestión de secretos (no llaves en repositorios).</li><li>Backups y restauración probada.</li><li>TLS/headers, dominios y correo (SPF/DKIM/DMARC) con criterio.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+    
+
+  <div class="modal" id="m-pymes" role="dialog" aria-modal="true" aria-labelledby="t-m-pymes">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-m-pymes">Pequeñas empresas</h3>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Qué dolores vemos y cómo apoyamos (sin humo).</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Orden y continuidad operacional: correo, endpoints, accesos y procesos simples que se sostienen.</p>
+        <ul>
+          <li>Inventario mínimo: qué existe y quién accede.</li><li>Seguridad en correo y cuentas críticas.</li><li>EndPoints: actualizaciones, hardening básico y copias.</li><li>Procedimientos simples: alta/baja, incidentes y respaldo.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+    
+
+  <div class="modal" id="m-entusiastas" role="dialog" aria-modal="true" aria-labelledby="t-m-entusiastas">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-m-entusiastas">Emprendedores y entusiastas</h3>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Qué dolores vemos y cómo apoyamos (sin humo).</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Aprender haciendo: guía clara, práctica y sin humo para construir criterio y autonomía.</p>
+        <ul>
+          <li>Conceptos esenciales explicados en lenguaje humano.</li><li>Buenas prácticas aplicables con herramientas accesibles.</li><li>Checklist y rutinas para mantener la seguridad.</li><li>Ruta de aprendizaje con ejercicios reales.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+    
+
+
+
+<script>
+    // Año automático
+    document.getElementById("year").textContent = new Date().getFullYear();
+    // Reveal on scroll
+    const reveals = Array.from(document.querySelectorAll(".card, .tile, .stat, .pill"));
+    reveals.forEach(el => el.classList.add("reveal"));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          e.target.classList.add("on");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+
+    // Modals
+    const modals = Array.from(document.querySelectorAll(".modal"));
+    let lastFocus = null;
+
+    function openModal(id){
+      const modal = document.getElementById(id);
+      if(!modal) return;
+      lastFocus = document.activeElement;
+      modal.classList.add("show");
+      document.body.style.overflow = "hidden";
+      // focus close button
+      const closeBtn = modal.querySelector(".modal-close");
+      if(closeBtn) closeBtn.focus();
+    }
+    function closeModal(modal){
+      modal.classList.remove("show");
+      document.body.style.overflow = "";
+      if(lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+    }
+    function closeAll(){
+      modals.forEach(m => m.classList.contains("show") && closeModal(m));
+    }
+
+    // Open from any element with data-modal
+    document.addEventListener("click", (e) => {
+      const trigger = e.target.closest("[data-modal]");
+      if(trigger){
+        openModal(trigger.getAttribute("data-modal"));
+      }
+      // Close when clicking backdrop
+      const open = e.target.classList && e.target.classList.contains("modal");
+      if(open){
+        closeModal(e.target);
+      }
+      // Close button
+      const closeBtn = e.target.closest(".modal-close");
+      if(closeBtn){
+        closeModal(closeBtn.closest(".modal"));
+      }
+    });
+
+    // Escape closes
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape") closeAll();
+      // simple focus trap for open modal
+      const activeModal = modals.find(m => m.classList.contains("show"));
+      if(!activeModal) return;
+      if(e.key === "Tab"){
+        const focusables = Array.from(activeModal.querySelectorAll('button, a, input, textarea, select, [tabindex]:not([tabindex="-1"])'))
+          .filter(el => !el.hasAttribute("disabled"));
+        if(focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if(e.shiftKey && document.activeElement === first){
+          e.preventDefault(); last.focus();
+        } else if(!e.shiftKey && document.activeElement === last){
+          e.preventDefault(); first.focus();
+        }
+      }
+    });
+  </script>
+<script>
+(function(){
+  const btn = document.getElementById('menuBtn');
+  const panel = document.getElementById('mobilePanel');
+
+  function setOpen(open){
+    if(!btn || !panel) return;
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.classList.toggle('is-open', open);
+    panel.classList.toggle('is-open', open);
+  }
+
+  function toggle(){
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    setOpen(!open);
+  }
+
+  if(btn && panel){
+    btn.setAttribute('aria-expanded','false');
+    setOpen(false);
+
+    btn.addEventListener('click', (e) => { e.preventDefault(); toggle(); });
+
+    // Close menu when clicking a link
+    panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      if(!open) return;
+      const inside = panel.contains(e.target) || btn.contains(e.target);
+      if(!inside) setOpen(false);
+    });
+
+    // Close on Esc
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') setOpen(false); });
+
+    // Close when resizing to desktop
+    window.addEventListener('resize', () => { if(window.innerWidth > 760) setOpen(false); });
+  }
+
+  // Active link highlight by page (and hash for the "Quiénes somos" anchor)
+  const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  const hash = (location.hash || '').toLowerCase();
+
+  document.querySelectorAll('#navLinks a').forEach(a => {
+    const page = (a.getAttribute('data-page') || '').toLowerCase();
+    const h = (a.getAttribute('data-hash') || '').toLowerCase();
+    if((page && page === path) || (h && h === hash)){
+      a.classList.add('active');
+    }
+  });
+})();
+</script>
+<script>
+(function(){
+  const root = document.querySelector('[data-qs]');
+  if(!root) return;
+
+  const panels = Array.from(root.querySelectorAll('.qs-panel'));
+  const prevBtn = root.querySelector('[data-qs-prev]');
+  const nextBtn = root.querySelector('[data-qs-next]');
+  const dots = Array.from(root.querySelectorAll('[data-qs-dot]'));
+
+  let step = 0;
+
+  function setStep(n){
+    step = Math.max(0, Math.min(panels.length - 1, n));
+
+    panels.forEach((p, i) => p.classList.toggle('is-active', i === step));
+
+    if(prevBtn) prevBtn.disabled = (step === 0);
+    if(nextBtn) nextBtn.disabled = (step === panels.length - 1);
+
+    dots.forEach((d, i) => {
+      const on = i === step;
+      d.classList.toggle('is-on', on);
+      d.setAttribute('aria-selected', on ? 'true' : 'false');
+      d.setAttribute('tabindex', on ? '0' : '-1');
+    });
+  }
+
+  if(prevBtn) prevBtn.addEventListener('click', () => setStep(step - 1));
+  if(nextBtn) nextBtn.addEventListener('click', () => setStep(step + 1));
+  dots.forEach(d => d.addEventListener('click', () => setStep(parseInt(d.getAttribute('data-qs-dot'), 10) || 0)));
+
+  // Keyboard support (left/right)
+  root.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowLeft'){ setStep(step - 1); }
+    if(e.key === 'ArrowRight'){ setStep(step + 1); }
+  });
+
+  setStep(0);
+})();
+</script>
 
 </body>
 </html>
