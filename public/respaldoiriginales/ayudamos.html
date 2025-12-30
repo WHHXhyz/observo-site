@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
 <!-- Google tag (gtag.js) -->
@@ -10,53 +10,92 @@
 
   gtag('config', 'G-XNJT1V3G6T');
 </script>
-
-  <meta charset="utf-8">
-  <title>Aegis8 - Acceso al Test</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <title>Aegis8 — A quiénes ayudamos</title>
+  <meta name="description" content="Aegis8 acompaña a personas, startups y pequeñas organizaciones con ciberseguridad clara, realista y aplicable." />
+  <meta name="theme-color" content="#0B2A5B" />
   <style>
 
+    :root{
+      --bg: #F7FBFF;
+      --card: #FFFFFF;
+      --text: #0B1B34;
+      --muted:#4B5E7B;
+      --line:#DCEBFF;
+      --blue:#0B2A5B;
+      --sky:#2FA9FF;
+      --sky2:#8FD3FF;
+      --shadow: 0 18px 45px rgba(11,42,91,.10);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 920px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background: linear-gradient(135deg,#0B2A5B,#2FA9FF);
-      color:#0B1B34;
       margin:0;
-      display:grid;
-      place-items:center;
-      min-height:100vh;
+      font-family: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(900px 420px at 20% -10%, rgba(47,169,255,.25), transparent 60%),
+        radial-gradient(900px 420px at 90% 0%, rgba(143,211,255,.25), transparent 60%),
+        linear-gradient(180deg, #FFFFFF 0%, var(--bg) 100%);
+      line-height:1.45;
     }
-    .card{
-      background:#fff;
-      border-radius:18px;
-      padding:28px;
-      max-width:520px;
-      text-align:center;
-      box-shadow:0 30px 80px rgba(0,0,0,.25);
-    }
-    h1{
-      margin-top:0;
-      background: linear-gradient(90deg,#0B2A5B,#2FA9FF);
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-    }
-    p{color:#4B5E7B}
-    a{
-      display:inline-block;
-      margin-top:18px;
-      padding:14px 20px;
-      border-radius:14px;
-      font-weight:800;
-      text-decoration:none;
-      color:#0B2A5B;
-      background:linear-gradient(135deg,rgba(47,169,255,.25),rgba(143,211,255,.35));
-      box-shadow:0 16px 40px rgba(11,42,91,.2);
-    }
-    a:hover{transform:translateY(-1px)}
 
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+    .center{ text-align:center; }
+    .muted{ color:var(--muted); }
+    .prose-center{max-width:72ch;margin:0 auto;text-align:center;}
+    .prose-center p{margin:0 0 10px;}
+    .prose-center p:last-child{margin-bottom:0;}
 
-/* === NAVBAR SYNC (from index) === */
-/* Header */
+    .pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.8);
+      border-radius:999px;
+      box-shadow: 0 8px 25px rgba(11,42,91,.06);
+      backdrop-filter: blur(8px);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, var(--sky2), var(--sky));
+      box-shadow: 0 0 0 4px rgba(47,169,255,.12);
+    }
+
+    
+    
+    .hero-logo-row{
+      margin: -18px auto -22px; /* closer to header + closer to title */
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position: relative;
+    }
+
+    .hero-logo-img{
+      width: 520px;
+      max-width: 96%;
+      height:auto;
+      object-fit: contain;
+      filter: drop-shadow(0 18px 40px rgba(47,169,255,.18));
+      display:block;
+    }
+
+    @media (max-width: 760px){
+      .hero-logo-row{ margin: -10px auto -14px; }
+      .hero-logo-img{ width: 360px; }
+    }
+
+    /* Header */
 
 header{
   position:sticky; top:0; z-index:50;
@@ -874,12 +913,20 @@ margin: 0 auto;
   background: linear-gradient(135deg, rgba(47,169,255,.55), rgba(143,211,255,.85));
   border-color: rgba(47,169,255,.0);
 }
-/* Ensure the navbar container uses index width and is centered */
-header .nav{ max-width: var(--max); margin: 0 auto; }
 
 
-</style>
+
+/* Page: A quiénes ayudamos */
+.hero-mini{
+  padding: 18px 0 10px;
+  text-align:center;
+}
+.hero-mini h1{ margin: 8px 0 14px; }
+.hero-mini .lead{ margin-bottom: 0; }
+
+  </style>
 </head>
+
 <body>
 <header>
   <div class="wrap">
@@ -918,13 +965,403 @@ header .nav{ max-width: var(--max); margin: 0 auto; }
     </div>
   </div>
 </header>
-  <div class="card">
-    <h1>Test de seguridad basica</h1>
-    <p>
-      Evalua en pocos minutos que tan expuesto estas y recibe una orientacion clara
-      sobre por donde empezar a mejorar tu seguridad digital.
-    </p>
-    <a href="test.html">Hacer el test →</a>
+
+<main id="top">
+  <div class="wrap">
+    <section class="hero-mini">
+      <div class="center">
+        <div class="pill" aria-label="Aegis8">
+          <span class="dot" aria-hidden="true"></span>
+          <strong>A quiénes ayudamos</strong>
+        </div>
+        <h1>Seguridad clara para quienes necesitan avanzar sin ruido.</h1>
+        <p class="lead">
+          Trabajamos con personas, startups y pequeñas organizaciones que quieren orden, criterio y acciones realistas.
+          Cada bloque es clickeable: verás casos típicos y cómo apoyamos paso a paso.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <h2>Perfiles con los que trabajamos</h2>
+        <p class="sec-sub">
+          No necesitas “ser enterprise” para mejorar seguridad. Necesitas claridad, prioridades y hábitos que se sostengan.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        
+    <button class="tile tile-btn reveal" type="button" data-modal="m-personas" aria-haspopup="dialog">
+      <div class="tile-top">
+        <span class="badge">Personas</span>
+        <span class="tile-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l7 4v6c0 5-3.2 9.4-7 10c-3.8-.6-7-5-7-10V6l7-4Z" stroke="currentColor" stroke-width="1.8" />
+            <path d="M9 12h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".8"/>
+          </svg>
+        </span>
+      </div>
+      <h3>Personas y familias</h3>
+      <p>Protección práctica para vida digital: cuentas, privacidad y hábitos simples que reducen riesgos reales.</p>
+    </button>
+    
+
+    <button class="tile tile-btn reveal" type="button" data-modal="m-startups" aria-haspopup="dialog">
+      <div class="tile-top">
+        <span class="badge">Startups</span>
+        <span class="tile-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l7 4v6c0 5-3.2 9.4-7 10c-3.8-.6-7-5-7-10V6l7-4Z" stroke="currentColor" stroke-width="1.8" />
+            <path d="M9 12h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".8"/>
+          </svg>
+        </span>
+      </div>
+      <h3>Startups</h3>
+      <p>Decisiones correctas temprano: accesos, secretos, backups y mínimos controles para crecer con confianza.</p>
+    </button>
+    
+
+    <button class="tile tile-btn reveal" type="button" data-modal="m-pymes" aria-haspopup="dialog">
+      <div class="tile-top">
+        <span class="badge">Pequeñas empresas</span>
+        <span class="tile-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l7 4v6c0 5-3.2 9.4-7 10c-3.8-.6-7-5-7-10V6l7-4Z" stroke="currentColor" stroke-width="1.8" />
+            <path d="M9 12h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".8"/>
+          </svg>
+        </span>
+      </div>
+      <h3>Pequeñas empresas</h3>
+      <p>Orden y continuidad operacional: correo, endpoints, accesos y procesos simples que se sostienen.</p>
+    </button>
+    
+
+    <button class="tile tile-btn reveal" type="button" data-modal="m-entusiastas" aria-haspopup="dialog">
+      <div class="tile-top">
+        <span class="badge">Entusiastas</span>
+        <span class="tile-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l7 4v6c0 5-3.2 9.4-7 10c-3.8-.6-7-5-7-10V6l7-4Z" stroke="currentColor" stroke-width="1.8" />
+            <path d="M9 12h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".8"/>
+          </svg>
+        </span>
+      </div>
+      <h3>Emprendedores y entusiastas</h3>
+      <p>Aprender haciendo: guía clara, práctica y sin humo para construir criterio y autonomía.</p>
+    </button>
+    
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <h2>Qué buscamos lograr</h2>
+        <p class="sec-sub">
+          Reducir incidentes comunes, mejorar decisiones técnicas y construir cultura de seguridad entendible.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="tile reveal">
+          <span class="badge">Impacto</span>
+          <h3>Prioridad a lo real</h3>
+          <p>Lo que reduce riesgo hoy: cuentas, accesos, correo, backups y exposición pública.</p>
+        </div>
+        <div class="tile reveal">
+          <span class="badge">Sostenible</span>
+          <h3>Rutinas simples</h3>
+          <p>Checklist y hábitos que no dependen de “héroes” ni de presupuestos gigantes.</p>
+        </div>
+        <div class="tile reveal">
+          <span class="badge">Autonomía</span>
+          <h3>Aprender para decidir</h3>
+          <p>Que el cliente entienda el porqué, y pueda mantener y mejorar sin humo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="social reveal">
+        <div class="sec-head" style="margin-bottom:10px;">
+          <h2 style="margin:0;">¿Te identificas con alguno?</h2>
+          <p class="sec-sub" style="margin:0;">
+            Podemos partir con un diagnóstico entendido y una lista de acciones priorizadas.
+          </p>
+        </div>
+        <div class="center" style="margin-top:14px;">
+          <a class="nav-cta" href="contactanos.html" style="display:inline-block; padding:12px 16px; border-radius:999px;">
+            Conversemos
+          </a>
+        </div>
+      </div>
+    </section>
+
   </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot" style="justify-content:center; text-align:center;">
+      <small>
+        © <span id="year"></span> <strong>Aegis8</strong> · Consultora y proyecto educativo‑social de ciberseguridad.<br/>
+        <span class="muted">Seguridad clara, sin humo y con sentido.</span>
+      </small>
+    </div>
+  </div>
+</footer>
+
+
+  <div class="modal" id="m-personas" role="dialog" aria-modal="true" aria-labelledby="t-m-personas">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-m-personas">Personas y familias</h3>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Qué dolores vemos y cómo apoyamos (sin humo).</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Protección práctica para vida digital: cuentas, privacidad y hábitos simples que reducen riesgos reales.</p>
+        <ul>
+          <li>Phishing, fraudes y suplantación: cómo reconocerlos y reaccionar.</li><li>Contraseñas y gestores: orden sin complicarse.</li><li>MFA, recuperación de cuentas y configuración segura.</li><li>Privacidad básica: permisos, redes sociales y dispositivos.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+    
+
+  <div class="modal" id="m-startups" role="dialog" aria-modal="true" aria-labelledby="t-m-startups">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-m-startups">Startups</h3>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Qué dolores vemos y cómo apoyamos (sin humo).</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Decisiones correctas temprano: accesos, secretos, backups y mínimos controles para crecer con confianza.</p>
+        <ul>
+          <li>MFA + roles + mínimos privilegios desde el día 1.</li><li>Gestión de secretos (no llaves en repositorios).</li><li>Backups y restauración probada.</li><li>TLS/headers, dominios y correo (SPF/DKIM/DMARC) con criterio.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+    
+
+  <div class="modal" id="m-pymes" role="dialog" aria-modal="true" aria-labelledby="t-m-pymes">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-m-pymes">Pequeñas empresas</h3>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Qué dolores vemos y cómo apoyamos (sin humo).</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Orden y continuidad operacional: correo, endpoints, accesos y procesos simples que se sostienen.</p>
+        <ul>
+          <li>Inventario mínimo: qué existe y quién accede.</li><li>Seguridad en correo y cuentas críticas.</li><li>EndPoints: actualizaciones, hardening básico y copias.</li><li>Procedimientos simples: alta/baja, incidentes y respaldo.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+    
+
+  <div class="modal" id="m-entusiastas" role="dialog" aria-modal="true" aria-labelledby="t-m-entusiastas">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="t-m-entusiastas">Emprendedores y entusiastas</h3>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Qué dolores vemos y cómo apoyamos (sin humo).</div>
+        </div>
+        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Aprender haciendo: guía clara, práctica y sin humo para construir criterio y autonomía.</p>
+        <ul>
+          <li>Conceptos esenciales explicados en lenguaje humano.</li><li>Buenas prácticas aplicables con herramientas accesibles.</li><li>Checklist y rutinas para mantener la seguridad.</li><li>Ruta de aprendizaje con ejercicios reales.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+    
+
+
+
+<script>
+    // Año automático
+    document.getElementById("year").textContent = new Date().getFullYear();
+    // Reveal on scroll
+    const reveals = Array.from(document.querySelectorAll(".card, .tile, .stat, .pill"));
+    reveals.forEach(el => el.classList.add("reveal"));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          e.target.classList.add("on");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+
+    // Modals
+    const modals = Array.from(document.querySelectorAll(".modal"));
+    let lastFocus = null;
+
+    function openModal(id){
+      const modal = document.getElementById(id);
+      if(!modal) return;
+      lastFocus = document.activeElement;
+      modal.classList.add("show");
+      document.body.style.overflow = "hidden";
+      // focus close button
+      const closeBtn = modal.querySelector(".modal-close");
+      if(closeBtn) closeBtn.focus();
+    }
+    function closeModal(modal){
+      modal.classList.remove("show");
+      document.body.style.overflow = "";
+      if(lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+    }
+    function closeAll(){
+      modals.forEach(m => m.classList.contains("show") && closeModal(m));
+    }
+
+    // Open from any element with data-modal
+    document.addEventListener("click", (e) => {
+      const trigger = e.target.closest("[data-modal]");
+      if(trigger){
+        openModal(trigger.getAttribute("data-modal"));
+      }
+      // Close when clicking backdrop
+      const open = e.target.classList && e.target.classList.contains("modal");
+      if(open){
+        closeModal(e.target);
+      }
+      // Close button
+      const closeBtn = e.target.closest(".modal-close");
+      if(closeBtn){
+        closeModal(closeBtn.closest(".modal"));
+      }
+    });
+
+    // Escape closes
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape") closeAll();
+      // simple focus trap for open modal
+      const activeModal = modals.find(m => m.classList.contains("show"));
+      if(!activeModal) return;
+      if(e.key === "Tab"){
+        const focusables = Array.from(activeModal.querySelectorAll('button, a, input, textarea, select, [tabindex]:not([tabindex="-1"])'))
+          .filter(el => !el.hasAttribute("disabled"));
+        if(focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if(e.shiftKey && document.activeElement === first){
+          e.preventDefault(); last.focus();
+        } else if(!e.shiftKey && document.activeElement === last){
+          e.preventDefault(); first.focus();
+        }
+      }
+    });
+  </script>
+<script>
+(function(){
+  const btn = document.getElementById('menuBtn');
+  const panel = document.getElementById('mobilePanel');
+
+  function setOpen(open){
+    if(!btn || !panel) return;
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.classList.toggle('is-open', open);
+    panel.classList.toggle('is-open', open);
+  }
+
+  function toggle(){
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    setOpen(!open);
+  }
+
+  if(btn && panel){
+    btn.setAttribute('aria-expanded','false');
+    setOpen(false);
+
+    btn.addEventListener('click', (e) => { e.preventDefault(); toggle(); });
+
+    // Close menu when clicking a link
+    panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      if(!open) return;
+      const inside = panel.contains(e.target) || btn.contains(e.target);
+      if(!inside) setOpen(false);
+    });
+
+    // Close on Esc
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') setOpen(false); });
+
+    // Close when resizing to desktop
+    window.addEventListener('resize', () => { if(window.innerWidth > 760) setOpen(false); });
+  }
+
+  // Active link highlight by page (and hash for the "Quiénes somos" anchor)
+  const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  const hash = (location.hash || '').toLowerCase();
+
+  document.querySelectorAll('#navLinks a').forEach(a => {
+    const page = (a.getAttribute('data-page') || '').toLowerCase();
+    const h = (a.getAttribute('data-hash') || '').toLowerCase();
+    if((page && page === path) || (h && h === hash)){
+      a.classList.add('active');
+    }
+  });
+})();
+</script>
+<script>
+(function(){
+  const root = document.querySelector('[data-qs]');
+  if(!root) return;
+
+  const panels = Array.from(root.querySelectorAll('.qs-panel'));
+  const prevBtn = root.querySelector('[data-qs-prev]');
+  const nextBtn = root.querySelector('[data-qs-next]');
+  const dots = Array.from(root.querySelectorAll('[data-qs-dot]'));
+
+  let step = 0;
+
+  function setStep(n){
+    step = Math.max(0, Math.min(panels.length - 1, n));
+
+    panels.forEach((p, i) => p.classList.toggle('is-active', i === step));
+
+    if(prevBtn) prevBtn.disabled = (step === 0);
+    if(nextBtn) nextBtn.disabled = (step === panels.length - 1);
+
+    dots.forEach((d, i) => {
+      const on = i === step;
+      d.classList.toggle('is-on', on);
+      d.setAttribute('aria-selected', on ? 'true' : 'false');
+      d.setAttribute('tabindex', on ? '0' : '-1');
+    });
+  }
+
+  if(prevBtn) prevBtn.addEventListener('click', () => setStep(step - 1));
+  if(nextBtn) nextBtn.addEventListener('click', () => setStep(step + 1));
+  dots.forEach(d => d.addEventListener('click', () => setStep(parseInt(d.getAttribute('data-qs-dot'), 10) || 0)));
+
+  // Keyboard support (left/right)
+  root.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowLeft'){ setStep(step - 1); }
+    if(e.key === 'ArrowRight'){ setStep(step + 1); }
+  });
+
+  setStep(0);
+})();
+</script>
+
 </body>
 </html>
