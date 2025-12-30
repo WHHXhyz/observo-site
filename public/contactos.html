@@ -13,382 +13,89 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Aegis8 — Contáctanos</title>
-  <meta name="description" content="Contáctanos para talleres, mentorías, comunidad y apoyo al proyecto social Aegis8." />
+  <meta name="description" content="Contáctanos: mensaje claro, guía rápida y experiencia interactiva." />
   <meta name="theme-color" content="#0B2A5B" />
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
 
     :root{
-      --bg:#F7FBFF;
-      --card:#FFFFFF;
-      --text:#0B1B34;
+      --bg: #F7FBFF;
+      --card: #FFFFFF;
+      --text: #0B1B34;
       --muted:#4B5E7B;
       --line:#DCEBFF;
       --blue:#0B2A5B;
       --sky:#2FA9FF;
       --sky2:#8FD3FF;
-      --shadow:0 18px 45px rgba(11,42,91,.10);
-      --radius:18px;
-      --radius2:26px;
-      --max:1080px;
-      --danger:#B42828;
-      --ok:#0B5B3A;
+      --shadow: 0 18px 45px rgba(11,42,91,.10);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 920px;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
       margin:0;
-      font-family:"Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      font-family: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       color:var(--text);
       background:
         radial-gradient(900px 420px at 20% -10%, rgba(47,169,255,.25), transparent 60%),
         radial-gradient(900px 420px at 90% 0%, rgba(143,211,255,.25), transparent 60%),
-        linear-gradient(180deg,#FFFFFF 0%, var(--bg) 100%);
+        linear-gradient(180deg, #FFFFFF 0%, var(--bg) 100%);
       line-height:1.45;
-      overflow-x:hidden;
-    }
-    a{color:inherit;text-decoration:none}
-    .wrap{width:min(var(--max), 100% - 40px);margin:0 auto}
-    .muted{color:var(--muted)}
-    .center{text-align:center}
-
-    /* Top progress */
-    .progress{
-      position:fixed;top:0;left:0;height:3px;width:0%;
-      background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.92), rgba(143,211,255,.95));
-      z-index:9999;
-      box-shadow:0 8px 20px rgba(47,169,255,.22);
     }
 
-    header{
-      position:sticky;top:0;z-index:50;
-      background:rgba(255,255,255,.78);
-      backdrop-filter:blur(10px);
-      border-bottom:1px solid rgba(220,235,255,.85);
-    }
-    .nav{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:14px 0;gap:16px;
-    }
-    .brand{display:flex;align-items:center;gap:12px;min-width:210px}
-    .logo{
-      width:38px;height:38px;border-radius:12px;
-      background:linear-gradient(135deg,var(--blue),#0D3B85);
-      position:relative;
-      box-shadow:0 14px 30px rgba(11,42,91,.18);
-      flex:0 0 auto;
-    }
-    .logo:before{
-      content:"";
-      position:absolute;inset:9px 11px 9px 11px;
-      border-radius:10px 10px 14px 14px;
-      background:linear-gradient(135deg, rgba(143,211,255,.95), rgba(47,169,255,.85));
-      clip-path:polygon(50% 0%, 92% 18%, 92% 55%, 50% 100%, 8% 55%, 8% 18%);
-      opacity:.95;
-    }
-    .brand strong{font-size:16px;letter-spacing:.2px}
-    .brand span{display:block;margin-top:2px;font-size:12px;color:var(--muted)}
-
-    nav ul{
-      list-style:none;padding:0;margin:0;
-      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-    }
-    nav a{
-      font-size:14px;
-      color:rgba(11,27,52,.86);
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.78);
-      box-shadow:0 10px 24px rgba(11,42,91,.06);
-      transition:transform .12s ease, background .12s ease, box-shadow .12s ease, border-color .12s ease;
-      white-space:nowrap;
-    }
-    nav a:hover{
-      transform:translateY(-1px);
-      background:rgba(220,235,255,.55);
-      border-color:rgba(47,169,255,.35);
-      box-shadow:0 14px 34px rgba(11,42,91,.10);
-      color:var(--blue);
-    }
-    nav a.active{
-      border-color:rgba(47,169,255,.45);
-      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
-      color:var(--blue);
-      font-weight:800;
-    }
-
-    .menu-btn{
-      display:none;width:44px;height:44px;border-radius:14px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.9);
-      box-shadow:0 12px 30px rgba(11,42,91,.08);
-      cursor:pointer;align-items:center;justify-content:center;
-    }
-    .menu-lines{width:18px;height:12px;position:relative}
-    .menu-lines span{position:absolute;left:0;right:0;height:2px;border-radius:99px;background:rgba(11,42,91,.8)}
-    .menu-lines span:nth-child(1){top:0}
-    .menu-lines span:nth-child(2){top:5px}
-    .menu-lines span:nth-child(3){top:10px}
-    .mobile-panel{display:none;padding:0 0 14px 0}
-    .mobile-panel a{
-      display:block;padding:12px 12px;margin:10px 0;
-      border:1px solid var(--line);
-      border-radius:14px;
-      background:rgba(255,255,255,.85);
-      font-weight:700;color:rgba(11,27,52,.9);
-    }
-    .mobile-panel a:hover{background:rgba(220,235,255,.55);color:var(--blue)}
-    .right{display:flex;align-items:center;gap:10px}
-
-    main{padding:30px 0 70px}
-    section{padding:54px 0}
-    section + section{border-top:1px solid rgba(220,235,255,.75)}
-
-    h1{
-      font-size:clamp(32px, 4vw, 48px);
-      line-height:1.06;
-      margin:14px 0 10px;
-      letter-spacing:-.7px;
-    }
-    .lead{
-      font-size:clamp(16px, 1.35vw, 18px);
-      color:var(--muted);
-      margin:0 auto 18px;
-      max-width:78ch;
-    }
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+    .center{ text-align:center; }
+    .muted{ color:var(--muted); }
+    .prose-center{max-width:72ch;margin:0 auto;text-align:center;}
+    .prose-center p{margin:0 0 10px;}
+    .prose-center p:last-child{margin-bottom:0;}
 
     .pill{
-      display:inline-flex;align-items:center;gap:10px;
-      padding:8px 12px;border:1px solid var(--line);
-      background:rgba(255,255,255,.82);border-radius:999px;
-      box-shadow:0 8px 25px rgba(11,42,91,.06);
-      backdrop-filter:blur(8px);
-    }
-    .dot{width:10px;height:10px;border-radius:999px;background:radial-gradient(circle at 30% 30%, var(--sky2), var(--sky));box-shadow:0 0 0 4px rgba(47,169,255,.12)}
-    .k{
-      background:linear-gradient(135deg, rgba(47,169,255,.22), rgba(143,211,255,.35));
-      border:1px solid rgba(47,169,255,.25);
-      padding:0 .45em;border-radius:.65em;
-      color:rgba(11,42,91,.92);
-      font-weight:800;white-space:nowrap;
-    }
-
-    .gradline{
-      height:1px;width:min(640px,100%);margin:14px auto 0;border-radius:99px;
-      background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.55), rgba(143,211,255,.65), rgba(47,169,255,.55), rgba(47,169,255,0));
-      position:relative;overflow:hidden;
-    }
-    .gradline:after{
-      content:"";position:absolute;top:0;bottom:0;width:160px;left:-180px;
-      background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.75), rgba(255,255,255,0));
-      filter:blur(1px);animation:shine 2.8s ease-in-out infinite;
-    }
-    @keyframes shine{
-      0%{transform:translateX(0);opacity:0}
-      15%{opacity:.8}
-      50%{opacity:.9}
-      85%{opacity:.8}
-      100%{transform:translateX(900px);opacity:0}
-    }
-
-    .sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
-    .sec-head h2{margin:0;font-weight:900;font-size:clamp(22px, 2.3vw, 32px);letter-spacing:-.35px}
-    .sec-sub{margin:0;max-width:92ch;color:var(--muted);font-size:15.5px}
-
-    .card{
-      background:rgba(255,255,255,.92);
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
       border:1px solid var(--line);
-      border-radius:var(--radius2);
-      box-shadow:var(--shadow);
+      background:rgba(255,255,255,.8);
+      border-radius:999px;
+      box-shadow: 0 8px 25px rgba(11,42,91,.06);
+      backdrop-filter: blur(8px);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, var(--sky2), var(--sky));
+      box-shadow: 0 0 0 4px rgba(47,169,255,.12);
     }
 
-    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-
-    .tile{
-      position:relative;overflow:hidden;
-      padding:16px;border-radius:var(--radius2);
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.92);
-      box-shadow:0 14px 40px rgba(11,42,91,.08);
-      min-height:164px;
-    }
-    .tile:before{
-      content:"";position:absolute;inset:-2px;
-      background:
-        radial-gradient(520px 220px at 15% 10%, rgba(47,169,255,.12), transparent 60%),
-        radial-gradient(520px 220px at 90% 0%, rgba(143,211,255,.14), transparent 55%);
-      opacity:.9;pointer-events:none;
-    }
-    .tile>*{position:relative}
-    .badge{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 10px;border-radius:999px;
-      border:1px solid rgba(220,235,255,.9);
-      background:rgba(47,169,255,.08);
-      color:rgba(11,42,91,.88);
-      font-weight:800;font-size:12px;
-    }
-    .tile h3{margin:10px 0 8px;font-size:16px;letter-spacing:-.12px}
-    .tile p{margin:0;color:var(--muted);font-size:14px}
-
-    .tile-btn{
-      text-align:left;cursor:pointer;
-      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-      border:0;
-    }
-    .tile-btn:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
-    .tile-btn:focus-visible{outline:3px solid rgba(47,169,255,.35);outline-offset:3px}
-
-    .mini-ico{
-      width:42px;height:42px;border-radius:16px;
-      border:1px solid rgba(220,235,255,.95);
-      background:rgba(11,42,91,.06);
-      display:grid;place-items:center;
-      box-shadow:0 12px 30px rgba(11,42,91,.08);
-      flex:0 0 auto;
-    }
-    .mini-ico svg{width:22px;height:22px}
-    .mini-ico path, .mini-ico circle, .mini-ico line, .mini-ico polyline{stroke:rgba(11,42,91,.85)}
-
-    /* Form */
-    .form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .field{display:flex;flex-direction:column;gap:6px}
-    label{font-size:13px;font-weight:800;color:rgba(11,42,91,.85)}
-    .input, textarea, select{
-      width:100%;
-      padding:12px 12px;border-radius:14px;border:1px solid var(--line);
-      background:rgba(255,255,255,.92);font:inherit;color:rgba(11,27,52,.95);
-      outline:none;box-shadow:0 12px 30px rgba(11,42,91,.06);
-    }
-    textarea{min-height:120px;resize:vertical}
-    .input:focus, textarea:focus, select:focus{border-color:rgba(47,169,255,.45);box-shadow:0 18px 40px rgba(11,42,91,.10)}
-
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      padding:11px 14px;border-radius:14px;border:1px solid var(--line);
-      background:rgba(255,255,255,.92);color:var(--blue);font-weight:800;
-      box-shadow:0 12px 30px rgba(11,42,91,.08);
-      transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
-      cursor:pointer;
-    }
-    .btn:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(11,42,91,.12)}
-    .btn.primary{
-      border-color:rgba(47,169,255,.35);
-      background:linear-gradient(135deg, rgba(47,169,255,.15), rgba(143,211,255,.25));
-      color:var(--blue);
-    }
-    .btn.ghost{background:rgba(255,255,255,.78)}
-    .btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
-
-    .hint{font-size:12.5px;color:var(--muted)}
-    .status{font-size:12.5px;font-weight:800;margin-top:10px}
-    .status.ok{color:var(--ok)}
-    .status.bad{color:var(--danger)}
-
-    /* Reveal */
-    .reveal{opacity:0;transform:translateY(10px);transition:opacity .55s ease, transform .55s ease}
-    .reveal.on{opacity:1;transform:none}
-
-    /* Modal */
-    .modal{
-      position:fixed;inset:0;z-index:1000;display:none;padding:18px;
-      background:rgba(11,27,52,.55);backdrop-filter:blur(6px);
-    }
-    .modal.show{display:grid;place-items:center}
-    .modal-dialog{
-      width:min(860px,100%);
-      background:rgba(255,255,255,.97);
-      border:1px solid rgba(220,235,255,.95);
-      border-radius:22px;
-      box-shadow:0 28px 70px rgba(11,42,91,.22);
-      overflow:hidden;
-      animation:modalIn .18s ease-out;
-    }
-    @keyframes modalIn{from{transform:translateY(8px) scale(.99);opacity:0}to{transform:none;opacity:1}}
-    .modal-head{
-      padding:16px 16px 12px;border-bottom:1px solid rgba(220,235,255,.9);
-      background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
-      display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
-    }
-    .modal-title{margin:0;font-size:18px;letter-spacing:-.2px;color:var(--blue)}
-    .modal-close{
-      width:42px;height:42px;border-radius:14px;border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.92);cursor:pointer;display:grid;place-items:center;
-      color:rgba(11,42,91,.85);box-shadow:0 12px 30px rgba(11,42,91,.10);
-    }
-    .modal-body{padding:14px 16px 16px;color:rgba(11,27,52,.92)}
-    .modal-body p{margin:0 0 10px;color:var(--muted)}
-    .modal-body ul{margin:10px 0 0;padding-left:18px;color:var(--muted)}
-    .modal-body li{margin:7px 0}
-    .callout{
-      margin-top:12px;padding:12px 12px;border-radius:var(--radius);
-      border:1px solid rgba(47,169,255,.25);
-      background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
-      color:rgba(11,42,91,.9);font-weight:900;font-size:13px;
+    
+    
+    .hero-logo-row{
+      margin: -18px auto -22px; /* closer to header + closer to title */
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position: relative;
     }
 
-    /* Map placeholder */
-    .map{
-      border-radius:var(--radius2);
-      border:1px solid rgba(220,235,255,.95);
-      overflow:hidden;
-      box-shadow:0 18px 45px rgba(11,42,91,.10);
-      background:
-        radial-gradient(600px 260px at 15% 10%, rgba(47,169,255,.16), transparent 60%),
-        radial-gradient(600px 260px at 90% 0%, rgba(143,211,255,.18), transparent 55%),
-        linear-gradient(135deg, rgba(11,42,91,.06), rgba(255,255,255,.9));
-      min-height:280px;
-      position:relative;
-    }
-    .map svg{position:absolute;inset:0;width:100%;height:100%}
-    .pin{transform-origin:50% 80%;animation:pin 2.3s ease-in-out infinite}
-    @keyframes pin{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-    .map-badge{
-      position:absolute;left:14px;bottom:14px;
-      padding:10px 12px;border-radius:16px;
-      border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.85);
-      box-shadow:0 12px 30px rgba(11,42,91,.10);
-      max-width: 520px;
+    .hero-logo-img{
+      width: 520px;
+      max-width: 96%;
+      height:auto;
+      object-fit: contain;
+      filter: drop-shadow(0 18px 40px rgba(47,169,255,.18));
+      display:block;
     }
 
-    footer{
-      padding:28px 0 40px;
-      border-top:1px solid rgba(220,235,255,.9);
-      background:rgba(255,255,255,.55);
-    }
-    .foot{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}
-
-    @media (max-width: 980px){
-      .grid-2{grid-template-columns:1fr}
-      .grid-3{grid-template-columns:1fr}
-      .form{grid-template-columns:1fr}
-    }
     @media (max-width: 760px){
-      nav ul{display:none}
-      .menu-btn{display:inline-flex}
-      .wrap{width:min(var(--max), 100% - 28px)}
+      .hero-logo-row{ margin: -10px auto -14px; }
+      .hero-logo-img{ width: 360px; }
     }
-    @media (prefers-reduced-motion: reduce){
-      *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
-    }
-  
-footer{
-  padding: 26px 0 30px;
-  border-top: 1px solid rgba(220,235,255,.9);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.75), rgba(247,251,255,.95));
-}
 
-
-/* === NAVBAR SYNC (from index) === */
-/* Header */
+    /* Header */
 
 header{
   position:sticky; top:0; z-index:50;
@@ -1206,17 +913,80 @@ margin: 0 auto;
   background: linear-gradient(135deg, rgba(47,169,255,.55), rgba(143,211,255,.85));
   border-color: rgba(47,169,255,.0);
 }
-/* Ensure the navbar container uses index width and is centered */
-header .nav{ max-width: var(--max); margin: 0 auto; }
 
+
+/* ===== Contactos: interactive, still "Aegis8 index style" ===== */
+.contact-shell{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:start;}
+@media (max-width: 980px){.contact-shell{grid-template-columns:1fr;}}
+.fun-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center;margin: 12px auto 0;}
+.fun-pill{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:999px;border:1px solid rgba(220,235,255,.95);background:rgba(255,255,255,.82);box-shadow:0 10px 24px rgba(11,42,91,.06);user-select:none;}
+.fun-pill b{color:rgba(11,42,91,.92)}
+.spark{width:10px;height:10px;border-radius:999px;background: radial-gradient(circle at 30% 30%, var(--sky2), var(--sky));box-shadow:0 0 0 4px rgba(47,169,255,.10);}
+.contact-card{padding:18px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media (max-width:760px){.form-grid{grid-template-columns:1fr;}}
+.field label{display:block;font-weight:900;color:rgba(11,42,91,.9);font-size:13px;margin-bottom:6px;}
+.input, textarea, select{width:100%;padding:12px 12px;border-radius:16px;border:1px solid rgba(220,235,255,.95);background: rgba(255,255,255,.92);box-shadow:0 12px 30px rgba(11,42,91,.06);font: inherit;outline:none;}
+textarea{min-height:140px;resize:vertical;}
+.input:focus, textarea:focus, select:focus{border-color: rgba(47,169,255,.45);box-shadow: 0 18px 45px rgba(11,42,91,.10);}
+.helper-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-top:10px;}
+.counter{font-size:12.5px;color:var(--muted);}
+.counter strong{color:rgba(11,42,91,.92);}
+.meter{border-radius:18px;border:1px solid rgba(220,235,255,.95);background: rgba(255,255,255,.90);box-shadow:0 12px 30px rgba(11,42,91,.06);padding:14px;}
+.meter h3{margin:0 0 8px;font-size:16px;letter-spacing:-.15px;}
+.meter p{margin:0;color:var(--muted);font-size:13.5px;}
+.meter .row{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap;}
+.meter .bar{flex:1 1 220px;height:12px;border-radius:999px;background: rgba(11,42,91,.08);overflow:hidden;position:relative;}
+.meter .fill{height:100%;width:25%;border-radius:999px;background: linear-gradient(90deg, rgba(47,169,255,.75), rgba(143,211,255,.95));box-shadow:0 10px 24px rgba(47,169,255,.18);transition: width .18s ease;}
+.meter .badge-mini{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:999px;border:1px solid rgba(220,235,255,.95);background: rgba(47,169,255,.08);color: rgba(11,42,91,.88);font-weight:900;font-size:12px;}
+.preview{padding:18px;position:sticky;top: 92px;}
+@media (max-width:980px){.preview{position:static;top:auto;}}
+.preview .mini{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:18px;border:1px solid rgba(220,235,255,.95);background:rgba(255,255,255,.90);box-shadow:0 12px 30px rgba(11,42,91,.06);}
+.preview .mini .mini-icon{width:42px;height:42px;border-radius:16px;border:1px solid rgba(47,169,255,.28);background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.24));display:grid;place-items:center;color:rgba(11,42,91,.92);font-weight:1000;flex:0 0 auto;}
+.preview .mini p{margin:0;color:var(--muted);font-size:13.5px;}
+.preview .mini strong{color:rgba(11,42,91,.92);}
+.preview .card{padding:16px;margin-top:12px;}
+.preview h3{margin:0 0 8px;font-size:16px;letter-spacing:-.15px;}
+.preview .kv{display:grid;gap:8px;margin-top:10px;}
+.kv .kv-row{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:16px;border:1px solid rgba(220,235,255,.95);background:rgba(255,255,255,.85);}
+.kv .k{font-size:12px;font-weight:900;color:rgba(11,42,91,.82)}
+.kv .v{font-size:12.5px;color:var(--muted);text-align:right;max-width:60%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.preset-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px;}
+@media (max-width:980px){.preset-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:760px){.preset-grid{grid-template-columns:1fr;}}
+.preset{text-align:left;cursor:pointer;padding:14px;border-radius:18px;border:1px solid rgba(220,235,255,.95);background: linear-gradient(135deg, rgba(255,255,255,.96), rgba(47,169,255,.07) 38%, rgba(143,211,255,.18));box-shadow:0 14px 34px rgba(11,42,91,.08);transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;position:relative;overflow:hidden;}
+.preset:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
+.preset:before{content:"";position:absolute;inset:-2px;background: radial-gradient(520px 220px at 15% 10%, rgba(47,169,255,.10), transparent 60%);opacity:.8;pointer-events:none;}
+.preset>*{position:relative}
+.preset h4{margin:0 0 6px;font-size:14px;letter-spacing:-.1px}
+.preset p{margin:0;color:var(--muted);font-size:12.8px;line-height:1.45}
+.preset .tag{margin-top:10px;display:inline-flex}
+.toast{position: fixed; left: 50%; transform: translateX(-50%);bottom: 18px;z-index: 9999;background: rgba(255,255,255,.92);border: 1px solid rgba(220,235,255,.95);box-shadow: 0 18px 55px rgba(11,42,91,.14);border-radius: 999px;padding: 10px 12px;display:flex; align-items:center; gap:10px;opacity:0; pointer-events:none;transition: opacity .16s ease, transform .16s ease;}
+.toast.show{opacity:1;pointer-events:auto;transform: translateX(-50%) translateY(-2px);}
+.toast .spark{width:9px;height:9px}
+.toast span{font-weight:800;color:rgba(11,42,91,.9);font-size:13px}
+
+  
+/* === Center contact layout === */
+#contacto .wrap{max-width: 980px;}
+.contact-shell{margin-left:auto;margin-right:auto;}
+
+
+/* === Contactos: lift + true center (override global card max-width constraints) === */
+#contacto{ padding-top: 22px; }
+#contacto .sec-head{ margin-bottom: 14px; }
+#contacto .wrap{ max-width: 980px; }
+#contacto .contact-shell{ width: 100%; margin-left:auto; margin-right:auto; }
+#contacto .card{ max-width: none !important; }
+#contacto .preview{ max-width: none !important; }
 
 </style>
 </head>
-
 <body>
+
   <div class="progress" id="progress" aria-hidden="true"></div>
 
-  <header>
+<header>
   <div class="wrap">
     <div class="nav">
 <button class="menu-btn" type="button" id="menuBtn" aria-label="Abrir menú">
@@ -1233,7 +1003,7 @@ header .nav{ max-width: var(--max); margin: 0 auto; }
           <li><a href="propuesta.html" data-page="propuesta.html">Propuesta</a></li>
           <li><a href="index.html#quienes" data-hash="#quienes">Quiénes somos</a></li>
           <li><a href="psocial.html" data-page="psocial.html">Proyecto social</a></li>
-          <li><a class="nav-cta" href="contactos.html" data-page="contactos.html">Contáctanos</a></li>
+          <li><a class="nav-cta" href="contactanos.html" data-page="contactanos.html">Contáctanos</a></li>
         </ul>
       </nav>
 
@@ -1249,519 +1019,394 @@ header .nav{ max-width: var(--max); margin: 0 auto; }
       <a href="ayudamos.html">A quiénes ayudamos</a>
       <a href="index.html#quienes">Quiénes somos</a>
       <a href="psocial.html">Proyecto social</a>
-      <a href="contactos.html">Contáctanos</a>
+      <a href="contactanos.html">Contáctanos</a>
     </div>
   </div>
 </header>
 
-  <main id="top">
+<main id="top">
+  <section class="hero">
+    <div class="wrap center">
+      <div class="pill reveal">
+        <span class="dot"></span>
+        <span><strong>Contacto</strong> — sin humo, sin miedo</span>
+      </div>
+
+      <h1 class="reveal">Escríbenos y armamos el primer paso.</h1>
+
+      <p class="lead reveal">
+        Dinos <span class="k">quién eres</span>, <span class="k">qué quieres lograr</span> y el <span class="k">nivel de urgencia</span>.
+        Nosotros te devolvemos un plan claro.
+      </p>
+
+      <div class="prose-center reveal">
+        <p><strong>¿Cómo funciona?</strong> Completa el formulario a tu ritmo. Puedes usar los <em>modos rápidos</em> para partir con una plantilla,
+        ver la <em>vista previa</em> de lo que nos llega y ajustar la <em>urgencia</em>. No pedimos datos sensibles.</p>
+        <p class="muted">Mientras más claro el contexto y el objetivo, mejor será el primer plan que te devolvamos.</p>
+      </div>
+
+
+      <div class="fun-bar reveal" aria-label="Atajos">
+        <div class="fun-pill"><span class="spark"></span> <b>Tip:</b> Contexto claro = respuesta más útil.</div>
+        <div class="fun-pill"><span class="spark"></span> <b>Regla:</b> No mandes credenciales ni datos sensibles.</div>
+      </div>
+
+      <div class="hero-cta center reveal" style="justify-content:center;margin-top:14px;">
+        <a class="btn primary" href="#contacto">Ir al formulario</a>
+        <a class="btn" href="https://instagram.com/aegis8ciber" target="_blank" rel="noopener">Instagram</a>
+        <button class='btn ghost' type='button' data-modal='m-plantilla' aria-haspopup='dialog'>Plantilla</button>
+      </div>
+
+      <div class="gradline" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <section id="contacto">
     <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>Cuéntanos tu caso</h2>
+        <p class="sec-sub">Elige un “modo” y verás cómo se arma el mensaje en vivo.</p>
+      </div>
 
-      <!-- HERO -->
-      <section class="hero">
-        <div class="center">
-          <div class="pill reveal" role="note" aria-label="Contacto Aegis8">
-            <span class="dot" aria-hidden="true"></span>
-            <span><strong>Escríbenos</strong> y te respondemos con claridad, sin humo.</span>
-          </div>
+      <div class="preset-grid reveal" aria-label="Modos rápidos">
+        <button class="preset" type="button" data-preset="persona">
+          <h4>🧍 Persona</h4>
+          <p>Mejorar hábitos, cuentas y seguridad en casa.</p>
+          <span class="tag">rápido</span>
+        </button>
+        <button class="preset" type="button" data-preset="startup">
+          <h4>🚀 Startup</h4>
+          <p>Orden mínimo: accesos, correo, backups y cultura.</p>
+          <span class="tag">prioridad</span>
+        </button>
+        <button class="preset" type="button" data-preset="taller">
+          <h4>🎓 Taller</h4>
+          <p>Capacitación corta, práctica y con ejemplos.</p>
+          <span class="tag">educativo</span>
+        </button>
+      </div>
 
-          <h1 class="reveal">Conversemos.</h1>
-
-          <p class="lead reveal">
-            Si quieres <span class="k">talleres</span>, <span class="k">mentoría</span>, sumar una <span class="k">comunidad</span>,
-            o apoyar el <span class="k">proyecto social</span>, este es el lugar.
-          </p>
-
-          <div class="center reveal" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
-            <a class="btn primary" href="#formulario">Enviar mensaje</a>
-            <button class="btn" type="button" data-modal="m-canales" aria-haspopup="dialog">Ver canales</button>
-            <button class="btn ghost" type="button" data-modal="m-privacidad" aria-haspopup="dialog">Privacidad</button>
-          </div>
-        </div>
-
-        <div class="gradline" aria-hidden="true"></div>
-
-        <div class="grid-3" style="margin-top:18px;">
-          <button class="tile tile-btn reveal" type="button" data-modal="m-taller" aria-haspopup="dialog">
-            <span class="badge">Taller</span>
-            <h3>Formación práctica</h3>
-            <p>Para equipos, comunidades, colegios, incubadoras y espacios técnicos.</p>
-          </button>
-
-          <button class="tile tile-btn reveal" type="button" data-modal="m-mentoria" aria-haspopup="dialog">
-            <span class="badge">Mentoría</span>
-            <h3>Prioridad y ejecución</h3>
-            <p>Reducir riesgo sin burocracia: MFA, backups, accesos, DNS/TLS, endpoints.</p>
-          </button>
-
-          <button class="tile tile-btn reveal" type="button" data-modal="m-apoyo" aria-haspopup="dialog">
-            <span class="badge">Apoyo</span>
-            <h3>Proyecto social</h3>
-            <p>Becas/cupos, materiales y continuidad. Transparencia por defecto.</p>
-          </button>
-        </div>
-      </section>
-
-      <!-- FORM + MAP -->
-      <section id="formulario">
-        <div class="sec-head reveal">
-          <h2>Enviar mensaje</h2>
-          <p class="sec-sub">
-            Completa lo mínimo. Si no sabes qué seleccionar, elige “No estoy seguro” y lo afinamos contigo.
-          </p>
-        </div>
-
-        <div class="grid-2">
-          <div class="card reveal" style="padding:18px;">
-            <form id="contactForm" novalidate>
-              <div class="form">
-                <div class="field">
-                  <label for="nombre">Nombre</label>
-                  <input class="input" id="nombre" name="nombre" placeholder="Tu nombre" autocomplete="name" required />
-                </div>
-
-                <div class="field">
-                  <label for="correo">Correo</label>
-                  <input class="input" id="correo" name="correo" placeholder="tu@correo.com" autocomplete="email" required />
-                </div>
-
-                <div class="field">
-                  <label for="rol">Soy</label>
-                  <select id="rol" name="rol" class="input">
-                    <option value="persona">Persona</option>
-                    <option value="startup">Startup</option>
-                    <option value="pyme">Pequeña organización / Pyme</option>
-                    <option value="comunidad">Comunidad / Educación</option>
-                    <option value="otro">Otro</option>
-                  </select>
-                </div>
-
-                <div class="field">
-                  <label for="motivo">Motivo</label>
-                  <select id="motivo" name="motivo" class="input">
-                    <option value="taller">Quiero un taller</option>
-                    <option value="mentoria">Quiero mentoría / acompañamiento</option>
-                    <option value="comunidad">Quiero sumar una comunidad</option>
-                    <option value="apoyo">Quiero apoyar el proyecto social</option>
-                    <option value="ns">No estoy seguro</option>
-                  </select>
-                </div>
-
-                <div class="field" style="grid-column:1/-1;">
-                  <label for="mensaje">Mensaje</label>
-                  <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos contexto, objetivo y urgencia (si aplica)."></textarea>
-                  <div class="hint">Tip: si es startup/pyme, describe tu stack y si tienes MFA + backups probados.</div>
-                </div>
+      <div class="contact-shell" style="margin-top:14px;">
+        <div class="card contact-card reveal">
+          <form id="contactForm" novalidate>
+            <div class="form-grid">
+              <div class="field">
+                <label for="nombre">Nombre</label>
+                <input id="nombre" name="nombre" class="input" placeholder="Tu nombre" autocomplete="name" required>
               </div>
 
-              <div class="btn-row">
-                <button class="btn primary" type="submit">Enviar (demo)</button>
-                <a class="btn" id="mailtoLink" href="mailto:contacto@aegis8.org?subject=Aegis8%20-%20Contacto&body=Hola%20Aegis8%2C%0A%0AMotivo%3A%20%0ARol%3A%20%0A%0AMensaje%3A%20%0A">Enviar por correo</a>
-                <button class="btn ghost" type="button" data-modal="m-tiempo" aria-haspopup="dialog">¿Tiempos de respuesta?</button>
+              <div class="field">
+                <label for="correo">Correo</label>
+                <input id="correo" name="correo" class="input" placeholder="tu@correo.com" autocomplete="email" required>
               </div>
 
-              <div class="status" id="status" aria-live="polite"></div>
-            </form>
-          </div>
+              <div class="field">
+                <label for="perfil">Soy</label>
+                <select id="perfil" name="perfil" class="input">
+                  <option value="Persona">Persona</option>
+                  <option value="Startup">Startup</option>
+                  <option value="Pequeña organización">Pequeña organización</option>
+                  <option value="Comunidad">Comunidad / educación</option>
+                  <option value="Otro">Otro</option>
+                </select>
+              </div>
 
-          <div class="reveal">
-            <div class="map" aria-label="Mapa ilustrativo">
-              <svg viewBox="0 0 900 520" role="img" aria-label="Ilustración minimalista de ubicación y comunidad">
-                <defs>
-                  <linearGradient id="mg" x1="0" x2="1" y1="0" y2="1">
-                    <stop offset="0" stop-color="#2FA9FF" stop-opacity="0.18"/>
-                    <stop offset="1" stop-color="#8FD3FF" stop-opacity="0.22"/>
-                  </linearGradient>
-                </defs>
-                <path d="M60 140 C220 40, 360 40, 520 130 C650 200, 760 190, 840 140 L840 440 C760 470, 640 480, 520 430 C380 360, 220 360, 60 440 Z"
-                      fill="url(#mg)" stroke="rgba(220,235,255,.95)" stroke-width="2"/>
-                <path d="M160 190 C270 130, 380 120, 500 170" fill="none" stroke="rgba(11,42,91,.22)" stroke-width="3" stroke-linecap="round"/>
-                <path d="M260 320 C380 260, 520 260, 680 310" fill="none" stroke="rgba(11,42,91,.18)" stroke-width="3" stroke-linecap="round"/>
-                <circle cx="310" cy="250" r="12" fill="rgba(47,169,255,.45)"/>
-                <circle cx="590" cy="290" r="10" fill="rgba(143,211,255,.55)"/>
-                <circle cx="520" cy="205" r="9" fill="rgba(47,169,255,.40)"/>
+              <div class="field">
+                <label for="motivo">Busco</label>
+                <select id="motivo" name="motivo" class="input">
+                  <option value="Orientación / guía">Orientación / guía</option>
+                  <option value="Acompañamiento">Acompañamiento</option>
+                  <option value="Taller / capacitación">Taller / capacitación</option>
+                  <option value="Apoyar proyecto">Apoyar proyecto</option>
+                  <option value="No estoy seguro">No estoy seguro</option>
+                </select>
+              </div>
 
-                <!-- Pin -->
-                <g class="pin">
-                  <path d="M460 246 C460 206 492 176 530 176 C568 176 600 206 600 246 C600 302 530 366 530 366 C530 366 460 302 460 246 Z"
-                        fill="rgba(255,255,255,.85)" stroke="rgba(11,42,91,.35)" stroke-width="2"/>
-                  <circle cx="530" cy="238" r="14" fill="rgba(47,169,255,.40)" stroke="rgba(11,42,91,.25)" stroke-width="2"/>
-                </g>
-
-                <!-- Network nodes -->
-                <g opacity="0.9">
-                  <circle cx="190" cy="120" r="14" fill="rgba(255,255,255,.82)" stroke="rgba(11,42,91,.28)" stroke-width="2"/>
-                  <circle cx="730" cy="120" r="14" fill="rgba(255,255,255,.82)" stroke="rgba(11,42,91,.28)" stroke-width="2"/>
-                  <circle cx="160" cy="430" r="14" fill="rgba(255,255,255,.82)" stroke="rgba(11,42,91,.28)" stroke-width="2"/>
-                  <circle cx="760" cy="430" r="14" fill="rgba(255,255,255,.82)" stroke="rgba(11,42,91,.28)" stroke-width="2"/>
-                  <path d="M190 120 L530 238 L730 120" stroke="rgba(11,42,91,.15)" stroke-width="3" stroke-linecap="round"/>
-                  <path d="M160 430 L530 238 L760 430" stroke="rgba(11,42,91,.12)" stroke-width="3" stroke-linecap="round"/>
-                </g>
-              </svg>
-
-              <div class="map-badge">
-                <div style="font-weight:900;color:rgba(11,42,91,.9);">Aegis8 es remoto por defecto.</div>
-                <div class="muted" style="font-size:13px;margin-top:4px;">
-                  Talleres/mentorías se coordinan online. Presencial: solo si tiene sentido (comunidad, alianza, evento).
+              <div class="field" style="grid-column:1/-1;">
+                <label for="mensaje">Mensaje</label>
+                <textarea id="mensaje" name="mensaje" class="input" placeholder="Contexto + objetivo + urgencia. (No mandes datos sensibles)"></textarea>
+                <div class="helper-row">
+                  <div class="counter">Idea: <strong id="hint">describe tu contexto en 1–2 líneas</strong></div>
+                  <div class="counter"><strong id="count">0</strong>/500</div>
                 </div>
               </div>
             </div>
 
-            <div class="hint" style="margin-top:10px;">
-              ¿Quieres agregar una ubicación real? Reemplazamos este bloque por un embed (Google Maps) cuando lo tengas.
+            <div class="helper-row" style="margin-top:12px;">
+              <div class="counter">Urgencia</div>
+              <div style="flex:1 1 260px;max-width:420px;">
+                <input id="urgencia" type="range" min="0" max="100" value="30" style="width:100%;">
+              </div>
+              <div class="counter"><strong id="urgLabel">normal</strong></div>
+            </div>
+
+            <div class="btn-row" style="margin-top:14px;">
+              <button class="btn primary" type="submit">Enviar (demo)</button>
+              <button class="btn" type="button" id="copyMsg">Copiar mensaje</button>
+              <button class="btn ghost" type="button" id="resetForm">Limpiar</button>
+            </div>
+
+            <div class="status" id="status" aria-live="polite" style="margin-top:12px;"></div>
+          </form>
+        </div>
+
+        <aside class="preview reveal">
+          <div class="mini">
+            <div class="mini-icon">✦</div>
+            <p><strong>Vista previa</strong><br>Se actualiza en vivo con tus inputs.</p>
+          </div>
+
+          <div class="card" style="margin-top:12px;">
+            <h3>Resumen</h3>
+            <p class="muted" style="margin:0;">Así llega tu solicitud (en corto).</p>
+            <div class="kv" aria-label="Resumen en vivo">
+              <div class="kv-row"><div class="k">Perfil</div><div class="v" id="pvPerfil">Persona</div></div>
+              <div class="kv-row"><div class="k">Motivo</div><div class="v" id="pvMotivo">Orientación / guía</div></div>
+              <div class="kv-row"><div class="k">Urgencia</div><div class="v" id="pvUrg">normal</div></div>
+              <div class="kv-row"><div class="k">Mensaje</div><div class="v" id="pvMsg">—</div></div>
             </div>
           </div>
-        </div>
-      </section>
 
-      <!-- CHANNELS -->
-      <section id="canales">
-        <div class="sec-head reveal">
-          <h2>Canales</h2>
-          <p class="sec-sub">Elige el canal que te quede cómodo. Mantengamos la conversación simple.</p>
-        </div>
-
-        <div class="grid-3">
-          <div class="tile reveal">
-            <span class="badge">Correo</span>
-            <h3>contacto@aegis8.org</h3>
-            <p>Ideal para propuestas, alianzas y coordinación de talleres/mentorías.</p>
+          <div class="meter" style="margin-top:12px;">
+            <h3>“Claridad” del mensaje</h3>
+            <p>Mientras más completo, mejor el primer paso.</p>
+            <div class="row">
+              <div class="bar" aria-hidden="true"><div class="fill" id="clarityFill"></div></div>
+              <div class="badge-mini" id="clarityBadge">25%</div>
+            </div>
             <div class="btn-row" style="margin-top:12px;">
-              <a class="btn primary" href="mailto:contacto@aegis8.org?subject=Aegis8%20-%20Contacto">Enviar correo</a>
-              <button class="btn ghost" type="button" data-copy="contacto@aegis8.org">Copiar</button>
+              <button class="btn ghost" type="button" id="suggestBtn">Sugerir mejora</button>
             </div>
           </div>
-
-          <div class="tile reveal">
-            <span class="badge">Comunidad</span>
-            <h3>Newsletter / avisos</h3>
-            <p>Actualizaciones cortas: guías, checklists, talleres y recursos.</p>
-            <div class="btn-row" style="margin-top:12px;">
-              <button class="btn primary" type="button" data-modal="m-news" aria-haspopup="dialog">Sumarme</button>
-              <button class="btn ghost" type="button" data-modal="m-qué-recibo" aria-haspopup="dialog">¿Qué recibo?</button>
-            </div>
-          </div>
-
-          <div class="tile reveal">
-            <span class="badge">Rápido</span>
-            <h3>Mensaje breve</h3>
-            <p>Si tienes 1 minuto: objetivo + urgencia + contexto. Te devolvemos un plan claro.</p>
-            <div class="btn-row" style="margin-top:12px;">
-              <a class="btn primary" href="#formulario">Ir al formulario</a>
-              <button class="btn ghost" type="button" data-modal="m-plantilla" aria-haspopup="dialog">Ver plantilla</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- FAQ -->
-      <section id="faq">
-        <div class="sec-head reveal">
-          <h2>Preguntas rápidas</h2>
-          <p class="sec-sub">Para alinear expectativas sin fricción.</p>
-        </div>
-
-        <div class="grid-2">
-          <div class="tile reveal">
-            <span class="badge">Enfoque</span>
-            <h3>¿En qué NO nos enfocamos?</h3>
-            <p>
-              No vendemos “miedo”, ni soluciones gigantes si no hacen falta. Priorizamos lo esencial (alto impacto / bajo esfuerzo).
-            </p>
-            <div class="btn-row" style="margin-top:12px;">
-              <button class="btn ghost" type="button" data-modal="m-enfoque" aria-haspopup="dialog">Ver detalle</button>
-            </div>
-          </div>
-
-          <div class="tile reveal">
-            <span class="badge">Seguridad</span>
-            <h3>¿Puedo mandar datos sensibles?</h3>
-            <p>
-              Mejor no. No compartas credenciales, llaves, dumps o PII. Si algo es sensible, lo tratamos por un canal acordado.
-            </p>
-            <div class="btn-row" style="margin-top:12px;">
-              <button class="btn ghost" type="button" data-modal="m-seguro" aria-haspopup="dialog">Guía rápida</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-    </div>
-  </main>
-
-  <!-- MODALS -->
-  <div class="modal" id="m-canales" role="dialog" aria-modal="true" aria-labelledby="t-canales">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-canales">Canales de contacto</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Elige el canal que prefieras.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p>Recomendación rápida:</p>
-        <ul>
-          <li><strong>Correo:</strong> propuestas, alianzas, coordinación formal.</li>
-          <li><strong>Formulario:</strong> para ordenar contexto y priorizar.</li>
-          <li><strong>Newsletter:</strong> para recursos y avisos de talleres.</li>
-        </ul>
-        <div class="callout">Tip: si eres startup/pyme, incluye si tienes MFA activo y backups probados.</div>
+        </aside>
       </div>
     </div>
-  </div>
+  </section>
+</main>
 
-  <div class="modal" id="m-privacidad" role="dialog" aria-modal="true" aria-labelledby="t-priv">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-priv">Privacidad (simple)</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Lo mínimo necesario. Nada raro.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p>Esta página es estática. El formulario es una demo local (no envía a servidor).</p>
-        <ul>
-          <li>No solicites ni envíes credenciales o llaves.</li>
-          <li>Cuando conectemos un formulario real, lo haremos con transparencia (Formspree/Tally/Google Forms u otro).</li>
-          <li>Usaremos tu contacto solo para responder tu solicitud (y avisos si tú lo eliges).</li>
-        </ul>
-        <div class="callout">Si quieres, agregamos una política formal en /privacidad.html con el mismo diseño.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="m-tiempo" role="dialog" aria-modal="true" aria-labelledby="t-tiempo">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-tiempo">Tiempos de respuesta</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Para que sepas qué esperar.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p>Estimación sugerida (ajústala cuando quieras):</p>
-        <ul>
-          <li><strong>General:</strong> 24–72 horas hábiles.</li>
-          <li><strong>Alianzas/talleres:</strong> respondemos con 2–3 preguntas para cotizar/coordinar.</li>
-          <li><strong>Urgente:</strong> pon “URGENTE” en asunto + qué necesitas exactamente.</li>
-        </ul>
-        <div class="callout">Si prefieres, agregamos “horarios” y “SLA” por tipo de solicitud.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="m-plantilla" role="dialog" aria-modal="true" aria-labelledby="t-plantilla">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-plantilla">Plantilla (1 minuto)</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Copia y pega en tu mensaje.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p><strong>Objetivo:</strong> (qué quieres lograr)</p>
-        <p><strong>Contexto:</strong> (persona/startup/pyme/comunidad, tamaño)</p>
-        <p><strong>Urgencia:</strong> (baja/media/alta + por qué)</p>
-        <p><strong>Stack:</strong> (si aplica) (cloud, CMS, repos, endpoints)</p>
-        <div class="callout">No envíes credenciales ni datos sensibles. Si hace falta, acordamos canal seguro.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="m-taller" role="dialog" aria-modal="true" aria-labelledby="t-taller">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-taller">Taller</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Educación práctica, sin humo.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p>Ideal para: comunidades, equipos pequeños, incubadoras, colegios, espacios técnicos.</p>
-        <ul>
-          <li>Temas: phishing, MFA, backups, seguridad móvil, privacidad, hardening básico.</li>
-          <li>Entregables: guía breve + checklist + recursos.</li>
-        </ul>
-        <div class="callout">En el formulario: elige “Quiero un taller” y comenta público objetivo + duración.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="m-mentoria" role="dialog" aria-modal="true" aria-labelledby="t-mentoria">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-mentoria">Mentoría</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Priorización y ejecución.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p>Enfoque: acciones con impacto real (alto impacto / bajo esfuerzo).</p>
-        <ul>
-          <li>MFA activo, accesos/roles, backups probados, DNS/TLS, endpoints.</li>
-          <li>Plan corto + checklist + seguimiento.</li>
-        </ul>
-        <div class="callout">Si quieres, luego conectamos herramientas (Observo/PBD) sin eclipsar el foco social.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="m-apoyo" role="dialog" aria-modal="true" aria-labelledby="t-apoyo">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-apoyo">Apoyo al proyecto social</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Becas/cupos y continuidad.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p>Para apoyar:</p>
-        <ul>
-          <li>becas/cupos para talleres</li>
-          <li>materiales (guías, recursos, difusión)</li>
-          <li>infraestructura (hosting, dominios, herramientas)</li>
-        </ul>
-        <div class="callout">Cuando definas el método (donación/alianza), lo implementamos con transparencia.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="m-news" role="dialog" aria-modal="true" aria-labelledby="t-news">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-news">Sumarme (demo)</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Avisos cortos y útiles.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p>Esto es demo (sin backend). Luego lo conectamos a una lista real.</p>
-        <div class="callout">Si quieres, lo conectamos a Mailchimp/Brevo/ConvertKit o a un Google Form.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="m-qué-recibo" role="dialog" aria-modal="true" aria-labelledby="t-recibo">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-recibo">¿Qué recibo?</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Contenido sin relleno.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <ul>
-          <li>checklists mínimos (MFA, backups, accesos, DNS/TLS)</li>
-          <li>avisos de talleres y recursos</li>
-          <li>guías cortas “qué hago hoy”</li>
-        </ul>
-        <div class="callout">Frecuencia sugerida: 1–2 al mes. (ajustable)</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="m-enfoque" role="dialog" aria-modal="true" aria-labelledby="t-enfoque">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-enfoque">Enfoque</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Menos ruido, más impacto.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <p>Nos enfocamos en reducir riesgo real, con decisiones simples.</p>
-        <ul>
-          <li>No prometemos “seguridad total”.</li>
-          <li>No empujamos herramientas caras si no son necesarias.</li>
-          <li>Priorizamos hábitos y mínimos que sostengan el tiempo.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="m-seguro" role="dialog" aria-modal="true" aria-labelledby="t-seguro">
-    <div class="modal-dialog">
-      <div class="modal-head">
-        <div>
-          <h3 class="modal-title" id="t-seguro">Guía rápida: qué NO enviar</h3>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Para protegerte a ti y a tu equipo.</div>
-        </div>
-        <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
-      </div>
-      <div class="modal-body">
-        <ul>
-          <li>Contraseñas, llaves API, tokens, seeds, backups completos.</li>
-          <li>PII sensible (RUT, direcciones, datos bancarios).</li>
-          <li>Archivos con secretos (env, config) sin sanitizar.</li>
-        </ul>
-        <div class="callout">Si hace falta revisar algo sensible, acordamos un canal y formato seguro.</div>
-      </div>
-    </div>
-  </div>
-
-  
 <footer>
   <div class="wrap">
     <div class="foot" style="justify-content:center; text-align:center;">
       <small>
-        © <span id="year"></span> <strong>Aegis8</strong> · Consultora y proyecto educativo-social de ciberseguridad.<br/>
+        © <span id="year"></span> <strong>Aegis8</strong> · Consultora y proyecto educativo‑social de ciberseguridad.<br/>
         <span class="muted">Seguridad clara, sin humo y con sentido.</span>
       </small>
     </div>
   </div>
 </footer>
+
+
+<div class="modal" id="m-plantilla" role="dialog" aria-modal="true" aria-labelledby="t-plantilla">
+  <div class="modal-dialog">
+    <div class="modal-head">
+      <div>
+        <h3 class="modal-title" id="t-plantilla">Plantilla rápida (copia/pega)</h3>
+        <div class="muted" style="font-size:13px;margin-top:4px;">Para que te respondamos mejor, más rápido.</div>
+      </div>
+      <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="muted">Pega esto en tu mensaje y completa lo que puedas:</p>
+      <p style="white-space:pre-wrap;background:rgba(11,42,91,.05);border:1px solid rgba(220,235,255,.95);padding:12px;border-radius:16px;font-weight:800;">
+Contexto:
+Objetivo:
+Urgencia (si aplica):
+Lo que ya tengo (MFA / backups / accesos / correo):
+      </p>
+      <div class="callout">No envíes contraseñas, llaves, tokens ni datos personales.</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span class="spark"></span>
+  <span id="toastText">Copiado ✅</span>
+</div>
+
 <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
+(function(){
+
+  const prog = document.getElementById('progress');
+  if(prog){
+    const onScroll = () => {
+      const h = document.documentElement;
+      const p = (h.scrollTop)/(h.scrollHeight - h.clientHeight);
+      prog.style.width = Math.max(0, Math.min(100, p*100)) + '%';
+    };
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+  }
+
+  const toast = document.getElementById('toast');
+  const toastText = document.getElementById('toastText');
+  let toastT;
+  function showToast(msg){
+    if(!toast) return;
+    toastText.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastT);
+    toastT = setTimeout(()=>toast.classList.remove('show'), 1600);
+  }
+
+  const elPerfil = document.getElementById('perfil');
+  const elMotivo = document.getElementById('motivo');
+  const elMsg = document.getElementById('mensaje');
+  const elUrg = document.getElementById('urgencia');
+  const elCount = document.getElementById('count');
+  const elUrgLabel = document.getElementById('urgLabel');
+  const pvPerfil = document.getElementById('pvPerfil');
+  const pvMotivo = document.getElementById('pvMotivo');
+  const pvUrg = document.getElementById('pvUrg');
+  const pvMsg = document.getElementById('pvMsg');
+  const fill = document.getElementById('clarityFill');
+  const badge = document.getElementById('clarityBadge');
+  const hint = document.getElementById('hint');
+
+  function urgToLabel(v){
+    v = Number(v||0);
+    if(v < 25) return 'tranqui';
+    if(v < 60) return 'normal';
+    if(v < 85) return 'alta';
+    return 'crítica';
+  }
+
+  function computeClarity(){
+    let score = 0;
+    const name = document.getElementById('nombre').value.trim();
+    const mail = document.getElementById('correo').value.trim();
+    const msg = elMsg.value.trim();
+    const has3lines = (msg.split(/\n+/).filter(Boolean).length >= 2) || (msg.length >= 80);
+
+    if(name) score += 15;
+    if(mail && mail.includes('@')) score += 15;
+    if(elPerfil.value) score += 10;
+    if(elMotivo.value) score += 10;
+    if(msg.length >= 30) score += 20;
+    if(has3lines) score += 15;
+    if(Number(elUrg.value) !== 30) score += 5;
+    score = Math.min(100, score);
+    return score;
+  }
+
+  function render(){
+    let msg = elMsg.value;
+    if(msg.length > 500){ msg = msg.slice(0,500); elMsg.value = msg; }
+    elCount.textContent = String(msg.length);
+
+    const u = urgToLabel(elUrg.value);
+    elUrgLabel.textContent = u;
+
+    pvPerfil.textContent = elPerfil.value;
+    pvMotivo.textContent = elMotivo.value;
+    pvUrg.textContent = u;
+    const compact = msg.trim().replace(/\s+/g,' ');
+    pvMsg.textContent = compact ? (compact.slice(0,80) + (compact.length>80?'…':'')) : '—';
+
+    const c = computeClarity();
+    fill.style.width = c + '%';
+    badge.textContent = c + '%';
+
+    if(c < 40) hint.textContent = 'agrega contexto + objetivo (1–2 líneas)';
+    else if(c < 70) hint.textContent = 'bien: agrega urgencia y qué ya tienes';
+    else hint.textContent = 'perfecto: listo para responder con plan';
+  }
+
+  ['change','input','keyup'].forEach(ev=>{
+    elPerfil.addEventListener(ev, render);
+    elMotivo.addEventListener(ev, render);
+    elMsg.addEventListener(ev, render);
+    elUrg.addEventListener(ev, render);
+    document.getElementById('nombre').addEventListener(ev, render);
+    document.getElementById('correo').addEventListener(ev, render);
+  });
+  render();
+
+  const presets = document.querySelectorAll('[data-preset]');
+  const presetText = {
+    persona: "Contexto: (casa / cuentas / hábitos)\nObjetivo: (qué quieres mejorar)\nUrgencia: (si aplica)\n",
+    startup: "Contexto: (equipo / correo / accesos / herramientas)\nObjetivo: (orden mínimo que se sostenga)\nUrgencia: (si aplica)\n",
+    taller: "Contexto: (público y nivel)\nObjetivo: (tema + resultado esperado)\nFecha/duración: (si aplica)\n"
+  };
+  presets.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const key = btn.getAttribute('data-preset');
+      if(key === 'persona') elPerfil.value = 'Persona';
+      if(key === 'startup') elPerfil.value = 'Startup';
+      if(key === 'taller') elMotivo.value = 'Taller / capacitación';
+      elMsg.value = presetText[key] + (elMsg.value.trim() ? ("\n" + elMsg.value.trim()) : "");
+      render();
+      showToast('Modo aplicado ✨');
+      elMsg.focus();
+    });
+  });
+
+  document.getElementById('copyMsg').addEventListener('click', async ()=>{
+    const nombreVal = document.getElementById('nombre').value.trim() || '—';
+    const correoVal = document.getElementById('correo').value.trim() || '—';
+    const payload =
+      "Nombre: " + nombreVal + "\n" +
+      "Correo: " + correoVal + "\n" +
+      "Perfil: " + elPerfil.value + "\n" +
+      "Motivo: " + elMotivo.value + "\n" +
+      "Urgencia: " + urgToLabel(elUrg.value) + "\n\n" +
+      "Mensaje:\n" + (elMsg.value.trim() || "—");
+    try{
+      await navigator.clipboard.writeText(payload);
+      showToast('Copiado ✅');
+    }catch(e){
+      const t = document.createElement('textarea');
+      t.value = payload; document.body.appendChild(t);
+      t.select(); document.execCommand('copy'); document.body.removeChild(t);
+      showToast('Copiado ✅');
+    }
+  });
+
+  document.getElementById('suggestBtn').addEventListener('click', ()=>{
+    const msg = elMsg.value.trim();
+    let tips = [];
+    if(msg.length < 30) tips.push("Agrega 1–2 líneas de contexto.");
+    if(!/objetivo/i.test(msg)) tips.push("Incluye explícitamente tu objetivo.");
+    if(!/urg/i.test(msg)) tips.push("Menciona urgencia (si aplica).");
+    tips.push("No compartas datos sensibles.");
+    showToast((tips.slice(0,2).join(' ')) || "Vas bien ✅");
+  });
+
+  const form = document.getElementById('contactForm');
+  const status = document.getElementById('status');
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    status.className = 'status ok';
+    status.textContent = 'Listo ✅ (demo). Si luego conectas backend, lo dejamos production.';
+    showToast('Enviado (demo) ✨');
+  });
+
+  document.getElementById('resetForm').addEventListener('click', ()=>{
+    form.reset();
+    elUrg.value = 30;
+    render();
+    showToast('Limpio 🧼');
+  });
+
+})();
 </script>
 
 
-  <script>
-    // Año
+
+<script>
+    // Año automático
     document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Menú móvil
-    const btn = document.getElementById("menuBtn");
-    const panel = document.getElementById("mobilePanel");
-    function closeMobileMenu(){ panel.style.display="none"; btn.setAttribute("aria-expanded","false"); }
-    function toggleMobileMenu(){
-      const isOpen = btn.getAttribute("aria-expanded")==="true";
-      if(isOpen) closeMobileMenu();
-      else{ panel.style.display="block"; btn.setAttribute("aria-expanded","true"); }
-    }
-    btn.addEventListener("click", toggleMobileMenu);
-    panel.querySelectorAll("a").forEach(a=>a.addEventListener("click", closeMobileMenu));
-    window.addEventListener("resize", ()=>{ if(window.innerWidth>760) closeMobileMenu(); });
-
-    // Scroll progress
-    const progress = document.getElementById("progress");
-    function onScroll(){
-      const h = document.documentElement;
-      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
-      progress.style.width = `${Math.max(0, Math.min(1, scrolled)) * 100}%`;
-    }
-    window.addEventListener("scroll", onScroll, { passive:true });
-    onScroll();
-
-    // Reveal
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
+    // Reveal on scroll
+    const reveals = Array.from(document.querySelectorAll('.reveal'));
+const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
         if(e.isIntersecting){
           e.target.classList.add("on");
           io.unobserve(e.target);
         }
       });
-    }, { threshold:0.12 });
-    document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
 
     // Modals
     const modals = Array.from(document.querySelectorAll(".modal"));
@@ -1772,145 +1417,153 @@ header .nav{ max-width: var(--max); margin: 0 auto; }
       if(!modal) return;
       lastFocus = document.activeElement;
       modal.classList.add("show");
-      document.body.style.overflow="hidden";
+      document.body.style.overflow = "hidden";
+      // focus close button
       const closeBtn = modal.querySelector(".modal-close");
       if(closeBtn) closeBtn.focus();
     }
     function closeModal(modal){
       modal.classList.remove("show");
-      document.body.style.overflow="";
-      if(lastFocus && typeof lastFocus.focus==="function") lastFocus.focus();
+      document.body.style.overflow = "";
+      if(lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
     }
-    function closeAll(){ modals.forEach(m=>m.classList.contains("show") && closeModal(m)); }
+    function closeAll(){
+      modals.forEach(m => m.classList.contains("show") && closeModal(m));
+    }
 
-    document.addEventListener("click",(e)=>{
+    // Open from any element with data-modal
+    document.addEventListener("click", (e) => {
       const trigger = e.target.closest("[data-modal]");
-      if(trigger) openModal(trigger.getAttribute("data-modal"));
-
-      const backdrop = e.target.classList && e.target.classList.contains("modal");
-      if(backdrop) closeModal(e.target);
-
+      if(trigger){
+        openModal(trigger.getAttribute("data-modal"));
+      }
+      // Close when clicking backdrop
+      const open = e.target.classList && e.target.classList.contains("modal");
+      if(open){
+        closeModal(e.target);
+      }
+      // Close button
       const closeBtn = e.target.closest(".modal-close");
-      if(closeBtn) closeModal(closeBtn.closest(".modal"));
-
-      const copyBtn = e.target.closest("[data-copy]");
-      if(copyBtn){
-        const txt = copyBtn.getAttribute("data-copy");
-        navigator.clipboard?.writeText(txt).then(()=>{
-          copyBtn.textContent = "Copiado ✓";
-          setTimeout(()=>copyBtn.textContent="Copiar", 1200);
-        }).catch(()=>{
-          copyBtn.textContent = "No se pudo copiar";
-          setTimeout(()=>copyBtn.textContent="Copiar", 1200);
-        });
+      if(closeBtn){
+        closeModal(closeBtn.closest(".modal"));
       }
     });
 
-    document.addEventListener("keydown",(e)=>{
-      if(e.key==="Escape") closeAll();
-
-      const activeModal = modals.find(m=>m.classList.contains("show"));
+    // Escape closes
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape") closeAll();
+      // simple focus trap for open modal
+      const activeModal = modals.find(m => m.classList.contains("show"));
       if(!activeModal) return;
-
-      if(e.key==="Tab"){
+      if(e.key === "Tab"){
         const focusables = Array.from(activeModal.querySelectorAll('button, a, input, textarea, select, [tabindex]:not([tabindex="-1"])'))
-          .filter(el=>!el.hasAttribute("disabled"));
-        if(focusables.length===0) return;
+          .filter(el => !el.hasAttribute("disabled"));
+        if(focusables.length === 0) return;
         const first = focusables[0];
-        const last = focusables[focusables.length-1];
-        if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
-        else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+        const last = focusables[focusables.length - 1];
+        if(e.shiftKey && document.activeElement === first){
+          e.preventDefault(); last.focus();
+        } else if(!e.shiftKey && document.activeElement === last){
+          e.preventDefault(); first.focus();
+        }
       }
-    });
-
-    // Form logic (DEMO)
-    const form = document.getElementById("contactForm");
-    const status = document.getElementById("status");
-    const mailto = document.getElementById("mailtoLink");
-
-    function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v||"").trim()); }
-
-    function updateMailto(){
-      const nombre = document.getElementById("nombre").value.trim();
-      const correo = document.getElementById("correo").value.trim();
-      const rol = document.getElementById("rol").value;
-      const motivo = document.getElementById("motivo").value;
-      const mensaje = document.getElementById("mensaje").value.trim();
-
-      const subj = `Aegis8 - Contacto (${motivo})`;
-      const body =
-`Hola Aegis8,
-Nombre: ${nombre}
-Correo: ${correo}
-Soy: ${rol}
-Motivo: ${motivo}
-
-Mensaje:
-${mensaje}
-`;
-
-      mailto.href = `mailto:contacto@aegis8.org?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
-    }
-    ["nombre","correo","rol","motivo","mensaje"].forEach(id=>{
-      document.getElementById(id).addEventListener("input", updateMailto);
-      document.getElementById(id).addEventListener("change", updateMailto);
-    });
-    updateMailto();
-
-    form.addEventListener("submit",(e)=>{
-      e.preventDefault();
-      const nombre = document.getElementById("nombre").value.trim();
-      const correo = document.getElementById("correo").value.trim();
-      const mensaje = document.getElementById("mensaje").value.trim();
-
-      if(!nombre){
-        status.textContent = "Escribe tu nombre para poder responderte.";
-        status.className = "status bad";
-        document.getElementById("nombre").focus();
-        return;
-      }
-      if(!validEmail(correo)){
-        status.textContent = "Escribe un correo válido (ej: tu@correo.com).";
-        status.className = "status bad";
-        document.getElementById("correo").focus();
-        return;
-      }
-      if(mensaje.length < 10){
-        status.textContent = "Cuéntanos un poco más (mínimo ~10 caracteres).";
-        status.className = "status bad";
-        document.getElementById("mensaje").focus();
-        return;
-      }
-
-      status.textContent = "Listo ✨ (demo) — Mensaje preparado. Para enviarlo de verdad, usa “Enviar por correo” o conectamos un backend.";
-      status.className = "status ok";
     });
   </script>
 <script>
 (function(){
-  // Mobile menu toggle
   const btn = document.getElementById('menuBtn');
   const panel = document.getElementById('mobilePanel');
-  if(btn && panel){
-    btn.addEventListener('click', () => {
-      const open = panel.style.display === 'block';
-      panel.style.display = open ? 'none' : 'block';
-      btn.setAttribute('aria-expanded', String(!open));
-    });
-    // Close on click
-    panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { panel.style.display='none'; btn.setAttribute('aria-expanded','false'); }));
+
+  function setOpen(open){
+    if(!btn || !panel) return;
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.classList.toggle('is-open', open);
+    panel.classList.toggle('is-open', open);
   }
 
-  // Active link (by page or hash)
+  function toggle(){
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    setOpen(!open);
+  }
+
+  if(btn && panel){
+    btn.setAttribute('aria-expanded','false');
+    setOpen(false);
+
+    btn.addEventListener('click', (e) => { e.preventDefault(); toggle(); });
+
+    // Close menu when clicking a link
+    panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      if(!open) return;
+      const inside = panel.contains(e.target) || btn.contains(e.target);
+      if(!inside) setOpen(false);
+    });
+
+    // Close on Esc
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') setOpen(false); });
+
+    // Close when resizing to desktop
+    window.addEventListener('resize', () => { if(window.innerWidth > 760) setOpen(false); });
+  }
+
+  // Active link highlight by page (and hash for the "Quiénes somos" anchor)
   const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   const hash = (location.hash || '').toLowerCase();
+
   document.querySelectorAll('#navLinks a').forEach(a => {
     const page = (a.getAttribute('data-page') || '').toLowerCase();
     const h = (a.getAttribute('data-hash') || '').toLowerCase();
-    if(page && page === path) a.classList.add('active');
-    if(h && hash && h === hash) a.classList.add('active');
+    if((page && page === path) || (h && h === hash)){
+      a.classList.add('active');
+    }
   });
 })();
 </script>
+<script>
+(function(){
+  const root = document.querySelector('[data-qs]');
+  if(!root) return;
+
+  const panels = Array.from(root.querySelectorAll('.qs-panel'));
+  const prevBtn = root.querySelector('[data-qs-prev]');
+  const nextBtn = root.querySelector('[data-qs-next]');
+  const dots = Array.from(root.querySelectorAll('[data-qs-dot]'));
+
+  let step = 0;
+
+  function setStep(n){
+    step = Math.max(0, Math.min(panels.length - 1, n));
+
+    panels.forEach((p, i) => p.classList.toggle('is-active', i === step));
+
+    if(prevBtn) prevBtn.disabled = (step === 0);
+    if(nextBtn) nextBtn.disabled = (step === panels.length - 1);
+
+    dots.forEach((d, i) => {
+      const on = i === step;
+      d.classList.toggle('is-on', on);
+      d.setAttribute('aria-selected', on ? 'true' : 'false');
+      d.setAttribute('tabindex', on ? '0' : '-1');
+    });
+  }
+
+  if(prevBtn) prevBtn.addEventListener('click', () => setStep(step - 1));
+  if(nextBtn) nextBtn.addEventListener('click', () => setStep(step + 1));
+  dots.forEach(d => d.addEventListener('click', () => setStep(parseInt(d.getAttribute('data-qs-dot'), 10) || 0)));
+
+  // Keyboard support (left/right)
+  root.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowLeft'){ setStep(step - 1); }
+    if(e.key === 'ArrowRight'){ setStep(step + 1); }
+  });
+
+  setStep(0);
+})();
+</script>
+
 </body>
 </html>
