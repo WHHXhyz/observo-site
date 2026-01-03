@@ -1461,6 +1461,9 @@ margin: 0 auto;
 header .nav{ max-width: var(--max); margin: 0 auto; }
 
 
+
+/* Hotfix: avoid blank pages if reveal JS fails */
+.reveal{opacity:1 !important; transform:none !important;}
 </style>
 </head>
 <body>
@@ -2029,5 +2032,56 @@ header .nav{ max-width: var(--max); margin: 0 auto; }
   });
 })();
 </script>
+
+<script>
+/* AEGIS8_MOBILE_MENU_V4: robust mobile nav toggle (no dependencies) */
+(function(){
+  function ready(fn){
+    if(document.readyState === "loading"){ document.addEventListener("DOMContentLoaded", fn); }
+    else { fn(); }
+  }
+  ready(function(){
+    var btn = document.getElementById("menuBtn") || document.querySelector("[data-menu-btn]");
+    var panel = document.getElementById("mobilePanel") || document.querySelector("[data-mobile-panel]");
+    if(!btn || !panel) return;
+
+    function isOpen(){ return btn.classList.contains("is-open"); }
+    function open(){
+      btn.classList.add("is-open");
+      panel.classList.add("is-open");
+      btn.setAttribute("aria-expanded","true");
+    }
+    function close(){
+      btn.classList.remove("is-open");
+      panel.classList.remove("is-open");
+      btn.setAttribute("aria-expanded","false");
+    }
+    function toggle(){ isOpen() ? close() : open(); }
+
+    btn.addEventListener("click", function(e){
+      e.preventDefault();
+      toggle();
+    }, { passive:false });
+
+    // close when navigating
+    panel.addEventListener("click", function(e){
+      var a = e.target && e.target.closest ? e.target.closest("a") : null;
+      if(a) close();
+    });
+
+    // close when tapping outside
+    document.addEventListener("click", function(e){
+      if(!isOpen()) return;
+      var inside = (e.target === btn) || (btn.contains && btn.contains(e.target)) || (panel.contains && panel.contains(e.target));
+      if(!inside) close();
+    });
+
+    // safety: close on resize/orientation change
+    window.addEventListener("resize", function(){ close(); });
+    window.addEventListener("orientationchange", function(){ close(); });
+  });
+})();
+</script>
+
 </body>
 </html>
