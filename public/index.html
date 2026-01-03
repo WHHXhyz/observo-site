@@ -1412,60 +1412,7 @@ margin: 0 auto;
       }
     });
   </script>
-<script>
-(function(){
-  const btn = document.getElementById('menuBtn');
-  const panel = document.getElementById('mobilePanel');
 
-  function setOpen(open){
-    if(!btn || !panel) return;
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    btn.classList.toggle('is-open', open);
-    panel.classList.toggle('is-open', open);
-  }
-
-  function toggle(){
-    const open = btn.getAttribute('aria-expanded') === 'true';
-    setOpen(!open);
-  }
-
-  if(btn && panel){
-    btn.setAttribute('aria-expanded','false');
-    setOpen(false);
-
-    btn.addEventListener('click', (e) => { e.preventDefault(); toggle(); });
-
-    // Close menu when clicking a link
-    panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
-
-    // Close when clicking outside
-    document.addEventListener('click', (e) => {
-      const open = btn.getAttribute('aria-expanded') === 'true';
-      if(!open) return;
-      const inside = panel.contains(e.target) || btn.contains(e.target);
-      if(!inside) setOpen(false);
-    });
-
-    // Close on Esc
-    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') setOpen(false); });
-
-    // Close when resizing to desktop
-    window.addEventListener('resize', () => { if(window.innerWidth > 760) setOpen(false); });
-  }
-
-  // Active link highlight by page (and hash for the "Quiénes somos" anchor)
-  const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  const hash = (location.hash || '').toLowerCase();
-
-  document.querySelectorAll('#navLinks a').forEach(a => {
-    const page = (a.getAttribute('data-page') || '').toLowerCase();
-    const h = (a.getAttribute('data-hash') || '').toLowerCase();
-    if((page && page === path) || (h && h === hash)){
-      a.classList.add('active');
-    }
-  });
-})();
-</script>
 <script>
 (function(){
   const root = document.querySelector('[data-qs]');
@@ -1508,55 +1455,8 @@ margin: 0 auto;
 })();
 </script>
 
-<script>
-/* AEGIS8_MOBILE_MENU_V4: robust mobile nav toggle (no dependencies) */
-(function(){
-  function ready(fn){
-    if(document.readyState === "loading"){ document.addEventListener("DOMContentLoaded", fn); }
-    else { fn(); }
-  }
-  ready(function(){
-    var btn = document.getElementById("menuBtn") || document.querySelector("[data-menu-btn]");
-    var panel = document.getElementById("mobilePanel") || document.querySelector("[data-mobile-panel]");
-    if(!btn || !panel) return;
 
-    function isOpen(){ return btn.classList.contains("is-open"); }
-    function open(){
-      btn.classList.add("is-open");
-      panel.classList.add("is-open");
-      btn.setAttribute("aria-expanded","true");
-    }
-    function close(){
-      btn.classList.remove("is-open");
-      panel.classList.remove("is-open");
-      btn.setAttribute("aria-expanded","false");
-    }
-    function toggle(){ isOpen() ? close() : open(); }
 
-    btn.addEventListener("click", function(e){
-      e.preventDefault();
-      toggle();
-    }, { passive:false });
-
-    // close when navigating
-    panel.addEventListener("click", function(e){
-      var a = e.target && e.target.closest ? e.target.closest("a") : null;
-      if(a) close();
-    });
-
-    // close when tapping outside
-    document.addEventListener("click", function(e){
-      if(!isOpen()) return;
-      var inside = (e.target === btn) || (btn.contains && btn.contains(e.target)) || (panel.contains && panel.contains(e.target));
-      if(!inside) close();
-    });
-
-    // safety: close on resize/orientation change
-    window.addEventListener("resize", function(){ close(); });
-    window.addEventListener("orientationchange", function(){ close(); });
-  });
-})();
-</script>
-
+<script src="/aegis-menu.js" defer></script>
 </body>
 </html>
