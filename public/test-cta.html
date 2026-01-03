@@ -926,5 +926,60 @@ header .nav{ max-width: var(--max); margin: 0 auto; }
     </p>
     <a href="test.html">Hacer el test →</a>
   </div>
+<script>
+(function(){
+  const btn = document.getElementById('menuBtn');
+  const panel = document.getElementById('mobilePanel');
+
+  function setOpen(open){
+    if(!btn || !panel) return;
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.classList.toggle('is-open', open);
+    panel.classList.toggle('is-open', open);
+  }
+
+  function toggle(){
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    setOpen(!open);
+  }
+
+  if(btn && panel){
+    btn.setAttribute('aria-expanded','false');
+    setOpen(false);
+
+    btn.addEventListener('click', (e) => { e.preventDefault(); toggle(); });
+
+    // Close menu when clicking a link
+    panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      if(!open) return;
+      const inside = panel.contains(e.target) || btn.contains(e.target);
+      if(!inside) setOpen(false);
+    });
+
+    // Close on Esc
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') setOpen(false); });
+
+    // Close when resizing to desktop
+    window.addEventListener('resize', () => { if(window.innerWidth > 760) setOpen(false); });
+  }
+
+  // Active link highlight by page (and hash for the "Quiénes somos" anchor)
+  const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  const hash = (location.hash || '').toLowerCase();
+
+  document.querySelectorAll('#navLinks a').forEach(a => {
+    const page = (a.getAttribute('data-page') || '').toLowerCase();
+    const h = (a.getAttribute('data-hash') || '').toLowerCase();
+    if((page && page === path) || (h && h === hash)){
+      a.classList.add('active');
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
