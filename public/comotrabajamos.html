@@ -1,1987 +1,532 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-PHHCK23VK6"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-XNJT1V3G6T');
-</script>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Aegis8 — Cómo trabajamos</title>
-<meta content="Cómo trabajamos en Aegis8: claridad, criterio y acompañamiento. Un método simple para aprender, aplicar y sostener cultura de ciberseguridad." name="description"/>
-<meta content="#0B2A5B" name="theme-color"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-<style>
-
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Aegis8 — Cómo trabajamos</title>
+  <meta name="description" content="Cómo trabajamos en Aegis8: diagnóstico claro, plan accionable e implementación con acompañamiento. Ciberseguridad con sentido."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
     :root{
-      --bg:#F7FBFF;
-      --card:#FFFFFF;
-      --text:#0B1B34;
-      --muted:#4B5E7B;
-      --line:#DCEBFF;
-      --blue:#0B2A5B;
-      --sky:#2FA9FF;
-      --sky2:#8FD3FF;
+      --bg:#F7FBFF;--card:#FFFFFF;--text:#0B1B34;--muted:#4B5E7B;
+      --line:#DCEBFF;--blue:#0B2A5B;--sky:#2FA9FF;--sky2:#8FD3FF;
       --shadow:0 18px 45px rgba(11,42,91,.10);
-      --radius:18px;
-      --radius2:26px;
-      --max:1080px;
-      --ok:#0B5B3A;
-      --warn:#8A5A0B;
+      --shadow2:0 12px 24px rgba(11,42,91,.10);
+      --radius:18px;--radius2:26px;--max:1120px;
+      --ok:#0bbf7a;--warn:#ffb020;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family:"Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family:"Space Grotesk",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
       color:var(--text);
       background:
-        radial-gradient(900px 420px at 20% -10%, rgba(47,169,255,.25), transparent 60%),
-        radial-gradient(900px 420px at 90% 0%, rgba(143,211,255,.25), transparent 60%),
-        linear-gradient(180deg,#FFFFFF 0%, var(--bg) 100%);
-      line-height:1.45;
-      overflow-x:hidden;
+        radial-gradient(900px 420px at 15% 0%, rgba(47,169,255,.18), transparent 60%),
+        radial-gradient(900px 420px at 85% 10%, rgba(143,211,255,.22), transparent 60%),
+        linear-gradient(180deg,#fff,var(--bg));
+      line-height:1.55;
     }
-    a{color:inherit;text-decoration:none}
-    .wrap{width:min(var(--max), 100% - 40px);margin:0 auto}
-    .muted{color:var(--muted)}
-    .center{text-align:center}
-
-    /* Top progress */
-    .progress{
-      position:fixed;top:0;left:0;height:3px;width:0%;
-      background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.92), rgba(143,211,255,.95));
-      z-index:9999;
-      box-shadow:0 8px 20px rgba(47,169,255,.22);
-    }
-
+    a{text-decoration:none;color:inherit}
+    .wrap{width:min(var(--max),100% - 40px);margin:0 auto}
     header{
-      position:sticky;top:0;z-index:50;
-      background:rgba(255,255,255,.78);
-      backdrop-filter:blur(10px);
-      border-bottom:1px solid rgba(220,235,255,.85);
+      position:sticky;top:0;z-index:10;
+      background:rgba(255,255,255,.88);
+      border-bottom:1px solid var(--line);
+      backdrop-filter: blur(8px);
     }
-    .nav{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:14px 0;gap:16px;
-    }
-    .brand{display:flex;align-items:center;gap:12px;min-width:210px}
-    .logo{
-      width:38px;height:38px;border-radius:12px;
-      background:linear-gradient(135deg,var(--blue),#0D3B85);
-      position:relative;
-      box-shadow:0 14px 30px rgba(11,42,91,.18);
-      flex:0 0 auto;
-    }
-    .logo:before{
-      content:"";
-      position:absolute;inset:9px 11px 9px 11px;
-      border-radius:10px 10px 14px 14px;
-      background:linear-gradient(135deg, rgba(143,211,255,.95), rgba(47,169,255,.85));
-      clip-path:polygon(50% 0%, 92% 18%, 92% 55%, 50% 100%, 8% 55%, 8% 18%);
-      opacity:.95;
-    }
-    .brand strong{font-size:16px;letter-spacing:.2px}
-    .brand span{display:block;margin-top:2px;font-size:12px;color:var(--muted)}
 
+    /* Navbar: keep one line; if needed, allow horizontal scroll */
     nav ul{
-      list-style:none;padding:0;margin:0;
-      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+      display:flex;gap:10px;list-style:none;
+      padding:12px;margin:0;justify-content:center;
+      flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;
     }
+    nav ul::-webkit-scrollbar{display:none}
     nav a{
-      font-size:14px;
-      color:rgba(11,27,52,.86);
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.78);
-      box-shadow:0 10px 24px rgba(11,42,91,.06);
-      transition:transform .12s ease, background .12s ease, box-shadow .12s ease, border-color .12s ease;
-      white-space:nowrap;
+      padding:10px 14px;border-radius:999px;border:1px solid var(--line);
+      background:#fff;font-weight:800;white-space:nowrap;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
     }
-    nav a:hover{
-      transform:translateY(-1px);
-      background:rgba(220,235,255,.55);
-      border-color:rgba(47,169,255,.35);
-      box-shadow:0 14px 34px rgba(11,42,91,.10);
-      color:var(--blue);
-    }
+    nav a:hover{transform:translateY(-1px);box-shadow:var(--shadow2);border-color:rgba(47,169,255,.45)}
     nav a.active{
-      border-color:rgba(47,169,255,.45);
-      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
-      color:var(--blue);
-      font-weight:800;
+      background:linear-gradient(135deg,rgba(47,169,255,.18),rgba(143,211,255,.28));
+      border-color:rgba(47,169,255,.40);
     }
 
-    .menu-btn{
-      display:none;width:44px;height:44px;border-radius:14px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.9);
-      box-shadow:0 12px 30px rgba(11,42,91,.08);
-      cursor:pointer;align-items:center;justify-content:center;
+    main{padding:34px 0 78px}
+    h1,h2{
+      font-weight:900;letter-spacing:-.6px;
+      background:linear-gradient(90deg,#0B2A5B,#2FA9FF,#8FD3FF);
+      -webkit-background-clip:text;background-clip:text;color:transparent
     }
-    .menu-lines{width:18px;height:12px;position:relative}
-    .menu-lines span{position:absolute;left:0;right:0;height:2px;border-radius:99px;background:rgba(11,42,91,.8)}
-    .menu-lines span:nth-child(1){top:0}
-    .menu-lines span:nth-child(2){top:5px}
-    .menu-lines span:nth-child(3){top:10px}
-    .mobile-panel{display:none;padding:0 0 14px 0}
-    .mobile-panel a{
-      display:block;padding:12px 12px;margin:10px 0;
-      border:1px solid var(--line);
-      border-radius:14px;
-      background:rgba(255,255,255,.85);
-      font-weight:700;color:rgba(11,27,52,.9);
-    }
-    .mobile-panel a:hover{background:rgba(220,235,255,.55);color:var(--blue)}
-    .right{display:flex;align-items:center;gap:10px}
+    h1{font-size:clamp(34px,4.2vw,52px);text-align:center;margin:0}
+    .lead{max-width:76ch;margin:14px auto 0;text-align:center;color:var(--muted)}
+    .sublead{max-width:76ch;margin:10px auto 0;text-align:center;color:var(--muted);font-size:14px}
 
-    main{padding:30px 0 70px}
-    section{padding:54px 0}
-    section + section{border-top:1px solid rgba(220,235,255,.75)}
-
-    h1{
-      font-size:clamp(32px, 4vw, 48px);
-      line-height:1.06;
-      margin:14px 0 10px;
-      letter-spacing:-.7px;
+    .hero{
+      padding:10px 0 30px;
     }
-    
-    /* Title styling synced with index */
-    h1, .sec-head h2, .persona h3{
-      font-weight: 900;
-      letter-spacing: -0.7px;
-      background: linear-gradient(90deg, rgba(11,42,91,1) 0%, rgba(47,169,255,1) 55%, rgba(143,211,255,1) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 14px 26px rgba(47,169,255,.10));
+    .hero-grid{
+      display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:stretch;
+      margin-top:20px;
     }
-    .sec-head h2{ letter-spacing: -0.35px; }
-    .persona h3{ letter-spacing: -0.14px; }
-
-    .lead{
-      font-size:clamp(16px, 1.35vw, 18px);
-      color:var(--muted);
-      margin:0 auto 18px;
-      max-width:82ch;
-    }
-
-    .pill{
-      display:inline-flex;align-items:center;gap:10px;
-      padding:8px 12px;border:1px solid var(--line);
-      background:rgba(255,255,255,.82);border-radius:999px;
-      box-shadow:0 8px 25px rgba(11,42,91,.06);
-      backdrop-filter:blur(8px);
-    }
-    .dot{width:10px;height:10px;border-radius:999px;background:radial-gradient(circle at 30% 30%, var(--sky2), var(--sky));box-shadow:0 0 0 4px rgba(47,169,255,.12)}
-    .k{
-      background:linear-gradient(135deg, rgba(47,169,255,.22), rgba(143,211,255,.35));
-      border:1px solid rgba(47,169,255,.25);
-      padding:0 .45em;border-radius:.65em;
-      color:rgba(11,42,91,.92);
-      font-weight:800;white-space:nowrap;
-    }
-
-    .gradline{
-      height:1px;width:min(640px,100%);margin:14px auto 0;border-radius:99px;
-      background:linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.55), rgba(143,211,255,.65), rgba(47,169,255,.55), rgba(47,169,255,0));
-      position:relative;overflow:hidden;
-    }
-    .gradline:after{
-      content:"";position:absolute;top:0;bottom:0;width:160px;left:-180px;
-      background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.75), rgba(255,255,255,0));
-      filter:blur(1px);animation:shine 2.8s ease-in-out infinite;
-    }
-    @keyframes shine{
-      0%{transform:translateX(0);opacity:0}
-      15%{opacity:.8}
-      50%{opacity:.9}
-      85%{opacity:.8}
-      100%{transform:translateX(900px);opacity:0}
-    }
-
-    .sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
-    .sec-head h2{margin:0;font-weight:900;font-size:clamp(22px, 2.3vw, 32px);letter-spacing:-.35px}
-    .sec-sub{margin:0;max-width:92ch;color:var(--muted);font-size:15.5px}
-
-    .card{
-      background:rgba(255,255,255,.92);
+    .hero-card{
+      background:rgba(255,255,255,.82);
       border:1px solid var(--line);
       border-radius:var(--radius2);
       box-shadow:var(--shadow);
+      padding:18px;
+      position:relative;
+      overflow:hidden;
     }
-    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-
-    .tile{
-      position:relative;overflow:hidden;
-      padding:16px;border-radius:var(--radius2);
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.92);
-      box-shadow:0 14px 40px rgba(11,42,91,.08);
-      min-height:164px;
-    }
-    .tile:before{
+    .hero-card:before{
       content:"";position:absolute;inset:-2px;
-      background:
-        radial-gradient(520px 220px at 15% 10%, rgba(47,169,255,.12), transparent 60%),
-        radial-gradient(520px 220px at 90% 0%, rgba(143,211,255,.14), transparent 55%);
-      opacity:.9;pointer-events:none;
+      background:linear-gradient(135deg,rgba(47,169,255,.18),rgba(143,211,255,.22),transparent 70%);
+      pointer-events:none;
     }
-    .tile>*{position:relative}
-    .badge{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 10px;border-radius:999px;
-      border:1px solid rgba(220,235,255,.9);
-      background:rgba(47,169,255,.08);
-      color:rgba(11,42,91,.88);
-      font-weight:800;font-size:12px;
+    .hero-card > *{position:relative}
+    .pill{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:8px 12px;border-radius:999px;
+      border:1px solid rgba(47,169,255,.25);
+      background:rgba(47,169,255,.10);
+      font-weight:900;font-size:12px;
     }
-    .tile h3{margin:10px 0 8px;font-size:16px;letter-spacing:-.12px}
-    .tile p{margin:0;color:var(--muted);font-size:14px}
-    .tile-btn{
-      text-align:left;cursor:pointer;border:0;
-      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    .dot{width:9px;height:9px;border-radius:99px;background:var(--sky);box-shadow:0 0 0 4px rgba(47,169,255,.18)}
+    .cta-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:12px 16px;border-radius:14px;
+      border:1px solid rgba(47,169,255,.35);
+      background:linear-gradient(135deg,rgba(47,169,255,.18),rgba(143,211,255,.28));
+      font-weight:900;
+      transition:transform .15s ease, box-shadow .15s ease;
     }
-    .tile-btn:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
-    .tile-btn:focus-visible{outline:3px solid rgba(47,169,255,.35);outline-offset:3px}
+    .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow2)}
+    .btn.ghost{background:#fff}
+    .kbd{
+      font-size:12px;font-weight:900;color:var(--muted);
+      border:1px solid var(--line);background:#fff;border-radius:10px;padding:3px 8px;
+    }
 
-    .mini-ico{
-      width:42px;height:42px;border-radius:16px;
-      border:1px solid rgba(220,235,255,.95);
-      background:rgba(11,42,91,.06);
+    .hero-figure{
       display:grid;place-items:center;
-      box-shadow:0 12px 30px rgba(11,42,91,.08);
-      flex:0 0 auto;
+      padding:0;
     }
-    .mini-ico svg{width:22px;height:22px}
-    .mini-ico path, .mini-ico circle, .mini-ico line, .mini-ico polyline{stroke:rgba(11,42,91,.85)}
+    .hero-figure img{
+      width:100%;height:100%;object-fit:cover;
+      border-radius:var(--radius2);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+    }
 
-    /* Method switch */
-    .switch{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      padding:12px;border-radius:var(--radius2);
-      border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.86);
-      box-shadow:0 14px 40px rgba(11,42,91,.08);
-      margin-top:16px;
-    }
-    .tabs{display:flex;gap:10px;flex-wrap:wrap}
-    .tab{
-      padding:10px 12px;border-radius:999px;
-      border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.88);
-      font-weight:900;color:rgba(11,42,91,.88);
-      cursor:pointer;
-      transition:transform .12s ease, background .12s ease, box-shadow .12s ease, border-color .12s ease;
-    }
-    .tab:hover{transform:translateY(-1px);box-shadow:0 16px 38px rgba(11,42,91,.10);border-color:rgba(47,169,255,.35)}
-    .tab.active{
-      border-color:rgba(47,169,255,.45);
-      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
-      color:var(--blue);
-    }
-    .tab small{display:block;font-weight:700;color:rgba(75,94,123,.9);margin-top:2px}
+    section{padding:54px 0;border-top:1px solid var(--line)}
+    .sec-head{text-align:center}
+    .sec-sub{max-width:78ch;margin:10px auto 0;color:var(--muted)}
 
-    /* Diagram + animated flow */
-    .diagram{
-      padding:16px;display:grid;place-items:center;
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius2);
+      box-shadow:var(--shadow);
+      padding:18px;
+      position:relative;
+      overflow:hidden;
     }
-    .diagram svg{width:min(620px,100%);height:auto}
-    .softSpin{transform-origin:50% 50%;animation:spin 14s linear infinite;opacity:.9}
-    @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-    .pulse{transform-origin:50% 50%;animation:pulse 2.8s ease-in-out infinite}
-    @keyframes pulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.04);opacity:1}}
+    .card h3{margin:10px 0 6px}
+    .tag{
+      display:inline-block;padding:6px 10px;border-radius:999px;
+      background:rgba(47,169,255,.12);border:1px solid rgba(47,169,255,.25);
+      font-weight:900;font-size:12px
+    }
+    .k{
+      display:inline-block;padding:1px 8px;border-radius:999px;
+      border:1px solid var(--line);background:#fff;font-weight:900;color:var(--blue);
+    }
+    ul.clean{margin:10px 0 0;padding-left:18px;color:var(--muted)}
+    ul.clean li{margin:6px 0}
 
-    .flow{
-      display:flex;flex-direction:column;gap:10px;margin-top:12px;
+    /* Stepper */
+    .stepper{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px;
     }
     .step{
-      position:relative;
-      padding:14px;border-radius:var(--radius2);
-      border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.92);
-      box-shadow:0 12px 30px rgba(11,42,91,.08);
-      display:flex;gap:12px;align-items:flex-start;
-      cursor:pointer;
-      transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-    }
-    .step:hover{transform:translateY(-1px);box-shadow:0 18px 44px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
-    .n{
-      width:38px;height:38px;border-radius:14px;
-      border:1px solid rgba(220,235,255,.95);
-      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.20));
-      display:grid;place-items:center;
-      font-weight:900;color:rgba(11,42,91,.9);
-      box-shadow:0 12px 26px rgba(11,42,91,.08);
-      flex:0 0 auto;
-    }
-    .step strong{display:block;margin-bottom:2px}
-    .meta{
-      display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;
-    }
-    .chip{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:7px 10px;border-radius:999px;
-      border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.85);
-      color:rgba(11,42,91,.86);
-      font-weight:900;font-size:12px;
-    }
-    .chip.ok{border-color:rgba(11,91,58,.22);background:rgba(11,91,58,.06);color:rgba(11,91,58,.95)}
-    .chip.warn{border-color:rgba(138,90,11,.22);background:rgba(138,90,11,.06);color:rgba(138,90,11,.95)}
-
-    /* Checklist */
-
-    /* Checklist (vivid) */
-    .checklist{
-      display:grid;
-      gap:10px;
-      margin-top:12px;
-    }
-
-    /* Card header for checklist */
-    .check-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:12px 12px 10px;
-      border-radius:18px;
-      border:1px solid rgba(220,235,255,.95);
-      background:
-        radial-gradient(520px 220px at 15% 0%, rgba(47,169,255,.10), transparent 62%),
-        radial-gradient(520px 220px at 95% 0%, rgba(143,211,255,.14), transparent 55%),
-        rgba(255,255,255,.92);
-      box-shadow:0 14px 34px rgba(11,42,91,.07);
-      margin-top:10px;
-    }
-    .check-head .left{
-      display:flex;align-items:center;gap:10px;
-      min-width:0;
-    }
-    .check-badge{
-      width:42px;height:42px;border-radius:16px;
-      border:1px solid rgba(220,235,255,.95);
-      background:linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.22));
-      box-shadow:0 14px 30px rgba(11,42,91,.10);
-      display:grid;place-items:center;
-      color:rgba(11,42,91,.88);
-      flex:0 0 auto;
-    }
-    .check-badge svg{width:22px;height:22px}
-    .check-title{
-      font-weight:900;
-      color:rgba(11,42,91,.92);
-      letter-spacing:-.25px;
-      margin:0;
-      line-height:1.05;
-    }
-    .check-sub{
-      margin:2px 0 0;
-      font-size:12.8px;
-      color:var(--muted);
-    }
-    .check-micro{
-      display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;
-    }
-    .spark{
-      height:10px;width:140px;border-radius:999px;
-      border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.7);
-      overflow:hidden;
-      box-shadow:0 10px 22px rgba(11,42,91,.06);
-    }
-    .spark > i{
-      display:block;height:100%;width:35%;
-      background:linear-gradient(90deg, rgba(47,169,255,.0), rgba(47,169,255,.75), rgba(143,211,255,.85), rgba(47,169,255,.0));
-      transform:translateX(-120%);
-      animation:spark 2.7s ease-in-out infinite;
-      opacity:.9;
-    }
-    @keyframes spark{
-      0%{transform:translateX(-120%);opacity:0}
-      18%{opacity:.9}
-      55%{opacity:.9}
-      100%{transform:translateX(260%);opacity:0}
-    }
-
-    .chk{
-      position:relative;
-      display:flex;
-      align-items:flex-start;
-      gap:12px;
-      padding:13px 14px;
-      border-radius:20px;
-      border:1px solid rgba(220,235,255,.95);
-      background:
-        radial-gradient(520px 220px at 10% 0%, rgba(47,169,255,.07), transparent 60%),
-        rgba(255,255,255,.92);
-      box-shadow:0 12px 30px rgba(11,42,91,.06);
-      cursor:pointer;
-      transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease, background .12s ease;
-      overflow:hidden;
-    }
-    .chk:before{
-      content:"";
-      position:absolute;left:0;top:0;bottom:0;width:6px;
-      background:linear-gradient(180deg, rgba(47,169,255,.55), rgba(143,211,255,.55));
-      opacity:.55;
-    }
-    .chk:hover{
-      transform:translateY(-1px);
-      box-shadow:0 18px 44px rgba(11,42,91,.10);
-      border-color:rgba(47,169,255,.42);
-      background:
-        radial-gradient(520px 220px at 10% 0%, rgba(47,169,255,.11), transparent 60%),
-        rgba(255,255,255,.94);
-    }
-
-    .box{
-      width:24px;height:24px;border-radius:9px;
-      border:1px solid rgba(220,235,255,.95);
-      background:rgba(11,42,91,.06);
-      display:grid;place-items:center;
-      flex:0 0 auto;
-      box-shadow:0 10px 22px rgba(11,42,91,.06);
-    }
-    .box svg{width:14px;height:14px;opacity:0;transform:scale(.85);transition:opacity .14s ease, transform .14s ease}
-    .chk strong{display:block;margin:0 0 2px}
-    .chk .muted{font-size:14px}
-
-    .chk.done{
-      border-color:rgba(47,169,255,.55);
-      background:
-        radial-gradient(520px 220px at 10% 0%, rgba(47,169,255,.12), transparent 60%),
-        linear-gradient(135deg, rgba(47,169,255,.06), rgba(143,211,255,.14)),
-        rgba(255,255,255,.96);
-      box-shadow:0 20px 54px rgba(11,42,91,.12);
-    }
-    .chk.done:before{
-      opacity:1;
-      background:linear-gradient(180deg, rgba(11,42,91,.85), rgba(47,169,255,.75));
-    }
-    .chk.done .box{
-      background:linear-gradient(135deg, rgba(47,169,255,.20), rgba(143,211,255,.32));
-      border-color:rgba(47,169,255,.55);
-    }
-    .chk.done .box svg{opacity:1;transform:scale(1)}
-
-    .bar{
-      height:11px;
-      border-radius:999px;
-      border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.75);
-      overflow:hidden;
-      box-shadow:0 14px 30px rgba(11,42,91,.07);
-      margin-top:12px;
-      position:relative;
-    }
-    .bar:after{
-      content:"";
-      position:absolute;inset:-2px;
-      background:
-        radial-gradient(420px 160px at 20% 0%, rgba(47,169,255,.18), transparent 60%),
-        radial-gradient(420px 160px at 90% 0%, rgba(143,211,255,.16), transparent 60%);
-      pointer-events:none;opacity:.9;
-    }
-    .bar > div{
-      height:100%;
-      width:0%;
-      background:linear-gradient(90deg, rgba(11,42,91,.85), rgba(47,169,255,.78), rgba(143,211,255,.88));
-      transition:width .35s ease;
-      box-shadow:0 0 0 1px rgba(47,169,255,.18) inset, 0 10px 24px rgba(47,169,255,.18);
-      position:relative;
-    }
-    .bar > div:after{
-      content:"";
-      position:absolute;top:0;bottom:0;width:140px;right:-160px;
-      background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.60), rgba(255,255,255,0));
-      filter:blur(1px);
-      animation:shine 2.4s ease-in-out infinite;
-      opacity:.55;
-    }
-    .mini{font-size:12.5px;color:var(--muted)}
-
-    /* Buttons */
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      padding:11px 14px;border-radius:14px;border:1px solid var(--line);
-      background:rgba(255,255,255,.92);color:var(--blue);font-weight:800;
-      box-shadow:0 12px 30px rgba(11,42,91,.08);
-      transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
-      cursor:pointer;
-    }
-    .btn:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(11,42,91,.12)}
-    .btn.primary{
-      border-color:rgba(47,169,255,.35);
-      background:linear-gradient(135deg, rgba(47,169,255,.15), rgba(143,211,255,.25));
-      color:var(--blue);
-    }
-    .btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
-
-    /* Hero spacing + actions (closer to index) */
-    section.hero{padding-top:36px;padding-bottom:46px}
-    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;align-items:center;margin-top:14px}
-    .btn.ghost{
-      background:rgba(255,255,255,.72);
-      border-color:rgba(220,235,255,.95);
-      color:rgba(11,42,91,.92);
-    }
-    .btn.ghost:hover{background:rgba(220,235,255,.55)}
-    
-    /* Vivid blocks */
-    .step{overflow:hidden}
-    .step:before{
-      content:"";
-      position:absolute;left:0;top:0;bottom:0;width:6px;
-      background:linear-gradient(180deg, rgba(47,169,255,.85), rgba(143,211,255,.75));
-      opacity:.9;
-    }
-    .step[data-modal="m-entender"]:before{background:linear-gradient(180deg, rgba(47,169,255,.9), rgba(143,211,255,.65))}
-    .step[data-modal="m-priorizar"]:before{background:linear-gradient(180deg, rgba(11,42,91,.9), rgba(47,169,255,.70))}
-    .step[data-modal="m-implementar"]:before{background:linear-gradient(180deg, rgba(47,169,255,.85), rgba(11,91,58,.45))}
-    .step[data-modal="m-sostener"]:before{background:linear-gradient(180deg, rgba(143,211,255,.85), rgba(138,90,11,.40))}
-    .step:hover .n{transform:translateY(-1px)}
-    .n{transition:transform .12s ease}
-    
-    .tile{min-height:170px}
-    .tile.grad:before{opacity:1}
-    .tile.grad{
-      border-color:rgba(47,169,255,.26);
-      background:
-        radial-gradient(520px 260px at 20% 0%, rgba(47,169,255,.14), transparent 60%),
-        radial-gradient(520px 260px at 90% 10%, rgba(143,211,255,.18), transparent 62%),
-        rgba(255,255,255,.94);
-    }
-    .badge{background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18))}
-
-    /* Reveal */
-    .reveal{opacity:0;transform:translateY(10px);transition:opacity .55s ease, transform .55s ease}
-    .reveal.on{opacity:1;transform:none}
-
-    /* Modal */
-    .modal{
-      position:fixed;inset:0;z-index:1000;display:none;padding:18px;
-      background:rgba(11,27,52,.55);backdrop-filter:blur(6px);
-    }
-    .modal.show{display:grid;place-items:center}
-    .modal-dialog{
-      width:min(900px,100%);
-      background:rgba(255,255,255,.97);
-      border:1px solid rgba(220,235,255,.95);
-      border-radius:22px;
-      box-shadow:0 28px 70px rgba(11,42,91,.22);
-      overflow:hidden;
-      animation:modalIn .18s ease-out;
-    }
-    @keyframes modalIn{from{transform:translateY(8px) scale(.99);opacity:0}to{transform:none;opacity:1}}
-    .modal-head{
-      padding:16px 16px 12px;border-bottom:1px solid rgba(220,235,255,.9);
-      background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
-      display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
-    }
-    .modal-title{margin:0;font-size:18px;letter-spacing:-.2px;color:var(--blue)}
-    .modal-close{
-      width:42px;height:42px;border-radius:14px;border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.92);cursor:pointer;display:grid;place-items:center;
-      color:rgba(11,42,91,.85);box-shadow:0 12px 30px rgba(11,42,91,.10);
-    }
-    .modal-body{padding:14px 16px 16px;color:rgba(11,27,52,.92)}
-    .modal-body p{margin:0 0 10px;color:var(--muted)}
-    .modal-body ul{margin:10px 0 0;padding-left:18px;color:var(--muted)}
-    .modal-body li{margin:7px 0}
-    .callout{
-      margin-top:12px;padding:12px 12px;border-radius:var(--radius);
-      border:1px solid rgba(47,169,255,.25);
-      background:linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
-      color:rgba(11,42,91,.9);font-weight:900;font-size:13px;
-    }
-
-    footer{
-      padding:28px 0 40px;
-      border-top:1px solid rgba(220,235,255,.9);
-      background:rgba(255,255,255,.55);
-    }
-    .foot{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}
-
-    @media (max-width: 980px){
-      .grid-3{grid-template-columns:1fr}
-      .grid-2{grid-template-columns:1fr}
-      .grid-4{grid-template-columns:1fr 1fr}
-    }
-    @media (max-width: 760px){
-      nav ul{display:none}
-      .menu-btn{display:inline-flex}
-      .wrap{width:min(var(--max), 100% - 28px)}
-      .grid-4{grid-template-columns:1fr}
-    }
-    @media (prefers-reduced-motion: reduce){
-      *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
-    }
-  
-footer{
-  padding: 26px 0 30px;
-  border-top: 1px solid rgba(220,235,255,.9);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.75), rgba(247,251,255,.95));
-}
-
-
-/* === NAVBAR SYNC (from index) === */
-/* Header */
-
-header{
-  position:sticky; top:0; z-index:50;
-  background: rgba(255,255,255,.68);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(220,235,255,.78);
-}
-
-/* a subtle "floating bar" inside the sticky header */
-.nav{
-  display:grid;
-  grid-template-columns: auto;
-  justify-content:center;
-  align-items:center;
-  padding:10px 0;
-  gap:14px;
-}
-
-.brand{ justify-self:start; display:flex; align-items:center; gap:12px; min-width: 190px; }
-header nav{ justify-self:center; }
-.nav-right{ display:none; }
-
-.logo{
-  width:40px; height:40px; border-radius:14px;
-  background: linear-gradient(135deg, var(--blue), #0D3B85);
-  position:relative;
-  box-shadow: 0 16px 34px rgba(11,42,91,.16);
-}
-.logo:before{
-  content:"";
-  position:absolute; inset:9px 11px;
-  border-radius:10px 10px 14px 14px;
-  background: linear-gradient(135deg, rgba(143,211,255,.95), rgba(47,169,255,.85));
-  clip-path: polygon(50% 0%, 92% 18%, 92% 55%, 50% 100%, 8% 55%, 8% 18%);
-  opacity:.95;
-}
-
-.brand strong{ font-size:16px; letter-spacing:.2px; line-height:1.05; }
-.brand span{ font-size:12px; color:var(--muted); display:block; margin-top:2px; line-height:1.2; }
-
-/* Desktop nav visibility */
-header nav{ display:block; }
-
-/* Desktop links */
-nav ul{
-  list-style:none; padding:0; margin:0;
-  display:flex; align-items:center; gap:8px;
-  padding:8px;
-  border-radius: 999px;
-  border: 1px solid rgba(220,235,255,.9);
-  background: rgba(255,255,255,.82);
-  box-shadow: 0 14px 34px rgba(11,42,91,.08);
-  backdrop-filter: blur(10px);
-}
-
-nav a{
-  font-size:13.5px;
-  color: rgba(11,27,52,.86);
-  padding:10px 12px;
-  border-radius: 999px;
-  transition: background .16s ease, color .16s ease, transform .12s ease;
-  white-space: nowrap;
-  position: relative;
-}
-nav a:hover{
-  background: rgba(220,235,255,.55);
-  color: var(--blue);
-  transform: translateY(-1px);
-}
-
-/* Active state (set by JS) */
-nav a.active{
-  color: var(--blue);
-  background: linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.24));
-  border: 1px solid rgba(47,169,255,.30);
-  box-shadow: 0 14px 32px rgba(11,42,91,.10);
-}
-
-/* Nav CTA link (Contáctanos) */
-.nav-cta{
-  border: 1px solid rgba(47,169,255,.35);
-  background: linear-gradient(135deg, rgba(47,169,255,.14), rgba(143,211,255,.26));
-  box-shadow: 0 14px 34px rgba(11,42,91,.10);
-}
-.nav-cta:hover{
-  background: linear-gradient(135deg, rgba(47,169,255,.18), rgba(143,211,255,.32));
-  color: var(--blue) !important;
-}
-
-/* Focus styles (keyboard friendly) */
-nav a:focus-visible,
-.menu-btn:focus-visible{
-  outline: 3px solid rgba(47,169,255,.35);
-  outline-offset: 3px;
-}
-
-/* Mobile nav button */
-.menu-btn{
-  display:none;
-  width:46px; height:46px;
-  border-radius: 16px;
-  border:1px solid rgba(220,235,255,.95);
-  background: rgba(255,255,255,.88);
-  box-shadow: 0 14px 34px rgba(11,42,91,.10);
-  cursor:pointer;
-  align-items:center; justify-content:center;
-  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
-}
-.menu-btn:hover{
-  transform: translateY(-1px);
-  box-shadow: 0 18px 45px rgba(11,42,91,.14);
-}
-.menu-lines{ width:18px; height:12px; position:relative; }
-.menu-lines span{
-  position:absolute; left:0; right:0; height:2px; border-radius:99px;
-  background: rgba(11,42,91,.78);
-  transition: transform .18s ease, top .18s ease, opacity .18s ease;
-}
-.menu-lines span:nth-child(1){ top:0; }
-.menu-lines span:nth-child(2){ top:5px; }
-.menu-lines span:nth-child(3){ top:10px; }
-
-/* Burger to X when open */
-.menu-btn.is-open .menu-lines span:nth-child(1){ top:5px; transform: rotate(45deg); }
-.menu-btn.is-open .menu-lines span:nth-child(2){ opacity:0; }
-.menu-btn.is-open .menu-lines span:nth-child(3){ top:5px; transform: rotate(-45deg); }
-
-/* Mobile panel: animated dropdown */
-.mobile-panel{
-  display:block;            /* keep in layout for animation */
-  max-height: 0;
-  overflow:hidden;
-  transition: max-height .22s ease;
-  padding: 0 0 0 0;
-}
-.mobile-panel.is-open{
-  max-height: 520px;
-  padding: 0 0 14px 0;
-}
-.mobile-panel a{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  padding:12px 12px;
-  border:1px solid rgba(220,235,255,.95);
-  border-radius: 16px;
-  background: rgba(255,255,255,.88);
-  margin:10px 0;
-  font-weight:700;
-  color: rgba(11,27,52,.9);
-  box-shadow: 0 12px 28px rgba(11,42,91,.08);
-}
-.mobile-panel a:hover{
-  background: rgba(220,235,255,.55);
-  color: var(--blue);
-}
-
-/* Responsive */
-@media (max-width: 760px){
-  nav ul{ display:none; }
-  .menu-btn{ display:inline-flex; }
-  .nav{ grid-template-columns: auto auto; justify-content:space-between; }
-  header nav{ display:none; }
-}
-
-
-    /* Sections */
-    main{ padding: 0px 0 60px; }
-    .hero{ padding: 4px 0 10px; text-align:center; }
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:28px;
-      align-items:stretch;
-      margin-top: 10px;
-    }
-    h1{
-      font-size: clamp(32px, 4vw, 46px);
-      line-height: 1.08;
-      margin: 6px 0 26px;
-      letter-spacing: -0.6px;
-    }
-    
-    /* Title styling: cyber gradient, not "dead" black */
-    h1, .sec-head h2{
-      font-weight: 900;
-      letter-spacing: -0.7px;
-      background: linear-gradient(90deg, rgba(11,42,91,1) 0%, rgba(47,169,255,1) 55%, rgba(143,211,255,1) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 14px 26px rgba(47,169,255,.10));
-    }
-    /* Keep paragraph text readable */
-    .sec-head h2{ letter-spacing: -0.35px; }
-
-    /* Hero emblem */
-    .hero-emblem{
-      margin: 28px auto 18px;
-      position: relative;
-      width: 100%;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-    }
-    .emblem-svg{
-      width: 130px;
-      height: 130px;
-      display:block;
-      filter: drop-shadow(0 24px 55px rgba(47,169,255,.18));
-      animation: floaty 3.8s ease-in-out infinite;
-    }
-    .emblem-img{
-      width: 360px;
-      max-width: 90%;
-      height: auto;
-      object-fit: contain;
-      display:block;
-      margin: 0 auto;
-      filter: drop-shadow(0 28px 65px rgba(47,169,255,.22));
-      animation: floaty 3.8s ease-in-out infinite;
-    }
-    .emblem-glow{
-      position:absolute;
-      inset: 22px;
-      border-radius: 26px;
-      background: radial-gradient(circle at 30% 25%, rgba(143,211,255,.35), rgba(47,169,255,.10), transparent 70%);
-      filter: blur(10px);
-      z-index:-1;
-      animation: pulse 3.2s ease-in-out infinite;
-    }
-    @keyframes floaty{
-      0%,100%{ transform: translateY(0); }
-      50%{ transform: translateY(-6px); }
-    }
-    @keyframes pulse{
-      0%,100%{ opacity:.8; transform: scale(1); }
-      50%{ opacity:1; transform: scale(1.06); }
-    }
-
-    /* Principle strip (no "PRINCIPIO" label) */
-    .principle-strip{
-      margin: 10px auto 0;
-      width: min(900px, 100%);
-      border-radius: 18px;
-      border: 1px solid rgba(47,169,255,.28);
-      background:
-        linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.16)),
-        repeating-linear-gradient(90deg, rgba(255,255,255,.0) 0, rgba(255,255,255,.0) 14px, rgba(47,169,255,.06) 15px, rgba(255,255,255,.0) 30px);
-      box-shadow: 0 22px 60px rgba(11,42,91,.10);
-      padding: 16px 16px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap: 12px;
-      position: relative;
-      overflow:hidden;
-    }
-    .principle-strip:before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background: radial-gradient(520px 180px at 20% 0%, rgba(47,169,255,.20), transparent 60%);
-      opacity:.9;
-      pointer-events:none;
-    }
-    .p-ico{
-      width: 34px; height: 34px;
-      border-radius: 14px;
-      border: 1px solid rgba(220,235,255,.95);
-      background: rgba(255,255,255,.75);
-      display:grid; place-items:center;
-      color: rgba(11,42,91,.92);
-      flex: 0 0 auto;
-      box-shadow: 0 14px 30px rgba(11,42,91,.06);
-    }
-    .p-ico svg{ width: 20px; height: 20px; }
-    .p-text{
-      position: relative;
-      color: rgba(11,27,52,.92);
-      font-weight: 700;
-      text-align:center;
-    }
-    .p-text strong{
-      background: linear-gradient(90deg, rgba(47,169,255,.25), rgba(143,211,255,.35));
-      border: 1px solid rgba(47,169,255,.25);
-      padding: 0 .35em;
-      border-radius: .65em;
-      white-space: nowrap;
-    }
-    .p-line{
-      position:absolute;
-      left: 10%;
-      right: 10%;
-      bottom: 8px;
-      height: 1px;
-      border-radius: 99px;
-      background: linear-gradient(90deg, rgba(47,169,255,0), rgba(47,169,255,.55), rgba(143,211,255,.70), rgba(47,169,255,.55), rgba(47,169,255,0));
-      opacity:.85;
-      animation: shimmer 2.6s ease-in-out infinite;
-    }
-    @keyframes shimmer{
-      0%,100%{ filter: blur(0px); opacity:.75; }
-      50%{ filter: blur(.3px); opacity:1; }
-    }
-
-    /* Tile icons */
-    .tile-top{
-      display:flex;
-      align-items:center;
-      justify-content:flex-start;
-      gap: 10px;
-      margin-bottom: 10px;
-      padding-right: 56px; /* espacio para el icono */
-    }
-    .tile-ico{
-      position:absolute;
-      top: 16px;
-      right: 16px;
-      width: 46px;
-      height: 46px;
-      border-radius: 16px;
-      border: 1px solid rgba(140,198,255,.55);
-      background: rgba(255,255,255,.78);
-      display:grid;
-      place-items:center;
-      color: rgba(11,42,91,.92);
-      box-shadow: 0 18px 44px rgba(11,42,91,.10);
-      backdrop-filter: blur(10px);
-    }
-    .tile-ico svg{ width: 20px; height: 20px; }
-
-.lead{
-      font-size: clamp(16px, 1.35vw, 18px);
-      color: var(--muted);
-      margin: 0px auto 18px;
-      max-width: 62ch;
-      text-align: center;
-    }
-    .hero-cta{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
-
-    .card{
-      background: rgba(255,255,255,.9);
+      padding:16px;border-radius:var(--radius2);
       border:1px solid var(--line);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
+      background:rgba(255,255,255,.82);
+      box-shadow:var(--shadow2);
+      position:relative;
     }
-    .hero-card{
-      padding: 18px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      min-height: 100%;
+    .step-num{
+      display:inline-grid;place-items:center;
+      width:36px;height:36px;border-radius:12px;
+      font-weight:1000;
+      background:linear-gradient(135deg,rgba(47,169,255,.20),rgba(143,211,255,.35));
+      border:1px solid rgba(47,169,255,.35);
     }
-    .stat{
-      display:flex; gap:14px; align-items:flex-start;
-      padding:14px;
-      border-radius: var(--radius);
-      border:1px solid rgba(220,235,255,.85);
-      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
-      margin-top: 12px;
-    }
-    .ico{
-      width:40px; height:40px; border-radius: 14px;
-      background: rgba(11,42,91,.08);
-      border:1px solid rgba(220,235,255,.95);
-      display:grid; place-items:center;
-      color: var(--blue);
+    .step h3{margin:10px 0 6px}
+    .deliver{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px dashed rgba(47,169,255,.45);
+      background:rgba(47,169,255,.07);
+      color:var(--blue);
       font-weight:800;
     }
-    .stat strong{ display:block; font-size:14px; }
-    .stat span{ display:block; font-size:13px; color: var(--muted); margin-top:4px; }
 
-    section{
-      padding: 52px 0;
+    /* Pricing */
+    .price{
+      display:flex;align-items:baseline;gap:8px;margin:8px 0 2px;
     }
-    .sec-head{
-      display:flex; flex-direction:column; gap:8px;
-      margin-bottom: 18px;
-      align-items:center;
-      text-align:center;
-    }
-    .sec-head h2{
-      margin:0;
-      font-size: clamp(22px, 2.3vw, 30px);
-      letter-spacing: -0.3px;
-    }
-    .grid-2{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:18px;
-    }
-    .grid-4{
-      display:grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap:14px;
-    }
-    
-
-    .grid-3{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:14px;
-    }
-
-    /* Clickable cards */
-    .stat-btn, .tile-btn{
-      text-align:left;
-      cursor:pointer;
-    }
-    .stat-btn{
-      width:100%;
-      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
-    }
-    .stat-btn:focus-visible, .tile-btn:focus-visible{
-      outline: 3px solid rgba(47,169,255,.35);
-      outline-offset: 3px;
-    }
-    .tile-btn{
-      background: rgba(255,255,255,.92);
-      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-    }
-    .tile-btn:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 18px 50px rgba(11,42,91,.12);
-      border-color: rgba(47,169,255,.35);
-    }
-
-    /* Subtle entrance animation */
-    .reveal{
-      opacity:0;
-      transform: translateY(10px);
-      transition: opacity .55s ease, transform .55s ease;
-    }
-    .reveal.on{
-      opacity:1;
-      transform:none;
-    }
-
-    /* Modal */
-    .modal{
-      position:fixed; inset:0; z-index:1000;
-      display:none;
-      padding: 18px;
-      background: rgba(11,27,52,.55);
-      backdrop-filter: blur(6px);
-    }
-    .modal.show{ display:grid; place-items:center; }
-    .modal-dialog{
-      width: min(780px, 100%);
-      background: rgba(255,255,255,.96);
-      border: 1px solid rgba(220,235,255,.95);
-      border-radius: 22px;
-      box-shadow: 0 28px 70px rgba(11,42,91,.22);
-      overflow:hidden;
-      animation: modalIn .18s ease-out;
-    }
-    @keyframes modalIn{
-      from{ transform: translateY(8px) scale(.99); opacity:.0; }
-      to{ transform: none; opacity:1; }
-    }
-    .modal-head{
-      padding: 16px 16px 12px;
-      border-bottom: 1px solid rgba(220,235,255,.9);
-      background: linear-gradient(135deg, rgba(47,169,255,.10), rgba(143,211,255,.18));
-      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
-    }
-    .modal-title{
-      margin:0;
-      font-size: 18px;
-      letter-spacing: -0.2px;
-      color: var(--blue);
-    }
-    .modal-close{
-      width:42px; height:42px;
-      border-radius: 14px;
-      border:1px solid rgba(220,235,255,.95);
-      background: rgba(255,255,255,.9);
-      cursor:pointer;
-      display:grid; place-items:center;
-      color: rgba(11,42,91,.85);
-      box-shadow: 0 12px 30px rgba(11,42,91,.10);
-    }
-    .modal-body{
-      padding: 14px 16px 16px;
-      color: rgba(11,27,52,.92);
-    }
-    .modal-body p{ margin: 0 0 10px; color: var(--muted); }
-    .modal-body ul{
-      margin: 10px 0 0;
-      padding-left: 18px;
-      color: var(--muted);
-    }
-    .modal-body li{ margin: 7px 0; }
-.tile{
-      position: relative;
-      overflow: hidden;
-      padding: 18px 18px 16px;
-      border-radius: var(--radius2);
-      border: 1px solid rgba(140, 198, 255, .55);
-      background:
-        linear-gradient(135deg,
-          rgba(255,255,255,.96) 0%,
-          rgba(47,169,255,.07) 38%,
-          rgba(143,211,255,.18) 100%);
-      box-shadow: 0 18px 44px rgba(11,42,91,.10);
-      min-height: 168px;
-      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-    }
-    .tile::after{
-      content:"";
-      position:absolute;
-      top:-120px; right:-140px;
-      width: 340px; height: 340px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%,
-        rgba(47,169,255,.18) 0%,
-        rgba(143,211,255,.12) 35%,
-        rgba(143,211,255,0) 70%);
-      pointer-events:none;
-    }
-    .tile::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(900px 340px at 20% 0%,
-          rgba(47,169,255,.09), transparent 60%);
-      pointer-events:none;
-    }
-    .tile:hover{
-      transform: translateY(-3px);
-      box-shadow: 0 26px 70px rgba(11,42,91,.14);
-      border-color: rgba(47,169,255,.70);
-    }
-    .tile h3{
-      margin: 10px 0 8px;
-      font-size: 16px;
-      letter-spacing: -0.1px;
-    }
-    .tile p{
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
+    .price b{font-size:26px}
+    .price span{color:var(--muted);font-weight:800}
     .badge{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(220,235,255,.9);
-      background: rgba(47,169,255,.08);
-      color: rgba(11,42,91,.88);
-      font-weight:700;
-      font-size: 12px;
-    }
-
-    .values{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 18px;
-      align-items:start;
-    }
-    .list{
-      margin:0; padding:0; list-style:none;
-      display:flex; flex-direction:column; gap:10px;
-    }
-    .list li{
-      display:flex; gap:10px; align-items:flex-start;
-      padding: 12px 12px;
-      border-radius: var(--radius);
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.92);
+      background:#fff;
+      font-weight:900;font-size:12px;color:var(--muted);
     }
-    .check{
-      width:26px; height:26px; border-radius: 10px;
-      background: linear-gradient(135deg, rgba(47,169,255,.20), rgba(143,211,255,.35));
-      border:1px solid rgba(47,169,255,.25);
-      display:grid; place-items:center;
-      color: var(--blue);
-      font-weight:900;
-      flex: 0 0 auto;
-    }
-    .list strong{ display:block; font-size:14px; }
-    .list span{ display:block; font-size:13px; color: var(--muted); margin-top:2px; }
+    .badge .mini{width:8px;height:8px;border-radius:99px;background:var(--ok)}
+    .note{color:var(--muted);font-size:13px;max-width:80ch;margin:10px auto 0;text-align:center}
 
-    .social{
-      padding: 18px;
-      border-radius: var(--radius2);
-      border: 1px solid rgba(47,169,255,.25);
-      background: linear-gradient(135deg, rgba(47,169,255,.12), rgba(143,211,255,.22));
-      box-shadow: 0 18px 45px rgba(11,42,91,.10);
+    /* FAQ */
+    .faq{max-width:920px;margin:18px auto 0}
+    .qa{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:rgba(255,255,255,.9);
+      box-shadow:var(--shadow2);
+      overflow:hidden;
+      margin:12px 0;
     }
-footer{
-  padding: 26px 0 30px;
-  border-top: 1px solid rgba(220,235,255,.9);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.75), rgba(247,251,255,.95));
-}
-    .foot{
-      display:flex; align-items:flex-start; justify-content:space-between; gap:18px;
-      flex-wrap:wrap;
-    }
-    .foot small{ color: var(--muted); }
-    .foot a{ text-decoration: underline; text-underline-offset: 3px; }
-
-    /* Responsive */
-    @media (max-width: 980px){
-      .hero-grid{ grid-template-columns: 1fr; }
-      .grid-4{ grid-template-columns: repeat(2, 1fr); }
-      .grid-3{ grid-template-columns: 1fr; }
-      .values{ grid-template-columns: 1fr; }
-    }
-    @media (max-width: 760px){
-      nav ul{ display:none; }
-      .menu-btn{ display:inline-flex; }
-      .grid-2{ grid-template-columns: 1fr; }
-      .grid-4{ grid-template-columns: 1fr; }
-      .grid-3{ grid-template-columns: 1fr; }
-      .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 14px; }
-      .hero{ padding-top: 0px; text-align:center; }
-      .hero-card{ padding: 16px; }
-    }
-
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      *{ scroll-behavior:auto !important; transition:none !important; }
-    }
-  
-
-    /* Make sections feel concentrated and centered */
-    section{ padding: 46px 0; }
-    .sec-head{ align-items:center; text-align:center; }
-    .sec-head p{ margin-left:auto !important; margin-right:auto !important; }
-
-    /* Constrain long copy */
-/* Cards: keep them smaller and centered */
-    .grid-2, .grid-3, .grid-4{
-      justify-content: center;
-    }
-    .grid-2{
-      grid-template-columns: repeat(2, minmax(0, 420px));
-      justify-content:center;
-    }
-    .grid-3{
-      grid-template-columns: repeat(3, minmax(0, 320px));
-      justify-content:center;
-    }
-    .grid-4{
-      grid-template-columns: repeat(4, minmax(0, 260px));
-      justify-content:center;
-    }
-    .tile, .card{
-      max-width: 420px;
-      margin-left:auto;
-      margin-right:auto;
-    }
-
-    @media (max-width: 980px){
-      .grid-4{ grid-template-columns: repeat(2, minmax(0, 320px)); }
-      .grid-3{ grid-template-columns: repeat(2, minmax(0, 340px)); }
-    }
-    @media (max-width: 760px){
-      section{ padding: 38px 0; }
-      .grid-4, .grid-3, .grid-2{ grid-template-columns: 1fr; }
-      .tile, .card{ max-width: 560px; }
-      .emblem-img{
-      width: 360px;
-      max-width: 90%;
-      height: auto;
-      object-fit: contain;
-      display:block;
-      margin: 0 auto;
-      filter: drop-shadow(0 28px 65px rgba(47,169,255,.22));
-      animation: floaty 3.8s ease-in-out infinite;
-    }
-    }
-
-.sec-sub{
-margin: 0 auto;
-      max-width: 64ch;
-      text-align: center;
-      color: var(--muted);
-      font-size: 14.5px;
-      line-height: 1.55;
-}
-/* Compact stacked paragraphs in section headers */
-    .sec-head .sec-sub + .sec-sub{ margin-top: 6px !important; }
-
-
-/* === Cards style synced with A quiénes ayudamos === */
-/* Personas cards */
-    .persona{
-      position:relative;
-      padding:16px;
+    .q{
+      width:100%;
+      display:flex;justify-content:space-between;align-items:center;gap:10px;
+      padding:14px 14px;
+      background:transparent;border:0;
+      font-weight:1000;
       text-align:left;
       cursor:pointer;
-      overflow:hidden;
-      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
     }
-    .persona:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(11,42,91,.12);border-color:rgba(47,169,255,.35)}
-    .tag{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 10px;border-radius:999px;
-      border:1px solid rgba(220,235,255,.9);
-      background:rgba(47,169,255,.08);
-      color:rgba(11,42,91,.88);
-      font-weight:900;font-size:12px;
-      white-space:nowrap;
+    .q small{color:var(--muted);font-weight:900}
+    .chev{
+      width:34px;height:34px;border-radius:12px;
+      border:1px solid var(--line);
+      display:grid;place-items:center;background:#fff;
+      transition:transform .15s ease;
+      flex:0 0 auto;
     }
-    .persona h3{margin:10px 0 6px;font-size:18px;letter-spacing:-.14px}
-    .persona p{margin:0;color:var(--muted);font-size:14.2px}
-    .icon{
-      width:44px;height:44px;border-radius:16px;border:1px solid rgba(220,235,255,.95);
-      background:rgba(255,255,255,.9);
-      box-shadow:0 12px 30px rgba(11,42,91,.06);
-      display:grid;place-items:center;
-      position:absolute;top:14px;right:14px;
+    .a{
+      padding:0 14px 14px;
+      color:var(--muted);
+      display:none;
     }
-    .persona:after{
-      content:"";position:absolute;inset:auto -80px -80px auto;
-      width:260px;height:260px;border-radius:50%;
-      background:radial-gradient(circle at 30% 30%, rgba(143,211,255,.35), rgba(47,169,255,.0) 70%);
-      transform:rotate(18deg);
-      opacity:.85;pointer-events:none;
+    .qa.open .a{display:block}
+    .qa.open .chev{transform:rotate(180deg)}
+
+    /* Sticky CTA */
+    .sticky-cta{
+      position:fixed;left:0;right:0;bottom:14px;z-index:20;
+      display:flex;justify-content:center;pointer-events:none;
+    }
+    .sticky-cta .bar{
+      pointer-events:auto;
+      width:min(920px, calc(100% - 26px));
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      box-shadow:0 18px 40px rgba(11,42,91,.12);
+      border-radius:999px;
+      padding:10px;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      backdrop-filter: blur(10px);
+    }
+    .sticky-cta .bar .msg{color:var(--muted);font-weight:900;font-size:13px}
+    .sticky-cta .bar .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .sticky-cta .bar .actions a{white-space:nowrap}
+    .mini-btn{
+      padding:10px 12px;border-radius:999px;border:1px solid var(--line);
+      background:#fff;font-weight:1000;
+    }
+    .mini-btn.primary{
+      border-color:rgba(47,169,255,.45);
+      background:linear-gradient(135deg,rgba(47,169,255,.18),rgba(143,211,255,.28));
     }
 
-    
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(12px);transition:opacity .55s ease, transform .55s ease}
+    .reveal.in{opacity:1;transform:none}
 
-/* === Quiénes somos: texto en 3 pasos + imagen === */
-.qs{ margin-top: 10px; }
-.qs-stage{ position:relative; min-height: 0; }
-.qs-panel{
-  display:none;
-  padding-top: 4px;
-  animation: qsIn .18s ease-out;
-}
-.qs-panel.is-active{ display:block; }
-@keyframes qsIn{
-  from{ opacity:0; transform: translateY(6px); }
-  to{ opacity:1; transform:none; }
-}
-.qs-text{ margin-top: 6px !important; }
-.qs-illus{
-  margin: 14px auto 0;
-  width: min(560px, 100%);
-  border-radius: 22px;
-  overflow:hidden;
-  box-shadow: 0 18px 55px rgba(11,42,91,.10);
-}
-.qs-illus svg, .qs-illus img{ width:100%; height:auto; display:block; }
-
-.qs-nav{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap: 14px;
-  margin-top: 14px;
-}
-.qs-btn{
-  width: 52px;
-  height: 52px;
-  border-radius: 18px;
-  border: 1px solid rgba(47,169,255,.35);
-  background: rgba(255,255,255,.86);
-  box-shadow: 0 14px 36px rgba(11,42,91,.10);
-  display:grid;
-  place-items:center;
-  cursor:pointer;
-  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
-  position:relative;
-}
-.qs-btn:hover{ transform: translateY(-1px); box-shadow: 0 18px 45px rgba(11,42,91,.14); }
-.qs-btn:disabled{
-  opacity: .45;
-  cursor: not-allowed;
-  transform:none;
-  box-shadow: 0 10px 26px rgba(11,42,91,.08);
-}
-.qs-btn-shield{
-  position:absolute;
-  inset: 12px;
-  display:grid;
-  place-items:center;
-  color: rgba(11,42,91,.88);
-}
-.qs-btn-shield svg{ width: 100%; height: 100%; }
-.qs-arrow{
-  position:absolute;
-  font-weight: 900;
-  font-size: 18px;
-  color: rgba(47,169,255,.95);
-  text-shadow: 0 12px 26px rgba(47,169,255,.18);
-}
-.qs-dots{
-  display:flex;
-  gap: 8px;
-  align-items:center;
-  justify-content:center;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border:1px solid rgba(220,235,255,.9);
-  background: rgba(255,255,255,.75);
-  box-shadow: 0 10px 24px rgba(11,42,91,.06);
-}
-.qs-dot{
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(47,169,255,.45);
-  background: rgba(47,169,255,.12);
-  cursor:pointer;
-}
-.qs-dot.is-on{
-  background: linear-gradient(135deg, rgba(47,169,255,.55), rgba(143,211,255,.85));
-  border-color: rgba(47,169,255,.0);
-}
-/* Ensure the navbar container uses index width and is centered */
-header .nav{ max-width: var(--max); margin: 0 auto; }
-
-
-
-/* Hotfix: avoid blank pages if reveal JS fails */
-.reveal{opacity:1 !important; transform:none !important;}
-</style>
+    @media(max-width:980px){
+      .hero-grid{grid-template-columns:1fr}
+      .stepper{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+      .sticky-cta .bar{border-radius:22px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      .reveal{opacity:1;transform:none;transition:none}
+      nav a, .btn{transition:none}
+    }
+  </style>
 </head>
 <body>
-<div aria-hidden="true" class="progress" id="progress"></div>
+
 <header>
-<div class="wrap">
-<div class="nav">
-<button aria-expanded="false" aria-label="Abrir menú" class="menu-btn" id="menuBtn" type="button">
-<div aria-hidden="true" class="menu-lines">
-<span></span><span></span><span></span>
-</div>
-</button>
-<nav aria-label="Navegación principal">
-<ul id="navLinks"><li><a href="index.html">Inicio</a></li>
-
-<li><a data-page="comotrabajamos.html" href="comotrabajamos.html">Cómo trabajamos</a></li>
-<li><a data-page="recursos.html" href="recursos.html">Cápsulas</a></li>
-<li><a data-page="propuesta.html" href="propuesta.html">Propuesta</a></li>
-<li><a data-page="quienessomos.html" href="quienessomos.html">Quiénes somos</a></li>
-<li><a data-page="psocial.html" href="psocial.html">Proyecto social</a></li>
-<li><a class="nav-cta" data-page="contactos.html" href="contactos.html">Contáctanos</a></li>
-</ul>
-<div class="right nav-right">
-<!-- espacio para CTA futuro -->
-</div>
-</div>
-<div aria-label="Navegación móvil" class="mobile-panel" id="mobilePanel">
-<a href="comotrabajamos.html">Cómo trabajamos</a>
-<a href="recursos.html">Cápsulas</a>
-<a href="ayudamos.html">A quiénes ayudamos</a>
-
-<a href="psocial.html">Proyecto social</a>
-<a href="contactos.html">Contáctanos</a>
-</div>
-</div>
+  <div class="wrap">
+    <nav aria-label="Navegación principal">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a class="active" href="comotrabajamos.html">Cómo trabajamos</a></li>
+        <li><a href="recursos.html">Cápsulas</a></li>
+        <li><a href="propuesta.html">Propuesta</a></li>
+        <li><a href="quienessomos.html">Quiénes somos</a></li>
+        <li><a href="psocial.html">Proyecto social</a></li>
+        <li><a href="contactos.html">Contáctanos</a></li>
+      </ul>
+    </nav>
+  </div>
 </header>
-<main id="top">
-<div class="wrap">
-<!-- HERO -->
-<section class="hero">
-<div class="center">
-<div aria-label="Método Aegis8" class="pill reveal" role="note">
-<span aria-hidden="true" class="dot"></span>
-<span><strong>Método Aegis8:</strong> claridad → acción → cultura</span>
-</div>
-<h1 class="reveal">Cómo trabajamos (sin humo y con método).</h1>
-<p class="lead reveal">
-            En Aegis8 convertimos “seguridad” en <span class="k">acciones claras</span> y <span class="k">hábitos sostenibles</span>.
-            No te llenamos de reuniones ni de jerga: te ayudamos a decidir <strong>qué hacer primero</strong>, ejecutarlo con evidencia,
-            y dejar un ritmo simple para que no se pierda con el tiempo.
+
+<main>
+  <div class="wrap hero">
+    <h1 class="reveal">Cómo trabajamos</h1>
+    <p class="lead reveal">
+      Ciberseguridad clara para startups, pymes y personas: <span class="k">diagnóstico</span> → <span class="k">plan</span> → <span class="k">implementación</span> → <span class="k">seguimiento</span>.
+    </p>
+    <p class="sublead reveal">
+      Sin datos sensibles, sin miedo, sin humo. Solo acciones realistas y entregables que puedes usar.
+    </p>
+
+    <div class="hero-grid">
+      <div class="hero-card reveal">
+        <div class="pill"><span class="dot"></span> Método Aegis8 · simple y progresivo</div>
+        <h2 style="margin:10px 0 0">Aprender · Aplicar · Sostener</h2>
+        <p style="color:var(--muted);margin:10px 0 0">
+          Empezamos por entender tu contexto. Luego priorizamos acciones. Finalmente, dejamos hábitos y controles que se mantienen en el tiempo.
+        </p>
+        <div class="cta-row">
+          <a class="btn" href="#planes">Ver planes</a>
+          <a class="btn ghost" href="#faq">Dudas frecuentes</a>
+          <a class="btn ghost" href="contactos.html">Empezar por diagnóstico <span class="kbd">CTA</span></a>
+        </div>
+        <p style="color:var(--muted);margin:12px 0 0;font-size:13px">
+          Tip: mientras más contexto (sin secretos), más rápido aterrizamos un primer plan.
+        </p>
+      </div>
+
+      <div class="hero-figure reveal" aria-label="Ilustración de nuestro proceso">
+        <img src="assets/como-trabajamos.png" alt="Ilustración Aegis8: cómo trabajamos"/>
+      </div>
+    </div>
+  </div>
+
+  <section id="metodo">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="reveal">Nuestro método</h2>
+        <p class="sec-sub reveal">
+          Lo diseñamos para que el lector sepa exactamente “qué pasa” y “qué recibe” en cada paso.
+        </p>
+      </div>
+
+      <div class="stepper">
+        <div class="step reveal">
+          <div class="step-num">1</div>
+          <h3>Diagnóstico (Entender)</h3>
+          <p style="color:var(--muted);margin:0">
+            Revisamos tu contexto real (técnico y operativo) y priorizamos riesgos por impacto.
           </p>
-</div>
-<div aria-hidden="true" class="gradline"></div>
-<div aria-label="Selector de modo" class="switch reveal">
-<div>
-<div style="font-weight:900;color:rgba(11,42,91,.92);">Elige tu modo</div>
-<div class="mini">Puedes cambiarlo cuando quieras. El contenido se adapta.</div>
-</div>
-<div aria-label="Modo del método" class="tabs" role="tablist">
-<button aria-selected="true" class="tab active" data-mode="rapido" id="tab-rapido" role="tab" type="button">
-              Modo rápido
-              <small>para partir hoy</small>
-</button>
-<button aria-selected="false" class="tab" data-mode="pro" id="tab-pro" role="tab" type="button">
-              Modo profundo
-              <small>para equipos</small>
-</button>
-</div>
-</div>
-<div class="grid-2" id="metodo" style="margin-top:16px;">
-<div class="card persona reveal" style="padding:18px; position:relative; overflow:hidden;">
-<div class="sec-head" style="margin-bottom:10px;">
-<h2 style="margin:0;">El mapa del trabajo</h2>
-<p class="sec-sub" id="mapSub">
-                En 4 pasos: entender, priorizar, implementar, sostener.
-              </p>
-</div>
-<div aria-label="Diagrama animado del método Aegis8" class="diagram">
-<svg aria-label="Método Aegis8 en ciclo" role="img" viewbox="0 0 660 360">
-<defs>
-<lineargradient id="g" x1="0" x2="1" y1="0" y2="1">
-<stop offset="0" stop-color="#2FA9FF" stop-opacity="0.18"></stop>
-<stop offset="1" stop-color="#8FD3FF" stop-opacity="0.28"></stop>
-</lineargradient>
-<lineargradient id="g2" x1="0" x2="1" y1="1" y2="0">
-<stop offset="0" stop-color="#0B2A5B" stop-opacity="0.10"></stop>
-<stop offset="1" stop-color="#0B2A5B" stop-opacity="0.04"></stop>
-</lineargradient>
-</defs>
-<circle class="softSpin" cx="330" cy="178" fill="none" r="150" stroke="rgba(47,169,255,.35)" stroke-dasharray="8 10" stroke-width="2"></circle>
-<circle class="softSpin" cx="330" cy="178" fill="none" r="112" stroke="rgba(143,211,255,.45)" stroke-dasharray="6 10" stroke-width="2" style="animation-duration:20s;"></circle>
-<rect fill="url(#g)" height="250" rx="28" stroke="rgba(220,235,255,.95)" width="520" x="70" y="48"></rect>
-<!-- 4 nodes -->
-<g>
-<circle class="pulse" cx="210" cy="140" fill="rgba(255,255,255,.82)" r="32" stroke="rgba(11,42,91,.55)" stroke-width="2"></circle>
-<circle class="pulse" cx="450" cy="140" fill="rgba(255,255,255,.82)" r="32" stroke="rgba(11,42,91,.55)" stroke-width="2" style="animation-delay:.25s"></circle>
-<circle class="pulse" cx="210" cy="220" fill="rgba(255,255,255,.82)" r="32" stroke="rgba(11,42,91,.55)" stroke-width="2" style="animation-delay:.5s"></circle>
-<circle class="pulse" cx="450" cy="220" fill="rgba(255,255,255,.82)" r="32" stroke="rgba(11,42,91,.55)" stroke-width="2" style="animation-delay:.75s"></circle>
-<path d="M242 140 C300 92 360 92 418 140" fill="none" stroke="rgba(11,42,91,.25)" stroke-linecap="round" stroke-width="3"></path>
-<path d="M450 172 C450 188 450 200 450 220" fill="none" stroke="rgba(11,42,91,.20)" stroke-linecap="round" stroke-width="3"></path>
-<path d="M418 220 C360 268 300 268 242 220" fill="none" stroke="rgba(11,42,91,.20)" stroke-linecap="round" stroke-width="3"></path>
-<path d="M210 188 C210 172 210 156 210 140" fill="none" stroke="rgba(11,42,91,.20)" stroke-linecap="round" stroke-width="3"></path>
-<text fill="rgba(11,42,91,.86)" font-size="12" font-weight="900" text-anchor="middle" x="210" y="145">Entender</text>
-<text fill="rgba(11,42,91,.86)" font-size="12" font-weight="900" text-anchor="middle" x="450" y="145">Priorizar</text>
-<text fill="rgba(11,42,91,.86)" font-size="12" font-weight="900" text-anchor="middle" x="210" y="225">Implementar</text>
-<text fill="rgba(11,42,91,.86)" font-size="12" font-weight="900" text-anchor="middle" x="450" y="225">Sostener</text>
-</g>
-<rect fill="url(#g2)" height="42" rx="18" stroke="rgba(220,235,255,.95)" width="396" x="132" y="292"></rect>
-<text fill="rgba(11,42,91,.82)" font-size="13" font-weight="900" id="diagramCaption" text-anchor="middle" x="330" y="318">
-                  entregables claros + hábitos repetibles
-                </text>
-</svg>
-</div>
-<div class="callout" id="calloutMain">
-              Regla Aegis8: si no se puede explicar en simple, no lo vamos a vender.
-            </div>
-</div>
-<div class="card persona reveal" style="padding:18px;">
-<div class="sec-head" style="margin-bottom:10px;">
-<h2 style="margin:0;">Los 4 pasos (clickeables)</h2>
-<p class="sec-sub" id="stepsSub">
-                Abre cada paso y verás entregables y métricas simples.
-              </p>
-</div>
-<div class="flow" id="flow">
-<div aria-label="Abrir: Entender" class="step" data-modal="m-entender" role="button" tabindex="0">
-<div class="n">1</div>
-<div>
-<strong>Entender (sin humo)</strong>
-<div class="muted">Contexto, activos y riesgos reales (no paranoia).</div>
-<div class="meta">
-<span class="chip ok">entregable: mapa simple</span>
-<span class="chip">duración: 30–60 min</span>
-</div>
-</div>
-</div>
-<div aria-label="Abrir: Priorizar" class="step" data-modal="m-priorizar" role="button" tabindex="0">
-<div class="n">2</div>
-<div>
-<strong>Priorizar (alto impacto / bajo esfuerzo)</strong>
-<div class="muted">Elegimos 3–5 acciones que de verdad bajan riesgo.</div>
-<div class="meta">
-<span class="chip ok">entregable: plan 1 página</span>
-<span class="chip">métrica: checklist</span>
-</div>
-</div>
-</div>
-<div aria-label="Abrir: Implementar" class="step" data-modal="m-implementar" role="button" tabindex="0">
-<div class="n">3</div>
-<div>
-<strong>Implementar (con acompañamiento)</strong>
-<div class="muted">Aplicamos mínimos que se notan: cuentas seguras, accesos ordenados, respaldos y revisión básica de tu web.</div>
-<div class="meta">
-<span class="chip ok">entregable: evidencia</span>
-<span class="chip warn">evitamos “mega-proyectos”</span>
-</div>
-</div>
-</div>
-<div aria-label="Abrir: Sostener" class="step" data-modal="m-sostener" role="button" tabindex="0">
-<div class="n">4</div>
-<div>
-<strong>Sostener (cultura continua)</strong>
-<div class="muted">Ritual mensual + verificación + aprendizaje corto.</div>
-<div class="meta">
-<span class="chip ok">entregable: ritual 20 min</span>
-<span class="chip">métrica: progreso</span>
-</div>
-</div>
-</div>
-</div>
-<div class="btn-row">
-<a class="btn primary" href="#check">Ver checklist</a>
-<button aria-haspopup="dialog" class="btn" data-modal="m-ejemplo" type="button">Ver ejemplo real</button>
-</div>
-</div>
-</div>
-</section>
-<!-- CHECKLIST INTERACTIVA -->
-<section id="check">
-<div class="sec-head reveal">
-<h2>Checklist mínimo (interactivo)</h2>
-<p class="sec-sub">
-            Marca lo que ya tienes. Te mostramos progreso y los “mínimos” recomendados para arrancar.
+          <div class="deliver">Entregable: informe claro + prioridades (quick wins incluidos).</div>
+        </div>
+
+        <div class="step reveal">
+          <div class="step-num">2</div>
+          <h3>Plan (Aplicar)</h3>
+          <p style="color:var(--muted);margin:0">
+            Traducimos hallazgos en un plan paso a paso: qué hacer primero, qué puede esperar y por qué.
           </p>
-</div>
-<div class="grid-2">
-<div class="card reveal" style="padding:18px;">
-<div aria-label="Encabezado de mínimos" class="check-head">
-<div class="left">
-<div aria-hidden="true" class="check-badge">
-<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
-<path d="M12 3l7 4v6c0 5-3 8-7 9-4-1-7-4-7-9V7l7-4z"></path>
-<path d="M9 12l2 2 4-5"></path>
-</svg>
-</div>
-<div style="min-width:0;">
-<div class="check-title">Mínimos de partida</div>
-<div class="check-sub">Marca lo que ya tienes. Verás progreso y una sugerencia clara.</div>
-</div>
-</div>
-<div aria-hidden="true" class="check-micro">
-<div class="spark"><i></i></div>
-</div>
-</div>
-<div class="checklist" id="checklist">
-<div class="chk" data-key="mfa">
-<div aria-hidden="true" class="box">
-<svg fill="none" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="rgba(11,42,91,.85)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</div>
-<div>
-<strong>MFA activo</strong>
-<div class="muted">Cuentas clave con 2FA (correo, repos, cloud, banca, admin).</div>
-</div>
-</div>
-<div class="chk" data-key="backups">
-<div aria-hidden="true" class="box">
-<svg fill="none" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="rgba(11,42,91,.85)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</div>
-<div>
-<strong>Backups probados</strong>
-<div class="muted">No solo “existe backup”: probaste restauración.</div>
-</div>
-</div>
-<div class="chk" data-key="roles">
-<div aria-hidden="true" class="box">
-<svg fill="none" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="rgba(11,42,91,.85)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</div>
-<div>
-<strong>Accesos ordenados</strong>
-<div class="muted">Roles mínimos, sin cuentas compartidas, revocación clara.</div>
-</div>
-</div>
-<div class="chk" data-key="dns">
-<div aria-hidden="true" class="box">
-<svg fill="none" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="rgba(11,42,91,.85)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</div>
-<div>
-<strong>Web y dominio en orden</strong>
-<div class="muted">HTTPS bien configurado, redirecciones claras y dominio sin configuraciones raras.</div>
-</div>
-</div>
-<div class="chk" data-key="endpoints">
-<div aria-hidden="true" class="box">
-<svg fill="none" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="rgba(11,42,91,.85)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</div>
-<div>
-<strong>Equipos con mínimos</strong>
-<div class="muted">Actualizaciones, bloqueo de pantalla y protección básica (lo que sea realista para tu contexto).</div>
-</div>
-</div>
-</div>
-<div aria-label="Progreso" class="bar"><div id="barFill"></div></div>
-<div class="mini" style="margin-top:8px;"><span id="pct">0%</span> completado • <span id="nextHint">Sugerencia: empieza por MFA.</span></div>
-<div class="btn-row">
-<button class="btn primary" id="reset" type="button">Reiniciar</button>
-<button aria-haspopup="dialog" class="btn" data-modal="m-por-que" type="button">¿Por qué estos mínimos?</button>
-</div>
-</div>
-<div class="card reveal" style="padding:18px;">
-<div class="sec-head" style="margin-bottom:10px;">
-<h2 style="margin:0;">Entregables que dejamos</h2>
-<p class="sec-sub">
-                Para que no quede “en conversación”, sino en pasos concretos.
-              </p>
-</div>
-<div class="grid-3">
-<div class="tile grad">
-<span class="badge">Documento</span>
-<h3>Plan 1 página</h3>
-<p>3–5 acciones priorizadas, responsables y fecha simple.</p>
-</div>
-<div class="tile grad">
-<span class="badge">Checklist</span>
-<h3>Mínimos</h3>
-<p>Lo básico para reducir incidentes comunes.</p>
-</div>
-<div class="tile grad">
-<span class="badge">Ritual</span>
-<h3>20 minutos/mes</h3>
-<p>Revisión corta: accesos, backups, cambios, señales.</p>
-</div>
-</div>
-<div class="callout">
-              Si algo no se sostiene con el tiempo, lo consideramos “no implementado”.
-            </div>
-</div>
-</div>
-</section>
-<!-- CTA -->
-<section id="cta">
-<div class="sec-head reveal">
-<h2>¿Listo para partir?</h2>
-<p class="sec-sub">
-            Puedes ir directo a contáctanos o ver el pilar social (la columna de Aegis8).
+          <div class="deliver">Entregable: hoja de ruta 30/60/90 + checklist y guías.</div>
+        </div>
+
+        <div class="step reveal">
+          <div class="step-num">3</div>
+          <h3>Continuidad (Sostener)</h3>
+          <p style="color:var(--muted);margin:0">
+            Te acompañamos para implementar y sostener hábitos (accesos, backups, MFA, monitoreo, etc.).
           </p>
-</div>
-<div class="grid-2">
-<div class="tile reveal">
-<span class="badge">Contacto</span>
-<h3>Conversemos en 10 minutos</h3>
-<p>Te ayudamos a definir “qué hago hoy” sin venderte humo ni gasto innecesario.</p>
-<div class="btn-row">
-<a class="btn primary" href="contactanos.html">Ir a Contáctanos</a>
-<button aria-haspopup="dialog" class="btn" data-modal="m-plantilla" type="button">Plantilla 1 minuto</button>
-</div>
-</div>
-<div class="tile reveal">
-<span class="badge">Proyecto social</span>
-<h3>La columna de Aegis8</h3>
-<p>Educación, cultura y acompañamiento para reducir la brecha de ciberseguridad.</p>
-<div class="btn-row">
-<a class="btn primary" href="psocial.html">Ver Proyecto social</a>
-<button aria-haspopup="dialog" class="btn" data-modal="m-apoyar" type="button">Apoyar</button>
-</div>
-</div>
-</div>
-</section>
-</div>
+          <div class="deliver">Entregable: seguimiento y mejoras (mensual opcional).</div>
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-top:18px">
+        <div class="card reveal">
+          <span class="tag">Qué NO pedimos</span>
+          <h3>Datos sensibles</h3>
+          <p style="color:var(--muted);margin:0">
+            Nunca solicitamos contraseñas, tokens, códigos MFA, llaves privadas o información bancaria.
+          </p>
+        </div>
+        <div class="card reveal">
+          <span class="tag">Cómo hablamos</span>
+          <h3>Lenguaje simple</h3>
+          <p style="color:var(--muted);margin:0">
+            Explicamos el “por qué” y el “cómo” sin jerga. Si hay jerga, la traducimos.
+          </p>
+        </div>
+        <div class="card reveal">
+          <span class="tag">Qué priorizamos</span>
+          <h3>Acciones realistas</h3>
+          <p style="color:var(--muted);margin:0">
+            No imponemos “enterprise”. Priorizamos impacto, costo y velocidad de mejora.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="planes">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="reveal">Planes de trabajo</h2>
+        <p class="sec-sub reveal">
+          Así se refleja nuestro modelo: <b>proyectos</b> (una vez) o <b>acompañamiento</b> (mensual). Tú eliges.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card reveal">
+          <span class="tag">Proyecto · punto de partida</span>
+          <h3>Diagnóstico único</h3>
+          <div class="price"><b>1 entrega</b> <span>+ prioridades</span></div>
+          <ul class="clean">
+            <li>Revisión técnica y operativa (según contexto)</li>
+            <li>Riesgos priorizados + quick wins</li>
+            <li>Recomendaciones realistas</li>
+          </ul>
+          <a class="btn" href="contactos.html">Solicitar diagnóstico</a>
+        </div>
+
+        <div class="card reveal">
+          <span class="tag">Proyecto · ejecución</span>
+          <h3>Implementación asistida</h3>
+          <div class="price"><b>Por etapa</b> <span>según alcance</span></div>
+          <ul class="clean">
+            <li>Implementamos contigo (o guiamos paso a paso)</li>
+            <li>Validación de controles (MFA, backups, hardening)</li>
+            <li>Documentación y handover</li>
+          </ul>
+          <a class="btn" href="contactos.html">Cotizar implementación</a>
+        </div>
+
+        <div class="card reveal">
+          <span class="tag">Retainer · continuidad</span>
+          <h3>Acompañamiento mensual</h3>
+          <div class="price"><b>Mensual</b> <span>según necesidad</span></div>
+          <ul class="clean">
+            <li>Revisiones periódicas + prioridades</li>
+            <li>Soporte y ajustes continuos</li>
+            <li>Mejora incremental (sin quemarte)</li>
+          </ul>
+          <a class="btn" href="contactos.html">Hablar de retainer</a>
+        </div>
+      </div>
+
+      <div class="note reveal">
+        <span class="badge"><span class="mini"></span> Transparencia</span>
+        &nbsp; Te diremos qué conviene hacer <b>ahora</b> y qué puede esperar. Sin sobreventa.
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="reveal">Dudas frecuentes</h2>
+        <p class="sec-sub reveal">Respuestas cortas para que el lector no se pierda (y avance).</p>
+      </div>
+
+      <div class="faq">
+        <div class="qa reveal">
+          <button class="q" type="button">
+            <div>¿Tengo que tener un SOC o presupuesto enterprise? <small>No.</small></div>
+            <span class="chev">⌄</span>
+          </button>
+          <div class="a">
+            No. Aegis8 está pensado para contextos reales: startups, pymes y entusiastas. Priorizamos acciones de alto impacto con costo razonable.
+          </div>
+        </div>
+
+        <div class="qa reveal">
+          <button class="q" type="button">
+            <div>¿Qué tan rápido recibo algo útil? <small>Depende del contexto.</small></div>
+            <span class="chev">⌄</span>
+          </button>
+          <div class="a">
+            En el diagnóstico entregamos quick wins (acciones inmediatas). Mientras más claro tu contexto, más rápido aterrizamos recomendaciones.
+          </div>
+        </div>
+
+        <div class="qa reveal">
+          <button class="q" type="button">
+            <div>¿Qué información NO debo enviar? <small>Datos sensibles.</small></div>
+            <span class="chev">⌄</span>
+          </button>
+          <div class="a">
+            Nunca envíes contraseñas, tokens, códigos MFA, llaves privadas, RUT/ID, datos bancarios ni información privada. Con contexto general basta.
+          </div>
+        </div>
+
+        <div class="qa reveal">
+          <button class="q" type="button">
+            <div>¿Cómo se define el alcance? <small>Con prioridades.</small></div>
+            <span class="chev">⌄</span>
+          </button>
+          <div class="a">
+            Partimos por riesgos y objetivos. Definimos un alcance mínimo viable de seguridad y lo iteramos por etapas (30/60/90 días).
+          </div>
+        </div>
+      </div>
+
+      <div class="center" style="margin-top:16px">
+        <a class="btn reveal" href="contactos.html">Cuéntanos tu caso</a>
+      </div>
+    </div>
+  </section>
 </main>
-<!-- MODALS -->
-<div aria-labelledby="t-que-es" aria-modal="true" class="modal" id="m-que-es" role="dialog">
-<div class="modal-dialog">
-<div class="modal-head">
-<div>
-<h3 class="modal-title" id="t-que-es">Acompañamiento honesto</h3>
-<div class="muted" style="font-size:13px;margin-top:4px;">Sin humo, sin miedo, sin “mega-proyectos”.</div>
+
+<div class="sticky-cta" aria-hidden="false">
+  <div class="bar">
+    <div class="msg">¿Partimos por un diagnóstico? <span class="kbd">2–3 min</span></div>
+    <div class="actions">
+      <a class="mini-btn" href="#planes">Ver planes</a>
+      <a class="mini-btn primary" href="contactos.html">Ir a Contacto</a>
+    </div>
+  </div>
 </div>
-<button aria-label="Cerrar" class="modal-close" type="button">✕</button>
-</div>
-<div class="modal-body">
-<p>Significa tres cosas:</p>
-<ul>
-<li><strong>Claridad:</strong> explicamos qué pasa y qué conviene, sin jerga.</li>
-<li><strong>Criterio:</strong> priorizamos lo que baja riesgo de verdad (alto impacto / bajo esfuerzo).</li>
-<li><strong>Continuidad:</strong> dejamos hábitos y rituales simples para sostenerlo.</li>
-</ul>
-<div class="callout">Si algo no aporta valor real o no se sostiene, lo descartamos.</div>
-</div>
-</div>
-</div>
-<div aria-labelledby="t-entender" aria-modal="true" class="modal" id="m-entender" role="dialog">
-<div class="modal-dialog">
-<div class="modal-head">
-<div>
-<h3 class="modal-title" id="t-entender">Paso 1: Entender</h3>
-<div class="muted" style="font-size:13px;margin-top:4px;">Mapa simple del contexto.</div>
-</div>
-<button aria-label="Cerrar" class="modal-close" type="button">✕</button>
-</div>
-<div class="modal-body">
-<p>Lo mínimo que necesitamos para orientar acciones:</p>
-<ul>
-<li>Activos clave (correo, dominio, web/app, repos, cloud, endpoints).</li>
-<li>Riesgos reales (phishing, robo de cuentas, pérdida de datos, accesos).</li>
-<li>Dolor principal: ¿qué te quita el sueño hoy?</li>
-</ul>
-<div class="callout">Entregable: “mapa simple” + primer set de recomendaciones.</div>
-</div>
-</div>
-</div>
-<div aria-labelledby="t-priorizar" aria-modal="true" class="modal" id="m-priorizar" role="dialog">
-<div class="modal-dialog">
-<div class="modal-head">
-<div>
-<h3 class="modal-title" id="t-priorizar">Paso 2: Priorizar</h3>
-<div class="muted" style="font-size:13px;margin-top:4px;">3–5 acciones con impacto real.</div>
-</div>
-<button aria-label="Cerrar" class="modal-close" type="button">✕</button>
-</div>
-<div class="modal-body">
-<p>Elegimos lo que reduce incidentes comunes más rápido:</p>
-<ul>
-<li>MFA (donde duele), recuperación de cuentas, controles de acceso.</li>
-<li>Backups y restauración (evitar pérdida total).</li>
-<li>Orden de secretos (tokens/llaves), DNS/TLS, y mínimos de endpoint.</li>
-</ul>
-<div class="callout">Entregable: plan de 1 página con responsables y fechas simples.</div>
-</div>
-</div>
-</div>
-<div aria-labelledby="t-impl" aria-modal="true" class="modal" id="m-implementar" role="dialog">
-<div class="modal-dialog">
-<div class="modal-head">
-<div>
-<h3 class="modal-title" id="t-impl">Paso 3: Implementar</h3>
-<div class="muted" style="font-size:13px;margin-top:4px;">Acompañamiento para ejecutar.</div>
-</div>
-<button aria-label="Cerrar" class="modal-close" type="button">✕</button>
-</div>
-<div class="modal-body">
-<p>Implementamos con evidencias simples (sin burocracia):</p>
-<ul>
-<li>Capturas / checklist / verificación de configuración.</li>
-<li>Antes/después (lo que cambia y por qué importa).</li>
-<li>Documentación mínima para que el equipo lo sostenga.</li>
-</ul>
-<div class="callout">Entregable: evidencia + checklist actualizado.</div>
-</div>
-</div>
-</div>
-<div aria-labelledby="t-sost" aria-modal="true" class="modal" id="m-sostener" role="dialog">
-<div class="modal-dialog">
-<div class="modal-head">
-<div>
-<h3 class="modal-title" id="t-sost">Paso 4: Sostener</h3>
-<div class="muted" style="font-size:13px;margin-top:4px;">Cultura continua.</div>
-</div>
-<button aria-label="Cerrar" class="modal-close" type="button">✕</button>
-</div>
-<div class="modal-body">
-<p>Dejamos un ritual simple (20 min/mes):</p>
-<ul>
-<li>Revisión de accesos (altas/bajas), MFA y recuperación.</li>
-<li>Backups: prueba breve de restauración (aunque sea parcial).</li>
-<li>Cambios en dominios/DNS y señales relevantes.</li>
-</ul>
-<div class="callout">Entregable: ritual + recordatorio (si quieres lo automatizamos en tu calendario).</div>
-</div>
-</div>
-</div>
-<div aria-labelledby="t-ej" aria-modal="true" class="modal" id="m-ejemplo" role="dialog">
-<div class="modal-dialog">
-<div class="modal-head">
-<div>
-<h3 class="modal-title" id="t-ej">Ejemplo (cómo se vería)</h3>
-<div class="muted" style="font-size:13px;margin-top:4px;">Simulación para entender el método.</div>
-</div>
-<button aria-label="Cerrar" class="modal-close" type="button">✕</button>
-</div>
-<div class="modal-body">
-<p><strong>Contexto:</strong> una startup con web en Vercel + correo + repos + pagos.</p>
-<ul>
-<li><strong>Entender:</strong> activos clave y “riesgo real” (phishing / cuentas / backups).</li>
-<li><strong>Priorizar:</strong> activar MFA en correo/repos, orden de accesos, backups probados, DNS/TLS.</li>
-<li><strong>Implementar:</strong> checklist + evidencia + cambios mínimos.</li>
-<li><strong>Sostener:</strong> ritual mensual + verificación de cambios.</li>
-</ul>
-<div class="callout">Resultado: menos incidentes comunes, más claridad y hábito.</div>
-</div>
-</div>
-</div>
-<div aria-labelledby="t-por-que" aria-modal="true" class="modal" id="m-por-que" role="dialog">
-<div class="modal-dialog">
-<div class="modal-head">
-<div>
-<h3 class="modal-title" id="t-por-que">¿Por qué estos mínimos?</h3>
-<div class="muted" style="font-size:13px;margin-top:4px;">Porque bajan incidentes comunes.</div>
-</div>
-<button aria-label="Cerrar" class="modal-close" type="button">✕</button>
-</div>
-<div class="modal-body">
-<p>Estos mínimos reducen riesgos típicos en personas, startups y pymes:</p>
-<ul>
-<li><strong>MFA:</strong> dificulta robo de cuentas (phishing/credenciales filtradas).</li>
-<li><strong>Backups probados:</strong> evita pérdida total ante errores, ransomware o borrados.</li>
-<li><strong>Accesos:</strong> reduce abuso por cuentas compartidas o permisos excesivos.</li>
-<li><strong>DNS/TLS:</strong> reduce errores que abren puertas (mal redirect, spoofing, etc.).</li>
-<li><strong>Endpoints:</strong> baja exposición por equipos desactualizados o sin bloqueo.</li>
-</ul>
-<div class="callout">Lo mínimo no es “lo único”, es el piso para construir cultura.</div>
-</div>
-</div>
-</div>
-<div aria-labelledby="t-pl" aria-modal="true" class="modal" id="m-plantilla" role="dialog">
-<div class="modal-dialog">
-<div class="modal-head">
-<div>
-<h3 class="modal-title" id="t-pl">Plantilla (1 minuto)</h3>
-<div class="muted" style="font-size:13px;margin-top:4px;">Copia/pega en Contáctanos.</div>
-</div>
-<button aria-label="Cerrar" class="modal-close" type="button">✕</button>
-</div>
-<div class="modal-body">
-<p><strong>Objetivo:</strong> (qué quieres lograr)</p>
-<p><strong>Contexto:</strong> (persona/startup/pyme/comunidad, tamaño)</p>
-<p><strong>Urgencia:</strong> (baja/media/alta + por qué)</p>
-<p><strong>Activos:</strong> (correo, dominio, web/app, repos, cloud, endpoints)</p>
-<div class="callout">No envíes credenciales ni datos sensibles. Acordamos canal seguro si hace falta.</div>
-</div>
-</div>
-</div>
-<div aria-labelledby="t-ap" aria-modal="true" class="modal" id="m-apoyar" role="dialog">
-<div class="modal-dialog">
-<div class="modal-head">
-<div>
-<h3 class="modal-title" id="t-ap">Apoyar el proyecto social</h3>
-<div class="muted" style="font-size:13px;margin-top:4px;">Becas, cupos y continuidad.</div>
-</div>
-<button aria-label="Cerrar" class="modal-close" type="button">✕</button>
-</div>
-<div class="modal-body">
-<p>Si quieres apoyar, lo hacemos transparente:</p>
-<ul>
-<li>becas/cupos para talleres</li>
-<li>materiales (guías, recursos, difusión)</li>
-<li>infraestructura (hosting, dominios, herramientas)</li>
-</ul>
-<div class="callout">Cuando definas el método (donación/alianza), lo implementamos con claridad.</div>
-</div>
-</div>
-</div>
-<footer>
-<div class="wrap">
-<div class="foot" style="justify-content:center; text-align:center;">
-<small>
-        © <span id="year"></span> <strong>Aegis8</strong> · Consultora y proyecto educativo‑social de ciberseguridad.<br/>
-<span class="muted">Seguridad clara, sin humo y con sentido.</span>
-</small>
-</div>
-</div>
-</footer>
+
 <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
+  // Reveal on scroll
+  const items = [...document.querySelectorAll('.reveal')];
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold: 0.12});
+  items.forEach(el=>io.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.qa .q').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const qa = btn.closest('.qa');
+      qa.classList.toggle('open');
+    });
+  });
 </script>
 
-
-
-
-<script src="/aegis-menu.js" defer></script>
 </body>
 </html>
