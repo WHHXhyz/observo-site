@@ -1565,8 +1565,9 @@ header .nav{ max-width: var(--max); margin: 0 auto; }
     })();
 
     // Reveal
+    let io;
     try{
-      const io = new IntersectionObserver((entries)=>{
+      io = new IntersectionObserver((entries)=>{
         entries.forEach(e=>{
           if(e.isIntersecting){
             e.target.classList.add("on");
@@ -1882,7 +1883,7 @@ header .nav{ max-width: var(--max); margin: 0 auto; }
         return activeCapFilter==="all" ? true : (String(c.category||"").toLowerCase()===activeCapFilter);
       });
       capsGridEl.innerHTML = filtered.map(capCard).join("");
-      document.querySelectorAll("#capsGrid .reveal").forEach(el=>io.observe(el));
+      if(io){ document.querySelectorAll("#capsGrid .reveal").forEach(el=>io.observe(el)); }
     }
     document.querySelectorAll('.chip[data-capfilter]').forEach(ch=>{
       ch.addEventListener("click", ()=>{
@@ -1919,7 +1920,7 @@ header .nav{ max-width: var(--max); margin: 0 auto; }
         return activeFilter==="all" ? true : (r.audience||[]).includes(activeFilter);
       });
       libraryEl.innerHTML = filtered.map(resourceCard).join("");
-      document.querySelectorAll("#library .reveal").forEach(el=>io.observe(el));
+      if(io){ document.querySelectorAll("#library .reveal").forEach(el=>io.observe(el)); }
     }
     document.querySelectorAll('.chip[data-filter]').forEach(ch=>{
       ch.addEventListener("click", ()=>{
