@@ -843,6 +843,11 @@ footer a:hover{color:var(--green);}
             <div class="urgency-labels"><span>Sin apuro</span><span>Normal</span><span>Urgente</span></div>
           </div>
 
+          <!-- Honeypot — campo invisible, no tocar -->
+          <div style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;overflow:hidden;" aria-hidden="true">
+            <input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off"/>
+          </div>
+
           <!-- Form Notice -->
           <div class="form-notice" id="form-notice" style="display:none;"></div>
 
@@ -1057,6 +1062,7 @@ function submitForm(){
   var o=document.getElementById('f-objetivo').value;
   var u=document.getElementById('urgency-label').textContent;
   var m=document.getElementById('f-mensaje').value.trim();
+  if(document.getElementById('f-website').value){ return; } // honeypot
   if(!n||!e||!t||!m){ showNotice('error','✗  Completa los campos obligatorios: nombre, correo, perfil y mensaje.'); return; }
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){ showNotice('error','✗  El correo no parece válido.'); return; }
   var btn=document.querySelector('.btn-main[onclick]');
