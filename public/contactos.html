@@ -517,31 +517,7 @@ footer a:hover{color:var(--green);}
   color:var(--muted2);margin-top:0.4rem;
 }
 
-/* Anti-spam */
-.antispam-row{
-  background:var(--surface);
-  border:1px solid var(--border);
-  padding:1rem;margin-bottom:1.5rem;
-  display:flex;align-items:center;gap:1rem;
-}
-.antispam-q{
-  font-family:var(--font-mono);font-size:0.72rem;
-  color:var(--muted);flex-grow:1;line-height:1.5;
-}
-.antispam-q strong{color:var(--text);}
-.antispam-q small{display:block;font-size:0.58rem;color:var(--muted2);margin-top:2px;}
-.antispam-input{
-  background:#04060a!important;
-  border:1px solid var(--border2)!important;
-  width:68px!important;
-  text-align:center;
-  padding:0.5rem!important;
-  font-family:var(--font-mono)!important;
-  font-size:0.9rem!important;
-  color:var(--text)!important;
-  outline:none;
-}
-.antispam-input:focus{border-color:rgba(0,255,136,0.5)!important;}
+
 
 /* Form actions */
 .form-actions{display:flex;gap:0.8rem;flex-wrap:wrap;}
@@ -671,6 +647,7 @@ footer a:hover{color:var(--green);}
   footer{flex-direction:column;gap:0.75rem;text-align:center;}
 }
   </style>
+  <script src="https://www.google.com/recaptcha/api.js?render=6LcaDocsAAAAAKooAzny0RrX53G4R0eWlihi2axK"></script>
 </head>
 <body>
 
@@ -864,25 +841,6 @@ footer a:hover{color:var(--green);}
             <input type="range" class="urgency-slider" id="f-urgency" min="1" max="3" value="2" oninput="updateUrgency();updatePreview()"/>
             <div class="urgency-labels"><span>Sin apuro</span><span>Normal</span><span>Urgente</span></div>
           </div>
-
-          <!-- Anti-spam -->
-          <div class="antispam-row">
-            <div class="antispam-q">
-              <strong id="antispam-question">Cargando…</strong>
-              <small>Bloquea bots. No guardamos datos sensibles.</small>
-            </div>
-            <input type="number" class="antispam-input" id="f-antispam" placeholder="?" min="0" max="99"/>
-          </div>
-
-          <!-- Actions -->
-          <div class="form-actions">
-            <button class="btn-main" onclick="submitForm()">Enviar →</button>
-            <button class="btn-out" onclick="copyMessage()">Copiar</button>
-            <button class="btn-out" onclick="clearForm()" style="padding:1rem 1.2rem;">Limpiar</button>
-          </div>
-
-          <div class="form-notice" id="form-notice"></div>
-        </div>
       </div>
     </div>
 
@@ -1086,11 +1044,21 @@ function submitForm(){
   var e=document.getElementById('f-email').value.trim();
   var t=document.getElementById('f-tipo').value;
   var m=document.getElementById('f-mensaje').value.trim();
-  var s=parseInt(document.getElementById('f-antispam').value,10);
   if(!n||!e||!t||!m){ showNotice('error','✗  Completa los campos obligatorios: nombre, correo, perfil y mensaje.'); return; }
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){ showNotice('error','✗  El correo no parece válido.'); return; }
-  if(s!==captchaAnswer){ showNotice('error','✗  Verificación incorrecta. Intenta de nuevo.'); genCaptcha(); document.getElementById('f-antispam').value=''; return; }
-  showNotice('success','✓  Mensaje enviado correctamente. Te respondemos en 1–2 días hábiles con un plan claro.');
+  var btn=document.querySelector('.btn-main[onclick]');
+  if(btn){ btn.textContent='Verificando…'; btn.style.opacity='0.7'; }
+  grecaptcha.ready(function(){
+    grecaptcha.execute('6LcaDocsAAAAAKooAzny0RrX53G4R0eWlihi2axK', {action:'contact'}).then(function(token){
+      if(btn){ btn.textContent='Enviar →'; btn.style.opacity='1'; }
+      // Token listo — aquí iría la validación server-side con tu Secret Key
+      // Por ahora confirmamos visualmente (integrar con Formspree/backend para validación real)
+      showNotice('success','✓  Mensaje enviado correctamente. Te respondemos en 1–2 días hábiles con un plan claro.');
+    }).catch(function(){
+      if(btn){ btn.textContent='Enviar →'; btn.style.opacity='1'; }
+      showNotice('error','✗  Error de verificación. Recarga la página e intenta de nuevo.');
+    });
+  });
 }
 
 function showNotice(type, msg){
@@ -1108,14 +1076,13 @@ function copyTemplate(){
   navigator.clipboard.writeText('Contexto:       [quién soy / mi organización]\nObjetivo:       [qué quiero lograr]\nUrgencia:       [si aplica]\nLo que ya tengo: [MFA / backups / accesos / correo]').then(function(){ showToast('✓ Plantilla copiada'); });
 }
 function clearForm(){
-  ['f-nombre','f-email','f-mensaje','f-antispam'].forEach(function(id){ document.getElementById(id).value=''; });
+  ['f-nombre','f-email','f-mensaje'].forEach(function(id){ document.getElementById(id).value=''; });
   document.getElementById('f-tipo').selectedIndex=0;
   document.getElementById('f-objetivo').selectedIndex=0;
   document.getElementById('f-urgency').value=2;
   document.getElementById('urgency-label').textContent='Normal';
   document.querySelectorAll('.mode-btn').forEach(function(b){ b.classList.remove('active'); });
   document.getElementById('form-notice').style.display='none';
-  genCaptcha();
   updatePreview(); updateChar();
 }
 function showToast(msg){
@@ -1123,19 +1090,7 @@ function showToast(msg){
   setTimeout(function(){ t.classList.remove('show'); },2500);
 }
 
-/* ── CAPTCHA ALEATORIO ── */
-var captchaAnswer = 0;
-function genCaptcha(){
-  var ops = [
-    function(){ var a=Math.floor(Math.random()*9)+1, b=Math.floor(Math.random()*9)+1; captchaAnswer=a+b; return '¿Cuánto es '+a+' + '+b+'?'; },
-    function(){ var a=Math.floor(Math.random()*5)+5, b=Math.floor(Math.random()*5)+1; captchaAnswer=a-b; return '¿Cuánto es '+a+' − '+b+'?'; },
-    function(){ var a=Math.floor(Math.random()*4)+2, b=Math.floor(Math.random()*4)+2; captchaAnswer=a*b; return '¿Cuánto es '+a+' × '+b+'?'; }
-  ];
-  var op = ops[Math.floor(Math.random()*ops.length)];
-  var q = op();
-  document.getElementById('antispam-question').textContent = 'Verificación — ' + q;
-}
-genCaptcha();
+
 
 updatePreview();
 </script>
