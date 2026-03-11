@@ -1044,19 +1044,44 @@ function submitForm(){
   var n=document.getElementById('f-nombre').value.trim();
   var e=document.getElementById('f-email').value.trim();
   var t=document.getElementById('f-tipo').value;
+  var o=document.getElementById('f-objetivo').value;
+  var u=document.getElementById('urgency-label').textContent;
   var m=document.getElementById('f-mensaje').value.trim();
   if(!n||!e||!t||!m){ showNotice('error','✗  Completa los campos obligatorios: nombre, correo, perfil y mensaje.'); return; }
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){ showNotice('error','✗  El correo no parece válido.'); return; }
   var btn=document.querySelector('.btn-main[onclick]');
-  if(btn){ btn.textContent='Verificando…'; btn.style.opacity='0.7'; }
+  if(btn){ btn.textContent='Verificando…'; btn.style.opacity='0.7'; btn.disabled=true; }
   grecaptcha.ready(function(){
     grecaptcha.execute('6LcaDocsAAAAAKooAzny0RrX53G4R0eWlihi2axK', {action:'contact'}).then(function(token){
-      if(btn){ btn.textContent='Enviar →'; btn.style.opacity='1'; }
-      // Token listo — aquí iría la validación server-side con tu Secret Key
-      // Por ahora confirmamos visualmente (integrar con Formspree/backend para validación real)
-      showNotice('success','✓  Mensaje enviado correctamente. Te respondemos en 1–2 días hábiles con un plan claro.');
+      fetch('https://formspree.io/f/mdawgeje', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          nombre: n,
+          email: e,
+          perfil: t,
+          objetivo: o,
+          urgencia: u,
+          mensaje: m,
+          'g-recaptcha-response': token
+        })
+      })
+      .then(function(res){ return res.json(); })
+      .then(function(data){
+        if(btn){ btn.textContent='Enviar →'; btn.style.opacity='1'; btn.disabled=false; }
+        if(data.ok){
+          showNotice('success','✓  Mensaje enviado correctamente. Te respondemos en 1–2 días hábiles con un plan claro.');
+          clearForm();
+        } else {
+          showNotice('error','✗  No se pudo enviar. Intenta de nuevo o escríbenos directo a Instagram.');
+        }
+      })
+      .catch(function(){
+        if(btn){ btn.textContent='Enviar →'; btn.style.opacity='1'; btn.disabled=false; }
+        showNotice('error','✗  Error de red. Verifica tu conexión e intenta de nuevo.');
+      });
     }).catch(function(){
-      if(btn){ btn.textContent='Enviar →'; btn.style.opacity='1'; }
+      if(btn){ btn.textContent='Enviar →'; btn.style.opacity='1'; btn.disabled=false; }
       showNotice('error','✗  Error de verificación. Recarga la página e intenta de nuevo.');
     });
   });
