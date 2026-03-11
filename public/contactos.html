@@ -842,6 +842,16 @@ footer a:hover{color:var(--green);}
             <input type="range" class="urgency-slider" id="f-urgency" min="1" max="3" value="2" oninput="updateUrgency();updatePreview()"/>
             <div class="urgency-labels"><span>Sin apuro</span><span>Normal</span><span>Urgente</span></div>
           </div>
+
+          <!-- Form Notice -->
+          <div class="form-notice" id="form-notice" style="display:none;"></div>
+
+          <!-- Actions -->
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;">
+            <button class="btn-main" onclick="submitForm()" style="flex:1;min-width:160px;">Enviar →</button>
+            <button class="btn-out" onclick="copyMessage()" style="padding:1rem 1.2rem;font-size:0.7rem;">Copiar</button>
+            <button class="btn-out" onclick="clearForm()" style="padding:1rem 1.2rem;font-size:0.7rem;">Limpiar</button>
+          </div>
       </div>
     </div>
 
