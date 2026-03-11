@@ -868,10 +868,10 @@ footer a:hover{color:var(--green);}
           <!-- Anti-spam -->
           <div class="antispam-row">
             <div class="antispam-q">
-              <strong>Verificación — ¿Cuánto es 3 + 4?</strong>
+              <strong id="antispam-question">Cargando…</strong>
               <small>Bloquea bots. No guardamos datos sensibles.</small>
             </div>
-            <input type="number" class="antispam-input" id="f-antispam" placeholder="?" min="0" max="20"/>
+            <input type="number" class="antispam-input" id="f-antispam" placeholder="?" min="0" max="99"/>
           </div>
 
           <!-- Actions -->
@@ -1089,7 +1089,7 @@ function submitForm(){
   var s=parseInt(document.getElementById('f-antispam').value,10);
   if(!n||!e||!t||!m){ showNotice('error','✗  Completa los campos obligatorios: nombre, correo, perfil y mensaje.'); return; }
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){ showNotice('error','✗  El correo no parece válido.'); return; }
-  if(s!==7){ showNotice('error','✗  Verificación incorrecta. Pista: 3 + 4 = ?'); return; }
+  if(s!==captchaAnswer){ showNotice('error','✗  Verificación incorrecta. Intenta de nuevo.'); genCaptcha(); document.getElementById('f-antispam').value=''; return; }
   showNotice('success','✓  Mensaje enviado correctamente. Te respondemos en 1–2 días hábiles con un plan claro.');
 }
 
@@ -1115,12 +1115,27 @@ function clearForm(){
   document.getElementById('urgency-label').textContent='Normal';
   document.querySelectorAll('.mode-btn').forEach(function(b){ b.classList.remove('active'); });
   document.getElementById('form-notice').style.display='none';
+  genCaptcha();
   updatePreview(); updateChar();
 }
 function showToast(msg){
   var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
   setTimeout(function(){ t.classList.remove('show'); },2500);
 }
+
+/* ── CAPTCHA ALEATORIO ── */
+var captchaAnswer = 0;
+function genCaptcha(){
+  var ops = [
+    function(){ var a=Math.floor(Math.random()*9)+1, b=Math.floor(Math.random()*9)+1; captchaAnswer=a+b; return '¿Cuánto es '+a+' + '+b+'?'; },
+    function(){ var a=Math.floor(Math.random()*5)+5, b=Math.floor(Math.random()*5)+1; captchaAnswer=a-b; return '¿Cuánto es '+a+' − '+b+'?'; },
+    function(){ var a=Math.floor(Math.random()*4)+2, b=Math.floor(Math.random()*4)+2; captchaAnswer=a*b; return '¿Cuánto es '+a+' × '+b+'?'; }
+  ];
+  var op = ops[Math.floor(Math.random()*ops.length)];
+  var q = op();
+  document.getElementById('antispam-question').textContent = 'Verificación — ' + q;
+}
+genCaptcha();
 
 updatePreview();
 </script>
