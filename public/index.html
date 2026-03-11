@@ -706,8 +706,8 @@ footer a:hover{color:var(--green);}
       Consultora de ciberseguridad
     </div>
 
-    <h1 class="glitch" data-text="CIBERSEGURIDAD SIN HUMO">
-      CIBERSEGURIDAD<br/><em>SIN HUMO.</em>
+    <h1 class="glitch" data-text="SEGURIDAD SIN HUMO">
+     SEGURIDAD<br/><em>SIN HUMO.</em>
     </h1>
 
     <p class="hero-sub">
@@ -951,7 +951,7 @@ footer a:hover{color:var(--green);}
       <span class="t-line"><span class="t-warn">⚠</span> <span class="t-c">MFA deshabilitado en 3 cuentas con acceso admin</span></span>
       <span class="t-line"><span class="t-err">✗</span> <span class="t-c">Backup sin verificar · última prueba: 67 días</span></span>
       <span class="t-line"><span class="t-warn">⚠</span> <span class="t-c">Puerto 8080 expuesto públicamente · sin necesidad aparente</span></span>
-      <span class="t-line"><span class="t-err">✗</span> <span class="t-c">Cuenta activa detectada: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ee8b968d81828f8c819c8f8a819cae8b839e9c8b9d8fc08d82">[email&#160;protected]</a></span></span>
+      <span class="t-line"><span class="t-err">✗</span> <span class="t-c">Cuenta activa detectada: excolaborador@empresa.cl</span></span>
       <span class="t-line"><span class="t-ok">✓</span> <span class="t-c">Dependencias actualizadas · sin CVEs críticos</span></span>
       <span class="t-line"><br/><span class="t-o">─────────────────────────────────────────</span></span>
       <span class="t-line"><span class="t-o">Resumen: </span><span class="t-err">2 críticos</span> · <span class="t-warn">2 advertencias</span> · <span class="t-ok">3 OK</span></span>
@@ -1018,7 +1018,7 @@ footer a:hover{color:var(--green);}
   <a href="https://aegis8.org/contactos.html">contacto →</a>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // CURSOR
 const cursor = document.getElementById('cursor');
 const ring = document.getElementById('cursor-ring');
@@ -1122,4 +1122,11 @@ const barObserver=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
       const fill=e.target.querySelector('.tcard-fill');
-  
+      if(fill){const w=fill.style.width;fill.style.width='0';setTimeout(()=>{fill.style.width=w;},100);}
+    }
+  });
+},{threshold:0.3});
+document.querySelectorAll('.tcard').forEach(el=>barObserver.observe(el));
+</script>
+</body>
+</html>
