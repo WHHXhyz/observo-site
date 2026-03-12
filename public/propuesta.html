@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Aegis8 — Propuesta de valor</title>
   <meta name="description" content="Propuesta de valor Aegis8: a quiénes ayudamos, por qué, qué buscamos lograr y qué nos diferencia."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -188,9 +188,9 @@ footer a:hover{color:var(--green);}
 
 /* PAGE HERO */
 .page-hero{
-  position:relative;padding:6rem 3rem 5rem;
-  min-height:50vh;display:flex;align-items:center;
-  overflow:hidden;z-index:1;border-bottom:1px solid var(--border);
+  position:relative;padding:80px 0 60px;
+  display:flex;align-items:center;
+  z-index:1;border-bottom:1px solid var(--border);
 }
 .hero-grid{
   position:absolute;inset:0;
@@ -211,9 +211,9 @@ footer a:hover{color:var(--green);}
 }
 .page-hero-inner{
   position:relative;z-index:2;
-  display:grid;grid-template-columns:1fr 480px;
-  gap:5rem;align-items:center;
-  width:100%;max-width:1400px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 420px;
+  gap:3rem;align-items:start;
+  width:100%;max-width:1080px;margin:0 auto;padding:0 3rem;
 }
 .hero-eyebrow{
   display:flex;align-items:center;gap:0.75rem;
@@ -224,7 +224,7 @@ footer a:hover{color:var(--green);}
 .hero-eyebrow-line{flex:1;max-width:40px;height:1px;background:var(--green);}
 .page-h1{
   font-family:var(--font-display);
-  font-size:clamp(4rem,8vw,8rem);
+  font-size:clamp(2rem,4vw,4rem);
   line-height:0.9;letter-spacing:0.02em;margin-bottom:1.5rem;
 }
 .page-h1 em{color:var(--green);font-style:normal;}
@@ -271,7 +271,7 @@ footer a:hover{color:var(--green);}
 /* CONTENT SECTION */
 .content-section{
   position:relative;z-index:1;
-  padding:5rem 3rem;
+  padding:5rem 0;
   border-bottom:1px solid var(--border);
 }
 .content-section:last-of-type{border-bottom:none;}
@@ -371,7 +371,7 @@ footer a:hover{color:var(--green);}
 
 /* CTA SECTION */
 .cta-section{
-  position:relative;z-index:1;padding:5rem 3rem;
+  position:relative;z-index:1;padding:5rem 0;
   text-align:center;border-top:1px solid var(--border);
 }
 .cta-inner{max-width:600px;margin:0 auto;}
@@ -423,20 +423,25 @@ footer a:hover{color:var(--green);}
   color:var(--green);line-height:1.6;
 }
 
+.wrap{max-width:1080px;margin:0 auto;width:100%;padding:0 3rem;}
 @media(max-width:1100px){
   .tiles-grid{grid-template-columns:repeat(2,1fr);}
   .values-grid{grid-template-columns:1fr;}
 }
-@media(max-width:900px){
-  .page-hero-inner{grid-template-columns:1fr;}
-  .info-panel{display:none;}
-  nav{padding:0 1.5rem;}
+@media(max-width:768px){
+  .wrap{padding:0 20px;}
+  nav{padding:0 20px;}
   .nav-links{display:none;}
-  .page-hero,.content-section,.cta-section{padding:4rem 1.5rem 3rem;}
-  footer{flex-direction:column;gap:0.75rem;text-align:center;}
-}
-@media(max-width:600px){
+  .nav-status{display:none;}
+  .page-hero{padding:70px 0 40px;}
+  .page-hero-inner{grid-template-columns:1fr;gap:2rem;padding:0 20px;}
+  .page-h1{font-size:clamp(1.8rem,7vw,3rem);}
+  .info-panel{display:none;}
+  .content-section{padding:3rem 0;}
+  .cta-section{padding:3rem 0;}
   .tiles-grid{grid-template-columns:1fr;}
+  .values-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:0.75rem;text-align:center;padding:1.75rem 20px;}
 }
   </style>
 </head>
@@ -455,6 +460,7 @@ footer a:hover{color:var(--green);}
   <ul class="nav-links">
     <li><a href="index.html">Inicio</a></li>
     <li><a href="propuesta.html" class="active">Propuesta</a></li>
+    <li><a href="/formacion.html" style="color:var(--green);border:1px solid rgba(0,255,136,0.25);padding:0.3rem 0.8rem;">Formación →</a></li>
     <li><a href="contactos.html">Contacto</a></li>
   </ul>
   <div class="nav-status">
@@ -537,6 +543,7 @@ footer a:hover{color:var(--green);}
 
 <!-- BLOQUES PRINCIPALES -->
 <section class="content-section" id="bloques">
+  <div class="wrap">
   <div class="content-inner">
     <div class="section-head reveal">
       <div class="section-label">Lo esencial</div>
@@ -582,6 +589,7 @@ footer a:hover{color:var(--green);}
 
 <!-- CÓMO SE VE EN LA PRÁCTICA -->
 <section class="content-section">
+  <div class="wrap">
   <div class="content-inner">
     <div class="section-head reveal">
       <div class="section-label">En la práctica</div>
@@ -640,6 +648,7 @@ footer a:hover{color:var(--green);}
 
 <!-- CTA -->
 <section class="cta-section">
+  <div class="wrap" style="text-align:center;">
   <div class="cta-inner reveal">
     <div class="section-label" style="justify-content:center;">¿Te hace sentido?</div>
     <h2 class="section-h">CONVERSEMOS Y<br/>ORDENEMOS LO ESENCIAL</h2>
@@ -648,7 +657,7 @@ footer a:hover{color:var(--green);}
       <a href="contactos.html" class="btn-main">Contáctanos →</a>
 
     </div>
-  </div>
+  </div><!-- /wrap -->
 </section>
 
 <!-- FOOTER -->
