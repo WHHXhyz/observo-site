@@ -859,9 +859,11 @@ body::before {
       </div>
       <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;margin-bottom:8px;">// escenario</div>
       <div class="scenario-tabs">
-        <button class="sc-tab active" onclick="selectSc(0,this)">phishing + ransomware</button>
-        <button class="sc-tab" onclick="selectSc(1,this)">credenciales robadas</button>
-        <button class="sc-tab" onclick="selectSc(2,this)">malware interno</button>
+        <button class="sc-tab active" onclick="selectSc(0,this)">smishing bancario</button>
+        <button class="sc-tab" onclick="selectSc(1,this)">deepfake CEO</button>
+        <button class="sc-tab" onclick="selectSc(2,this)">phishing + ransomware</button>
+        <button class="sc-tab" onclick="selectSc(3,this)">credenciales robadas</button>
+        <button class="sc-tab" onclick="selectSc(4,this)">malware interno</button>
       </div>
       <div class="breach-controls">
         <button class="btn-breach bb-start" id="bStartBtn" onclick="startBreach()">▶ iniciar simulación</button>
@@ -1343,26 +1345,20 @@ function copyPw() {
 
 // ── BREACH ───────────────────────────────────────────────────
 const SCENARIOS = [
-  {name:'smishing → fraude bancario', events:[
-    {t:0, txt:'Empleada recibe SMS: "Banco Estado: cargo no autorizado de $340.000. Cancela aquí: [enlace]"', tp:'warn'},
-    {t:1, txt:'Hace clic en el enlace — página idéntica al banco pero en dominio falso', tp:'crit'},
-    {t:2, txt:'Ingresa RUT, clave internet y segundo factor (tarjeta coordenadas)', tp:'crit'},
-    {t:3, txt:'Atacante captura credenciales en tiempo real y accede al banco legítimo', tp:'crit'},
-    {t:4, txt:'Transferencia de $4.800.000 a cuenta mula en menos de 3 minutos', tp:'crit'},
-    {t:5, txt:'El banco bloquea la cuenta — pero el dinero ya salió hacia cuenta intermedia', tp:'warn'},
-    {t:6, txt:'La empleada llama al banco real. La cuenta mula ya está vacía.', tp:'info'},
-    {t:7, txt:'Lección: los bancos nunca envían SMS con enlaces. Llama siempre al número del reverso de la tarjeta.', tp:'ok'},
-  ], protect:['Nunca hacer clic en enlaces de SMS bancarios','Verificar siempre en la app oficial o llamando al número oficial','Activar notificaciones de transacciones en tiempo real','Habilitar límites de transferencia y doble confirmación']},
-  {name:'deepfake CEO → transferencia', events:[
-    {t:0, txt:'Contador recibe videollamada de Teams del "Director General" — imagen y voz perfectas', tp:'info'},
-    {t:1, txt:'El "CEO" pide transferencia urgente de $18M CLP a proveedor nuevo antes de las 16:00', tp:'warn'},
-    {t:2, txt:'El contador intenta verificar pero el "CEO" dice que no hay tiempo y que el CFO ya aprobó', tp:'warn'},
-    {t:3, txt:'Contador realiza la transferencia sin verificar por canal separado', tp:'crit'},
-    {t:4, txt:'A las 17:00, el CEO real llama preguntando por la reunión de mañana', tp:'crit'},
-    {t:5, txt:'El contador confirma que la llamada de las 14:00 fue un deepfake generado por IA', tp:'crit'},
-    {t:6, txt:'El dinero ya fue movido a través de tres cuentas mula internacionales', tp:'crit'},
-    {t:7, txt:'Lección: toda transferencia significativa requiere verificación por canal alternativo, sin excepciones.', tp:'ok'},
-  ], protect:['Protocolo de verificación obligatoria para transferencias sobre cierto monto','Llamar al móvil del ejecutivo para confirmar — no responder por el mismo canal','Nunca realizar transferencias urgentes sin doble aprobación','Formación específica en detección de deepfakes para el equipo financiero']},
+  {name:'smishing → fraude bancario', currency:'CLP', events:[
+    {h:'Min 0', title:'SMS de banco falso recibido', desc:'Empleada recibe SMS: "Banco Estado: cargo no autorizado de $340.000. Cancela aquí: [enlace]". El número parece oficial.', impact:'La empleada hace clic en el enlace — página idéntica al banco real pero en dominio falso.', cost:0},
+    {h:'Min 2', title:'credenciales capturadas', desc:'La empleada ingresa RUT, clave internet y tarjeta de coordenadas en el sitio falso.', impact:'El atacante captura las credenciales en tiempo real y las usa simultáneamente en el banco legítimo.', cost:0},
+    {h:'Min 5', title:'transferencia ejecutada', desc:'Desde la sesión real del banco, el atacante realiza una transferencia de $4.800.000 a una cuenta mula.', impact:'Transacción completada. El dinero sale hacia cuenta intermedia antes de que el banco pueda bloquearla.', cost:4800000},
+    {h:'Min 15', title:'cuenta bloqueada', desc:'El banco detecta actividad inusual y bloquea la cuenta. La empleada intenta llamar al banco.', impact:'El bloqueo llega tarde. El dinero ya fue movido a una segunda cuenta mula.', cost:0},
+    {h:'H+1', title:'denuncia y investigación', desc:'La empleada denuncia en el banco y en la PDI. Se inicia investigación de la cuenta mula.', impact:'La cuenta mula ya está vacía. Recuperación del dinero: improbable.', cost:0},
+  ]},
+  {name:'deepfake CEO → transferencia', currency:'CLP', events:[
+    {h:'14:00', title:'videollamada deepfake del CEO', desc:'El contador recibe videollamada de Teams del "Director General". Imagen y voz perfectamente realistas. Pide transferencia urgente de $18M CLP a proveedor nuevo antes de las 16:00.', impact:'El contador intenta verificar pero el "CEO" insiste: no hay tiempo, el CFO ya aprobó.', cost:0},
+    {h:'14:20', title:'transferencia ejecutada sin verificar', desc:'El contador realiza la transferencia sin llamar al CEO por canal separado. Confía en lo que vio y escuchó.', impact:'$18.000.000 CLP transferidos a cuenta de proveedor desconocido.', cost:18000000},
+    {h:'17:00', title:'el CEO real llama', desc:'El CEO real contacta al contador preguntando por la reunión de mañana. No sabe nada de ninguna transferencia.', impact:'El equipo confirma que la videollamada de las 14:00 fue generada por IA.', cost:0},
+    {h:'17:30', title:'investigación de la transferencia', desc:'El banco es contactado para detener la transferencia. Ya fue procesada y enviada al exterior.', impact:'El dinero pasó por tres cuentas mula internacionales. Indetectable.', cost:0},
+    {h:'H+24', title:'denuncia y crisis interna', desc:'Se denuncia ante la PDI y SBIF. Se contrata equipo forense. Se notifica a directorio.', impact:'Costo total: $18M perdidos + costos legales + daño reputacional con directorio.', cost:5000000},
+  ]},
   {name:'phishing + ransomware', events:[
     {h:'H+0', title:'email de phishing recibido', desc:'Un empleado del área financiera recibe un email que suplanta a un proveedor habitual. El adjunto contiene una macro maliciosa.', impact:'El empleado abre el adjunto. La macro se ejecuta silenciosamente en segundo plano.', cost:0},
     {h:'H+1', title:'malware instalado — RAT activo', desc:'El malware establece comunicación con el servidor C2 del atacante. El equipo parece funcionar con normalidad. Nadie lo sabe aún.', impact:'El atacante tiene acceso remoto completo. Ve la pantalla, lee el teclado, navega la red.', cost:0},
@@ -1392,16 +1388,29 @@ let selSc = 0, bRunning = false, bStep = 0, bTimer = null;
 function selectSc(i, btn) { selSc = i; document.querySelectorAll('.sc-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); resetBreach(); }
 function renderBreachTL() {
   const s = SCENARIOS[selSc];
-  document.getElementById('bTimeline').innerHTML = s.events.map((e,i) => `
+  document.getElementById('bTimeline').innerHTML = s.events.map((e,i) => {
+    const hour = e.h || '';
+    const title = e.title || '';
+    const desc = e.desc || '';
+    const impact = e.impact || '';
+    const cost = e.cost || 0;
+    const costLabel = s.currency === 'CLP'
+      ? `impacto estimado: $${cost.toLocaleString('es')} CLP`
+      : `coste acumulado estimado: +${cost.toLocaleString('es')}€`;
+    const impactHtml = cost > 0
+      ? `<div class="tl-impact" id="bI${i}">${costLabel}</div>`
+      : `<div class="tl-impact" id="bI${i}">${impact}</div>`;
+    return `
     <div class="tl-item">
       <div class="tl-dot" id="bD${i}"></div>
       <div class="tl-card" id="bC${i}">
-        <div class="tl-hour">${e.h}</div>
-        <div class="tl-title">${e.title}</div>
-        <div class="tl-desc">${e.desc}</div>
-        ${e.cost > 0 ? `<div class="tl-impact" id="bI${i}">coste acumulado estimado: +${e.cost.toLocaleString('es')}€</div>` : `<div class="tl-impact" id="bI${i}">${e.impact}</div>`}
+        <div class="tl-hour">${hour}</div>
+        <div class="tl-title">${title}</div>
+        <div class="tl-desc">${desc}</div>
+        ${impactHtml}
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
   document.getElementById('bStats').style.display = 'none';
 }
 function startBreach() {
@@ -1427,8 +1436,8 @@ function showBreachResult() {
   bs.innerHTML = `
     <div class="bstat"><div class="bstat-n">${s.events.length}</div><div class="bstat-l">fases del ataque</div></div>
     <div class="bstat"><div class="bstat-n">${s.events.filter(e=>e.cost>0).length}</div><div class="bstat-l">con impacto económico</div></div>
-    <div class="bstat"><div class="bstat-n">${(totalCost/1000).toFixed(0)}K€</div><div class="bstat-l">coste estimado total</div></div>
-    <div class="bstat"><div class="bstat-n" style="color:var(--green)">0€</div><div class="bstat-l">si hubiera MFA + EDR + backups</div></div>`;
+    <div class="bstat"><div class="bstat-n">${s.currency==='CLP' ? '$'+(totalCost/1000000).toFixed(1)+'M CLP' : (totalCost/1000).toFixed(0)+'K€'}</div><div class="bstat-l">impacto estimado total</div></div>
+    <div class="bstat"><div class="bstat-n" style="color:var(--green)">${s.currency==='CLP' ? '$0' : '0€'}</div><div class="bstat-l">con controles preventivos</div></div>`;
   bs.scrollIntoView({behavior:'smooth',block:'nearest'});
   document.getElementById('bStartBtn').textContent = '✓ completado'; bRunning = false;
 }
