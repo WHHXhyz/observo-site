@@ -132,7 +132,7 @@ nav{
   position:relative;min-height:100vh;
   display:grid;grid-template-columns:1fr 1fr;
   align-items:center;
-  padding:6rem 3rem 4rem;
+  padding:5rem 3rem 3rem;
   overflow:hidden;
   z-index:1;
 }
@@ -155,7 +155,7 @@ nav{
 .glitch{
   position:relative;
   font-family:var(--font-display);
-  font-size:clamp(4rem,9vw,9rem);
+  font-size:clamp(3rem,7vw,7.5rem);
   line-height:0.9;
   color:var(--text);
   letter-spacing:0.02em;
@@ -354,7 +354,7 @@ nav{
   border-bottom:1px solid var(--border);
 }
 .stat-cell{
-  padding:2.5rem 2rem;
+  padding:2rem 1.5rem;
   border-right:1px solid var(--border);
   position:relative;overflow:hidden;
 }
@@ -366,7 +366,7 @@ nav{
 }
 .stat-cell:hover::before{transform:scaleX(1);}
 .stat-n{
-  font-family:var(--font-display);font-size:3.5rem;
+  font-family:var(--font-display);font-size:3rem;
   color:var(--green);line-height:1;
   display:block;margin-bottom:0.25rem;
 }
@@ -375,7 +375,7 @@ nav{
 /* THREATS GRID */
 .threats-section{
   position:relative;z-index:1;
-  padding:6rem 3rem;
+  padding:5rem 3rem;
   background:var(--bg2);
   border-top:1px solid var(--border);
 }
@@ -392,7 +392,7 @@ nav{
 }
 .section-h{
   font-family:var(--font-display);
-  font-size:clamp(2.5rem,5vw,5rem);
+  font-size:clamp(2rem,4vw,3.5rem);
   line-height:1;letter-spacing:0.02em;
   margin-bottom:1rem;
 }
@@ -407,7 +407,7 @@ nav{
 
 .tcard{
   background:var(--surface);
-  padding:2.5rem 2rem;
+  padding:2rem 1.5rem;
   position:relative;overflow:hidden;
   transition:background 0.3s;
 }
@@ -450,7 +450,7 @@ nav{
 /* PRINCIPLES — DIAGONAL LAYOUT */
 .principles-section{
   position:relative;z-index:1;
-  padding:6rem 3rem;
+  padding:5rem 3rem;
   overflow:hidden;
 }
 .principles-section::before{
@@ -495,7 +495,7 @@ nav{
 /* TERMINAL */
 .terminal-section{
   position:relative;z-index:1;
-  padding:6rem 3rem;
+  padding:5rem 3rem;
   background:var(--bg2);
   border-top:1px solid var(--border);
   border-bottom:1px solid var(--border);
@@ -553,7 +553,7 @@ nav{
 /* CHECKLIST */
 .checklist-section{
   position:relative;z-index:1;
-  padding:6rem 3rem;
+  padding:5rem 3rem;
 }
 .checklist-cols{
   display:grid;
@@ -600,7 +600,7 @@ nav{
 /* FINAL CTA */
 .cta-final{
   position:relative;z-index:1;
-  padding:8rem 3rem;text-align:center;
+  padding:6rem 3rem;text-align:center;
   overflow:hidden;
   background:var(--bg2);
   border-top:1px solid var(--border);
@@ -623,7 +623,7 @@ nav{
 }
 .cta-h{
   font-family:var(--font-display);
-  font-size:clamp(3rem,8vw,7rem);
+  font-size:clamp(2.5rem,6vw,5.5rem);
   line-height:0.95;letter-spacing:0.02em;
   margin-bottom:1.5rem;
 }
@@ -649,8 +649,14 @@ footer a:hover{color:var(--green);}
 }
 .reveal.visible{opacity:1;transform:none;}
 
+@media(max-width:1100px){
+  .hero{padding:6rem 2rem 3rem;}
+  .threats-section,.principles-section,.terminal-section,.checklist-section,.cta-final{padding:5rem 2rem;}
+  .stat-n{font-size:2.8rem;}
+}
 @media(max-width:900px){
-  .hero{grid-template-columns:1fr;gap:3rem;padding:6rem 1.5rem 4rem;}
+  html{font-size:14px;}
+  .hero{grid-template-columns:1fr;gap:2rem;padding:5rem 1.5rem 3rem;}
   .threat-monitor{display:none;}
   .stats-bar{grid-template-columns:1fr 1fr;}
   .threats-grid{grid-template-columns:1fr;}
@@ -658,14 +664,36 @@ footer a:hover{color:var(--green);}
   .checklist-cols{grid-template-columns:1fr;}
   .principles-grid{grid-template-columns:1fr;}
   nav{padding:0 1.5rem;}
+  .nav-links{gap:1.5rem;}
+  .nav-links a{font-size:0.6rem;}
+  section,
+  .threats-section,
+  .principles-section,
+  .terminal-section,
+  .checklist-section,
+  .cta-final{padding:3.5rem 1.5rem;}
+  footer{flex-direction:column;gap:0.75rem;text-align:center;}
+  .stat-n{font-size:2.5rem;}
+  .stat-cell{padding:1.75rem 1.25rem;}
+}
+@media(max-width:600px){
+  html{font-size:13px;}
+  .hero{padding:4.5rem 1.25rem 2.5rem;}
+  .stats-bar{grid-template-columns:1fr 1fr;}
+  .stat-cell{padding:1.25rem 1rem;}
+  .stat-n{font-size:2rem;}
+  nav{padding:0 1.25rem;}
   .nav-links{display:none;}
   section,
   .threats-section,
   .principles-section,
   .terminal-section,
   .checklist-section,
-  .cta-final{padding:4rem 1.5rem;}
-  footer{flex-direction:column;gap:0.75rem;text-align:center;}
+  .cta-final{padding:2.5rem 1.25rem;}
+  .term-body{padding:1.25rem;font-size:0.72rem;}
+  .tcard{padding:1.75rem 1.25rem;}
+  .pcard{padding:1.75rem 1.25rem;}
+  footer{padding:1.5rem 1.25rem;}
 }
 </style>
 </head>
