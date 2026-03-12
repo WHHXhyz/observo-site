@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Aegis8 — Contáctanos</title>
   <meta name="description" content="Escríbenos y armamos el primer paso. Sin datos sensibles, sin humo."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -267,10 +267,8 @@ footer a:hover{color:var(--green);}
 /* ─── PAGE HERO ───────────────────────────────────────────────── */
 .page-hero{
   position:relative;
-  padding:6rem 3rem 5rem;
-  min-height:50vh;
+  padding:80px 0 60px;
   display:flex;align-items:center;
-  overflow:hidden;
   z-index:1;
   border-bottom:1px solid var(--border);
 }
@@ -302,9 +300,10 @@ footer a:hover{color:var(--green);}
 
 .page-hero-inner{
   position:relative;z-index:2;
-  display:grid;grid-template-columns:1fr 480px;
-  gap:5rem;align-items:center;
-  width:100%;max-width:1400px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 440px;
+  gap:3rem;align-items:start;
+  width:100%;max-width:1080px;margin:0 auto;
+  padding:0 3rem;
 }
 
 .hero-eyebrow{
@@ -317,7 +316,7 @@ footer a:hover{color:var(--green);}
 
 .page-h1{
   font-family:var(--font-display);
-  font-size:clamp(4rem,8vw,8rem);
+  font-size:clamp(2rem,4vw,4rem);
   line-height:0.9;letter-spacing:0.02em;
   margin-bottom:1.5rem;
 }
@@ -374,7 +373,7 @@ footer a:hover{color:var(--green);}
 /* ─── CONTACT SECTION ─────────────────────────────────────────── */
 .contact-section{
   position:relative;z-index:1;
-  padding:6rem 3rem;
+  padding:5rem 0;
   background:var(--bg2);
   border-top:1px solid var(--border);
 }
@@ -636,16 +635,21 @@ footer a:hover{color:var(--green);}
 }
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
-@media(max-width:900px){
-  .page-hero-inner{grid-template-columns:1fr;}
-  .rules-panel{display:none;}
-  .contact-grid{grid-template-columns:1fr;}
-  nav{padding:0 1.5rem;}
+@media(max-width:768px){
+  nav{padding:0 20px;}
   .nav-links{display:none;}
-  .page-hero,.contact-section{padding:4rem 1.5rem;}
-  .form-body{padding:1.5rem;}
+  .nav-status{display:none;}
+  .page-hero{padding:70px 0 40px;}
+  .page-hero-inner{grid-template-columns:1fr;gap:2rem;padding:0 20px;}
+  .page-h1{font-size:clamp(1.8rem,7vw,3rem);}
+  .hero-sub{font-size:0.88rem;}
+  .contact-section{padding:3rem 0;}
+  .contact-section > div{padding:0 20px!important;}
+  .contact-grid{grid-template-columns:1fr;}
+  .rules-panel{display:none;}
+  .form-body{padding:1.25rem;}
   .field-row{grid-template-columns:1fr;}
-  footer{flex-direction:column;gap:0.75rem;text-align:center;}
+  footer{flex-direction:column;gap:0.75rem;text-align:center;padding:1.75rem 20px;}
 }
   </style>
   <script src="https://www.google.com/recaptcha/api.js?render=6LcaDocsAAAAAKooAzny0RrX53G4R0eWlihi2axK"></script>
@@ -666,6 +670,7 @@ footer a:hover{color:var(--green);}
     <li><a href="index.html#amenazas">Amenazas</a></li>
     <li><a href="index.html#principios">Principios</a></li>
     <li><a href="index.html#checklist">Checklist</a></li>
+    <li><a href="/formacion.html" style="color:var(--green);border:1px solid rgba(0,255,136,0.25);padding:0.3rem 0.8rem;">Formación →</a></li>
     <li><a href="contactos.html" class="active">Contacto</a></li>
   </ul>
   <div class="nav-status">
@@ -749,6 +754,7 @@ footer a:hover{color:var(--green);}
 
 <!-- CONTACT SECTION -->
 <section class="contact-section" id="contacto">
+  <div style="max-width:1080px;margin:0 auto;padding:0 3rem;width:100%;">
   <div class="section-header reveal">
     <div class="section-label">Formulario de contacto</div>
     <h2 class="section-h">CUÉNTANOS<br/><span style="color:var(--green)">TU CASO</span></h2>
@@ -924,7 +930,7 @@ footer a:hover{color:var(--green);}
       </div>
 
     </div>
-  </div>
+  </div><!-- /contact-wrap -->
 </section>
 
 <!-- FOOTER — identical to index -->
