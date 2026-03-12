@@ -745,30 +745,21 @@ footer a:hover{color:var(--green);}
 
     <p class="hero-sub">
       Probablemente no lo sabías. Si tienes un negocio online, hay una alta probabilidad de que tu web esté expuesta ahora mismo. <strong>No porque seas descuidado</strong> — sino porque nadie te lo explicó.<br/><br/>
-      Aegis8 lo revisa, lo encuentra y lo corrige. Sin tecnicismos. Sin drama.
+      Somos una startup que nació para proteger startups y personas. Revisamos, encontramos y cerramos vulnerabilidades — sin contratos, sin jerga, sin drama.
     </p>
 
     <div class="cta-group">
       <a href="https://aegis8.org/contactos.html" class="btn-main">Quiero que lo revisen →</a>
       <a href="/formacion.html" class="btn-out">Ponlo a prueba gratis</a>
     </div>
-    <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
-      <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.6rem;">// funciona con</div>
-      <div style="display:flex;gap:0;flex-wrap:wrap;">
-        <span style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted);padding:0.3rem 0.8rem;border:1px solid var(--border2);border-right:none;">WordPress</span>
-        <span style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted);padding:0.3rem 0.8rem;border:1px solid var(--border2);border-right:none;">Shopify</span>
-        <span style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted);padding:0.3rem 0.8rem;border:1px solid var(--border2);border-right:none;">Wix</span>
-        <span style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted);padding:0.3rem 0.8rem;border:1px solid var(--border2);border-right:none;">Squarespace</span>
-        <span style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted);padding:0.3rem 0.8rem;border:1px solid var(--border2);">webs a medida</span>
-      </div>
-    </div>
+
   </div>
 
   <!-- THREAT MONITOR -->
   <div class="threat-monitor">
     <div class="monitor-header">
-      <span class="monitor-title">// Monitor de amenazas activas</span>
-      <span class="monitor-live"><span class="monitor-live-dot"></span>EN VIVO</span>
+      <span class="monitor-title">// Chile bajo ataque · en cifras</span>
+      <span class="monitor-live">2024</span>
     </div>
     <div class="monitor-body">
       <div class="threat-row">
@@ -805,8 +796,9 @@ footer a:hover{color:var(--green);}
 
     <div style="padding:0 1.25rem 1.25rem;">
       <div class="threat-counter">
-        <span class="counter-label">Amenazas detectadas hoy</span>
-        <span class="counter-num" id="counter">0</span>
+        <span class="counter-label">intentos de ataque en Chile · 1er semestre 2025</span>
+        <span class="counter-num" id="counter">+15.000M</span>
+        <div style="font-family:var(--font-mono);font-size:0.5rem;color:var(--muted);margin-top:0.4rem;letter-spacing:0.08em;">Fuente: FortiGuard Labs · Fortinet</div>
       </div>
       <div class="scan-bar-wrap"><div class="scan-bar"></div></div>
     </div>
@@ -1147,16 +1139,8 @@ function drawParticles(){
 }
 drawParticles();
 
-// COUNTER ANIMATION
-const counterEl=document.getElementById('counter');
-if(counterEl){
-  let n=0,target=247;
-  const interval=setInterval(()=>{
-    n+=Math.ceil((target-n)/8);
-    counterEl.textContent=n;
-    if(n>=target){counterEl.textContent=target;clearInterval(interval);}
-  },40);
-}
+// COUNTER — static real data, no fake animation
+// Source: FortiGuard Labs Fortinet 2024
 
 // SCROLL REVEAL
 const observer=new IntersectionObserver(entries=>{
