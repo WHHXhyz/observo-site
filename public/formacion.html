@@ -737,6 +737,16 @@ body::before {
           <div class="mod-name">Políticas</div>
           <div class="mod-desc">Normas de seguridad que todo empleado debe conocer y aplicar.</div>
         </div>
+        <div class="mod-card" onclick="goTo('smishing',8)">
+          <div class="mod-icon">📱</div>
+          <div class="mod-name">Smishing</div>
+          <div class="mod-desc">Detecta SMS y mensajes de texto falsos.</div>
+        </div>
+        <div class="mod-card" onclick="goTo('deepfake',9)">
+          <div class="mod-icon">🎭</div>
+          <div class="mod-name">Deepfake</div>
+          <div class="mod-desc">Aprende a detectar audio y video generado por IA.</div>
+        </div>
         <div class="mod-card mod-soon">
           <div class="mod-icon">📊</div>
           <div class="mod-name">Dashboard</div>
@@ -791,6 +801,19 @@ body::before {
     </section>
 
     <!-- PASSWORD -->
+    <!-- SMISHING -->
+    <section id="smishing" class="section">
+      <div class="sec-label">simulador · smishing</div>
+      <div id="smishMsg" class="panel" style="max-width:480px;margin:0 auto 16px;"></div>
+      <div id="smishVerdict" style="display:none;" class="panel"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
+        <button class="ph-btn ph-safe" onclick="smishAns(false)">✓ es legítimo</button>
+        <button class="ph-btn ph-danger" onclick="smishAns(true)">⚠ es smishing</button>
+        <button class="ph-btn ph-report" onclick="smishAns('report')">↗ reportar y bloquear</button>
+      </div>
+      <button id="btnNsm" class="btn-ghost" style="display:none;margin-top:16px;" onclick="nextSmish()">siguiente mensaje →</button>
+    </section>
+
     <section id="password" class="section">
       <div class="sec-label">analizador · contraseñas</div>
       <div class="pw-wrap">
@@ -861,6 +884,18 @@ body::before {
       <div id="polContent"></div>
     </section>
 
+    <!-- DEEPFAKE -->
+    <section id="deepfake" class="section">
+      <div class="sec-label">simulador · deepfake y fraude por IA</div>
+      <div id="dfCard" class="panel" style="max-width:560px;margin:0 auto 16px;"></div>
+      <div id="dfVerdict" style="display:none;" class="panel"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
+        <button class="ph-btn ph-safe" onclick="dfAns(false)">✓ parece legítimo</button>
+        <button class="ph-btn ph-danger" onclick="dfAns(true)">⚠ podría ser deepfake/fraude</button>
+      </div>
+      <button id="btnNdf" class="btn-ghost" style="display:none;margin-top:16px;" onclick="nextDf()">siguiente escenario →</button>
+    </section>
+
     <!-- CTA FINAL -->
     <section id="cta-final" style="padding:3rem 2rem;border-top:1px solid rgba(0,255,136,0.12);background:rgba(0,255,136,0.02);text-align:center;">
       <div style="max-width:560px;margin:0 auto;">
@@ -881,7 +916,7 @@ body::before {
 
     <!-- FOOTER -->
     <footer class="footer">
-      <span>© 2025 <a href="https://aegis8.org">aegis8</a> · consultora de ciberseguridad</span>
+      <span>© 2026 <a href="https://aegis8.org">aegis8</a> · consultora de ciberseguridad</span>
       <span>formación interactiva · <a href="/propuesta.html">propuesta →</a> · <a href="https://aegis8.org/contactos.html">contacto →</a></span>
     </footer>
 
@@ -902,6 +937,8 @@ body::before {
     <div class="md-item" onclick="goTo('password',5);closeMore()"><span class="md-icon">🔐</span><span>contraseñas</span></div>
     <div class="md-item" onclick="goTo('breach',6);closeMore()"><span class="md-icon">💥</span><span>si me hackean</span></div>
     <div class="md-item" onclick="goTo('policies',7);closeMore()"><span class="md-icon">📋</span><span>políticas</span></div>
+    <div class="md-item" onclick="goTo('smishing',8);closeMore()"><span class="md-icon">📱</span><span>smishing</span></div>
+    <div class="md-item" onclick="goTo('deepfake',9);closeMore()"><span class="md-icon">🎭</span><span>deepfake</span></div>
   </div>
 </div><!-- /shell -->
 
@@ -940,18 +977,103 @@ window.addEventListener('load', () => {
 });
 
 // ── QUIZ ─────────────────────────────────────────────────────
-const Q = [
+const QBANK = [
+  // CONTRASEÑAS (6)
   {cat:'contraseñas', q:'¿Cuál es la contraseña más segura?', opts:['Empresa2024','P@ssw0rd!','7hK#mQ2!vLpN9x','contraseña123'], c:2, fb:'Una contraseña segura combina mayúsculas, minúsculas, números y símbolos con 12+ caracteres aleatorios. Evita palabras del diccionario o nombres de empresa.'},
+  {cat:'contraseñas', q:'¿Con qué frecuencia debes cambiar tu contraseña si sospechas que fue comprometida?', opts:['En el próximo ciclo mensual','Inmediatamente y avisar a IT','Solo si notas actividad rara','No es necesario si tienes antivirus'], c:1, fb:'Ante sospecha de compromiso, el cambio debe ser inmediato. Cada minuto de espera es tiempo que el atacante puede usar para moverse lateralmente.'},
+  {cat:'contraseñas', q:'¿Qué es un gestor de contraseñas?', opts:['Un cuaderno donde anotar contraseñas','Software que genera y almacena contraseñas cifradas','Un sistema que usa la misma contraseña en todo','Una app que cambia tu contraseña automáticamente'], c:1, fb:'Un gestor como Bitwarden o 1Password genera contraseñas únicas y largas para cada servicio. Solo necesitas recordar una contraseña maestra.'},
+  {cat:'contraseñas', q:'Tienes la misma contraseña en tu email y en tu banco. ¿Cuál es el riesgo principal?', opts:['Ninguno si es una contraseña fuerte','Si una se filtra, la otra también queda expuesta','Solo si usas WiFi público','El riesgo es bajo si cambias cada 90 días'], c:1, fb:'La reutilización es uno de los vectores más explotados. Las credenciales filtradas se prueban automáticamente en miles de servicios (credential stuffing).'},
+  {cat:'contraseñas', q:'¿Qué longitud mínima se recomienda para una contraseña corporativa?', opts:['6 caracteres','8 caracteres','12 caracteres','4 caracteres con símbolo'], c:2, fb:'El estándar actual es 12+ caracteres. Con hardware moderno, una contraseña de 8 caracteres puede romperse por fuerza bruta en horas.'},
+  {cat:'contraseñas', q:'Un compañero te pide tu contraseña para acceder a un archivo mientras estás de vacaciones. ¿Qué haces?', opts:['Se la das si es de confianza','Rechazas y le pides que solicite acceso oficial','Se la mandas cifrada por WhatsApp','Se la das solo si es urgente'], c:1, fb:'Nunca compartas credenciales, ni con compañeros de confianza. El protocolo correcto es solicitar acceso temporal a través de IT o el responsable.'},
+
+  // PHISHING (7)
   {cat:'phishing', q:'Recibes un email urgente de "soporte@micr0soft-support.net" pidiendo tus credenciales. ¿Qué haces?', opts:['Haces clic para verificar tu cuenta','Ignoras y eliminas el correo','Reportas a IT antes de eliminar','Respondes confirmando tu identidad'], c:2, fb:'Reportar a IT preserva evidencia forense valiosa. El dominio "micr0soft" (con cero) es suplantación clásica. Microsoft nunca pide credenciales por email.'},
-  {cat:'wifi', q:'En un aeropuerto necesitas acceder al ERP de la empresa. ¿Qué haces?', opts:['WiFi del aeropuerto directamente','Datos móviles del teléfono','WiFi del aeropuerto con VPN corporativa','Esperar a llegar a la oficina'], c:2, fb:'La VPN cifra todo el tráfico incluso en redes públicas no seguras. Nunca accedas a sistemas sensibles sin VPN desde WiFi público.'},
-  {cat:'ingeniería social', q:'Alguien llama afirmando ser de IT y pide tu contraseña para "actualizar tu cuenta". ¿Qué haces?', opts:['La das si parece urgente','Pides su nombre y cuelgas','Niegas tener contraseña','Te niegas y reportas la llamada'], c:3, fb:'IT legítimo NUNCA pedirá tu contraseña por teléfono o email. Es vishing (phishing por voz). Reporta siempre estas llamadas.'},
+  {cat:'phishing', q:'¿Cuál es la señal más fiable de que un email es phishing?', opts:['Tiene faltas de ortografía','El remitente usa un dominio ligeramente diferente al legítimo','Llegó fuera del horario laboral','Pide que respondas con información'], c:1, fb:'El typosquatting (dominios falsos parecidos) es la técnica más usada. "paypa1.com" o "arnazon.com" engañan a miles de personas al día.'},
+  {cat:'phishing', q:'Recibes un enlace de un colega por Slack. Al pasar el mouse por encima, la URL no coincide con lo que dice el texto. ¿Qué haces?', opts:['Lo abres igual porque confías en tu colega','No lo abres y le preguntas por otro canal si lo envió él','Lo abres en modo incógnito','Lo reenvías a otros para que lo verifiquen'], c:1, fb:'Las cuentas de compañeros también pueden ser comprometidas. Verificar por otro canal (llamada, otro chat) antes de abrir enlaces sospechosos es la práctica correcta.'},
+  {cat:'phishing', q:'Un email dice que ganaste un iPhone y solo necesitas pagar el envío. ¿Qué es?', opts:['Una oferta legítima de marketing','Phishing con gancho de recompensa (baiting)','Un error del sistema de premios','Spam inofensivo'], c:1, fb:'El baiting usa la promesa de recompensa para bajar la guardia. El objetivo es obtener datos de tarjeta o instalar malware al pagar el falso "envío".'},
+  {cat:'phishing', q:'¿Qué es el spear phishing?', opts:['Phishing masivo enviado a miles de personas','Ataque dirigido a una persona específica usando información real sobre ella','Phishing a través de SMS','Un tipo de malware que roba contraseñas'], c:1, fb:'El spear phishing usa datos reales (nombre, empresa, cargo, proyectos) para crear mensajes creíbles. Tiene tasas de éxito mucho mayores que el phishing masivo.'},
+  {cat:'phishing', q:'¿Qué significa que un sitio tenga HTTPS con candado verde?', opts:['Que el sitio es completamente seguro y legítimo','Que el tráfico está cifrado, pero no garantiza que el sitio sea legítimo','Que fue verificado por el gobierno','Que no puede robar datos'], c:1, fb:'HTTPS solo cifra la comunicación. Un sitio de phishing puede tener HTTPS perfectamente. El candado no significa que quien está al otro lado sea quien dice ser.'},
+  {cat:'phishing', q:'Tu jefe te manda un email muy urgente pidiendo que transfieras dinero a una cuenta nueva. ¿Qué haces?', opts:['Lo haces porque es tu jefe','Llamas a tu jefe por teléfono para confirmar antes de hacer nada','Le respondes el email pidiendo confirmación','Lo haces y luego avisas a contabilidad'], c:1, fb:'El "fraude del CEO" (BEC - Business Email Compromise) es uno de los ataques más rentables. Siempre confirma transferencias urgentes por voz, nunca solo por email.'},
+
+  // SMISHING (5)
+  {cat:'smishing', q:'Recibes un SMS de "Banco Santander" con un enlace para desbloquear tu cuenta. ¿Qué haces?', opts:['Haces clic para evitar que bloqueen tu cuenta','Llamas al número oficial del banco en su web','Respondes el SMS pidiendo más información','Lo ignoras y esperas que se resuelva solo'], c:1, fb:'Los bancos nunca envían SMS con enlaces para gestionar cuentas. Llama siempre al número que está en tu tarjeta o en la web oficial, nunca uses el del SMS.'},
+  {cat:'smishing', q:'¿Qué es el smishing?', opts:['Phishing a través de llamadas telefónicas','Phishing a través de SMS o mensajes de texto','Malware que infecta smartphones','Robo de datos por Bluetooth'], c:1, fb:'Smishing = SMS + phishing. Es especialmente efectivo porque la gente baja la guardia con SMS y los mensajes se ven en pantallas pequeñas donde es difícil verificar URLs.'},
+  {cat:'smishing', q:'Recibes un SMS que dice: "Tu paquete está retenido. Paga 1.200 pesos de aduana aquí: [enlace]". ¿Qué haces?', opts:['Pagas porque es una cantidad pequeña','Entras al enlace para ver si es real','Buscas el número de seguimiento en la web oficial del courier','Llamas al número del SMS'], c:2, fb:'El smishing de paquetes es uno de los más comunes. Siempre verifica directamente en el sitio oficial del courier usando el número de seguimiento que tienes.'},
+  {cat:'smishing', q:'Un SMS dice que ganaste un sorteo y pide tus datos bancarios para depositar el premio. ¿Qué haces?', opts:['Proporcionas los datos porque ganaste legítimamente','No proporcionas nada — es una estafa clásica','Preguntas más detalles antes de dar datos','Das solo el número de cuenta, no el CVV'], c:1, fb:'Ningún sorteo legítimo pide datos bancarios por SMS. Para depositar un premio, una empresa legítima solo necesita tus datos fiscales básicos, nunca datos de tarjeta.'},
+  {cat:'smishing', q:'¿Cuál es la principal diferencia entre detectar phishing por email vs smishing por SMS?', opts:['No hay diferencia','En SMS no puedes ver la URL completa antes de hacer clic','Los SMS siempre son más peligrosos','El email es más fácil de falsificar'], c:1, fb:'En SMS, las URLs aparecen acortadas y en pantallas pequeñas. Es mucho más difícil verificar el dominio real. Por eso el smishing tiene tasas de clic más altas que el email.'},
+
+  // DEEPFAKE / IA (5)
+  {cat:'deepfake', q:'Recibes una videollamada de tu CEO pidiendo una transferencia urgente. La imagen y voz parecen perfectamente reales. ¿Qué haces?', opts:['Realizas la transferencia — es tu CEO','Cuelgas y llamas al CEO por su número habitual para verificar','Pides que te mande el mismo pedido por email','Le preguntas datos que solo él sabría'], c:1, fb:'Los deepfakes de voz y video son hoy una realidad. En 2024 una empresa perdió 25M USD por una videollamada deepfake. El protocolo: siempre verificar transferencias por canal separado.'},
+  {cat:'deepfake', q:'¿Qué es un deepfake de voz?', opts:['Una grabación editada con efectos de sonido','Audio generado por IA que imita la voz de una persona real','Una llamada con mala calidad de audio','Un tipo de malware que graba conversaciones'], c:1, fb:'Con solo unos segundos de audio real, la IA puede clonar una voz. Se usa en ataques de ingeniería social para suplantar a directivos, familiares o colegas por teléfono.'},
+  {cat:'deepfake', q:'Tu familia te manda un audio de WhatsApp que suena exactamente como tu voz, pidiendo dinero urgente. ¿Qué haces?', opts:['Mandas el dinero porque reconoces la voz','Llamas directamente a esa persona para verificar','Le mandas un mensaje escrito preguntando','Ignoras el mensaje'], c:1, fb:'El clonado de voz se usa en estafas familiares. Los atacantes usan audios de redes sociales para clonar voces. Siempre llama directamente a la persona por su número.'},
+  {cat:'deepfake', q:'¿Qué señales pueden indicar que un video es un deepfake?', opts:['Parpadeo extraño o inconsistente, bordes del rostro borrosos, sincronía labial imperfecta','Solo los videos de baja resolución pueden ser deepfakes','Si el video tiene buena calidad no puede ser falso','Los deepfakes siempre tienen un sello de agua visible'], c:0, fb:'Aunque la tecnología mejora constantemente, los deepfakes actuales aún pueden mostrar artefactos en el parpadeo, los bordes del pelo o la sincronía labial. La verificación por otro canal es más fiable que intentar detectarlos visualmente.'},
+  {cat:'deepfake', q:'Una IA generó un comunicado de prensa falso de tu empresa y lo publicó online. ¿Qué riesgo representa?', opts:['Ninguno si el sitio no es conocido','Puede dañar la reputación y provocar acciones de clientes o inversores basadas en información falsa','Solo es un problema legal','Es fácil de desmentir y no tiene impacto real'], c:1, fb:'La desinformación generada por IA afecta reputación, precio de acciones y confianza de clientes. Las empresas necesitan protocolos de comunicación oficial verificables y monitoreo de menciones.'},
+
+  // WIFI Y REDES (4)
+  {cat:'redes', q:'En un aeropuerto necesitas acceder al ERP de la empresa. ¿Qué haces?', opts:['WiFi del aeropuerto directamente','Datos móviles del teléfono','WiFi del aeropuerto con VPN corporativa','Esperar a llegar a la oficina'], c:2, fb:'La VPN cifra todo el tráfico incluso en redes públicas no seguras. Nunca accedas a sistemas sensibles sin VPN desde WiFi público.'},
+  {cat:'redes', q:'¿Qué es un ataque "evil twin"?', opts:['Un malware que crea copias de tus archivos','Una red WiFi falsa con nombre idéntico a una legítima para interceptar tráfico','Un virus que duplica procesos del sistema','Un ataque de fuerza bruta a routers'], c:1, fb:'El "evil twin" crea una red WiFi con el mismo nombre que la del hotel, café o aeropuerto. Tu dispositivo se conecta automáticamente y el atacante intercepta todo el tráfico.'},
+  {cat:'redes', q:'¿Es seguro usar el WiFi de un hotel para revisar tu email corporativo sin VPN?', opts:['Sí, los hoteles tienen redes seguras','No, cualquier red pública puede ser interceptada','Sí, si usas HTTPS','Solo si el hotel tiene certificación de seguridad'], c:1, fb:'Las redes de hotel son frecuentemente objetivo de ataques. Incluso con HTTPS, un atacante puede realizar ataques de tipo MITM en redes que controla. Usa siempre VPN.'},
+  {cat:'redes', q:'Tu router doméstico sigue usando la contraseña por defecto del fabricante. ¿Cuál es el riesgo?', opts:['Ninguno si el ISP lo configuró','Es uno de los vectores más explotados — contraseñas default son públicas','Solo es un riesgo si tienes vecinos con conocimientos técnicos','El riesgo es bajo si tienes antivirus'], c:1, fb:'Las contraseñas por defecto de routers son públicas y están en bases de datos online. Cambiar la contraseña del router es una de las acciones más básicas y más ignoradas.'},
+
+  // DISPOSITIVOS Y FÍSICO (5)
   {cat:'dispositivos', q:'Encuentras un USB en el parking de la empresa. ¿Qué haces?', opts:['Lo conectas para ver el contenido','Lo llevas a IT para análisis','Lo tiras a la basura','Lo guardas por si alguien lo busca'], c:1, fb:'Los USB abandonados ("USB drop attack") son un ataque real documentado. Conectarlo puede instalar malware automáticamente. Entrega siempre a IT.'},
+  {cat:'dispositivos', q:'¿Con qué frecuencia debes bloquear tu equipo al alejarte?', opts:['Solo al final del día','Al ir a almorzar','Siempre, aunque sea 30 segundos','Solo en zonas con visitas externas'], c:2, fb:'Win+L o Cmd+Ctrl+Q bloquean en un segundo. Configura bloqueo automático a 5 minutos máximo. Un equipo sin bloquear es un vector de ataque.'},
+  {cat:'dispositivos', q:'¿Qué es el "shoulder surfing"?', opts:['Un tipo de ataque de red inalámbrica','Espiar la pantalla de alguien por encima del hombro para obtener información','Un malware que activa la cámara del portátil','Un ataque a dispositivos Bluetooth'], c:1, fb:'El shoulder surfing es bajo tech pero muy efectivo. En espacios públicos, trenes o cafés, siempre usa filtro de privacidad en tu pantalla o posiciona el equipo contra la pared.'},
+  {cat:'dispositivos', q:'Vas a desechar un disco duro antiguo con datos de clientes. ¿Qué haces?', opts:['Lo formateas y lo tiras','Lo rompes físicamente','Usas software de borrado seguro (mínimo 3 pasadas) o destrucción física certificada','Lo guardas en un cajón por si acaso'], c:2, fb:'El formateo normal NO borra los datos de forma segura — pueden recuperarse con herramientas básicas. El estándar es borrado de 3 pasadas (DoD 5220.22-M) o trituración física.'},
+  {cat:'dispositivos', q:'Tu portátil corporativo fue robado. ¿Cuál es el primer paso?', opts:['Comprar uno nuevo y reinstalar todo','Reportar a IT inmediatamente para revocar accesos y activar borrado remoto','Cambiar tus contraseñas personales','Esperar a ver si aparece'], c:1, fb:'El tiempo es crítico. IT debe revocar tokens, cerrar sesiones activas y activar borrado remoto antes de que el atacante acceda a los datos o la red corporativa.'},
+
+  // ACTUALIZACIONES Y VULNERABILIDADES (4)
   {cat:'actualizaciones', q:'El sistema muestra una actualización de seguridad crítica. ¿Cuándo la instalas?', opts:['La pospongo indefinidamente','En el siguiente ciclo mensual','En las próximas 24-48 horas','La ignoro si todo funciona bien'], c:2, fb:'El 60% de las brechas explotan vulnerabilidades para las que ya existía parche. Los críticos deben aplicarse en 24-48h máximo.'},
+  {cat:'actualizaciones', q:'¿Qué es un "zero-day"?', opts:['Una vulnerabilidad descubierta por los investigadores de seguridad','Una vulnerabilidad explotada antes de que exista un parche disponible','Un ataque que ocurre a medianoche','Un tipo de ransomware nuevo'], c:1, fb:'Los zero-days son especialmente peligrosos porque no hay defensa técnica inmediata. La mitigación es detección de comportamiento anómalo y segmentación de red.'},
+  {cat:'actualizaciones', q:'Tienes un plugin de WordPress que no usas pero está instalado. ¿Qué riesgo representa?', opts:['Ninguno si está desactivado','Puede contener vulnerabilidades explotables aunque esté inactivo','Solo es un riesgo si está activado','Solo importa si el plugin tiene acceso a la base de datos'], c:1, fb:'Los plugins desactivados pero instalados siguen siendo superficie de ataque. Sus archivos están accesibles y pueden tener vulnerabilidades conocidas. Desinstala todo lo que no uses.'},
+  {cat:'actualizaciones', q:'¿Qué es la gestión de vulnerabilidades?', opts:['Instalar antivirus en todos los equipos','Proceso continuo de identificar, priorizar y remediar debilidades en sistemas','Hacer backup semanal de los datos','Cambiar contraseñas cada 90 días'], c:1, fb:'La gestión de vulnerabilidades es un proceso continuo, no un evento puntual. Incluye escaneo regular, priorización por criticidad e impacto, y seguimiento de remediación.'},
+
+  // ACCESOS Y PERMISOS (5)
   {cat:'accesos', q:'Un compañero pide acceso a archivos confidenciales de clientes "para un proyecto". ¿Qué haces?', opts:['Se los envías por email','Compartes el enlace de la carpeta','Verificas con su responsable y sigues el protocolo','Acceso temporal sin avisar a nadie'], c:2, fb:'Principio de mínimo privilegio: verifica siempre la necesidad real. Toda solicitud debe seguir el protocolo formal, sin excepciones.'},
-  {cat:'bloqueo', q:'¿Con qué frecuencia debes bloquear tu equipo al alejarte?', opts:['Solo al final del día','Al ir a almorzar','Siempre, aunque sea 30 segundos','Solo en zonas con visitas externas'], c:2, fb:'Win+L o Cmd+Ctrl+Q bloquean en un segundo. Configura bloqueo automático a 5 minutos máximo. Un equipo sin bloquear es un vector de ataque.'},
+  {cat:'accesos', q:'¿Qué es el principio de mínimo privilegio?', opts:['Dar acceso completo a todos para maximizar productividad','Cada usuario solo tiene acceso a lo estrictamente necesario para su función','Rotar contraseñas cada 30 días','Usar el mismo usuario para todas las aplicaciones'], c:1, fb:'El mínimo privilegio limita el daño de una cuenta comprometida. Si un atacante obtiene acceso a una cuenta con privilegios limitados, su capacidad de moverse lateralmente es mínima.'},
+  {cat:'accesos', q:'Un empleado deja la empresa. ¿Cuándo deben desactivarse sus accesos?', opts:['En los próximos 30 días','En su último día laboral o antes','Cuando IT tenga tiempo','Solo si era de un departamento sensible'], c:1, fb:'Las cuentas de exempleados activas son uno de los vectores más frecuentes. La desactivación debe ser parte del proceso de offboarding, idealmente el mismo día de salida.'},
+  {cat:'accesos', q:'¿Qué es la autenticación multifactor (MFA)?', opts:['Usar contraseñas distintas en cada sistema','Verificar identidad con algo que sabes + algo que tienes o eres','Cambiar contraseña mensualmente','Usar un gestor de contraseñas'], c:1, fb:'El MFA bloquea el 99.9% de los ataques automatizados de cuentas (Microsoft). Combina contraseña + código temporal (TOTP) o biometría. Es la medida de mayor impacto por menor costo.'},
+  {cat:'accesos', q:'Tu empresa usa cuentas de administrador compartidas entre el equipo de IT. ¿Cuál es el riesgo?', opts:['Ninguno si el equipo es de confianza','No hay trazabilidad de quién hizo qué — imposible auditar o investigar incidentes','Solo es un problema de organización interna','El riesgo es bajo si la contraseña es fuerte'], c:1, fb:'Las cuentas compartidas eliminan la trazabilidad. En una brecha, es imposible saber qué usuario realizó qué acción. Cada administrador debe tener cuenta nominal individual.'},
+
+  // BACKUPS Y CONTINUIDAD (4)
   {cat:'backups', q:'¿Cuál es la estrategia de backup recomendada para datos críticos?', opts:['1 copia en el mismo disco','Solo backup en la nube','Regla 3-2-1: 3 copias, 2 medios, 1 offsite','Backup semanal en USB externo'], c:2, fb:'La regla 3-2-1 es el estándar de la industria. Una copia offline (sin conexión a la red) es la diferencia entre recuperación y desastre total ante ransomware.'},
-  {cat:'autenticación', q:'¿Qué es la autenticación multifactor (MFA) y por qué importa?', opts:['Usar contraseñas distintas en cada sistema','Requerir múltiples identidades físicas','Verificar identidad con algo que sabes + algo que tienes/eres','Cambiar contraseña mensualmente'], c:2, fb:'El MFA bloquea el 99.9% de los ataques automatizados de cuentas (Microsoft, 2023). Combina contraseña + dispositivo/token + biometría.'},
+  {cat:'backups', q:'Tienes backups automáticos diarios pero nunca los has probado. ¿Qué problema representa?', opts:['Ninguno si el sistema no ha dado errores','Un backup no probado es un backup que no existe — puede fallar justo cuando lo necesitas','Solo es relevante si tienes datos muy críticos','Es suficiente con verificar el log de completado'], c:1, fb:'El 58% de los backups fallan al restaurar por primera vez. Probar la restauración al menos trimestralmente es la única forma de saber que el backup funciona realmente.'},
+  {cat:'backups', q:'El ransomware cifró todos tus archivos incluyendo las copias de backup conectadas a la red. ¿Qué lección aplica?', opts:['Que el antivirus falló','Que necesitas una copia offline no conectada a la red (aire gap)','Que el backup en la nube es suficiente','Que deberías haber pagado el rescate antes'], c:1, fb:'El ransomware moderno busca y cifra los backups conectados antes de cifrar los datos principales. El backup offline (disco desconectado o cinta) es la única defensa real.'},
+  {cat:'backups', q:'¿Qué debe incluir un plan básico de respuesta a incidentes?', opts:['Solo el número del proveedor de antivirus','Contactos clave, pasos de contención, procedimiento de restauración y comunicación a afectados','Un manual técnico de más de 100 páginas','Solo aplica a empresas grandes'], c:1, fb:'Un plan de respuesta no tiene que ser complejo para ser útil. Lo esencial: saber a quién llamar, cómo aislar sistemas afectados, cómo restaurar y cómo comunicar el incidente.'},
+
+  // INGENIERÍA SOCIAL (5)
+  {cat:'ingeniería social', q:'Alguien llama afirmando ser de IT y pide tu contraseña para "actualizar tu cuenta". ¿Qué haces?', opts:['La das si parece urgente','Pides su nombre y cuelgas','Niegas tener contraseña','Te niegas y reportas la llamada'], c:3, fb:'IT legítimo NUNCA pedirá tu contraseña por teléfono o email. Es vishing (phishing por voz). Reporta siempre estas llamadas.'},
+  {cat:'ingeniería social', q:'Un extraño se acerca a la puerta de la oficina con las manos llenas y te pide que le abras "solo un momento". ¿Qué haces?', opts:['Le abres porque parece inofensivo','Le pides que espere y llamas a recepción o seguridad','Le abres si lleva uniforme de empresa','Le preguntas su nombre y le abres'], c:1, fb:'Es tailgating o piggybacking — una técnica clásica de intrusión física. El acceso físico no autorizado puede ser tan dañino como un ciberataque. Sigue siempre el protocolo.'},
+  {cat:'ingeniería social', q:'Recibes una llamada de "tu banco" diciendo que detectaron un cargo fraudulento y necesitan tu CVV para cancelarlo. ¿Qué haces?', opts:['Das el CVV para proteger tu cuenta','Cuelgas y llamas al banco por el número oficial','Pides que te lo confirmen por email antes','Das solo los últimos 4 dígitos de la tarjeta'], c:1, fb:'Los bancos nunca piden CVV, PIN ni contraseñas por teléfono. Es vishing. Cuelga y llama tú al número que está en el reverso de tu tarjeta.'},
+  {cat:'ingeniería social', q:'¿Qué es el pretexting?', opts:['Enviar emails con virus adjuntos','Crear una historia falsa creíble para manipular a alguien y obtener información','Hackear el sistema de contraseñas','Un tipo de malware que se oculta en documentos'], c:1, fb:'El pretexting construye un escenario falso (ser del banco, de IT, de un proveedor) para ganar confianza. Es la base de la mayoría de ataques de ingeniería social sofisticados.'},
+  {cat:'ingeniería social', q:'Te llaman diciendo que eres el ganador de un sorteo de tu empresa y piden tus datos personales para "tramitar el premio". ¿Qué haces?', opts:['Das los datos porque confías en tu empresa','Verificas con RRHH directamente antes de dar cualquier dato','Das solo nombre y email','Pides que te lo confirmen por escrito'], c:1, fb:'Los atacantes investigan a sus víctimas en LinkedIn y redes sociales para personalizar el engaño. Verifica siempre con la fuente directamente, nunca a través del canal del atacante.'},
 ];
+
+// Shuffle helper
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Pick 10 questions ensuring category variety
+function pickQuestions() {
+  const cats = {};
+  QBANK.forEach(q => { if (!cats[q.cat]) cats[q.cat] = []; cats[q.cat].push(q); });
+  const picked = [];
+  // First pass: one from each category
+  const catKeys = shuffle(Object.keys(cats));
+  catKeys.forEach(c => { if (picked.length < 10) picked.push(shuffle(cats[c])[0]); });
+  // Second pass: fill remaining slots randomly
+  const remaining = shuffle(QBANK.filter(q => !picked.includes(q)));
+  while (picked.length < 10 && remaining.length > 0) picked.push(remaining.shift());
+  return shuffle(picked);
+}
+
+let Q = pickQuestions();
 let qIdx = 0, qScore = 0, qAnswered = false;
 function renderQ() {
   const d = Q[qIdx];
@@ -989,12 +1111,12 @@ function showQResult() {
   document.getElementById('qScore').textContent = `${qScore}/${Q.length}`;
   document.getElementById('qScore').style.color = pct >= 70 ? 'var(--green)' : 'var(--red)';
   document.getElementById('qMsg').textContent =
-    pct >= 90 ? 'Excelente. Eres un activo clave para la seguridad de tu empresa.' :
+    pct >= 90 ? 'Excelente. Eres un activo clave para la seguridad de tu equipo.' :
     pct >= 70 ? 'Buen nivel. Refuerza los conceptos en los que fallaste.' :
-    pct >= 50 ? 'Nivel básico. Tu empresa necesita que mejores tus competencias urgentemente.' :
-    'Riesgo alto. Es urgente completar la formación completa de seguridad.';
+    pct >= 50 ? 'Nivel básico. Hay vectores de ataque que aún te exponen.' :
+    'Riesgo alto. Completa los módulos de formación — tu equipo depende de ti.';
 }
-function restartQuiz() { qIdx = 0; qScore = 0; document.getElementById('qResult').style.display = 'none'; document.getElementById('qCard').style.display = 'block'; renderQ(); }
+function restartQuiz() { Q = pickQuestions(); qIdx = 0; qScore = 0; document.getElementById('qResult').style.display = 'none'; document.getElementById('qCard').style.display = 'block'; renderQ(); }
 
 // ── THREATS ──────────────────────────────────────────────────
 const T = [
@@ -1088,17 +1210,67 @@ function updateCkP() {
 }
 
 // ── PHISHING ─────────────────────────────────────────────────
-const PE = [
+const PE_BANK = [
+  // PHISHING (10)
   {from:'soporte@micr0soft-365.net',fn:'Microsoft Support',to:'empleado@tuempresa.com',subj:'⚠️ URGENTE: Su cuenta expirará en 24 horas',
    body:`<p>Estimado usuario,</p><p>Hemos detectado actividad inusual en su cuenta de Microsoft 365. Para evitar la suspensión inmediata debe verificar su identidad en las próximas <strong>24 horas</strong>.</p><p>Confirme sus datos aquí:</p><p><span class="elink">https://micr0soft-365-verify.net/confirm?token=xK92mP</span></p><p><span class="ecta">Verificar cuenta ahora</span></p><p>Si no actúa, su cuenta será suspendida permanentemente.</p><p>Equipo de Seguridad Microsoft</p>`,
    phish:true, clues:['Dominio falso: "micr0soft-365.net" usa cero en lugar de la letra o','Urgencia artificial para presionar sin reflexionar','URL no pertenece a ningún dominio oficial de Microsoft','Microsoft nunca solicita credenciales por correo electrónico','Amenaza de pérdida permanente de cuenta']},
-  {from:'rrhh@tuempresa.com',fn:'Recursos Humanos',to:'empleado@tuempresa.com',subj:'Recordatorio: Actualización del portal de nóminas',
-   body:`<p>Hola,</p><p>Te recordamos que el portal de gestión de nóminas ha sido actualizado. Puedes acceder con tus credenciales habituales desde la intranet.</p><p>Para cualquier duda escribe a <span class="elink">rrhh@tuempresa.com</span> o llama a la extensión 3401.</p><p>Un saludo,<br>Departamento de RRHH</p>`,
-   phish:false, clues:['Dominio corporativo legítimo (@tuempresa.com)','No solicita credenciales ni datos personales sensibles','Proporciona canales de contacto internos verificables','Sin urgencia ni amenazas de ningún tipo','Información genérica sin petición de acciones peligrosas']},
   {from:'it-helpdesk@emp1esa-soporte.com',fn:'IT Helpdesk',to:'empleado@tuempresa.com',subj:'Tu contraseña expira HOY – Acción requerida',
    body:`<p>Tu contraseña corporativa expirará <strong>hoy a las 23:59</strong>. Para no perder acceso a los sistemas debes renovarla inmediatamente.</p><p>Proporciona tu contraseña actual y la nueva en el siguiente formulario:</p><p><span class="elink">http://password-reset-corp.xyz/renew</span></p><p>Si no lo haces antes de medianoche tu acceso quedará bloqueado permanentemente.</p><p>IT Helpdesk</p>`,
-   phish:true, clues:['Dominio falso: "emp1esa-soporte.com" usa el número 1 en lugar de la letra i','IT nunca solicita tu contraseña actual por correo electrónico','URL externa desconocida: "password-reset-corp.xyz"','Amenaza de bloqueo permanente para crear urgencia artificial','URL con HTTP sin cifrado (no HTTPS)']},
+   phish:true, clues:['Dominio falso: "emp1esa-soporte.com" usa el número 1 en lugar de la letra i','IT nunca solicita tu contraseña actual — solo te pedirá que la cambies tú mismo','URL externa desconocida con HTTP sin cifrado','Amenaza de bloqueo permanente para crear urgencia artificial']},
+  {from:'no-reply@paypa1-seguridad.com',fn:'PayPal Seguridad',to:'empleado@tuempresa.com',subj:'Actividad sospechosa en tu cuenta PayPal — Verifica ahora',
+   body:`<p>Hemos detectado un intento de acceso desde Chile no reconocido.</p><p>Para proteger tu cuenta, confirma tu identidad en las próximas 2 horas:</p><p><span class="elink">https://paypa1-seguridad.com/verify?id=88342</span></p><p>Si no lo haces, tu cuenta quedará suspendida por seguridad.</p><p>El equipo de PayPal</p>`,
+   phish:true, clues:['Dominio "paypa1-seguridad.com" usa el número 1 en lugar de la letra l','PayPal envía desde paypal.com, no desde dominios externos','Urgencia artificial: 2 horas para actuar','La URL no pertenece a paypal.com','Amenaza de suspensión para presionar la acción impulsiva']},
+  {from:'ceo.martinez@tuempresa-corp.net',fn:'Carlos Martínez CEO',to:'contador@tuempresa.com',subj:'Transferencia urgente y confidencial',
+   body:`<p>Hola,</p><p>Necesito que realices una transferencia urgente de $4.800.000 CLP a la siguiente cuenta bancaria como parte de una adquisición confidencial.</p><p>Banco: Santander Chile<br>RUT: 76.432.891-2<br>Cuenta: 000-7-432891-9</p><p>Es confidencial, no lo menciones a nadie todavía. Lo explicaré en la reunión de mañana.</p><p>Carlos</p>`,
+   phish:true, clues:['Dominio "tuempresa-corp.net" no es el dominio oficial de la empresa','Solicitud de confidencialidad — diseñada para evitar verificación','Los CEO no solicitan transferencias urgentes por email sin proceso formal','Sin documentación ni contrato adjunto','Presión temporal y emocional combinadas']},
+  {from:'descuentos@am4z0n-ofertas.cl',fn:'Amazon Ofertas Chile',to:'empleado@tuempresa.com',subj:'🎁 Has ganado un vale de $50.000 — Reclama antes de las 12:00',
+   body:`<p>¡Felicitaciones! Fuiste seleccionado para recibir un vale de compras de <strong>$50.000 CLP</strong> en Amazon.</p><p>Para reclamarlo, confirma tus datos de envío y datos de tarjeta para cubrir los gastos de emisión ($990 CLP):</p><p><span class="ecta">Reclamar mi vale ahora</span></p><p>Oferta válida solo hasta las 12:00 de hoy.</p>`,
+   phish:true, clues:['Dominio "am4z0n-ofertas.cl" usa el número 4 en lugar de la letra a','Amazon no opera tienda directa en Chile con dominio .cl','Pedir datos de tarjeta para "gastos de emisión" es una estafa clásica','Urgencia artificial: solo hasta las 12:00','Premia inesperada sin haber participado en ningún sorteo']},
+  {from:'soporte@banco-chile-seguro.com',fn:'Banco de Chile',to:'cliente@email.com',subj:'Su tarjeta ha sido bloqueada por actividad inusual',
+   body:`<p>Estimado cliente,</p><p>Hemos bloqueado su tarjeta de crédito terminada en **4521 por detección de actividad fraudulenta.</p><p>Para desbloquearla y confirmar su identidad, ingrese a:</p><p><span class="elink">https://banco-chile-seguro.com/desbloqueo</span></p><p>Tiene 4 horas para actuar o la tarjeta será cancelada definitivamente.</p>`,
+   phish:true, clues:['Dominio "banco-chile-seguro.com" no es bancochile.cl','El Banco de Chile envía desde bancochile.cl','Amenaza de cancelación definitiva para crear urgencia','Los bancos nunca desbloquean tarjetas a través de enlaces por email','Sin mención del nombre completo del cliente']},
+  {from:'admin@dropb0x-storage.net',fn:'Dropbox',to:'empleado@tuempresa.com',subj:'[Acción requerida] Documento compartido contigo',
+   body:`<p>Carlos Rodríguez ha compartido un documento confidencial contigo a través de Dropbox.</p><p>Para ver el documento, inicia sesión con tus credenciales corporativas:</p><p><span class="elink">https://dropb0x-storage.net/view?doc=conf_2024_Q4</span></p><p>El enlace expirará en 48 horas.</p>`,
+   phish:true, clues:['Dominio "dropb0x-storage.net" usa cero en lugar de la letra o','Dropbox envía desde dropbox.com, no desde dominios externos','Solicita credenciales corporativas en un dominio no corporativo','El nombre "Carlos Rodríguez" puede ser real — el ataque está personalizado','Plazo de expiración para crear urgencia moderada']},
+  {from:'facturacion@sii-chile-gov.cl',fn:'SII Chile',to:'empresa@tuempresa.com',subj:'URGENTE: Deuda tributaria pendiente — Evite multas',
+   body:`<p>Se ha detectado una inconsistencia en sus declaraciones tributarias del período 2023-2024.</p><p>Deuda pendiente: <strong>$1.247.890 CLP</strong></p><p>Para regularizar su situación y evitar multas e intereses, acceda al siguiente enlace:</p><p><span class="elink">https://sii-chile-gov.cl/regularizar?rut=xxxxx</span></p><p>Plazo máximo: 72 horas.</p>`,
+   phish:true, clues:['El SII opera desde sii.cl, no desde "sii-chile-gov.cl"','El SII notifica deudas mediante carta certificada o Mipyme Portal, no por email con enlaces','Cifra exacta de deuda para dar credibilidad falsa','Urgencia de 72 horas para evitar verificación','El SII nunca pide regularización a través de enlaces en emails no solicitados']},
+  {from:'noreply@l1nked1n-alerts.com',fn:'LinkedIn',to:'profesional@email.com',subj:'Tienes 3 solicitudes de conexión pendientes de empresas reconocidas',
+   body:`<p>Hola,</p><p>Tres reclutadores de empresas como Google, Mercado Libre y Falabella han visto tu perfil y quieren conectar contigo.</p><p>Para ver sus perfiles y aceptar las solicitudes:</p><p><span class="elink">https://l1nked1n-alerts.com/connections?token=abc123</span></p><p>Este aviso expirará en 24 horas.</p>`,
+   phish:true, clues:['Dominio "l1nked1n-alerts.com" usa el número 1 en lugar de la letra i','LinkedIn envía desde linkedin.com o e.linkedin.com, no desde dominios externos','Mención de empresas de alto perfil para aumentar credibilidad','El token en la URL es único para rastrear clics','LinkedIn nunca requiere login desde emails — siempre dirige a linkedin.com']},
+  {from:'alertas@mercadolibre-pago-seguro.net',fn:'Mercado Pago',to:'vendedor@email.com',subj:'Tu pago de $89.990 está retenido — Verifica tu cuenta',
+   body:`<p>Tu pago por venta reciente está retenido por una verificación de seguridad.</p><p>Para liberar los fondos a tu cuenta bancaria, confirma tu identidad:</p><p><span class="elink">https://mercadolibre-pago-seguro.net/liberar?id=venta_9823</span></p><p>Si no verificas en 24 horas, el pago será devuelto al comprador.</p>`,
+   phish:true, clues:['Mercado Pago opera desde mercadopago.com, no desde dominios externos','Amenaza de perder el pago para presionar la acción','Los pagos retenidos se gestionan desde la app o web oficial','URL con dominio inventado que intenta imitar la marca','Sin detalles específicos de la venta que lo hagan verificable']},
+
+  // LEGÍTIMOS (5)
+  {from:'rrhh@tuempresa.com',fn:'Recursos Humanos',to:'empleado@tuempresa.com',subj:'Recordatorio: Actualización del portal de nóminas',
+   body:`<p>Hola,</p><p>Te recordamos que el portal de gestión de nóminas ha sido actualizado. Puedes acceder con tus credenciales habituales desde la intranet corporativa.</p><p>Para cualquier duda escribe a <span class="elink">rrhh@tuempresa.com</span> o llama a la extensión 3401.</p><p>Un saludo,<br>Departamento de RRHH</p>`,
+   phish:false, clues:['Dominio corporativo legítimo (@tuempresa.com)','No solicita credenciales ni datos personales','Proporciona canales de contacto internos verificables','Sin urgencia ni amenazas','Dirige a la intranet, no a URL externa']},
+  {from:'noreply@github.com',fn:'GitHub',to:'desarrollador@email.com',subj:'[GitHub] Nuevo inicio de sesión desde Santiago, Chile',
+   body:`<p>Hola,</p><p>Detectamos un nuevo inicio de sesión en tu cuenta GitHub desde Santiago, Chile el 10 de marzo de 2026 a las 14:32.</p><p>Si fuiste tú, no necesitas hacer nada.</p><p>Si no reconoces este acceso, protege tu cuenta desde: github.com/settings/security</p><p>El equipo de GitHub</p>`,
+   phish:false, clues:['El remitente es noreply@github.com — dominio oficial','No incluye enlaces directos de clic — dirige a navegar manualmente','No crea urgencia artificial ni amenaza consecuencias','Proporciona información específica: fecha, hora y ubicación','Ofrece acción solo si el usuario NO reconoce el acceso']},
+  {from:'facturas@proveedor-legitimo.cl',fn:'Proveedor Legítimo SpA',to:'compras@tuempresa.com',subj:'Factura N°4521 — Servicios marzo 2026',
+   body:`<p>Estimados,</p><p>Adjuntamos la factura N°4521 por los servicios de consultoría prestados durante marzo 2026, por un total de $850.000 CLP + IVA.</p><p>Pueden verificar el documento en el SII con el folio adjunto o contactarnos en el +56 2 2345 6789.</p><p>Saludos,<br>Administración · Proveedor Legítimo SpA</p>`,
+   phish:false, clues:['Dominio .cl consistente con empresa chilena registrada','Proporciona número de factura verificable en SII','Incluye número de teléfono de contacto directo','No solicita credenciales ni acciones urgentes','Referencia a una relación comercial previa existente']},
+  {from:'security-alerts@google.com',fn:'Google',to:'usuario@gmail.com',subj:'Nuevo dispositivo conectado a tu cuenta',
+   body:`<p>Se conectó un nuevo dispositivo a tu cuenta Google.</p><p>Dispositivo: Chrome en Windows 11 · Santiago, Chile · 11 mar 2026, 09:15</p><p>Si fuiste tú: no necesitas hacer nada.</p><p>Si no fuiste tú: visita myaccount.google.com/security para revisar tu actividad.</p>`,
+   phish:false, clues:['Remitente desde google.com — dominio oficial de Google','No incluye enlaces directos — indica navegar manualmente a myaccount.google.com','Proporciona detalles específicos verificables del dispositivo','No crea urgencia — solo informa','No solicita credenciales ni datos adicionales']},
+  {from:'notificaciones@linkedin.com',fn:'LinkedIn',to:'profesional@email.com',subj:'Tu solicitud de conexión fue aceptada',
+   body:`<p>Hola,</p><p>Ana González aceptó tu solicitud de conexión en LinkedIn.</p><p>Ahora son contactos de primer nivel. Puedes ver su perfil en linkedin.com.</p><p>El equipo de LinkedIn</p>`,
+   phish:false, clues:['Remitente desde linkedin.com — dominio oficial','Mensaje simple sin solicitud de acción urgente','No incluye enlaces directos que requieran login','Referencia a una acción iniciada por el propio usuario','Sin urgencia, sin amenaza, sin solicitud de datos']},
 ];
+
+function shufflePE(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const PE = shufflePE(PE_BANK);
 let pIdx = 0;
 function renderPhish() {
   const p = PE[pIdx];
@@ -1171,6 +1343,26 @@ function copyPw() {
 
 // ── BREACH ───────────────────────────────────────────────────
 const SCENARIOS = [
+  {name:'smishing → fraude bancario', events:[
+    {t:0, txt:'Empleada recibe SMS: "Banco Estado: cargo no autorizado de $340.000. Cancela aquí: [enlace]"', tp:'warn'},
+    {t:1, txt:'Hace clic en el enlace — página idéntica al banco pero en dominio falso', tp:'crit'},
+    {t:2, txt:'Ingresa RUT, clave internet y segundo factor (tarjeta coordenadas)', tp:'crit'},
+    {t:3, txt:'Atacante captura credenciales en tiempo real y accede al banco legítimo', tp:'crit'},
+    {t:4, txt:'Transferencia de $4.800.000 a cuenta mula en menos de 3 minutos', tp:'crit'},
+    {t:5, txt:'El banco bloquea la cuenta — pero el dinero ya salió hacia cuenta intermedia', tp:'warn'},
+    {t:6, txt:'La empleada llama al banco real. La cuenta mula ya está vacía.', tp:'info'},
+    {t:7, txt:'Lección: los bancos nunca envían SMS con enlaces. Llama siempre al número del reverso de la tarjeta.', tp:'ok'},
+  ], protect:['Nunca hacer clic en enlaces de SMS bancarios','Verificar siempre en la app oficial o llamando al número oficial','Activar notificaciones de transacciones en tiempo real','Habilitar límites de transferencia y doble confirmación']},
+  {name:'deepfake CEO → transferencia', events:[
+    {t:0, txt:'Contador recibe videollamada de Teams del "Director General" — imagen y voz perfectas', tp:'info'},
+    {t:1, txt:'El "CEO" pide transferencia urgente de $18M CLP a proveedor nuevo antes de las 16:00', tp:'warn'},
+    {t:2, txt:'El contador intenta verificar pero el "CEO" dice que no hay tiempo y que el CFO ya aprobó', tp:'warn'},
+    {t:3, txt:'Contador realiza la transferencia sin verificar por canal separado', tp:'crit'},
+    {t:4, txt:'A las 17:00, el CEO real llama preguntando por la reunión de mañana', tp:'crit'},
+    {t:5, txt:'El contador confirma que la llamada de las 14:00 fue un deepfake generado por IA', tp:'crit'},
+    {t:6, txt:'El dinero ya fue movido a través de tres cuentas mula internacionales', tp:'crit'},
+    {t:7, txt:'Lección: toda transferencia significativa requiere verificación por canal alternativo, sin excepciones.', tp:'ok'},
+  ], protect:['Protocolo de verificación obligatoria para transferencias sobre cierto monto','Llamar al móvil del ejecutivo para confirmar — no responder por el mismo canal','Nunca realizar transferencias urgentes sin doble aprobación','Formación específica en detección de deepfakes para el equipo financiero']},
   {name:'phishing + ransomware', events:[
     {h:'H+0', title:'email de phishing recibido', desc:'Un empleado del área financiera recibe un email que suplanta a un proveedor habitual. El adjunto contiene una macro maliciosa.', impact:'El empleado abre el adjunto. La macro se ejecuta silenciosamente en segundo plano.', cost:0},
     {h:'H+1', title:'malware instalado — RAT activo', desc:'El malware establece comunicación con el servidor C2 del atacante. El equipo parece funcionar con normalidad. Nadie lo sabe aún.', impact:'El atacante tiene acceso remoto completo. Ve la pantalla, lee el teclado, navega la red.', cost:0},
@@ -1241,6 +1433,174 @@ function showBreachResult() {
   document.getElementById('bStartBtn').textContent = '✓ completado'; bRunning = false;
 }
 function resetBreach() { clearTimeout(bTimer); bRunning=false; bStep=0; document.getElementById('bStartBtn').textContent='▶ iniciar simulación'; document.getElementById('bStartBtn').disabled=false; renderBreachTL(); }
+
+// ── SMISHING ─────────────────────────────────────────────────
+const SM_BANK = [
+  // SMISHING (8)
+  {from:'+56 9 8823 1042',fn:'Banco Santander',subj:'SMS de tu banco',
+   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0"><strong>SANTANDER:</strong> Detectamos un cargo no reconocido de $89.990 en tu tarjeta. Si no fuiste tú, cancela aquí: <span class="elink">http://sntandr-seguro.cl/cancelar?id=4521</span></div>`,
+   smish:true, clues:['Los bancos nunca envían SMS con enlaces para gestionar cargos','Dominio "sntandr-seguro.cl" no es santander.cl','URL con HTTP sin cifrado','El número no es el número oficial de Santander Chile (+56 2 2320 1111)','Para bloquear un cargo, llama al número del reverso de tu tarjeta']},
+  {from:'+56 2 2345 6789',fn:'Correos de Chile',subj:'SMS de Correos',
+   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Correos de Chile: Tu paquete N°CL-8823491 no pudo ser entregado. Reprograma tu entrega: <span class="elink">https://correoschile-entregas.net/reagendar</span></div>`,
+   smish:true, clues:['Correos de Chile opera desde correos.cl, no desde "correoschile-entregas.net"','El número de seguimiento parece válido — es una técnica para dar credibilidad','Correos de Chile no envía SMS con enlaces para reagendar','Verifica siempre en correos.cl con tu número de seguimiento real']},
+  {from:'+1 (415) 555-0182',fn:'Apple',subj:'SMS de Apple',
+   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Apple: Tu ID de Apple ha sido bloqueado por actividad inusual. Desbloquea en: <span class="elink">https://apple-id-chile.com/unlock</span></div>`,
+   smish:true, clues:['Apple nunca envía SMS con enlaces para desbloquear cuentas','Número de EE.UU. (+1) sospechoso para comunicaciones de Apple Chile','Dominio "apple-id-chile.com" no es apple.com','Para problemas con Apple ID, ve directamente a appleid.apple.com']},
+  {from:'+56 9 7723 4401',fn:'Desconocido',subj:'SMS de número desconocido',
+   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Hola! Soy Ana de RRHH. Mañana es el cumpleaños de Carlos y estamos juntando para un regalo grupal. ¿Puedes transferir $5.000 a este número? Te lo devuelvo el viernes 😊</div>`,
+   smish:true, clues:['Número no registrado en tus contactos','Solicitud de dinero sin verificación previa de identidad','El tono amistoso busca bajar la guardia','Antes de transferir, llama directamente a Ana para confirmar','Las estafas de "colecta grupal" son comunes y usan nombres reales del directorio de la empresa']},
+  {from:'+56 9 4412 8830',fn:'Desconocido',subj:'SMS de número desconocido',
+   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">URGENTE: Tu RUT fue usado en una declaración de impuestos fraudulenta. Debes responder este SMS con tu número de serie de cédula para bloquear el proceso. Plazo: 2 horas.</div>`,
+   smish:true, clues:['El SII nunca contacta por SMS solicitando datos de identidad','Nunca envíes datos de cédula o RUT por SMS','Urgencia artificial de 2 horas','Si tienes una duda real con el SII, ingresa directamente a sii.cl o llama al 22395 1115']},
+  {from:'+56 9 3341 2290',fn:'Desconocido',subj:'SMS de sorteo',
+   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Jumbo: Ganaste un Gift Card de $100.000 en nuestro sorteo de marzo. Reclama antes del viernes en: <span class="elink">http://jumbo-premios.net/reclamar?code=GC8823</span></div>`,
+   smish:true, clues:['Jumbo opera desde jumbo.cl, no desde "jumbo-premios.net"','URL con HTTP sin cifrado','No participaste en ningún sorteo','Los premios legítimos se reciben por correo certificado o en tienda, no por SMS con enlace','El código de regalo en la URL es único para rastrear clics']},
+  {from:'+56 9 1123 9987',fn:'Desconocido',subj:'SMS de trabajo',
+   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Hola! Vimos tu CV en LinkedIn. Ofrecemos trabajo remoto $850.000/mes. Solo necesitas una inversión inicial de $30.000 para el kit de materiales. Interesado? Responde SÍ.</div>`,
+   smish:true, clues:['Las ofertas de trabajo legítimas nunca piden inversión inicial al candidato','"Inversión inicial para materiales" es una estafa clásica de trabajo remoto falso','El número no corresponde a ninguna empresa reconocida','Si fuera legítimo, el reclutador contactaría por LinkedIn, no por SMS']},
+  {from:'+56 9 8845 0023',fn:'Desconocido',subj:'SMS de tu médico',
+   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Clínica Alemana: Tiene un resultado de examen pendiente de revisar. Acceda con su RUN y fecha de nacimiento en: <span class="elink">https://cl-alemana-resultados.com/ver</span></div>`,
+   smish:true, clues:['Clínica Alemana opera desde clinicaalemana.cl, no desde dominios externos','Las clínicas no envían resultados por SMS con enlace a dominios no oficiales','Pedir RUN + fecha de nacimiento expone datos personales sensibles','Verifica siempre en la aplicación o web oficial de tu clínica']},
+
+  // LEGÍTIMOS (4)
+  {from:'+56 9 800 123 456',fn:'Banco Estado',subj:'SMS de Banco Estado',
+   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">BancoEstado: Tu transferencia de $45.000 a Juan Pérez fue procesada exitosamente el 11/03/2026 a las 14:32. Si no reconoces esta operación llama al 600 200 7000.</div>`,
+   smish:false, clues:['Número de contacto oficial de Banco Estado (600 200 7000) verificable','No incluye enlaces — solo informa de la transacción','No solicita datos ni acciones','Proporciona detalles específicos de la transacción','Dirige a llamar, no a hacer clic']},
+  {from:'+56 2 2354 6000',fn:'Clínica',subj:'SMS de confirmación',
+   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Recordatorio: Tienes una cita médica mañana 12 de marzo a las 10:30 con Dr. Rodríguez. Para cancelar llama al +56 2 2354 6000. No respondas este SMS.</div>`,
+   smish:false, clues:['No incluye enlaces','Proporciona número de teléfono para cancelar — no un enlace','No solicita datos personales ni credenciales','Mensaje informativo simple sin urgencia ni amenaza']},
+  {from:'+56 9 800 700 100',fn:'Uber',subj:'SMS de código Uber',
+   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Tu código de verificación de Uber es: 847392. No lo compartas con nadie. Uber nunca te pedirá este código.</div>`,
+   smish:false, clues:['El mensaje advierte explícitamente que no se comparta el código','Tú iniciaste el proceso de verificación en la app','No incluye enlaces','El aviso "Uber nunca te pedirá este código" es una señal de legitimidad','Mensaje corto y específico para la acción que el usuario realizó']},
+  {from:'+56 9 800 400 700',fn:'Entel',subj:'SMS de Entel',
+   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Entel: Tu factura de febrero de $18.990 está disponible. Puedes verla en Mi Entel en entel.cl o en la app. Si ya pagaste, ignora este mensaje.</div>`,
+   smish:false, clues:['Dirige a entel.cl — dominio oficial','No incluye un enlace directo de clic — indica navegar manualmente','No solicita datos ni acciones urgentes','Proporciona alternativa (app) para verificar','Sin urgencia ni amenaza de corte de servicio']},
+];
+
+function shuffleSM(arr) { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a; }
+const SM = shuffleSM(SM_BANK);
+let smIdx = 0;
+function renderSmish() {
+  const s = SM[smIdx];
+  document.getElementById('smishMsg').innerHTML = `
+    <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">// mensaje recibido</div>
+    <div style="background:#1a1f2e;border-radius:4px;padding:12px 14px;margin-bottom:8px;">
+      <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">De: <strong style="color:var(--text)">${s.fn}</strong> · ${s.from}</div>
+      ${s.body}
+    </div>`;
+  document.getElementById('smishVerdict').style.display = 'none';
+  document.getElementById('btnNsm').style.display = 'none';
+  document.querySelectorAll('.ph-btn').forEach(b => { b.disabled = false; b.style.opacity = '1'; });
+}
+function smishAns(action) {
+  const s = SM[smIdx];
+  document.querySelectorAll('.ph-btn').forEach(b => { b.disabled = true; b.style.opacity = '.4'; });
+  let ok, title, color;
+  if (s.smish) { ok = action === true || action === 'report'; title = ok ? (action === 'report' ? '✓ acción óptima. bloquear y reportar.' : '✓ correcto. es smishing.') : '✗ incorrecto. este SMS sí es smishing.'; color = ok ? 'var(--green)' : 'var(--red)'; }
+  else { ok = action === false; title = ok ? '✓ correcto. este SMS es legítimo.' : '✗ incorrecto. este SMS es legítimo.'; color = ok ? 'var(--green)' : 'var(--red)'; }
+  const v = document.getElementById('smishVerdict');
+  v.innerHTML = `<div style="color:${color};font-family:var(--mono);font-size:13px;margin-bottom:12px">${title}</div>
+    <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">// ${s.smish ? 'señales de smishing' : 'señales de legitimidad'}</div>
+    ${s.clues.map(c => `<div class="pv-clue"><span>${s.smish ? '!' : '✓'}</span><span>${c}</span></div>`).join('')}`;
+  v.style.display = 'block';
+  const remaining = smIdx < SM.length - 1;
+  document.getElementById('btnNsm').style.display = remaining ? 'block' : 'none';
+  if (!remaining) v.innerHTML += `<p style="margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--green)">// fin del simulador de smishing — todos los mensajes completados.</p>`;
+}
+function nextSmish() { smIdx = (smIdx + 1) % SM.length; renderSmish(); }
+
+// ── DEEPFAKE ──────────────────────────────────────────────────
+const DF_BANK = [
+  {type:'videollamada', title:'Videollamada del CEO',
+   scene:`<div style="background:#0d1117;border:1px solid #2d2d2d;border-radius:4px;padding:16px;margin-bottom:12px;">
+     <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-bottom:10px;">📹 VIDEOLLAMADA ENTRANTE · Microsoft Teams · 14:23</div>
+     <div style="background:#161b22;padding:12px;border-radius:3px;margin-bottom:10px;">
+       <div style="font-size:12px;color:#58a6ff;margin-bottom:6px;">👤 Roberto Sánchez — Director General</div>
+       <div style="font-size:13px;color:var(--text);line-height:1.6">"Hola, necesito que hagas una transferencia urgente de $15M CLP a una cuenta nueva de proveedor. Es para cerrar un contrato hoy. El CFO ya sabe. Hazlo antes de las 16:00."</div>
+     </div>
+     <div style="font-size:11px;color:var(--text-dim);">La imagen y voz del director parecen completamente reales. La llamada tiene buena calidad de video.</div>
+   </div>`,
+   fake:true, clues:['Los ejecutivos no solicitan transferencias urgentes por videollamada sin proceso formal','El deepfake de video es hoy una realidad — en 2024 una empresa perdió 25M USD así','Nunca realices una transferencia sin verificar por canal separado (llamada al móvil del director)','Si el CFO ya sabe, él puede confirmarlo directamente','La urgencia y confidencialidad son señales de ingeniería social']},
+  {type:'audio', title:'Audio de WhatsApp de tu familiar',
+   scene:`<div style="background:#0d1117;border:1px solid #2d2d2d;border-radius:4px;padding:16px;margin-bottom:12px;">
+     <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-bottom:10px;">🎵 AUDIO DE WHATSAPP · 0:08 · Mamá 📱</div>
+     <div style="background:#161b22;padding:12px;border-radius:3px;margin-bottom:10px;">
+       <div style="font-size:13px;color:var(--text);line-height:1.6;font-style:italic;">"[audio de 8 segundos] Hola amor, tuve un accidente menor con el auto y necesito $80.000 para el mecánico. ¿Me puedes transferir ahora? Estoy apurada."</div>
+     </div>
+     <div style="font-size:11px;color:var(--text-dim);">La voz suena exactamente como la de tu madre. El tono es urgente pero no desesperado.</div>
+   </div>`,
+   fake:true, clues:['Con 3-5 segundos de audio real, la IA puede clonar una voz perfectamente','Los atacantes obtienen muestras de voz de videos en redes sociales','Llama directamente a tu familiar al número que siempre usas para verificar','Las estafas de clonado de voz familiar están aumentando en Chile','Antes de transferir dinero a un familiar por urgencia, siempre llama']},
+  {type:'email', title:'Email con foto adjunta del CEO',
+   scene:`<div style="background:#0d1117;border:1px solid #2d2d2d;border-radius:4px;padding:16px;margin-bottom:12px;">
+     <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-bottom:10px;">📧 EMAIL · De: ceo@tuempresa.com · 09:15</div>
+     <div style="background:#161b22;padding:12px;border-radius:3px;margin-bottom:10px;">
+       <div style="font-size:13px;color:var(--text);line-height:1.6">Hola equipo,<br><br>Adjunto foto del evento de ayer. Fue un gran día para la empresa. Pueden compartirla en redes.<br><br>— Carlos</div>
+       <div style="margin-top:10px;padding:8px;background:#21262d;border-radius:3px;font-size:11px;color:#58a6ff;">📎 evento_empresa_11marzo.jpg (2.3MB)</div>
+     </div>
+   </div>`,
+   fake:false, clues:['Email desde el dominio corporativo oficial','No solicita acción urgente ni datos sensibles','El adjunto es una imagen JPG — aunque siempre es recomendable verificar con IT antes de abrir adjuntos inesperados','No hay presión de tiempo ni amenaza','El tono es casual y consistente con comunicaciones internas normales']},
+  {type:'llamada', title:'Llamada de soporte técnico',
+   scene:`<div style="background:#0d1117;border:1px solid #2d2d2d;border-radius:4px;padding:16px;margin-bottom:12px;">
+     <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-bottom:10px;">📞 LLAMADA ENTRANTE · +56 2 2891 0034 · 11:40</div>
+     <div style="background:#161b22;padding:12px;border-radius:3px;margin-bottom:10px;">
+       <div style="font-size:13px;color:var(--text);line-height:1.6;font-style:italic;">"Buenos días, soy Miguel de soporte técnico. Detectamos actividad inusual en su equipo y necesitamos acceso remoto para verificar. ¿Puede instalar AnyDesk ahora?"</div>
+     </div>
+     <div style="font-size:11px;color:var(--text-dim);">La voz suena profesional y usa terminología técnica correcta.</div>
+   </div>`,
+   fake:true, clues:['IT legítimo no llama pidiendo instalar software de acceso remoto sin ticket previo','AnyDesk es frecuentemente usado en estafas de soporte técnico falso','Nunca instales software por instrucción telefónica sin verificar con IT interno','Pide el número de ticket o cuelga y llama tú a IT','El uso de terminología técnica correcta es parte del script del atacante']},
+  {type:'video', title:'Video en redes sociales del directivo',
+   scene:`<div style="background:#0d1117;border:1px solid #2d2d2d;border-radius:4px;padding:16px;margin-bottom:12px;">
+     <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-bottom:10px;">🎬 VIDEO · LinkedIn · Publicado hace 2 horas</div>
+     <div style="background:#161b22;padding:12px;border-radius:3px;margin-bottom:10px;">
+       <div style="font-size:12px;color:#58a6ff;margin-bottom:6px;">👤 Andrés Vidal — Gerente General TechCorp Chile</div>
+       <div style="font-size:13px;color:var(--text);line-height:1.6">[Video de 45 segundos donde el ejecutivo anuncia una "oportunidad de inversión exclusiva" para empleados con retornos garantizados del 30% mensual. Pide contactar por WhatsApp.]</div>
+     </div>
+     <div style="font-size:11px;color:var(--text-dim);">El video tiene buena calidad. La voz y movimientos se ven naturales.</div>
+   </div>`,
+   fake:true, clues:['Los ejecutivos no anuncian "oportunidades de inversión exclusivas" por video en redes','Retornos garantizados del 30% mensual no existen — es una estafa piramidal','Verificar el perfil oficial del ejecutivo para confirmar si publicó el video','Contactar directamente a la empresa para verificar','Los deepfakes de ejecutivos para fraude financiero son uno de los usos más comunes']},
+  {type:'audio', title:'Mensaje de voz del jefe directo',
+   scene:`<div style="background:#0d1117;border:1px solid #2d2d2d;border-radius:4px;padding:16px;margin-bottom:12px;">
+     <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-bottom:10px;">🎵 WHATSAPP BUSINESS · 0:12 · Tu jefe directo</div>
+     <div style="background:#161b22;padding:12px;border-radius:3px;margin-bottom:10px;">
+       <div style="font-size:13px;color:var(--text);line-height:1.6;font-style:italic;">[audio de 12 segundos] "Hola, te llamo porque mañana tenemos la presentación con el cliente. ¿Puedes enviarme el informe final antes de las 18:00? Gracias."</div>
+     </div>
+     <div style="font-size:11px;color:var(--text-dim);">La voz es la de tu jefe. El tono es normal, sin urgencia excesiva.</div>
+   </div>`,
+   fake:false, clues:['Solicitud razonable y verificable — puedes confirmar la reunión en el calendario','No pide dinero, credenciales ni datos sensibles','El canal (WhatsApp Business) es consistente con comunicaciones habituales','Sin urgencia artificial ni amenaza','Puedes responder el mensaje o llamar para confirmar sin riesgo']},
+];
+
+function shuffleDF(arr) { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a; }
+const DF = shuffleDF(DF_BANK);
+let dfIdx = 0;
+function renderDf() {
+  const d = DF[dfIdx];
+  document.getElementById('dfCard').innerHTML = `
+    <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">// escenario: ${d.type}</div>
+    <div style="font-weight:600;margin-bottom:10px;">${d.title}</div>
+    ${d.scene}
+    <div style="font-size:12px;color:var(--text-dim);">¿Este escenario podría ser un deepfake o fraude por IA?</div>`;
+  document.getElementById('dfVerdict').style.display = 'none';
+  document.getElementById('btnNdf').style.display = 'none';
+  document.querySelectorAll('.ph-btn').forEach(b => { b.disabled = false; b.style.opacity = '1'; });
+}
+function dfAns(action) {
+  const d = DF[dfIdx];
+  document.querySelectorAll('.ph-btn').forEach(b => { b.disabled = true; b.style.opacity = '.4'; });
+  const ok = action === d.fake;
+  const title = d.fake
+    ? (ok ? '✓ correcto. este escenario es una señal de fraude por IA.' : '✗ incorrecto. este escenario sí es una alerta de deepfake/fraude.')
+    : (ok ? '✓ correcto. este escenario parece legítimo.' : '✗ incorrecto. este escenario es legítimo.');
+  const color = ok ? 'var(--green)' : 'var(--red)';
+  const v = document.getElementById('dfVerdict');
+  v.innerHTML = `<div style="color:${color};font-family:var(--mono);font-size:13px;margin-bottom:12px">${title}</div>
+    <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">// ${d.fake ? 'por qué es una alerta' : 'por qué es legítimo'}</div>
+    ${d.clues.map(c => `<div class="pv-clue"><span>${d.fake ? '!' : '✓'}</span><span>${c}</span></div>`).join('')}`;
+  v.style.display = 'block';
+  const remaining = dfIdx < DF.length - 1;
+  document.getElementById('btnNdf').style.display = remaining ? 'block' : 'none';
+  if (!remaining) v.innerHTML += `<p style="margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--green)">// fin del simulador de deepfake — todos los escenarios completados.</p>`;
+}
+function nextDf() { dfIdx = (dfIdx + 1) % DF.length; renderDf(); }
 
 // ── POLICIES ─────────────────────────────────────────────────
 const POL = [
@@ -1342,7 +1702,7 @@ function renderPolContent(i) {
 function togglePol(i) { document.getElementById('ph'+i).classList.toggle('open'); document.getElementById('pb'+i).classList.toggle('open'); }
 
 // ── INIT ─────────────────────────────────────────────────────
-renderQ(); renderThreats(); renderChecklist(); renderPhish(); renderBreachTL(); renderPolicies();
+renderQ(); renderThreats(); renderChecklist(); renderPhish(); renderBreachTL(); renderPolicies(); renderSmish(); renderDf();
 </script>
 </body>
 </html>
