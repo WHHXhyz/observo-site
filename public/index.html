@@ -133,9 +133,7 @@ nav{
 /* HERO */
 .hero{
   position:relative;min-height:100vh;
-  display:grid;grid-template-columns:1fr 1fr;
-  align-items:center;
-  padding:5rem 3rem 3rem;
+  padding:5rem 0 3rem;
   overflow:hidden;
   z-index:1;
 }
@@ -192,6 +190,7 @@ nav{
   97%{transform:translateX(0);opacity:0;}
 }
 
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4rem;}
 .hero-left{position:relative;z-index:2;}
 
 .hero-eyebrow{
@@ -652,53 +651,63 @@ footer a:hover{color:var(--green);}
 }
 .reveal.visible{opacity:1;transform:none;}
 
+/* WRAP — centered container */
+.wrap{max-width:1080px;margin:0 auto;width:100%;padding:0 3rem;}
+
+/* HERO inner uses wrap for centering */
+.hero{
+  position:relative;min-height:100vh;
+  padding:5rem 0 3rem;
+  overflow:hidden;z-index:1;
+}
+.hero-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;gap:4rem;
+}
+
+/* Sections use wrap internally — remove direct padding */
+.threats-section{position:relative;z-index:1;padding:5rem 0;background:var(--bg2);border-top:1px solid var(--border);}
+.principles-section{position:relative;z-index:1;padding:5rem 0;overflow:hidden;}
+.terminal-section{position:relative;z-index:1;padding:5rem 0;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.checklist-section{position:relative;z-index:1;padding:5rem 0;}
+.cta-final{position:relative;padding:6rem 0;text-align:center;}
+
 @media(max-width:1100px){
-  .hero{padding:5rem 2rem 3rem;}
-  .threats-section,.principles-section,.terminal-section,.checklist-section,.cta-final{padding:4rem 2rem;}
+  .wrap{padding:0 2rem;}
 }
 @media(max-width:768px){
+  .wrap{padding:0 20px;}
   nav{padding:0 20px;}
   .nav-links{display:none;}
   .nav-status{display:none;}
-  .hero{
-    grid-template-columns:1fr;
-    padding:80px 20px 40px;
-    min-height:auto;
-    gap:1.5rem;
-  }
+  .hero{min-height:auto;padding:80px 0 40px;}
+  .hero-inner{grid-template-columns:1fr;gap:1.5rem;}
   .threat-monitor{display:none;}
-  .glitch{font-size:clamp(2.2rem,9vw,3.5rem);letter-spacing:0;}
-  .hero-sub{font-size:0.88rem;max-width:100%;}
-  .cta-group{flex-direction:column;gap:0.75rem;}
-  .btn-main,.btn-out{text-align:center;padding:0.85rem 1.5rem;font-size:0.7rem;}
+  .glitch{font-size:clamp(1.9rem,8vw,2.8rem);line-height:1;}
+  .hero-sub{font-size:0.88rem;}
+  .cta-group{flex-direction:column;gap:0.6rem;}
+  .btn-main,.btn-out{width:100%;text-align:center;padding:0.9rem 1.5rem;}
   .stats-bar{grid-template-columns:1fr 1fr;}
   .stat-cell{padding:1.25rem 1rem;}
   .stat-n{font-size:1.75rem;}
   .stat-l{font-size:0.58rem;}
+  .threats-section,.principles-section,.terminal-section,.checklist-section{padding:3rem 0;}
+  .cta-final{padding:4rem 0;}
+  .section-header{margin-bottom:2rem;}
+  .section-h{font-size:clamp(1.6rem,6vw,2.2rem);}
+  .section-p{font-size:0.85rem;}
   .threats-grid{grid-template-columns:1fr;}
   .tcard.featured{grid-column:span 1;}
   .tcard{padding:1.5rem 1.25rem;}
   .tcard-num{font-size:3rem;}
-  .section-h{font-size:clamp(1.6rem,6vw,2.2rem);}
-  .section-header{margin-bottom:1.75rem;}
-  .section-p{font-size:0.85rem;}
-  .checklist-cols{grid-template-columns:1fr;}
-  .principles-grid{grid-template-columns:1fr;}
+  .principles-grid{grid-template-columns:1fr;max-width:100%;}
   .pcard{padding:1.5rem 1.25rem;}
+  .checklist-cols{grid-template-columns:1fr;}
+  .cl-card{padding:1.25rem;}
   .term-body{padding:1rem;font-size:0.72rem;line-height:1.7;min-height:auto;}
-  .terminal-wrap{margin:0;}
-  section,
-  .threats-section,
-  .principles-section,
-  .terminal-section,
-  .checklist-section{padding:2.5rem 20px;}
-  .cta-final{padding:3.5rem 20px;}
   .cta-h{font-size:clamp(1.8rem,7vw,3rem);}
   .cta-p{font-size:0.88rem;margin-bottom:2rem;}
   footer{flex-direction:column;gap:0.75rem;text-align:center;padding:1.75rem 20px;}
-  .marquee-item{font-size:0.6rem;}
-  .checklist-cols{gap:1rem;}
-  .cl-card{padding:1.25rem;}
 }
 </style>
 </head>
@@ -733,8 +742,8 @@ footer a:hover{color:var(--green);}
 <!-- HERO -->
 <section class="hero">
   <div class="hero-grid"></div>
-
-  <div class="hero-left">
+  <div class="wrap hero-inner">
+    <div class="hero-left">
     <div class="hero-eyebrow">
       <span class="hero-eyebrow-line"></span>
       para quién es esto
@@ -811,10 +820,8 @@ footer a:hover{color:var(--green);}
       </div>
       <div class="scan-bar-wrap"><div class="scan-bar"></div></div>
     </div>
-  </div>
+  </div><!-- /wrap -->
 </section>
-
-<!-- MARQUEE -->
 <div class="marquee-wrap">
   <div class="marquee">
     <!-- first copy -->
@@ -860,6 +867,7 @@ footer a:hover{color:var(--green);}
 
 <!-- THREATS -->
 <section class="threats-section" id="amenazas">
+  <div class="wrap">
   <div class="section-header reveal">
     <div class="section-label">// vectores de ataque</div>
     <h2 class="section-h">Las amenazas<br/>más comunes</h2>
@@ -938,11 +946,12 @@ footer a:hover{color:var(--green);}
       <p>Manipulación psicológica. No requiere código: requiere confianza mal gestionada y ausencia de cultura de seguridad.</p>
       <div class="tcard-bar"><div class="tcard-fill" style="background:var(--blue);width:55%;"></div></div>
     </div>
-  </div>
+  </div><!-- /wrap -->
 </section>
 
 <!-- PRINCIPLES -->
 <section class="principles-section" id="principios">
+  <div class="wrap">
   <div class="section-header reveal">
     <div class="section-label">// nuestra postura</div>
     <h2 class="section-h">Cuatro principios.<br/>Todo lo demás es ruido.</h2>
@@ -969,11 +978,12 @@ footer a:hover{color:var(--green);}
       <h3>Cultura sobre herramientas</h3>
       <p>El 90% de los incidentes involucra error humano. La tecnología ayuda, pero los hábitos y la comprensión son lo que sostiene en el tiempo.</p>
     </div>
-  </div>
+  </div><!-- /wrap -->
 </section>
 
 <!-- TERMINAL -->
 <section class="terminal-section">
+  <div class="wrap">
   <div class="section-header reveal" style="text-align:center;margin-bottom:3rem;">
     <div class="section-label" style="justify-content:center;">// así se ve un diagnóstico real</div>
     <h2 class="section-h" style="margin:0 auto;">Sin puntajes,<br/>con criterio</h2>
@@ -1001,11 +1011,12 @@ footer a:hover{color:var(--green);}
       <span class="t-line"><span class="t-o">Prioridad: </span><span class="t-c">accesos → backup → exposición</span></span>
       <span class="t-line"><span class="t-p">aegis8@scan:~$</span> <span class="t-cursor"></span></span>
     </div>
-  </div>
+  </div><!-- /wrap -->
 </section>
 
 <!-- CHECKLIST -->
 <section class="checklist-section" id="checklist">
+  <div class="wrap">
   <div class="section-header reveal">
     <div class="section-label">// acción concreta</div>
     <h2 class="section-h">Higiene básica.<br/>Alto impacto.</h2>
@@ -1039,11 +1050,12 @@ footer a:hover{color:var(--green);}
       <div class="cl-item"><div class="cl-box"></div><span>Plan básico de respuesta a incidentes</span></div>
       <div class="cl-item"><div class="cl-box done">✓</div><span>Inventario de sistemas críticos</span></div>
     </div>
-  </div>
+  </div><!-- /wrap -->
 </section>
 
 <!-- FINAL CTA -->
 <section class="cta-final">
+  <div class="wrap" style="text-align:center;">
   <div class="cta-bg"></div>
   <div class="cta-label reveal">// siguiente paso</div>
   <h2 class="cta-h reveal">¿TU WEB ESTÁ<br/><span>PROTEGIDA?</span></h2>
@@ -1053,6 +1065,7 @@ footer a:hover{color:var(--green);}
     <a href="/formacion.html" class="btn-out">Ponlo a prueba gratis</a>
   </div>
   <p style="margin-top:1.5rem;font-family:var(--font-mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;">sin contratos · sin permanencia · sin jerga técnica</p>
+  </div><!-- /wrap -->
 </section>
 
 <!-- FOOTER -->
