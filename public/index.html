@@ -660,11 +660,6 @@ footer a:hover{color:var(--green);}
   padding:5rem 0 3rem;
   overflow:hidden;z-index:1;
 }
-.hero-inner{
-  display:grid;grid-template-columns:1fr 1fr;
-  align-items:center;gap:4rem;
-}
-
 /* Sections use wrap internally — remove direct padding */
 .threats-section{position:relative;z-index:1;padding:5rem 0;background:var(--bg2);border-top:1px solid var(--border);}
 .principles-section{position:relative;z-index:1;padding:5rem 0;overflow:hidden;}
@@ -681,8 +676,8 @@ footer a:hover{color:var(--green);}
   .nav-links{display:none;}
   .nav-status{display:none;}
   .hero{min-height:auto;padding:80px 0 40px;}
-  .hero-inner{grid-template-columns:1fr;gap:1.5rem;}
-  .threat-monitor{display:none;}
+  .hero-inner{grid-template-columns:1fr;gap:2rem;}
+  .threat-monitor{display:block;}
   .glitch{font-size:clamp(1.9rem,8vw,2.8rem);line-height:1;}
   .hero-sub{font-size:0.88rem;}
   .cta-group{flex-direction:column;gap:0.6rem;}
@@ -820,7 +815,9 @@ footer a:hover{color:var(--green);}
       </div>
       <div class="scan-bar-wrap"><div class="scan-bar"></div></div>
     </div>
-  </div><!-- /wrap -->
+  </div><!-- /threat-monitor -->
+
+  </div><!-- /wrap.hero-inner -->
 </section>
 <div class="marquee-wrap">
   <div class="marquee">
