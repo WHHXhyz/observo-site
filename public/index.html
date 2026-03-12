@@ -720,14 +720,14 @@ footer a:hover{color:var(--green);}
       <a href="https://aegis8.org/contactos.html" class="btn-main">Quiero que lo revisen →</a>
       <a href="/formacion.html" class="btn-out">Ponlo a prueba gratis</a>
     </div>
-    <div style="margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border);">
-      <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.75rem;">// funciona con</div>
+    <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.6rem;">// funciona con</div>
       <div style="display:flex;gap:0;flex-wrap:wrap;">
-        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);padding:0.35rem 0.9rem;border:1px solid var(--border2);border-right:none;letter-spacing:0.08em;">WordPress</span>
-        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);padding:0.35rem 0.9rem;border:1px solid var(--border2);border-right:none;letter-spacing:0.08em;">Shopify</span>
-        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);padding:0.35rem 0.9rem;border:1px solid var(--border2);border-right:none;letter-spacing:0.08em;">Wix</span>
-        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);padding:0.35rem 0.9rem;border:1px solid var(--border2);border-right:none;letter-spacing:0.08em;">Squarespace</span>
-        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);padding:0.35rem 0.9rem;border:1px solid var(--border2);letter-spacing:0.08em;">webs a medida</span>
+        <span style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted);padding:0.3rem 0.8rem;border:1px solid var(--border2);border-right:none;">WordPress</span>
+        <span style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted);padding:0.3rem 0.8rem;border:1px solid var(--border2);border-right:none;">Shopify</span>
+        <span style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted);padding:0.3rem 0.8rem;border:1px solid var(--border2);border-right:none;">Wix</span>
+        <span style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted);padding:0.3rem 0.8rem;border:1px solid var(--border2);border-right:none;">Squarespace</span>
+        <span style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted);padding:0.3rem 0.8rem;border:1px solid var(--border2);">webs a medida</span>
       </div>
     </div>
   </div>
@@ -1133,4 +1133,25 @@ const barObserver=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
       const fill=e.target.querySelector('.tcard-fill');
-  
+      if(fill){
+        const w=fill.style.width;
+        fill.style.width='0';
+        setTimeout(()=>{fill.style.width=w;},100);
+      }
+      barObserver.unobserve(e.target);
+    }
+  });
+},{threshold:0.3});
+document.querySelectorAll('.tcard').forEach(el=>barObserver.observe(el));
+
+// CHECKLIST TOGGLE
+document.querySelectorAll('.cl-box').forEach(box=>{
+  box.addEventListener('click',()=>{
+    const item=box.parentElement;
+    item.classList.toggle('done');
+    box.textContent=item.classList.contains('done')?'✓':'';
+  });
+});
+</script>
+</body>
+</html>
