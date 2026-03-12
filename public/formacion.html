@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="description" content="Plataforma interactiva de formación en ciberseguridad. Quiz, simulador de phishing, análisis de contraseñas y más. Por Aegis8.">
+<title>Formación · Aegis8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   AEGIS8 DESIGN SYSTEM — matched from aegis8.org
+   ============================================================ */
+:root {
+  --bg:       #0a0a0a;
+  --bg2:      #111111;
+  --surface:  #161616;
+  --surface2: #1c1c1c;
+  --border:   #2a2a2a;
+  --border2:  #333333;
+  --green:    #00ff87;
+  --green-dim:rgba(0,255,135,0.12);
+  --green-glow:rgba(0,255,135,0.25);
+  --red:      #ff4444;
+  --amber:    #ffaa00;
+  --blue:     #4499ff;
+  --text:     #e8e8e8;
+  --text-mid: #999999;
+  --text-dim: #555555;
+  --mono:     'IBM Plex Mono', monospace;
+  --sans:     'Inter', sans-serif;
+  --nav-h:    64px;
+  --bottom-h: 60px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { font-size: 16px; }
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NOISE TEXTURE */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ============================================================
+   NAVIGATION — exact Aegis8 style
+   ============================================================ */
+.nav {
+  position: sticky; top: 0; z-index: 200;
+  height: var(--nav-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+  background: rgba(10,10,10,0.95);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 15px; font-weight: 500;
+  color: var(--green); letter-spacing: 2px;
+  text-decoration: none; text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-logo::before {
+  content: '';
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+.nav-links {
+  display: flex; align-items: center; gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--mono); font-size: 12px;
+  color: var(--text-mid); text-decoration: none;
+  letter-spacing: 1px; text-transform: lowercase;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--green); }
+.nav-links a.active { color: var(--text); }
+
+.nav-tag {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--green); border: 1px solid var(--green);
+  padding: 4px 10px; letter-spacing: 1px;
+  opacity: .7;
+}
+
+/* ============================================================
+   APP SHELL — mobile-first scroll
+   ============================================================ */
+#shell {
+  position: relative; z-index: 1;
+  height: calc(100vh - var(--nav-h));
+  display: flex; flex-direction: column;
+}
+.scroll-area {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+.scroll-area::-webkit-scrollbar { width: 2px; }
+.scroll-area::-webkit-scrollbar-thumb { background: var(--border2); }
+
+/* BOTTOM NAV (mobile) */
+.bottom-nav {
+  display: none;
+  height: var(--bottom-h);
+  background: rgba(10,10,10,0.97);
+  border-top: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+@media (max-width: 768px) {
+  .nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .nav-tag { display: none; }
+  #shell { height: calc(100vh - var(--nav-h) - var(--bottom-h)); }
+  .bottom-nav { display: flex; }
+  .section { padding: 24px 16px 32px; }
+}
+.bottom-nav { flex-direction: row; }
+.bn-item {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 3px;
+  cursor: pointer; border: none; background: transparent;
+  padding: 8px 4px; transition: background .15s;
+}
+.bn-item:active { background: rgba(0,255,135,0.04); }
+.bn-item .bi { font-size: 19px; transition: transform .2s; }
+.bn-item .bl { font-family: var(--mono); font-size: 9px; letter-spacing: .5px; color: var(--text-dim); transition: color .2s; }
+.bn-item.active .bi { transform: scale(1.1); }
+.bn-item.active .bl { color: var(--green); }
+.bn-item.active { background: rgba(0,255,135,0.04); }
+
+/* MORE DRAWER */
+.more-drawer {
+  position: fixed; bottom: calc(var(--bottom-h) + 8px); left: 8px; right: 8px;
+  background: var(--surface); border: 1px solid var(--border2);
+  z-index: 300; display: none; animation: slideUp .2s ease;
+}
+.more-drawer.open { display: grid; grid-template-columns: 1fr 1fr; }
+@keyframes slideUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+.md-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 16px 14px; border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  cursor: pointer; font-size: 13px; color: var(--text-mid);
+  transition: all .15s;
+}
+.md-item:nth-child(even) { border-right: none; }
+.md-item:nth-last-child(-n+2) { border-bottom: none; }
+.md-item:active { color: var(--green); background: var(--green-dim); }
+.md-icon { font-size: 18px; flex-shrink: 0; }
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+.section { display: none; padding: 40px; max-width: 880px; margin: 0 auto; width: 100%; }
+.section.active { display: block; animation: fadeUp .3s ease; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+/* ============================================================
+   AEGIS8 TYPOGRAPHY SYSTEM
+   ============================================================ */
+.page-label {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 3px;
+  color: var(--green); text-transform: uppercase;
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+}
+.page-label::before { content: '//'; color: var(--text-dim); }
+
+.page-title {
+  font-size: clamp(36px, 7vw, 64px); font-weight: 900;
+  line-height: .95; letter-spacing: -2px; color: var(--text);
+  text-transform: uppercase; margin-bottom: 16px;
+}
+.page-title em { color: var(--green); font-style: normal; }
+
+.page-sub {
+  font-size: 15px; color: var(--text-mid); font-weight: 300;
+  line-height: 1.65; max-width: 520px; margin-bottom: 32px;
+}
+
+.sec-label {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 3px;
+  color: var(--text-dim); text-transform: uppercase;
+  margin-bottom: 20px; padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.sec-label::before { content: '//'; color: var(--green); }
+
+/* ============================================================
+   HOME
+   ============================================================ */
+.hero { padding: 40px 0 32px; }
+
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); margin-top: 8px;
+}
+.mod-card {
+  background: var(--bg); padding: 22px 18px;
+  cursor: pointer; transition: background .15s;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.mod-card:hover { background: var(--surface); }
+.mod-card:active { background: var(--green-dim); }
+.mod-icon { font-size: 22px; }
+.mod-name {
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+  color: var(--text); letter-spacing: 1px; text-transform: uppercase;
+}
+.mod-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+.mod-soon { opacity: .3; cursor: default; }
+.mod-soon:hover { background: var(--bg); }
+
+.stats-strip {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); margin-bottom: 32px;
+}
+@media (max-width: 600px) { .stats-strip { grid-template-columns: 1fr 1fr; } }
+.stat-box { background: var(--bg); padding: 20px 16px; }
+.stat-n {
+  font-family: var(--mono); font-size: 28px;
+  line-height: 1; margin-bottom: 4px;
+}
+.stat-n.g { color: var(--green); }
+.stat-n.r { color: var(--red); }
+.stat-n.a { color: var(--amber); }
+.stat-l { font-size: 11px; color: var(--text-dim); line-height: 1.35; }
+
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+.btn-primary {
+  padding: 13px 28px; background: var(--green); color: #000;
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+  letter-spacing: 1px; text-transform: lowercase;
+  border: none; cursor: pointer; transition: all .2s;
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+.btn-primary:hover { background: #fff; }
+.btn-primary:active { transform: scale(.97); }
+.btn-ghost {
+  padding: 12px 24px; background: transparent;
+  border: 1px solid var(--border2); color: var(--text-mid);
+  font-family: var(--mono); font-size: 12px; letter-spacing: 1px; text-transform: lowercase;
+  cursor: pointer; transition: all .2s;
+}
+.btn-ghost:hover { border-color: var(--green); color: var(--green); }
+
+/* ============================================================
+   SHARED COMPONENTS
+   ============================================================ */
+.panel {
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 20px; margin-bottom: 12px; position: relative; overflow: hidden;
+}
+.panel-accent::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, var(--green), transparent);
+}
+.panel-red::before { background: linear-gradient(90deg, var(--red), transparent); }
+.panel-amber::before { background: linear-gradient(90deg, var(--amber), transparent); }
+.panel-blue::before { background: linear-gradient(90deg, var(--blue), transparent); }
+
+.tag {
+  display: inline-block; font-family: var(--mono); font-size: 9px;
+  letter-spacing: 2px; text-transform: uppercase; padding: 2px 8px;
+  border: 1px solid currentColor;
+}
+.tag-g { color: var(--green); }
+.tag-r { color: var(--red); }
+.tag-a { color: var(--amber); }
+.tag-b { color: var(--blue); }
+
+/* ============================================================
+   QUIZ
+   ============================================================ */
+.q-prog { height: 2px; background: var(--border); margin-bottom: 24px; overflow: hidden; }
+.q-prog-fill { height: 100%; background: var(--green); transition: width .5s ease; }
+
+.q-wrap { max-width: 640px; }
+.q-cat { font-family: var(--mono); font-size: 10px; letter-spacing: 3px; color: var(--green); text-transform: uppercase; margin-bottom: 10px; }
+.q-text { font-size: 18px; font-weight: 600; color: var(--text); line-height: 1.45; margin-bottom: 24px; }
+.q-opts { display: grid; gap: 8px; }
+.q-opt {
+  padding: 14px 16px; background: var(--bg); border: 1px solid var(--border);
+  font-family: var(--sans); font-size: 14px; color: var(--text-mid);
+  cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: 12px;
+  text-align: left; width: 100%;
+}
+.q-opt:hover { border-color: var(--border2); color: var(--text); background: var(--surface); }
+.q-opt:active { background: var(--green-dim); }
+.q-opt.correct { border-color: var(--green); background: var(--green-dim); color: var(--green); }
+.q-opt.wrong { border-color: var(--red); background: rgba(255,68,68,.07); color: var(--red); }
+.q-opt.disabled { cursor: default; pointer-events: none; }
+.q-letter {
+  width: 24px; height: 24px; border: 1px solid currentColor; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 10px;
+}
+.q-fb {
+  margin-top: 16px; padding: 14px 16px;
+  border-left: 2px solid var(--green); background: var(--green-dim);
+  font-size: 13px; color: var(--text-mid); line-height: 1.65; display: none;
+}
+.q-fb.wrong { border-color: var(--red); background: rgba(255,68,68,.07); }
+.q-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+.q-count { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+.btn-qnext {
+  padding: 10px 20px; background: transparent;
+  border: 1px solid var(--green); color: var(--green);
+  font-family: var(--mono); font-size: 11px; letter-spacing: 1px; text-transform: lowercase;
+  cursor: pointer; transition: all .2s; display: none;
+}
+.btn-qnext:hover { background: var(--green); color: #000; }
+
+.q-result {
+  text-align: center; padding: 48px 24px; background: var(--surface);
+  border: 1px solid var(--border); display: none;
+}
+.qr-score { font-family: var(--mono); font-size: 72px; line-height: 1; }
+.qr-label { font-family: var(--mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; }
+.qr-msg { font-size: 15px; color: var(--text-mid); margin: 14px 0 28px; line-height: 1.6; }
+.btn-restart {
+  padding: 13px 28px; background: var(--green); color: #000;
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+  letter-spacing: 1px; text-transform: lowercase;
+  border: none; cursor: pointer; transition: all .2s; width: 100%; max-width: 320px;
+}
+.btn-restart:hover { background: #fff; }
+
+/* ============================================================
+   THREATS
+   ============================================================ */
+.threat-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px; background: var(--bg); border: 1px solid var(--border);
+  margin-bottom: 6px; cursor: pointer; transition: all .15s;
+}
+.threat-row:hover { background: var(--surface); }
+.threat-row:active { background: var(--green-dim); }
+.threat-row.open { border-color: rgba(255,68,68,.4); background: rgba(255,68,68,.03); }
+.ti { font-size: 20px; width: 30px; text-align: center; flex-shrink: 0; }
+.tn { font-size: 14px; font-weight: 600; color: var(--text); }
+.td { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.ts { margin-left: auto; flex-shrink: 0; }
+.chev { margin-left: 6px; font-family: var(--mono); font-size: 12px; color: var(--text-dim); transition: transform .2s; flex-shrink: 0; }
+.threat-row.open .chev { transform: rotate(90deg); }
+
+.threat-detail {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-top: none; padding: 20px; margin-bottom: 6px; display: none;
+  animation: fadeUp .2s ease;
+}
+.threat-detail.open { display: block; }
+.dt-h { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
+.dt-p { font-size: 13px; color: var(--text-mid); line-height: 1.65; margin-bottom: 16px; }
+.dt-list { list-style: none; margin-bottom: 16px; }
+.dt-list li { font-size: 13px; color: var(--text-mid); padding: 5px 0 5px 16px; position: relative; line-height: 1.5; }
+.dt-list li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-family: var(--mono); font-size: 11px; }
+
+/* ============================================================
+   CHECKLIST
+   ============================================================ */
+.ck-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.ck-bar-wrap { flex: 1; height: 2px; background: var(--border); }
+.ck-bar-fill { height: 100%; background: var(--green); transition: width .4s; }
+.ck-pct { font-family: var(--mono); font-size: 13px; color: var(--green); min-width: 36px; text-align: right; }
+
+.ck-group { margin-bottom: 2px; }
+.ck-g-title {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px; background: var(--surface); border: 1px solid var(--border);
+  cursor: pointer; transition: background .15s;
+  font-family: var(--mono); font-size: 12px; color: var(--text); letter-spacing: 1px; text-transform: uppercase;
+}
+.ck-g-title:hover { background: var(--surface2); }
+.ck-g-ch { color: var(--text-dim); transition: transform .2s; }
+.ck-g-title.open .ck-g-ch { transform: rotate(90deg); }
+.ck-items { display: none; }
+.ck-items.open { display: block; }
+.ck-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 16px; background: var(--bg); border: 1px solid var(--border); border-top: none;
+  cursor: pointer; transition: background .15s;
+}
+.ck-item:hover { background: var(--surface); }
+.ck-item:active { background: var(--green-dim); }
+.ck-box {
+  width: 16px; height: 16px; border: 1px solid var(--border2); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 10px; margin-top: 2px; transition: all .2s;
+}
+.ck-item.done .ck-box { background: var(--green); border-color: var(--green); color: #000; }
+.ck-text { font-size: 13px; color: var(--text-mid); line-height: 1.5; }
+.ck-item.done .ck-text { color: var(--text-dim); text-decoration: line-through; }
+
+/* ============================================================
+   PHISHING
+   ============================================================ */
+.email-frame {
+  background: #fff; border-radius: 1px; overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,.7); margin-bottom: 16px;
+}
+.em-hdr { background: #efefef; padding: 14px 16px; border-bottom: 1px solid #ddd; }
+.em-field { display: flex; gap: 6px; font-size: 12px; color: #555; margin-bottom: 4px; }
+.em-field:last-child { margin: 0; }
+.em-field strong { color: #888; min-width: 32px; }
+.em-subj { font-size: 15px; font-weight: 600; color: #111; padding: 12px 16px; border-bottom: 1px solid #e0e0e0; }
+.em-body { padding: 20px 16px; font-size: 13px; color: #333; line-height: 1.8; }
+.em-body p { margin-bottom: 10px; }
+.elink { color: #1a56db; text-decoration: underline; word-break: break-all; }
+.ecta { display: inline-block; padding: 10px 20px; background: #1a56db; color: #fff; font-weight: 600; border-radius: 3px; font-size: 13px; cursor: pointer; }
+
+.ph-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.ph-btn {
+  padding: 13px 8px; border: 1px solid; background: transparent;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 1px; text-transform: lowercase;
+  cursor: pointer; transition: all .15s;
+}
+.ph-btn:active { opacity: .7; }
+.ph-safe { border-color: var(--green); color: var(--green); }
+.ph-safe:hover { background: var(--green); color: #000; }
+.ph-danger { border-color: var(--red); color: var(--red); }
+.ph-danger:hover { background: var(--red); color: #fff; }
+.ph-report { border-color: var(--amber); color: var(--amber); grid-column: 1/-1; }
+.ph-report:hover { background: var(--amber); color: #000; }
+
+.ph-verdict {
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 18px; display: none; margin-bottom: 12px;
+}
+.pv-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+.pv-clue { display: flex; gap: 10px; font-size: 13px; color: var(--text-mid); padding: 7px 0; border-bottom: 1px solid var(--border); line-height: 1.5; }
+.pv-clue:last-child { border: none; }
+.pv-clue span:first-child { flex-shrink: 0; }
+.btn-nphish {
+  width: 100%; padding: 13px; background: transparent;
+  border: 1px solid var(--border2); color: var(--text-mid);
+  font-family: var(--mono); font-size: 11px; letter-spacing: 1px; text-transform: lowercase;
+  cursor: pointer; transition: all .2s; display: none; margin-top: 8px;
+}
+.btn-nphish:hover { border-color: var(--green); color: var(--green); }
+
+/* ============================================================
+   PASSWORD ANALYZER
+   ============================================================ */
+.pw-wrap { max-width: 600px; }
+.pw-input-row { position: relative; margin-bottom: 16px; }
+.pw-input {
+  width: 100%; padding: 16px 48px 16px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text); font-family: var(--mono); font-size: 15px;
+  outline: none; transition: border-color .2s; border-radius: 0;
+  -webkit-appearance: none;
+}
+.pw-input:focus { border-color: var(--green); }
+.pw-eye {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: var(--text-dim); font-size: 16px; cursor: pointer; padding: 6px;
+}
+
+.pw-bars { display: flex; gap: 4px; margin-bottom: 8px; }
+.pw-bar { height: 3px; flex: 1; background: var(--border); transition: background .3s; }
+.pw-bar.f1 { background: var(--red); }
+.pw-bar.f2 { background: var(--amber); }
+.pw-bar.f3 { background: var(--blue); }
+.pw-bar.f4 { background: var(--green); }
+.pw-score-row { display: flex; justify-content: space-between; margin-bottom: 16px; }
+.pw-score-label { font-family: var(--mono); font-size: 12px; }
+.pw-crack { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+
+.pw-criteria { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 20px; }
+@media (max-width: 500px) { .pw-criteria { grid-template-columns: 1fr 1fr; } }
+.pw-crit {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px; background: var(--surface); border: 1px solid var(--border);
+  font-family: var(--mono); font-size: 11px; color: var(--text-dim);
+  transition: all .2s; letter-spacing: .5px;
+}
+.pw-crit.pass { border-color: rgba(0,255,135,.3); color: var(--green); background: var(--green-dim); }
+.pw-cc { font-size: 10px; flex-shrink: 0; }
+
+.btn-gen {
+  width: 100%; padding: 14px; background: transparent;
+  border: 1px solid var(--border2); color: var(--text-mid);
+  font-family: var(--mono); font-size: 12px; letter-spacing: 1px; text-transform: lowercase;
+  cursor: pointer; transition: all .2s; margin-bottom: 12px;
+}
+.btn-gen:hover { border-color: var(--green); color: var(--green); }
+
+.pw-generated { background: var(--surface); border: 1px solid var(--border); padding: 16px; display: none; margin-bottom: 16px; }
+.pw-gen-val { font-family: var(--mono); font-size: 14px; color: var(--green); word-break: break-all; line-height: 1.6; margin-bottom: 12px; }
+.btn-copy {
+  padding: 8px 14px; background: transparent;
+  border: 1px solid var(--border2); color: var(--text-dim);
+  font-family: var(--mono); font-size: 11px; cursor: pointer; transition: all .2s;
+}
+.btn-copy.copied { border-color: var(--green); color: var(--green); }
+
+.pw-tips { margin-top: 8px; }
+.pw-tip { display: flex; align-items: flex-start; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text-mid); line-height: 1.55; }
+.pw-tip:last-child { border: none; }
+.pw-tip-icon { font-size: 14px; flex-shrink: 0; font-family: var(--mono); color: var(--green); }
+
+/* ============================================================
+   BREACH SIMULATOR
+   ============================================================ */
+.breach-intro {
+  background: rgba(255,68,68,.05); border: 1px solid rgba(255,68,68,.2);
+  padding: 16px; margin-bottom: 24px;
+  font-size: 13px; color: var(--text-mid); line-height: 1.65;
+}
+.breach-intro strong { color: var(--red); }
+
+.scenario-tabs { display: flex; gap: 0; margin-bottom: 20px; overflow-x: auto; }
+.scenario-tabs::-webkit-scrollbar { display: none; }
+.sc-tab {
+  flex-shrink: 0; padding: 9px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-right: none;
+  font-family: var(--mono); font-size: 11px; color: var(--text-dim);
+  letter-spacing: 1px; cursor: pointer; transition: all .15s;
+}
+.sc-tab:last-child { border-right: 1px solid var(--border); }
+.sc-tab.active { color: var(--red); border-bottom-color: var(--bg); background: var(--surface); }
+.sc-tab:active { opacity: .7; }
+
+.breach-controls { display: flex; gap: 10px; margin-bottom: 24px; }
+.btn-breach {
+  flex: 1; padding: 13px; background: transparent; border: 1px solid;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 1px; text-transform: lowercase;
+  cursor: pointer; transition: all .15s;
+}
+.bb-start { border-color: var(--red); color: var(--red); }
+.bb-start:hover { background: var(--red); color: #fff; }
+.bb-reset { border-color: var(--border2); color: var(--text-dim); }
+.bb-reset:hover { border-color: var(--text-dim); color: var(--text); }
+
+.timeline { padding-left: 24px; position: relative; }
+.timeline::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 1px; background: var(--border); }
+.tl-item { position: relative; margin-bottom: 0; }
+.tl-dot {
+  position: absolute; left: -20px; top: 20px;
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 1px solid var(--border); background: var(--bg);
+  transition: all .4s;
+}
+.tl-dot.active { border-color: var(--red); background: var(--red); box-shadow: 0 0 10px rgba(255,68,68,.5); }
+.tl-dot.done { border-color: var(--green); background: var(--green); }
+.tl-card {
+  background: var(--bg); border: 1px solid var(--border);
+  padding: 16px; margin-bottom: 8px; transition: all .3s;
+}
+.tl-card.active { border-color: rgba(255,68,68,.35); background: rgba(255,68,68,.03); }
+.tl-card.done { opacity: .55; }
+.tl-hour { font-family: var(--mono); font-size: 10px; color: var(--text-dim); margin-bottom: 4px; }
+.tl-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.tl-desc { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+.tl-impact { margin-top: 10px; padding: 8px 12px; border-left: 2px solid var(--red); background: rgba(255,68,68,.05); font-size: 11px; color: var(--red); line-height: 1.5; display: none; font-family: var(--mono); }
+
+.breach-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 24px; display: none; }
+@media (max-width: 600px) { .breach-stats { grid-template-columns: 1fr 1fr; } }
+.bstat { background: var(--surface); padding: 16px; text-align: center; }
+.bstat-n { font-family: var(--mono); font-size: 20px; color: var(--red); }
+.bstat-l { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; line-height: 1.3; }
+
+/* ============================================================
+   POLICIES
+   ============================================================ */
+.policy-tabs { display: flex; overflow-x: auto; margin-bottom: 16px; gap: 0; }
+.policy-tabs::-webkit-scrollbar { display: none; }
+.ptab {
+  flex-shrink: 0; padding: 10px 16px;
+  background: var(--bg); border: 1px solid var(--border); border-right: none;
+  font-family: var(--mono); font-size: 11px; color: var(--text-dim);
+  letter-spacing: 1px; cursor: pointer; transition: all .15s; text-transform: lowercase;
+}
+.ptab:last-child { border-right: 1px solid var(--border); }
+.ptab.active { color: var(--green); background: var(--surface); border-bottom-color: var(--surface); }
+.ptab:active { opacity: .7; }
+
+.pol-section { margin-bottom: 2px; background: var(--bg); border: 1px solid var(--border); overflow: hidden; }
+.pol-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px; cursor: pointer; transition: background .15s;
+}
+.pol-header:hover { background: var(--surface); }
+.pol-htitle { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--text); }
+.pol-icon { font-size: 16px; }
+.pol-ch { font-family: var(--mono); font-size: 12px; color: var(--text-dim); transition: transform .2s; }
+.pol-header.open .pol-ch { transform: rotate(90deg); }
+.pol-body { display: none; padding: 0 16px 16px; border-top: 1px solid var(--border); }
+.pol-body.open { display: block; }
+.pol-rule {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  font-size: 13px; color: var(--text-mid); line-height: 1.55;
+}
+.pol-rule:last-child { border: none; }
+.pol-dot { font-family: var(--mono); font-size: 10px; flex-shrink: 0; margin-top: 2px; }
+.pol-dot.m { color: var(--red); }
+.pol-dot.r { color: var(--amber); }
+.pol-badge {
+  display: inline-block; margin-left: 6px; padding: 1px 6px;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 1px; text-transform: uppercase; vertical-align: middle;
+}
+.pb-m { background: rgba(255,68,68,.1); color: var(--red); border: 1px solid rgba(255,68,68,.25); }
+.pb-r { background: rgba(255,170,0,.1); color: var(--amber); border: 1px solid rgba(255,170,0,.25); }
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+.toast {
+  position: fixed; bottom: calc(var(--bottom-h) + 16px); left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  background: var(--green); color: #000;
+  padding: 10px 20px; font-family: var(--mono); font-size: 12px; font-weight: 500;
+  opacity: 0; transition: all .3s; pointer-events: none; z-index: 999;
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  padding: 32px 40px; border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: gap;
+  font-family: var(--mono); font-size: 11px; color: var(--text-dim); gap: 12px;
+}
+@media (max-width: 600px) { .footer { padding: 24px 16px; flex-direction: column; text-align: center; } }
+.footer a { color: var(--text-dim); text-decoration: none; transition: color .2s; }
+.footer a:hover { color: var(--green); }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVIGATION — identical to aegis8.org
+     ============================================================ -->
+<nav class="nav">
+  <a href="https://aegis8.org" class="nav-logo">AEGIS8</a>
+  <ul class="nav-links">
+    <li><a href="https://aegis8.org/#amenazas">amenazas</a></li>
+    <li><a href="https://aegis8.org/#principios">principios</a></li>
+    <li><a href="https://aegis8.org/#checklist">checklist</a></li>
+    <li><a href="/formacion.html" class="active">formación</a></li>
+    <li><a href="https://aegis8.org/contactos.html">contacto</a></li>
+  </ul>
+  <span class="nav-tag">formación interactiva</span>
+</nav>
+
+<!-- ============================================================
+     APP SHELL
+     ============================================================ -->
+<div id="shell">
+  <div class="scroll-area" id="scrollArea">
+
+    <!-- HOME -->
+    <section id="home" class="section active">
+      <div class="hero">
+        <div class="page-label">plataforma de entrenamiento</div>
+        <h1 class="page-title">Formación<em>sin humo.</em></h1>
+        <p class="page-sub">Quiz interactivo, simulador de phishing, análisis de contraseñas y escenarios de brecha reales. Entrena a tu equipo con herramientas concretas.</p>
+        <div class="cta-row">
+          <button class="btn-primary" onclick="goTo('quiz',1)">▶ empezar quiz</button>
+          <button class="btn-ghost" onclick="goTo('breach',6)">ver simulador de brecha</button>
+        </div>
+      </div>
+
+      <div class="stats-strip">
+        <div class="stat-box"><div class="stat-n r counting" data-t="95">0</div><div class="stat-l">% de brechas por error humano</div></div>
+        <div class="stat-box"><div class="stat-n a counting" data-t="287">0</div><div class="stat-l">días promedio sin detectar una brecha</div></div>
+        <div class="stat-box"><div class="stat-n r counting" data-t="60">0</div><div class="stat-l">% de pymes cierran tras un incidente</div></div>
+        <div class="stat-box"><div class="stat-n g counting" data-t="72">0</div><div class="stat-l">% reducción del riesgo con formación continua</div></div>
+      </div>
+
+      <div class="sec-label">módulos disponibles</div>
+      <div class="module-grid">
+        <div class="mod-card" onclick="goTo('quiz',1)">
+          <div class="mod-icon">🎯</div>
+          <div class="mod-name">Quiz</div>
+          <div class="mod-desc">10 preguntas sobre situaciones reales de ciberseguridad empresarial.</div>
+        </div>
+        <div class="mod-card" onclick="goTo('threats',2)">
+          <div class="mod-icon">⚠️</div>
+          <div class="mod-name">Amenazas</div>
+          <div class="mod-desc">Explora los vectores de ataque más comunes y cómo defenderte.</div>
+        </div>
+        <div class="mod-card" onclick="goTo('checklist',3)">
+          <div class="mod-icon">✅</div>
+          <div class="mod-name">Checklist</div>
+          <div class="mod-desc">Audita el nivel de seguridad de tu empresa con 25 controles clave.</div>
+        </div>
+        <div class="mod-card" onclick="goTo('phishing',4)">
+          <div class="mod-icon">🎣</div>
+          <div class="mod-name">Phishing</div>
+          <div class="mod-desc">Identifica correos maliciosos en escenarios reales de suplantación.</div>
+        </div>
+        <div class="mod-card" onclick="goTo('password',5)">
+          <div class="mod-icon">🔐</div>
+          <div class="mod-name">Contraseñas</div>
+          <div class="mod-desc">Analiza la fortaleza de contraseñas y genera claves seguras.</div>
+        </div>
+        <div class="mod-card" onclick="goTo('breach',6)">
+          <div class="mod-icon">💥</div>
+          <div class="mod-name">Si me hackean</div>
+          <div class="mod-desc">Simula una brecha real paso a paso y ve el impacto económico.</div>
+        </div>
+        <div class="mod-card" onclick="goTo('policies',7)">
+          <div class="mod-icon">📋</div>
+          <div class="mod-name">Políticas</div>
+          <div class="mod-desc">Normas de seguridad que todo empleado debe conocer y aplicar.</div>
+        </div>
+        <div class="mod-card mod-soon">
+          <div class="mod-icon">📊</div>
+          <div class="mod-name">Dashboard</div>
+          <div class="mod-desc">Panel de seguimiento del equipo. Próximamente.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="quiz" class="section">
+      <div class="sec-label">quiz · concienciación</div>
+      <div class="q-wrap">
+        <div class="q-prog"><div class="q-prog-fill" id="qProg" style="width:0%"></div></div>
+        <div id="qCard"></div>
+        <div id="qResult" class="q-result">
+          <div class="qr-label">puntuación final</div>
+          <div class="qr-score" id="qScore"></div>
+          <div id="qMsg" class="qr-msg"></div>
+          <button class="btn-restart" onclick="restartQuiz()">↺ repetir quiz</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- THREATS -->
+    <section id="threats" class="section">
+      <div class="sec-label">vectores de ataque</div>
+      <div id="threatList"></div>
+    </section>
+
+    <!-- CHECKLIST -->
+    <section id="checklist" class="section">
+      <div class="sec-label">checklist · seguridad empresarial</div>
+      <div class="ck-header">
+        <div class="ck-bar-wrap"><div class="ck-bar-fill" id="ckFill" style="width:0%"></div></div>
+        <div class="ck-pct" id="ckPct">0%</div>
+      </div>
+      <div id="ckGrid"></div>
+    </section>
+
+    <!-- PHISHING -->
+    <section id="phishing" class="section">
+      <div class="sec-label">simulador · phishing</div>
+      <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px;">Analiza el correo y decide si es legítimo o un ataque.</p>
+      <div id="phEmail"></div>
+      <div class="ph-actions">
+        <button class="ph-btn ph-safe" onclick="phAns(false)">✓ es legítimo</button>
+        <button class="ph-btn ph-danger" onclick="phAns(true)">⚠ es phishing</button>
+        <button class="ph-btn ph-report" onclick="phAns('report')">↗ reportar y eliminar</button>
+      </div>
+      <div id="phVerdict" class="ph-verdict"></div>
+      <button class="btn-nphish" id="btnNph" onclick="nextPhish()">siguiente correo →</button>
+    </section>
+
+    <!-- PASSWORD -->
+    <section id="password" class="section">
+      <div class="sec-label">analizador · contraseñas</div>
+      <div class="pw-wrap">
+        <div class="pw-input-row">
+          <input type="password" class="pw-input" id="pwIn" placeholder="escribe una contraseña…" oninput="analyzePw(this.value)" autocomplete="new-password">
+          <button class="pw-eye" onclick="toggleEye()" id="pwEye">👁</button>
+        </div>
+        <div class="pw-bars" id="pwBars">
+          <div class="pw-bar" id="pb1"></div><div class="pw-bar" id="pb2"></div>
+          <div class="pw-bar" id="pb3"></div><div class="pw-bar" id="pb4"></div>
+        </div>
+        <div class="pw-score-row">
+          <span class="pw-score-label" id="pwLabel" style="color:var(--text-dim)">sin contraseña</span>
+          <span class="pw-crack" id="pwCrack"></span>
+        </div>
+        <div class="pw-criteria">
+          <div class="pw-crit" id="pc-len"><span class="pw-cc">○</span> 12+ caracteres</div>
+          <div class="pw-crit" id="pc-up"><span class="pw-cc">○</span> Mayúsculas</div>
+          <div class="pw-crit" id="pc-lo"><span class="pw-cc">○</span> Minúsculas</div>
+          <div class="pw-crit" id="pc-nu"><span class="pw-cc">○</span> Números</div>
+          <div class="pw-crit" id="pc-sy"><span class="pw-cc">○</span> Símbolos</div>
+          <div class="pw-crit" id="pc-nd"><span class="pw-cc">○</span> No es común</div>
+        </div>
+        <button class="btn-gen" onclick="generatePw()">⚡ generar contraseña segura</button>
+        <div id="pwGen" class="pw-generated">
+          <div class="pw-gen-val" id="pwGenVal"></div>
+          <button class="btn-copy" id="pwCopy" onclick="copyPw()">copiar contraseña</button>
+        </div>
+        <div class="pw-tips">
+          <div class="pw-tip"><span class="pw-tip-icon">!</span><span>Nunca reutilices contraseñas. Una filtración en cualquier servicio expone todos tus accesos.</span></div>
+          <div class="pw-tip"><span class="pw-tip-icon">!</span><span>Usa un gestor de contraseñas (Bitwarden, 1Password). Solo necesitas recordar una contraseña maestra.</span></div>
+          <div class="pw-tip"><span class="pw-tip-icon">!</span><span>Activa MFA siempre. Una contraseña robada sin MFA da acceso inmediato y completo.</span></div>
+          <div class="pw-tip"><span class="pw-tip-icon">!</span><span>Cambia contraseñas solo ante sospecha de brecha, no por calendario sin razón específica.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BREACH -->
+    <section id="breach" class="section">
+      <div class="sec-label">simulador · brecha real</div>
+      <div class="breach-intro">
+        Esto es lo que ocurre cuando un ataque tiene éxito. <strong>Cada hora sin respuesta multiplica el daño.</strong> La mayoría de empresas descubren la brecha días o semanas después.
+      </div>
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;margin-bottom:8px;">// escenario</div>
+      <div class="scenario-tabs">
+        <button class="sc-tab active" onclick="selectSc(0,this)">phishing + ransomware</button>
+        <button class="sc-tab" onclick="selectSc(1,this)">credenciales robadas</button>
+        <button class="sc-tab" onclick="selectSc(2,this)">malware interno</button>
+      </div>
+      <div class="breach-controls">
+        <button class="btn-breach bb-start" id="bStartBtn" onclick="startBreach()">▶ iniciar simulación</button>
+        <button class="btn-breach bb-reset" onclick="resetBreach()">↺ reiniciar</button>
+      </div>
+      <div class="timeline" id="bTimeline"></div>
+      <div class="breach-stats" id="bStats"></div>
+    </section>
+
+    <!-- POLICIES -->
+    <section id="policies" class="section">
+      <div class="sec-label">políticas · seguridad interna</div>
+      <div class="policy-tabs" id="polTabs">
+        <button class="ptab active" onclick="switchPol(0,this)">accesos</button>
+        <button class="ptab" onclick="switchPol(1,this)">dispositivos</button>
+        <button class="ptab" onclick="switchPol(2,this)">datos</button>
+        <button class="ptab" onclick="switchPol(3,this)">incidentes</button>
+        <button class="ptab" onclick="switchPol(4,this)">teletrabajo</button>
+      </div>
+      <div id="polContent"></div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <span>© 2025 <a href="https://aegis8.org">aegis8</a> · consultora de ciberseguridad</span>
+      <span>formación interactiva · <a href="https://aegis8.org/contactos.html">contacto →</a></span>
+    </footer>
+
+  </div><!-- /scroll-area -->
+
+  <!-- BOTTOM NAV (mobile only) -->
+  <nav class="bottom-nav" id="bnav">
+    <button class="bn-item active" onclick="goTo('home',0)"><span class="bi">🏠</span><span class="bl">inicio</span></button>
+    <button class="bn-item" onclick="goTo('quiz',1)"><span class="bi">🎯</span><span class="bl">quiz</span></button>
+    <button class="bn-item" onclick="goTo('threats',2)"><span class="bi">⚠️</span><span class="bl">amenazas</span></button>
+    <button class="bn-item" onclick="goTo('checklist',3)"><span class="bi">✅</span><span class="bl">checklist</span></button>
+    <button class="bn-item" id="moreBtn" onclick="toggleMore()"><span class="bi">⋯</span><span class="bl">más</span></button>
+  </nav>
+
+  <!-- MORE DRAWER -->
+  <div class="more-drawer" id="moreDrawer">
+    <div class="md-item" onclick="goTo('phishing',4);closeMore()"><span class="md-icon">🎣</span><span>phishing</span></div>
+    <div class="md-item" onclick="goTo('password',5);closeMore()"><span class="md-icon">🔐</span><span>contraseñas</span></div>
+    <div class="md-item" onclick="goTo('breach',6);closeMore()"><span class="md-icon">💥</span><span>si me hackean</span></div>
+    <div class="md-item" onclick="goTo('policies',7);closeMore()"><span class="md-icon">📋</span><span>políticas</span></div>
+  </div>
+</div><!-- /shell -->
+
+<div class="toast" id="toast"></div>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+// ── NAV ──────────────────────────────────────────────────────
+function goTo(id, idx) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('scrollArea').scrollTop = 0;
+  const bns = document.querySelectorAll('#bnav .bn-item');
+  bns.forEach((b,i) => b.classList.toggle('active', i === Math.min(idx,3) || (idx > 3 && i === 4)));
+}
+function toggleMore() { document.getElementById('moreDrawer').classList.toggle('open'); }
+function closeMore()  { document.getElementById('moreDrawer').classList.remove('open'); }
+document.addEventListener('click', e => {
+  if (!e.target.closest('#moreDrawer') && !document.getElementById('moreBtn').contains(e.target)) closeMore();
+});
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ── COUNTERS ─────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  document.querySelectorAll('.counting').forEach(el => {
+    const target = parseInt(el.dataset.t), dur = 1600, step = target / (dur / 16);
+    let cur = 0;
+    const id = setInterval(() => { cur = Math.min(cur + step, target); el.textContent = Math.round(cur); if (cur >= target) clearInterval(id); }, 16);
+  });
+});
+
+// ── QUIZ ─────────────────────────────────────────────────────
+const Q = [
+  {cat:'contraseñas', q:'¿Cuál es la contraseña más segura?', opts:['Empresa2024','P@ssw0rd!','7hK#mQ2!vLpN9x','contraseña123'], c:2, fb:'Una contraseña segura combina mayúsculas, minúsculas, números y símbolos con 12+ caracteres aleatorios. Evita palabras del diccionario o nombres de empresa.'},
+  {cat:'phishing', q:'Recibes un email urgente de "soporte@micr0soft-support.net" pidiendo tus credenciales. ¿Qué haces?', opts:['Haces clic para verificar tu cuenta','Ignoras y eliminas el correo','Reportas a IT antes de eliminar','Respondes confirmando tu identidad'], c:2, fb:'Reportar a IT preserva evidencia forense valiosa. El dominio "micr0soft" (con cero) es suplantación clásica. Microsoft nunca pide credenciales por email.'},
+  {cat:'wifi', q:'En un aeropuerto necesitas acceder al ERP de la empresa. ¿Qué haces?', opts:['WiFi del aeropuerto directamente','Datos móviles del teléfono','WiFi del aeropuerto con VPN corporativa','Esperar a llegar a la oficina'], c:2, fb:'La VPN cifra todo el tráfico incluso en redes públicas no seguras. Nunca accedas a sistemas sensibles sin VPN desde WiFi público.'},
+  {cat:'ingeniería social', q:'Alguien llama afirmando ser de IT y pide tu contraseña para "actualizar tu cuenta". ¿Qué haces?', opts:['La das si parece urgente','Pides su nombre y cuelgas','Niegas tener contraseña','Te niegas y reportas la llamada'], c:3, fb:'IT legítimo NUNCA pedirá tu contraseña por teléfono o email. Es vishing (phishing por voz). Reporta siempre estas llamadas.'},
+  {cat:'dispositivos', q:'Encuentras un USB en el parking de la empresa. ¿Qué haces?', opts:['Lo conectas para ver el contenido','Lo llevas a IT para análisis','Lo tiras a la basura','Lo guardas por si alguien lo busca'], c:1, fb:'Los USB abandonados ("USB drop attack") son un ataque real documentado. Conectarlo puede instalar malware automáticamente. Entrega siempre a IT.'},
+  {cat:'actualizaciones', q:'El sistema muestra una actualización de seguridad crítica. ¿Cuándo la instalas?', opts:['La pospongo indefinidamente','En el siguiente ciclo mensual','En las próximas 24-48 horas','La ignoro si todo funciona bien'], c:2, fb:'El 60% de las brechas explotan vulnerabilidades para las que ya existía parche. Los críticos deben aplicarse en 24-48h máximo.'},
+  {cat:'accesos', q:'Un compañero pide acceso a archivos confidenciales de clientes "para un proyecto". ¿Qué haces?', opts:['Se los envías por email','Compartes el enlace de la carpeta','Verificas con su responsable y sigues el protocolo','Acceso temporal sin avisar a nadie'], c:2, fb:'Principio de mínimo privilegio: verifica siempre la necesidad real. Toda solicitud debe seguir el protocolo formal, sin excepciones.'},
+  {cat:'bloqueo', q:'¿Con qué frecuencia debes bloquear tu equipo al alejarte?', opts:['Solo al final del día','Al ir a almorzar','Siempre, aunque sea 30 segundos','Solo en zonas con visitas externas'], c:2, fb:'Win+L o Cmd+Ctrl+Q bloquean en un segundo. Configura bloqueo automático a 5 minutos máximo. Un equipo sin bloquear es un vector de ataque.'},
+  {cat:'backups', q:'¿Cuál es la estrategia de backup recomendada para datos críticos?', opts:['1 copia en el mismo disco','Solo backup en la nube','Regla 3-2-1: 3 copias, 2 medios, 1 offsite','Backup semanal en USB externo'], c:2, fb:'La regla 3-2-1 es el estándar de la industria. Una copia offline (sin conexión a la red) es la diferencia entre recuperación y desastre total ante ransomware.'},
+  {cat:'autenticación', q:'¿Qué es la autenticación multifactor (MFA) y por qué importa?', opts:['Usar contraseñas distintas en cada sistema','Requerir múltiples identidades físicas','Verificar identidad con algo que sabes + algo que tienes/eres','Cambiar contraseña mensualmente'], c:2, fb:'El MFA bloquea el 99.9% de los ataques automatizados de cuentas (Microsoft, 2023). Combina contraseña + dispositivo/token + biometría.'},
+];
+let qIdx = 0, qScore = 0, qAnswered = false;
+function renderQ() {
+  const d = Q[qIdx];
+  document.getElementById('qProg').style.width = (qIdx / Q.length * 100) + '%';
+  document.getElementById('qCard').innerHTML = `
+    <div class="panel panel-accent">
+      <div class="q-cat">// ${d.cat}</div>
+      <div class="q-text">${d.q}</div>
+      <div class="q-opts">${d.opts.map((o,i) => `<button class="q-opt" onclick="selectQ(${i})"><span class="q-letter">${String.fromCharCode(65+i)}</span>${o}</button>`).join('')}</div>
+      <div class="q-fb" id="qFb"></div>
+      <div class="q-foot">
+        <span class="q-count">${qIdx+1} / ${Q.length}</span>
+        <button class="btn-qnext" id="btnQN" onclick="nextQ()">${qIdx < Q.length-1 ? 'siguiente →' : 'ver resultado'}</button>
+      </div>
+    </div>`;
+  qAnswered = false;
+}
+function selectQ(i) {
+  if (qAnswered) return; qAnswered = true;
+  const d = Q[qIdx];
+  document.querySelectorAll('.q-opt').forEach(o => o.classList.add('disabled'));
+  document.querySelectorAll('.q-opt')[i].classList.add(i === d.c ? 'correct' : 'wrong');
+  if (i !== d.c) document.querySelectorAll('.q-opt')[d.c].classList.add('correct');
+  if (i === d.c) qScore++;
+  const fb = document.getElementById('qFb');
+  fb.textContent = d.fb; fb.className = 'q-fb' + (i !== d.c ? ' wrong' : ''); fb.style.display = 'block';
+  document.getElementById('btnQN').style.display = 'inline-block';
+}
+function nextQ() { qIdx++; if (qIdx >= Q.length) showQResult(); else renderQ(); }
+function showQResult() {
+  document.getElementById('qCard').style.display = 'none';
+  document.getElementById('qProg').style.width = '100%';
+  const pct = Math.round(qScore / Q.length * 100);
+  document.getElementById('qResult').style.display = 'block';
+  document.getElementById('qScore').textContent = `${qScore}/${Q.length}`;
+  document.getElementById('qScore').style.color = pct >= 70 ? 'var(--green)' : 'var(--red)';
+  document.getElementById('qMsg').textContent =
+    pct >= 90 ? 'Excelente. Eres un activo clave para la seguridad de tu empresa.' :
+    pct >= 70 ? 'Buen nivel. Refuerza los conceptos en los que fallaste.' :
+    pct >= 50 ? 'Nivel básico. Tu empresa necesita que mejores tus competencias urgentemente.' :
+    'Riesgo alto. Es urgente completar la formación completa de seguridad.';
+}
+function restartQuiz() { qIdx = 0; qScore = 0; document.getElementById('qResult').style.display = 'none'; document.getElementById('qCard').style.display = 'block'; renderQ(); }
+
+// ── THREATS ──────────────────────────────────────────────────
+const T = [
+  {ic:'🎣', nm:'Phishing / Spear Phishing', ds:'suplantación por correo electrónico', sv:'critical',
+   what:'El phishing es el vector de ataque #1 en empresas. El spear phishing personaliza el ataque usando datos reales de la víctima para aumentar la tasa de éxito significativamente.',
+   how:['Email con dominio falsificado o typosquatting','Enlace a web clonada con SSL falso','Harvesting de credenciales en tiempo real','Acceso a sistemas internos con las credenciales robadas'],
+   protect:['Filtros antiphishing con IA en el gateway de email','Formación continua con simulaciones reales','MFA obligatorio para todos los accesos','DMARC/DKIM/SPF configurados en el dominio']},
+  {ic:'💰', nm:'Ransomware', ds:'cifrado de datos con extorsión económica', sv:'critical',
+   what:'El ransomware cifra archivos críticos y exige rescate. Los grupos modernos aplican doble extorsión: cifran Y amenazan publicar los datos. El coste medio supera los 1,8M€ por incidente.',
+   how:['Entrada inicial vía phishing o RDP expuesto','Movimiento lateral silencioso (días o semanas)','Exfiltración de datos antes del cifrado','Activación sincronizada del payload'],
+   protect:['Backups 3-2-1 con copia offline verificada','Segmentación de red para limitar propagación','EDR con análisis de comportamiento','Plan de respuesta a incidentes documentado y probado']},
+  {ic:'🕵️', nm:'Ingeniería Social', ds:'manipulación psicológica del factor humano', sv:'high',
+   what:'Los atacantes explotan sesgos cognitivos: urgencia, autoridad, miedo o recompensa. Una llamada puede dar acceso completo sin explotar ninguna vulnerabilidad técnica.',
+   how:['Vishing: llamadas suplantando IT, banco o proveedor','Pretexting: crear una historia creíble y detallada','Baiting: USB infectados en zonas comunes','Quid pro quo: ofrecer ayuda a cambio de acceso'],
+   protect:['Protocolo estricto de verificación de identidad','Formación en reconocimiento de técnicas sociales','Política de no compartir credenciales nunca','Cultura de "si tienes duda, reporta"']},
+  {ic:'🔓', nm:'Credenciales Comprometidas', ds:'acceso con contraseñas robadas o filtradas', sv:'high',
+   what:'+24.000 millones de credenciales disponibles en la dark web. La reutilización de contraseñas convierte una filtración menor en acceso a sistemas críticos de la empresa.',
+   how:['Credential stuffing con bases de datos filtradas','Brute force en portales sin rate limiting','Password spraying con contraseñas comunes','Compra de credenciales en mercados clandestinos'],
+   protect:['Gestor de contraseñas corporativo obligatorio','Contraseñas únicas de 16+ caracteres','MFA en todos los sistemas sin excepción','Monitorización de credenciales en dark web']},
+  {ic:'💻', nm:'Malware / RATs', ds:'software malicioso con control remoto', sv:'critical',
+   what:'Los RATs dan control total del equipo: captura de pantalla, keylogging, acceso a cámara/micrófono, descarga de archivos y movimiento lateral por la red corporativa.',
+   how:['Adjunto malicioso con macro ofuscada','Descarga drive-by en sitio web comprometido','Software pirata o herramientas "crackeadas"','Actualización falsa de software legítimo'],
+   protect:['EDR actualizado con análisis de comportamiento','Control de aplicaciones (application whitelist)','Navegación segura con proxy y filtrado DNS','Deshabilitar macros de Office por defecto']},
+  {ic:'📡', nm:'Ataques a Red WiFi', ds:'interceptación en redes inalámbricas', sv:'medium',
+   what:'Las WiFi mal configuradas permiten interceptar comunicaciones y ataques man-in-the-middle. El "evil twin" crea una red falsa con el mismo nombre de la red legítima.',
+   how:['Evil Twin: punto de acceso falso con SSID clonado','Cracking de WPA2 con handshake capturado','Desautenticación forzada para capturar credenciales','Acceso físico a red con puerto abierto'],
+   protect:['WPA3 Enterprise con autenticación 802.1X','Red de invitados completamente aislada','VPN obligatoria en todos los dispositivos','Auditorías periódicas de puntos de acceso']},
+];
+let openT = -1;
+function renderThreats() {
+  document.getElementById('threatList').innerHTML = T.map((t,i) => `
+    <div class="threat-row" id="tr${i}" onclick="toggleT(${i})">
+      <span class="ti">${t.ic}</span>
+      <div style="flex:1;min-width:0"><div class="tn">${t.nm}</div><div class="td">${t.ds}</div></div>
+      <span class="ts tag tag-${t.sv === 'critical' ? 'r' : t.sv === 'high' ? 'a' : 'b'}">${t.sv}</span>
+      <span class="chev">›</span>
+    </div>
+    <div class="threat-detail" id="td${i}">
+      <div class="dt-h">qué es</div><div class="dt-p">${t.what}</div>
+      <div class="dt-h">cómo funciona el ataque</div>
+      <ul class="dt-list">${t.how.map(s=>`<li>${s}</li>`).join('')}</ul>
+      <div class="dt-h">cómo protegerse</div>
+      <ul class="dt-list">${t.protect.map(s=>`<li>${s}</li>`).join('')}</ul>
+    </div>`).join('');
+}
+function toggleT(i) {
+  const same = openT === i;
+  if (openT >= 0) { document.getElementById('tr'+openT).classList.remove('open'); document.getElementById('td'+openT).classList.remove('open'); }
+  if (!same) { document.getElementById('tr'+i).classList.add('open'); document.getElementById('td'+i).classList.add('open'); openT = i; }
+  else openT = -1;
+}
+
+// ── CHECKLIST ────────────────────────────────────────────────
+const CL = [
+  {g:'🔑 acceso e identidad', items:['MFA habilitado en todos los sistemas críticos','Gestor de contraseñas corporativo implantado','Política de contraseñas de mínimo 14 caracteres','Revisión trimestral de accesos y privilegios','Baja inmediata de accesos al finalizar relación laboral']},
+  {g:'💻 dispositivos y endpoints', items:['EDR instalado en todos los endpoints','Actualizaciones automáticas habilitadas','Cifrado de disco completo (BitLocker/FileVault)','Bloqueo automático a los 5 minutos','Inventario actualizado de todos los dispositivos']},
+  {g:'📡 red y conectividad', items:['VPN obligatoria para acceso remoto','Segmentación de red implementada','NGFW configurado y actualizado','Monitorización de tráfico 24/7','Red WiFi de invitados aislada de la LAN']},
+  {g:'💾 datos y backups', items:['Clasificación de datos sensibles documentada','Backup 3-2-1 con prueba de restauración mensual','Cifrado de datos en reposo y en tránsito','DLP (Data Loss Prevention) configurado','Política de retención de datos definida']},
+  {g:'🎓 formación y cultura', items:['Formación de concienciación anual para toda la plantilla','Simulaciones de phishing trimestrales','Canal de reporte de incidentes conocido por todos','Plan de respuesta a incidentes documentado','Responsable de seguridad (CISO/DPO) designado']},
+];
+let ckState = {};
+function renderChecklist() {
+  CL.forEach((g,gi) => g.items.forEach((_,ii) => { ckState[`${gi}-${ii}`] = false; }));
+  document.getElementById('ckGrid').innerHTML = CL.map((g,gi) => `
+    <div class="ck-group">
+      <div class="ck-g-title open" id="cgt${gi}" onclick="toggleCkG(${gi})">
+        <span>${g.g}</span><span class="ck-g-ch">›</span>
+      </div>
+      <div class="ck-items open" id="cgi${gi}">
+        ${g.items.map((item,ii) => `
+          <div class="ck-item" id="ci${gi}-${ii}" onclick="toggleCk(${gi},${ii})">
+            <div class="ck-box" id="cb${gi}-${ii}"></div>
+            <div class="ck-text">${item}</div>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+  updateCkP();
+}
+function toggleCkG(gi) { document.getElementById('cgt'+gi).classList.toggle('open'); document.getElementById('cgi'+gi).classList.toggle('open'); }
+function toggleCk(gi,ii) {
+  const k = `${gi}-${ii}`; ckState[k] = !ckState[k];
+  document.getElementById(`ci${gi}-${ii}`).classList.toggle('done', ckState[k]);
+  document.getElementById(`cb${gi}-${ii}`).textContent = ckState[k] ? '✓' : '';
+  updateCkP();
+}
+function updateCkP() {
+  const tot = Object.keys(ckState).length, done = Object.values(ckState).filter(Boolean).length;
+  const pct = Math.round(done/tot*100);
+  document.getElementById('ckFill').style.width = pct + '%';
+  document.getElementById('ckPct').textContent = pct + '%';
+}
+
+// ── PHISHING ─────────────────────────────────────────────────
+const PE = [
+  {from:'soporte@micr0soft-365.net',fn:'Microsoft Support',to:'empleado@tuempresa.com',subj:'⚠️ URGENTE: Su cuenta expirará en 24 horas',
+   body:`<p>Estimado usuario,</p><p>Hemos detectado actividad inusual en su cuenta de Microsoft 365. Para evitar la suspensión inmediata debe verificar su identidad en las próximas <strong>24 horas</strong>.</p><p>Confirme sus datos aquí:</p><p><span class="elink">https://micr0soft-365-verify.net/confirm?token=xK92mP</span></p><p><span class="ecta">Verificar cuenta ahora</span></p><p>Si no actúa, su cuenta será suspendida permanentemente.</p><p>Equipo de Seguridad Microsoft</p>`,
+   phish:true, clues:['Dominio falso: "micr0soft-365.net" usa cero en lugar de la letra o','Urgencia artificial para presionar sin reflexionar','URL no pertenece a ningún dominio oficial de Microsoft','Microsoft nunca solicita credenciales por correo electrónico','Amenaza de pérdida permanente de cuenta']},
+  {from:'rrhh@tuempresa.com',fn:'Recursos Humanos',to:'empleado@tuempresa.com',subj:'Recordatorio: Actualización del portal de nóminas',
+   body:`<p>Hola,</p><p>Te recordamos que el portal de gestión de nóminas ha sido actualizado. Puedes acceder con tus credenciales habituales desde la intranet.</p><p>Para cualquier duda escribe a <span class="elink">rrhh@tuempresa.com</span> o llama a la extensión 3401.</p><p>Un saludo,<br>Departamento de RRHH</p>`,
+   phish:false, clues:['Dominio corporativo legítimo (@tuempresa.com)','No solicita credenciales ni datos personales sensibles','Proporciona canales de contacto internos verificables','Sin urgencia ni amenazas de ningún tipo','Información genérica sin petición de acciones peligrosas']},
+  {from:'it-helpdesk@emp1esa-soporte.com',fn:'IT Helpdesk',to:'empleado@tuempresa.com',subj:'Tu contraseña expira HOY – Acción requerida',
+   body:`<p>Tu contraseña corporativa expirará <strong>hoy a las 23:59</strong>. Para no perder acceso a los sistemas debes renovarla inmediatamente.</p><p>Proporciona tu contraseña actual y la nueva en el siguiente formulario:</p><p><span class="elink">http://password-reset-corp.xyz/renew</span></p><p>Si no lo haces antes de medianoche tu acceso quedará bloqueado permanentemente.</p><p>IT Helpdesk</p>`,
+   phish:true, clues:['Dominio falso: "emp1esa-soporte.com" usa el número 1 en lugar de la letra i','IT nunca solicita tu contraseña actual por correo electrónico','URL externa desconocida: "password-reset-corp.xyz"','Amenaza de bloqueo permanente para crear urgencia artificial','URL con HTTP sin cifrado (no HTTPS)']},
+];
+let pIdx = 0;
+function renderPhish() {
+  const p = PE[pIdx];
+  document.getElementById('phEmail').innerHTML = `
+    <div class="email-frame">
+      <div class="em-hdr"><div class="em-field"><strong>de:</strong> ${p.fn} &lt;${p.from}&gt;</div><div class="em-field"><strong>para:</strong> ${p.to}</div></div>
+      <div class="em-subj">${p.subj}</div>
+      <div class="em-body">${p.body}</div>
+    </div>`;
+  document.getElementById('phVerdict').style.display = 'none';
+  document.getElementById('btnNph').style.display = 'none';
+  document.querySelectorAll('.ph-btn').forEach(b => { b.disabled = false; b.style.opacity = '1'; });
+}
+function phAns(action) {
+  const p = PE[pIdx];
+  document.querySelectorAll('.ph-btn').forEach(b => { b.disabled = true; b.style.opacity = '.4'; });
+  let ok, title, color;
+  if (p.phish) { ok = action === true || action === 'report'; title = ok ? (action === 'report' ? '✓ acción óptima. reportar preserva evidencia forense.' : '✓ correcto. es un ataque de phishing.') : '✗ incorrecto. este correo sí es phishing.'; color = ok ? 'var(--green)' : 'var(--red)'; }
+  else { ok = action === false; title = ok ? '✓ correcto. este correo es legítimo.' : '✗ incorrecto. este correo es legítimo, no es phishing.'; color = ok ? 'var(--green)' : 'var(--red)'; }
+  const v = document.getElementById('phVerdict');
+  v.innerHTML = `<div class="pv-title" style="color:${color};font-family:var(--mono);font-size:13px">${title}</div>
+    <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;margin-top:12px;">// indicadores ${p.phish ? 'de phishing' : 'de legitimidad'}</div>
+    ${p.clues.map(c => `<div class="pv-clue"><span>${p.phish ? '!' : '✓'}</span><span>${c}</span></div>`).join('')}`;
+  v.style.display = 'block';
+  if (pIdx < PE.length - 1) document.getElementById('btnNph').style.display = 'block';
+  else v.innerHTML += `<p style="margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--green)">// fin del simulador — todos los escenarios completados.</p>`;
+}
+function nextPhish() { pIdx = (pIdx + 1) % PE.length; renderPhish(); }
+
+// ── PASSWORD ─────────────────────────────────────────────────
+const COMMON = ['123456','password','contraseña','qwerty','abc123','111111','password1','admin','letmein','welcome','monkey','dragon'];
+function analyzePw(val) {
+  if (!val) { resetPw(); return; }
+  const ch = { len:val.length>=12, up:/[A-Z]/.test(val), lo:/[a-z]/.test(val), nu:/[0-9]/.test(val), sy:/[^A-Za-z0-9]/.test(val), nd:!COMMON.some(c=>val.toLowerCase().includes(c)) };
+  [['len','len'],['up','up'],['lo','lo'],['nu','nu'],['sy','sy'],['nd','nd']].forEach(([k,id]) => {
+    const el = document.getElementById('pc-'+id);
+    el.classList.toggle('pass', ch[k]);
+    el.querySelector('.pw-cc').textContent = ch[k] ? '●' : '○';
+  });
+  const score = Object.values(ch).filter(Boolean).length;
+  const filled = Math.round(score / 6 * 4);
+  [1,2,3,4].forEach(i => { const b = document.getElementById('pb'+i); b.className = 'pw-bar' + (i <= filled ? ' f' + filled : ''); });
+  const labels = ['','muy débil','débil','moderada','fuerte','muy fuerte','excelente'];
+  const colors = ['var(--text-dim)','var(--red)','var(--red)','var(--amber)','var(--blue)','var(--green)','var(--green)'];
+  document.getElementById('pwLabel').textContent = labels[score] || 'sin contraseña';
+  document.getElementById('pwLabel').style.color = colors[score] || 'var(--text-dim)';
+  const cracks = ['instantáneo','segundos','minutos','horas','años','siglos'];
+  document.getElementById('pwCrack').textContent = '⏱ tiempo de crackeo estimado: ' + (cracks[Math.min(score,5)] || 'instantáneo');
+}
+function resetPw() {
+  [1,2,3,4].forEach(i => document.getElementById('pb'+i).className='pw-bar');
+  document.getElementById('pwLabel').textContent = 'sin contraseña'; document.getElementById('pwLabel').style.color='var(--text-dim)';
+  document.getElementById('pwCrack').textContent='';
+  ['len','up','lo','nu','sy','nd'].forEach(k => { const el=document.getElementById('pc-'+k); el.classList.remove('pass'); el.querySelector('.pw-cc').textContent='○'; });
+}
+function toggleEye() { const i=document.getElementById('pwIn'); i.type=i.type==='password'?'text':'password'; document.getElementById('pwEye').textContent=i.type==='password'?'👁':'🙈'; }
+function generatePw() {
+  const chars='abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789!@#$%^&*-_=+';
+  let pw=''; for(let i=0;i<16;i++) pw+=chars[Math.floor(Math.random()*chars.length)];
+  pw=pw.slice(0,14)+String.fromCharCode(65+Math.floor(Math.random()*26))+'7!';
+  document.getElementById('pwGenVal').textContent=pw;
+  document.getElementById('pwGen').style.display='block';
+  document.getElementById('pwCopy').textContent='copiar contraseña'; document.getElementById('pwCopy').classList.remove('copied');
+}
+function copyPw() {
+  navigator.clipboard.writeText(document.getElementById('pwGenVal').textContent)
+    .then(() => { document.getElementById('pwCopy').textContent='✓ copiada'; document.getElementById('pwCopy').classList.add('copied'); showToast('contraseña copiada'); })
+    .catch(() => showToast('copia manualmente'));
+}
+
+// ── BREACH ───────────────────────────────────────────────────
+const SCENARIOS = [
+  {name:'phishing + ransomware', events:[
+    {h:'H+0', title:'email de phishing recibido', desc:'Un empleado del área financiera recibe un email que suplanta a un proveedor habitual. El adjunto contiene una macro maliciosa.', impact:'El empleado abre el adjunto. La macro se ejecuta silenciosamente en segundo plano.', cost:0},
+    {h:'H+1', title:'malware instalado — RAT activo', desc:'El malware establece comunicación con el servidor C2 del atacante. El equipo parece funcionar con normalidad. Nadie lo sabe aún.', impact:'El atacante tiene acceso remoto completo. Ve la pantalla, lee el teclado, navega la red.', cost:0},
+    {h:'H+6', title:'reconocimiento interno', desc:'El atacante explora la red interna buscando servidores de ficheros, backups y controladores de dominio. Mapea la infraestructura completa.', impact:'El atacante conoce la arquitectura. Ha identificado los objetivos de mayor valor.', cost:0},
+    {h:'H+24', title:'movimiento lateral — propagación', desc:'Usando credenciales obtenidas del equipo infectado, el atacante accede a 12 servidores y 8 equipos de otros empleados.', impact:'El 40% de los sistemas críticos están comprometidos. Sin alertas activadas.', cost:15000},
+    {h:'H+36', title:'exfiltración de datos', desc:'Se transfieren 127 GB de datos: contratos, datos de clientes, información financiera y propiedad intelectual.', impact:'Brecha de datos confirmada. Obligación legal de notificar a la AEPD en 72 horas.', cost:85000},
+    {h:'H+48', title:'activación del ransomware', desc:'A las 3:00 AM, el ransomware cifra simultáneamente todos los sistemas accesibles. Los empleados llegan y no pueden trabajar.', impact:'Operaciones completamente paralizadas. Rescate exigido: 450.000€ en Bitcoin.', cost:450000},
+    {h:'H+72', title:'respuesta al incidente', desc:'Se contrata equipo de incident response externo. Se notifica a la AEPD. Se contacta con abogados especializados.', impact:'72 horas de negocio paralizado. Clientes notificados. Reputación gravemente dañada.', cost:120000},
+    {h:'H+168', title:'recuperación parcial — 7 días', desc:'Con backups offsite (actualizados) se restauran los sistemas críticos. La investigación forense continúa durante semanas.', impact:'Coste total del incidente: ~870.000€ + daño reputacional difícil de cuantificar.', cost:200000},
+  ]},
+  {name:'credenciales robadas', events:[
+    {h:'H+0', title:'credenciales filtradas en dark web', desc:'Las credenciales del responsable de IT aparecen en una base de datos filtrada de un servicio externo. Sin alerta ni detección.', impact:'El atacante adquiere usuario y contraseña válidos por menos de 50€.', cost:0},
+    {h:'H+2', title:'login en vpn corporativa', desc:'El atacante usa las credenciales para conectarse a la VPN corporativa desde una IP extranjera. Sin MFA, el acceso es inmediato.', impact:'Acceso "legítimo" a toda la red interna. Sin alertas. Sin bloqueos.', cost:0},
+    {h:'H+8', title:'escalada de privilegios', desc:'Desde el equipo del IT, el atacante accede a Active Directory y se otorga permisos de administrador de dominio.', impact:'Control total sobre toda la infraestructura de usuarios y sistemas de la empresa.', cost:0},
+    {h:'H+24', title:'persistencia instalada', desc:'Se crean cuentas backdoor, se deshabilitan logs de seguridad y se instalan herramientas de control remoto adicionales.', impact:'El atacante puede volver cuando quiera, incluso si detectan y cambian la contraseña original.', cost:25000},
+    {h:'H+72', title:'exfiltración masiva de datos', desc:'Durante tres días se exfiltran bases de datos de clientes, datos financieros y código fuente de productos.', impact:'Brecha masiva de datos personales. RGPD: notificación urgente a AEPD y clientes afectados.', cost:200000},
+    {h:'H+96', title:'detección accidental', desc:'Un empleado nota comportamiento extraño en su cuenta. Se alerta a IT. Al revisar logs, descubren el acceso no autorizado hace 4 días.', impact:'4 días de brecha sin detectar. El daño ya está hecho. La investigación empieza tarde.', cost:150000},
+  ]},
+  {name:'malware interno (usb)', events:[
+    {h:'H+0', title:'usb infectado conectado', desc:'Un empleado encuentra un USB en la sala de reuniones y lo conecta a su equipo "para ver de quién es". El malware se instala automáticamente.', impact:'Infección inicial completada. El malware establece persistencia y empieza a ejecutarse.', cost:0},
+    {h:'H+3', title:'keylogger activo', desc:'El keylogger captura credenciales, conversaciones internas y datos confidenciales que el empleado teclea durante su jornada.', impact:'En 3 horas se han capturado credenciales de 4 sistemas críticos de la empresa.', cost:0},
+    {h:'H+12', title:'propagación por red interna', desc:'El malware explora la red buscando vulnerabilidades. Infecta 6 equipos adicionales a través de una vulnerabilidad sin parchear.', impact:'La infección se ha extendido a múltiples departamentos. Nadie es consciente aún.', cost:30000},
+    {h:'H+48', title:'activación del payload destructivo', desc:'El malware activa su carga: elimina archivos críticos, corrompe bases de datos y envía spam desde los servidores de correo corporativos.', impact:'Datos críticos perdidos. Servidores en lista negra. Pérdida de confianza de clientes.', cost:300000},
+  ]},
+];
+let selSc = 0, bRunning = false, bStep = 0, bTimer = null;
+function selectSc(i, btn) { selSc = i; document.querySelectorAll('.sc-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); resetBreach(); }
+function renderBreachTL() {
+  const s = SCENARIOS[selSc];
+  document.getElementById('bTimeline').innerHTML = s.events.map((e,i) => `
+    <div class="tl-item">
+      <div class="tl-dot" id="bD${i}"></div>
+      <div class="tl-card" id="bC${i}">
+        <div class="tl-hour">${e.h}</div>
+        <div class="tl-title">${e.title}</div>
+        <div class="tl-desc">${e.desc}</div>
+        ${e.cost > 0 ? `<div class="tl-impact" id="bI${i}">coste acumulado estimado: +${e.cost.toLocaleString('es')}€</div>` : `<div class="tl-impact" id="bI${i}">${e.impact}</div>`}
+      </div>
+    </div>`).join('');
+  document.getElementById('bStats').style.display = 'none';
+}
+function startBreach() {
+  if (bRunning) return; bRunning = true;
+  document.getElementById('bStartBtn').textContent = '⏳ ejecutando…'; document.getElementById('bStartBtn').disabled = true;
+  runStep();
+}
+function runStep() {
+  const s = SCENARIOS[selSc];
+  if (bStep >= s.events.length) { showBreachResult(); return; }
+  if (bStep > 0) { document.getElementById('bD'+(bStep-1)).className='tl-dot done'; document.getElementById('bC'+(bStep-1)).classList.remove('active'); document.getElementById('bC'+(bStep-1)).classList.add('done'); }
+  document.getElementById('bD'+bStep).className='tl-dot active';
+  document.getElementById('bC'+bStep).classList.add('active');
+  document.getElementById('bI'+bStep).style.display = 'block';
+  document.getElementById('bC'+bStep).scrollIntoView({behavior:'smooth',block:'nearest'});
+  bStep++; bTimer = setTimeout(runStep, 1800);
+}
+function showBreachResult() {
+  const s = SCENARIOS[selSc];
+  if (bStep > 0) { document.getElementById('bD'+(bStep-1)).className='tl-dot done'; document.getElementById('bC'+(bStep-1)).classList.remove('active'); }
+  const totalCost = s.events.reduce((a,e) => a+e.cost, 0);
+  const bs = document.getElementById('bStats'); bs.style.display = 'grid';
+  bs.innerHTML = `
+    <div class="bstat"><div class="bstat-n">${s.events.length}</div><div class="bstat-l">fases del ataque</div></div>
+    <div class="bstat"><div class="bstat-n">${s.events.filter(e=>e.cost>0).length}</div><div class="bstat-l">con impacto económico</div></div>
+    <div class="bstat"><div class="bstat-n">${(totalCost/1000).toFixed(0)}K€</div><div class="bstat-l">coste estimado total</div></div>
+    <div class="bstat"><div class="bstat-n" style="color:var(--green)">0€</div><div class="bstat-l">si hubiera MFA + EDR + backups</div></div>`;
+  bs.scrollIntoView({behavior:'smooth',block:'nearest'});
+  document.getElementById('bStartBtn').textContent = '✓ completado'; bRunning = false;
+}
+function resetBreach() { clearTimeout(bTimer); bRunning=false; bStep=0; document.getElementById('bStartBtn').textContent='▶ iniciar simulación'; document.getElementById('bStartBtn').disabled=false; renderBreachTL(); }
+
+// ── POLICIES ─────────────────────────────────────────────────
+const POL = [
+  {name:'accesos', sections:[
+    {icon:'🔑', title:'gestión de contraseñas', rules:[
+      {t:'Contraseñas de mínimo 14 caracteres con complejidad requerida.',m:true},
+      {t:'Uso obligatorio del gestor de contraseñas corporativo.',m:true},
+      {t:'Prohibida la reutilización de contraseñas entre servicios.',m:true},
+      {t:'Cambio inmediato ante cualquier sospecha de compromiso.',m:true},
+      {t:'Cambio periódico recomendado cada 12 meses si no hay incidentes.',m:false},
+    ]},
+    {icon:'📱', title:'autenticación multifactor (MFA)', rules:[
+      {t:'MFA obligatorio para todos los accesos a sistemas corporativos sin excepción.',m:true},
+      {t:'Uso preferente de apps autenticadoras (no SMS cuando sea posible).',m:false},
+      {t:'Notificar a IT inmediatamente si se recibe un código MFA sin haberlo solicitado.',m:true},
+    ]},
+    {icon:'👥', title:'gestión de accesos y privilegios', rules:[
+      {t:'Principio de mínimo privilegio: acceso solo a lo estrictamente necesario para el trabajo.',m:true},
+      {t:'Revisión trimestral de todos los accesos y permisos activos.',m:true},
+      {t:'Revocación inmediata de accesos al finalizar la relación laboral o contractual.',m:true},
+      {t:'Cuentas de administrador separadas de las cuentas de usuario diario.',m:true},
+    ]},
+  ]},
+  {name:'dispositivos', sections:[
+    {icon:'💻', title:'equipos corporativos', rules:[
+      {t:'Solo software aprobado por IT puede instalarse en equipos corporativos.',m:true},
+      {t:'Actualizaciones de seguridad críticas aplicadas en máximo 48h desde publicación.',m:true},
+      {t:'Cifrado de disco completo activado obligatoriamente (BitLocker o FileVault).',m:true},
+      {t:'Bloqueo automático de pantalla configurado a máximo 5 minutos de inactividad.',m:true},
+    ]},
+    {icon:'🔌', title:'dispositivos externos', rules:[
+      {t:'Prohibido conectar dispositivos USB no corporativos sin autorización explícita de IT.',m:true},
+      {t:'Dispositivos USB encontrados: nunca conectar. Entregar a IT inmediatamente.',m:true},
+      {t:'Uso de almacenamiento en la nube corporativo en lugar de USB siempre que sea posible.',m:false},
+    ]},
+  ]},
+  {name:'datos', sections:[
+    {icon:'📊', title:'clasificación de datos', rules:[
+      {t:'Datos clasificados en 4 niveles: Público, Interno, Confidencial, Secreto.',m:true},
+      {t:'Datos Confidenciales y Secretos requieren cifrado en reposo y en tránsito.',m:true},
+      {t:'Datos de clientes y personales (RGPD) se tratan como Confidencial mínimo.',m:true},
+    ]},
+    {icon:'📤', title:'compartición de datos', rules:[
+      {t:'Datos confidenciales solo por canales corporativos cifrados aprobados.',m:true},
+      {t:'Prohibido el uso de servicios de transferencia de archivos no aprobados por IT.',m:true},
+      {t:'Datos de clientes nunca se envían a servicios externos sin DPA firmado.',m:true},
+    ]},
+  ]},
+  {name:'incidentes', sections:[
+    {icon:'🚨', title:'qué reportar', rules:[
+      {t:'Emails sospechosos de phishing, aunque no hayas hecho clic en ningún enlace.',m:true},
+      {t:'Haber hecho clic accidentalmente en un enlace sospechoso o abierto un adjunto.',m:true},
+      {t:'Pérdida o robo de dispositivos corporativos o con acceso a sistemas de la empresa.',m:true},
+      {t:'Mensajes MFA recibidos sin haberlos solicitado tú.',m:true},
+      {t:'Dispositivos USB u objetos encontrados en zonas comunes de la empresa.',m:true},
+    ]},
+    {icon:'📞', title:'cómo y cuándo reportar', rules:[
+      {t:'Incidente crítico (brecha activa): reporte en menos de 15 minutos.',m:true},
+      {t:'Incidente alto (phishing con clic): reporte en menos de 1 hora.',m:true},
+      {t:'No intentar resolver el incidente por cuenta propia antes de reportar a IT.',m:true},
+      {t:'Preservar evidencia: no apagar equipos ni borrar correos sospechosos.',m:true},
+      {t:'La empresa está obligada a notificar a la AEPD en 72h si hay datos personales implicados.',m:true},
+    ]},
+  ]},
+  {name:'teletrabajo', sections:[
+    {icon:'🏠', title:'entorno de trabajo remoto', rules:[
+      {t:'VPN corporativa activa siempre que se acceda a sistemas de la empresa.',m:true},
+      {t:'Prohibido trabajar desde redes WiFi públicas sin VPN activa.',m:true},
+      {t:'Router doméstico con contraseña segura y firmware actualizado.',m:false},
+      {t:'Pantalla orientada para que no sea visible por otras personas al trabajar con datos sensibles.',m:true},
+    ]},
+    {icon:'👨‍👩‍👧', title:'uso del equipo en el hogar', rules:[
+      {t:'Prohibido el uso del equipo corporativo por parte de familiares o convivientes.',m:true},
+      {t:'No descargar contenido personal ni acceder a cuentas personales en equipos corporativos.',m:true},
+      {t:'Sesión cerrada o bloqueada cuando no se esté trabajando activamente.',m:true},
+    ]},
+    {icon:'☁️', title:'almacenamiento y colaboración', rules:[
+      {t:'Usar únicamente las soluciones de almacenamiento cloud aprobadas por IT.',m:true},
+      {t:'Prohibido almacenar datos corporativos en cuentas personales de servicios cloud.',m:true},
+      {t:'Herramientas de colaboración: solo las aprobadas oficialmente por la empresa.',m:true},
+    ]},
+  ]},
+];
+function renderPolicies() { renderPolContent(0); }
+function switchPol(i, btn) { document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active')); btn.classList.add('active'); renderPolContent(i); }
+function renderPolContent(i) {
+  const p = POL[i];
+  document.getElementById('polContent').innerHTML = p.sections.map((s,si) => `
+    <div class="pol-section">
+      <div class="pol-header ${si===0?'open':''}" id="ph${si}" onclick="togglePol(${si})">
+        <div class="pol-htitle"><span class="pol-icon">${s.icon}</span>${s.title}</div>
+        <span class="pol-ch">›</span>
+      </div>
+      <div class="pol-body ${si===0?'open':''}" id="pb${si}">
+        ${s.rules.map(r => `<div class="pol-rule"><span class="pol-dot ${r.m?'m':'r'}">${r.m?'●':'○'}</span><span>${r.t}<span class="pol-badge ${r.m?'pb-m':'pb-r'}">${r.m?'obligatorio':'recomendado'}</span></span></div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+function togglePol(i) { document.getElementById('ph'+i).classList.toggle('open'); document.getElementById('pb'+i).classList.toggle('open'); }
+
+// ── INIT ─────────────────────────────────────────────────────
+renderQ(); renderThreats(); renderChecklist(); renderPhish(); renderBreachTL(); renderPolicies();
+</script>
+</body>
+</html>
