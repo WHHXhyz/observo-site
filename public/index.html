@@ -670,6 +670,7 @@ footer a:hover{color:var(--green);}
   .nav-links{display:none;}
   .nav-status{display:none;}
   .hero{padding:70px 0 40px;}
+  .how-grid{grid-template-columns:1fr!important;}
   .hero-inner{grid-template-columns:1fr;gap:2rem;}
   .threat-monitor{display:block;}
   .glitch{font-size:clamp(1.5rem,6vw,2rem);line-height:1;}
@@ -718,7 +719,7 @@ footer a:hover{color:var(--green);}
   <ul class="nav-links">
     <li><a href="#amenazas">Amenazas</a></li>
     <li><a href="#principios">Principios</a></li>
-    <li><a href="#checklist">Checklist</a></li>
+    <li><a href="/formacion.html#checklist">Checklist</a></li>
     <li><a href="/propuesta.html">Propuesta</a></li>
     <li><a href="/formacion.html" style="color:var(--green);border:1px solid rgba(0,255,136,0.25);padding:0.3rem 0.8rem;">Formación →</a></li>
     <li><a href="https://aegis8.org/contactos.html">Contacto</a></li>
@@ -861,19 +862,19 @@ footer a:hover{color:var(--green);}
   <div class="threats-grid">
     <div class="tcard featured reveal">
       <div class="tcard-num">01</div>
-      <div class="tcard-icon">🎣</div>
+      <div class="tcard-icon" style="font-family:var(--font-mono);font-size:0.65rem;color:var(--red);letter-spacing:0.1em;">PHISHING</div>
       <div class="tcard-sev" style="color:var(--red);">
         <div class="tcard-sev-dot" style="background:var(--red);box-shadow:0 0 6px var(--red);"></div>
         Crítico
       </div>
       <h3>Phishing y spear phishing</h3>
-      <p>Correos y mensajes diseñados para engañar. Es el vector de entrada número uno en incidentes reales. No requiere exploits sofisticados: requiere descuido.</p>
+      <p>Correos, llamadas y mensajes diseñados para engañar. El vector de entrada número uno. Incluye suplantación de identidad, llamadas falsas de soporte y mensajes urgentes. No requiere código: requiere que bajes la guardia.</p>
       <div class="tcard-bar"><div class="tcard-fill" style="background:var(--red);width:94%;"></div></div>
     </div>
 
     <div class="tcard reveal">
       <div class="tcard-num">02</div>
-      <div class="tcard-icon">🔑</div>
+      <div class="tcard-icon" style="font-family:var(--font-mono);font-size:0.65rem;color:var(--red);letter-spacing:0.1em;">ACCESOS</div>
       <div class="tcard-sev" style="color:var(--red);">
         <div class="tcard-sev-dot" style="background:var(--red);box-shadow:0 0 6px var(--red);"></div>
         Crítico
@@ -885,7 +886,7 @@ footer a:hover{color:var(--green);}
 
     <div class="tcard reveal">
       <div class="tcard-num">03</div>
-      <div class="tcard-icon">💾</div>
+      <div class="tcard-icon" style="font-family:var(--font-mono);font-size:0.65rem;color:var(--red);letter-spacing:0.1em;">RANSOMWARE</div>
       <div class="tcard-sev" style="color:var(--red);">
         <div class="tcard-sev-dot" style="background:var(--red);box-shadow:0 0 6px var(--red);"></div>
         Crítico
@@ -897,7 +898,7 @@ footer a:hover{color:var(--green);}
 
     <div class="tcard reveal">
       <div class="tcard-num">04</div>
-      <div class="tcard-icon">🔓</div>
+      <div class="tcard-icon" style="font-family:var(--font-mono);font-size:0.65rem;color:var(--amber);letter-spacing:0.1em;">EXPOSICIÓN</div>
       <div class="tcard-sev" style="color:var(--amber);">
         <div class="tcard-sev-dot" style="background:var(--amber);box-shadow:0 0 6px var(--amber);"></div>
         Alto
@@ -909,7 +910,7 @@ footer a:hover{color:var(--green);}
 
     <div class="tcard reveal">
       <div class="tcard-num">05</div>
-      <div class="tcard-icon">🧑‍💻</div>
+      <div class="tcard-icon" style="font-family:var(--font-mono);font-size:0.65rem;color:var(--amber);letter-spacing:0.1em;">PERMISOS</div>
       <div class="tcard-sev" style="color:var(--amber);">
         <div class="tcard-sev-dot" style="background:var(--amber);box-shadow:0 0 6px var(--amber);"></div>
         Alto
@@ -919,17 +920,6 @@ footer a:hover{color:var(--green);}
       <div class="tcard-bar"><div class="tcard-fill" style="background:var(--amber);width:68%;"></div></div>
     </div>
 
-    <div class="tcard reveal">
-      <div class="tcard-num">06</div>
-      <div class="tcard-icon">🕵️</div>
-      <div class="tcard-sev" style="color:var(--blue);">
-        <div class="tcard-sev-dot" style="background:var(--blue);box-shadow:0 0 4px var(--blue);"></div>
-        Medio
-      </div>
-      <h3>Ingeniería social</h3>
-      <p>Manipulación psicológica. No requiere código: requiere confianza mal gestionada y ausencia de cultura de seguridad.</p>
-      <div class="tcard-bar"><div class="tcard-fill" style="background:var(--blue);width:55%;"></div></div>
-    </div>
   </div><!-- /wrap -->
 </section>
 
@@ -944,23 +934,23 @@ footer a:hover{color:var(--green);}
   <div class="principles-grid reveal">
     <div class="pcard">
       <div class="pcard-n">01 // Accesos</div>
-      <h3>Mínimo privilegio</h3>
-      <p>Cada persona y sistema debe tener solo el acceso que necesita. Revisar y reducir permisos regularmente es la acción de mayor impacto con menor costo.</p>
+      <h3>Menos accesos, menos riesgo</h3>
+      <p>Cada persona debería ver solo lo que necesita para trabajar. Si alguien entra a tu sistema, que no pueda llegar a todo. Es el cambio más barato con más impacto.</p>
     </div>
     <div class="pcard">
       <div class="pcard-n">02 // Capas</div>
-      <h3>Defensa en profundidad</h3>
-      <p>No existe una capa infalible. Combinamos controles técnicos, operativos y humanos para que si una falla, las demás sostengan.</p>
+      <h3>Si una capa falla, hay otra</h3>
+      <p>Ninguna herramienta es perfecta. Por eso no dependemos de una sola. Contraseña fuerte + MFA + monitoreo — si alguien pasa la primera, todavía hay más.</p>
     </div>
     <div class="pcard">
       <div class="pcard-n">03 // Visibilidad</div>
-      <h3>Ver antes de reaccionar</h3>
-      <p>No puedes defender lo que no ves. Logs, inventario y monitoreo básico permiten detectar anomalías antes de que escalen.</p>
+      <h3>Saber qué pasa antes de que pase</h3>
+      <p>La mayoría de los ataques dejan señales antes de volverse graves. Si no sabes qué está pasando en tu web o sistemas, no puedes reaccionar a tiempo.</p>
     </div>
     <div class="pcard">
       <div class="pcard-n">04 // Personas</div>
-      <h3>Cultura sobre herramientas</h3>
-      <p>El 90% de los incidentes involucra error humano. La tecnología ayuda, pero los hábitos y la comprensión son lo que sostiene en el tiempo.</p>
+      <h3>La herramienta no te salva. El hábito, sí</h3>
+      <p>9 de cada 10 incidentes empiezan con un error humano — un clic, una contraseña débil, un acceso que se dejó abierto. Las herramientas ayudan, pero el hábito es lo que sostiene.</p>
     </div>
   </div><!-- /wrap -->
 </section>
@@ -998,42 +988,39 @@ footer a:hover{color:var(--green);}
   </div><!-- /wrap -->
 </section>
 
-<!-- CHECKLIST -->
-<section class="checklist-section" id="checklist">
+
+
+<!-- CÓMO FUNCIONA -->
+<section style="position:relative;z-index:1;padding:5rem 0;border-top:1px solid var(--border);">
   <div class="wrap">
-  <div class="section-header reveal">
-    <div class="section-label">// acción concreta</div>
-    <h2 class="section-h">Higiene básica.<br/>Alto impacto.</h2>
-    <p class="section-p">Sin presupuesto enterprise. Sin SOC. Estas acciones cubren la mayoría de los vectores comunes.</p>
+  <div class="section-header reveal" style="text-align:center;margin-bottom:3.5rem;">
+    <div class="section-label" style="justify-content:center;">// el proceso</div>
+    <h2 class="section-h" style="margin:0 auto;">Tres pasos.<br/>Una semana.</h2>
   </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;" class="reveal how-grid">
 
-  <div class="checklist-cols">
-    <div class="cl-card reveal">
-      <div class="cl-title"><span class="cl-icon">🔐</span> Identidad y accesos</div>
-      <div class="cl-item"><div class="cl-box done">✓</div><span>MFA activo en todas las cuentas críticas</span></div>
-      <div class="cl-item"><div class="cl-box done">✓</div><span>Gestor de contraseñas en uso</span></div>
-      <div class="cl-item"><div class="cl-box"></div><span>Revisión de permisos trimestral</span></div>
-      <div class="cl-item"><div class="cl-box"></div><span>Cuentas de exempleados desactivadas</span></div>
-      <div class="cl-item"><div class="cl-box"></div><span>Separación de roles y mínimo privilegio</span></div>
+    <div style="position:relative;padding:2rem;border:1px solid var(--border2);background:rgba(7,10,16,0.6);">
+      <div style="font-family:var(--font-mono);font-size:2.5rem;font-weight:700;color:rgba(0,255,136,0.12);line-height:1;margin-bottom:1rem;">01</div>
+      <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--green);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.6rem;">Día 1</div>
+      <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.5rem;">Nos contactas</h3>
+      <p style="font-size:0.85rem;color:var(--muted);line-height:1.6;">Cuéntanos qué tienes: tu web, tu CMS, si tienes panel de administración. Sin formularios largos. Una conversación.</p>
     </div>
 
-    <div class="cl-card reveal">
-      <div class="cl-title"><span class="cl-icon">📡</span> Infraestructura</div>
-      <div class="cl-item"><div class="cl-box done">✓</div><span>HTTPS en todos los servicios públicos</span></div>
-      <div class="cl-item"><div class="cl-box done">✓</div><span>SPF, DKIM y DMARC configurados</span></div>
-      <div class="cl-item"><div class="cl-box"></div><span>Headers de seguridad HTTP presentes</span></div>
-      <div class="cl-item"><div class="cl-box"></div><span>Puertos innecesarios cerrados</span></div>
-      <div class="cl-item"><div class="cl-box"></div><span>Parches y actualizaciones al día</span></div>
+    <div style="position:relative;padding:2rem;border:1px solid var(--border2);background:rgba(7,10,16,0.6);">
+      <div style="font-family:var(--font-mono);font-size:2.5rem;font-weight:700;color:rgba(0,255,136,0.12);line-height:1;margin-bottom:1rem;">02</div>
+      <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--green);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.6rem;">Días 2–5</div>
+      <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.5rem;">Revisamos tu web</h3>
+      <p style="font-size:0.85rem;color:var(--muted);line-height:1.6;">Analizamos tu superficie de exposición: configuración, accesos, plugins, certificados, puertos. Sin instalar nada en tu servidor.</p>
     </div>
 
-    <div class="cl-card reveal">
-      <div class="cl-title"><span class="cl-icon">💾</span> Continuidad</div>
-      <div class="cl-item"><div class="cl-box"></div><span>Backup automatizado y verificado</span></div>
-      <div class="cl-item"><div class="cl-box"></div><span>Restauración probada (al menos 1 vez)</span></div>
-      <div class="cl-item"><div class="cl-box"></div><span>Copia en ubicación separada (regla 3-2-1)</span></div>
-      <div class="cl-item"><div class="cl-box"></div><span>Plan básico de respuesta a incidentes</span></div>
-      <div class="cl-item"><div class="cl-box done">✓</div><span>Inventario de sistemas críticos</span></div>
+    <div style="position:relative;padding:2rem;border:1px solid var(--border2);background:rgba(7,10,16,0.6);">
+      <div style="font-family:var(--font-mono);font-size:2.5rem;font-weight:700;color:rgba(0,255,136,0.12);line-height:1;margin-bottom:1rem;">03</div>
+      <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--green);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.6rem;">Día 7</div>
+      <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.5rem;">Informe + lo cerramos juntos</h3>
+      <p style="font-size:0.85rem;color:var(--muted);line-height:1.6;">Recibes un informe claro con todo lo encontrado. Luego lo implementamos contigo — no te dejamos con un PDF y suerte.</p>
     </div>
+
+  </div>
   </div><!-- /wrap -->
 </section>
 
@@ -1043,7 +1030,7 @@ footer a:hover{color:var(--green);}
   <div class="cta-bg"></div>
   <div class="cta-label reveal">// siguiente paso</div>
   <h2 class="cta-h reveal">¿TU WEB ESTÁ<br/><span>PROTEGIDA?</span></h2>
-  <p class="cta-p reveal">Probablemente no lo sabes con certeza.<br/>En una semana lo sabes — y si hay algo, está resuelto.</p>
+  <p class="cta-p reveal">Probablemente no lo sabes con certeza.<br/>En una semana lo sabes — y lo cerramos juntos.</p>
   <div class="cta-group reveal" style="justify-content:center;">
     <a href="https://aegis8.org/contactos.html" class="btn-main">Quiero que lo revisen →</a>
     <a href="/formacion.html" class="btn-out">Ponlo a prueba gratis</a>
