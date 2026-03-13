@@ -186,6 +186,7 @@ footer a:hover{color:var(--green);}
 @media(max-width:768px){
   .wrap{padding:0 20px;}nav{padding:0 20px;}
   .nav-links{display:none;}.nav-status{display:none;}
+  #hamburger{display:flex!important;}
   .page-hero{padding:70px 0 40px;}
   .page-hero-inner{grid-template-columns:1fr;gap:2rem;padding:0 20px;}
   .page-h1{font-size:clamp(1.8rem,7vw,3rem);}
@@ -214,13 +215,27 @@ footer a:hover{color:var(--green);}
     <li><a href="index.html">Inicio</a></li>
     <li><a href="propuesta.html" class="active">Propuesta</a></li>
     <li><a href="/formacion.html" style="color:var(--green);border:1px solid rgba(0,255,136,0.25);padding:0.3rem 0.8rem;">Formación →</a></li>
+    <li><a href="/agente-seguridad.html">Agente IA</a></li>
     <li><a href="contactos.html">Contacto</a></li>
   </ul>
   <div class="nav-status">
     <div class="nav-status-dot"></div>
     Proyectos abiertos
   </div>
+  <button id="hamburger" aria-label="Menú" onclick="toggleMobileMenu()" style="display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;">
+    <span style="display:block;width:22px;height:2px;background:var(--green);transition:all 0.3s;"></span>
+    <span style="display:block;width:22px;height:2px;background:var(--green);transition:all 0.3s;"></span>
+    <span style="display:block;width:22px;height:2px;background:var(--green);transition:all 0.3s;"></span>
+  </button>
 </nav>
+
+<div id="mobileMenuOverlay" style="display:none;position:fixed;top:64px;left:0;right:0;bottom:0;background:rgba(4,6,10,0.98);backdrop-filter:blur(20px);z-index:499;flex-direction:column;align-items:center;justify-content:center;gap:2rem;">
+  <a href="index.html" onclick="toggleMobileMenu()" style="font-family:var(--font-mono);font-size:1rem;color:var(--muted);text-decoration:none;letter-spacing:0.15em;text-transform:uppercase;">Inicio</a>
+  <a href="propuesta.html" onclick="toggleMobileMenu()" style="font-family:var(--font-mono);font-size:1rem;color:var(--green);text-decoration:none;letter-spacing:0.15em;text-transform:uppercase;">Propuesta</a>
+  <a href="/formacion.html" onclick="toggleMobileMenu()" style="font-family:var(--font-mono);font-size:1rem;color:var(--muted);text-decoration:none;letter-spacing:0.15em;text-transform:uppercase;">Formación</a>
+  <a href="/agente-seguridad.html" onclick="toggleMobileMenu()" style="font-family:var(--font-mono);font-size:1rem;color:var(--muted);text-decoration:none;letter-spacing:0.15em;text-transform:uppercase;">Agente IA</a>
+  <a href="contactos.html" onclick="toggleMobileMenu()" style="font-family:var(--font-mono);font-size:0.9rem;color:#000;background:var(--green);padding:0.8rem 2.5rem;text-decoration:none;letter-spacing:0.12em;text-transform:uppercase;">Contacto →</a>
+</div>
 
 <div class="marquee-wrap" style="margin-top:64px;">
   <div class="marquee">
@@ -667,6 +682,26 @@ function openModal(id){var m=document.getElementById(id);if(!m)return;m.classLis
 function closeModal(id){var m=document.getElementById(id);if(!m)return;m.classList.remove('show');document.body.style.overflow='';}
 document.addEventListener('click',function(e){if(e.target.classList.contains('modal-overlay')){e.target.classList.remove('show');document.body.style.overflow='';}});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.modal-overlay.show').forEach(function(m){m.classList.remove('show');document.body.style.overflow='';});}});
+</script>
+<script>
+function toggleMobileMenu() {
+  const btn = document.getElementById("hamburger");
+  const menu = document.getElementById("mobileMenuOverlay");
+  const isOpen = menu.style.display === "flex";
+  menu.style.display = isOpen ? "none" : "flex";
+  const spans = btn.querySelectorAll("span");
+  if (!isOpen) {
+    spans[0].style.transform = "rotate(45deg) translate(5px, 5px)";
+    spans[1].style.opacity = "0";
+    spans[2].style.transform = "rotate(-45deg) translate(5px, -5px)";
+    document.body.style.overflow = "hidden";
+  } else {
+    spans[0].style.transform = "";
+    spans[1].style.opacity = "1";
+    spans[2].style.transform = "";
+    document.body.style.overflow = "";
+  }
+}
 </script>
 </body>
 </html>
