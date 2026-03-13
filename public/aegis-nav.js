@@ -128,6 +128,29 @@
 
     #aegis-nav .an-links a.an-cta::after { display: none; }
 
+    /* EDUCA highlight */
+    #aegis-nav .an-links a.an-educa {
+      color: #38bdf8 !important;
+      border: 1px solid rgba(56,189,248,0.35);
+      padding: 0.3rem 0.8rem;
+      position: relative;
+    }
+    #aegis-nav .an-links a.an-educa:hover { color: #7dd3fc !important; }
+    #aegis-nav .an-links a.an-educa::after { display: none; }
+    .an-educa-dot {
+      position: absolute;
+      top: -5px; right: -5px;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #38bdf8;
+      animation: an-educa-pulse 2s ease-in-out infinite;
+    }
+    @keyframes an-educa-pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:0.3; transform:scale(1.5); }
+    }
+    #aegis-mobile-menu a.m-educa { color: #38bdf8 !important; }
+
     /* HAMBURGER */
     #aegis-nav .an-burger {
       display: none; flex-direction: column; gap: 5px;
@@ -194,7 +217,7 @@
     { href: '/#amenazas',             label: 'Amenazas',  page: null },
     { href: '/propuesta.html',        label: 'Propuesta', page: 'propuesta' },
     { href: '/formacion.html',        label: 'Formación', page: 'formacion' },
-    { href: '/educa.html',            label: 'Educa',     page: 'educa' },
+    { href: '/educa.html',            label: 'Educa',     page: 'educa', educa: true },
     { href: '/agente-seguridad.html', label: 'Agente IA', page: 'agente', agent: true },
     { href: '/contactos.html',        label: 'Contacto',  page: 'contacto', cta: true },
   ];
@@ -218,6 +241,13 @@
       a.textContent = link.label;
       if (link.cta) a.className = 'an-cta';
       else if (link.agent) a.className = 'an-agent';
+      else if (link.educa) {
+        a.className = 'an-educa';
+        // Dot badge
+        const dot = document.createElement('span');
+        dot.className = 'an-educa-dot';
+        a.appendChild(dot);
+      }
       else if (link.page && currentPage === link.page) a.className = 'an-active';
       li.appendChild(a);
       ul.appendChild(li);
@@ -234,6 +264,7 @@
       a.onclick = () => closeMenu();
       if (link.cta) a.className = 'm-cta';
       else if (link.agent) a.className = 'm-agent';
+      else if (link.educa) a.className = 'm-educa';
       else if (link.page && currentPage === link.page) a.className = 'm-active';
       mobileMenu.appendChild(a);
     });
