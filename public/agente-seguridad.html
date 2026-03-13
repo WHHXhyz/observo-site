@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security Engineer — Aegis8</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #050508;
+      --surface:   #0d0d14;
+      --border:    #1c1c2e;
+      --accent:    #00ff88;
+      --accent2:   #00c8ff;
+      --danger:    #ff3b5c;
+      --warn:      #ffaa00;
+      --text:      #e8e8f0;
+      --muted:     #5a5a78;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-sans: 'Syne', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animated grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Scanline effect */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.05) 2px,
+        rgba(0,0,0,0.05) 4px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.2rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+
+    .nav-logo {
+      font-family: var(--font-sans);
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-back {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--accent); }
+
+    /* HEADER */
+    .header {
+      margin-bottom: 2.5rem;
+    }
+
+    .agent-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.3rem 0.8rem;
+      border-radius: 2px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .agent-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    h1 {
+      font-family: var(--font-sans);
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.8rem;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .header-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* STARTER PROMPTS */
+    .starters-label {
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .starters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+
+    .starter-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      line-height: 1.4;
+    }
+
+    .starter-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0,255,136,0.04);
+    }
+
+    /* CHAT WINDOW */
+    .chat-window {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .chat-titlebar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; }
+    .dot-y { background: #febc2e; }
+    .dot-g { background: #28c840; }
+
+    .chat-titlebar-label {
+      margin-left: 0.5rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    .messages {
+      padding: 1.5rem;
+      min-height: 320px;
+      max-height: 500px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      scroll-behavior: smooth;
+    }
+
+    .messages::-webkit-scrollbar { width: 4px; }
+    .messages::-webkit-scrollbar-track { background: transparent; }
+    .messages::-webkit-scrollbar-thumb { background: var(--border); }
+
+    /* Empty state */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 240px;
+      gap: 0.8rem;
+      color: var(--muted);
+    }
+
+    .empty-icon {
+      font-size: 2.5rem;
+      opacity: 0.4;
+    }
+
+    .empty-state p {
+      font-size: 0.78rem;
+      text-align: center;
+      max-width: 320px;
+      line-height: 1.6;
+    }
+
+    /* Messages */
+    .msg {
+      display: flex;
+      gap: 0.8rem;
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .msg-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .msg.user .msg-avatar {
+      background: rgba(0,200,255,0.15);
+      border: 1px solid rgba(0,200,255,0.3);
+      color: var(--accent2);
+    }
+
+    .msg.agent .msg-avatar {
+      background: rgba(0,255,136,0.1);
+      border: 1px solid rgba(0,255,136,0.3);
+      color: var(--accent);
+    }
+
+    .msg-body { flex: 1; }
+
+    .msg-label {
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .msg.user .msg-label { color: var(--accent2); }
+    .msg.agent .msg-label { color: var(--accent); }
+
+    .msg-text {
+      font-size: 0.82rem;
+      line-height: 1.75;
+      color: var(--text);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .msg.user .msg-text {
+      color: rgba(232,232,240,0.85);
+    }
+
+    /* Typing indicator */
+    .typing-indicator {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      padding: 4px 0;
+    }
+
+    .typing-dot {
+      width: 5px;
+      height: 5px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: typingBounce 1.2s infinite;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typingBounce {
+      0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+      40%           { transform: translateY(-5px); opacity: 1; }
+    }
+
+    /* INPUT BAR */
+    .input-bar {
+      display: flex;
+      gap: 0.6rem;
+      padding: 0.9rem;
+      border-top: 1px solid var(--border);
+      background: rgba(255,255,255,0.01);
+    }
+
+    .input-field {
+      flex: 1;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.65rem 0.9rem;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      outline: none;
+      resize: none;
+      min-height: 44px;
+      max-height: 140px;
+      transition: border-color 0.2s;
+    }
+
+    .input-field::placeholder { color: var(--muted); }
+    .input-field:focus { border-color: rgba(0,255,136,0.4); }
+
+    .send-btn {
+      background: var(--accent);
+      border: none;
+      border-radius: 3px;
+      width: 44px;
+      height: 44px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+      align-self: flex-end;
+    }
+
+    .send-btn:hover { background: #00e07a; transform: scale(1.05); }
+    .send-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+
+    .send-btn svg { width: 16px; height: 16px; fill: #050508; }
+
+    /* DISCLAIMER */
+    .disclaimer {
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
+      padding: 0 1rem;
+    }
+
+    .disclaimer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .disclaimer a:hover { text-decoration: underline; }
+
+    /* ERROR BANNER */
+    .error-banner {
+      background: rgba(255,59,92,0.1);
+      border: 1px solid rgba(255,59,92,0.3);
+      border-radius: 3px;
+      padding: 0.7rem 1rem;
+      font-size: 0.78rem;
+      color: var(--danger);
+      margin-bottom: 0.8rem;
+      display: none;
+    }
+
+    .error-banner.visible { display: block; }
+
+    /* WORKER URL NOTICE */
+    .config-notice {
+      background: rgba(255,170,0,0.08);
+      border: 1px solid rgba(255,170,0,0.25);
+      border-radius: 3px;
+      padding: 1rem 1.2rem;
+      font-size: 0.75rem;
+      color: var(--warn);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .config-notice code {
+      background: rgba(255,170,0,0.15);
+      padding: 0.1rem 0.4rem;
+      border-radius: 2px;
+      font-family: var(--font-mono);
+    }
+
+    @media (max-width: 600px) {
+      .starters { flex-direction: column; }
+      .starter-btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <nav>
+    <a href="https://aegis8.org" class="nav-logo">AEGIS<span>8</span></a>
+    <a href="https://aegis8.org" class="nav-back">← volver al inicio</a>
+  </nav>
+
+  <!-- CONFIG NOTICE — elimina este bloque cuando tengas el Worker desplegado -->
+  <div class="config-notice" id="configNotice">
+    ⚠ Antes de publicar: reemplaza <code>WORKER_URL</code> en el JS de esta página con la URL de tu Cloudflare Worker (ej: <code>https://aegis8-agent.TU_USUARIO.workers.dev</code>). Ver instrucciones en el README.
+  </div>
+
+  <div class="header">
+    <div class="agent-badge">Security Engineer · Aegis8</div>
+    <h1>Consulta al<br /><em>Agente de Seguridad</em></h1>
+    <p class="header-desc">
+      Describe tu situación, web, stack o incidente. El agente analiza tu superficie de exposición y te entrega recomendaciones priorizadas — sin contratos, sin compromiso.
+    </p>
+  </div>
+
+  <div class="starters-label">// preguntas frecuentes</div>
+  <div class="starters">
+    <button class="starter-btn" onclick="useStarter(this)">¿Qué tan segura es mi web WordPress con plugins desactualizados?</button>
+    <button class="starter-btn" onclick="useStarter(this)">¿Cómo sé si tengo puertos expuestos innecesariamente?</button>
+    <button class="starter-btn" onclick="useStarter(this)">Alguien accedió a una cuenta de admin. ¿Qué hago ahora?</button>
+    <button class="starter-btn" onclick="useStarter(this)">¿Qué es MFA y por qué es crítico habilitarlo?</button>
+    <button class="starter-btn" onclick="useStarter(this)">Tenemos un equipo de 10 personas. ¿Por dónde empezamos con seguridad?</button>
+  </div>
+
+  <div class="error-banner" id="errorBanner">
+    Error al conectar con el agente. Verifica que el Worker esté desplegado y la URL sea correcta.
+  </div>
+
+  <div class="chat-window">
+    <div class="chat-titlebar">
+      <div class="dot dot-r"></div>
+      <div class="dot dot-y"></div>
+      <div class="dot dot-g"></div>
+      <span class="chat-titlebar-label">aegis8@security-engineer:~$</span>
+    </div>
+
+    <div class="messages" id="messages">
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">🔒</div>
+        <p>El Security Engineer está listo. Describe tu situación o elige una pregunta frecuente arriba.</p>
+      </div>
+    </div>
+
+    <div class="input-bar">
+      <textarea
+        id="inputField"
+        class="input-field"
+        placeholder="Describe tu web, stack o situación de seguridad..."
+        rows="1"
+        onkeydown="handleKey(event)"
+        oninput="autoResize(this)"
+      ></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Enviar">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <p class="disclaimer">
+    Este agente es orientativo y no reemplaza una auditoría profesional.
+    Para un diagnóstico completo, <a href="https://aegis8.org/contactos.html">contáctanos directamente</a>.
+  </p>
+
+</div>
+
+<script>
+  // ─────────────────────────────────────────────────────────
+  // CONFIGURACIÓN — reemplaza con la URL de tu Worker
+  // ─────────────────────────────────────────────────────────
+  const WORKER_URL = "const WORKER_URL = "https://aegis8-agent.christianmora705.workers.dev";";
+  // ─────────────────────────────────────────────────────────
+
+  const conversationHistory = [];
+  let isLoading = false;
+
+  function useStarter(btn) {
+    const input = document.getElementById("inputField");
+    input.value = btn.textContent;
+    autoResize(input);
+    input.focus();
+  }
+
+  function autoResize(el) {
+    el.style.height = "auto";
+    el.style.height = Math.min(el.scrollHeight, 140) + "px";
+  }
+
+  function handleKey(e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+
+  function addMessage(role, text) {
+    const container = document.getElementById("messages");
+    const empty = document.getElementById("emptyState");
+    if (empty) empty.remove();
+
+    const isUser = role === "user";
+    const div = document.createElement("div");
+    div.className = `msg ${isUser ? "user" : "agent"}`;
+    div.innerHTML = `
+      <div class="msg-avatar">${isUser ? "tú" : "🔒"}</div>
+      <div class="msg-body">
+        <div class="msg-label">${isUser ? "// tú" : "// security engineer"}</div>
+        <div class="msg-text">${escapeHtml(text)}</div>
+      </div>
+    `;
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+    return div;
+  }
+
+  function addTypingIndicator() {
+    const container = document.getElementById("messages");
+    const empty = document.getElementById("emptyState");
+    if (empty) empty.remove();
+
+    const div = document.createElement("div");
+    div.className = "msg agent";
+    div.id = "typing";
+    div.innerHTML = `
+      <div class="msg-avatar">🔒</div>
+      <div class="msg-body">
+        <div class="msg-label">// security engineer</div>
+        <div class="typing-indicator">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function removeTypingIndicator() {
+    const t = document.getElementById("typing");
+    if (t) t.remove();
+  }
+
+  function escapeHtml(str) {
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  async function sendMessage() {
+    if (isLoading) return;
+
+    const input = document.getElementById("inputField");
+    const text = input.value.trim();
+    if (!text) return;
+
+    // Check config
+    if (WORKER_URL.includes("TU_WORKER")) {
+      document.getElementById("errorBanner").classList.add("visible");
+      document.getElementById("errorBanner").textContent =
+        "⚠ Worker no configurado. Reemplaza WORKER_URL con la URL de tu Cloudflare Worker.";
+      return;
+    }
+
+    document.getElementById("errorBanner").classList.remove("visible");
+
+    // Add user message
+    addMessage("user", text);
+    conversationHistory.push({ role: "user", content: text });
+
+    input.value = "";
+    input.style.height = "auto";
+
+    // Disable input
+    isLoading = true;
+    document.getElementById("sendBtn").disabled = true;
+    input.disabled = true;
+
+    addTypingIndicator();
+
+    try {
+      const res = await fetch(WORKER_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: conversationHistory }),
+      });
+
+      removeTypingIndicator();
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+
+      const reply = data.response;
+      conversationHistory.push({ role: "assistant", content: reply });
+      addMessage("agent", reply);
+
+    } catch (err) {
+      removeTypingIndicator();
+      document.getElementById("errorBanner").classList.add("visible");
+      document.getElementById("errorBanner").textContent =
+        "Error al contactar el agente: " + err.message;
+      // Remove failed user message from history
+      conversationHistory.pop();
+    } finally {
+      isLoading = false;
+      document.getElementById("sendBtn").disabled = false;
+      input.disabled = false;
+      input.focus();
+    }
+  }
+</script>
+</body>
+</html>
