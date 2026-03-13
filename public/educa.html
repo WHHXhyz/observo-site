@@ -625,6 +625,28 @@ footer a:hover { color: var(--green); }
 #cursor{position:fixed;width:12px;height:12px;background:#00ff88;border-radius:50%;pointer-events:none;z-index:9999;opacity:0;left:-50px;top:-50px;}
 #cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(0,255,136,0.4);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;left:-50px;top:-50px;transition:width 0.2s,height 0.2s,border-color 0.2s;}
 body:has(a:hover) #cursor-ring,body:has(button:hover) #cursor-ring{width:56px;height:56px;border-color:#00ff88;}
+
+/* ── HERRAMIENTAS IA ── */
+.tools-section{padding:4rem 2rem;max-width:1100px;margin:0 auto;}
+.tools-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
+.tools-title{font-family:var(--display);font-size:clamp(2rem,5vw,3.5rem);line-height:0.9;text-transform:uppercase;margin-bottom:0.75rem;}
+.tools-title span{color:var(--green);}
+.tools-sub{font-size:0.95rem;color:var(--muted);max-width:520px;margin-bottom:2.5rem;line-height:1.6;}
+.tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);}
+.tool-card{background:var(--bg2);padding:2.5rem 2rem;text-decoration:none;color:var(--text);display:flex;flex-direction:column;gap:1rem;transition:background 0.2s;position:relative;overflow:hidden;}
+.tool-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--tool-color,var(--green));transform:scaleX(0);transform-origin:left;transition:transform 0.3s ease;}
+.tool-card:hover::before{transform:scaleX(1);}
+.tool-card:hover{background:var(--surface);}
+.tool-icon{font-size:2.5rem;}
+.tool-tag{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--tool-color,var(--green));border:1px solid;opacity:0.7;padding:0.2rem 0.6rem;display:inline-block;width:fit-content;}
+.tool-name{font-family:var(--display);font-size:1.8rem;line-height:0.95;text-transform:uppercase;color:var(--tool-color,var(--text));}
+.tool-desc{font-size:0.88rem;color:var(--muted);line-height:1.6;flex:1;}
+.tool-cta{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--tool-color,var(--green));display:flex;align-items:center;gap:0.5rem;transition:gap 0.2s;}
+.tool-card:hover .tool-cta{gap:0.9rem;}
+.tool-phishing{--tool-color:#ff2244;}
+.tool-checklist{--tool-color:#00ff88;}
+@media(max-width:600px){.tools-grid{grid-template-columns:1fr;}}
+
 </style>
 </head>
 <body data-page="educa">
@@ -660,63 +682,56 @@ body:has(a:hover) #cursor-ring,body:has(button:hover) #cursor-ring{width:56px;he
   </p>
 
   <div class="hero-cta-group">
-    <a href="#secciones" class="hero-btn-main">Explorar secciones →</a>
     <a href="/agente-seguridad.html" class="hero-btn-out">Consultar al agente IA</a>
   </div>
 
-  <div class="hero-scroll">EXPLORAR</div>
 </section>
 
-<!-- STATS BAR -->
-<div class="stats-bar reveal">
-  <div class="stat-item">
-    <span class="stat-num">4</span>
-    <span class="stat-label">segmentos<br>educativos</span>
+<!-- POR QUÉ IMPORTA -->
+<section class="why-section">
+  <div class="why-inner">
+    <div class="why-left reveal">
+      <div class="section-label">por qué importa</div>
+      <h2 class="why-title">
+        LOS NIÑOS<br>SON EL<br><span>BLANCO</span>
+      </h2>
+      <p class="why-body">
+        El grooming, el phishing disfrazado de juego y el robo de identidad afectan a niños y jóvenes cada vez más. La educación digital temprana es la única defensa real — y la mayoría de los colegios todavía no la imparte.
+      </p>
+    </div>
+    <div class="why-stats reveal">
+      <div class="why-stat">
+        <span class="why-stat-num">+50%</span>
+        <div class="why-stat-text">
+          <strong>Phishing creció el último año</strong>
+          Muchas campañas usan contenido dirigido a menores: juegos, sorteos y redes sociales.
+        </div>
+      </div>
+      <div class="why-stat">
+        <span class="why-stat-num">60%</span>
+        <div class="why-stat-text">
+          <strong>Empresas chilenas sufrió brecha</strong>
+          En los últimos 2 años. Los datos de familias enteras quedaron expuestos.
+        </div>
+      </div>
+      <div class="why-stat">
+        <span class="why-stat-num">1 de 3</span>
+        <div class="why-stat-text">
+          <strong>Menores expuestos a contacto no deseado</strong>
+          En plataformas de juego y redes sociales sin supervisión ni educación.
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="stat-item">
-    <span class="stat-num">100%</span>
-    <span class="stat-label">gratuito<br>sin registro</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num">+20</span>
-    <span class="stat-label">recursos y<br>actividades</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num">0</span>
-    <span class="stat-label">datos<br>requeridos</span>
-  </div>
-</div>
+</section>
 
-<!-- FEATURES STRIP -->
-<div class="features">
-  <div class="features-track">
-    <span class="feat-item"><span class="dot"></span>100% gratuito</span>
-    <span class="feat-item"><span class="dot"></span>Quizzes interactivos</span>
-    <span class="feat-item"><span class="dot"></span>Material para clases</span>
-    <span class="feat-item"><span class="dot"></span>Guías descargables</span>
-    <span class="feat-item"><span class="dot"></span>Agente IA especializado</span>
-    <span class="feat-item"><span class="dot"></span>Juegos educativos</span>
-    <span class="feat-item"><span class="dot"></span>Sin registro</span>
-    <span class="feat-item"><span class="dot"></span>Talleres presenciales</span>
-    <span class="feat-item"><span class="dot"></span>📬 Newsletter mensual</span>
-    <span class="feat-item"><span class="dot"></span>🏅 Certificados digitales</span>
-    <!-- duplicate for infinite scroll -->
-    <span class="feat-item"><span class="dot"></span>100% gratuito</span>
-    <span class="feat-item"><span class="dot"></span>Quizzes interactivos</span>
-    <span class="feat-item"><span class="dot"></span>Material para clases</span>
-    <span class="feat-item"><span class="dot"></span>Guías descargables</span>
-    <span class="feat-item"><span class="dot"></span>Agente IA especializado</span>
-    <span class="feat-item"><span class="dot"></span>Juegos educativos</span>
-    <span class="feat-item"><span class="dot"></span>Sin registro</span>
-    <span class="feat-item"><span class="dot"></span>Talleres presenciales</span>
-    <span class="feat-item"><span class="dot"></span>📬 Newsletter mensual</span>
-    <span class="feat-item"><span class="dot"></span>🏅 Certificados digitales</span>
-  </div>
-</div>
 
 <!-- CARDS -->
 <section class="cards-section" id="secciones">
-  <div class="section-label reveal">elige tu sección</div>
+  <div class="reveal" style="text-align:center;margin-bottom:2.5rem;">
+    <h2 style="font-family:var(--display);font-size:clamp(2.5rem,6vw,5rem);line-height:0.9;text-transform:uppercase;letter-spacing:0.02em;">¿PARA QUIÉN<br><span style="color:var(--green);">ES ESTO?</span></h2>
+    <p style="font-family:var(--mono);font-size:0.78rem;color:var(--muted);margin-top:1rem;letter-spacing:0.06em;">Elige tu perfil y accede al contenido que te corresponde</p>
+  </div>
 
   <div class="cards-grid">
 
@@ -795,41 +810,29 @@ body:has(a:hover) #cursor-ring,body:has(button:hover) #cursor-ring{width:56px;he
   </div>
 </section>
 
-<!-- POR QUÉ IMPORTA -->
-<section class="why-section">
-  <div class="why-inner">
-    <div class="why-left reveal">
-      <div class="section-label">por qué importa</div>
-      <h2 class="why-title">
-        LOS NIÑOS<br>SON EL<br><span>BLANCO</span>
-      </h2>
-      <p class="why-body">
-        El grooming, el phishing disfrazado de juego y el robo de identidad afectan a niños y jóvenes cada vez más. La educación digital temprana es la única defensa real — y la mayoría de los colegios todavía no la imparte.
-      </p>
-    </div>
-    <div class="why-stats reveal">
-      <div class="why-stat">
-        <span class="why-stat-num">+50%</span>
-        <div class="why-stat-text">
-          <strong>Phishing creció el último año</strong>
-          Muchas campañas usan contenido dirigido a menores: juegos, sorteos y redes sociales.
-        </div>
-      </div>
-      <div class="why-stat">
-        <span class="why-stat-num">60%</span>
-        <div class="why-stat-text">
-          <strong>Empresas chilenas sufrió brecha</strong>
-          En los últimos 2 años. Los datos de familias enteras quedaron expuestos.
-        </div>
-      </div>
-      <div class="why-stat">
-        <span class="why-stat-num">1 de 3</span>
-        <div class="why-stat-text">
-          <strong>Menores expuestos a contacto no deseado</strong>
-          En plataformas de juego y redes sociales sin supervisión ni educación.
-        </div>
-      </div>
-    </div>
+<!-- HERRAMIENTAS IA -->
+<section class="tools-section reveal">
+  <div class="tools-label">// herramientas gratuitas · powered by ia</div>
+  <h2 class="tools-title">DETECTA.<br>PLANIFICA.<br><span>PROTÉGETE.</span></h2>
+  <p class="tools-sub">Herramientas interactivas con inteligencia artificial para analizar amenazas reales y armar tu plan de seguridad.</p>
+  <div class="tools-grid">
+
+    <a href="/analizador-phishing.html" class="tool-card tool-phishing">
+      <div class="tool-icon">🎣</div>
+      <div class="tool-tag">IA en tiempo real</div>
+      <div class="tool-name">ANALIZADOR<br>DE PHISHING</div>
+      <div class="tool-desc">Pega una URL o mensaje sospechoso. La IA detecta si es un engaño y te explica por qué — en segundos.</div>
+      <div class="tool-cta">Analizar ahora →</div>
+    </a>
+
+    <a href="/checklist.html" class="tool-card tool-checklist">
+      <div class="tool-icon">✅</div>
+      <div class="tool-tag">Para familias y colegios</div>
+      <div class="tool-name">CHECKLIST<br>FAMILIAR</div>
+      <div class="tool-desc">¿Cómo está de seguro tu hogar digital? Responde 4 preguntas y recibe un plan concreto para proteger a tu familia.</div>
+      <div class="tool-cta">Crear mi plan familiar →</div>
+    </a>
+
   </div>
 </section>
 
