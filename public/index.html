@@ -682,6 +682,8 @@ footer a:hover{color:var(--green);}
   .stat-n{font-size:1.75rem;}
   .stat-l{font-size:0.58rem;}
   .threats-section,.principles-section,.terminal-section,.checklist-section{padding:3rem 0;}
+  #educa-promo { padding: 3rem 0 !important; }
+  #educa-promo .wrap > div[style*="grid-template-columns:repeat(4"] { grid-template-columns: 1fr 1fr !important; }
   .cta-final{padding:4rem 0;}
   .section-header{margin-bottom:2rem;}
   .section-h{font-size:clamp(1.6rem,6vw,2.2rem);}
@@ -964,6 +966,75 @@ footer a:hover{color:var(--green);}
   </div><!-- /wrap -->
 </section>
 
+<!-- ============================================================
+     EDUCA SECTION — between principles and terminal
+     ============================================================ -->
+<section id="educa-promo" style="position:relative;z-index:1;padding:6rem 0;overflow:hidden;background:var(--bg);">
+
+  <!-- Decorative glow blobs -->
+  <div style="position:absolute;top:-100px;left:-100px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(56,189,248,0.06) 0%,transparent 65%);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(251,146,60,0.05) 0%,transparent 65%);pointer-events:none;"></div>
+
+  <div class="wrap">
+
+    <!-- Header -->
+    <div class="section-header reveal" style="text-align:center;margin-bottom:1rem;">
+      <div class="section-label" style="justify-content:center;">// proyecto social · educación gratuita</div>
+      <h2 class="section-h" style="margin:0 auto;">Ciberseguridad para<br/><em style="color:var(--green);font-style:normal;">toda la familia</em></h2>
+      <p style="font-size:1rem;color:var(--muted);max-width:520px;margin:1rem auto 0;line-height:1.75;">Juegos interactivos, quizzes, guías reales y un agente de IA — gratis, sin registro, para niños, adolescentes, padres y profesores.</p>
+    </div>
+
+    <!-- 4 Cards -->
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin:3rem 0;border:1px solid var(--border);">
+
+      <a href="/educa/ninos.html" style="background:var(--bg2);padding:2rem 1.5rem;text-decoration:none;display:flex;flex-direction:column;gap:0.75rem;transition:background 0.2s;position:relative;overflow:hidden;" onmouseover="this.style.background='rgba(56,189,248,0.06)'" onmouseout="this.style.background='var(--bg2)'">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#38bdf8,transparent);opacity:0.5;"></div>
+        <span style="font-size:2.5rem;">🧒</span>
+        <div style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.2em;color:#38bdf8;text-transform:uppercase;">Niños</div>
+        <div style="font-size:0.85rem;color:var(--muted);line-height:1.6;">Juegos interactivos y reglas de oro para 6 a 12 años.</div>
+        <div style="margin-top:auto;font-family:var(--font-mono);font-size:0.65rem;color:#38bdf8;">entrar →</div>
+      </a>
+
+      <a href="/educa/adolescentes.html" style="background:var(--bg2);padding:2rem 1.5rem;text-decoration:none;display:flex;flex-direction:column;gap:0.75rem;transition:background 0.2s;position:relative;overflow:hidden;" onmouseover="this.style.background='rgba(167,139,250,0.06)'" onmouseout="this.style.background='var(--bg2)'">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#a78bfa,transparent);opacity:0.5;"></div>
+        <span style="font-size:2.5rem;">🧑‍💻</span>
+        <div style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.2em;color:#a78bfa;text-transform:uppercase;">Adolescentes</div>
+        <div style="font-size:0.85rem;color:var(--muted);line-height:1.6;">Quiz desafiante y amenazas reales para 13 a 17 años.</div>
+        <div style="margin-top:auto;font-family:var(--font-mono);font-size:0.65rem;color:#a78bfa;">entrar →</div>
+      </a>
+
+      <a href="/educa/padres.html" style="background:var(--bg2);padding:2rem 1.5rem;text-decoration:none;display:flex;flex-direction:column;gap:0.75rem;transition:background 0.2s;position:relative;overflow:hidden;" onmouseover="this.style.background='rgba(52,211,153,0.06)'" onmouseout="this.style.background='var(--bg2)'">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#34d399,transparent);opacity:0.5;"></div>
+        <span style="font-size:2.5rem;">👨‍👩‍👧</span>
+        <div style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.2em;color:#34d399;text-transform:uppercase;">Padres</div>
+        <div style="font-size:0.85rem;color:var(--muted);line-height:1.6;">Guías de conversación y checklist familiar de seguridad.</div>
+        <div style="margin-top:auto;font-family:var(--font-mono);font-size:0.65rem;color:#34d399;">entrar →</div>
+      </a>
+
+      <a href="/educa/profesores.html" style="background:var(--bg2);padding:2rem 1.5rem;text-decoration:none;display:flex;flex-direction:column;gap:0.75rem;transition:background 0.2s;position:relative;overflow:hidden;" onmouseover="this.style.background='rgba(251,146,60,0.06)'" onmouseout="this.style.background='var(--bg2)'">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#fb923c,transparent);opacity:0.5;"></div>
+        <span style="font-size:2.5rem;">👩‍🏫</span>
+        <div style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.2em;color:#fb923c;text-transform:uppercase;">Profesores</div>
+        <div style="font-size:0.85rem;color:var(--muted);line-height:1.6;">6 planes de clase listos + generador de actividades con IA.</div>
+        <div style="margin-top:auto;font-family:var(--font-mono);font-size:0.65rem;color:#fb923c;">entrar →</div>
+      </a>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="reveal" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <div style="display:flex;flex-wrap:wrap;gap:2rem;">
+        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);display:flex;align-items:center;gap:0.5rem;"><span style="color:var(--green);">✓</span> 100% gratuito</span>
+        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);display:flex;align-items:center;gap:0.5rem;"><span style="color:var(--green);">✓</span> Sin registro</span>
+        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);display:flex;align-items:center;gap:0.5rem;"><span style="color:var(--green);">✓</span> Agente IA incluido</span>
+        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);display:flex;align-items:center;gap:0.5rem;"><span style="color:var(--green);">✓</span> Talleres presenciales disponibles</span>
+      </div>
+      <a href="/educa.html" style="font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);text-decoration:none;border:1px solid rgba(0,255,136,0.3);padding:0.5rem 1.25rem;transition:all 0.2s;" onmouseover="this.style.background='rgba(0,255,136,0.08)'" onmouseout="this.style.background='transparent'">Ver todo →</a>
+    </div>
+
+  </div>
+</section>
+
 <!-- TERMINAL -->
 <section class="terminal-section">
   <div class="wrap">
@@ -1031,54 +1102,6 @@ footer a:hover{color:var(--green);}
 
   </div>
   </div><!-- /wrap -->
-</section>
-
-<!-- EDUCA SECTION -->
-<section style="position:relative;z-index:1;padding:5rem 0;border-top:1px solid var(--border);">
-  <div class="wrap">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;">
-
-      <div class="reveal">
-        <div style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--green);margin-bottom:1rem;display:flex;align-items:center;gap:0.6rem;">
-          <span style="width:20px;height:1px;background:var(--green);display:inline-block;"></span>
-          nuevo · educación digital gratuita
-        </div>
-        <h2 style="font-family:var(--font-display);font-size:clamp(2.5rem,5vw,4rem);font-weight:900;line-height:0.92;letter-spacing:0.02em;text-transform:uppercase;margin-bottom:1.25rem;">
-          NIÑOS, ADOLESCENTES,<br>PADRES Y<br><span style="color:var(--green);">PROFESORES</span>
-        </h2>
-        <p style="font-size:0.95rem;color:var(--muted);line-height:1.75;margin-bottom:2rem;max-width:440px;">
-          Creamos una sección gratuita para que toda la familia aprenda a navegar seguro — con juegos, quizzes interactivos, guías y un agente de IA. Sin costo, sin registro.
-        </p>
-        <a href="/educa.html" style="display:inline-flex;align-items:center;gap:0.6rem;background:var(--green);color:#000;font-family:var(--font-mono);font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.9rem 1.75rem;text-decoration:none;transition:background 0.2s;">
-          Visitar Educa →
-        </a>
-      </div>
-
-      <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
-        <a href="/educa/ninos.html" style="background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.2);padding:1.25rem;text-decoration:none;transition:background 0.2s;display:block;">
-          <div style="font-size:1.8rem;margin-bottom:0.5rem;">🧒</div>
-          <div style="font-family:var(--font-mono);font-size:0.7rem;color:#38bdf8;letter-spacing:0.1em;margin-bottom:0.25rem;">NIÑOS</div>
-          <div style="font-size:0.78rem;color:var(--muted);">Juegos y actividades 6–12 años</div>
-        </a>
-        <a href="/educa/adolescentes.html" style="background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.2);padding:1.25rem;text-decoration:none;transition:background 0.2s;display:block;">
-          <div style="font-size:1.8rem;margin-bottom:0.5rem;">🧑‍💻</div>
-          <div style="font-family:var(--font-mono);font-size:0.7rem;color:#a78bfa;letter-spacing:0.1em;margin-bottom:0.25rem;">ADOLESCENTES</div>
-          <div style="font-size:0.78rem;color:var(--muted);">Quiz desafiante 13–17 años</div>
-        </a>
-        <a href="/educa/padres.html" style="background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.2);padding:1.25rem;text-decoration:none;transition:background 0.2s;display:block;">
-          <div style="font-size:1.8rem;margin-bottom:0.5rem;">👨‍👩‍👧</div>
-          <div style="font-family:var(--font-mono);font-size:0.7rem;color:#34d399;letter-spacing:0.1em;margin-bottom:0.25rem;">PADRES</div>
-          <div style="font-size:0.78rem;color:var(--muted);">Guías y conversaciones reales</div>
-        </a>
-        <a href="/educa/profesores.html" style="background:rgba(251,146,60,0.06);border:1px solid rgba(251,146,60,0.2);padding:1.25rem;text-decoration:none;transition:background 0.2s;display:block;">
-          <div style="font-size:1.8rem;margin-bottom:0.5rem;">👩‍🏫</div>
-          <div style="font-family:var(--font-mono);font-size:0.7rem;color:#fb923c;letter-spacing:0.1em;margin-bottom:0.25rem;">PROFESORES</div>
-          <div style="font-size:0.78rem;color:var(--muted);">Planes de clase listos</div>
-        </a>
-      </div>
-
-    </div>
-  </div>
 </section>
 
 <!-- FINAL CTA -->

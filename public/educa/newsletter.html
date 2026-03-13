@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Newsletter Docente · Aegis8</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="/aegis-nav.js"></script>
+<style>
+:root{--bg:#07080c;--bg2:#0b0e18;--card:#0f1420;--border:#182030;--orange:#fb923c;--orange2:#ea580c;--amber:#fbbf24;--green:#4ade80;--text:#e2e8f0;--muted:#64748b;--font:'Inter',sans-serif;--mono:'IBM Plex Mono',monospace;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased;padding-top:64px;overflow-x:hidden;}
+.bg-lines{position:fixed;inset:0;z-index:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(251,146,60,0.015) 39px,rgba(251,146,60,0.015) 40px);}
+
+/* HERO */
+.hero{position:relative;z-index:1;max-width:700px;margin:0 auto;padding:6rem 2rem 4rem;text-align:center;}
+.hero-tag{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--orange);border:1px solid rgba(251,146,60,0.25);padding:0.3rem 0.9rem;margin-bottom:1.5rem;background:rgba(251,146,60,0.05);}
+.hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--orange);animation:blink 1.5s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.1}}
+h1{font-size:clamp(2.5rem,7vw,5rem);font-weight:800;line-height:0.92;letter-spacing:-0.03em;margin-bottom:1.25rem;}
+h1 span{color:var(--orange);}
+.hero-p{font-size:1rem;color:var(--muted);line-height:1.75;margin-bottom:2.5rem;}
+
+/* SIGNUP FORM */
+.signup-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:2.5rem;max-width:520px;margin:0 auto 4rem;position:relative;z-index:1;}
+.form-label{font-family:var(--mono);font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;display:block;}
+.form-input{width:100%;background:var(--bg2);border:1.5px solid var(--border);border-radius:8px;padding:0.8rem 1rem;font-family:var(--font);font-size:0.9rem;color:var(--text);outline:none;margin-bottom:1rem;transition:border-color 0.2s;}
+.form-input:focus{border-color:var(--orange);}
+.form-input::placeholder{color:var(--muted);}
+.form-select{width:100%;background:var(--bg2);border:1.5px solid var(--border);border-radius:8px;padding:0.8rem 1rem;font-family:var(--font);font-size:0.9rem;color:var(--text);outline:none;margin-bottom:1rem;appearance:none;transition:border-color 0.2s;}
+.form-select:focus{border-color:var(--orange);}
+.form-select option{background:var(--card);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;}
+.submit-btn{width:100%;background:linear-gradient(135deg,var(--orange2),var(--amber));border:none;border-radius:8px;padding:1rem;font-family:var(--font);font-size:0.95rem;font-weight:700;color:#fff;cursor:pointer;transition:opacity 0.2s,transform 0.2s;margin-top:0.5rem;}
+.submit-btn:hover{opacity:0.88;transform:translateY(-1px);}
+.form-note{font-family:var(--mono);font-size:0.6rem;color:var(--muted);text-align:center;margin-top:0.75rem;letter-spacing:0.08em;}
+.success-msg{display:none;text-align:center;padding:2rem;}
+.success-msg.show{display:block;}
+.success-emoji{font-size:3.5rem;margin-bottom:1rem;}
+.success-title{font-size:1.4rem;font-weight:700;margin-bottom:0.5rem;}
+.success-sub{font-size:0.9rem;color:var(--muted);line-height:1.65;}
+
+/* WHAT YOU GET */
+.benefits{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 2rem 5rem;}
+.benefits-title{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--orange);margin-bottom:2rem;text-align:center;}
+.benefits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.benefit{background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:1.5rem;transition:border-color 0.2s;}
+.benefit:hover{border-color:rgba(251,146,60,0.3);}
+.b-icon{font-size:2rem;margin-bottom:0.75rem;}
+.b-title{font-size:0.95rem;font-weight:700;margin-bottom:0.4rem;}
+.b-text{font-size:0.82rem;color:var(--muted);line-height:1.6;}
+.b-tag{display:inline-block;margin-top:0.75rem;font-family:var(--mono);font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--orange);border:1px solid rgba(251,146,60,0.25);padding:0.2rem 0.5rem;border-radius:3px;}
+
+/* PREVIEW */
+.preview{position:relative;z-index:1;max-width:700px;margin:0 auto;padding:0 2rem 5rem;}
+.preview-title{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--orange);margin-bottom:1.5rem;text-align:center;}
+.email-mock{background:var(--card);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;}
+.em-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.em-from{font-family:var(--mono);font-size:0.72rem;color:var(--muted);}
+.em-from span{color:var(--orange);}
+.em-date{font-family:var(--mono);font-size:0.65rem;color:var(--muted);}
+.em-body{padding:1.5rem;}
+.em-tag{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--orange);margin-bottom:0.5rem;}
+.em-title{font-size:1.1rem;font-weight:700;margin-bottom:1rem;}
+.em-section{margin-bottom:1.25rem;}
+.em-section-title{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;}
+.em-section-title::before{content:'//';color:rgba(251,146,60,0.4);}
+.em-text{font-size:0.85rem;color:var(--muted);line-height:1.65;}
+.em-cta{display:inline-block;background:var(--orange);color:#fff;font-family:var(--mono);font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.6rem 1.25rem;text-decoration:none;border-radius:6px;margin-top:0.75rem;}
+
+.page-footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.5rem;text-align:center;font-family:var(--mono);font-size:0.62rem;color:var(--muted);}
+.page-footer a{color:var(--muted);text-decoration:none;}
+.page-footer a:hover{color:var(--orange);}
+
+@media(max-width:700px){.benefits-grid{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr;}}
+</style>
+</head>
+<body data-page="educa">
+<div class="bg-lines"></div>
+
+<section class="hero">
+  <div class="hero-tag">mensual · gratuito</div>
+  <h1>La amenaza<br>del <span>mes</span></h1>
+  <p>Cada mes, un correo con la amenaza digital más relevante para el aula + material listo para usar en clases. Sin spam, solo lo que importa.</p>
+</section>
+
+<div class="signup-card">
+  <div id="signupForm">
+    <div class="form-row">
+      <div>
+        <label class="form-label">Nombre</label>
+        <input class="form-input" id="fname" placeholder="Tu nombre">
+      </div>
+      <div>
+        <label class="form-label">Apellido</label>
+        <input class="form-input" id="lname" placeholder="Tu apellido">
+      </div>
+    </div>
+    <label class="form-label">Correo electrónico</label>
+    <input class="form-input" id="email" type="email" placeholder="tu@colegio.cl">
+    <label class="form-label">Nivel que enseñas</label>
+    <select class="form-select" id="level">
+      <option value="">Selecciona...</option>
+      <option>Ed. Básica (1° a 4°)</option>
+      <option>Ed. Básica (5° a 8°)</option>
+      <option>Ed. Media (1° a 4°)</option>
+      <option>Varios niveles</option>
+    </select>
+    <label class="form-label">Región</label>
+    <select class="form-select" id="region">
+      <option value="">Selecciona...</option>
+      <option>Metropolitana</option><option>Valparaíso</option><option>Biobío</option>
+      <option>La Araucanía</option><option>Los Lagos</option><option>Coquimbo</option>
+      <option>O'Higgins</option><option>Maule</option><option>Otra</option>
+    </select>
+    <button class="submit-btn" onclick="subscribe()">Suscribirme gratis →</button>
+    <p class="form-note">sin spam · puedes darte de baja cuando quieras</p>
+  </div>
+  <div class="success-msg" id="successMsg">
+    <div class="success-emoji">🎉</div>
+    <div class="success-title">¡Listo, ya estás dentro!</div>
+    <div class="success-sub">El próximo lunes recibes tu primer newsletter con la amenaza del mes y material para tus clases. Revisa tu bandeja de spam por si acaso.</div>
+  </div>
+</div>
+
+<div class="benefits">
+  <div class="benefits-title">// qué recibes cada mes</div>
+  <div class="benefits-grid">
+    <div class="benefit">
+      <div class="b-icon">⚠️</div>
+      <div class="b-title">Amenaza del mes</div>
+      <div class="b-text">La amenaza digital más relevante para jóvenes chilenos ese mes, con contexto real y estadísticas actualizadas.</div>
+      <span class="b-tag">siempre actualizado</span>
+    </div>
+    <div class="benefit">
+      <div class="b-icon">📋</div>
+      <div class="b-title">Actividad lista</div>
+      <div class="b-text">Una actividad de 20–30 minutos lista para aplicar en clases, con instrucciones y material para estudiantes incluido.</div>
+      <span class="b-tag">llega y aplica</span>
+    </div>
+    <div class="benefit">
+      <div class="b-icon">💡</div>
+      <div class="b-title">Tip del mes</div>
+      <div class="b-text">Un consejo práctico para hablar de tecnología con tus estudiantes de forma cercana y sin tecnicismos.</div>
+      <span class="b-tag">fácil de aplicar</span>
+    </div>
+  </div>
+</div>
+
+<div class="preview">
+  <div class="preview-title">// así se ve el newsletter</div>
+  <div class="email-mock">
+    <div class="em-header">
+      <div class="em-from">De: <span>newsletter@aegis8.org</span> · Para: profesor/a</div>
+      <div class="em-date">1° lunes del mes</div>
+    </div>
+    <div class="em-body">
+      <div class="em-tag">// amenaza del mes · marzo 2026</div>
+      <div class="em-title">Deepfakes en WhatsApp: qué están viendo tus estudiantes</div>
+      <div class="em-section">
+        <div class="em-section-title">Qué está pasando</div>
+        <div class="em-text">En las últimas semanas aumentaron los casos de videos manipulados con IA que circulan por WhatsApp entre adolescentes. Muchos los comparten sin saber que son falsos, lo que genera rumores y conflictos en los cursos.</div>
+      </div>
+      <div class="em-section">
+        <div class="em-section-title">Actividad para esta semana</div>
+        <div class="em-text">Muestra 3 videos cortos al curso y pídeles que voten cuál es real. Luego revelen juntos las señales que los delatan. Material incluido más abajo.</div>
+      </div>
+      <a class="em-cta" href="#">Descargar material →</a>
+    </div>
+  </div>
+</div>
+
+<footer class="page-footer">
+  <a href="/educa/profesores.html">← volver a profesores</a> &nbsp;·&nbsp;
+  <a href="/educa.html">educa</a> &nbsp;·&nbsp;
+  <a href="/">aegis8.org</a>
+</footer>
+
+<script>
+function subscribe(){
+  const name=document.getElementById('fname').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const level=document.getElementById('level').value;
+  if(!name||!email||!level){
+    alert('Por favor completa al menos nombre, correo y nivel.');return;
+  }
+  if(!email.includes('@')){alert('Ingresa un correo válido.');return;}
+  // In production: send to your backend/Mailchimp/ConvertKit
+  // For now, show success state
+  document.getElementById('signupForm').style.display='none';
+  document.getElementById('successMsg').className='success-msg show';
+  // Log to console for now (replace with real API call)
+  console.log('New subscriber:',{name,email,level,
+    lname:document.getElementById('lname').value,
+    region:document.getElementById('region').value
+  });
+}
+</script>
+</body>
+</html>

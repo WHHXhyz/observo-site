@@ -403,6 +403,13 @@ body {
           <div class="rb-item"><span class="rb-n" id="rWrong"   style="color:var(--red)"></span><span class="rb-l">incorrectas</span></div>
         </div>
         <button class="retry-btn" onclick="restartQuiz()">↺ Intentar de nuevo</button>
+        <div id="certSection" style="display:none;margin-top:1.5rem;">
+          <div style="font-family:var(--mono);font-size:0.65rem;letter-spacing:0.15em;color:var(--muted);margin-bottom:0.75rem;text-transform:uppercase;">// obtén tu certificado</div>
+          <div style="display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;">
+            <input id="certName" placeholder="Escribe tu nombre completo" style="background:var(--bg2);border:1.5px solid var(--border);border-radius:8px;padding:0.65rem 1rem;font-family:var(--font);font-size:0.88rem;color:var(--text);outline:none;width:220px;" onfocus="this.style.borderColor='var(--violet)'" onblur="this.style.borderColor='var(--border)'">
+            <button onclick="downloadCert()" style="background:linear-gradient(135deg,var(--violet2),var(--violet));border:none;border-radius:8px;padding:0.65rem 1.25rem;font-family:var(--font);font-size:0.85rem;font-weight:700;color:#fff;cursor:pointer;">🏅 Descargar certificado</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -587,6 +594,98 @@ function showQuizResult() {
   document.getElementById('rCorrect').textContent=qcorrect;
   document.getElementById('rScore').textContent=qs;
   document.getElementById('rWrong').textContent=qData.length-qcorrect;
+  // Show certificate option if passed (≥50%)
+  document.getElementById('certSection').style.display = pct>=0.5 ? 'block' : 'none';
+}
+
+function downloadCert() {
+  const name = document.getElementById('certName').value.trim() || 'Estudiante';
+  const score = qs;
+  const date = new Date().toLocaleDateString('es-CL',{day:'numeric',month:'long',year:'numeric'});
+  const canvas = document.createElement('canvas');
+  canvas.width = 900; canvas.height = 636;
+  const ctx = canvas.getContext('2d');
+
+  // Background
+  ctx.fillStyle = '#07080c';
+  ctx.fillRect(0,0,900,636);
+
+  // Border frame
+  ctx.strokeStyle = '#a78bfa'; ctx.lineWidth = 2;
+  ctx.strokeRect(20,20,860,596);
+  ctx.strokeStyle = 'rgba(167,139,250,0.2)'; ctx.lineWidth = 1;
+  ctx.strokeRect(28,28,844,580);
+
+  // Top accent line
+  const grad = ctx.createLinearGradient(20,0,880,0);
+  grad.addColorStop(0,'transparent');
+  grad.addColorStop(0.3,'#a78bfa');
+  grad.addColorStop(0.7,'#22d3ee');
+  grad.addColorStop(1,'transparent');
+  ctx.strokeStyle = grad; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(20,20); ctx.lineTo(880,20); ctx.stroke();
+
+  // Logo text
+  ctx.fillStyle = '#a78bfa';
+  ctx.font = 'bold 13px monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('AEGIS8 · EDUCACIÓN DIGITAL', 450, 80);
+
+  // Certificate title
+  ctx.fillStyle = '#e2e8f0';
+  ctx.font = 'bold 38px sans-serif';
+  ctx.fillText('CERTIFICADO DE COMPLETACIÓN', 450, 150);
+
+  // Divider
+  ctx.strokeStyle = 'rgba(167,139,250,0.4)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(150,175); ctx.lineTo(750,175); ctx.stroke();
+
+  // Body text
+  ctx.fillStyle = '#64748b';
+  ctx.font = '16px sans-serif';
+  ctx.fillText('Se certifica que', 450, 225);
+
+  // Name
+  ctx.fillStyle = '#a78bfa';
+  ctx.font = 'bold 46px sans-serif';
+  ctx.fillText(name, 450, 290);
+
+  // Description
+  ctx.fillStyle = '#e2e8f0';
+  ctx.font = '17px sans-serif';
+  ctx.fillText('completó el curso de Ciberseguridad para Adolescentes', 450, 345);
+  ctx.fillStyle = '#64748b';
+  ctx.font = '14px sans-serif';
+  ctx.fillText(`con un puntaje de ${score}/100 puntos · ${date}`, 450, 378);
+
+  // Divider 2
+  ctx.strokeStyle = 'rgba(167,139,250,0.3)';
+  ctx.beginPath(); ctx.moveTo(150,410); ctx.lineTo(750,410); ctx.stroke();
+
+  // Topics
+  ctx.fillStyle = '#64748b';
+  ctx.font = '12px monospace';
+  ctx.fillText('Temas: Privacidad · Grooming · Ciberbullying · Phishing · Redes Sociales · Fake News', 450, 445);
+
+  // Badge
+  ctx.fillStyle = 'rgba(167,139,250,0.1)';
+  ctx.beginPath(); ctx.arc(450,530,45,0,Math.PI*2); ctx.fill();
+  ctx.strokeStyle = '#a78bfa'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.arc(450,530,45,0,Math.PI*2); ctx.stroke();
+  ctx.fillStyle = '#a78bfa';
+  ctx.font = 'bold 32px sans-serif';
+  ctx.fillText('🛡️', 450, 545);
+
+  // Bottom
+  ctx.fillStyle = '#2d3748';
+  ctx.font = '11px monospace';
+  ctx.fillText('aegis8.org/educa · educación digital gratuita', 450, 595);
+
+  // Download
+  const link = document.createElement('a');
+  link.download = `certificado-aegis8-${name.replace(/\s+/g,'-').toLowerCase()}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
 }
 
 function restartQuiz() {
