@@ -656,25 +656,14 @@ body::before {
 .footer a { color: var(--text-dim); text-decoration: none; transition: color .2s; }
 .footer a:hover { color: var(--green); }
 </style>
+<script src="/aegis-nav.js"></script>
 </head>
-<body>
+<body data-page="formacion">
 
 <!-- ============================================================
      NAVIGATION — identical to aegis8.org
      ============================================================ -->
-<nav class="nav">
-  <a href="https://aegis8.org" class="nav-logo">AEGIS8</a>
-  <ul class="nav-links">
-    <li><a href="https://aegis8.org/#amenazas">amenazas</a></li>
-    <li><a href="https://aegis8.org/#principios">principios</a></li>
-    <li><a href="https://aegis8.org/#checklist">checklist</a></li>
-    <li><a href="/propuesta.html">propuesta</a></li>
-    <li><a href="/formacion.html" class="active">formación</a></li>
-    <li><a href="/agente-seguridad.html">agente IA</a></li>
-    <li><a href="https://aegis8.org/contactos.html">contacto</a></li>
-  </ul>
-  <span class="nav-tag">formación interactiva</span>
-</nav>
+
 
 <!-- ============================================================
      APP SHELL
@@ -926,13 +915,7 @@ body::before {
   </div><!-- /scroll-area -->
 
   <!-- BOTTOM NAV (mobile only) -->
-  <nav class="bottom-nav" id="bnav">
-    <button class="bn-item active" onclick="goTo('home',0)"><span class="bi">🏠</span><span class="bl">inicio</span></button>
-    <button class="bn-item" onclick="goTo('quiz',1)"><span class="bi">🎯</span><span class="bl">quiz</span></button>
-    <button class="bn-item" onclick="goTo('threats',2)"><span class="bi">⚠️</span><span class="bl">amenazas</span></button>
-    <button class="bn-item" onclick="goTo('checklist',3)"><span class="bi">✅</span><span class="bl">checklist</span></button>
-    <button class="bn-item" id="moreBtn" onclick="toggleMore()"><span class="bi">⋯</span><span class="bl">más</span></button>
-  </nav>
+  
 
   <!-- MORE DRAWER -->
   <div class="more-drawer" id="moreDrawer">
@@ -942,8 +925,6 @@ body::before {
     <div class="md-item" onclick="goTo('policies',7);closeMore()"><span class="md-icon">📋</span><span>políticas</span></div>
     <div class="md-item" onclick="goTo('smishing',8);closeMore()"><span class="md-icon">📱</span><span>smishing</span></div>
     <div class="md-item" onclick="goTo('deepfake',9);closeMore()"><span class="md-icon">🎭</span><span>deepfake</span></div>
-    <div class="md-item" onclick="window.location.href='/agente-seguridad.html'"><span class="md-icon">🔒</span><span>agente IA</span></div>
-    <div class="md-item" onclick="window.location.href='https://aegis8.org/contactos.html'"><span class="md-icon">✉️</span><span>contacto</span></div>
   </div>
 </div><!-- /shell -->
 
