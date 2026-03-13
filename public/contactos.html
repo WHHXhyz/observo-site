@@ -21,8 +21,8 @@
   --font-body:'DM Sans',sans-serif;
 }
 *{cursor:none!important;}
-#cursor{position:fixed;width:12px;height:12px;background:var(--green);border-radius:50%;pointer-events:none;z-index:9999;transition:transform 0.1s,opacity 0.2s;mix-blend-mode:screen;}
-#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(0,255,136,0.4);border-radius:50%;pointer-events:none;z-index:9998;transition:transform 0.15s ease-out,width 0.2s,height 0.2s,border-color 0.2s;}
+#cursor{position:fixed;width:12px;height:12px;background:var(--green);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;left:-50px;top:-50px;}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(0,255,136,0.4);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;left:-50px;top:-50px;transition:width 0.2s,height 0.2s,border-color 0.2s;}
 body:has(a:hover) #cursor-ring,body:has(button:hover) #cursor-ring{width:60px;height:60px;border-color:var(--green);}
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.6;overflow-x:hidden;padding-top:64px;}
@@ -69,7 +69,7 @@ footer a{color:var(--muted);text-decoration:none;transition:color 0.2s;}
 footer a:hover{color:var(--green);}
 .footer-logo{color:var(--green);letter-spacing:0.1em;}
 
-.reveal{opacity:1;transform:none;transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal{opacity:1;transform:none;}
 .reveal.visible{opacity:1;transform:none;}
 
 /* PAGE HERO */
@@ -465,9 +465,23 @@ footer a:hover{color:var(--green);}
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* CURSOR */
 var cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+var moved=false;
 document.addEventListener('mousemove',function(e){
-  cur.style.left=(e.clientX-6)+'px';cur.style.top=(e.clientY-6)+'px';
-  ring.style.left=(e.clientX-18)+'px';ring.style.top=(e.clientY-18)+'px';
+  var x=e.clientX,y=e.clientY;
+  cur.style.left=(x-6)+'px';
+  cur.style.top=(y-6)+'px';
+  ring.style.left=(x-18)+'px';
+  ring.style.top=(y-18)+'px';
+  if(!moved){
+    cur.style.transition='opacity 0.3s';
+    ring.style.transition='opacity 0.3s,width 0.2s,height 0.2s,border-color 0.2s';
+    cur.style.opacity='1';
+    ring.style.opacity='1';
+    moved=true;
+  }
+},true);
+document.addEventListener('mouseleave',function(){
+  cur.style.opacity='0';ring.style.opacity='0';
 });
 
 /* PARTICLES */
