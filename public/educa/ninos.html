@@ -339,12 +339,13 @@ body {
 <!-- HERO -->
 <section class="hero">
   <span class="hero-emoji">🧒</span>
-  <h1>¡Internet<br>Seguro!</h1>
-  <p>Aprende a navegar seguro en internet con juegos y actividades. ¡Es más fácil de lo que crees!</p>
+  <h1>¡Esta página<br>es para <span style="background:linear-gradient(135deg,#38bdf8,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">ti!</span></h1>
+  <p>Aquí vas a aprender a protegerte en internet jugando. ¿Sabes qué está bien y qué está mal compartir online? ¡Descúbrelo tú mismo!</p>
   <div class="badge-row">
-    <span class="badge sky">6 – 12 años</span>
-    <span class="badge yellow">🎮 juego interactivo</span>
-    <span class="badge pink">🤖 pregúntale a la IA</span>
+    <span class="badge sky">🧒 6 – 12 años</span>
+    <span class="badge yellow">🎮 juegos interactivos</span>
+    <span class="badge pink">🤖 CiberBot te ayuda</span>
+    <span class="badge" style="border-color:var(--mint);color:var(--mint);">🛡️ aprende las reglas</span>
   </div>
 </section>
 
@@ -448,12 +449,54 @@ body {
     </div>
   </section>
 
-  <!-- CTA -->
-  <div class="cta-box">
-    <h3>¿Quieres aprender más? 🚀</h3>
-    <p>Podemos llevar talleres interactivos a tu colegio con juegos, actividades y mucho más.</p>
-    <a href="/contactos.html" class="cta-link">Cuéntanos →</a>
-  </div>
+  <!-- SECOND GAME: Password Strength -->
+  <hr class="divider">
+  <section class="section">
+    <div class="section-title">🔐 ¿Qué tan fuerte es tu contraseña?</div>
+    <div class="section-sub">Escribe una contraseña inventada (¡no la tuya real!) y descubre si es segura.</div>
+    <div class="game-card">
+      <div style="display:flex;gap:0.75rem;margin-bottom:1.25rem;">
+        <input id="pwInput" type="text" placeholder="Escribe una contraseña inventada..."
+          style="flex:1;background:var(--bg2);border:2px solid var(--border);border-radius:10px;padding:0.75rem 1rem;font-family:var(--font);font-size:1rem;color:var(--text);outline:none;"
+          oninput="checkPw(this.value)">
+        <button onclick="document.getElementById('pwInput').value='';checkPw('')"
+          style="background:var(--bg2);border:2px solid var(--border);border-radius:10px;padding:0.75rem 1rem;font-size:1.2rem;cursor:pointer;">🗑️</button>
+      </div>
+      <div id="pwMeter" style="height:12px;border-radius:999px;background:var(--bg2);overflow:hidden;margin-bottom:0.75rem;">
+        <div id="pwBar" style="height:100%;width:0%;border-radius:999px;transition:all 0.4s;"></div>
+      </div>
+      <div id="pwLabel" style="font-size:1.1rem;font-weight:800;margin-bottom:0.75rem;min-height:28px;"></div>
+      <div id="pwTips" style="display:flex;flex-wrap:wrap;gap:0.5rem;min-height:36px;"></div>
+    </div>
+  </section>
+
+  <!-- THIRD GAME: True or False -->
+  <hr class="divider">
+  <section class="section">
+    <div class="section-title">✅ ¿Verdadero o Falso?</div>
+    <div class="section-sub">Toca la respuesta correcta. ¡Rápido!</div>
+    <div class="game-card" id="tfCard">
+      <div id="tfMain">
+        <div style="font-family:var(--mono);font-size:0.65rem;color:var(--muted);letter-spacing:0.12em;margin-bottom:1rem;">
+          Pregunta <span id="tfNum">1</span> de <span id="tfTotal"></span> &nbsp;·&nbsp; ⭐ <span id="tfScore">0</span> pts
+        </div>
+        <div id="tfQ" style="font-size:1.2rem;font-weight:800;text-align:center;min-height:70px;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;line-height:1.4;"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+          <button class="game-btn" id="tfTrue"  onclick="tfAnswer(true)"  style="font-size:1.3rem;gap:0.5rem;"><span>✅</span> VERDADERO</button>
+          <button class="game-btn" id="tfFalse" onclick="tfAnswer(false)" style="font-size:1.3rem;gap:0.5rem;"><span>❌</span> FALSO</button>
+        </div>
+        <div class="game-feedback" id="tfFeedback"></div>
+        <button class="next-btn" id="tfNext" onclick="tfNext()">Siguiente ➡️</button>
+      </div>
+      <div class="result-panel" id="tfResult">
+        <div class="result-emoji" id="tfREmoji"></div>
+        <div class="result-title" id="tfRTitle"></div>
+        <div class="result-sub" id="tfRSub"></div>
+        <div class="result-stars" id="tfRStars"></div>
+        <button class="restart-btn" onclick="tfRestart()">🔄 Jugar de nuevo</button>
+      </div>
+    </div>
+  </section>
 </div>
 
 <footer class="page-footer">
@@ -595,7 +638,96 @@ function restartGame() {
 
 renderQuestion();
 
-// ── CHAT ──
+// ── PASSWORD CHECKER ──
+function checkPw(v){
+  const bar=document.getElementById('pwBar');
+  const label=document.getElementById('pwLabel');
+  const tips=document.getElementById('pwTips');
+  if(!v){bar.style.width='0%';bar.style.background='';label.textContent='';tips.innerHTML='';return;}
+  let score=0;const t=[];
+  if(v.length>=8) score+=20; else t.push({txt:'Mínimo 8 caracteres',ok:false});
+  if(v.length>=12) score+=10; else if(v.length>=8) t.push({txt:'12+ caracteres = más seguro',ok:false});
+  if(/[A-Z]/.test(v)) score+=20; else t.push({txt:'Agrega una MAYÚSCULA',ok:false});
+  if(/[0-9]/.test(v)) score+=20; else t.push({txt:'Agrega un número',ok:false});
+  if(/[^A-Za-z0-9]/.test(v)) score+=25; else t.push({txt:'Agrega un símbolo (!@#$)',ok:false});
+  if(!/(.)\1{2,}/.test(v)) score+=5;
+  score=Math.min(score,100);
+  const colors=['#f87171','#fb923c','#fbbf24','#4ade80','#34d399'];
+  const labels=[
+    {txt:'😬 Muy débil — cualquiera la adivinaría',c:colors[0]},
+    {txt:'😐 Débil — necesita mejorar',c:colors[1]},
+    {txt:'🤔 Regular — va mejorando',c:colors[2]},
+    {txt:'😊 Fuerte — ¡bien hecho!',c:colors[3]},
+    {txt:'🏆 ¡Súper segura! — experto/a',c:colors[4]},
+  ];
+  const idx=Math.min(Math.floor(score/25),4);
+  bar.style.width=score+'%'; bar.style.background=labels[idx].c;
+  label.textContent=labels[idx].txt; label.style.color=labels[idx].c;
+  tips.innerHTML=t.map(tip=>`<span style="background:var(--bg2);border:1.5px solid var(--border);border-radius:999px;padding:0.3rem 0.75rem;font-size:0.75rem;font-weight:700;color:var(--muted);">⚠️ ${tip.txt}</span>`).join('');
+  if(t.length===0) tips.innerHTML='<span style="background:rgba(52,211,153,0.1);border:1.5px solid rgba(52,211,153,0.3);border-radius:999px;padding:0.3rem 0.75rem;font-size:0.75rem;font-weight:700;color:var(--mint);">✓ ¡Contraseña perfecta!</span>';
+}
+
+// ── TRUE / FALSE GAME ──
+const tfQs=[
+  {q:'Las contraseñas se pueden compartir con tus mejores amigos.',ans:false,ok:'¡Correcto! Las contraseñas son siempre secretas, incluso con amigos.',fail:'Las contraseñas no se comparten con nadie. ¡Son tuyas!'},
+  {q:'Si alguien en internet te hace sentir incómodo, debes contarle a un adulto.',ans:true,ok:'¡Exacto! Siempre cuéntale a un adulto de confianza.',fail:'Sí debes contarlo. Nunca guardes ese secreto solo.'},
+  {q:'Una foto que "borras" de internet desaparece para siempre.',ans:false,ok:'¡Correcto! Una vez publicada, una foto puede quedar en internet aunque la borres.',fail:'Falso. Las fotos pueden permanecer en internet aunque las elimines.'},
+  {q:'Está bien decirle tu dirección a alguien que conociste solo en un videojuego.',ans:false,ok:'¡Bien! Nunca des tu dirección a personas que solo conociste online.',fail:'No está bien. Esa persona podría no ser quien dice ser.'},
+  {q:'Una contraseña de 12 letras y números es más segura que "gato123".',ans:true,ok:'¡Correcto! Las contraseñas largas y mezcladas son mucho más seguras.',fail:'Sí es más segura. Más larga y mezclada = más difícil de adivinar.'},
+  {q:'Si recibes un mensaje de un extraño que dice haberte ganado un premio, debes dar tus datos para recibirlo.',ans:false,ok:'¡Exacto! Es una trampa. Nunca des tus datos por premios.',fail:'¡Cuidado! Es una trampa común en internet. Nunca des tus datos.'},
+  {q:'El ciberbullying es igual de dañino que el bullying presencial.',ans:true,ok:'Totalmente cierto. El acoso online duele igual y deja marcas.',fail:'Sí es igual de dañino. El dolor no depende de si es online u offline.'},
+  {q:'Puedes compartir tu teléfono sin problema en tus redes sociales públicas.',ans:false,ok:'¡Correcto! Tu número es información privada que puede usarse para hacerte daño.',fail:'Nunca compartas tu teléfono en redes públicas.'},
+];
+let tfi=0,tfs=0,tfAnswered=false;
+document.getElementById('tfTotal').textContent=tfQs.length;
+function tfRender(){
+  const q=tfQs[tfi];
+  document.getElementById('tfQ').textContent=q.q;
+  document.getElementById('tfNum').textContent=tfi+1;
+  document.getElementById('tfFeedback').className='game-feedback';
+  document.getElementById('tfNext').className='next-btn';
+  document.getElementById('tfTrue').className='game-btn';
+  document.getElementById('tfFalse').className='game-btn';
+  document.getElementById('tfTrue').disabled=false;
+  document.getElementById('tfFalse').disabled=false;
+  tfAnswered=false;
+}
+function tfAnswer(val){
+  if(tfAnswered)return; tfAnswered=true;
+  const q=tfQs[tfi]; const correct=(val===q.ans);
+  document.getElementById('tfTrue').disabled=true;
+  document.getElementById('tfFalse').disabled=true;
+  if(q.ans===true)  document.getElementById('tfTrue').classList.add('correct');
+  else              document.getElementById('tfFalse').classList.add('correct');
+  if(!correct){
+    if(val===true)  document.getElementById('tfTrue').classList.add('wrong');
+    else            document.getElementById('tfFalse').classList.add('wrong');
+  }
+  const fb=document.getElementById('tfFeedback');
+  if(correct){tfs+=10;document.getElementById('tfScore').textContent=tfs;fb.textContent='✅ '+q.ok;fb.className='game-feedback show good';}
+  else{fb.textContent='❌ '+q.fail;fb.className='game-feedback show bad';}
+  document.getElementById('tfNext').className='next-btn show';
+}
+function tfNext(){
+  tfi++;
+  if(tfi>=tfQs.length) tfShowResult();
+  else tfRender();
+}
+function tfShowResult(){
+  document.getElementById('tfMain').style.display='none';
+  const p=document.getElementById('tfResult'); p.className='result-panel show';
+  const pct=tfs/(tfQs.length*10);
+  let emoji,title,sub,stars;
+  if(pct>=0.9){emoji='🏆';title='¡Campeón/a!';sub='¡Lo sabías todo! Eres un experto en internet seguro.';stars='⭐⭐⭐⭐⭐';}
+  else if(pct>=0.6){emoji='🌟';title='¡Muy bien!';sub='¡Casi perfecto! Sigue practicando.';stars='⭐⭐⭐⭐';}
+  else{emoji='📚';title='Sigue aprendiendo';sub='Repasa las reglas de oro y vuelve a intentarlo.';stars='⭐⭐⭐';}
+  document.getElementById('tfREmoji').textContent=emoji;
+  document.getElementById('tfRTitle').textContent=title;
+  document.getElementById('tfRSub').textContent=sub+` Puntaje: ${tfs}/${tfQs.length*10}`;
+  document.getElementById('tfRStars').textContent=stars;
+}
+function tfRestart(){tfi=0;tfs=0;document.getElementById('tfScore').textContent='0';document.getElementById('tfMain').style.display='';document.getElementById('tfResult').className='result-panel';tfRender();}
+tfRender();
 const WORKER = 'https://aegis8-agent.christianmora705.workers.dev';
 const SYSTEM = `Eres CiberBot, un asistente de ciberseguridad para niños de 6 a 12 años. 
 Explica todo de forma muy simple, divertida y con emojis. 

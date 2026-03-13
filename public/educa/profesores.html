@@ -162,8 +162,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
 <!-- HERO -->
 <div class="hero">
   <div class="hero-label">aegis8 · para profesores</div>
-  <h1>Material<br><span class="line2">listo para</span><br>tu clase</h1>
-  <p>Presentaciones, actividades y guías docentes de ciberseguridad. Llega y aplica — sin preparación extra, sin jerga técnica.</p>
+  <h1>Para que<br><span class="line2">lo enseñes</span><br>mañana</h1>
+  <p>Esta página es para ti: material listo para usar en clases, sin preparación extra, sin necesitar ser experto en tecnología. Llegas y enseñas.</p>
   <div class="hero-chips">
     <span class="chip o">gratis</span>
     <span class="chip s">Ed. Básica y Media</span>
@@ -665,26 +665,38 @@ async function generateActivity(){
   const format=document.getElementById('bFormat').value;
   const extra=document.getElementById('bExtra').value;
   const btn=document.getElementById('genBtn');
-  btn.textContent='Generando...';btn.disabled=true;
+  btn.textContent='Generando...'; btn.disabled=true;
   const result=document.getElementById('builderResult');
   result.className='builder-result show';
   document.getElementById('brContent').textContent='⏳ Creando actividad personalizada...';
-  const prompt=`Crea una actividad de ciberseguridad para un profesor chileno.
+
+  const userMsg=`Crea una actividad de ciberseguridad para un profesor chileno.
 Nivel: ${level}
 Tema: ${topic}
 Formato: ${format}
 ${extra?'Contexto adicional: '+extra:''}
 
-Incluye: objetivo, instrucciones paso a paso, preguntas de discusión, y cómo evaluar si el objetivo se logró.
-Máximo 400 palabras. Usa lenguaje apropiado para el nivel. Formato con secciones claras.`;
+Incluye: objetivo de aprendizaje, instrucciones paso a paso, preguntas de discusión, y criterio de evaluación.
+Máximo 400 palabras. Formato con secciones claras usando mayúsculas para los títulos.`;
+
   try{
-    const r=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:prompt}]})});
+    const r=await fetch(WORKER,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:700,
+        system:'Eres un experto en educación y ciberseguridad chilena. Creas actividades pedagógicas prácticas para profesores de educación básica y media. Usas lenguaje claro, estructura limpia, y referencias al contexto chileno cuando es relevante.',
+        messages:[{role:'user',content:userMsg}]
+      })
+    });
     const d=await r.json();
-    document.getElementById('brContent').textContent=d.content?.[0]?.text||'Error al generar.';
-  }catch{
-    document.getElementById('brContent').textContent='Error de conexión. Intenta de nuevo.';
+    const txt=d.content?.[0]?.text;
+    document.getElementById('brContent').textContent = txt || ('Error: '+(d.error?.message||'respuesta vacía'));
+  }catch(e){
+    document.getElementById('brContent').textContent='Error de conexión. Revisa que el Worker esté activo e intenta de nuevo.';
   }
-  btn.textContent='⚡ Generar actividad →';btn.disabled=false;
+  btn.textContent='⚡ Generar actividad →'; btn.disabled=false;
 }
 
 function copyActivity(){

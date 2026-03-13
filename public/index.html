@@ -700,9 +700,8 @@ footer a:hover{color:var(--green);}
   footer{flex-direction:column;gap:0.75rem;text-align:center;padding:1.75rem 20px;}
 }
 </style>
-<script src="/aegis-nav.js"></script>
 </head>
-<body data-page="index">
+<body>
 
 <!-- CURSOR -->
 <div id="cursor"></div>
@@ -712,7 +711,23 @@ footer a:hover{color:var(--green);}
 <canvas id="particles"></canvas>
 
 <!-- NAV -->
-
+<nav>
+  <a href="https://aegis8.org" class="nav-logo">
+    <div class="nav-logo-dot"></div>
+    AEGIS8
+  </a>
+  <ul class="nav-links">
+    <li><a href="#amenazas">Amenazas</a></li>
+    <li><a href="#principios">Principios</a></li>
+    <li><a href="/propuesta.html">Propuesta</a></li>
+    <li><a href="/formacion.html" style="color:var(--green);border:1px solid rgba(0,255,136,0.25);padding:0.3rem 0.8rem;">Formación →</a></li>
+    <li><a href="https://aegis8.org/contactos.html">Contacto</a></li>
+  </ul>
+  <div class="nav-status">
+    <div class="nav-status-dot"></div>
+    SISTEMA ACTIVO
+  </div>
+</nav>
 
 <!-- HERO -->
 <section class="hero">
@@ -1016,6 +1031,54 @@ footer a:hover{color:var(--green);}
 
   </div>
   </div><!-- /wrap -->
+</section>
+
+<!-- EDUCA SECTION -->
+<section style="position:relative;z-index:1;padding:5rem 0;border-top:1px solid var(--border);">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;">
+
+      <div class="reveal">
+        <div style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--green);margin-bottom:1rem;display:flex;align-items:center;gap:0.6rem;">
+          <span style="width:20px;height:1px;background:var(--green);display:inline-block;"></span>
+          nuevo · educación digital gratuita
+        </div>
+        <h2 style="font-family:var(--font-display);font-size:clamp(2.5rem,5vw,4rem);font-weight:900;line-height:0.92;letter-spacing:0.02em;text-transform:uppercase;margin-bottom:1.25rem;">
+          NIÑOS, ADOLESCENTES,<br>PADRES Y<br><span style="color:var(--green);">PROFESORES</span>
+        </h2>
+        <p style="font-size:0.95rem;color:var(--muted);line-height:1.75;margin-bottom:2rem;max-width:440px;">
+          Creamos una sección gratuita para que toda la familia aprenda a navegar seguro — con juegos, quizzes interactivos, guías y un agente de IA. Sin costo, sin registro.
+        </p>
+        <a href="/educa.html" style="display:inline-flex;align-items:center;gap:0.6rem;background:var(--green);color:#000;font-family:var(--font-mono);font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.9rem 1.75rem;text-decoration:none;transition:background 0.2s;">
+          Visitar Educa →
+        </a>
+      </div>
+
+      <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+        <a href="/educa/ninos.html" style="background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.2);padding:1.25rem;text-decoration:none;transition:background 0.2s;display:block;">
+          <div style="font-size:1.8rem;margin-bottom:0.5rem;">🧒</div>
+          <div style="font-family:var(--font-mono);font-size:0.7rem;color:#38bdf8;letter-spacing:0.1em;margin-bottom:0.25rem;">NIÑOS</div>
+          <div style="font-size:0.78rem;color:var(--muted);">Juegos y actividades 6–12 años</div>
+        </a>
+        <a href="/educa/adolescentes.html" style="background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.2);padding:1.25rem;text-decoration:none;transition:background 0.2s;display:block;">
+          <div style="font-size:1.8rem;margin-bottom:0.5rem;">🧑‍💻</div>
+          <div style="font-family:var(--font-mono);font-size:0.7rem;color:#a78bfa;letter-spacing:0.1em;margin-bottom:0.25rem;">ADOLESCENTES</div>
+          <div style="font-size:0.78rem;color:var(--muted);">Quiz desafiante 13–17 años</div>
+        </a>
+        <a href="/educa/padres.html" style="background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.2);padding:1.25rem;text-decoration:none;transition:background 0.2s;display:block;">
+          <div style="font-size:1.8rem;margin-bottom:0.5rem;">👨‍👩‍👧</div>
+          <div style="font-family:var(--font-mono);font-size:0.7rem;color:#34d399;letter-spacing:0.1em;margin-bottom:0.25rem;">PADRES</div>
+          <div style="font-size:0.78rem;color:var(--muted);">Guías y conversaciones reales</div>
+        </a>
+        <a href="/educa/profesores.html" style="background:rgba(251,146,60,0.06);border:1px solid rgba(251,146,60,0.2);padding:1.25rem;text-decoration:none;transition:background 0.2s;display:block;">
+          <div style="font-size:1.8rem;margin-bottom:0.5rem;">👩‍🏫</div>
+          <div style="font-family:var(--font-mono);font-size:0.7rem;color:#fb923c;letter-spacing:0.1em;margin-bottom:0.25rem;">PROFESORES</div>
+          <div style="font-size:0.78rem;color:var(--muted);">Planes de clase listos</div>
+        </a>
+      </div>
+
+    </div>
+  </div>
 </section>
 
 <!-- FINAL CTA -->
