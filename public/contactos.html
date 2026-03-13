@@ -332,10 +332,12 @@ footer a:hover{color:var(--green);}
               <label class="field-label" for="f-tipo">Soy <span>*</span></label>
               <select id="f-tipo" onchange="updatePreview()">
                 <option value="" disabled selected>Elige una opción…</option>
-                <option>Freelancer / consultor</option>
                 <option>Startup</option>
                 <option>Pequeño negocio</option>
-                <option>Agencia o desarrollador</option>
+                <option>Padre / Madre</option>
+                <option>Docente</option>
+                <option>Educador/a</option>
+                <option>Entusiasta</option>
                 <option>Otro</option>
               </select>
             </div>
@@ -356,6 +358,35 @@ footer a:hover{color:var(--green);}
             <div class="form-actions">
               <button class="btn-main" id="btn-submit" onclick="submitForm()" style="flex:1;min-width:160px;">Enviar →</button>
               <button class="btn-out" onclick="clearForm()" style="padding:1rem 1.2rem;font-size:0.7rem;">Limpiar</button>
+            </div>
+
+            <!-- PRIVACY NOTICE -->
+            <div style="margin-top:1.25rem;padding:1rem 1.25rem;background:rgba(0,255,136,0.03);border:1px solid rgba(0,255,136,0.1);border-radius:6px;">
+              <div style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--green);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.5rem;">
+                <span style="width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;"></span>
+                privacidad y datos
+              </div>
+              <p style="font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);line-height:1.7;margin-bottom:0.5rem;">
+                🚫 <strong style="color:var(--text);">No usamos cookies</strong> de seguimiento, publicidad ni analítica de terceros en este formulario.
+              </p>
+              <p style="font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);line-height:1.7;margin-bottom:0.5rem;">
+                🔒 <strong style="color:var(--text);">Tus datos son solo para contacto.</strong> Nombre y correo se usan únicamente para responderte. No los vendemos, no los cedemos, no los cruzamos con terceros.
+              </p>
+              <p style="font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);line-height:1.7;margin-bottom:0.5rem;">
+                📋 <strong style="color:var(--text);">Nos regimos por la Ley 19.628</strong> (Chile) y los principios del <strong style="color:var(--text);">RGPD / GDPR</strong> europeo. Tienes derecho a solicitar la eliminación de tus datos en cualquier momento escribiéndonos a <span style="color:var(--green);">privacidad@aegis8.org</span>
+              </p>
+              <p style="font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);line-height:1.7;">
+                🗑️ <strong style="color:var(--text);">Retención:</strong> Si no hay contrato activo, eliminamos los datos de contacto a los 12 meses del último intercambio.
+              </p>
+            </div>
+
+            <!-- NEWSLETTER NUDGE -->
+            <div style="margin-top:0.75rem;padding:0.85rem 1.25rem;background:rgba(251,146,60,0.04);border:1px solid rgba(251,146,60,0.15);border-radius:6px;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+              <div>
+                <div style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:#fb923c;margin-bottom:0.2rem;">¿Eres docente?</div>
+                <div style="font-size:0.78rem;color:var(--muted);">Suscríbete al newsletter mensual — amenaza del mes + actividad lista para clases.</div>
+              </div>
+              <a href="/educa/newsletter.html" style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;color:#fb923c;text-decoration:none;border:1px solid rgba(251,146,60,0.3);padding:0.4rem 0.9rem;border-radius:4px;white-space:nowrap;transition:all 0.2s;" onmouseover="this.style.background='rgba(251,146,60,0.1)'" onmouseout="this.style.background='transparent'">ver newsletter →</a>
             </div>
 
           </div>
@@ -411,8 +442,8 @@ footer a:hover{color:var(--green);}
           <div class="info-row">
             <span class="info-icon">🔒</span>
             <div>
-              <h4>Sin datos sensibles</h4>
-              <p>Nunca contraseñas, tokens, llaves ni datos bancarios por este canal.</p>
+              <h4>Sin cookies · sin rastreo</h4>
+              <p>No guardamos cookies de terceros. Tus datos solo se usan para responderte, bajo la Ley 19.628 y el RGPD europeo.</p>
             </div>
           </div>
           <div class="info-row">
