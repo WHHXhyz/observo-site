@@ -351,6 +351,7 @@ document.addEventListener('mousemove',function(e){
   if(!moved){cur.style.opacity='1';ring.style.opacity='1';moved=true;}
 },true);
 document.addEventListener('mouseleave',function(){cur.style.opacity='0';ring.style.opacity='0';});
+document.addEventListener('mouseenter',function(){if(moved){cur.style.opacity='1';ring.style.opacity='1';}});
 
 (function(){
   var c=document.getElementById('particles'),ctx=c.getContext('2d'),pts=[];
