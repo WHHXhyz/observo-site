@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Ciberseguridad para niños, adolescentes, padres y profesores. Materiales gratuitos, juegos y recursos educativos por Aegis8.">
+<title>Educa · Aegis8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="/aegis-nav.js"></script>
+<style>
+
+:root {
+  --bg:        #07080c;
+  --bg2:       #0d0f15;
+  --surface:   #12151e;
+  --border:    #1e2230;
+  --border2:   #252a3a;
+  --green:     #00ff88;
+  --green-dim: rgba(0,255,136,0.10);
+  --green-glow:rgba(0,255,136,0.22);
+  --text:      #e2e8f0;
+  --muted:     #4a5568;
+  --muted2:    #2d3748;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-disp: 'Bebas Neue', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  /* Segment colors */
+  --c-ninos:   #38bdf8;   /* sky blue  */
+  --c-teens:   #a78bfa;   /* violet    */
+  --c-padres:  #34d399;   /* emerald   */
+  --c-profes:  #fb923c;   /* amber     */
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  padding-top: 64px;
+}
+
+/* ── NOISE TEXTURE ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative; z-index: 1;
+  min-height: 92vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 5rem 2rem 4rem;
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute; top: -20%; left: 50%;
+  transform: translateX(-50%);
+  width: 700px; height: 500px;
+  background: radial-gradient(ellipse, rgba(0,255,136,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem; letter-spacing: 0.25em;
+  color: var(--green); text-transform: uppercase;
+  display: flex; align-items: center; gap: 0.6rem;
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 0.6s ease 0.1s forwards;
+}
+
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: ''; flex: 1; max-width: 40px; height: 1px;
+  background: var(--green); opacity: 0.4;
+}
+
+.hero-title {
+  font-family: var(--font-disp);
+  font-size: clamp(4.5rem, 14vw, 12rem);
+  line-height: 0.88; letter-spacing: 0.03em;
+  color: var(--text); text-transform: uppercase;
+  margin-bottom: 2rem;
+  opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards;
+}
+
+.hero-title span { color: var(--green); }
+
+/* Animated audience list */
+.hero-audience {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 0.5rem 0;
+  font-family: var(--font-mono); font-size: 0.8rem;
+  letter-spacing: 0.12em; color: var(--muted);
+  margin-bottom: 3.5rem;
+  opacity: 0; animation: fadeUp 0.7s ease 0.35s forwards;
+}
+
+.hero-audience .aud {
+  padding: 0.3rem 0.8rem;
+  border-radius: 2px;
+  transition: color 0.3s;
+}
+
+.hero-audience .sep {
+  padding: 0 0.3rem;
+  opacity: 0.3;
+}
+
+.aud.ninos  { color: var(--c-ninos); }
+.aud.teens  { color: var(--c-teens); }
+.aud.padres { color: var(--c-padres); }
+.aud.profes { color: var(--c-profes); }
+
+.hero-sub {
+  font-size: 1.05rem; color: var(--muted);
+  font-weight: 300; max-width: 540px;
+  line-height: 1.7; margin-bottom: 3rem;
+  opacity: 0; animation: fadeUp 0.7s ease 0.45s forwards;
+}
+
+.hero-scroll {
+  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  font-family: var(--font-mono); font-size: 0.6rem;
+  letter-spacing: 0.15em; color: var(--muted);
+  animation: bounce 2s ease-in-out infinite;
+  opacity: 0; animation: fadeUp 0.7s ease 0.8s forwards, bounce 2s ease-in-out 1.5s infinite;
+}
+
+.hero-scroll::after {
+  content: '↓'; font-size: 1rem; color: var(--green);
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(6px); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── CARDS SECTION ── */
+.cards-section {
+  position: relative; z-index: 1;
+  padding: 2rem 2rem 6rem;
+  max-width: 1160px; margin: 0 auto;
+}
+
+.section-label {
+  font-family: var(--font-mono); font-size: 0.65rem;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 3rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+
+.section-label::before { content: '//'; color: var(--muted2); }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5px;
+  background: var(--border);
+}
+
+/* ── SEGMENT CARD ── */
+.seg-card {
+  position: relative; overflow: hidden;
+  background: var(--bg2);
+  padding: 3rem 2.5rem;
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column;
+  cursor: pointer;
+  transition: background 0.3s;
+  min-height: 380px;
+}
+
+.seg-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--card-color, var(--green));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.seg-card:hover::before { transform: scaleX(1); }
+
+.seg-card:hover { background: var(--surface); }
+
+.seg-card:hover .seg-icon { transform: scale(1.08); }
+.seg-card:hover .seg-arrow { transform: translateX(6px); opacity: 1; }
+.seg-card:hover .seg-tag { opacity: 1; }
+
+/* Card accent glow on hover */
+.seg-card::after {
+  content: '';
+  position: absolute; bottom: -60px; right: -60px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--card-glow, rgba(0,255,136,0.08)) 0%, transparent 70%);
+  transition: opacity 0.4s;
+  opacity: 0;
+}
+
+.seg-card:hover::after { opacity: 1; }
+
+.seg-icon {
+  font-size: 3rem; margin-bottom: 1.5rem;
+  transition: transform 0.3s;
+  display: block;
+}
+
+.seg-num {
+  font-family: var(--font-mono); font-size: 0.62rem;
+  letter-spacing: 0.2em; color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.seg-title {
+  font-family: var(--font-disp);
+  font-size: 3rem; line-height: 0.95;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--card-color, var(--text));
+  margin-bottom: 1rem;
+}
+
+.seg-desc {
+  font-size: 0.9rem; color: var(--muted);
+  line-height: 1.65; font-weight: 300;
+  flex: 1; margin-bottom: 1.5rem;
+}
+
+.seg-pills {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.seg-pill {
+  font-family: var(--font-mono); font-size: 0.6rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid;
+  border-color: var(--card-border, var(--border2));
+  color: var(--card-color, var(--muted));
+  opacity: 0.7;
+}
+
+.seg-tag {
+  font-family: var(--font-mono); font-size: 0.6rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--green); opacity: 0;
+  transition: opacity 0.3s;
+  margin-bottom: 0.4rem;
+}
+
+.seg-arrow {
+  font-family: var(--font-mono); font-size: 0.8rem;
+  color: var(--card-color, var(--green));
+  opacity: 0.5;
+  transition: transform 0.3s, opacity 0.3s;
+  align-self: flex-start;
+}
+
+/* Card color themes */
+.card-ninos  { --card-color: var(--c-ninos);  --card-glow: rgba(56,189,248,0.09);  --card-border: rgba(56,189,248,0.25); }
+.card-teens  { --card-color: var(--c-teens);  --card-glow: rgba(167,139,250,0.09); --card-border: rgba(167,139,250,0.25); }
+.card-padres { --card-color: var(--c-padres); --card-glow: rgba(52,211,153,0.09);  --card-border: rgba(52,211,153,0.25); }
+.card-profes { --card-color: var(--c-profes); --card-glow: rgba(251,146,60,0.09);  --card-border: rgba(251,146,60,0.25); }
+
+/* ── FREE BADGE ── */
+.free-badge {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  font-family: var(--font-mono); font-size: 0.55rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--green); border: 1px solid rgba(0,255,136,0.3);
+  padding: 0.25rem 0.6rem; background: rgba(0,255,136,0.05);
+}
+
+/* ── FEATURES STRIP ── */
+.features {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 2rem 0;
+  overflow: hidden;
+  margin-bottom: 6rem;
+}
+
+.features-track {
+  display: flex; gap: 3rem;
+  animation: scroll-x 25s linear infinite;
+  white-space: nowrap;
+}
+
+.features-track:hover { animation-play-state: paused; }
+
+.feat-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-family: var(--font-mono); font-size: 0.7rem;
+  letter-spacing: 0.1em; color: var(--muted);
+  flex-shrink: 0;
+}
+
+.feat-item .dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--green); opacity: 0.6;
+}
+
+@keyframes scroll-x {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── CTA SECTION ── */
+.cta-section {
+  position: relative; z-index: 1;
+  text-align: center; padding: 5rem 2rem 7rem;
+  max-width: 700px; margin: 0 auto;
+}
+
+.cta-label {
+  font-family: var(--font-mono); font-size: 0.65rem;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 1.5rem;
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+}
+
+.cta-label::before { content: '//'; color: var(--muted2); }
+
+.cta-title {
+  font-family: var(--font-disp);
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  line-height: 0.92; letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--text);
+  margin-bottom: 1.5rem;
+}
+
+.cta-title span { color: var(--green); }
+
+.cta-sub {
+  font-size: 1rem; color: var(--muted);
+  font-weight: 300; line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+
+.cta-btn {
+  display: inline-block;
+  font-family: var(--font-mono); font-size: 0.75rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #000; background: var(--green);
+  padding: 1rem 2.5rem; text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.cta-btn:hover {
+  background: #00cc6a;
+  transform: translateY(-2px);
+}
+
+/* ── FOOTER ── */
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--font-mono); font-size: 0.62rem;
+  color: var(--muted);
+}
+
+footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+footer a:hover { color: var(--green); }
+
+/* ── REVEAL ANIMATION ── */
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  .cards-grid { grid-template-columns: 1fr; }
+  .seg-card { min-height: auto; padding: 2.5rem 1.75rem; }
+  .seg-title { font-size: 2.4rem; }
+  footer { flex-direction: column; gap: 0.75rem; padding: 1.5rem; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: clamp(3.5rem, 18vw, 5rem); }
+  .hero-audience { font-size: 0.7rem; }
+  .cards-section { padding: 1rem 1rem 4rem; }
+  .seg-card { padding: 2rem 1.25rem; }
+}
+
+</style>
+</head>
+<body data-page="educa">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+
+  <div class="hero-eyebrow">
+    <span>aegis8 · educación digital</span>
+  </div>
+
+  <h1 class="hero-title">
+    INTERNET<br><span>SEGURO</span>
+  </h1>
+
+  <div class="hero-audience">
+    <span class="aud ninos">niños</span>
+    <span class="sep">·</span>
+    <span class="aud teens">adolescentes</span>
+    <span class="sep">·</span>
+    <span class="aud padres">padres</span>
+    <span class="sep">·</span>
+    <span class="aud profes">profesores</span>
+  </div>
+
+  <p class="hero-sub">
+    Materiales gratuitos, juegos interactivos y recursos reales para que toda la familia navegue con seguridad.
+  </p>
+
+  <div class="hero-scroll">EXPLORAR</div>
+</section>
+
+<!-- FEATURES STRIP -->
+<div class="features">
+  <div class="features-track">
+    <span class="feat-item"><span class="dot"></span>100% gratuito</span>
+    <span class="feat-item"><span class="dot"></span>Quizzes interactivos</span>
+    <span class="feat-item"><span class="dot"></span>Material para clases</span>
+    <span class="feat-item"><span class="dot"></span>Guías descargables</span>
+    <span class="feat-item"><span class="dot"></span>Agente IA especializado</span>
+    <span class="feat-item"><span class="dot"></span>Juegos educativos</span>
+    <span class="feat-item"><span class="dot"></span>Sin registro</span>
+    <span class="feat-item"><span class="dot"></span>Talleres presenciales</span>
+    <!-- duplicate for infinite scroll -->
+    <span class="feat-item"><span class="dot"></span>100% gratuito</span>
+    <span class="feat-item"><span class="dot"></span>Quizzes interactivos</span>
+    <span class="feat-item"><span class="dot"></span>Material para clases</span>
+    <span class="feat-item"><span class="dot"></span>Guías descargables</span>
+    <span class="feat-item"><span class="dot"></span>Agente IA especializado</span>
+    <span class="feat-item"><span class="dot"></span>Juegos educativos</span>
+    <span class="feat-item"><span class="dot"></span>Sin registro</span>
+    <span class="feat-item"><span class="dot"></span>Talleres presenciales</span>
+  </div>
+</div>
+
+<!-- CARDS -->
+<section class="cards-section">
+  <div class="section-label reveal">elige tu sección</div>
+
+  <div class="cards-grid">
+
+    <!-- NIÑOS -->
+    <a href="/educa/ninos.html" class="seg-card card-ninos reveal">
+      <span class="free-badge">gratis</span>
+      <span class="seg-icon">🧒</span>
+      <div class="seg-num">01 / 04</div>
+      <div class="seg-title">Niños</div>
+      <p class="seg-desc">
+        Para pequeños de 6 a 12 años. Juegos interactivos y actividades para aprender qué es seguro compartir en internet y cómo protegerse de extraños.
+      </p>
+      <div class="seg-pills">
+        <span class="seg-pill">6 – 12 años</span>
+        <span class="seg-pill">juegos</span>
+        <span class="seg-pill">actividades</span>
+      </div>
+      <div class="seg-tag">✦ todo gratuito</div>
+      <div class="seg-arrow">→ entrar</div>
+    </a>
+
+    <!-- ADOLESCENTES -->
+    <a href="/educa/adolescentes.html" class="seg-card card-teens reveal">
+      <span class="free-badge">gratis</span>
+      <span class="seg-icon">🧑‍💻</span>
+      <div class="seg-num">02 / 04</div>
+      <div class="seg-title">Adolescentes</div>
+      <p class="seg-desc">
+        Para jóvenes de 13 a 17 años. Quiz de ciberseguridad con puntaje, temas reales: privacidad en redes, phishing, grooming y reputación digital.
+      </p>
+      <div class="seg-pills">
+        <span class="seg-pill">13 – 17 años</span>
+        <span class="seg-pill">quiz</span>
+        <span class="seg-pill">redes sociales</span>
+      </div>
+      <div class="seg-tag">✦ todo gratuito</div>
+      <div class="seg-arrow">→ entrar</div>
+    </a>
+
+    <!-- PADRES -->
+    <a href="/educa/padres.html" class="seg-card card-padres reveal">
+      <span class="free-badge">gratis</span>
+      <span class="seg-icon">👨‍👩‍👧</span>
+      <div class="seg-num">03 / 04</div>
+      <div class="seg-title">Padres</div>
+      <p class="seg-desc">
+        Guías prácticas y conversaciones reales para tener con tus hijos. Sin tecnicismos, con ejemplos concretos para proteger a tu familia en el mundo digital.
+      </p>
+      <div class="seg-pills">
+        <span class="seg-pill">guías</span>
+        <span class="seg-pill">PDF descargable</span>
+        <span class="seg-pill">agente IA</span>
+      </div>
+      <div class="seg-tag">✦ todo gratuito</div>
+      <div class="seg-arrow">→ entrar</div>
+    </a>
+
+    <!-- PROFESORES -->
+    <a href="/educa/profesores.html" class="seg-card card-profes reveal">
+      <span class="free-badge">gratis</span>
+      <span class="seg-icon">👩‍🏫</span>
+      <div class="seg-num">04 / 04</div>
+      <div class="seg-title">Profesores</div>
+      <p class="seg-desc">
+        Material listo para aplicar en clases: presentaciones, actividades y guías docentes. Sin preparación extra — llega y enséña.
+      </p>
+      <div class="seg-pills">
+        <span class="seg-pill">presentaciones</span>
+        <span class="seg-pill">guía docente</span>
+        <span class="seg-pill">actividades</span>
+      </div>
+      <div class="seg-tag">✦ todo gratuito</div>
+      <div class="seg-arrow">→ entrar</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section reveal">
+  <div class="cta-label">¿quieres más?</div>
+  <h2 class="cta-title">LLEVA ESTO A<br>TU <span>COLEGIO</span></h2>
+  <p class="cta-sub">
+    Talleres presenciales, charlas para apoderados y programas anuales de ciberseguridad educativa. Diseñados para colegios y jardines en Chile.
+  </p>
+  <a href="/contactos.html" class="cta-btn">quiero saber más →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="/">aegis8</a>
+  <span>educación digital · materiales gratuitos</span>
+  <a href="/contactos.html">contacto →</a>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Stagger card reveals
+document.querySelectorAll('.seg-card').forEach((card, i) => {
+  card.style.transitionDelay = `${i * 0.08}s`;
+});
+</script>
+
+</body>
+</html>
