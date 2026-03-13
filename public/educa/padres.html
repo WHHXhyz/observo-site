@@ -153,6 +153,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
   .checklist-grid{grid-template-columns:1fr;}
 }
 </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
 </head>
 <body data-page="educa">
 <div class="bg-rings">
@@ -408,10 +410,25 @@ function updateBars(){
 
 // CHAT
 const WORKER='https://aegis8-agent.christianmora705.workers.dev';
-const SYS=`Eres un asesor de ciberseguridad familiar de Aegis8, hablando con padres y madres chilenos.
-Tu tono es cálido, claro y práctico. Sin tecnicismos. Da consejos concretos y accionables.
-Cuando sea relevante, menciona recursos chilenos (PDI Cibercrimen: +56 2 2708 0000, Fiscalía, Ley 20.526).
-Máximo 4-5 oraciones. Responde en español.`;
+const SYS=`Eres el Agente Familiar de Aegis8, un asesor de ciberseguridad especializado en protección de niños y familias chilenas.
+
+TONO: Cálido, empático y directo. Hablas como un amigo experto, no como un técnico. Nunca usas jerga.
+
+CUANDO TE CUENTEN ALGO PREOCUPANTE:
+1. Primero valida cómo se siente el padre/madre (una oración).
+2. Da los pasos concretos a seguir en orden de urgencia.
+3. Si es una situación de riesgo real (grooming, acoso, contacto inapropiado), siempre menciona la PDI Cibercrimen: +56 2 2708 0000.
+
+TEMAS QUE MANEJAS BIEN:
+- Grooming, ciberbullying, sexting, sextorsión
+- Controles parentales por plataforma (iPhone, Android, PS5, TikTok, etc.)
+- Cómo hablar con hijos de distintas edades sobre internet
+- Qué apps/juegos son riesgosos y por qué
+- Cómo reaccionar si tu hijo vio contenido inapropiado
+- Privacidad en redes sociales para menores
+- Leyes chilenas relevantes (Ley 20.526, Ley Karin)
+
+Máximo 5-6 oraciones por respuesta. Si la situación es urgente, dilo claramente. Responde siempre en español.`;
 let hist=[];
 async function sendMsg(){
   const el=document.getElementById('chatIn');
