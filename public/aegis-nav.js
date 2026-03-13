@@ -194,6 +194,7 @@
     { href: '/#amenazas',             label: 'Amenazas',  page: null },
     { href: '/propuesta.html',        label: 'Propuesta', page: 'propuesta' },
     { href: '/formacion.html',        label: 'Formación', page: 'formacion' },
+    { href: '/educa.html',            label: 'Educa',     page: 'educa' },
     { href: '/agente-seguridad.html', label: 'Agente IA', page: 'agente', agent: true },
     { href: '/contactos.html',        label: 'Contacto',  page: 'contacto', cta: true },
   ];
