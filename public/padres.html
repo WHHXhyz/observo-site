@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Padres · Educa · Aegis8</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="/aegis-nav.js"></script>
+<style>
+:root {
+  --bg:     #07080c;
+  --bg2:    #0c1018;
+  --card:   #101820;
+  --border: #192030;
+  --green:  #34d399;
+  --green2: #059669;
+  --teal:   #2dd4bf;
+  --blue:   #60a5fa;
+  --yellow: #fbbf24;
+  --red:    #f87171;
+  --text:   #e2e8f0;
+  --muted:  #64748b;
+  --font:   'DM Sans', sans-serif;
+  --mono:   'IBM Plex Mono', monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:64px;}
+
+.bg-rings{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.ring{position:absolute;border-radius:50%;border:1px solid rgba(52,211,153,0.04);}
+.ring:nth-child(1){width:600px;height:600px;top:-200px;right:-200px;}
+.ring:nth-child(2){width:400px;height:400px;top:-100px;right:-100px;}
+.ring:nth-child(3){width:800px;height:800px;bottom:-300px;left:-300px;}
+
+/* ── HERO ── */
+.hero{position:relative;z-index:1;padding:5rem 1.5rem 4rem;max-width:1000px;margin:0 auto;}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
+.hero-tag{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--green);display:flex;align-items:center;gap:0.5rem;margin-bottom:1.25rem;}
+.hero-tag::before{content:'';width:20px;height:1px;background:var(--green);}
+.hero h1{font-size:clamp(2.8rem,6vw,4.5rem);font-weight:700;line-height:1.05;letter-spacing:-0.02em;margin-bottom:1rem;}
+.hero h1 span{color:var(--green);}
+.hero-p{font-size:1rem;color:var(--muted);line-height:1.75;margin-bottom:2rem;font-weight:400;}
+.hero-actions{display:flex;flex-wrap:wrap;gap:0.75rem;}
+.btn-primary{display:inline-block;background:var(--green);color:#000;font-weight:700;font-size:0.85rem;padding:0.8rem 1.75rem;text-decoration:none;border-radius:8px;transition:background 0.2s,transform 0.2s;border:none;cursor:pointer;font-family:var(--font);}
+.btn-primary:hover{background:var(--teal);transform:translateY(-1px);}
+.btn-outline{display:inline-block;background:transparent;color:var(--green);font-weight:700;font-size:0.85rem;padding:0.8rem 1.75rem;text-decoration:none;border-radius:8px;border:1.5px solid rgba(52,211,153,0.3);transition:all 0.2s;cursor:pointer;font-family:var(--font);}
+.btn-outline:hover{border-color:var(--green);background:rgba(52,211,153,0.06);}
+.hero-visual{position:relative;}
+.alert-stack{display:flex;flex-direction:column;gap:0.75rem;}
+.alert-card{background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:1rem 1.25rem;display:flex;align-items:flex-start;gap:0.75rem;transition:transform 0.3s;animation:slideIn 0.5s ease backwards;}
+.alert-card:hover{transform:translateX(4px);}
+.alert-card:nth-child(1){animation-delay:0.1s;}
+.alert-card:nth-child(2){animation-delay:0.25s;}
+.alert-card:nth-child(3){animation-delay:0.4s;}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+.alert-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.alert-dot.red{background:var(--red);box-shadow:0 0 8px var(--red);}
+.alert-dot.yellow{background:var(--yellow);box-shadow:0 0 8px var(--yellow);}
+.alert-dot.green{background:var(--green);box-shadow:0 0 8px var(--green);}
+.alert-title{font-size:0.85rem;font-weight:700;margin-bottom:0.2rem;}
+.alert-sub{font-size:0.78rem;color:var(--muted);}
+
+/* ── WRAP ── */
+.wrap{max-width:900px;margin:0 auto;padding:0 1.5rem;}
+.section{position:relative;z-index:1;padding:3.5rem 0;}
+.section-tag{font-family:var(--mono);font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--green);margin-bottom:0.5rem;}
+.section-title{font-size:1.5rem;font-weight:700;margin-bottom:0.35rem;}
+.section-sub{font-size:0.9rem;color:var(--muted);margin-bottom:2rem;}
+.divider{border:none;border-top:1px solid var(--border);margin:0.5rem 0;}
+
+/* ── CONVERSATIONS ── */
+.convs{display:flex;flex-direction:column;gap:1.25rem;}
+.conv{background:var(--card);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color 0.2s;}
+.conv:hover{border-color:rgba(52,211,153,0.25);}
+.conv-header{padding:1.1rem 1.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;}
+.conv-title{font-size:0.95rem;font-weight:700;display:flex;align-items:center;gap:0.6rem;}
+.conv-icon{font-size:1.3rem;}
+.conv-badge{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:4px;border:1px solid;}
+.conv-badge.rojo{color:var(--red);border-color:rgba(248,113,113,0.3);}
+.conv-badge.amarillo{color:var(--yellow);border-color:rgba(251,191,36,0.3);}
+.conv-badge.verde{color:var(--green);border-color:rgba(52,211,153,0.3);}
+.conv-arrow{font-size:0.9rem;color:var(--muted);transition:transform 0.3s;flex-shrink:0;}
+.conv.open .conv-arrow{transform:rotate(180deg);}
+.conv-body{display:none;padding:0 1.5rem 1.5rem;border-top:1px solid var(--border);}
+.conv.open .conv-body{display:block;}
+.conv-body p{font-size:0.9rem;line-height:1.7;color:var(--muted);margin-bottom:1rem;}
+.conv-script{background:var(--bg2);border-left:3px solid var(--green);padding:1rem 1.25rem;border-radius:0 8px 8px 0;margin-top:0.75rem;}
+.conv-script-label{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--green);margin-bottom:0.75rem;}
+.conv-turn{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:0.5rem;}
+.conv-you{font-size:0.85rem;font-weight:700;color:var(--teal);}
+.conv-they{font-size:0.85rem;color:var(--muted);padding-left:1rem;border-left:2px solid var(--border);}
+
+/* ── CHECKLIST ── */
+.checklist-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;}
+.cl-group{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:1.5rem;}
+.cl-group-title{font-size:0.9rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:0.6rem;}
+.cl-item{display:flex;align-items:flex-start;gap:0.75rem;padding:0.5rem 0;border-bottom:1px solid var(--border);cursor:pointer;transition:opacity 0.2s;}
+.cl-item:last-child{border-bottom:none;}
+.cl-item.done{opacity:0.45;}
+.cl-check{width:20px;height:20px;border:1.5px solid var(--border);border-radius:5px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;transition:all 0.2s;background:var(--bg2);}
+.cl-item.done .cl-check{background:var(--green);border-color:var(--green);color:#000;}
+.cl-text{font-size:0.82rem;color:var(--muted);line-height:1.5;}
+.cl-item.done .cl-text{text-decoration:line-through;}
+.cl-progress{margin-top:1rem;height:4px;background:var(--bg2);border-radius:2px;overflow:hidden;}
+.cl-bar{height:100%;background:linear-gradient(90deg,var(--green2),var(--teal));border-radius:2px;transition:width 0.4s ease;}
+
+/* ── CHAT ── */
+.chat-box{background:var(--card);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;}
+.chat-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:1rem 1.5rem;display:flex;align-items:center;gap:0.75rem;}
+.chat-ava{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--green2),var(--teal));display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+.chat-name{font-weight:700;font-size:0.95rem;}
+.chat-status{font-size:0.72rem;color:var(--green);}
+.pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--green);margin-left:auto;animation:blink 1.5s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.15}}
+.chat-msgs{height:300px;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:0.75rem;}
+.chat-msgs::-webkit-scrollbar{width:3px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.msg{display:flex;gap:0.6rem;align-items:flex-start;}
+.msg.user{flex-direction:row-reverse;}
+.msg-bubble{max-width:78%;padding:0.7rem 1rem;font-size:0.88rem;line-height:1.55;}
+.msg.bot  .msg-bubble{background:var(--bg2);border:1px solid var(--border);border-radius:4px 10px 10px 10px;}
+.msg.user .msg-bubble{background:linear-gradient(135deg,var(--green2),var(--teal));color:#fff;border-radius:10px 4px 10px 10px;}
+.msg-ava2{width:28px;height:28px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.88rem;background:var(--bg2);border:1px solid var(--border);}
+.typing-wrap{display:flex;gap:4px;padding:4px 0;}
+.tdot{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:ty 1.2s ease-in-out infinite;}
+.tdot:nth-child(2){animation-delay:0.2s;}
+.tdot:nth-child(3){animation-delay:0.4s;}
+@keyframes ty{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.chat-quick{padding:0.75rem 1.25rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:0.4rem;}
+.qbtn{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.75rem;font-family:var(--font);font-size:0.75rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.2s;}
+.qbtn:hover{border-color:var(--green);color:var(--green);}
+.chat-row{padding:0.75rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:0.5rem;}
+.chat-in{flex:1;background:var(--bg2);border:1.5px solid var(--border);border-radius:8px;padding:0.65rem 1rem;font-family:var(--font);font-size:0.88rem;color:var(--text);outline:none;transition:border-color 0.2s;}
+.chat-in:focus{border-color:var(--green);}
+.chat-in::placeholder{color:var(--muted);}
+.send-btn{background:linear-gradient(135deg,var(--green2),var(--teal));border:none;border-radius:8px;padding:0.65rem 1rem;font-size:1rem;cursor:pointer;transition:opacity 0.15s;}
+.send-btn:hover{opacity:0.85;}
+
+/* ── CTA ── */
+.cta-box{background:linear-gradient(135deg,rgba(52,211,153,0.07),rgba(45,212,191,0.04));border:1.5px solid rgba(52,211,153,0.2);border-radius:14px;padding:3rem 2rem;text-align:center;margin:3rem 0;position:relative;z-index:1;}
+.cta-box h3{font-size:1.75rem;font-weight:700;margin-bottom:0.75rem;}
+.cta-box p{color:var(--muted);font-size:0.95rem;margin-bottom:1.5rem;line-height:1.65;}
+
+/* ── FOOTER ── */
+.page-footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.5rem;text-align:center;font-family:var(--mono);font-size:0.62rem;color:var(--muted);}
+.page-footer a{color:var(--muted);text-decoration:none;}
+.page-footer a:hover{color:var(--green);}
+
+@media(max-width:768px){
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-visual{display:none;}
+  .checklist-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body data-page="educa">
+<div class="bg-rings">
+  <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-tag">aegis8 · para padres y madres</div>
+      <h1>Protege a<br>tu <span>familia</span><br>digital</h1>
+      <p>Guías prácticas, conversaciones reales y herramientas concretas para proteger a tus hijos en internet. Sin términos técnicos.</p>
+      <div class="hero-actions">
+        <a href="#conversaciones" class="btn-primary">Ver guías de conversación</a>
+        <a href="#checklist" class="btn-outline">Checklist familiar</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="alert-stack">
+        <div class="alert-card">
+          <div class="alert-dot red"></div>
+          <div><div class="alert-title">Señal de alerta</div><div class="alert-sub">Tu hijo evita mostrarte su teléfono cuando llegas</div></div>
+        </div>
+        <div class="alert-card">
+          <div class="alert-dot yellow"></div>
+          <div><div class="alert-title">Qué hacer</div><div class="alert-sub">Abre una conversación, no un interrogatorio</div></div>
+        </div>
+        <div class="alert-card">
+          <div class="alert-dot green"></div>
+          <div><div class="alert-title">Resultado</div><div class="alert-sub">Tu hijo sabe que puede contarte si algo lo incomoda</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- CONVERSACIONES -->
+  <section class="section" id="conversaciones">
+    <div class="section-tag">// guías prácticas</div>
+    <div class="section-title">Conversaciones reales con tus hijos</div>
+    <div class="section-sub">Guiones y estrategias para hablar de ciberseguridad sin que se conviertan en sermones.</div>
+
+    <div class="convs">
+      <div class="conv" id="c1">
+        <div class="conv-header" onclick="toggleConv('c1')">
+          <div class="conv-title"><span class="conv-icon">📱</span>Cómo hablar de redes sociales</div>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <span class="conv-badge amarillo">8–14 años</span>
+            <span class="conv-arrow">↓</span>
+          </div>
+        </div>
+        <div class="conv-body">
+          <p>El error más común es prohibir sin explicar. Los adolescentes buscan la forma de hacerlo igual, solo que sin tu ayuda. La clave es ser un aliado, no un policía.</p>
+          <div class="conv-script">
+            <div class="conv-script-label">💬 Ejemplo de conversación</div>
+            <div class="conv-turn">
+              <div class="conv-you">Tú: "¿Qué redes usas tú con tus amigos? ¿TikTok, Instagram?"</div>
+              <div class="conv-they">Ellos comparten lo que usan → crea confianza</div>
+            </div>
+            <div class="conv-turn">
+              <div class="conv-you">Tú: "¿Y sabes que cualquiera puede ver lo que publicas si tu cuenta es pública?"</div>
+              <div class="conv-they">Revisen juntos la configuración de privacidad</div>
+            </div>
+            <div class="conv-turn">
+              <div class="conv-you">Tú: "Si alguna vez alguien te escribe algo que te hace sentir incómodo, ¿me lo contarías?"</div>
+              <div class="conv-they">Esto abre la puerta para que vengan a ti cuando lo necesiten</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="conv" id="c2">
+        <div class="conv-header" onclick="toggleConv('c2')">
+          <div class="conv-title"><span class="conv-icon">🎭</span>Cómo hablar de grooming</div>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <span class="conv-badge rojo">tema urgente</span>
+            <span class="conv-arrow">↓</span>
+          </div>
+        </div>
+        <div class="conv-body">
+          <p>El grooming es cuando un adulto finge ser joven para ganarse la confianza de un menor. Ocurre en juegos online, redes sociales y apps de mensajería. El 70% de los casos comienza con un "¿quieres ser mi amigo?".</p>
+          <div class="conv-script">
+            <div class="conv-script-label">💬 Cómo introducir el tema</div>
+            <div class="conv-turn">
+              <div class="conv-you">Tú: "¿Has conocido gente nueva en internet últimamente?"</div>
+              <div class="conv-they">No como acusación, como curiosidad genuina</div>
+            </div>
+            <div class="conv-turn">
+              <div class="conv-you">Tú: "¿Sabías que hay personas que se hacen pasar por niños para hacerse amigos de menores? Es un delito que se llama grooming."</div>
+            </div>
+            <div class="conv-turn">
+              <div class="conv-you">Tú: "La regla es: si alguien online te pide fotos, encontrarse, o te pide guardar un secreto de mí, me lo dices de inmediato. Nunca te va a pasar nada malo por contarme."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="conv" id="c3">
+        <div class="conv-header" onclick="toggleConv('c3')">
+          <div class="conv-title"><span class="conv-icon">😡</span>Cómo hablar de ciberbullying</div>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <span class="conv-badge amarillo">frecuente</span>
+            <span class="conv-arrow">↓</span>
+          </div>
+        </div>
+        <div class="conv-body">
+          <p>El 40% de los menores en Chile ha sufrido alguna forma de acoso online. Muchos no lo cuentan por vergüenza o porque creen que sus padres van a "apagar el problema" quitándoles el teléfono.</p>
+          <div class="conv-script">
+            <div class="conv-script-label">💬 El mensaje más importante</div>
+            <div class="conv-turn">
+              <div class="conv-you">Tú: "Si alguien te hace sentir mal en internet, no es tu culpa y no estás solo. Lo primero es no responder, guardar las pruebas, y contarme."</div>
+            </div>
+            <div class="conv-turn">
+              <div class="conv-you">Tú: "Y si tú ves que alguien está acosando a un compañero, ¿qué harías?"</div>
+              <div class="conv-they">Enseña también a ser testigo activo, no pasivo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="conv" id="c4">
+        <div class="conv-header" onclick="toggleConv('c4')">
+          <div class="conv-title"><span class="conv-icon">🔐</span>Contraseñas y privacidad básica</div>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <span class="conv-badge verde">fundamental</span>
+            <span class="conv-arrow">↓</span>
+          </div>
+        </div>
+        <div class="conv-body">
+          <p>Más del 70% de los jóvenes usa la misma contraseña en todas sus cuentas. Una sola contraseña robada puede comprometer todo: email, redes, fotos, datos bancarios familiares.</p>
+          <div class="conv-script">
+            <div class="conv-script-label">💬 Actividad práctica</div>
+            <div class="conv-turn">
+              <div class="conv-you">Tú: "Hagamos un juego. Abre tu cuenta de Instagram y vamos a revisar juntos la configuración de privacidad."</div>
+            </div>
+            <div class="conv-turn">
+              <div class="conv-you">Revisen: ¿quién puede ver tus fotos?, ¿quién puede mandarte mensajes?, ¿está activada la autenticación de dos pasos?</div>
+            </div>
+            <div class="conv-turn">
+              <div class="conv-you">Hazlo contigo también para que sea una actividad compartida, no un interrogatorio.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CHECKLIST -->
+  <section class="section" id="checklist">
+    <div class="section-tag">// acción práctica</div>
+    <div class="section-title">Checklist de seguridad familiar</div>
+    <div class="section-sub">Marca lo que ya tienes cubierto. Marca todo y tu familia está protegida.</div>
+    <div class="checklist-grid" id="checklistGrid">
+      <div class="cl-group">
+        <div class="cl-group-title">🔐 Contraseñas y accesos</div>
+        <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div><div class="cl-text">Tus hijos usan contraseñas únicas por cuenta</div></div>
+        <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div><div class="cl-text">Tienen activada la verificación en dos pasos en sus cuentas principales</div></div>
+        <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div><div class="cl-text">No comparten contraseñas con amigos</div></div>
+        <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div><div class="cl-text">Conocen las contraseñas de sus hijos menores</div></div>
+        <div class="cl-progress"><div class="cl-bar" style="width:0%"></div></div>
+      </div>
+      <div class="cl-group">
+        <div class="cl-group-title">📱 Redes sociales</div>
+        <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div><div class="cl-text">Las cuentas de sus hijos son privadas</div></div>
+        <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div><div class="cl-text">No tienen ubicación activa en sus publicaciones</div></div>
+        <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div><div class="cl-text">Sus hijos no aceptan solicitudes de desconocidos</div></div>
+        <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div><div class="cl-text">Saben qué apps tienen instaladas en su teléfono</div></div>
+        <div class="cl-progress"><div class="cl-bar" style="width:0%"></div></div>
+      </div>
+      <div class="cl-group">
+        <div class="cl-group-title">💬 Comunicación en casa</div>
+        <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div><div class="cl-text">Sus hijos saben que pueden contarte si algo les incomoda en internet</div></div>
+        <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div><div class="cl-text">Han hablado sobre el grooming y el ciberbullying</div></div>
+        <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div><div class="cl-text">Tienen acuerdos claros sobre el uso del teléfono</div></div>
+        <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div><div class="cl-text">No se penaliza a los hijos por contar problemas digitales</div></div>
+        <div class="cl-progress"><div class="cl-bar" style="width:0%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CHAT -->
+  <section class="section">
+    <div class="section-tag">// asesoría IA</div>
+    <div class="section-title">Consulta al Agente</div>
+    <div class="section-sub">Pregunta lo que quieras sobre protección digital para tu familia.</div>
+    <div class="chat-box">
+      <div class="chat-header">
+        <div class="chat-ava">🛡️</div>
+        <div>
+          <div class="chat-name">Agente Familiar · Aegis8</div>
+          <div class="chat-status">● activo</div>
+        </div>
+        <div class="pulse-dot"></div>
+      </div>
+      <div class="chat-msgs" id="chatMsgs">
+        <div class="msg bot">
+          <div class="msg-ava2">🛡️</div>
+          <div class="msg-bubble">Hola 👋 Soy el agente de Aegis8 para familias. Puedo ayudarte con cualquier duda sobre cómo proteger a tus hijos en internet, qué hacer ante situaciones de riesgo, o cómo abordar conversaciones difíciles. ¿En qué te puedo ayudar hoy?</div>
+        </div>
+      </div>
+      <div class="chat-quick">
+        <button class="qbtn" onclick="qa('¿Qué hago si creo que mi hijo está sufriendo grooming?')">Sospecho grooming</button>
+        <button class="qbtn" onclick="qa('¿Qué apps son peligrosas para menores?')">Apps peligrosas</button>
+        <button class="qbtn" onclick="qa('¿Cómo poner controles parentales en el teléfono?')">Controles parentales</button>
+        <button class="qbtn" onclick="qa('¿Cómo hablar de redes sociales con mi hijo sin que se enoje?')">Hablar sin conflicto</button>
+        <button class="qbtn" onclick="qa('¿Puedo denunciar ciberbullying en Chile?')">Denunciar en Chile</button>
+      </div>
+      <div class="chat-row">
+        <input class="chat-in" id="chatIn" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendMsg()">
+        <button class="send-btn" onclick="sendMsg()">➤</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h3>¿Quieres una charla para apoderados? 👨‍👩‍👧‍👦</h3>
+    <p>Organizamos charlas presenciales para padres en colegios y comunidades. Prácticas, sin tecnicismos, con ejemplos reales de Chile.</p>
+    <a href="/contactos.html" class="btn-primary">Quiero organizar una charla →</a>
+  </div>
+</div>
+
+<footer class="page-footer">
+  <a href="/educa.html">← volver a educa</a> &nbsp;·&nbsp; <a href="/">aegis8.org</a> &nbsp;·&nbsp; guías para padres
+</footer>
+
+<script>
+function toggleConv(id){
+  const c=document.getElementById(id);
+  c.classList.toggle('open');
+}
+
+function toggleCheck(item){
+  item.classList.toggle('done');
+  item.querySelector('.cl-check').textContent=item.classList.contains('done')?'✓':'';
+  updateBars();
+}
+
+function updateBars(){
+  document.querySelectorAll('.cl-group').forEach(g=>{
+    const total=g.querySelectorAll('.cl-item').length;
+    const done=g.querySelectorAll('.cl-item.done').length;
+    g.querySelector('.cl-bar').style.width=(done/total*100)+'%';
+  });
+}
+
+// CHAT
+const WORKER='https://aegis8-agent.christianmora705.workers.dev';
+const SYS=`Eres un asesor de ciberseguridad familiar de Aegis8, hablando con padres y madres chilenos.
+Tu tono es cálido, claro y práctico. Sin tecnicismos. Da consejos concretos y accionables.
+Cuando sea relevante, menciona recursos chilenos (PDI Cibercrimen: +56 2 2708 0000, Fiscalía, Ley 20.526).
+Máximo 4-5 oraciones. Responde en español.`;
+let hist=[];
+async function sendMsg(){
+  const el=document.getElementById('chatIn');
+  const t=el.value.trim();if(!t)return;el.value='';
+  addM('user',t);hist.push({role:'user',content:t});showT();
+  try{
+    const r=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,system:SYS,messages:hist})});
+    const d=await r.json();removeT();
+    const rep=d.content?.[0]?.text||'Error al conectar.';
+    hist.push({role:'assistant',content:rep});addM('bot',rep);
+  }catch{removeT();addM('bot','Error de conexión. Intenta de nuevo.');}
+}
+function qa(q){document.getElementById('chatIn').value=q;sendMsg();}
+function addM(r,t){
+  const c=document.getElementById('chatMsgs');
+  const d=document.createElement('div');d.className=`msg ${r}`;
+  d.innerHTML=`<div class="msg-ava2">${r==='bot'?'🛡️':'👤'}</div><div class="msg-bubble">${t}</div>`;
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+function showT(){
+  const c=document.getElementById('chatMsgs');const d=document.createElement('div');
+  d.className='msg bot';d.id='tMsg';
+  d.innerHTML=`<div class="msg-ava2">🛡️</div><div class="msg-bubble"><div class="typing-wrap"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div></div>`;
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+function removeT(){document.getElementById('tMsg')?.remove();}
+</script>
+</body>
+</html>
