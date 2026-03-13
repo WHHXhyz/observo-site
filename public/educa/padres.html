@@ -425,10 +425,19 @@ async function sendMsg(){
   }catch{removeT();addM('bot','Error de conexión. Intenta de nuevo.');}
 }
 function qa(q){document.getElementById('chatIn').value=q;sendMsg();}
+
+// ── XSS SANITIZER ──
+function sanitize(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
 function addM(r,t){
   const c=document.getElementById('chatMsgs');
   const d=document.createElement('div');d.className=`msg ${r}`;
-  d.innerHTML=`<div class="msg-ava2">${r==='bot'?'🛡️':'👤'}</div><div class="msg-bubble">${t}</div>`;
+  const ava=document.createElement('div');ava.className='msg-ava2';ava.textContent=r==='bot'?'🛡️':'👤';
+  const bub=document.createElement('div');bub.className='msg-bubble';bub.textContent=t;
+  d.appendChild(ava);d.appendChild(bub);
   c.appendChild(d);c.scrollTop=c.scrollHeight;
 }
 function showT(){

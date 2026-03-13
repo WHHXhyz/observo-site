@@ -772,11 +772,25 @@ function quickAsk(q) {
   sendChat();
 }
 
+
+// ── XSS SANITIZER ──
+function sanitize(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
 function addMsg(role, text) {
   const msgs = document.getElementById('chatMsgs');
   const div = document.createElement('div');
   div.className = `msg ${role}`;
-  div.innerHTML = `<div class="msg-ava">${role === 'bot' ? '🤖' : '🧒'}</div><div class="msg-bubble">${text}</div>`;
+  const ava = document.createElement('div');
+  ava.className = 'msg-ava';
+  ava.textContent = role === 'bot' ? '🤖' : '🧒';
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.textContent = text;
+  div.appendChild(ava);
+  div.appendChild(bubble);
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
 }
