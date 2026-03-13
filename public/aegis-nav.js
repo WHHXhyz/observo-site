@@ -69,6 +69,52 @@
 
     #aegis-nav .an-links a.an-active::after { display: none; }
 
+    /* AGENTE IA — pill con punto parpadeante */
+    #aegis-nav .an-links a.an-agent {
+      color: var(--green, #00ff88);
+      border: 1px solid rgba(0,255,136,0.35);
+      padding: 0.3rem 0.8rem;
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      background: rgba(0,255,136,0.05);
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    #aegis-nav .an-links a.an-agent::before {
+      content: '';
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--green, #00ff88);
+      flex-shrink: 0;
+      animation: an-blink 1.5s step-end infinite;
+    }
+
+    @keyframes an-blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.15; }
+    }
+
+    #aegis-nav .an-links a.an-agent:hover {
+      background: rgba(0,255,136,0.12);
+      border-color: rgba(0,255,136,0.6);
+      color: var(--green, #00ff88);
+    }
+
+    #aegis-nav .an-links a.an-agent::after { display: none; }
+
+    /* Mobile agente IA */
+    #aegis-mobile-menu a.m-agent {
+      color: var(--green, #00ff88) !important;
+      border: 1px solid rgba(0,255,136,0.3);
+      padding: 0.6rem 1.8rem;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+
+    #aegis-mobile-menu a.m-agent::before {
+      content: '';
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--green, #00ff88);
+      animation: an-blink 1.5s step-end infinite;
+    }
+
     #aegis-nav .an-links a.an-cta {
       color: #000 !important;
       background: var(--green, #00ff88);
@@ -144,12 +190,12 @@
   `;
 
   const LINKS = [
-    { href: '/',                   label: 'Inicio',     page: 'index' },
-    { href: '/#amenazas',          label: 'Amenazas',   page: null },
-    { href: '/propuesta.html',     label: 'Propuesta',  page: 'propuesta' },
-    { href: '/formacion.html',     label: 'Formación',  page: 'formacion' },
-    { href: '/agente-seguridad.html', label: 'Agente IA', page: 'agente' },
-    { href: '/contactos.html',     label: 'Contacto',   page: 'contacto', cta: true },
+    { href: '/',                      label: 'Inicio',    page: 'index' },
+    { href: '/#amenazas',             label: 'Amenazas',  page: null },
+    { href: '/propuesta.html',        label: 'Propuesta', page: 'propuesta' },
+    { href: '/formacion.html',        label: 'Formación', page: 'formacion' },
+    { href: '/agente-seguridad.html', label: 'Agente IA', page: 'agente', agent: true },
+    { href: '/contactos.html',        label: 'Contacto',  page: 'contacto', cta: true },
   ];
 
   function init() {
@@ -170,6 +216,7 @@
       a.href = link.href;
       a.textContent = link.label;
       if (link.cta) a.className = 'an-cta';
+      else if (link.agent) a.className = 'an-agent';
       else if (link.page && currentPage === link.page) a.className = 'an-active';
       li.appendChild(a);
       ul.appendChild(li);
@@ -185,6 +232,7 @@
       a.textContent = link.label;
       a.onclick = () => closeMenu();
       if (link.cta) a.className = 'm-cta';
+      else if (link.agent) a.className = 'm-agent';
       else if (link.page && currentPage === link.page) a.className = 'm-active';
       mobileMenu.appendChild(a);
     });
