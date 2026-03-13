@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XNJT1V3G6T');
+  </script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Aegis8 — Contáctanos</title>
@@ -368,7 +376,7 @@ footer a:hover{color:var(--green);}
               </div>
               <p style="font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);line-height:1.7;margin-bottom:0.5rem;">🚫 <strong style="color:var(--text);">No usamos cookies</strong> de seguimiento, publicidad ni analítica de terceros en este formulario.</p>
               <p style="font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);line-height:1.7;margin-bottom:0.5rem;">🔒 <strong style="color:var(--text);">Tus datos son solo para contacto.</strong> Nombre y correo se usan únicamente para responderte. No los vendemos, no los cedemos, no los cruzamos con terceros.</p>
-              <p style="font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);line-height:1.7;margin-bottom:0.5rem;">📋 <strong style="color:var(--text);">Nos regimos por la Ley 19.628</strong> (Chile) y los principios del <strong style="color:var(--text);">RGPD / GDPR</strong> europeo. Tienes derecho a solicitar la eliminación de tus datos escribiéndonos a <span style="color:var(--green);">privacidad@aegis8.org</span></p>
+              <p style="font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);line-height:1.7;margin-bottom:0.5rem;">📋 <strong style="color:var(--text);">Nos regimos por la Ley 19.628</strong> (Chile) y los principios del <strong style="color:var(--text);">RGPD / GDPR</strong> europeo. Tienes derecho a solicitar la eliminación de tus datos escribiéndonos a <span style="color:var(--green);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e797958e9186848e838683a78682808e94dfc9889580">[email&#160;protected]</a></span></p>
               <p style="font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);line-height:1.7;">🗑️ <strong style="color:var(--text);">Retención:</strong> Si no hay contrato activo, eliminamos los datos de contacto a los 12 meses del último intercambio.</p>
             </div>
 
@@ -460,7 +468,7 @@ footer a:hover{color:var(--green);}
 
 <div class="toast" id="toast"></div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* CURSOR */
 var cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
 document.addEventListener('mousemove',function(e){
@@ -624,14 +632,4 @@ function clearForm(){
   document.getElementById('f-tipo').selectedIndex=0;
   document.querySelectorAll('.mode-btn').forEach(function(b){b.classList.remove('active');});
   document.getElementById('form-notice').style.display='none';
-  updatePreview();updateChar();
-}
-function showToast(msg){
-  var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
-  setTimeout(function(){t.classList.remove('show');},2500);
-}
-
-updatePreview();
-</script>
-</body>
-</html>
+  updatePreview()
