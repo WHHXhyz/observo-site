@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XNJT1V3G6T');
-  </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -663,10 +655,19 @@ body::before {
 @media (max-width: 600px) { .footer { padding: 24px 16px; flex-direction: column; text-align: center; } }
 .footer a { color: var(--text-dim); text-decoration: none; transition: color .2s; }
 .footer a:hover { color: var(--green); }
+
+/* ── CURSOR CUSTOM ── */
+*{cursor:none!important;}
+#cursor{position:fixed;width:12px;height:12px;background:#00ff88;border-radius:50%;pointer-events:none;z-index:9999;opacity:0;left:-50px;top:-50px;}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(0,255,136,0.4);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;left:-50px;top:-50px;transition:width 0.2s,height 0.2s,border-color 0.2s;}
+body:has(a:hover) #cursor-ring,body:has(button:hover) #cursor-ring{width:56px;height:56px;border-color:#00ff88;}
 </style>
-<script src="/aegis-nav.js"></script>
+
 </head>
 <body data-page="formacion">
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
 
 <!-- ============================================================
      NAVIGATION — identical to aegis8.org
@@ -1704,6 +1705,26 @@ function togglePol(i) { document.getElementById('ph'+i).classList.toggle('open')
 
 // ── INIT ─────────────────────────────────────────────────────
 renderQ(); renderThreats(); renderChecklist(); renderPhish(); renderBreachTL(); renderPolicies(); renderSmish(); renderDf();
+</script>
+<script src="/aegis-nav.js"></script>
+<style>
+/* cursor override - siempre al final */
+*, *::before, *::after { cursor: none !important; }
+#cursor { display: block !important; }
+#cursor-ring { display: block !important; }
+</style>
+<script>
+/* CURSOR */
+(function(){
+  var cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring'),moved=false;
+  if(!cur||!ring)return;
+  document.addEventListener('mousemove',function(e){
+    cur.style.left=(e.clientX-6)+'px';cur.style.top=(e.clientY-6)+'px';
+    ring.style.left=(e.clientX-18)+'px';ring.style.top=(e.clientY-18)+'px';
+    if(!moved){cur.style.opacity='1';ring.style.opacity='1';moved=true;}
+  },true);
+  document.addEventListener('mouseleave',function(){cur.style.opacity='0';ring.style.opacity='0';});
+})();
 </script>
 </body>
 </html>

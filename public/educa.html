@@ -7,7 +7,7 @@
 <title>Educa · Aegis8</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-<script src="/aegis-nav.js"></script>
+
 <style>
 
 :root {
@@ -619,9 +619,18 @@ footer a:hover { color: var(--green); }
   .why-stat-num { font-size: 2rem; width: 5rem; }
 }
 
+
+/* ── CURSOR CUSTOM ── */
+*{cursor:none!important;}
+#cursor{position:fixed;width:12px;height:12px;background:#00ff88;border-radius:50%;pointer-events:none;z-index:9999;opacity:0;left:-50px;top:-50px;}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(0,255,136,0.4);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;left:-50px;top:-50px;transition:width 0.2s,height 0.2s,border-color 0.2s;}
+body:has(a:hover) #cursor-ring,body:has(button:hover) #cursor-ring{width:56px;height:56px;border-color:#00ff88;}
 </style>
 </head>
 <body data-page="educa">
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
 
 <!-- HERO -->
 <section class="hero">
@@ -677,44 +686,6 @@ footer a:hover { color: var(--green); }
     <span class="stat-label">datos<br>requeridos</span>
   </div>
 </div>
-
-<!-- POR QUÉ IMPORTA -->
-<section class="why-section">
-  <div class="why-inner">
-    <div class="why-left reveal">
-      <div class="section-label">por qué importa</div>
-      <h2 class="why-title">
-        LOS NIÑOS<br>SON EL<br><span>BLANCO</span>
-      </h2>
-      <p class="why-body">
-        El grooming, el phishing disfrazado de juego y el robo de identidad afectan a niños y jóvenes cada vez más. La educación digital temprana es la única defensa real — y la mayoría de los colegios todavía no la imparte.
-      </p>
-    </div>
-    <div class="why-stats reveal">
-      <div class="why-stat">
-        <span class="why-stat-num">+50%</span>
-        <div class="why-stat-text">
-          <strong>Phishing creció el último año</strong>
-          Muchas campañas usan contenido dirigido a menores: juegos, sorteos y redes sociales.
-        </div>
-      </div>
-      <div class="why-stat">
-        <span class="why-stat-num">60%</span>
-        <div class="why-stat-text">
-          <strong>Empresas chilenas sufrió brecha</strong>
-          En los últimos 2 años. Los datos de familias enteras quedaron expuestos.
-        </div>
-      </div>
-      <div class="why-stat">
-        <span class="why-stat-num">1 de 3</span>
-        <div class="why-stat-text">
-          <strong>Menores expuestos a contacto no deseado</strong>
-          En plataformas de juego y redes sociales sin supervisión ni educación.
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- FEATURES STRIP -->
 <div class="features">
@@ -824,6 +795,44 @@ footer a:hover { color: var(--green); }
   </div>
 </section>
 
+<!-- POR QUÉ IMPORTA -->
+<section class="why-section">
+  <div class="why-inner">
+    <div class="why-left reveal">
+      <div class="section-label">por qué importa</div>
+      <h2 class="why-title">
+        LOS NIÑOS<br>SON EL<br><span>BLANCO</span>
+      </h2>
+      <p class="why-body">
+        El grooming, el phishing disfrazado de juego y el robo de identidad afectan a niños y jóvenes cada vez más. La educación digital temprana es la única defensa real — y la mayoría de los colegios todavía no la imparte.
+      </p>
+    </div>
+    <div class="why-stats reveal">
+      <div class="why-stat">
+        <span class="why-stat-num">+50%</span>
+        <div class="why-stat-text">
+          <strong>Phishing creció el último año</strong>
+          Muchas campañas usan contenido dirigido a menores: juegos, sorteos y redes sociales.
+        </div>
+      </div>
+      <div class="why-stat">
+        <span class="why-stat-num">60%</span>
+        <div class="why-stat-text">
+          <strong>Empresas chilenas sufrió brecha</strong>
+          En los últimos 2 años. Los datos de familias enteras quedaron expuestos.
+        </div>
+      </div>
+      <div class="why-stat">
+        <span class="why-stat-num">1 de 3</span>
+        <div class="why-stat-text">
+          <strong>Menores expuestos a contacto no deseado</strong>
+          En plataformas de juego y redes sociales sin supervisión ni educación.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- NEWSLETTER -->
 <section class="extras-section reveal">
   <div class="section-label" style="margin-bottom:1.5rem;">// también disponible</div>
@@ -897,5 +906,25 @@ document.querySelectorAll('.aud-pill').forEach((pill, i) => {
 });
 </script>
 
+<script src="/aegis-nav.js"></script>
+<style>
+/* cursor override - siempre al final */
+*, *::before, *::after { cursor: none !important; }
+#cursor { display: block !important; }
+#cursor-ring { display: block !important; }
+</style>
+<script>
+/* CURSOR */
+(function(){
+  var cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring'),moved=false;
+  if(!cur||!ring)return;
+  document.addEventListener('mousemove',function(e){
+    cur.style.left=(e.clientX-6)+'px';cur.style.top=(e.clientY-6)+'px';
+    ring.style.left=(e.clientX-18)+'px';ring.style.top=(e.clientY-18)+'px';
+    if(!moved){cur.style.opacity='1';ring.style.opacity='1';moved=true;}
+  },true);
+  document.addEventListener('mouseleave',function(){cur.style.opacity='0';ring.style.opacity='0';});
+})();
+</script>
 </body>
 </html>
