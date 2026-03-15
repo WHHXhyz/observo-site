@@ -137,6 +137,8 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .db-ok:hover,.db-ok.sel{background:rgba(46,204,128,.1);border-color:var(--green);}
 .db-ph{color:var(--accent);border-color:rgba(240,120,48,.3);}
 .db-ph:hover,.db-ph.sel{background:rgba(240,120,48,.1);border-color:var(--accent);}
+.demo-btns .db{cursor:pointer!important;}
+.demo-nxt{cursor:pointer!important;}
 .demo-res{margin-top:10px;padding:12px 14px;border-radius:3px;font-size:.84rem;line-height:1.6;
   display:none;border-left:3px solid;}
 .demo-res.show{display:block;}
@@ -840,23 +842,33 @@ function ans(a){
   const m=msgs[idx];
   const correct=a===m.type;
   if(correct)score++;
-  document.querySelector('.db-'+a).classList.add('sel');
-  document.getElementById('demoBox').className='demo-box '+m.boxCls;
+  const btnSel=document.querySelector('.db-'+a);
+  if(btnSel)btnSel.classList.add('sel');
+  const box=document.getElementById('demoBox');
+  if(box)box.className='demo-box '+m.boxCls;
   const res=document.getElementById('demoRes');
-  res.className='demo-res show '+(correct?'right':'wrong');
-  res.innerHTML=correct?m.exp:(a==='phishing'?m.wrongExp:m.exp);
-  document.getElementById('demoSc').textContent=score;
-  document.getElementById('demoHdScore').textContent=score+' / 3 correctas';
+  if(res){
+    res.className='demo-res show '+(correct?'right':'wrong');
+    res.innerHTML=correct?m.exp:(a==='phishing'?m.wrongExp:m.exp);
+  }
+  const sc=document.getElementById('demoSc');
+  if(sc)sc.textContent=score;
+  const hd=document.getElementById('demoHdScore');
+  if(hd)hd.textContent=score+' / 3 correctas';
   const nxt=document.getElementById('demoNxt');
-  nxt.className='demo-nxt show';
-  if(idx===msgs.length-1){
-    nxt.textContent=score===3?'🎉 ¡Perfecto! Ver Aegis Educa →':'📚 Practicar más en Aegis Educa →';
-    nxt.onclick=()=>window.location.href='/educa';
+  if(nxt){
+    nxt.className='demo-nxt show';
+    nxt.style.display='block';
+    if(idx===msgs.length-1){
+      nxt.textContent=score===3?'🎉 ¡Perfecto! Ver Aegis Educa →':'📚 Practicar más en Aegis Educa →';
+      nxt.onclick=function(){window.location.href='/educa.html';};
+    }
   }
 }
 
 function nextMsg(){
   if(idx<msgs.length-1){idx++;loadMsg();}
+  else{window.location.href='/educa.html';}
 }
 
 loadMsg();
