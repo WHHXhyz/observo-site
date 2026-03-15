@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>El Proyecto · Aegis8</title>
-<meta name="description" content="Aegis8 es un proyecto social de ciberseguridad educativa para familias y docentes de Chile. Gratuito, sin humo, hecho para proteger a los que más importan."/>
+<meta name="description" content="Por qué existe Aegis8, qué construimos, para quién y hacia dónde vamos. El proyecto social de ciberseguridad educativa de Chile."/>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
   <script src="/aegis-nav.js"></script>
@@ -104,238 +104,374 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 @media(max-width:640px){.wrap{padding:0 16px;}.page-footer{padding:32px 16px;}}
 
 
-.hero-p{position:relative;z-index:10;padding:80px 0 60px;border-bottom:1px solid var(--border);overflow:hidden;text-align:center;}
+/* HERO */
+.hero-p{position:relative;z-index:10;padding:80px 0 64px;border-bottom:1px solid var(--border);overflow:hidden;}
 .blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
-.b1{width:500px;height:500px;top:-80px;right:-100px;background:radial-gradient(circle,rgba(240,120,48,.09) 0%,transparent 70%);animation:fl1 8s ease-in-out infinite;}
-.b2{width:400px;height:400px;bottom:-60px;left:-80px;background:radial-gradient(circle,rgba(58,127,212,.08) 0%,transparent 70%);animation:fl2 10s ease-in-out infinite;}
+.b1{width:600px;height:600px;top:-100px;right:-120px;background:radial-gradient(circle,rgba(240,120,48,.08) 0%,transparent 70%);animation:fl1 9s ease-in-out infinite;}
+.b2{width:400px;height:400px;bottom:-60px;left:-80px;background:radial-gradient(circle,rgba(58,127,212,.07) 0%,transparent 70%);animation:fl2 11s ease-in-out infinite;}
 @keyframes fl1{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,20px);}}
 @keyframes fl2{0%,100%{transform:translate(0,0);}50%{transform:translate(20px,-30px);}}
-.pilares{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
-@media(max-width:640px){.pilares{grid-template-columns:1fr;}}
-.pilar{padding:32px 28px;background:var(--card);border:1px solid var(--border);transition:all .25s;position:relative;overflow:hidden;}
-.pilar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transform:scaleX(0);transform-origin:left;transition:transform .4s;}
-.pilar:hover::before{transform:scaleX(1);}
-.pilar:hover{background:rgba(255,255,255,.04);}
-.p1::before{background:var(--accent);}
-.p2::before{background:var(--blue);}
-.p3::before{background:var(--green);}
-.p4::before{background:var(--gold);}
-.pilar-n{font-family:'DM Serif Display',serif;font-size:3rem;line-height:1;opacity:.07;margin-bottom:12px;}
-.pilar-i{font-size:1.6rem;margin-bottom:10px;}
-.pilar-nm{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);margin-bottom:6px;}
-.pilar-d{font-size:.84rem;line-height:1.7;color:var(--ink2);}
-.impacto-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+
+/* PROBLEMA */
+.prob-g{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
+@media(max-width:720px){.prob-g{grid-template-columns:1fr;gap:2rem;}}
+.prob-stats{display:flex;flex-direction:column;gap:2px;background:var(--border);}
+.prob-stat{background:var(--bg2);padding:1.5rem 1.75rem;display:flex;align-items:center;gap:1.5rem;}
+.ps-n{font-family:'DM Serif Display',serif;font-size:2.8rem;color:var(--accent);line-height:1;font-style:italic;flex-shrink:0;min-width:80px;}
+.ps-t{font-size:.86rem;color:var(--ink2);line-height:1.55;}
+.ps-t strong{color:var(--ink);display:block;margin-bottom:2px;}
+.ps-src{font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--ink3);letter-spacing:1px;margin-top:4px;}
+
+/* MVP / PRODUCTO */
+.mvp-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
+@media(max-width:640px){.mvp-g{grid-template-columns:1fr;}}
+.mvp-c{background:var(--bg2);padding:2rem 1.75rem;position:relative;overflow:hidden;transition:background .2s;}
+.mvp-c::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.mvp-c:hover::before{transform:scaleX(1);}
+.mvp-c:hover{background:rgba(255,255,255,.03);}
+.m1::before{background:var(--accent);}
+.m2::before{background:var(--blue);}
+.m3::before{background:var(--green);}
+.m4::before{background:var(--gold);}
+.m5::before{background:#9b6dff;}
+.m6::before{background:#ef4444;}
+.mvp-ico{font-size:1.8rem;margin-bottom:.75rem;}
+.mvp-title{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:var(--ink);margin-bottom:.5rem;}
+.mvp-desc{font-size:.84rem;color:var(--ink2);line-height:1.65;}
+.mvp-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:2px;
+  color:var(--ink3);margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border);}
+
+/* DIFERENCIADORES */
+.diff-g{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);}
+@media(max-width:640px){.diff-g{grid-template-columns:1fr;}}
+.diff{background:var(--bg2);padding:2rem 1.75rem;display:flex;gap:1.25rem;}
+.diff-ico{font-size:1.6rem;flex-shrink:0;margin-top:2px;}
+.diff-title{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--ink);font-weight:600;margin-bottom:.4rem;}
+.diff-body{font-size:.84rem;color:var(--ink2);line-height:1.65;}
+
+/* ROADMAP */
+.road-g{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.road{background:var(--bg2);padding:1.5rem 1.75rem;display:flex;gap:1.5rem;align-items:flex-start;}
+.road-fase{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
+  text-transform:uppercase;padding:.25rem .7rem;border-radius:20px;flex-shrink:0;margin-top:3px;}
+.fase-done{color:var(--green);background:rgba(46,204,128,.1);border:1px solid rgba(46,204,128,.2);}
+.fase-now{color:var(--accent);background:rgba(240,120,48,.1);border:1px solid rgba(240,120,48,.25);
+  animation:pulse-now 2s ease-in-out infinite;}
+@keyframes pulse-now{0%,100%{box-shadow:0 0 0 0 rgba(240,120,48,0);}50%{box-shadow:0 0 0 4px rgba(240,120,48,.1);}}
+.fase-next{color:var(--ink3);background:var(--card);border:1px solid var(--border);}
+.road-content{flex:1;}
+.road-title{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);margin-bottom:.35rem;line-height:1.2;}
+.road-desc{font-size:.84rem;color:var(--ink2);line-height:1.6;}
+
+/* IMPACTO */
+.impacto-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
 @media(max-width:640px){.impacto-g{grid-template-columns:1fr;}}
-.imp{padding:28px 20px;background:var(--card);border:1px solid var(--border);text-align:center;}
-.imp-n{font-family:'DM Serif Display',serif;font-size:2.8rem;color:var(--accent);line-height:1;margin-bottom:6px;font-style:italic;}
-.imp-l{font-size:.82rem;line-height:1.55;color:var(--ink2);}
-.imp-s{font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--ink3);letter-spacing:1px;margin-top:5px;}
-.quienes-g{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);}
-@media(max-width:640px){.quienes-g{grid-template-columns:1fr;}}
-.quien{background:var(--bg2);padding:2rem 1.75rem;display:flex;gap:1rem;align-items:flex-start;}
-.quien-ico{font-size:1.8rem;flex-shrink:0;}
-.quien-title{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--ink);font-weight:600;margin-bottom:.35rem;}
-.quien-desc{font-size:.84rem;color:var(--ink2);line-height:1.6;}
-.como-g{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);}
-@media(max-width:720px){.como-g{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:480px){.como-g{grid-template-columns:1fr;}}
-.como{background:var(--bg2);padding:2rem 1.5rem;text-align:center;}
-.como-n{font-family:'DM Serif Display',serif;font-size:2.5rem;color:rgba(240,120,48,.15);line-height:1;margin-bottom:.6rem;font-style:italic;}
-.como-ico{font-size:1.5rem;margin-bottom:.5rem;}
-.como-title{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink);font-weight:600;margin-bottom:.35rem;}
-.como-desc{font-size:.8rem;color:var(--ink2);line-height:1.55;}
-.participa-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-@media(max-width:640px){.participa-g{grid-template-columns:1fr;}}
-.part{border:1px solid var(--border);border-radius:var(--radius);padding:2rem 1.75rem;background:var(--card);
-  text-decoration:none;transition:all .25s;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;}
-.part::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
-.part:hover::after{transform:scaleX(1);}
-.part:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.1);}
-.pa1::after{background:var(--accent);}
-.pa2::after{background:var(--blue);}
-.pa3::after{background:var(--green);}
-.part-ico{font-size:1.8rem;}
-.part-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;}
-.part-name{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);line-height:1.15;}
-.part-desc{font-size:.83rem;line-height:1.6;color:var(--ink2);flex:1;}
-.part-cta{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;color:var(--accent);display:flex;align-items:center;gap:5px;transition:gap .2s;}
-.part:hover .part-cta{gap:9px;}
-.mf{padding:56px;background:rgba(240,120,48,.03);border:1px solid var(--border2);border-radius:var(--radius);text-align:center;position:relative;overflow:hidden;}
-.mf::before{content:'"';position:absolute;top:-20px;left:24px;font-family:'DM Serif Display',serif;font-size:12rem;color:rgba(240,120,48,.05);line-height:1;pointer-events:none;}
-.mf-text{font-family:'DM Serif Display',serif;font-size:clamp(1.3rem,2.8vw,2rem);line-height:1.5;color:var(--ink);max-width:700px;margin:0 auto;font-style:italic;position:relative;z-index:1;}
+.imp{background:var(--bg2);padding:2rem 1.5rem;text-align:center;}
+.imp-n{font-family:'DM Serif Display',serif;font-size:3rem;color:var(--accent);font-style:italic;line-height:1;margin-bottom:.5rem;}
+.imp-l{font-size:.88rem;color:var(--ink2);line-height:1.55;}
+.imp-sub{font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--ink3);margin-top:6px;letter-spacing:1px;}
+
+/* MANIFIESTO */
+.mf{padding:56px;background:rgba(240,120,48,.03);border:1px solid var(--border2);border-radius:var(--radius);
+  text-align:center;position:relative;overflow:hidden;}
+.mf::before{content:'"';position:absolute;top:-20px;left:20px;font-family:'DM Serif Display',serif;
+  font-size:12rem;color:rgba(240,120,48,.05);line-height:1;pointer-events:none;}
+.mf-text{font-family:'DM Serif Display',serif;font-size:clamp(1.3rem,2.8vw,2rem);
+  line-height:1.5;color:var(--ink);max-width:700px;margin:0 auto;font-style:italic;position:relative;z-index:1;}
 .mf-text em{color:var(--accent);font-style:normal;}
 .mf-sig{margin-top:20px;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:3px;}
 @media(max-width:640px){.mf{padding:32px 24px;}}
 
-@keyframes fadeInLogo{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
+/* PARTICIPA */
+.part-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+@media(max-width:640px){.part-g{grid-template-columns:1fr;}}
+.part{border:1px solid var(--border);border-radius:var(--radius);padding:2rem 1.75rem;
+  background:var(--card);text-decoration:none;transition:all .25s;display:flex;flex-direction:column;gap:10px;
+  position:relative;overflow:hidden;}
+.part::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.part:hover::after{transform:scaleX(1);}
+.part:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.1);}
+.pa1::after{background:var(--accent);} .pa2::after{background:var(--blue);} .pa3::after{background:var(--green);}
+.part-ico{font-size:1.8rem;}
+.part-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;}
+.part-name{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);line-height:1.15;}
+.part-desc{font-size:.83rem;line-height:1.6;color:var(--ink2);flex:1;}
+.part-cta{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;color:var(--accent);
+  display:flex;align-items:center;gap:5px;transition:gap .2s;}
+.part:hover .part-cta{gap:9px;}
+
 </style>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body data-page="propuesta">
+<!-- HERO -->
 <section class="hero-p">
   <div class="blob b1"></div><div class="blob b2"></div>
   <div class="wrap" style="position:relative;z-index:2;">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ink3);margin-bottom:24px;display:flex;align-items:center;justify-content:center;gap:10px;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ink3);margin-bottom:28px;display:flex;align-items:center;gap:10px;">
       <div style="width:28px;height:1px;background:var(--accent);"></div>
-      PROYECTO SOCIAL · EDUCACIÓN DIGITAL · CHILE · GRATUITO
-      <div style="width:28px;height:1px;background:var(--accent);"></div>
+      PROYECTO SOCIAL · EDUCACIÓN DIGITAL · CHILE · 2024–
     </div>
-    
-    <div style="margin-bottom:20px;opacity:0;animation:fadeInLogo .8s cubic-bezier(.34,1.56,.64,1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="100" height="100" fill="none">
-  <defs>
-    <filter id="p1" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <filter id="p2" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <filter id="p3" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <linearGradient id="pg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f5c842"/>
-      <stop offset="50%" stop-color="#f07830"/>
-      <stop offset="100%" stop-color="#e0531a"/>
-    </linearGradient>
-    <radialGradient id="pg-core" cx="50%" cy="45%" r="55%">
-      <stop offset="0%" stop-color="rgba(240,120,48,0.18)"/>
-      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
-    </radialGradient>
-    <clipPath id="pc"><path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z"/></clipPath>
-  </defs>
-  <ellipse cx="120" cy="115" rx="88" ry="95" fill="url(#pg-core)" filter="url(#p2)">
-    <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite"/>
-  </ellipse>
-  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="#0d1422"/>
-  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="none" stroke="url(#pg)" stroke-width="3">
-    <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="3.5s" repeatCount="indefinite"/>
-  </path>
-  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="none" stroke="#f07830" stroke-width="3" stroke-dasharray="590" stroke-dashoffset="590" filter="url(#p1)">
-    <animate attributeName="stroke-dashoffset" from="590" to="0" dur="1.8s" fill="freeze" begin="0.2s" calcMode="spline" keySplines="0.4 0 0.2 1"/>
-  </path>
-  <!-- Chile silhouette simplified — elongated thin shape -->
-  <path d="M112,58 C108,62 105,72 104,85 C103,98 105,110 107,124 C109,138 110,150 109,162 C108,170 107,176 108,182 L112,182 C113,176 114,170 115,162 C116,150 115,138 113,124 C111,110 109,98 110,85 C111,72 114,62 118,58 Z" fill="rgba(240,120,48,0.1)" stroke="url(#pg)" stroke-width="2" filter="url(#p1)">
-    <animate attributeName="stroke-dasharray" values="0 220;220 0" dur="1s" fill="freeze" begin="1.2s"/>
-    <animate attributeName="fill" values="rgba(240,120,48,0.05);rgba(240,120,48,0.18);rgba(240,120,48,0.05)" dur="3.5s" repeatCount="indefinite" begin="3s"/>
-  </path>
-  <!-- Heart overlaid on Chile -->
-  <path d="M120,92 C120,92 108,82 108,72 C108,65 113,60 120,60 C127,60 132,65 132,72 C132,82 120,92 120,92 Z" fill="none" stroke="url(#pg)" stroke-width="3" stroke-linejoin="round" filter="url(#p1)">
-    <animate attributeName="stroke-dasharray" values="0 80;80 0" dur="0.6s" fill="freeze" begin="2.2s"/>
-    <animate attributeName="fill" values="rgba(240,120,48,0);rgba(240,120,48,0.2);rgba(240,120,48,0)" dur="2s" repeatCount="indefinite" begin="3s"/>
-  </path>
-  <!-- Heartbeat line -->
-  <polyline points="54,115 70,115 78,95 86,135 94,115 146,115 154,100 162,130 170,115 186,115" fill="none" stroke="url(#pg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" filter="url(#p1)">
-    <animate attributeName="stroke-dasharray" values="0 200;200 0" dur="0.9s" fill="freeze" begin="2.5s"/>
-    <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" begin="3.5s"/>
-  </polyline>
-  <!-- People icons — community dots -->
-  <circle cx="60" cy="82" r="5" fill="rgba(240,120,48,0.15)" stroke="#f07830" stroke-width="1.5"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.8s"/><animate attributeName="r" values="5;7;5" dur="2.5s" repeatCount="indefinite" begin="3.5s"/></circle>
-  <circle cx="60" cy="152" r="5" fill="rgba(240,120,48,0.15)" stroke="#f07830" stroke-width="1.5"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.9s"/><animate attributeName="r" values="5;7;5" dur="2.5s" repeatCount="indefinite" begin="3.8s"/></circle>
-  <circle cx="180" cy="82" r="5" fill="rgba(240,120,48,0.15)" stroke="#f07830" stroke-width="1.5"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="3s"/><animate attributeName="r" values="5;7;5" dur="2.5s" repeatCount="indefinite" begin="4.1s"/></circle>
-  <circle cx="180" cy="152" r="5" fill="rgba(240,120,48,0.15)" stroke="#f07830" stroke-width="1.5"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="3.1s"/><animate attributeName="r" values="5;7;5" dur="2.5s" repeatCount="indefinite" begin="4.4s"/></circle>
-  <!-- Connecting lines community -->
-  <line x1="65" y1="82" x2="104" y2="68" stroke="rgba(240,120,48,0.2)" stroke-width="1" stroke-dasharray="3 5"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="3.2s"/></line>
-  <line x1="65" y1="152" x2="104" y2="162" stroke="rgba(240,120,48,0.2)" stroke-width="1" stroke-dasharray="3 5"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="3.3s"/></line>
-  <line x1="175" y1="82" x2="136" y2="68" stroke="rgba(240,120,48,0.2)" stroke-width="1" stroke-dasharray="3 5"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="3.4s"/></line>
-  <line x1="175" y1="152" x2="136" y2="162" stroke="rgba(240,120,48,0.2)" stroke-width="1" stroke-dasharray="3 5"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="3.5s"/></line>
-  <!-- Scan, corners, bottom -->
-  <rect x="26" y="0" width="188" height="2" fill="url(#pg)" clip-path="url(#pc)"><animate attributeName="y" from="18" to="212" dur="3.5s" repeatCount="indefinite" begin="3.5s"/><animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.04;0.96;1" dur="3.5s" repeatCount="indefinite" begin="3.5s"/></rect>
-  <polyline points="44,68 44,54 58,54" fill="none" stroke="url(#pg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="stroke-dasharray" values="0 30;30 0" dur="0.3s" fill="freeze" begin="2s"/></polyline>
-  <polyline points="196,68 196,54 182,54" fill="none" stroke="url(#pg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="stroke-dasharray" values="0 30;30 0" dur="0.3s" fill="freeze" begin="2.1s"/></polyline>
-  <circle cx="120" cy="204" r="3.5" fill="#f07830" filter="url(#p1)"><animate attributeName="opacity" values="0;1" dur="0.2s" fill="freeze" begin="2s"/><animate attributeName="r" values="3.5;5;3.5" dur="2s" repeatCount="indefinite" begin="3.5s"/></circle>
-  <line x1="68" y1="24" x2="172" y2="24" stroke="rgba(245,200,66,0.18)" stroke-width="1" stroke-linecap="round"><animate attributeName="stroke-dasharray" values="0 104;104 0" dur="0.8s" fill="freeze" begin="0.5s"/></line>
-</svg></div>
     <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(3rem,8vw,6.5rem);line-height:.9;letter-spacing:-2px;margin-bottom:24px;">
-      Ciberseguridad<br>
-      <span style="color:var(--accent);font-style:italic;">para todos.</span><br>
-      <span style="color:transparent;-webkit-text-stroke:1px rgba(234,240,248,.1);">Sin excusas.</span>
+      Por qué<br>
+      <span style="color:var(--accent);font-style:italic;">existe Aegis8.</span>
     </h1>
-    <p style="font-size:1.05rem;line-height:1.8;color:var(--ink2);max-width:520px;margin:0 auto 36px;">
-      Aegis8 enseña a familias y docentes de Chile a proteger a los niños en el mundo digital —
-      <strong style="color:var(--ink);font-weight:400;">gratis, sin tecnicismos y sin miedo innecesario.</strong>
+    <p style="font-size:1.05rem;line-height:1.9;color:var(--ink2);max-width:580px;margin-bottom:36px;">
+      No somos una consultora. No vendemos software. Somos un proyecto social que nació de una convicción simple:
+      <strong style="color:var(--ink);font-weight:400;">en Chile, la educación digital no llega a quienes más la necesitan.</strong>
+      Aegis8 existe para cambiar eso.
     </p>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
-      <a href="/educa.html" class="btn-p"><span>Ir a Aegis Educa →</span></a>
-      <a href="/contactos.html" class="btn-g">Organizar un taller</a>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="#problema" class="btn-p"><span>El problema →</span></a>
+      <a href="#mvp" class="btn-g">Qué construimos</a>
     </div>
   </div>
 </section>
 
 <div class="wrap page-inner">
 
-<div class="sw">
-  <div class="sl">// Qué es Aegis8</div>
-  <h2 class="st">Un proyecto social.<br><em>No una empresa.</em></h2>
-  <p class="si">Aegis8 nació con una convicción simple: la ciberseguridad no debería ser un privilegio. Los niños, las familias y los docentes también merecen herramientas concretas para protegerse en el mundo digital — sin pagar, sin tecnicismos, sin miedo innecesario.</p>
-  <div class="pilares">
-    <div class="pilar p1"><div class="pilar-n">01</div><div class="pilar-i">🎓</div><div class="pilar-nm">100% gratuito</div><div class="pilar-d">Sin freemium, sin versión de pago, sin sorpresas. Todo siempre disponible para todos.</div></div>
-    <div class="pilar p2"><div class="pilar-n">02</div><div class="pilar-i">🇨🇱</div><div class="pilar-nm">Hecho para Chile</div><div class="pilar-d">Datos chilenos, contexto legal chileno, ejemplos reales de nuestras escuelas y hogares.</div></div>
-    <div class="pilar p3"><div class="pilar-n">03</div><div class="pilar-i">🤝</div><div class="pilar-nm">Sin agenda</div><div class="pilar-d">Sin patrocinadores, sin fear marketing, sin vender nada. Solo educación real y con criterio.</div></div>
-  </div>
-</div>
-
-<div class="sw">
+<!-- PROBLEMA -->
+<div class="sw" id="problema">
   <div class="sl">// El problema que queremos resolver</div>
-  <h2 class="st">Los niños son<br><em>el blanco.</em></h2>
-  <p class="si">El grooming, el phishing disfrazado de juego y el robo de identidad afectan a niños y jóvenes cada vez más. La educación digital temprana es la única defensa real — y la mayoría de los colegios todavía no la imparte.</p>
+  <div class="prob-g">
+    <div>
+      <h2 class="st">El problema<br><em>es concreto.</em></h2>
+      <p class="si">Las amenazas digitales crecen. Las víctimas son cada vez más jóvenes. Y los colegios, las familias y los docentes no tienen herramientas para protegerlos — no porque no quieran, sino porque nadie se las ha dado.</p>
+      <p style="font-size:.9rem;line-height:1.8;color:var(--ink2);">Las soluciones de ciberseguridad que existen son para empresas. Caras, técnicas, llenas de jerga. Inaccesibles para una profesora de básica o una mamá en La Florida.</p>
+    </div>
+    <div class="prob-stats">
+      <div class="prob-stat">
+        <div class="ps-n">+50%</div>
+        <div class="ps-t">
+          <strong>Crecimiento del phishing en Chile</strong>
+          Muchas campañas están dirigidas específicamente a menores de edad.
+          <div class="ps-src">ANCI 2025</div>
+        </div>
+      </div>
+      <div class="prob-stat">
+        <div class="ps-n">1/3</div>
+        <div class="ps-t">
+          <strong>Menores expuestos a contacto no deseado</strong>
+          En plataformas digitales de uso diario, sin supervisión ni herramientas.
+          <div class="ps-src">UNICEF / SERNAC</div>
+        </div>
+      </div>
+      <div class="prob-stat">
+        <div class="ps-n">42</div>
+        <div class="ps-t">
+          <strong>Intentos de phishing bloqueados por minuto</strong>
+          22 millones en 2024. La mayoría ni se reportan.
+          <div class="ps-src">Kaspersky 2025</div>
+        </div>
+      </div>
+      <div class="prob-stat">
+        <div class="ps-n">0</div>
+        <div class="ps-t">
+          <strong>Colegios con programa obligatorio de ciberseguridad</strong>
+          El currículo nacional no lo exige. La mayoría improvisa o no hace nada.
+          <div class="ps-src">MINEDUC 2024</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MVP -->
+<div class="sw" id="mvp">
+  <div class="sl">// Qué construimos · MVP actual</div>
+  <h2 class="st">El producto<br><em>es la educación.</em></h2>
+  <p class="si">Aegis8 no es una app ni una plataforma de cursos. Es una infraestructura educativa gratuita con seis componentes que funcionan juntos.</p>
+  <div class="mvp-g">
+    <div class="mvp-c m1">
+      <div class="mvp-ico">🤖</div>
+      <div class="mvp-title">Agentes IA especializados</div>
+      <div class="mvp-desc">4 agentes distintos — niños, adolescentes, familias y docentes — cada uno con su sistema de conocimiento, tono y leyes chilenas. Disponibles 24/7, sin costo.</div>
+      <div class="mvp-tag">TECNOLOGÍA PROPIA · WORKER CLOUDFLARE</div>
+    </div>
+    <div class="mvp-c m2">
+      <div class="mvp-ico">📚</div>
+      <div class="mvp-title">Contenido diferenciado por perfil</div>
+      <div class="mvp-desc">Quiz interactivos, guías de conversación, planes de clase y protocolos de incidentes. Todo adaptado al currículo chileno, con ejemplos locales y marco legal real.</div>
+      <div class="mvp-tag">CHILE-FIRST · ACTUALIZADO 2025</div>
+    </div>
+    <div class="mvp-c m3">
+      <div class="mvp-ico">📄</div>
+      <div class="mvp-title">Biblioteca de recursos descargables</div>
+      <div class="mvp-desc">10 PDFs educativos y 10 guías técnicas HTML listas para usar. Desde un póster para pegar en sala hasta un plan de clase completo de 60 minutos.</div>
+      <div class="mvp-tag">GRATUITO · SIN REGISTRO</div>
+    </div>
+    <div class="mvp-c m4">
+      <div class="mvp-ico">🎣</div>
+      <div class="mvp-title">Herramientas IA interactivas</div>
+      <div class="mvp-desc">Analizador de phishing en tiempo real, generador de checklist personalizada y agente de seguridad general. Cualquiera puede usarlas sin saber nada de tecnología.</div>
+      <div class="mvp-tag">IA EN PRODUCCIÓN · CLAUDE API</div>
+    </div>
+    <div class="mvp-c m5">
+      <div class="mvp-ico">🏫</div>
+      <div class="mvp-title">Talleres presenciales</div>
+      <div class="mvp-desc">Talleres gratuitos para colegios en la Región Metropolitana. Niños, adolescentes y apoderados. Sin equipos especiales — solo proyector y ganas.</div>
+      <div class="mvp-tag">PRESENCIAL · SANTIAGO</div>
+    </div>
+    <div class="mvp-c m6">
+      <div class="mvp-ico">📬</div>
+      <div class="mvp-title">Newsletter mensual docente</div>
+      <div class="mvp-desc">Una amenaza relevante por mes + actividad lista para usar en clases esa semana. Para docentes que no tienen tiempo de investigar pero sí quieren enseñar.</div>
+      <div class="mvp-tag">MENSUAL · SIN SPAM</div>
+    </div>
+  </div>
+</div>
+
+<!-- DIFERENCIADORES -->
+<div class="sw">
+  <div class="sl">// Por qué Aegis8 y no otra opción</div>
+  <h2 class="st">Lo que nos<br><em>hace distintos.</em></h2>
+  <div class="diff-g">
+    <div class="diff">
+      <div class="diff-ico">🇨🇱</div>
+      <div>
+        <div class="diff-title">Chile-first, no traducido</div>
+        <div class="diff-body">Cada ejemplo, estadística, referencia legal y caso de uso es chileno. No tradujimos material de EE.UU. — construimos desde cero para nuestra realidad.</div>
+      </div>
+    </div>
+    <div class="diff">
+      <div class="diff-ico">🎯</div>
+      <div>
+        <div class="diff-title">Audiencia ignorada por el mercado</div>
+        <div class="diff-body">El mercado de ciberseguridad sirve a empresas. Nadie sirve a familias, colegios y docentes. Eso no es un nicho — es la mayoría de la población.</div>
+      </div>
+    </div>
+    <div class="diff">
+      <div class="diff-ico">🤖</div>
+      <div>
+        <div class="diff-title">IA como palanca de escala</div>
+        <div class="diff-body">Los agentes IA permiten atender millones de consultas simultáneas sin equipo humano proporcional. La IA no reemplaza al docente — lo amplifica.</div>
+      </div>
+    </div>
+    <div class="diff">
+      <div class="diff-ico">🔓</div>
+      <div>
+        <div class="diff-title">100% gratuito, sin condiciones</div>
+        <div class="diff-body">No hay versión de pago, freemium ni datos que vender. La sostenibilidad viene de talleres pagados para empresas y organizaciones no educativas.</div>
+      </div>
+    </div>
+    <div class="diff">
+      <div class="diff-ico">⚖️</div>
+      <div>
+        <div class="diff-title">Marco legal incorporado</div>
+        <div class="diff-body">Leyes 21.459, 20.526, 20.536, Ley 21.663 y Ley Karin — integradas en cada agente, guía y plan de clase. No decimos "consulta a un abogado", damos el contexto.</div>
+      </div>
+    </div>
+    <div class="diff">
+      <div class="diff-ico">📏</div>
+      <div>
+        <div class="diff-title">Sin intermediarios</div>
+        <div class="diff-body">El docente entra a la página y tiene el plan de clase. El apoderado entra y tiene la guía. Sin formularios, sin esperar aprobación, sin burocracia.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IMPACTO BUSCADO -->
+<div class="sw">
+  <div class="sl">// Impacto que buscamos · 2025–2026</div>
+  <h2 class="st">Métricas que<br><em>nos importan.</em></h2>
+  <p class="si">No medimos pageviews. Medimos cuántos niños, docentes y familias tienen acceso a educación digital que antes no existía.</p>
   <div class="impacto-g">
-    <div class="imp"><div class="imp-n">+50%</div><div class="imp-l">Crecimiento del phishing en Chile el último año — muchas campañas dirigidas a menores</div><div class="imp-s">ANCI 2025</div></div>
-    <div class="imp"><div class="imp-n">1 de 3</div><div class="imp-l">Menores expuestos a contacto no deseado en plataformas digitales sin supervisión</div><div class="imp-s">UNICEF / SERNAC</div></div>
-    <div class="imp"><div class="imp-n">22M</div><div class="imp-l">Intentos de phishing bloqueados en Chile en 2024 — 42 ataques por minuto</div><div class="imp-s">Kaspersky 2025</div></div>
+    <div class="imp">
+      <div class="imp-n">100K</div>
+      <div class="imp-l">Visitas únicas anuales al hub educativo</div>
+      <div class="imp-sub">META 2025</div>
+    </div>
+    <div class="imp">
+      <div class="imp-n">500</div>
+      <div class="imp-l">Colegios con al menos un docente suscrito al newsletter</div>
+      <div class="imp-sub">META 2025</div>
+    </div>
+    <div class="imp">
+      <div class="imp-n">50</div>
+      <div class="imp-l">Talleres presenciales en establecimientos educacionales</div>
+      <div class="imp-sub">META 2026</div>
+    </div>
   </div>
 </div>
 
+<!-- ROADMAP -->
 <div class="sw">
-  <div class="sl">// Para quién es</div>
-  <h2 class="st">Contenido diferenciado<br><em>para cada perfil.</em></h2>
-  <p class="si">El mismo tema se enseña distinto a un niño de 8 años y a un docente que tiene clase mañana. Aegis8 tiene materiales específicos para cada grupo.</p>
-  <div class="quienes-g">
-    <div class="quien"><div class="quien-ico">🧒</div><div><div class="quien-title">Niños (6–12 años)</div><div class="quien-desc">Juegos interactivos, actividades y CiberBot — un agente IA que responde preguntas en lenguaje de niños. Aprenden qué compartir, cómo reconocer peligros y a quién contarle.</div></div></div>
-    <div class="quien"><div class="quien-ico">🧑‍💻</div><div><div class="quien-title">Adolescentes (13–17 años)</div><div class="quien-desc">Quiz con casos reales de videojuegos y redes sociales, privacidad digital, grooming y ciberbullying. Sin condescendencia — con respeto y sin bajarles el perfil.</div></div></div>
-    <div class="quien"><div class="quien-ico">👨‍👩‍👧</div><div><div class="quien-title">Familias y apoderados</div><div class="quien-desc">Guías prácticas de conversación por edad, checklist de seguridad familiar y agente IA para cuando algo pasa y no saben qué hacer.</div></div></div>
-    <div class="quien"><div class="quien-ico">👩‍🏫</div><div><div class="quien-title">Docentes y educadores</div><div class="quien-desc">Planes de clase listos para usar, recursos imprimibles, agente IA especializado y newsletter mensual con la amenaza del mes + actividad lista para el aula.</div></div></div>
+  <div class="sl">// Hoja de ruta</div>
+  <h2 class="st">Dónde estamos<br><em>y hacia dónde vamos.</em></h2>
+  <div class="road-g">
+    <div class="road">
+      <div class="road-fase fase-done">✓ Hecho</div>
+      <div class="road-content">
+        <div class="road-title">MVP Chile — plataforma educativa completa</div>
+        <div class="road-desc">Sitio en producción con 15 páginas, 4 agentes IA especializados, analizador de phishing, checklist interactiva, 10 PDFs descargables, 10 guías técnicas y newsletter.</div>
+      </div>
+    </div>
+    <div class="road">
+      <div class="road-fase fase-now">● Ahora</div>
+      <div class="road-content">
+        <div class="road-title">Talleres presenciales en Santiago + newsletter docente</div>
+        <div class="road-desc">Primeros talleres en colegios de la RM. Construcción de la base de docentes suscriptores. Iteración del contenido según feedback real de aula.</div>
+      </div>
+    </div>
+    <div class="road">
+      <div class="road-fase fase-next">Próximo</div>
+      <div class="road-content">
+        <div class="road-title">Alianzas con municipios y SLEP</div>
+        <div class="road-desc">Convenios con Servicios Locales de Educación para llegar a colegios municipales a escala. Integración de los materiales en programas de convivencia escolar existentes.</div>
+      </div>
+    </div>
+    <div class="road">
+      <div class="road-fase fase-next">2026</div>
+      <div class="road-content">
+        <div class="road-title">Expansión LATAM</div>
+        <div class="road-desc">Adaptación del contenido para Colombia, México y Perú — manteniendo el enfoque Chile-first como modelo replicable. Marco legal y ejemplos localizados por país.</div>
+      </div>
+    </div>
+    <div class="road">
+      <div class="road-fase fase-next">Futuro</div>
+      <div class="road-content">
+        <div class="road-title">Certificación docente + contenido curricular</div>
+        <div class="road-desc">Programa de certificación para docentes que enseñan ciberseguridad. Integración formal en OA del MINEDUC. Aegis8 como infraestructura curricular, no solo recurso.</div>
+      </div>
+    </div>
   </div>
 </div>
 
+<!-- MANIFIESTO -->
 <div class="sw">
-  <div class="sl">// Cómo funciona</div>
-  <h2 class="st">Gratis, accesible<br><em>y sin registro.</em></h2>
-  <p class="si">Todo en Aegis8 está diseñado para usarse sin barreras. No se necesita crear cuenta, no se recopilan datos personales, no hay pasos previos.</p>
-  <div class="como-g">
-    <div class="como"><div class="como-n">01</div><div class="como-ico">🎯</div><div class="como-title">Elige tu perfil</div><div class="como-desc">Niños, adolescentes, familia o docente. Contenido adaptado para cada uno.</div></div>
-    <div class="como"><div class="como-n">02</div><div class="como-ico">📚</div><div class="como-title">Accede al contenido</div><div class="como-desc">Juegos, guías, planes de clase, herramientas IA. Todo disponible de inmediato.</div></div>
-    <div class="como"><div class="como-n">03</div><div class="como-ico">🤖</div><div class="como-title">Consulta al agente IA</div><div class="como-desc">Cada sección tiene un agente especializado para responder preguntas en tiempo real.</div></div>
-    <div class="como"><div class="como-n">04</div><div class="como-ico">🏫</div><div class="como-title">Llévalo al aula</div><div class="como-desc">Los planes de clase y recursos son descargables. Sin costo, sin licencia.</div></div>
+  <div class="mf">
+    <div class="mf-text">La ciberseguridad no es un problema técnico. Es un problema de <em>acceso</em>. Quienes más necesitan protección digital son los que menos tienen acceso a educación sobre el tema. <em>Aegis8 existe para cerrar esa brecha.</em></div>
+    <div class="mf-sig">// Aegis8 · Proyecto Social · Santiago, Chile · 2024</div>
   </div>
 </div>
 
+<!-- PARTICIPAR -->
 <div class="sw">
   <div class="sl">// Cómo participar</div>
-  <h2 class="st">¿Quieres ser<br><em>parte del proyecto?</em></h2>
-  <p class="si">Aegis8 crece con la comunidad. Hay tres formas de participar.</p>
-  <div class="participa-g">
+  <h2 class="st">Sé parte<br><em>del proyecto.</em></h2>
+  <div class="part-g">
     <a href="/educa.html" class="part pa1">
       <div class="part-ico">📖</div>
-      <div class="part-tag">Aprender</div>
-      <div class="part-name">Usar los materiales</div>
-      <div class="part-desc">Accede a todos los recursos, compártelos con tu familia, tu curso o tu comunidad. Es todo lo que necesitamos.</div>
+      <div class="part-tag">Usar</div>
+      <div class="part-name">Usa los materiales</div>
+      <div class="part-desc">Accede a todo el contenido, compártelo con tu comunidad, úsalo en tu sala. No se necesita registro ni permiso.</div>
       <div class="part-cta">Ir a Aegis Educa →</div>
     </a>
-    <a href="/contactos.html" class="part pa2">
+    <a href="/talleres.html" class="part pa2">
       <div class="part-ico">🏫</div>
       <div class="part-tag">Talleres</div>
-      <div class="part-name">Organizar un taller</div>
-      <div class="part-desc">Llevamos talleres presenciales a colegios, juntas de vecinos y organizaciones comunitarias. Gratuitos para instituciones educativas.</div>
+      <div class="part-name">Organiza un taller</div>
+      <div class="part-desc">Llevamos talleres presenciales a colegios y organizaciones. Gratuitos para establecimientos educacionales.</div>
       <div class="part-cta">Solicitar taller →</div>
     </a>
     <a href="/educa/newsletter.html" class="part pa3">
       <div class="part-ico">📬</div>
-      <div class="part-tag">Docentes</div>
-      <div class="part-name">Suscribirse al newsletter</div>
-      <div class="part-desc">Un correo mensual con la amenaza digital más relevante para tus alumnos + actividad lista para usar en clases.</div>
+      <div class="part-tag">Newsletter</div>
+      <div class="part-name">Suscríbete al newsletter</div>
+      <div class="part-desc">Un correo mensual con la amenaza del mes + actividad lista para usar en clases. Para docentes de todos los niveles.</div>
       <div class="part-cta">Suscribirse gratis →</div>
     </a>
-  </div>
-</div>
-
-<div class="sw">
-  <div class="mf">
-    <div class="mf-text">La educación digital temprana es la única defensa real — y la mayoría de los colegios todavía no la imparte. <em>Aegis8 existe para cambiar eso.</em> Gratis. Para todos. Sin excusas.</div>
-    <div class="mf-sig">// Aegis8 · Proyecto Social · Chile · 2026</div>
   </div>
 </div>
 

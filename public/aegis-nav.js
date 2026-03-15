@@ -1,5 +1,5 @@
 /* ============================================================
-   AEGIS8 — Navbar v3 · Nueva identidad naranja
+   AEGIS8 — Navbar v4 · Completa
    <script src="/aegis-nav.js"></script>
    data-page="nombre" en <body>
    ============================================================ */
@@ -26,9 +26,6 @@ const LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" 
   <polyline points="198,58 198,44 184,44" fill="none" stroke="#f07830" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
     <animate attributeName="stroke-opacity" values="0.4;1;0.4" dur="3.5s" repeatCount="indefinite" begin="0.8s"/>
   </polyline>
-  <line x1="98" y1="104" x2="142" y2="104" stroke="rgba(240,120,48,0.3)" stroke-width="1.5">
-    <animate attributeName="stroke-opacity" values="0.1;0.4;0.1" dur="2s" repeatCount="indefinite"/>
-  </line>
 </svg>`;
 
 const CSS = `
@@ -43,75 +40,70 @@ const CSS = `
     border-bottom:1px solid rgba(240,120,48,0.1);
     transition:background .3s,border-color .3s;
   }
-  #aegis-nav.an-scrolled {
-    background:rgba(8,12,20,0.98);
-    border-bottom-color:rgba(240,120,48,0.18);
-  }
+  #aegis-nav.an-scrolled{background:rgba(8,12,20,0.98);border-bottom-color:rgba(240,120,48,0.18);}
 
-  /* LOGO */
-  #aegis-nav .an-logo {
-    font-family:'JetBrains Mono',monospace;
-    font-size:.9rem;font-weight:600;letter-spacing:4px;
-    color:#eaf0f8;text-decoration:none;
-    display:flex;align-items:center;gap:10px;flex-shrink:0;
+  #aegis-nav .an-logo{
+    font-family:'JetBrains Mono',monospace;font-size:.88rem;font-weight:600;letter-spacing:4px;
+    color:#eaf0f8;text-decoration:none;display:flex;align-items:center;gap:10px;flex-shrink:0;
   }
   #aegis-nav .an-logo .an-acc{color:#f07830;}
   #aegis-nav .an-logo:hover svg{filter:drop-shadow(0 0 14px rgba(240,120,48,.7))!important;}
 
-  /* LINKS */
-  #aegis-nav .an-links{display:flex;align-items:center;gap:1.75rem;list-style:none;}
-  #aegis-nav .an-links a {
-    font-family:'JetBrains Mono',monospace;
-    font-size:.6rem;color:#5a6a80;
+  #aegis-nav .an-links{display:flex;align-items:center;gap:0;list-style:none;}
+
+  #aegis-nav .an-links a{
+    font-family:'JetBrains Mono',monospace;font-size:.58rem;color:#5a6a80;
     text-decoration:none;letter-spacing:2px;text-transform:uppercase;
     transition:color .2s;position:relative;white-space:nowrap;
+    padding:0 .9rem;
   }
   #aegis-nav .an-links a::after{
-    content:'';position:absolute;bottom:-4px;left:0;right:0;
-    height:1px;background:#f07830;
-    transform:scaleX(0);transition:transform .3s;
+    content:'';position:absolute;bottom:-4px;left:.9rem;right:.9rem;
+    height:1px;background:#f07830;transform:scaleX(0);transition:transform .3s;
   }
   #aegis-nav .an-links a:hover{color:#eaf0f8;}
   #aegis-nav .an-links a:hover::after{transform:scaleX(1);}
 
-  /* Active */
-  #aegis-nav .an-links a.an-active{
-    color:#f07830;
-    border:1px solid rgba(240,120,48,.28);
-    padding:.28rem .65rem;border-radius:2px;
+  /* Dropdown parent */
+  #aegis-nav .an-has-drop{position:relative;}
+  #aegis-nav .an-has-drop > a::before{
+    content:'▾';font-size:.45rem;margin-left:4px;opacity:.5;
+    vertical-align:middle;display:inline-block;
   }
+  #aegis-nav .an-drop{
+    display:none;position:absolute;top:calc(100% + 12px);left:0;
+    background:rgba(8,12,20,.98);border:1px solid rgba(240,120,48,.2);
+    border-radius:4px;min-width:220px;z-index:900;
+    box-shadow:0 16px 40px rgba(0,0,0,.5);
+    padding:6px 0;
+  }
+  #aegis-nav .an-has-drop:hover .an-drop{display:block;}
+  #aegis-nav .an-drop a{
+    display:block;padding:.6rem 1.25rem;font-size:.58rem;color:#5a6a80;
+    letter-spacing:2px;text-transform:uppercase;text-decoration:none;
+    transition:color .15s,background .15s;white-space:nowrap;
+  }
+  #aegis-nav .an-drop a:hover{color:#eaf0f8;background:rgba(240,120,48,.06);}
+  #aegis-nav .an-drop a::after{display:none;}
+  .an-drop-div{height:1px;background:rgba(240,120,48,.1);margin:5px 0;}
+
+  /* Active */
+  #aegis-nav .an-links a.an-active{color:#f07830;}
   #aegis-nav .an-links a.an-active::after{display:none;}
 
   /* Agente IA pill */
   #aegis-nav .an-links a.an-agent{
-    color:#f07830;
-    border:1px solid rgba(240,120,48,.32);
+    color:#f07830;border:1px solid rgba(240,120,48,.32);
     padding:.28rem .75rem;border-radius:2px;
     display:inline-flex;align-items:center;gap:.4rem;
-    background:rgba(240,120,48,.04);
-    transition:background .2s,border-color .2s;
+    background:rgba(240,120,48,.04);transition:background .2s,border-color .2s;
   }
   #aegis-nav .an-links a.an-agent::before{
-    content:'';width:5px;height:5px;border-radius:50%;
-    background:#f07830;flex-shrink:0;
+    content:'';width:5px;height:5px;border-radius:50%;background:#f07830;flex-shrink:0;
     animation:an-blink 1.5s step-end infinite;
   }
   #aegis-nav .an-links a.an-agent:hover{background:rgba(240,120,48,.12);border-color:rgba(240,120,48,.6);}
   #aegis-nav .an-links a.an-agent::after{display:none;}
-
-  /* Educa */
-  #aegis-nav .an-links a.an-educa{
-    color:#38bdf8!important;
-    border:1px solid rgba(56,189,248,.3);
-    padding:.28rem .75rem;border-radius:2px;position:relative;
-  }
-  #aegis-nav .an-links a.an-educa:hover{color:#7dd3fc!important;}
-  #aegis-nav .an-links a.an-educa::after{display:none;}
-  .an-educa-dot{
-    position:absolute;top:-5px;right:-5px;
-    width:7px;height:7px;border-radius:50%;background:#38bdf8;
-    animation:an-educa-p 2s ease-in-out infinite;
-  }
 
   /* CTA */
   #aegis-nav .an-links a.an-cta{
@@ -125,12 +117,10 @@ const CSS = `
   /* Burger */
   #aegis-nav .an-burger{
     display:none;flex-direction:column;gap:5px;
-    background:none;border:none;cursor:pointer!important;
-    padding:6px;z-index:801;
+    background:none;border:none;cursor:pointer!important;padding:6px;z-index:801;
   }
   #aegis-nav .an-burger span{
-    display:block;width:22px;height:2px;
-    background:#8898b0;border-radius:2px;transition:all .3s;
+    display:block;width:22px;height:2px;background:#8898b0;border-radius:2px;transition:all .3s;
   }
   #aegis-nav .an-burger.an-open span:nth-child(1){transform:translateY(7px) rotate(45deg);background:#f07830;}
   #aegis-nav .an-burger.an-open span:nth-child(2){opacity:0;transform:scaleX(0);}
@@ -138,145 +128,227 @@ const CSS = `
 
   /* Mobile drawer */
   #an-drawer{
-    display:none;position:fixed;
-    top:64px;left:0;right:0;bottom:0;
-    background:rgba(8,12,20,.98);
-    backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-    z-index:799;
-    flex-direction:column;align-items:center;justify-content:center;gap:2rem;
+    display:none;position:fixed;top:64px;left:0;right:0;bottom:0;
+    background:rgba(8,12,20,.98);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+    z-index:799;flex-direction:column;align-items:center;justify-content:center;
+    gap:0;overflow-y:auto;padding:2rem 0;
   }
   #an-drawer.an-open{display:flex;}
-  #an-drawer a{
-    font-family:'JetBrains Mono',monospace;
-    font-size:.95rem;color:#5a6a80;
+  #an-drawer .m-item{
+    font-family:'JetBrains Mono',monospace;font-size:.9rem;color:#5a6a80;
     text-decoration:none;letter-spacing:3px;text-transform:uppercase;
-    transition:color .2s;padding:.4rem 0;
+    transition:color .2s;padding:.7rem 0;width:200px;text-align:center;
   }
-  #an-drawer a:hover,#an-drawer a.an-m-active{color:#f07830;}
-  #an-drawer a.an-m-agent{
-    color:#f07830!important;
-    border:1px solid rgba(240,120,48,.28);
+  #an-drawer .m-item:hover,#an-drawer .m-item.an-m-active{color:#f07830;}
+  #an-drawer .m-sub{
+    font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#3a4f68;
+    text-decoration:none;letter-spacing:2px;text-transform:uppercase;
+    transition:color .2s;padding:.45rem 0;width:200px;text-align:center;
+  }
+  #an-drawer .m-sub:hover{color:#8898b0;}
+  #an-drawer .m-div{width:120px;height:1px;background:rgba(240,120,48,.1);margin:.5rem 0;}
+  #an-drawer .m-agent{
+    color:#f07830!important;border:1px solid rgba(240,120,48,.28);
     padding:.65rem 2rem;border-radius:2px;
-    display:inline-flex;align-items:center;gap:.5rem;
+    display:inline-flex;align-items:center;gap:.5rem;margin:.3rem 0;
   }
-  #an-drawer a.an-m-agent::before{
-    content:'';width:5px;height:5px;border-radius:50%;
-    background:#f07830;animation:an-blink 1.5s step-end infinite;
+  #an-drawer .m-agent::before{
+    content:'';width:5px;height:5px;border-radius:50%;background:#f07830;
+    animation:an-blink 1.5s step-end infinite;
   }
-  #an-drawer a.an-m-educa{color:#38bdf8!important;}
-  #an-drawer a.an-m-cta{
+  #an-drawer .m-cta{
     color:#080c14!important;background:#f07830;
-    padding:.85rem 2.5rem;border-radius:2px;font-size:.85rem;
+    padding:.85rem 2.5rem;border-radius:2px;font-size:.8rem;margin-top:.5rem;
   }
 
   /* Custom cursor */
   *,*::before,*::after{cursor:none!important;}
-  #an-cur{
-    position:fixed;z-index:9999;pointer-events:none;
-    width:10px;height:10px;border-radius:50%;
-    background:#f07830;transform:translate(-50%,-50%);
-    opacity:0;transition:opacity .2s;
-    left:-50px;top:-50px;
-  }
-  #an-ring{
-    position:fixed;z-index:9998;pointer-events:none;
-    width:36px;height:36px;border-radius:50%;
-    border:1px solid rgba(240,120,48,.3);
-    transform:translate(-50%,-50%);
-    opacity:0;transition:width .15s,height .15s,border-color .15s;
-    left:-50px;top:-50px;
-  }
+  #an-cur{position:fixed;z-index:9999;pointer-events:none;width:10px;height:10px;border-radius:50%;
+    background:#f07830;transform:translate(-50%,-50%);opacity:0;left:-50px;top:-50px;}
+  #an-ring{position:fixed;z-index:9998;pointer-events:none;width:36px;height:36px;border-radius:50%;
+    border:1px solid rgba(240,120,48,.3);transform:translate(-50%,-50%);
+    opacity:0;transition:width .15s,height .15s,border-color .15s;left:-50px;top:-50px;}
 
   body{padding-top:64px;}
-
   @keyframes an-blink{0%,100%{opacity:1;}50%{opacity:.15;}}
-  @keyframes an-educa-p{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(1.5);}}
 
-  @media(max-width:768px){
+  @media(max-width:900px){
     #aegis-nav{padding:0 1.25rem;}
     #aegis-nav .an-links{display:none!important;}
     #aegis-nav .an-burger{display:flex!important;}
   }
 `;
 
-const LINKS = [
-  {href:'/',                       label:'Inicio',      page:'index'},
-  {href:'/propuesta.html',         label:'El Proyecto', page:'propuesta'},
-  {href:'/educa.html',             label:'Educa',       page:'educa', educa:true},
-  {href:'/talleres.html',          label:'Talleres',    page:'talleres'},
-  {href:'/agente-seguridad.html',  label:'Agente IA',   page:'agente', agent:true},
-  {href:'/contactos.html',         label:'Contacto',    page:'contacto', cta:true},
+// ── ESTRUCTURA DEL NAV ──
+// Grupos con dropdown y links directos
+const NAV = [
+  {
+    label: 'El Proyecto',
+    href: '/propuesta.html',
+    page: 'propuesta',
+    drop: [
+      {href:'/propuesta.html', label:'Por qué existe Aegis8'},
+      {href:'/propuesta.html#mvp', label:'Qué construimos'},
+      {href:'/propuesta.html#problema', label:'El problema'},
+      {href:'/propuesta.html#roadmap', label:'Hoja de ruta — pendiente añadir id'},
+      'div',
+      {href:'/guias.html', label:'Guías técnicas'},
+    ]
+  },
+  {
+    label: 'Educa',
+    href: '/educa.html',
+    page: 'educa',
+    educa: true,
+    drop: [
+      {href:'/educa.html', label:'Hub educativo'},
+      'div',
+      {href:'/educa/ninos.html', label:'Niños 6–12'},
+      {href:'/educa/adolescentes.html', label:'Adolescentes'},
+      {href:'/educa/padres.html', label:'Familias'},
+      {href:'/educa/profesores.html', label:'Docentes'},
+      'div',
+      {href:'/educa/newsletter.html', label:'Newsletter mensual'},
+    ]
+  },
+  {
+    label: 'Herramientas',
+    href: '/agente-seguridad.html',
+    page: 'agente',
+    drop: [
+      {href:'/agente-seguridad.html', label:'Agente de Seguridad', agent:true},
+      {href:'/analizador-phishing.html', label:'Analizador de Phishing'},
+      {href:'/checklist.html', label:'Checklist Familiar'},
+    ]
+  },
+  {href:'/talleres.html', label:'Talleres', page:'talleres'},
+  {href:'/contactos.html', label:'Contacto', cta:true},
 ];
 
+function buildDesktop(page, ul) {
+  NAV.forEach(item => {
+    const li = document.createElement('li');
+    li.style.display = 'flex';
+    li.style.alignItems = 'center';
+
+    const a = document.createElement('a');
+    a.href = item.href;
+    a.textContent = item.label;
+
+    if (item.cta) {
+      a.className = 'an-cta';
+    } else if (item.page && page === item.page) {
+      a.className = 'an-active';
+    }
+
+    li.appendChild(a);
+
+    if (item.drop) {
+      li.className = 'an-has-drop';
+      const drop = document.createElement('div');
+      drop.className = 'an-drop';
+      item.drop.forEach(d => {
+        if (d === 'div') {
+          const div = document.createElement('div');
+          div.className = 'an-drop-div';
+          drop.appendChild(div);
+        } else {
+          const da = document.createElement('a');
+          da.href = d.href;
+          da.textContent = d.label;
+          if (d.agent) da.style.color = '#f07830';
+          drop.appendChild(da);
+        }
+      });
+      li.appendChild(drop);
+    }
+
+    ul.appendChild(li);
+  });
+}
+
+function buildMobile(page, drawer) {
+  // Flat structure for mobile
+  const flat = [
+    {href:'/', label:'Inicio', cls:'m-item'},
+    {href:'/propuesta.html', label:'El Proyecto', cls:'m-item', pg:'propuesta'},
+    {href:'/guias.html', label:'Guías técnicas', cls:'m-sub'},
+    'div',
+    {href:'/educa.html', label:'Educa', cls:'m-item', pg:'educa'},
+    {href:'/educa/ninos.html', label:'Niños', cls:'m-sub'},
+    {href:'/educa/adolescentes.html', label:'Adolescentes', cls:'m-sub'},
+    {href:'/educa/padres.html', label:'Familias', cls:'m-sub'},
+    {href:'/educa/profesores.html', label:'Docentes', cls:'m-sub'},
+    'div',
+    {href:'/agente-seguridad.html', label:'Agente IA', cls:'m-agent'},
+    {href:'/analizador-phishing.html', label:'Analizador Phishing', cls:'m-sub'},
+    {href:'/checklist.html', label:'Checklist', cls:'m-sub'},
+    'div',
+    {href:'/talleres.html', label:'Talleres', cls:'m-item', pg:'talleres'},
+    {href:'/contactos.html', label:'Contacto', cls:'m-cta'},
+  ];
+
+  flat.forEach(item => {
+    if (item === 'div') {
+      const d = document.createElement('div');
+      d.className = 'm-div';
+      drawer.appendChild(d);
+    } else {
+      const a = document.createElement('a');
+      a.href = item.href;
+      a.textContent = item.label;
+      a.className = item.cls;
+      if (item.pg && page === item.pg) a.classList.add('an-m-active');
+      a.addEventListener('click', closeMenu);
+      drawer.appendChild(a);
+    }
+  });
+}
+
 function init(){
-  const style=document.createElement('style');
-  style.textContent=CSS;
+  const style = document.createElement('style');
+  style.textContent = CSS;
   document.head.appendChild(style);
 
-  const page=document.body.dataset.page||'';
+  const page = document.body.dataset.page || '';
 
-  // Desktop links
-  const ul=document.createElement('ul');
-  ul.className='an-links';
-  LINKS.forEach(link=>{
-    const li=document.createElement('li');
-    const a=document.createElement('a');
-    a.href=link.href;
-    a.textContent=link.label;
-    if(link.cta){a.className='an-cta';}
-    else if(link.agent){a.className='an-agent';}
-    else if(link.educa){
-      a.className='an-educa';
-      const dot=document.createElement('span');
-      dot.className='an-educa-dot';
-      a.appendChild(dot);
-    }
-    else if(link.page&&page===link.page){a.className='an-active';}
-    li.appendChild(a);ul.appendChild(li);
-  });
+  const ul = document.createElement('ul');
+  ul.className = 'an-links';
+  buildDesktop(page, ul);
 
-  // Mobile drawer
-  const drawer=document.createElement('div');
-  drawer.id='an-drawer';
-  LINKS.forEach(link=>{
-    const a=document.createElement('a');
-    a.href=link.href;
-    a.textContent=link.label;
-    a.addEventListener('click',closeMenu);
-    if(link.cta)a.className='an-m-cta';
-    else if(link.agent)a.className='an-m-agent';
-    else if(link.educa)a.className='an-m-educa';
-    else if(link.page&&page===link.page)a.className='an-m-active';
-    drawer.appendChild(a);
-  });
+  const drawer = document.createElement('div');
+  drawer.id = 'an-drawer';
+  buildMobile(page, drawer);
 
-  // Burger
-  const burger=document.createElement('button');
-  burger.className='an-burger';
+  const burger = document.createElement('button');
+  burger.className = 'an-burger';
   burger.setAttribute('aria-label','Menú');
-  burger.innerHTML='<span></span><span></span><span></span>';
-  burger.addEventListener('click',toggleMenu);
+  burger.innerHTML = '<span></span><span></span><span></span>';
+  burger.addEventListener('click', toggleMenu);
 
-  // Nav
-  const nav=document.createElement('nav');
-  nav.id='aegis-nav';
-  const logo=document.createElement('a');
-  logo.href='/';logo.className='an-logo';
-  logo.innerHTML=LOGO_SVG+'<span>AEGIS<span class="an-acc">8</span></span>';
-  nav.appendChild(logo);nav.appendChild(ul);nav.appendChild(burger);
+  const nav = document.createElement('nav');
+  nav.id = 'aegis-nav';
 
-  // Clean up any existing
+  const logo = document.createElement('a');
+  logo.href = '/';
+  logo.className = 'an-logo';
+  logo.innerHTML = LOGO_SVG + '<span>AEGIS<span class="an-acc">8</span></span>';
+
+  nav.appendChild(logo);
+  nav.appendChild(ul);
+  nav.appendChild(burger);
+
   document.getElementById('aegis-nav')?.remove();
   document.getElementById('an-drawer')?.remove();
-  document.querySelector('nav')?.remove();
 
-  document.body.insertAdjacentElement('afterbegin',drawer);
-  document.body.insertAdjacentElement('afterbegin',nav);
+  document.body.insertAdjacentElement('afterbegin', drawer);
+  document.body.insertAdjacentElement('afterbegin', nav);
 
   // Cursor
-  const cur=document.createElement('div');cur.id='an-cur';
-  const ring=document.createElement('div');ring.id='an-ring';
-  document.body.appendChild(cur);document.body.appendChild(ring);
+  const cur = document.createElement('div'); cur.id = 'an-cur';
+  const ring = document.createElement('div'); ring.id = 'an-ring';
+  document.body.appendChild(cur);
+  document.body.appendChild(ring);
 
   let mx=0,my=0,rx=0,ry=0,alive=false;
   document.addEventListener('mousemove',e=>{
@@ -287,8 +359,6 @@ function init(){
   (function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
   document.addEventListener('mouseleave',()=>{cur.style.opacity='0';ring.style.opacity='0';});
   document.addEventListener('mouseenter',()=>{if(alive){cur.style.opacity='1';ring.style.opacity='1';}});
-
-  // Hover ring expand
   document.addEventListener('mouseover',e=>{
     if(e.target.closest('a,button,[role=button]')){
       ring.style.width='50px';ring.style.height='50px';ring.style.borderColor='#f07830';
@@ -300,16 +370,15 @@ function init(){
     }
   });
 
-  // Scroll darken
   window.addEventListener('scroll',()=>{
-    nav.classList.toggle('an-scrolled',window.scrollY>30);
+    nav.classList.toggle('an-scrolled', window.scrollY > 30);
   },{passive:true});
 }
 
 function toggleMenu(){
-  const burger=document.querySelector('.an-burger');
-  const drawer=document.getElementById('an-drawer');
-  const open=drawer.classList.contains('an-open');
+  const burger = document.querySelector('.an-burger');
+  const drawer = document.getElementById('an-drawer');
+  const open = drawer.classList.contains('an-open');
   if(open){closeMenu();}
   else{burger.classList.add('an-open');drawer.classList.add('an-open');document.body.style.overflow='hidden';}
 }
@@ -322,5 +391,4 @@ function closeMenu(){
 
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}
 else{init();}
-
 })();
