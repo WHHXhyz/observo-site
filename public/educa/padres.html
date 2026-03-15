@@ -207,6 +207,21 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 /* Sidebar cards entrance -->  */
 .quien{transition:background .2s,transform .2s;}
 
+
+.pdf-dl-g{display:flex;flex-direction:column;gap:2px;background:var(--border);}
+.pdf-dl-card{background:var(--bg2);padding:1.1rem 1.5rem;text-decoration:none;
+  display:flex;align-items:center;gap:1rem;transition:background .2s;position:relative;overflow:hidden;}
+.pdf-dl-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c,var(--accent));}
+.pdf-dl-card:hover{background:rgba(255,255,255,.04);}
+.pdf-ico{font-size:1.3rem;flex-shrink:0;}
+.pdf-info{flex:1;}
+.pdf-title{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink);font-weight:600;margin-bottom:.2rem;}
+.pdf-desc{font-size:.8rem;color:var(--ink2);line-height:1.45;}
+.pdf-btn{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--c,var(--accent));border:1px solid;padding:.3rem .7rem;border-radius:var(--radius);
+  white-space:nowrap;flex-shrink:0;border-color:currentColor;opacity:.7;transition:opacity .2s;}
+.pdf-dl-card:hover .pdf-btn{opacity:1;}
+
 </style>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
@@ -423,6 +438,20 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <div class="cl-item" onclick="toggleCl(this,'bar2')"><div class="cl-check"></div><div class="cl-text">Mi hijo/a sabe que puede contarme si algo raro pasa online</div></div>
       <div class="cl-item" onclick="toggleCl(this,'bar2')"><div class="cl-check"></div><div class="cl-text">Revisamos juntos la lista de amigos/seguidores en redes sociales</div></div>
     </div>
+  </div>
+</div>
+
+
+<div class="sw" id="descargas">
+  <div class="sl">// Materiales descargables · PDF</div>
+  <h2 class="st">Descarga y<br><em>comparte.</em></h2>
+  <p class="si">Guías en PDF para imprimir o enviar por WhatsApp a otros apoderados.</p>
+  <div class="pdf-dl-g">
+    <a href="/descargas/pdf-checklist-familiar.pdf" download class="pdf-dl-card" style="--c:var(--green);"><div class="pdf-ico">✅</div><div class="pdf-info"><div class="pdf-title">Checklist Familiar</div><div class="pdf-desc">Revisión anual de seguridad digital con toda la familia.</div></div><div class="pdf-btn">&#8595; PDF</div></a>
+    <a href="/descargas/pdf-guia-apoderados.pdf" download class="pdf-dl-card" style="--c:var(--blue);"><div class="pdf-ico">👨‍👩‍👧</div><div class="pdf-info"><div class="pdf-title">Guía para Apoderados</div><div class="pdf-desc">Cómo hablar con tus hijos sobre internet según su edad.</div></div><div class="pdf-btn">&#8595; PDF</div></a>
+    <a href="/descargas/pdf-guia-grooming.pdf" download class="pdf-dl-card" style="--c:#ef4444;"><div class="pdf-ico">🛡️</div><div class="pdf-info"><div class="pdf-title">Guía de Grooming</div><div class="pdf-desc">Qué es, señales de alerta y qué hacer si ya pasó.</div></div><div class="pdf-btn">&#8595; PDF</div></a>
+    <a href="/descargas/pdf-controles-parentales.pdf" download class="pdf-dl-card" style="--c:var(--blue);"><div class="pdf-ico">📱</div><div class="pdf-info"><div class="pdf-title">Controles Parentales</div><div class="pdf-desc">iPhone, Android, TikTok, Instagram y consolas — paso a paso.</div></div><div class="pdf-btn">&#8595; PDF</div></a>
+    <a href="/descargas/pdf-privacidad-adolescentes.pdf" download class="pdf-dl-card" style="--c:#9b6dff;"><div class="pdf-ico">🔒</div><div class="pdf-info"><div class="pdf-title">Privacidad en Redes</div><div class="pdf-desc">Para compartir directamente con tus hijos adolescentes.</div></div><div class="pdf-btn">&#8595; PDF</div></a>
   </div>
 </div>
 

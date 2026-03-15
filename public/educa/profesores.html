@@ -228,6 +228,21 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .qbtn{transition:all .2s cubic-bezier(.34,1.56,.64,1);}
 .qbtn:hover{transform:scale(1.06) translateY(-2px);}
 
+
+.pdf-dl-g{display:flex;flex-direction:column;gap:2px;background:var(--border);}
+.pdf-dl-card{background:var(--bg2);padding:1.1rem 1.5rem;text-decoration:none;
+  display:flex;align-items:center;gap:1rem;transition:background .2s;position:relative;overflow:hidden;}
+.pdf-dl-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c,var(--accent));}
+.pdf-dl-card:hover{background:rgba(255,255,255,.04);}
+.pdf-ico{font-size:1.3rem;flex-shrink:0;}
+.pdf-info{flex:1;}
+.pdf-title{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink);font-weight:600;margin-bottom:.2rem;}
+.pdf-desc{font-size:.8rem;color:var(--ink2);line-height:1.45;}
+.pdf-btn{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--c,var(--accent));border:1px solid;padding:.3rem .7rem;border-radius:var(--radius);
+  white-space:nowrap;flex-shrink:0;border-color:currentColor;opacity:.7;transition:opacity .2s;}
+.pdf-dl-card:hover .pdf-btn{opacity:1;}
+
 </style>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
@@ -463,11 +478,20 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   </div>
 </div>
 
-<div class="sw" id="recursos">
-  <div class="sl">// Recursos descargables</div>
+
+<div class="sw" id="descargas">
+  <div class="sl">// Recursos descargables · PDF</div>
   <h2 class="st">Todo listo<br><em>para imprimir.</em></h2>
-  <div class="recursos-g">
-    <div class="rec"><div class="rec-ico">📋</div><div><div class="rec-title">Guía de conversación para apoderados</div><div class="rec-desc">Cómo hablar con tus hijos sobre internet. En lenguaje simple, con ejemplos reales de Chile.</div></div></div>
+  <p class="si">Descarga directa. Sin registro, sin costo. Uso libre para fines educativos.</p>
+  <div class="pdf-dl-g">
+    <a href="/descargas/pdf-protocolo-docentes.pdf" download class="pdf-dl-card" style="--c:#ef4444;"><div class="pdf-ico">🚨</div><div class="pdf-info"><div class="pdf-title">Protocolo ante Incidente</div><div class="pdf-desc">Grooming, ciberbullying y phishing — pasos claros para actuar.</div></div><div class="pdf-btn">&#8595; PDF</div></a>
+    <a href="/descargas/pdf-plan-clase-phishing.pdf" download class="pdf-dl-card" style="--c:var(--accent);"><div class="pdf-ico">📋</div><div class="pdf-info"><div class="pdf-title">Plan de Clase: Phishing</div><div class="pdf-desc">60 min, 7° básico–2° medio. Análisis de casos reales.</div></div><div class="pdf-btn">&#8595; PDF</div></a>
+    <a href="/descargas/pdf-plan-clase-grooming.pdf" download class="pdf-dl-card" style="--c:var(--accent);"><div class="pdf-ico">📋</div><div class="pdf-info"><div class="pdf-title">Plan de Clase: Grooming</div><div class="pdf-desc">60 min, 7° básico–2° medio. Roleplay y marco legal.</div></div><div class="pdf-btn">&#8595; PDF</div></a>
+    <a href="/descargas/pdf-reglas-internauta.pdf" download class="pdf-dl-card" style="--c:var(--blue);"><div class="pdf-ico">🎯</div><div class="pdf-info"><div class="pdf-title">5 Reglas del Internauta</div><div class="pdf-desc">Póster A4 para imprimir y pegar en sala. Niños 6–12.</div></div><div class="pdf-btn">&#8595; PDF</div></a>
+    <a href="/descargas/pdf-amenazas-chile-2025.pdf" download class="pdf-dl-card" style="--c:var(--gold);"><div class="pdf-ico">📊</div><div class="pdf-info"><div class="pdf-title">Amenazas Chile 2025</div><div class="pdf-desc">Infografía con datos para contextualizar tus clases.</div></div><div class="pdf-btn">&#8595; PDF</div></a>
+    <a href="/descargas/pdf-privacidad-adolescentes.pdf" download class="pdf-dl-card" style="--c:#9b6dff;"><div class="pdf-ico">🔒</div><div class="pdf-info"><div class="pdf-title">Privacidad en Redes</div><div class="pdf-desc">Guía para distribuir a tus alumnos adolescentes.</div></div><div class="pdf-btn">&#8595; PDF</div></a>
+  </div>
+</div></div>
     <div class="rec"><div class="rec-ico">🗓️</div><div><div class="rec-title">Calendario anual de seguridad digital</div><div class="rec-desc">Un tema por mes con actividades sugeridas para cada nivel educativo.</div></div></div>
     <div class="rec"><div class="rec-ico">🎯</div><div><div class="rec-title">Póster "Reglas del Internauta"</div><div class="rec-desc">Para imprimir y pegar en la sala. 5 reglas en lenguaje de niños. Disponible en A3 y A4.</div></div></div>
     <div class="rec"><div class="rec-ico">⚠️</div><div><div class="rec-title">Protocolo ante incidente digital</div><div class="rec-desc">Qué hacer paso a paso si un alumno sufre grooming, ciberbullying o sextorsión.</div></div></div>

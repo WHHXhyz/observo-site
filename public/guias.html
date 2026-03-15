@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Guías Técnicas · Aegis8</title>
-<meta name="description" content="Marco de seguridad, gestión de incidentes, modelo OSI, ISO 27001 y más. Recursos técnicos para profesionales de seguridad."/>
+<meta name="description" content="Guías técnicas de ciberseguridad: Modelo OSI, ISO 27001, NIST CSF, OWASP, Zero Trust, Forense Digital y más."/>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
   <script src="/aegis-nav.js"></script>
@@ -110,40 +110,44 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .b2{width:400px;height:400px;bottom:-60px;left:-80px;background:radial-gradient(circle,rgba(240,120,48,.07) 0%,transparent 70%);animation:fl2 10s ease-in-out infinite;}
 @keyframes fl1{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,20px);}}
 @keyframes fl2{0%,100%{transform:translate(0,0);}50%{transform:translate(20px,-30px);}}
+/* GRID */
 .guias-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
-@media(max-width:720px){.guias-g{grid-template-columns:1fr;}}
-.guia-card{background:var(--bg2);padding:2rem 1.75rem;position:relative;overflow:hidden;transition:background .2s;}
-.guia-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+@media(max-width:860px){.guias-g{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:540px){.guias-g{grid-template-columns:1fr;}}
+/* CARDS */
+.guia-card{background:var(--bg2);padding:2rem 1.75rem;position:relative;overflow:hidden;
+  transition:background .2s,transform .25s;text-decoration:none;display:flex;flex-direction:column;gap:10px;}
+.guia-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  transform:scaleX(0);transform-origin:left;transition:transform .4s;}
 .guia-card:hover::before{transform:scaleX(1);}
-.guia-card:hover{background:rgba(255,255,255,.03);}
+.guia-card:hover{background:rgba(255,255,255,.04);transform:translateY(-3px);}
 .gc-b::before{background:var(--blue);}
 .gc-o::before{background:var(--accent);}
 .gc-g::before{background:var(--green);}
 .gc-p::before{background:#9b6dff;}
 .gc-gold::before{background:var(--gold);}
 .gc-r::before{background:#ef4444;}
-.guia-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:.5rem;}
-.guia-title{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink);margin-bottom:.5rem;line-height:1.15;}
-.guia-desc{font-size:.84rem;color:var(--ink2);line-height:1.65;margin-bottom:1rem;}
-.guia-pills{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1rem;}
-.pp{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:1px;padding:2px 7px;border-radius:20px;border:1px solid var(--border);color:var(--ink3);}
-.guia-dl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;
-  color:var(--bg);background:var(--blue);padding:.45rem .9rem;border-radius:var(--radius);
-  text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;transition:background .2s;}
-.guia-dl:hover{background:#1a3f7a;}
-.gc-o .guia-dl{background:var(--accent);}.gc-o .guia-dl:hover{background:var(--accent2);}
-.gc-g .guia-dl{background:var(--green);}.gc-g .guia-dl:hover{background:#22c55e;}
-.gc-p .guia-dl{background:#9b6dff;}.gc-p .guia-dl:hover{background:#7c3aed;}
-.gc-gold .guia-dl{background:var(--gold);color:var(--bg);}.gc-gold .guia-dl:hover{background:#d97706;}
-.gc-r .guia-dl{background:#ef4444;}.gc-r .guia-dl:hover{background:#dc2626;}
-.coming{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);
-  border:1px solid var(--border);padding:.4rem .9rem;border-radius:var(--radius);display:inline-block;}
-.marco-g{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);}
-@media(max-width:640px){.marco-g{grid-template-columns:repeat(2,1fr);}}
-.marco-c{background:var(--bg2);padding:1.5rem 1.25rem;text-align:center;}
-.marco-ico{font-size:1.5rem;margin-bottom:.5rem;}
-.marco-n{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--ink);font-weight:600;margin-bottom:.25rem;}
-.marco-d{font-size:.78rem;color:var(--ink2);line-height:1.5;}
+.guia-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;text-transform:uppercase;}
+.guia-title{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink);line-height:1.15;}
+.guia-desc{font-size:.84rem;color:var(--ink2);line-height:1.65;flex:1;}
+.guia-pills{display:flex;flex-wrap:wrap;gap:.35rem;}
+.pp{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:1px;
+  padding:2px 7px;border-radius:20px;border:1px solid var(--border);color:var(--ink3);}
+.guia-cta{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--ink3);transition:color .2s;display:flex;align-items:center;gap:5px;}
+.guia-card:hover .guia-cta{color:var(--ink);}
+.gc-b:hover .guia-cta{color:var(--blue);}
+.gc-o:hover .guia-cta{color:var(--accent);}
+.gc-g:hover .guia-cta{color:var(--green);}
+.gc-p:hover .guia-cta{color:#9b6dff;}
+.gc-gold:hover .guia-cta{color:var(--gold);}
+.gc-r:hover .guia-cta{color:#ef4444;}
+/* STATS BAR */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:40px;}
+@media(max-width:640px){.stats-bar{grid-template-columns:repeat(2,1fr);}}
+.sb{background:var(--bg2);padding:1.25rem 1.5rem;text-align:center;}
+.sb-n{font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--accent);font-style:italic;line-height:1;}
+.sb-l{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;margin-top:4px;}
 
 </style>
 </head>
@@ -153,121 +157,115 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div class="wrap" style="position:relative;z-index:2;">
     <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ink3);margin-bottom:20px;display:flex;align-items:center;gap:10px;">
       <div style="width:24px;height:1px;background:var(--blue);"></div>
-      GUÍAS TÉCNICAS · MARCOS DE REFERENCIA · DESCARGA GRATUITA
+      GUÍAS TÉCNICAS · MARCOS DE REFERENCIA · CIBERSEGURIDAD
       <div style="width:24px;height:1px;background:var(--blue);"></div>
     </div>
     <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,7vw,5.5rem);line-height:.92;letter-spacing:-1px;margin-bottom:18px;">
-      Marcos y guías<br><span style="color:var(--blue);font-style:italic;">para profesionales.</span>
+      Guías técnicas<br><span style="color:var(--blue);font-style:italic;">de referencia.</span>
     </h1>
-    <p style="font-size:1rem;line-height:1.8;color:var(--ink2);max-width:520px;margin-bottom:32px;">
-      Recursos técnicos sobre gestión de seguridad, marcos de referencia internacionales y guías operativas. Para equipos de TI, consultores y líderes de seguridad.
+    <p style="font-size:1rem;line-height:1.8;color:var(--ink2);max-width:540px;margin-bottom:32px;">
+      Marcos de seguridad, estándares internacionales y guías operativas. ISO 27001, NIST CSF, OWASP, Zero Trust y más — adaptados al contexto de Chile.
     </p>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
       <a href="#guias" class="btn-p"><span>Ver guías →</span></a>
-      <a href="/contactos.html" class="btn-g">Consultar al equipo</a>
+      <a href="/contactos.html" class="btn-g">Contactar al equipo</a>
+    </div>
+    <div class="stats-bar">
+      <div class="sb"><div class="sb-n">10</div><div class="sb-l">guías disponibles</div></div>
+      <div class="sb"><div class="sb-n">7</div><div class="sb-l">marcos internacionales</div></div>
+      <div class="sb"><div class="sb-n">1</div><div class="sb-l">marco legal Chile</div></div>
+      <div class="sb"><div class="sb-n">↗</div><div class="sb-l">actualizadas 2025</div></div>
     </div>
   </div>
 </section>
 
 <div class="wrap page-inner">
 
-<div class="sw">
-  <div class="sl">// Marco de referencia</div>
-  <h2 class="st">Los estándares<br><em>que usamos.</em></h2>
-  <p class="si">Todas las guías de Aegis8 están alineadas con estos marcos internacionales, adaptados al contexto legal y operativo de Chile.</p>
-  <div class="marco-g">
-    <div class="marco-c"><div class="marco-ico">🛡️</div><div class="marco-n">ISO 27001</div><div class="marco-d">Sistema de gestión de seguridad de la información</div></div>
-    <div class="marco-c"><div class="marco-ico">🔗</div><div class="marco-n">Modelo OSI</div><div class="marco-d">7 capas de referencia para protocolos de red</div></div>
-    <div class="marco-c"><div class="marco-ico">📋</div><div class="marco-n">NIST CSF</div><div class="marco-d">Framework de ciberseguridad del NIST</div></div>
-    <div class="marco-c"><div class="marco-ico">⚙️</div><div class="marco-n">OWASP</div><div class="marco-d">Seguridad de aplicaciones web y APIs</div></div>
-  </div>
-</div>
-
 <div class="sw" id="guias">
-  <div class="sl">// Guías disponibles</div>
-  <h2 class="st">Descarga<br><em>lo que necesitas.</em></h2>
+  <div class="sl">// 10 guías disponibles</div>
+  <h2 class="st">Elige tu<br><em>referencia.</em></h2>
   <div class="guias-g">
-
-    <div class="guia-card gc-b">
+    
+    <a href="/guias/modelo-osi-1.html" class="guia-card gc-b">
       <div class="guia-tag" style="color:var(--blue);">Modelo de referencia</div>
-      <div class="guia-title">Modelo OSI — 7 Capas</div>
-      <div class="guia-desc">Descripción de cada capa, protocolos asociados, vectores de ataque por capa y controles de seguridad recomendados.</div>
-      <div class="guia-pills"><span class="pp">referencia técnica</span><span class="pp">redes</span><span class="pp">protocolos</span></div>
-      <a href="/descargas/pdf-modelo-osi.pdf" class="guia-dl">↓ Descargar PDF</a>
-    </div>
+      <div class="guia-title">Modelo OSI</div>
+      <div class="guia-desc">7 capas de referencia, protocolos asociados, vectores de ataque por capa y controles de seguridad recomendados.</div>
+      <div class="guia-pills"><span class="pp">redes</span><span class="pp">referencia técnica</span><span class="pp">protocolos</span></div>
+      <div class="guia-cta">Abrir guía →</div>
+    </a>
 
-    <div class="guia-card gc-o">
+    <a href="/guias/iso27001-guia-completa.html" class="guia-card gc-o">
       <div class="guia-tag" style="color:var(--accent);">Marco internacional</div>
-      <div class="guia-title">ISO 27001 — Guía de implementación</div>
-      <div class="guia-desc">Dominios de control, proceso de certificación, gestión de riesgos y adaptación al contexto PYME chileno.</div>
+      <div class="guia-title">ISO 27001 — Guía Completa</div>
+      <div class="guia-desc">Sistema de Gestión de Seguridad de la Información. Dominios de control, proceso de certificación y gestión de riesgos.</div>
       <div class="guia-pills"><span class="pp">ISO 27001</span><span class="pp">SGSI</span><span class="pp">gestión de riesgos</span></div>
-      <a href="/descargas/pdf-iso-27001.pdf" class="guia-dl">↓ Descargar PDF</a>
-    </div>
+      <div class="guia-cta">Abrir guía →</div>
+    </a>
 
-    <div class="guia-card gc-g">
+    <a href="/guias/iso27035-gestion-incidentes.html" class="guia-card gc-g">
       <div class="guia-tag" style="color:var(--green);">Operativo</div>
-      <div class="guia-title">Gestión de Incidentes</div>
+      <div class="guia-title">ISO 27035 — Gestión de Incidentes</div>
       <div class="guia-desc">Ciclo de vida del incidente, roles y responsabilidades, plantillas de comunicación y lecciones aprendidas.</div>
-      <div class="guia-pills"><span class="pp">incident response</span><span class="pp">NIST</span><span class="pp">playbook</span></div>
-      <a href="/descargas/pdf-gestion-incidentes.pdf" class="guia-dl">↓ Descargar PDF</a>
-    </div>
+      <div class="guia-pills"><span class="pp">incident response</span><span class="pp">ISO 27035</span><span class="pp">playbook</span></div>
+      <div class="guia-cta">Abrir guía →</div>
+    </a>
 
-    <div class="guia-card gc-p">
+    <a href="/guias/nist-csf-2.0-guia-completa.html" class="guia-card gc-p">
       <div class="guia-tag" style="color:#9b6dff;">Marco de evaluación</div>
-      <div class="guia-title">NIST Cybersecurity Framework</div>
-      <div class="guia-desc">Las 5 funciones del NIST CSF (Identificar, Proteger, Detectar, Responder, Recuperar) aplicadas a organizaciones chilenas.</div>
+      <div class="guia-title">NIST CSF 2.0</div>
+      <div class="guia-desc">Las 6 funciones del NIST CSF 2.0 (Gobernar, Identificar, Proteger, Detectar, Responder, Recuperar) con controles aplicados.</div>
       <div class="guia-pills"><span class="pp">NIST CSF</span><span class="pp">evaluación</span><span class="pp">madurez</span></div>
-      <a href="/descargas/pdf-nist-csf.pdf" class="guia-dl">↓ Descargar PDF</a>
-    </div>
+      <div class="guia-cta">Abrir guía →</div>
+    </a>
 
-    <div class="guia-card gc-gold">
-      <div class="guia-tag" style="color:var(--gold);">Marco legal Chile</div>
-      <div class="guia-title">Marco Normativo Chileno</div>
-      <div class="guia-desc">Ley 21.459 (delitos informáticos), Marco de Ciberseguridad ANCI, Ley de Protección de Datos y obligaciones de reporte.</div>
-      <div class="guia-pills"><span class="pp">Ley 21.459</span><span class="pp">ANCI</span><span class="pp">compliance</span></div>
-      <a href="/descargas/pdf-marco-normativo-chile.pdf" class="guia-dl">↓ Descargar PDF</a>
-    </div>
+    <a href="/guias/nist-sp800-86-forense-digital.html" class="guia-card gc-b">
+      <div class="guia-tag" style="color:var(--blue);">Forense</div>
+      <div class="guia-title">NIST SP 800-86 — Forense Digital</div>
+      <div class="guia-desc">Guía de integración de técnicas forenses en respuesta a incidentes. Recolección, examinación y análisis de evidencia.</div>
+      <div class="guia-pills"><span class="pp">forense digital</span><span class="pp">evidencia</span><span class="pp">NIST</span></div>
+      <div class="guia-cta">Abrir guía →</div>
+    </a>
 
-    <div class="guia-card gc-r">
-      <div class="guia-tag" style="color:#ef4444;">Análisis de riesgo</div>
-      <div class="guia-title">Gestión de Riesgos</div>
-      <div class="guia-desc">Metodología de identificación, evaluación y tratamiento de riesgos de seguridad. Incluye plantillas de registro y matrices.</div>
-      <div class="guia-pills"><span class="pp">riesgo</span><span class="pp">ISO 31000</span><span class="pp">plantillas</span></div>
-      <a href="/descargas/pdf-gestion-riesgos.pdf" class="guia-dl">↓ Descargar PDF</a>
-    </div>
-
-    <div class="guia-card gc-b">
-      <div class="guia-tag" style="color:var(--blue);">Seguridad aplicaciones</div>
+    <a href="/guias/owasp-top10.html" class="guia-card gc-r">
+      <div class="guia-tag" style="color:#ef4444;">Seguridad web</div>
       <div class="guia-title">OWASP Top 10</div>
-      <div class="guia-desc">Las 10 vulnerabilidades web más críticas, con ejemplos reales, impacto y controles técnicos para cada una.</div>
-      <div class="guia-pills"><span class="pp">OWASP</span><span class="pp">web security</span><span class="pp">desarrollo</span></div>
-      <a href="/descargas/pdf-owasp-top10.pdf" class="guia-dl">↓ Descargar PDF</a>
-    </div>
+      <div class="guia-desc">Las 10 vulnerabilidades web más críticas con ejemplos reales, impacto y controles técnicos de mitigación.</div>
+      <div class="guia-pills"><span class="pp">OWASP</span><span class="pp">web security</span><span class="pp">vulnerabilidades</span></div>
+      <div class="guia-cta">Abrir guía →</div>
+    </a>
 
-    <div class="guia-card gc-o">
-      <div class="guia-tag" style="color:var(--accent);">Hardening</div>
-      <div class="guia-title">Guía de Hardening</div>
-      <div class="guia-desc">Configuraciones de seguridad para servidores Linux, Windows Server, nginx/Apache y bases de datos comunes.</div>
-      <div class="guia-pills"><span class="pp">hardening</span><span class="pp">configuración</span><span class="pp">servidores</span></div>
-      <a href="/descargas/pdf-hardening.pdf" class="guia-dl">↓ Descargar PDF</a>
-    </div>
+    <a href="/guias/pentesting.html" class="guia-card gc-r">
+      <div class="guia-tag" style="color:#ef4444;">Ofensivo</div>
+      <div class="guia-title">Pentesting — Guía Metodológica</div>
+      <div class="guia-desc">Fases de una prueba de penetración, herramientas, reporting y diferencias entre tipos de test (black/grey/white box).</div>
+      <div class="guia-pills"><span class="pp">pentesting</span><span class="pp">ethical hacking</span><span class="pp">metodología</span></div>
+      <div class="guia-cta">Abrir guía →</div>
+    </a>
 
-    <div class="guia-card gc-g">
-      <div class="guia-tag" style="color:var(--green);">Continuidad</div>
-      <div class="guia-title">Plan de Continuidad (BCP)</div>
-      <div class="guia-desc">Estructura de un plan de continuidad de negocio orientado a seguridad. RTO, RPO, análisis de impacto y pruebas.</div>
-      <div class="guia-pills"><span class="pp">BCP</span><span class="pp">recuperación</span><span class="pp">ISO 22301</span></div>
-      <span class="coming">// Próximamente</span>
-    </div>
+    <a href="/guias/zero-trust.html" class="guia-card gc-p">
+      <div class="guia-tag" style="color:#9b6dff;">Arquitectura</div>
+      <div class="guia-title">Zero Trust</div>
+      <div class="guia-desc">Principios del modelo Zero Trust, arquitectura de implementación, microsegmentación e identidad como perímetro.</div>
+      <div class="guia-pills"><span class="pp">zero trust</span><span class="pp">arquitectura</span><span class="pp">identidad</span></div>
+      <div class="guia-cta">Abrir guía →</div>
+    </a>
 
+    <a href="/guias/cloud-security.html" class="guia-card gc-b">
+      <div class="guia-tag" style="color:var(--blue);">Cloud</div>
+      <div class="guia-title">Cloud Security</div>
+      <div class="guia-desc">Seguridad en entornos cloud (AWS, Azure, GCP). Modelo de responsabilidad compartida, CIS Benchmarks y controles IAM.</div>
+      <div class="guia-pills"><span class="pp">cloud</span><span class="pp">AWS</span><span class="pp">Azure</span><span class="pp">GCP</span></div>
+      <div class="guia-cta">Abrir guía →</div>
+    </a>
+
+    <a href="/guias/ley-21663-ciberseguridad-chile.html" class="guia-card gc-gold">
+      <div class="guia-tag" style="color:var(--gold);">Marco legal Chile</div>
+      <div class="guia-title">Ley 21.663 — Marco Chile</div>
+      <div class="guia-desc">Nueva Ley Marco de Ciberseguridad de Chile. Obligaciones, sujetos regulados, ANCI, plazos y sanciones.</div>
+      <div class="guia-pills"><span class="pp">Ley 21.663</span><span class="pp">ANCI</span><span class="pp">compliance</span><span class="pp">Chile</span></div>
+      <div class="guia-cta">Abrir guía →</div>
+    </a>
   </div>
-</div>
-
-<div class="sw">
-  <div class="sl">// ¿Necesitas algo específico?</div>
-  <h2 class="st">Guías a medida<br><em>para tu equipo.</em></h2>
-  <p class="si">Si necesitas una guía específica para tu organización, sector o marco normativo, podemos desarrollarla. Escríbenos.</p>
-  <a href="/contactos.html" class="btn-p"><span>Solicitar guía personalizada →</span></a>
 </div>
 
 </div>
