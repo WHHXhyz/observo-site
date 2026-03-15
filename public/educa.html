@@ -1,934 +1,420 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Ciberseguridad para niños, adolescentes, padres y profesores. Materiales gratuitos, juegos y recursos educativos por Aegis8.">
-<title>Educa · Aegis8</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Aegis Educa · Ciberseguridad para familias y docentes</title>
+<meta name="description" content="Recursos gratuitos de ciberseguridad para niños, adolescentes, familias y docentes de Chile."/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
+  <script src="/aegis-nav.js"></script>
 <style>
 
-:root {
-  --bg:        #07080c;
-  --bg2:       #0d0f15;
-  --surface:   #12151e;
-  --border:    #1e2230;
-  --border2:   #252a3a;
-  --green:     #00ff88;
-  --text:      #e2e8f0;
-  --muted:     #4a5568;
-  --muted2:    #2d3748;
-  --font-mono: 'IBM Plex Mono', monospace;
-  --font-disp: 'Bebas Neue', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-  --c-ninos:   #38bdf8;
-  --c-teens:   #a78bfa;
-  --c-padres:  #34d399;
-  --c-profes:  #fb923c;
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-  padding-top: 64px;
-}
-
-/* ── NOISE TEXTURE ── */
-body::before {
-  content: '';
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-}
-
-/* ═══════════════════════════════════════
-   HERO
-═══════════════════════════════════════ */
-.hero {
-  position: relative; z-index: 1;
-  min-height: 96vh;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center;
-  padding: 5rem 2rem 6rem;
-  overflow: hidden;
-}
-
-/* Big multicolor glow blobs */
-.hero-blob {
-  position: absolute; border-radius: 50%;
-  pointer-events: none; filter: blur(80px);
-  animation: blobFloat 8s ease-in-out infinite;
-}
-.blob-blue  { width:500px;height:400px;background:rgba(56,189,248,0.09);  top:-10%;left:-5%;  animation-delay:0s; }
-.blob-violet{ width:400px;height:400px;background:rgba(167,139,250,0.08); top:10%;right:-5%; animation-delay:2s; }
-.blob-green { width:350px;height:350px;background:rgba(52,211,153,0.07);  bottom:5%;left:15%; animation-delay:4s; }
-.blob-orange{ width:300px;height:300px;background:rgba(251,146,60,0.07);  bottom:0%;right:10%;animation-delay:1s; }
-
-@keyframes blobFloat {
-  0%,100% { transform: translateY(0) scale(1); }
-  50%      { transform: translateY(-20px) scale(1.05); }
-}
-
-/* Scanlines overlay */
-.hero::after {
-  content:'';
-  position:absolute;inset:0;pointer-events:none;z-index:0;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);
-}
-
-.hero-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.68rem; letter-spacing: 0.25em;
-  color: var(--green); text-transform: uppercase;
-  display: flex; align-items: center; gap: 0.6rem;
-  margin-bottom: 1.5rem;
-  position: relative; z-index: 1;
-  opacity: 0; animation: fadeUp 0.6s ease 0.1s forwards;
-}
-.hero-eyebrow::before, .hero-eyebrow::after {
-  content: ''; flex: 1; max-width: 40px; height: 1px;
-  background: var(--green); opacity: 0.4;
-}
-
-/* Animated word that cycles through audience */
-.hero-title {
-  font-family: var(--font-disp);
-  font-size: clamp(4.5rem, 13vw, 11rem);
-  line-height: 0.88; letter-spacing: 0.03em;
-  text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  position: relative; z-index: 1;
-  opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards;
-}
-
-.hero-title .line1 { color: var(--text); display: block; }
-.hero-title .line2 {
-  display: block;
-  background: linear-gradient(90deg, var(--c-ninos), var(--c-teens), var(--c-padres), var(--c-profes));
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradShift 4s ease infinite;
-}
-
-@keyframes gradShift {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Audience pills */
-.hero-audience {
-  display: flex; align-items: center; justify-content: center;
-  flex-wrap: wrap; gap: 0.5rem;
-  margin-bottom: 2rem;
-  position: relative; z-index: 1;
-  opacity: 0; animation: fadeUp 0.7s ease 0.35s forwards;
-}
-
-.aud-pill {
-  font-family: var(--font-mono); font-size: 0.7rem;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  padding: 0.4rem 1rem;
-  border: 1px solid;
-  cursor: default;
-  transition: all 0.2s;
-}
-.aud-pill.ninos  { color: var(--c-ninos);  border-color: rgba(56,189,248,0.3);  background: rgba(56,189,248,0.05); }
-.aud-pill.teens  { color: var(--c-teens);  border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.05); }
-.aud-pill.padres { color: var(--c-padres); border-color: rgba(52,211,153,0.3);  background: rgba(52,211,153,0.05); }
-.aud-pill.profes { color: var(--c-profes); border-color: rgba(251,146,60,0.3);  background: rgba(251,146,60,0.05); }
-.aud-pill:hover { transform: translateY(-2px); filter: brightness(1.2); }
-
-.hero-sub {
-  font-size: 1.05rem; color: var(--muted);
-  font-weight: 300; max-width: 520px;
-  line-height: 1.7; margin-bottom: 3rem;
-  position: relative; z-index: 1;
-  opacity: 0; animation: fadeUp 0.7s ease 0.45s forwards;
-}
-
-.hero-cta-group {
-  display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
-  position: relative; z-index: 1;
-  opacity: 0; animation: fadeUp 0.7s ease 0.55s forwards;
-  margin-bottom: 4rem;
-}
-
-.hero-btn-main {
-  font-family: var(--font-mono); font-size: 0.75rem;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: #000; background: var(--green);
-  padding: 0.9rem 2rem; text-decoration: none;
-  transition: background 0.2s, transform 0.2s;
-}
-.hero-btn-main:hover { background: #00cc6a; transform: translateY(-2px); }
-
-.hero-btn-out {
-  font-family: var(--font-mono); font-size: 0.75rem;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--text); border: 1px solid var(--border2);
-  padding: 0.9rem 2rem; text-decoration: none;
-  transition: border-color 0.2s, color 0.2s, transform 0.2s;
-}
-.hero-btn-out:hover { border-color: var(--green); color: var(--green); transform: translateY(-2px); }
-
-.hero-scroll {
-  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-  font-family: var(--font-mono); font-size: 0.6rem;
-  letter-spacing: 0.15em; color: var(--muted);
-  z-index: 1;
-  opacity: 0; animation: fadeUp 0.7s ease 0.9s forwards;
-}
-.hero-scroll::after { content: '↓'; font-size: 1rem; color: var(--green); animation: bounce 2s ease-in-out infinite; }
-@keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(6px);} }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ═══════════════════════════════════════
-   STATS BAR
-═══════════════════════════════════════ */
-.stats-bar {
-  position: relative; z-index: 1;
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  background: var(--bg2);
-}
-
-.stat-item {
-  padding: 2rem 1.5rem;
-  border-right: 1px solid var(--border);
-  text-align: center;
-  transition: background 0.3s;
-}
-.stat-item:last-child { border-right: none; }
-.stat-item:hover { background: var(--surface); }
-
-.stat-num {
-  font-family: var(--font-disp);
-  font-size: clamp(2.2rem, 4vw, 3.5rem);
-  line-height: 1;
-  display: block; margin-bottom: 0.4rem;
-}
-.stat-item:nth-child(1) .stat-num { color: var(--c-ninos); }
-.stat-item:nth-child(2) .stat-num { color: var(--c-teens); }
-.stat-item:nth-child(3) .stat-num { color: var(--c-padres); }
-.stat-item:nth-child(4) .stat-num { color: var(--c-profes); }
-
-.stat-label {
-  font-family: var(--font-mono); font-size: 0.6rem;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--muted); line-height: 1.4;
-}
-
-/* ═══════════════════════════════════════
-   FEATURES STRIP
-═══════════════════════════════════════ */
-.features {
-  position: relative; z-index: 1;
-  border-bottom: 1px solid rgba(0,255,136,0.12);
-  overflow: hidden;
-  background: rgba(0,255,136,0.02);
-}
-.features::before, .features::after {
-  content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
-}
-.features::before { left: 0;  background: linear-gradient(90deg, var(--bg2), transparent); }
-.features::after  { right: 0; background: linear-gradient(-90deg, var(--bg2), transparent); }
-
-.features-track {
-  display: flex; gap: 0;
-  animation: scroll-x 30s linear infinite;
-  white-space: nowrap;
-}
-.features-track:hover { animation-play-state: paused; }
-
-.feat-item {
-  display: inline-flex; align-items: center; gap: 0.75rem;
-  font-family: var(--font-mono); font-size: 0.72rem;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--text); flex-shrink: 0;
-  padding: 1rem 2.5rem;
-  border-right: 1px solid rgba(0,255,136,0.07);
-  transition: color 0.2s, background 0.2s;
-}
-.feat-item:hover { color: var(--green); background: rgba(0,255,136,0.04); }
-.feat-item .dot {
-  width: 5px; height: 5px; border-radius: 50%;
-  background: var(--green); box-shadow: 0 0 6px rgba(0,255,136,0.6); flex-shrink: 0;
-}
-@keyframes scroll-x { from{transform:translateX(0);} to{transform:translateX(-50%);} }
-
-/* ═══════════════════════════════════════
-   CARDS SECTION
-═══════════════════════════════════════ */
-.cards-section {
-  position: relative; z-index: 1;
-  padding: 5rem 2rem 2rem;
-  max-width: 1200px; margin: 0 auto;
-}
-
-.section-label {
-  font-family: var(--font-mono); font-size: 0.65rem;
-  letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--green); margin-bottom: 3rem;
-  display: flex; align-items: center; gap: 0.6rem;
-}
-.section-label::before { content: '//'; color: var(--muted2); }
-
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1px;
-  background: var(--border);
-}
-
-/* ── SEGMENT CARD ── */
-.seg-card {
-  position: relative; overflow: hidden;
-  background: var(--bg2);
-  padding: 3.5rem 3rem;
-  text-decoration: none; color: inherit;
-  display: flex; flex-direction: column;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-  min-height: 420px;
-}
-
-/* Top accent bar */
-.seg-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: var(--card-color, var(--green));
-  transform: scaleX(0); transform-origin: left;
-  transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.seg-card:hover::before { transform: scaleX(1); }
-
-/* Bottom glow */
-.seg-card::after {
-  content: '';
-  position: absolute; bottom: -80px; right: -80px;
-  width: 280px; height: 280px; border-radius: 50%;
-  background: radial-gradient(circle, var(--card-glow, rgba(0,255,136,0.1)) 0%, transparent 70%);
-  transition: opacity 0.4s, transform 0.4s;
-  opacity: 0; transform: scale(0.8);
-}
-.seg-card:hover::after { opacity: 1; transform: scale(1); }
-
-.seg-card:hover { background: var(--surface); }
-.seg-card:hover .seg-icon { transform: scale(1.12) rotate(-5deg); }
-.seg-card:hover .seg-arrow { transform: translateX(8px); opacity: 1; }
-.seg-card:hover .seg-num   { color: var(--card-color); }
-
-/* Big BG number */
-.seg-bg-num {
-  position: absolute; bottom: -1rem; right: 1.5rem;
-  font-family: var(--font-disp);
-  font-size: 9rem; line-height: 1;
-  color: rgba(255,255,255,0.03);
-  pointer-events: none;
-  transition: color 0.4s;
-}
-.seg-card:hover .seg-bg-num { color: rgba(255,255,255,0.055); }
-
-.seg-icon {
-  font-size: 3.5rem; margin-bottom: 2rem;
-  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-  display: block; filter: drop-shadow(0 0 12px var(--card-glow));
-}
-
-.seg-num {
-  font-family: var(--font-mono); font-size: 0.62rem;
-  letter-spacing: 0.2em; color: var(--muted);
-  margin-bottom: 0.75rem;
-  transition: color 0.3s;
-}
-
-.seg-title {
-  font-family: var(--font-disp);
-  font-size: 3.5rem; line-height: 0.92;
-  letter-spacing: 0.04em; text-transform: uppercase;
-  color: var(--card-color, var(--text));
-  margin-bottom: 1.25rem;
-}
-
-.seg-desc {
-  font-size: 0.9rem; color: var(--muted);
-  line-height: 1.7; font-weight: 300;
-  flex: 1; margin-bottom: 2rem;
-  max-width: 38ch;
-}
-
-.seg-pills {
-  display: flex; flex-wrap: wrap; gap: 0.4rem;
-  margin-bottom: 2rem;
-}
-.seg-pill {
-  font-family: var(--font-mono); font-size: 0.6rem;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 0.3rem 0.7rem;
-  border: 1px solid var(--card-border, var(--border2));
-  color: var(--card-color, var(--muted));
-  opacity: 0.65;
-  transition: opacity 0.2s;
-}
-.seg-card:hover .seg-pill { opacity: 1; }
-
-.seg-arrow {
-  font-family: var(--font-mono); font-size: 0.85rem;
-  color: var(--card-color, var(--green));
-  opacity: 0.4;
-  transition: transform 0.3s, opacity 0.3s;
-  align-self: flex-start;
-}
-
-.free-badge {
-  position: absolute; top: 1.5rem; right: 1.5rem;
-  font-family: var(--font-mono); font-size: 0.55rem;
-  letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--green); border: 1px solid rgba(0,255,136,0.3);
-  padding: 0.25rem 0.6rem; background: rgba(0,255,136,0.05);
-}
-
-/* Card themes */
-.card-ninos  { --card-color: var(--c-ninos);  --card-glow: rgba(56,189,248,0.12);  --card-border: rgba(56,189,248,0.25); }
-.card-teens  { --card-color: var(--c-teens);  --card-glow: rgba(167,139,250,0.12); --card-border: rgba(167,139,250,0.25); }
-.card-padres { --card-color: var(--c-padres); --card-glow: rgba(52,211,153,0.12);  --card-border: rgba(52,211,153,0.25); }
-.card-profes { --card-color: var(--c-profes); --card-glow: rgba(251,146,60,0.12);  --card-border: rgba(251,146,60,0.25); }
-
-/* ═══════════════════════════════════════
-   POR QUÉ IMPORTA — números reales
-═══════════════════════════════════════ */
-.why-section {
-  position: relative; z-index: 1;
-  padding: 6rem 2rem;
-  background: var(--bg2);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  overflow: hidden;
-}
-
-.why-section::before {
-  content: '';
-  position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
-  width: 800px; height: 600px;
-  background: radial-gradient(ellipse, rgba(167,139,250,0.05) 0%, transparent 65%);
-  pointer-events: none;
-}
-
-.why-inner {
-  max-width: 1100px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 5rem; align-items: center;
-}
-
-.why-left .section-label { margin-bottom: 1.5rem; }
-
-.why-title {
-  font-family: var(--font-disp);
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  line-height: 0.92; text-transform: uppercase;
-  margin-bottom: 1.5rem;
-}
-.why-title span { color: var(--c-teens); }
-
-.why-body {
-  font-size: 0.95rem; color: var(--muted); line-height: 1.8;
-  font-weight: 300; max-width: 42ch;
-}
-
-.why-stats {
-  display: flex; flex-direction: column; gap: 1px;
-  background: var(--border);
-}
-
-.why-stat {
-  background: var(--surface);
-  padding: 1.75rem 2rem;
-  display: flex; align-items: center; gap: 1.5rem;
-  transition: background 0.3s;
-  cursor: default;
-}
-.why-stat:hover { background: #16192400; background: #161924; }
-
-.why-stat-num {
-  font-family: var(--font-disp);
-  font-size: 3rem; line-height: 1; flex-shrink: 0; width: 6rem; text-align: right;
-}
-.why-stat:nth-child(1) .why-stat-num { color: var(--c-ninos); }
-.why-stat:nth-child(2) .why-stat-num { color: var(--c-teens); }
-.why-stat:nth-child(3) .why-stat-num { color: var(--c-profes); }
-
-.why-stat-text {
-  font-size: 0.88rem; color: var(--muted); line-height: 1.55;
-}
-.why-stat-text strong { color: var(--text); font-weight: 500; display: block; margin-bottom: 0.2rem; }
-
-/* ═══════════════════════════════════════
-   EXTRAS / NEWSLETTER
-═══════════════════════════════════════ */
-.extras-section {
-  position: relative; z-index: 1;
-  padding: 5rem 2rem;
-  max-width: 1100px; margin: 0 auto;
-}
-
-.extras-card {
-  border: 1px solid rgba(251,146,60,0.2);
-  background: rgba(251,146,60,0.03);
-  display: flex; align-items: center; gap: 2rem;
-  padding: 2.5rem;
-  text-decoration: none; color: inherit;
-  transition: background 0.3s, border-color 0.3s;
-  position: relative; overflow: hidden;
-}
-.extras-card::before {
-  content: ''; position: absolute; top:0;left:0;right:0; height:2px;
-  background: var(--c-profes);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform 0.4s ease;
-}
-.extras-card:hover::before { transform: scaleX(1); }
-.extras-card:hover { background: rgba(251,146,60,0.06); border-color: rgba(251,146,60,0.4); }
-
-.extras-icon { font-size: 3rem; flex-shrink: 0; }
-
-.extras-tag {
-  font-family: var(--font-mono); font-size: 0.6rem;
-  letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--c-profes); margin-bottom: 0.4rem;
-}
-.extras-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; }
-.extras-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
-
-.extras-arrow {
-  margin-left: auto; flex-shrink: 0;
-  font-family: var(--font-mono); font-size: 0.75rem;
-  color: var(--c-profes); opacity: 0.7;
-  transition: transform 0.3s, opacity 0.3s;
-}
-.extras-card:hover .extras-arrow { transform: translateX(6px); opacity: 1; }
-
-/* ═══════════════════════════════════════
-   CTA FINAL
-═══════════════════════════════════════ */
-.cta-section {
-  position: relative; z-index: 1;
-  padding: 7rem 2rem;
-  text-align: center;
-  overflow: hidden;
-}
-
-.cta-section::before {
-  content: '';
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  width: 600px; height: 400px;
-  background: radial-gradient(ellipse, rgba(0,255,136,0.06) 0%, transparent 65%);
-  pointer-events: none;
-}
-
-.cta-label {
-  font-family: var(--font-mono); font-size: 0.65rem;
-  letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--green); margin-bottom: 1.5rem;
-  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-}
-.cta-label::before { content: '//'; color: var(--muted2); }
-
-.cta-title {
-  font-family: var(--font-disp);
-  font-size: clamp(2.5rem, 7vw, 6rem);
-  line-height: 0.88; letter-spacing: 0.04em;
-  text-transform: uppercase; color: var(--text);
-  margin-bottom: 1.5rem;
-}
-.cta-title span { color: var(--green); }
-
-.cta-sub {
-  font-size: 1rem; color: var(--muted);
-  font-weight: 300; line-height: 1.7;
-  margin-bottom: 2.5rem; max-width: 48ch; margin-left: auto; margin-right: auto;
-}
-
-.cta-btn {
-  display: inline-block;
-  font-family: var(--font-mono); font-size: 0.75rem;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: #000; background: var(--green);
-  padding: 1rem 2.5rem; text-decoration: none;
-  transition: background 0.2s, transform 0.2s;
-}
-.cta-btn:hover { background: #00cc6a; transform: translateY(-2px); }
-
-/* ── FOOTER ── */
-footer {
-  position: relative; z-index: 1;
-  border-top: 1px solid var(--border);
-  padding: 1.5rem 3rem;
-  display: flex; align-items: center; justify-content: space-between;
-  font-family: var(--font-mono); font-size: 0.62rem;
-  color: var(--muted);
-}
-footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
-footer a:hover { color: var(--green); }
-
-/* ── REVEAL ── */
-.reveal {
-  opacity: 0; transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal.visible { opacity: 1; transform: none; }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 900px) {
-  .stats-bar { grid-template-columns: repeat(2,1fr); }
-  .stat-item:nth-child(2) { border-right: none; }
-  .why-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .why-left { text-align: center; }
-  .why-left .section-label { justify-content: center; }
-  .why-body { max-width: none; }
-}
-@media (max-width: 768px) {
-  .cards-grid { grid-template-columns: 1fr; }
-  .seg-card { min-height: auto; padding: 2.5rem 2rem; }
-  .seg-title { font-size: 2.8rem; }
-  .hero-cta-group { flex-direction: column; align-items: center; }
-  footer { flex-direction: column; gap: 0.75rem; padding: 1.5rem; text-align: center; }
-  .extras-card { flex-direction: column; text-align: center; }
-  .extras-arrow { margin-left: 0; }
-}
-@media (max-width: 480px) {
-  .stats-bar { grid-template-columns: 1fr 1fr; }
-  .cards-section { padding: 3rem 1rem 2rem; }
-  .seg-card { padding: 2rem 1.5rem; }
-  .why-section { padding: 4rem 1.5rem; }
-  .why-stat-num { font-size: 2rem; width: 5rem; }
-}
-
-
-/* ── CURSOR CUSTOM ── */
-*{cursor:none!important;}
-#cursor{position:fixed;width:12px;height:12px;background:#00ff88;border-radius:50%;pointer-events:none;z-index:9999;opacity:0;left:-50px;top:-50px;}
-#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(0,255,136,0.4);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;left:-50px;top:-50px;transition:width 0.2s,height 0.2s,border-color 0.2s;}
-body:has(a:hover) #cursor-ring,body:has(button:hover) #cursor-ring{width:56px;height:56px;border-color:#00ff88;}
-
-/* ── HERRAMIENTAS IA ── */
-.tools-section{padding:4rem 2rem;max-width:1100px;margin:0 auto;}
-.tools-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
-.tools-title{font-family:var(--display);font-size:clamp(2rem,5vw,3.5rem);line-height:0.9;text-transform:uppercase;margin-bottom:0.75rem;}
-.tools-title span{color:var(--green);}
-.tools-sub{font-size:0.95rem;color:var(--muted);max-width:520px;margin-bottom:2.5rem;line-height:1.6;}
-.tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);}
-.tool-card{background:var(--bg2);padding:2.5rem 2rem;text-decoration:none;color:var(--text);display:flex;flex-direction:column;gap:1rem;transition:background 0.2s;position:relative;overflow:hidden;}
-.tool-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--tool-color,var(--green));transform:scaleX(0);transform-origin:left;transition:transform 0.3s ease;}
-.tool-card:hover::before{transform:scaleX(1);}
-.tool-card:hover{background:var(--surface);}
-.tool-icon{font-size:2.5rem;}
-.tool-tag{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--tool-color,var(--green));border:1px solid;opacity:0.7;padding:0.2rem 0.6rem;display:inline-block;width:fit-content;}
-.tool-name{font-family:var(--display);font-size:1.8rem;line-height:0.95;text-transform:uppercase;color:var(--tool-color,var(--text));}
-.tool-desc{font-size:0.88rem;color:var(--muted);line-height:1.6;flex:1;}
-.tool-cta{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--tool-color,var(--green));display:flex;align-items:center;gap:0.5rem;transition:gap 0.2s;}
-.tool-card:hover .tool-cta{gap:0.9rem;}
-.tool-phishing{--tool-color:#ff2244;}
-.tool-checklist{--tool-color:#00ff88;}
-@media(max-width:600px){.tools-grid{grid-template-columns:1fr;}}
-
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+:root{
+  --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
+  --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
+  --card:rgba(255,255,255,.03);--radius:4px;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(58,127,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.025) 1px,transparent 1px);
+  background-size:80px 80px;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+.page-inner{position:relative;z-index:10;}
+.sl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+  color:var(--accent);text-transform:uppercase;margin-bottom:12px;}
+.st{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.6rem);
+  line-height:1.05;color:var(--ink);margin-bottom:20px;letter-spacing:-1px;}
+.st em{font-style:italic;color:var(--accent);}
+.si{font-size:1rem;line-height:1.9;color:var(--ink2);max-width:640px;margin-bottom:40px;}
+.sw{padding:80px 0 48px;border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
+.sw.vis{opacity:1;transform:none;}
+.sw:last-child{border-bottom:none;}
+.btn-p{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--bg);background:var(--accent);border:none;padding:14px 28px;border-radius:var(--radius);
+  text-decoration:none;transition:all .25s;position:relative;overflow:hidden;display:inline-block;cursor:pointer!important;}
+.btn-p::before{content:'';position:absolute;inset:0;background:var(--accent2);transform:translateX(-100%);transition:transform .3s;}
+.btn-p:hover::before{transform:translateX(0);}
+.btn-p span,.btn-p{position:relative;z-index:1;}
+.btn-p:hover{box-shadow:0 0 28px rgba(240,120,48,.4);transform:translateY(-2px);}
+.btn-g{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink2);background:transparent;border:1px solid var(--border);
+  padding:14px 28px;border-radius:var(--radius);text-decoration:none;transition:all .25s;display:inline-block;}
+.btn-g:hover{color:var(--ink);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
+/* CHAT SHARED */
+.chat-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;}
+.chat-hd{background:rgba(240,120,48,.05);border-bottom:1px solid var(--border2);
+  padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.chat-hd-l{display:flex;align-items:center;gap:.75rem;}
+.chat-ava{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  background:rgba(240,120,48,.12);}
+.chat-name{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;color:var(--ink);}
+.chat-status{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--green);letter-spacing:1px;}
+.chat-live{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+.chat-msgs{height:320px;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;}
+.chat-msgs::-webkit-scrollbar{width:3px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.msg{display:flex;gap:.6rem;align-items:flex-start;}
+.msg.user{flex-direction:row-reverse;}
+.msg-ava{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;flex-shrink:0;background:var(--card);}
+.msg-bubble{background:var(--card);border:1px solid var(--border);padding:.65rem .9rem;
+  font-size:.84rem;line-height:1.6;max-width:85%;border-radius:2px;color:var(--ink2);}
+.msg.user .msg-bubble{background:rgba(240,120,48,.06);border-color:var(--border2);color:var(--ink);}
+.chat-quick{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.4rem;}
+.qbtn{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1px;
+  color:var(--accent);border:1px solid var(--border2);background:rgba(240,120,48,.04);
+  padding:.3rem .7rem;border-radius:var(--radius);cursor:pointer!important;transition:all .2s;}
+.qbtn:hover{background:rgba(240,120,48,.1);border-color:var(--accent);}
+.chat-row{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:.5rem;}
+.chat-in{flex:1;background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);
+  padding:.65rem 1rem;font-family:'Lato',sans-serif;font-size:.88rem;color:var(--ink);
+  outline:none;transition:border-color .2s;}
+.chat-in:focus{border-color:var(--accent);}
+.chat-in::placeholder{color:var(--ink3);}
+.send-btn{background:var(--accent);color:var(--bg);border:none;padding:.65rem 1.1rem;
+  border-radius:var(--radius);font-weight:700;cursor:pointer!important;transition:background .2s;}
+.send-btn:hover{background:var(--accent2);}
+.typing-wrap{display:flex;gap:4px;align-items:center;}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.3;
+  animation:tdot 1.2s ease-in-out infinite;}
+.tdot:nth-child(2){animation-delay:.2s;}.tdot:nth-child(3){animation-delay:.4s;}
+@keyframes tdot{0%,80%,100%{opacity:.2;transform:scale(.8);}40%{opacity:1;transform:scale(1);}}
+/* FOOTER */
+.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);
+  padding:48px 32px 32px;max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;
+  letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.fl span{color:var(--accent);}
+.flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.flinks a:hover{color:var(--accent);}
+.fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
+/* SCROLL REVEAL JS inline */
+@media(max-width:640px){.wrap{padding:0 16px;}.page-footer{padding:32px 16px;}}
+
+
+.educa-hero{position:relative;z-index:10;padding:80px 0 60px;border-bottom:1px solid var(--border);overflow:hidden;text-align:center;}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
+.b1{width:500px;height:500px;top:-80px;right:-100px;background:radial-gradient(circle,rgba(240,120,48,.09) 0%,transparent 70%);animation:fl1 8s ease-in-out infinite;}
+.b2{width:400px;height:400px;bottom:-60px;left:-80px;background:radial-gradient(circle,rgba(58,127,212,.08) 0%,transparent 70%);animation:fl2 10s ease-in-out infinite;}
+@keyframes fl1{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,20px);}}
+@keyframes fl2{0%,100%{transform:translate(0,0);}50%{transform:translate(20px,-30px);}}
+.why-s{position:relative;z-index:10;background:rgba(13,20,34,.85);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.why-in{max-width:1080px;margin:0 auto;padding:72px 24px;display:grid;grid-template-columns:1fr 2fr;gap:56px;align-items:center;}
+@media(max-width:720px){.why-in{grid-template-columns:1fr;gap:32px;}}
+.why-h{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.1;color:var(--ink);letter-spacing:-1px;}
+.why-h em{color:var(--accent);font-style:italic;display:block;}
+.why-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+@media(max-width:480px){.why-stats{grid-template-columns:1fr;}}
+.wst{padding:24px 18px;background:var(--card);border:1px solid var(--border);text-align:center;}
+.wst-n{font-family:'DM Serif Display',serif;font-size:2.4rem;color:var(--accent);line-height:1;margin-bottom:6px;font-style:italic;}
+.wst-l{font-size:.8rem;line-height:1.5;color:var(--ink2);}
+.wst-s{font-family:'JetBrains Mono',monospace;font-size:.52rem;color:var(--ink3);letter-spacing:1px;margin-top:4px;}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:640px){.pg{grid-template-columns:1fr;}}
+.pc{position:relative;border:1px solid var(--border);border-radius:var(--radius);padding:32px 28px 24px;
+  background:var(--card);text-decoration:none;overflow:hidden;transition:all .3s;display:flex;flex-direction:column;gap:12px;}
+.pc-bgn{position:absolute;right:-10px;bottom:-20px;font-family:'DM Serif Display',serif;
+  font-size:8rem;line-height:1;font-style:italic;opacity:.04;pointer-events:none;color:var(--ink);transition:opacity .3s;}
+.pc:hover .pc-bgn{opacity:.07;}
+.pc:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.1);box-shadow:0 18px 50px rgba(0,0,0,.3);}
+.pcn::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:var(--radius);background:radial-gradient(circle at 70% 30%,rgba(58,127,212,.08),transparent 60%);}
+.pca::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:var(--radius);background:radial-gradient(circle at 70% 30%,rgba(155,109,255,.07),transparent 60%);}
+.pcp::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:var(--radius);background:radial-gradient(circle at 70% 30%,rgba(46,204,128,.07),transparent 60%);}
+.pcd::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:var(--radius);background:radial-gradient(circle at 70% 30%,rgba(240,120,48,.08),transparent 60%);}
+.pc:hover::before{opacity:1;}
+.pc-top{display:flex;align-items:center;gap:12px;}
+.pc-ico{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;}
+.pcn .pc-ico{background:rgba(58,127,212,.12);}
+.pca .pc-ico{background:rgba(155,109,255,.1);}
+.pcp .pc-ico{background:rgba(46,204,128,.1);}
+.pcd .pc-ico{background:rgba(240,120,48,.1);}
+.pc-tag{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:3px;color:var(--ink3);margin-bottom:3px;}
+.pc-name{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--ink);line-height:1.1;}
+.pc-desc{font-size:.86rem;line-height:1.7;color:var(--ink2);flex:1;}
+.pc-pills{display:flex;flex-wrap:wrap;gap:5px;}
+.pp{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:1px;
+  padding:2px 8px;border-radius:20px;border:1px solid var(--border);color:var(--ink3);}
+.pc-cta{display:flex;align-items:center;justify-content:space-between;margin-top:4px;}
+.pc-cta-t{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;color:var(--accent);}
+.pc-arr{width:30px;height:30px;border-radius:50%;border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;font-size:.85rem;color:var(--accent);transition:all .25s;}
+.pc:hover .pc-arr{background:var(--accent);color:var(--bg);border-color:var(--accent);transform:translateX(3px);}
+.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+@media(max-width:720px){.tg{grid-template-columns:1fr;}}
+.tc{border:1px solid var(--border);border-radius:var(--radius);padding:24px 20px;background:var(--card);
+  text-decoration:none;transition:all .25s;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden;}
+.tc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.tc:hover::after{transform:scaleX(1);}
+.tc:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.1);box-shadow:0 14px 40px rgba(0,0,0,.2);}
+.t1::after{background:var(--accent);}
+.t2::after{background:var(--blue);}
+.t3::after{background:var(--green);}
+.tc-ico{font-size:1.6rem;}
+.tc-tag{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;}
+.tc-name{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink);line-height:1.15;}
+.tc-desc{font-size:.82rem;line-height:1.6;color:var(--ink2);flex:1;}
+.tc-cta{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;color:var(--accent);
+  display:flex;align-items:center;gap:5px;transition:gap .2s;}
+.tc:hover .tc-cta{gap:9px;}
+.nl{border:1px solid var(--border);border-radius:var(--radius);padding:40px;background:var(--card);
+  display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;position:relative;overflow:hidden;}
+.nl::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--blue),var(--green));}
+@media(max-width:640px){.nl{grid-template-columns:1fr;}}
+.nl-lbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;color:var(--accent);margin-bottom:8px;}
+.nl-title{font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink);margin-bottom:6px;}
+.nl-desc{font-size:.86rem;line-height:1.7;color:var(--ink2);}
+.mf{padding:56px;background:rgba(240,120,48,.03);border:1px solid var(--border2);border-radius:var(--radius);text-align:center;position:relative;overflow:hidden;}
+.mf::before{content:'"';position:absolute;top:-20px;left:24px;font-family:'DM Serif Display',serif;font-size:12rem;color:rgba(240,120,48,.05);line-height:1;pointer-events:none;}
+.mf-text{font-family:'DM Serif Display',serif;font-size:clamp(1.3rem,2.8vw,2rem);line-height:1.5;color:var(--ink);max-width:700px;margin:0 auto;font-style:italic;position:relative;z-index:1;}
+.mf-text em{color:var(--accent);font-style:normal;}
+.mf-sig{margin-top:20px;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:3px;}
+@media(max-width:640px){.mf{padding:32px 24px;}}
+
+@keyframes fadeInLogo{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
 </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body data-page="educa">
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
-
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-blob blob-blue"></div>
-  <div class="hero-blob blob-violet"></div>
-  <div class="hero-blob blob-green"></div>
-  <div class="hero-blob blob-orange"></div>
-
-  <div class="hero-eyebrow">
-    <span>aegis8 · educación digital</span>
+<section class="educa-hero">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap" style="position:relative;z-index:2;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ink3);margin-bottom:24px;display:flex;align-items:center;justify-content:center;gap:10px;">
+      <div style="width:28px;height:1px;background:var(--accent);"></div>
+      PROYECTO SOCIAL · EDUCACIÓN DIGITAL · CHILE · GRATUITO
+      <div style="width:28px;height:1px;background:var(--accent);"></div>
+    </div>
+    
+    <div style="margin-bottom:20px;opacity:0;animation:fadeInLogo .8s cubic-bezier(.34,1.56,.64,1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="100" height="100" fill="none">
+  <defs>
+    <filter id="e1" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="e2" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="e3" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="eg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5c842"/>
+      <stop offset="50%" stop-color="#f07830"/>
+      <stop offset="100%" stop-color="#e0531a"/>
+    </linearGradient>
+    <linearGradient id="eg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60c8f5"/>
+      <stop offset="100%" stop-color="#3a7fd4"/>
+    </linearGradient>
+    <radialGradient id="eg-core" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="rgba(240,120,48,0.16)"/>
+      <stop offset="60%" stop-color="rgba(58,127,212,0.06)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+    <clipPath id="ec"><path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z"/></clipPath>
+  </defs>
+  <ellipse cx="120" cy="115" rx="88" ry="95" fill="url(#eg-core)" filter="url(#e2)">
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite"/>
+  </ellipse>
+  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="#0d1422"/>
+  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="none" stroke="url(#eg)" stroke-width="3">
+    <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="3.5s" repeatCount="indefinite"/>
+  </path>
+  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="none" stroke="#f07830" stroke-width="3" stroke-dasharray="590" stroke-dashoffset="590" filter="url(#e1)">
+    <animate attributeName="stroke-dashoffset" from="590" to="0" dur="1.8s" fill="freeze" begin="0.2s" calcMode="spline" keySplines="0.4 0 0.2 1"/>
+  </path>
+  <!-- Open book -->
+  <!-- Spine -->
+  <line x1="120" y1="72" x2="120" y2="162" stroke="url(#eg)" stroke-width="3" stroke-linecap="round" filter="url(#e1)">
+    <animate attributeName="stroke-dasharray" values="0 90;90 0" dur="0.5s" fill="freeze" begin="1.2s"/>
+  </line>
+  <!-- Left page curve -->
+  <path d="M120,72 Q82,78 76,117 Q82,156 120,162" fill="rgba(240,120,48,0.07)" stroke="url(#eg)" stroke-width="2.5" filter="url(#e1)">
+    <animate attributeName="stroke-dasharray" values="0 150;150 0" dur="0.7s" fill="freeze" begin="1.5s"/>
+    <animate attributeName="fill" values="rgba(240,120,48,0.04);rgba(240,120,48,0.12);rgba(240,120,48,0.04)" dur="3s" repeatCount="indefinite" begin="3s"/>
+  </path>
+  <!-- Right page curve -->
+  <path d="M120,72 Q158,78 164,117 Q158,156 120,162" fill="rgba(240,120,48,0.07)" stroke="url(#eg)" stroke-width="2.5" filter="url(#e1)">
+    <animate attributeName="stroke-dasharray" values="0 150;150 0" dur="0.7s" fill="freeze" begin="1.7s"/>
+    <animate attributeName="fill" values="rgba(240,120,48,0.04);rgba(240,120,48,0.12);rgba(240,120,48,0.04)" dur="3s" repeatCount="indefinite" begin="3.3s"/>
+  </path>
+  <!-- Text lines left page -->
+  <line x1="83" y1="96" x2="114" y2="94" stroke="rgba(240,120,48,0.5)" stroke-width="1.5" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.2s"/></line>
+  <line x1="81" y1="108" x2="114" y2="106" stroke="rgba(240,120,48,0.4)" stroke-width="1.5" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.3s"/></line>
+  <line x1="82" y1="120" x2="114" y2="118" stroke="rgba(240,120,48,0.3)" stroke-width="1.5" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.4s"/></line>
+  <line x1="83" y1="132" x2="114" y2="130" stroke="rgba(240,120,48,0.25)" stroke-width="1.5" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.5s"/></line>
+  <!-- Text lines right page -->
+  <line x1="126" y1="96" x2="157" y2="94" stroke="rgba(240,120,48,0.5)" stroke-width="1.5" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.3s"/></line>
+  <line x1="126" y1="108" x2="159" y2="106" stroke="rgba(240,120,48,0.4)" stroke-width="1.5" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.4s"/></line>
+  <line x1="126" y1="120" x2="158" y2="118" stroke="rgba(240,120,48,0.3)" stroke-width="1.5" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.5s"/></line>
+  <!-- 4 profile icons above book — representing the 4 audiences -->
+  <circle cx="76" cy="58" r="7" fill="rgba(58,127,212,0.15)" stroke="#3a7fd4" stroke-width="2" filter="url(#e3)">
+    <animate attributeName="opacity" values="0;1" dur="0.15s" fill="freeze" begin="2.6s"/>
+    <animate attributeName="r" values="7;9;7" dur="2.5s" repeatCount="indefinite" begin="3.5s"/>
+  </circle>
+  <circle cx="98" cy="52" r="7" fill="rgba(155,109,255,0.15)" stroke="#9b6dff" stroke-width="2" filter="url(#e3)">
+    <animate attributeName="opacity" values="0;1" dur="0.15s" fill="freeze" begin="2.7s"/>
+    <animate attributeName="r" values="7;9;7" dur="2.5s" repeatCount="indefinite" begin="3.8s"/>
+  </circle>
+  <circle cx="142" cy="52" r="7" fill="rgba(46,204,128,0.15)" stroke="#2ecc80" stroke-width="2" filter="url(#e3)">
+    <animate attributeName="opacity" values="0;1" dur="0.15s" fill="freeze" begin="2.8s"/>
+    <animate attributeName="r" values="7;9;7" dur="2.5s" repeatCount="indefinite" begin="4.1s"/>
+  </circle>
+  <circle cx="164" cy="58" r="7" fill="rgba(245,158,11,0.15)" stroke="#f59e0b" stroke-width="2" filter="url(#e3)">
+    <animate attributeName="opacity" values="0;1" dur="0.15s" fill="freeze" begin="2.9s"/>
+    <animate attributeName="r" values="7;9;7" dur="2.5s" repeatCount="indefinite" begin="4.4s"/>
+  </circle>
+  <!-- Connecting arcs between profiles and book -->
+  <path d="M76,65 Q88,70 105,72" stroke="rgba(58,127,212,0.3)" stroke-width="1.5" stroke-dasharray="3 4" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.2s" fill="freeze" begin="3.2s"/></path>
+  <path d="M164,65 Q152,70 135,72" stroke="rgba(245,158,11,0.3)" stroke-width="1.5" stroke-dasharray="3 4" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.2s" fill="freeze" begin="3.3s"/></path>
+  <!-- Scan, corners, bottom -->
+  <rect x="26" y="0" width="188" height="2" fill="url(#eg)" clip-path="url(#ec)">
+    <animate attributeName="y" from="18" to="212" dur="3.5s" repeatCount="indefinite" begin="3.5s"/>
+    <animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.04;0.96;1" dur="3.5s" repeatCount="indefinite" begin="3.5s"/>
+  </rect>
+  <polyline points="44,68 44,54 58,54" fill="none" stroke="url(#eg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="stroke-dasharray" values="0 30;30 0" dur="0.3s" fill="freeze" begin="2s"/></polyline>
+  <polyline points="196,68 196,54 182,54" fill="none" stroke="url(#eg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="stroke-dasharray" values="0 30;30 0" dur="0.3s" fill="freeze" begin="2.1s"/></polyline>
+  <circle cx="120" cy="204" r="3.5" fill="#f07830" filter="url(#e1)"><animate attributeName="opacity" values="0;1" dur="0.2s" fill="freeze" begin="2s"/><animate attributeName="r" values="3.5;5;3.5" dur="2s" repeatCount="indefinite" begin="3.5s"/></circle>
+  <circle cx="120" cy="115" r="30" fill="none" stroke="rgba(240,120,48,0.06)" stroke-width="1"><animate attributeName="r" values="30;44;30" dur="4s" repeatCount="indefinite" begin="3.5s"/><animate attributeName="stroke-opacity" values="0.06;0.02;0.06" dur="4s" repeatCount="indefinite" begin="3.5s"/></circle>
+  <line x1="68" y1="24" x2="172" y2="24" stroke="rgba(245,200,66,0.18)" stroke-width="1" stroke-linecap="round"><animate attributeName="stroke-dasharray" values="0 104;104 0" dur="0.8s" fill="freeze" begin="0.5s"/></line>
+</svg></div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(3rem,9vw,7rem);line-height:.9;letter-spacing:-2px;margin-bottom:20px;">
+      Ciberseguridad<br>
+      <span style="color:var(--accent);font-style:italic;">para todos.</span>
+    </h1>
+    <p style="font-size:1.05rem;line-height:1.8;color:var(--ink2);max-width:520px;margin:0 auto 32px;">
+      Materiales gratuitos para <strong style="color:var(--ink);font-weight:400;">niños, adolescentes, familias y docentes</strong> de Chile. Sin tecnicismos. Sin miedo innecesario.
+    </p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+      <a href="#secciones" class="btn-p"><span>Ver secciones →</span></a>
+      <a href="/analizador-phishing.html" class="btn-g">Herramientas IA</a>
+    </div>
   </div>
-
-  <h1 class="hero-title">
-    <span class="line1">INTERNET</span>
-    <span class="line2">SEGURO</span>
-  </h1>
-
-  <div class="hero-audience">
-    <span class="aud-pill ninos">🧒 niños</span>
-    <span class="aud-pill teens">🧑‍💻 adolescentes</span>
-    <span class="aud-pill padres">👨‍👩‍👧 padres</span>
-    <span class="aud-pill profes">👩‍🏫 profesores</span>
-  </div>
-
-  <p class="hero-sub">
-    Materiales gratuitos, juegos interactivos y recursos reales para que toda la familia navegue con seguridad.
-  </p>
-
-  <div class="hero-cta-group">
-    <a href="/agente-seguridad.html" class="hero-btn-out">Consultar al agente IA</a>
-  </div>
-
 </section>
 
 <!-- POR QUÉ IMPORTA -->
-<section class="why-section">
-  <div class="why-inner">
-    <div class="why-left reveal">
-      <div class="section-label">por qué importa</div>
-      <h2 class="why-title">
-        LOS NIÑOS<br>SON EL<br><span>BLANCO</span>
-      </h2>
-      <p class="why-body">
-        El grooming, el phishing disfrazado de juego y el robo de identidad afectan a niños y jóvenes cada vez más. La educación digital temprana es la única defensa real — y la mayoría de los colegios todavía no la imparte.
-      </p>
-    </div>
-    <div class="why-stats reveal">
-      <div class="why-stat">
-        <span class="why-stat-num">+50%</span>
-        <div class="why-stat-text">
-          <strong>Phishing creció el último año</strong>
-          Muchas campañas usan contenido dirigido a menores: juegos, sorteos y redes sociales.
-        </div>
-      </div>
-      <div class="why-stat">
-        <span class="why-stat-num">60%</span>
-        <div class="why-stat-text">
-          <strong>Empresas chilenas sufrió brecha</strong>
-          En los últimos 2 años. Los datos de familias enteras quedaron expuestos.
-        </div>
-      </div>
-      <div class="why-stat">
-        <span class="why-stat-num">1 de 3</span>
-        <div class="why-stat-text">
-          <strong>Menores expuestos a contacto no deseado</strong>
-          En plataformas de juego y redes sociales sin supervisión ni educación.
-        </div>
-      </div>
+<div class="why-s">
+  <div class="why-in">
+    <div class="why-h">El problema <em>es real.</em></div>
+    <div class="why-stats">
+      <div class="wst"><div class="wst-n">+50%</div><div class="wst-l">Crecimiento del phishing en Chile — muchas campañas dirigidas a menores</div><div class="wst-s">ANCI 2025</div></div>
+      <div class="wst"><div class="wst-n">1 de 3</div><div class="wst-l">Menores expuestos a contacto no deseado en plataformas digitales</div><div class="wst-s">UNICEF / SERNAC</div></div>
+      <div class="wst"><div class="wst-n">22M</div><div class="wst-l">Intentos de phishing bloqueados en Chile — 42 por minuto</div><div class="wst-s">Kaspersky 2025</div></div>
     </div>
   </div>
-</section>
+</div>
 
+<div class="wrap page-inner">
 
-<!-- CARDS -->
-<section class="cards-section" id="secciones">
-  <div class="reveal" style="text-align:center;margin-bottom:2.5rem;">
-    <h2 style="font-family:var(--display);font-size:clamp(2.5rem,6vw,5rem);line-height:0.9;text-transform:uppercase;letter-spacing:0.02em;">¿PARA QUIÉN<br><span style="color:var(--green);">ES ESTO?</span></h2>
-    <p style="font-family:var(--mono);font-size:0.78rem;color:var(--muted);margin-top:1rem;letter-spacing:0.06em;">Elige tu perfil y accede al contenido que te corresponde</p>
+<div class="sw" id="secciones">
+  <div class="sl">// ¿Para quién es?</div>
+  <h2 class="st">Elige tu <em>camino.</em></h2>
+  <p class="si">Contenido diferenciado para cada perfil. El mismo tema se enseña distinto a un niño de 8 años y a un docente que tiene clase mañana.</p>
+  <div class="pg">
+    <a href="/educa/ninos.html" class="pc pcn">
+      <div class="pc-bgn">01</div>
+      <div class="pc-top"><div class="pc-ico">🧒</div><div><div class="pc-tag">01 · Niños</div><div class="pc-name">Niños</div></div></div>
+      <div class="pc-desc">Juegos interactivos y actividades para aprender qué es seguro compartir, cómo reconocer a un extraño online y qué hacer cuando algo no se siente bien.</div>
+      <div class="pc-pills"><span class="pp">6–12 años</span><span class="pp">juegos</span><span class="pp">actividades</span><span class="pp">agente IA</span></div>
+      <div class="pc-cta"><span class="pc-cta-t">ENTRAR</span><div class="pc-arr">→</div></div>
+    </a>
+    <a href="/educa/adolescentes.html" class="pc pca">
+      <div class="pc-bgn">02</div>
+      <div class="pc-top"><div class="pc-ico">🧑‍💻</div><div><div class="pc-tag">02 · Adolescentes</div><div class="pc-name">Adolescentes</div></div></div>
+      <div class="pc-desc">Quiz con puntaje real, privacidad en redes, grooming, phishing y reputación digital. Sin condescendencia — con respeto y sin bajarles el perfil.</div>
+      <div class="pc-pills"><span class="pp">13–17 años</span><span class="pp">quiz</span><span class="pp">redes sociales</span><span class="pp">agente IA</span></div>
+      <div class="pc-cta"><span class="pc-cta-t">ENTRAR</span><div class="pc-arr">→</div></div>
+    </a>
+    <a href="/educa/padres.html" class="pc pcp">
+      <div class="pc-bgn">03</div>
+      <div class="pc-top"><div class="pc-ico">👨‍👩‍👧</div><div><div class="pc-tag">03 · Familias</div><div class="pc-name">Familias</div></div></div>
+      <div class="pc-desc">Guías prácticas, conversaciones reales para tener con tus hijos y un agente IA para cuando algo pasa y no sabes qué hacer.</div>
+      <div class="pc-pills"><span class="pp">guías</span><span class="pp">PDF descargable</span><span class="pp">agente IA</span></div>
+      <div class="pc-cta"><span class="pc-cta-t">ENTRAR</span><div class="pc-arr">→</div></div>
+    </a>
+    <a href="/educa/profesores.html" class="pc pcd">
+      <div class="pc-bgn">04</div>
+      <div class="pc-top"><div class="pc-ico">👩‍🏫</div><div><div class="pc-tag">04 · Docentes</div><div class="pc-name">Docentes</div></div></div>
+      <div class="pc-desc">Planes de clase listos para usar mañana, generador de actividades con IA y agente docente para situaciones difíciles.</div>
+      <div class="pc-pills"><span class="pp">planes de clase</span><span class="pp">generador IA</span><span class="pp">1°básico–4°medio</span></div>
+      <div class="pc-cta"><span class="pc-cta-t">ENTRAR</span><div class="pc-arr">→</div></div>
+    </a>
   </div>
+</div>
 
-  <div class="cards-grid">
-
-    <!-- NIÑOS -->
-    <a href="/educa/ninos.html" class="seg-card card-ninos reveal">
-      <span class="free-badge">gratis</span>
-      <div class="seg-bg-num">01</div>
-      <span class="seg-icon">🧒</span>
-      <div class="seg-num">01 / 04</div>
-      <div class="seg-title">Niños</div>
-      <p class="seg-desc">
-        Para pequeños de 6 a 12 años. Juegos interactivos y actividades para aprender qué es seguro compartir en internet y cómo protegerse de extraños.
-      </p>
-      <div class="seg-pills">
-        <span class="seg-pill">6 – 12 años</span>
-        <span class="seg-pill">juegos</span>
-        <span class="seg-pill">actividades</span>
-      </div>
-      <div class="seg-arrow">→ entrar</div>
+<div class="sw" id="herramientas">
+  <div class="sl">// Herramientas gratuitas · Con IA</div>
+  <h2 class="st">Detecta. Evalúa.<br><em>Actúa ahora.</em></h2>
+  <p class="si">Tres herramientas concretas que resuelven un problema real en menos de 2 minutos. Sin registro, sin datos personales.</p>
+  <div class="tg">
+    <a href="/analizador-phishing.html" class="tc t1">
+      <div class="tc-ico">🎣</div><div class="tc-tag">IA EN TIEMPO REAL</div>
+      <div class="tc-name">Analizador de Phishing</div>
+      <div class="tc-desc">Pega una URL o mensaje sospechoso. La IA detecta si es un engaño y te explica exactamente por qué.</div>
+      <div class="tc-cta">Analizar ahora →</div>
     </a>
-
-    <!-- ADOLESCENTES -->
-    <a href="/educa/adolescentes.html" class="seg-card card-teens reveal">
-      <span class="free-badge">gratis</span>
-      <div class="seg-bg-num">02</div>
-      <span class="seg-icon">🧑‍💻</span>
-      <div class="seg-num">02 / 04</div>
-      <div class="seg-title">Adolescentes</div>
-      <p class="seg-desc">
-        Para jóvenes de 13 a 17 años. Quiz de ciberseguridad con puntaje, temas reales: privacidad en redes, phishing, grooming y reputación digital.
-      </p>
-      <div class="seg-pills">
-        <span class="seg-pill">13 – 17 años</span>
-        <span class="seg-pill">quiz</span>
-        <span class="seg-pill">redes sociales</span>
-      </div>
-      <div class="seg-arrow">→ entrar</div>
+    <a href="/checklist.html" class="tc t2">
+      <div class="tc-ico">✅</div><div class="tc-tag">PARA FAMILIAS</div>
+      <div class="tc-name">Checklist Familiar</div>
+      <div class="tc-desc">4 preguntas y recibes un plan personalizado para proteger tu hogar digital. Concreto, sin tecnicismos.</div>
+      <div class="tc-cta">Crear mi plan →</div>
     </a>
-
-    <!-- PADRES -->
-    <a href="/educa/padres.html" class="seg-card card-padres reveal">
-      <span class="free-badge">gratis</span>
-      <div class="seg-bg-num">03</div>
-      <span class="seg-icon">👨‍👩‍👧</span>
-      <div class="seg-num">03 / 04</div>
-      <div class="seg-title">Padres</div>
-      <p class="seg-desc">
-        Guías prácticas y conversaciones reales para tener con tus hijos. Sin tecnicismos, con ejemplos concretos para proteger a tu familia en el mundo digital.
-      </p>
-      <div class="seg-pills">
-        <span class="seg-pill">guías</span>
-        <span class="seg-pill">PDF descargable</span>
-        <span class="seg-pill">agente IA</span>
-      </div>
-      <div class="seg-arrow">→ entrar</div>
+    <a href="/agente-seguridad.html" class="tc t3">
+      <div class="tc-ico">🤖</div><div class="tc-tag">AGENTE IA · SIEMPRE DISPONIBLE</div>
+      <div class="tc-name">Agente de Seguridad</div>
+      <div class="tc-desc">¿Pasó algo y no sabes qué hacer? El agente IA responde preguntas adaptadas a familias y docentes.</div>
+      <div class="tc-cta">Consultar →</div>
     </a>
-
-    <!-- PROFESORES -->
-    <a href="/educa/profesores.html" class="seg-card card-profes reveal">
-      <span class="free-badge">gratis</span>
-      <div class="seg-bg-num">04</div>
-      <span class="seg-icon">👩‍🏫</span>
-      <div class="seg-num">04 / 04</div>
-      <div class="seg-title">Profesores</div>
-      <p class="seg-desc">
-        Material listo para aplicar en clases: presentaciones, actividades y guías docentes. Sin preparación extra — llega y enseña.
-      </p>
-      <div class="seg-pills">
-        <span class="seg-pill">presentaciones</span>
-        <span class="seg-pill">guía docente</span>
-        <span class="seg-pill">actividades</span>
-      </div>
-      <div class="seg-arrow">→ entrar</div>
-    </a>
-
   </div>
-</section>
+</div>
 
-<!-- HERRAMIENTAS IA -->
-<section class="tools-section reveal">
-  <div class="tools-label">// herramientas gratuitas · powered by ia</div>
-  <h2 class="tools-title">DETECTA.<br>PLANIFICA.<br><span>PROTÉGETE.</span></h2>
-  <p class="tools-sub">Herramientas interactivas con inteligencia artificial para analizar amenazas reales y armar tu plan de seguridad.</p>
-  <div class="tools-grid">
-
-    <a href="/analizador-phishing.html" class="tool-card tool-phishing">
-      <div class="tool-icon">🎣</div>
-      <div class="tool-tag">IA en tiempo real</div>
-      <div class="tool-name">ANALIZADOR<br>DE PHISHING</div>
-      <div class="tool-desc">Pega una URL o mensaje sospechoso. La IA detecta si es un engaño y te explica por qué — en segundos.</div>
-      <div class="tool-cta">Analizar ahora →</div>
-    </a>
-
-    <a href="/checklist.html" class="tool-card tool-checklist">
-      <div class="tool-icon">✅</div>
-      <div class="tool-tag">Para familias y colegios</div>
-      <div class="tool-name">CHECKLIST<br>FAMILIAR</div>
-      <div class="tool-desc">¿Cómo está de seguro tu hogar digital? Responde 4 preguntas y recibe un plan concreto para proteger a tu familia.</div>
-      <div class="tool-cta">Crear mi plan familiar →</div>
-    </a>
-
-  </div>
-</section>
-
-<!-- NEWSLETTER -->
-<section class="extras-section reveal">
-  <div class="section-label" style="margin-bottom:1.5rem;">// también disponible</div>
-  <a href="/educa/newsletter.html" class="extras-card">
-    <span class="extras-icon">📬</span>
+<div class="sw" id="newsletter">
+  <div class="nl">
     <div>
-      <div class="extras-tag">Newsletter · mensual · gratis · para profesores</div>
-      <div class="extras-title">La amenaza del mes</div>
-      <div class="extras-desc">Un correo mensual con la amenaza digital más relevante + actividad lista para usar en clases. Sin spam.</div>
+      <div class="nl-lbl">// NEWSLETTER MENSUAL · SOLO PARA DOCENTES</div>
+      <div class="nl-title">La amenaza del mes</div>
+      <div class="nl-desc">Un correo mensual con la amenaza digital más relevante para tus alumnos + una actividad lista para usar en clases. Sin spam. Sin vender nada.</div>
     </div>
-    <div class="extras-arrow">suscribirse →</div>
-  </a>
-</section>
+    <a href="/educa/newsletter.html" class="btn-p" style="white-space:nowrap"><span>Suscribirse gratis →</span></a>
+  </div>
+</div>
 
-<!-- CTA -->
-<section class="cta-section reveal">
-  <div class="cta-label">¿quieres más?</div>
-  <h2 class="cta-title">LLEVA ESTO A<br>TU <span>COLEGIO</span></h2>
-  <p class="cta-sub">
-    Talleres presenciales, charlas para apoderados y programas anuales de ciberseguridad educativa. Diseñados para colegios y jardines en Chile.
-  </p>
-  <a href="/contactos.html" class="cta-btn">quiero saber más →</a>
-</section>
+<div class="sw">
+  <div class="mf">
+    <div class="mf-text">La educación digital temprana es la única defensa real — y la mayoría de los colegios todavía no la imparte. <em>Aegis8 existe para cambiar eso.</em> Gratis. Para todos. Sin excusas.</div>
+    <div class="mf-sig">// Aegis8 · Proyecto Social · Chile · 2026</div>
+  </div>
+</div>
 
-<!-- FOOTER -->
-<footer>
-  <a href="/">aegis8</a>
-  <span>educación digital · materiales gratuitos</span>
-  <a href="/contactos.html">contacto →</a>
+</div><!-- /wrap -->
+
+<footer class="page-footer">
+  <a href="/" class="fl">AEGIS<span>8</span></a>
+  <ul class="flinks">
+    <li><a href="/educa.html">Educa</a></li>
+    <li><a href="/educa/profesores.html">Docentes</a></li>
+    <li><a href="/educa/padres.html">Familias</a></li>
+    <li><a href="/analizador-phishing.html">Herramientas</a></li>
+    <li><a href="/contactos.html">Contacto</a></li>
+  </ul>
+  <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+    <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
+    
+  </div>
 </footer>
-
 <script>
-// Scroll reveal
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// Stagger card reveals
-document.querySelectorAll('.seg-card').forEach((card, i) => {
-  card.style.transitionDelay = `${i * 0.1}s`;
-});
+const ro=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});
+},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.sw').forEach(el=>ro.observe(el));
 
-// 3D tilt on cards
-document.querySelectorAll('.seg-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width  - 0.5;
-    const y = (e.clientY - r.top)  / r.height - 0.5;
-    card.style.transform = `perspective(800px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) scale(1.01)`;
-  });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = '';
-  });
-});
 
-// Animate hero audience pills with stagger
-document.querySelectorAll('.aud-pill').forEach((pill, i) => {
-  pill.style.opacity = '0';
-  pill.style.transform = 'translateY(10px)';
-  pill.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-  setTimeout(() => {
-    pill.style.opacity = '1';
-    pill.style.transform = '';
-  }, 400 + i * 100);
-});
-</script>
-
-<script src="/aegis-nav.js"></script>
-<style>
-/* cursor override - siempre al final */
-*, *::before, *::after { cursor: none !important; }
-#cursor { display: block !important; }
-#cursor-ring { display: block !important; }
-</style>
-<script>
-/* CURSOR */
-(function(){
-  var cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring'),moved=false;
-  if(!cur||!ring)return;
-  document.addEventListener('mousemove',function(e){
-    cur.style.left=(e.clientX-6)+'px';cur.style.top=(e.clientY-6)+'px';
-    ring.style.left=(e.clientX-18)+'px';ring.style.top=(e.clientY-18)+'px';
-    if(!moved){cur.style.opacity='1';ring.style.opacity='1';moved=true;}
-  },true);
-  document.addEventListener('mouseleave',function(){cur.style.opacity='0';ring.style.opacity='0';});
-  document.addEventListener('mouseenter',function(){if(moved){cur.style.opacity='1';ring.style.opacity='1';}});
-})();
 </script>
 </body>
 </html>

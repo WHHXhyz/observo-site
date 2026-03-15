@@ -1,1731 +1,353 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#0a0a0a">
-<meta name="description" content="Plataforma interactiva de formación en ciberseguridad. Quiz, simulador de phishing, análisis de contraseñas y más. Por Aegis8.">
-<title>Formación · Aegis8</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Docentes · Aegis8 Educa</title>
+<meta name="description" content="Planes de clase, recursos y agente IA para enseñar ciberseguridad sin ser experto. Para docentes de Chile."/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
+  <script src="/aegis-nav.js"></script>
 <style>
-/* ============================================================
-   AEGIS8 DESIGN SYSTEM — matched from aegis8.org
-   ============================================================ */
-:root {
-  --bg:       #0a0a0a;
-  --bg2:      #111111;
-  --surface:  #161616;
-  --surface2: #1c1c1c;
-  --border:   #2a2a2a;
-  --border2:  #333333;
-  --green:    #00ff87;
-  --green-dim:rgba(0,255,135,0.12);
-  --green-glow:rgba(0,255,135,0.25);
-  --red:      #ff4444;
-  --amber:    #ffaa00;
-  --blue:     #4499ff;
-  --text:     #e8e8e8;
-  --text-mid: #999999;
-  --text-dim: #555555;
-  --mono:     'IBM Plex Mono', monospace;
-  --sans:     'Inter', sans-serif;
-  --nav-h:    64px;
-  --bottom-h: 60px;
-}
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html { font-size: 16px; }
-html, body { height: 100%; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--sans);
-  line-height: 1.5;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+:root{
+  --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
+  --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
+  --card:rgba(255,255,255,.03);--radius:4px;
 }
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(58,127,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.025) 1px,transparent 1px);
+  background-size:80px 80px;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+.page-inner{position:relative;z-index:10;}
+.sl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+  color:var(--accent);text-transform:uppercase;margin-bottom:12px;}
+.st{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.6rem);
+  line-height:1.05;color:var(--ink);margin-bottom:20px;letter-spacing:-1px;}
+.st em{font-style:italic;color:var(--accent);}
+.si{font-size:1rem;line-height:1.9;color:var(--ink2);max-width:640px;margin-bottom:40px;}
+.sw{padding:80px 0 48px;border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
+.sw.vis{opacity:1;transform:none;}
+.sw:last-child{border-bottom:none;}
+.btn-p{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--bg);background:var(--accent);border:none;padding:14px 28px;border-radius:var(--radius);
+  text-decoration:none;transition:all .25s;position:relative;overflow:hidden;display:inline-block;cursor:pointer!important;}
+.btn-p::before{content:'';position:absolute;inset:0;background:var(--accent2);transform:translateX(-100%);transition:transform .3s;}
+.btn-p:hover::before{transform:translateX(0);}
+.btn-p span,.btn-p{position:relative;z-index:1;}
+.btn-p:hover{box-shadow:0 0 28px rgba(240,120,48,.4);transform:translateY(-2px);}
+.btn-g{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink2);background:transparent;border:1px solid var(--border);
+  padding:14px 28px;border-radius:var(--radius);text-decoration:none;transition:all .25s;display:inline-block;}
+.btn-g:hover{color:var(--ink);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
+/* CHAT SHARED */
+.chat-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;}
+.chat-hd{background:rgba(240,120,48,.05);border-bottom:1px solid var(--border2);
+  padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.chat-hd-l{display:flex;align-items:center;gap:.75rem;}
+.chat-ava{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  background:rgba(240,120,48,.12);}
+.chat-name{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;color:var(--ink);}
+.chat-status{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--green);letter-spacing:1px;}
+.chat-live{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+.chat-msgs{height:320px;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;}
+.chat-msgs::-webkit-scrollbar{width:3px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.msg{display:flex;gap:.6rem;align-items:flex-start;}
+.msg.user{flex-direction:row-reverse;}
+.msg-ava{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;flex-shrink:0;background:var(--card);}
+.msg-bubble{background:var(--card);border:1px solid var(--border);padding:.65rem .9rem;
+  font-size:.84rem;line-height:1.6;max-width:85%;border-radius:2px;color:var(--ink2);}
+.msg.user .msg-bubble{background:rgba(240,120,48,.06);border-color:var(--border2);color:var(--ink);}
+.chat-quick{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.4rem;}
+.qbtn{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1px;
+  color:var(--accent);border:1px solid var(--border2);background:rgba(240,120,48,.04);
+  padding:.3rem .7rem;border-radius:var(--radius);cursor:pointer!important;transition:all .2s;}
+.qbtn:hover{background:rgba(240,120,48,.1);border-color:var(--accent);}
+.chat-row{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:.5rem;}
+.chat-in{flex:1;background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);
+  padding:.65rem 1rem;font-family:'Lato',sans-serif;font-size:.88rem;color:var(--ink);
+  outline:none;transition:border-color .2s;}
+.chat-in:focus{border-color:var(--accent);}
+.chat-in::placeholder{color:var(--ink3);}
+.send-btn{background:var(--accent);color:var(--bg);border:none;padding:.65rem 1.1rem;
+  border-radius:var(--radius);font-weight:700;cursor:pointer!important;transition:background .2s;}
+.send-btn:hover{background:var(--accent2);}
+.typing-wrap{display:flex;gap:4px;align-items:center;}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.3;
+  animation:tdot 1.2s ease-in-out infinite;}
+.tdot:nth-child(2){animation-delay:.2s;}.tdot:nth-child(3){animation-delay:.4s;}
+@keyframes tdot{0%,80%,100%{opacity:.2;transform:scale(.8);}40%{opacity:1;transform:scale(1);}}
+/* FOOTER */
+.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);
+  padding:48px 32px 32px;max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;
+  letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.fl span{color:var(--accent);}
+.flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.flinks a:hover{color:var(--accent);}
+.fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
+/* SCROLL REVEAL JS inline */
+@media(max-width:640px){.wrap{padding:0 16px;}.page-footer{padding:32px 16px;}}
 
-/* NOISE TEXTURE */
-body::before {
-  content: '';
-  position: fixed; inset: 0; z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-}
 
-/* ============================================================
-   NAVIGATION — exact Aegis8 style
-   ============================================================ */
-.nav {
-  position: sticky; top: 0; z-index: 200;
-  height: var(--nav-h);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 40px;
-  background: rgba(10,10,10,0.95);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-.nav-logo {
-  font-family: var(--mono);
-  font-size: 15px; font-weight: 500;
-  color: var(--green); letter-spacing: 2px;
-  text-decoration: none; text-transform: uppercase;
-  display: flex; align-items: center; gap: 10px;
-}
-.nav-logo::before {
-  content: '';
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 8px var(--green);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.page-hero-s{position:relative;z-index:10;padding:72px 0 48px;border-bottom:1px solid var(--border);}
+.hero-ey{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ink3);margin-bottom:24px;display:flex;align-items:center;gap:10px;}
+.hero-ey-line{width:28px;height:1px;background:var(--accent);}
+.planes-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:40px;}
+@media(max-width:720px){.planes-g{grid-template-columns:1fr;}}
+.plan-c{background:var(--bg2);padding:2rem 1.75rem;transition:background .2s;position:relative;overflow:hidden;}
+.plan-c::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.plan-c:hover::before{transform:scaleX(1);}
+.plan-c:hover{background:rgba(255,255,255,.03);}
+.plan-n{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;color:var(--accent);margin-bottom:.5rem;}
+.plan-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);margin-bottom:.5rem;line-height:1.2;}
+.plan-meta{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ink3);letter-spacing:1px;margin-bottom:.75rem;}
+.plan-desc{font-size:.82rem;color:var(--ink2);line-height:1.6;margin-bottom:1rem;}
+.plan-pills{display:flex;flex-wrap:wrap;gap:.4rem;}
+.pp{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:1px;
+  padding:2px 7px;border-radius:20px;border:1px solid var(--border);color:var(--ink3);}
+.recursos-g{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);margin-top:40px;}
+@media(max-width:640px){.recursos-g{grid-template-columns:1fr;}}
+.rec{background:var(--bg2);padding:1.75rem;display:flex;gap:1rem;transition:background .2s;}
+.rec:hover{background:rgba(255,255,255,.03);}
+.rec-ico{font-size:1.5rem;flex-shrink:0;margin-top:2px;}
+.rec-title{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink);font-weight:600;margin-bottom:.3rem;}
+.rec-desc{font-size:.8rem;color:var(--ink2);line-height:1.6;}
+.tip-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px;}
+@media(max-width:640px){.tip-g{grid-template-columns:1fr;}}
+.tip{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.25rem;}
+.tip-n{font-family:'DM Serif Display',serif;font-size:2.5rem;color:rgba(240,120,48,.12);line-height:1;margin-bottom:.5rem;}
+.tip-text{font-size:.84rem;color:var(--ink2);line-height:1.6;}
+.tip-text strong{color:var(--ink);}
 
-.nav-links {
-  display: flex; align-items: center; gap: 32px;
-  list-style: none;
-}
-.nav-links a {
-  font-family: var(--mono); font-size: 12px;
-  color: var(--text-mid); text-decoration: none;
-  letter-spacing: 1px; text-transform: lowercase;
-  transition: color .2s;
-}
-.nav-links a:hover { color: var(--green); }
-.nav-links a.active { color: var(--text); }
-
-.nav-tag {
-  font-family: var(--mono); font-size: 10px;
-  color: var(--green); border: 1px solid var(--green);
-  padding: 4px 10px; letter-spacing: 1px;
-  opacity: .7;
-}
-
-/* ============================================================
-   APP SHELL — mobile-first scroll
-   ============================================================ */
-#shell {
-  position: relative; z-index: 1;
-  height: calc(100vh - var(--nav-h));
-  display: flex; flex-direction: column;
-}
-.scroll-area {
-  flex: 1; overflow-y: auto; overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-}
-.scroll-area::-webkit-scrollbar { width: 2px; }
-.scroll-area::-webkit-scrollbar-thumb { background: var(--border2); }
-
-/* BOTTOM NAV (mobile) */
-.bottom-nav {
-  display: none;
-  height: var(--bottom-h);
-  background: rgba(10,10,10,0.97);
-  border-top: 1px solid var(--border);
-  backdrop-filter: blur(16px);
-  padding-bottom: env(safe-area-inset-bottom);
-}
-@media (max-width: 768px) {
-  .nav { padding: 0 20px; }
-  .nav-links { display: none; }
-  .nav-tag { display: none; }
-  #shell { height: calc(100vh - var(--nav-h) - var(--bottom-h)); }
-  .bottom-nav { display: flex; }
-  .section { padding: 24px 16px 32px; }
-}
-.bottom-nav { flex-direction: row; }
-.bn-item {
-  flex: 1; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 3px;
-  cursor: pointer; border: none; background: transparent;
-  padding: 8px 4px; transition: background .15s;
-}
-.bn-item:active { background: rgba(0,255,135,0.04); }
-.bn-item .bi { font-size: 19px; transition: transform .2s; }
-.bn-item .bl { font-family: var(--mono); font-size: 9px; letter-spacing: .5px; color: var(--text-dim); transition: color .2s; }
-.bn-item.active .bi { transform: scale(1.1); }
-.bn-item.active .bl { color: var(--green); }
-.bn-item.active { background: rgba(0,255,135,0.04); }
-
-/* MORE DRAWER */
-.more-drawer {
-  position: fixed; bottom: calc(var(--bottom-h) + 8px); left: 8px; right: 8px;
-  background: var(--surface); border: 1px solid var(--border2);
-  z-index: 300; display: none; animation: slideUp .2s ease;
-}
-.more-drawer.open { display: grid; grid-template-columns: 1fr 1fr; }
-@keyframes slideUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-.md-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 16px 14px; border-bottom: 1px solid var(--border);
-  border-right: 1px solid var(--border);
-  cursor: pointer; font-size: 13px; color: var(--text-mid);
-  transition: all .15s;
-}
-.md-item:nth-child(even) { border-right: none; }
-.md-item:nth-last-child(-n+2) { border-bottom: none; }
-.md-item:active { color: var(--green); background: var(--green-dim); }
-.md-icon { font-size: 18px; flex-shrink: 0; }
-
-/* ============================================================
-   SECTIONS
-   ============================================================ */
-.section { display: none; padding: 40px; max-width: 880px; margin: 0 auto; width: 100%; }
-.section.active { display: block; animation: fadeUp .3s ease; }
-@keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-
-/* ============================================================
-   AEGIS8 TYPOGRAPHY SYSTEM
-   ============================================================ */
-.page-label {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 3px;
-  color: var(--green); text-transform: uppercase;
-  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
-}
-.page-label::before { content: '//'; color: var(--text-dim); }
-
-.page-title {
-  font-size: clamp(36px, 7vw, 64px); font-weight: 900;
-  line-height: .95; letter-spacing: -2px; color: var(--text);
-  text-transform: uppercase; margin-bottom: 16px;
-}
-.page-title em { color: var(--green); font-style: normal; }
-
-.page-sub {
-  font-size: 15px; color: var(--text-mid); font-weight: 300;
-  line-height: 1.65; max-width: 520px; margin-bottom: 32px;
-}
-
-.sec-label {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 3px;
-  color: var(--text-dim); text-transform: uppercase;
-  margin-bottom: 20px; padding-bottom: 12px;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 8px;
-}
-.sec-label::before { content: '//'; color: var(--green); }
-
-/* ============================================================
-   HOME
-   ============================================================ */
-.hero { padding: 40px 0 32px; }
-
-.module-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1px; background: var(--border);
-  border: 1px solid var(--border); margin-top: 8px;
-}
-.mod-card {
-  background: var(--bg); padding: 22px 18px;
-  cursor: pointer; transition: background .15s;
-  display: flex; flex-direction: column; gap: 10px;
-}
-.mod-card:hover { background: var(--surface); }
-.mod-card:active { background: var(--green-dim); }
-.mod-icon { font-size: 22px; }
-.mod-name {
-  font-family: var(--mono); font-size: 12px; font-weight: 500;
-  color: var(--text); letter-spacing: 1px; text-transform: uppercase;
-}
-.mod-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
-.mod-soon { opacity: .3; cursor: default; }
-.mod-soon:hover { background: var(--bg); }
-
-.stats-strip {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 1px; background: var(--border);
-  border: 1px solid var(--border); margin-bottom: 32px;
-}
-@media (max-width: 600px) { .stats-strip { grid-template-columns: 1fr 1fr; } }
-.stat-box { background: var(--bg); padding: 20px 16px; }
-.stat-n {
-  font-family: var(--mono); font-size: 28px;
-  line-height: 1; margin-bottom: 4px;
-}
-.stat-n.g { color: var(--green); }
-.stat-n.r { color: var(--red); }
-.stat-n.a { color: var(--amber); }
-.stat-l { font-size: 11px; color: var(--text-dim); line-height: 1.35; }
-
-.cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
-.btn-primary {
-  padding: 13px 28px; background: var(--green); color: #000;
-  font-family: var(--mono); font-size: 12px; font-weight: 500;
-  letter-spacing: 1px; text-transform: lowercase;
-  border: none; cursor: pointer; transition: all .2s;
-  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
-}
-.btn-primary:hover { background: #fff; }
-.btn-primary:active { transform: scale(.97); }
-.btn-ghost {
-  padding: 12px 24px; background: transparent;
-  border: 1px solid var(--border2); color: var(--text-mid);
-  font-family: var(--mono); font-size: 12px; letter-spacing: 1px; text-transform: lowercase;
-  cursor: pointer; transition: all .2s;
-}
-.btn-ghost:hover { border-color: var(--green); color: var(--green); }
-
-/* ============================================================
-   SHARED COMPONENTS
-   ============================================================ */
-.panel {
-  background: var(--surface); border: 1px solid var(--border);
-  padding: 20px; margin-bottom: 12px; position: relative; overflow: hidden;
-}
-.panel-accent::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, var(--green), transparent);
-}
-.panel-red::before { background: linear-gradient(90deg, var(--red), transparent); }
-.panel-amber::before { background: linear-gradient(90deg, var(--amber), transparent); }
-.panel-blue::before { background: linear-gradient(90deg, var(--blue), transparent); }
-
-.tag {
-  display: inline-block; font-family: var(--mono); font-size: 9px;
-  letter-spacing: 2px; text-transform: uppercase; padding: 2px 8px;
-  border: 1px solid currentColor;
-}
-.tag-g { color: var(--green); }
-.tag-r { color: var(--red); }
-.tag-a { color: var(--amber); }
-.tag-b { color: var(--blue); }
-
-/* ============================================================
-   QUIZ
-   ============================================================ */
-.q-prog { height: 2px; background: var(--border); margin-bottom: 24px; overflow: hidden; }
-.q-prog-fill { height: 100%; background: var(--green); transition: width .5s ease; }
-
-.q-wrap { max-width: 640px; }
-.q-cat { font-family: var(--mono); font-size: 10px; letter-spacing: 3px; color: var(--green); text-transform: uppercase; margin-bottom: 10px; }
-.q-text { font-size: 18px; font-weight: 600; color: var(--text); line-height: 1.45; margin-bottom: 24px; }
-.q-opts { display: grid; gap: 8px; }
-.q-opt {
-  padding: 14px 16px; background: var(--bg); border: 1px solid var(--border);
-  font-family: var(--sans); font-size: 14px; color: var(--text-mid);
-  cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: 12px;
-  text-align: left; width: 100%;
-}
-.q-opt:hover { border-color: var(--border2); color: var(--text); background: var(--surface); }
-.q-opt:active { background: var(--green-dim); }
-.q-opt.correct { border-color: var(--green); background: var(--green-dim); color: var(--green); }
-.q-opt.wrong { border-color: var(--red); background: rgba(255,68,68,.07); color: var(--red); }
-.q-opt.disabled { cursor: default; pointer-events: none; }
-.q-letter {
-  width: 24px; height: 24px; border: 1px solid currentColor; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--mono); font-size: 10px;
-}
-.q-fb {
-  margin-top: 16px; padding: 14px 16px;
-  border-left: 2px solid var(--green); background: var(--green-dim);
-  font-size: 13px; color: var(--text-mid); line-height: 1.65; display: none;
-}
-.q-fb.wrong { border-color: var(--red); background: rgba(255,68,68,.07); }
-.q-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
-.q-count { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
-.btn-qnext {
-  padding: 10px 20px; background: transparent;
-  border: 1px solid var(--green); color: var(--green);
-  font-family: var(--mono); font-size: 11px; letter-spacing: 1px; text-transform: lowercase;
-  cursor: pointer; transition: all .2s; display: none;
-}
-.btn-qnext:hover { background: var(--green); color: #000; }
-
-.q-result {
-  text-align: center; padding: 48px 24px; background: var(--surface);
-  border: 1px solid var(--border); display: none;
-}
-.qr-score { font-family: var(--mono); font-size: 72px; line-height: 1; }
-.qr-label { font-family: var(--mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; }
-.qr-msg { font-size: 15px; color: var(--text-mid); margin: 14px 0 28px; line-height: 1.6; }
-.btn-restart {
-  padding: 13px 28px; background: var(--green); color: #000;
-  font-family: var(--mono); font-size: 12px; font-weight: 500;
-  letter-spacing: 1px; text-transform: lowercase;
-  border: none; cursor: pointer; transition: all .2s; width: 100%; max-width: 320px;
-}
-.btn-restart:hover { background: #fff; }
-
-/* ============================================================
-   THREATS
-   ============================================================ */
-.threat-row {
-  display: flex; align-items: center; gap: 14px;
-  padding: 16px; background: var(--bg); border: 1px solid var(--border);
-  margin-bottom: 6px; cursor: pointer; transition: all .15s;
-}
-.threat-row:hover { background: var(--surface); }
-.threat-row:active { background: var(--green-dim); }
-.threat-row.open { border-color: rgba(255,68,68,.4); background: rgba(255,68,68,.03); }
-.ti { font-size: 20px; width: 30px; text-align: center; flex-shrink: 0; }
-.tn { font-size: 14px; font-weight: 600; color: var(--text); }
-.td { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
-.ts { margin-left: auto; flex-shrink: 0; }
-.chev { margin-left: 6px; font-family: var(--mono); font-size: 12px; color: var(--text-dim); transition: transform .2s; flex-shrink: 0; }
-.threat-row.open .chev { transform: rotate(90deg); }
-
-.threat-detail {
-  background: var(--surface2); border: 1px solid var(--border);
-  border-top: none; padding: 20px; margin-bottom: 6px; display: none;
-  animation: fadeUp .2s ease;
-}
-.threat-detail.open { display: block; }
-.dt-h { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
-.dt-p { font-size: 13px; color: var(--text-mid); line-height: 1.65; margin-bottom: 16px; }
-.dt-list { list-style: none; margin-bottom: 16px; }
-.dt-list li { font-size: 13px; color: var(--text-mid); padding: 5px 0 5px 16px; position: relative; line-height: 1.5; }
-.dt-list li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-family: var(--mono); font-size: 11px; }
-
-/* ============================================================
-   CHECKLIST
-   ============================================================ */
-.ck-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-.ck-bar-wrap { flex: 1; height: 2px; background: var(--border); }
-.ck-bar-fill { height: 100%; background: var(--green); transition: width .4s; }
-.ck-pct { font-family: var(--mono); font-size: 13px; color: var(--green); min-width: 36px; text-align: right; }
-
-.ck-group { margin-bottom: 2px; }
-.ck-g-title {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 16px; background: var(--surface); border: 1px solid var(--border);
-  cursor: pointer; transition: background .15s;
-  font-family: var(--mono); font-size: 12px; color: var(--text); letter-spacing: 1px; text-transform: uppercase;
-}
-.ck-g-title:hover { background: var(--surface2); }
-.ck-g-ch { color: var(--text-dim); transition: transform .2s; }
-.ck-g-title.open .ck-g-ch { transform: rotate(90deg); }
-.ck-items { display: none; }
-.ck-items.open { display: block; }
-.ck-item {
-  display: flex; align-items: flex-start; gap: 12px;
-  padding: 12px 16px; background: var(--bg); border: 1px solid var(--border); border-top: none;
-  cursor: pointer; transition: background .15s;
-}
-.ck-item:hover { background: var(--surface); }
-.ck-item:active { background: var(--green-dim); }
-.ck-box {
-  width: 16px; height: 16px; border: 1px solid var(--border2); flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--mono); font-size: 10px; margin-top: 2px; transition: all .2s;
-}
-.ck-item.done .ck-box { background: var(--green); border-color: var(--green); color: #000; }
-.ck-text { font-size: 13px; color: var(--text-mid); line-height: 1.5; }
-.ck-item.done .ck-text { color: var(--text-dim); text-decoration: line-through; }
-
-/* ============================================================
-   PHISHING
-   ============================================================ */
-.email-frame {
-  background: #fff; border-radius: 1px; overflow: hidden;
-  box-shadow: 0 8px 40px rgba(0,0,0,.7); margin-bottom: 16px;
-}
-.em-hdr { background: #efefef; padding: 14px 16px; border-bottom: 1px solid #ddd; }
-.em-field { display: flex; gap: 6px; font-size: 12px; color: #555; margin-bottom: 4px; }
-.em-field:last-child { margin: 0; }
-.em-field strong { color: #888; min-width: 32px; }
-.em-subj { font-size: 15px; font-weight: 600; color: #111; padding: 12px 16px; border-bottom: 1px solid #e0e0e0; }
-.em-body { padding: 20px 16px; font-size: 13px; color: #333; line-height: 1.8; }
-.em-body p { margin-bottom: 10px; }
-.elink { color: #1a56db; text-decoration: underline; word-break: break-all; }
-.ecta { display: inline-block; padding: 10px 20px; background: #1a56db; color: #fff; font-weight: 600; border-radius: 3px; font-size: 13px; cursor: pointer; }
-
-.ph-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
-.ph-btn {
-  padding: 13px 8px; border: 1px solid; background: transparent;
-  font-family: var(--mono); font-size: 11px; letter-spacing: 1px; text-transform: lowercase;
-  cursor: pointer; transition: all .15s;
-}
-.ph-btn:active { opacity: .7; }
-.ph-safe { border-color: var(--green); color: var(--green); }
-.ph-safe:hover { background: var(--green); color: #000; }
-.ph-danger { border-color: var(--red); color: var(--red); }
-.ph-danger:hover { background: var(--red); color: #fff; }
-.ph-report { border-color: var(--amber); color: var(--amber); grid-column: 1/-1; }
-.ph-report:hover { background: var(--amber); color: #000; }
-
-.ph-verdict {
-  background: var(--surface); border: 1px solid var(--border);
-  padding: 18px; display: none; margin-bottom: 12px;
-}
-.pv-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
-.pv-clue { display: flex; gap: 10px; font-size: 13px; color: var(--text-mid); padding: 7px 0; border-bottom: 1px solid var(--border); line-height: 1.5; }
-.pv-clue:last-child { border: none; }
-.pv-clue span:first-child { flex-shrink: 0; }
-.btn-nphish {
-  width: 100%; padding: 13px; background: transparent;
-  border: 1px solid var(--border2); color: var(--text-mid);
-  font-family: var(--mono); font-size: 11px; letter-spacing: 1px; text-transform: lowercase;
-  cursor: pointer; transition: all .2s; display: none; margin-top: 8px;
-}
-.btn-nphish:hover { border-color: var(--green); color: var(--green); }
-
-/* ============================================================
-   PASSWORD ANALYZER
-   ============================================================ */
-.pw-wrap { max-width: 600px; }
-.pw-input-row { position: relative; margin-bottom: 16px; }
-.pw-input {
-  width: 100%; padding: 16px 48px 16px 16px;
-  background: var(--surface); border: 1px solid var(--border);
-  color: var(--text); font-family: var(--mono); font-size: 15px;
-  outline: none; transition: border-color .2s; border-radius: 0;
-  -webkit-appearance: none;
-}
-.pw-input:focus { border-color: var(--green); }
-.pw-eye {
-  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-  background: none; border: none; color: var(--text-dim); font-size: 16px; cursor: pointer; padding: 6px;
-}
-
-.pw-bars { display: flex; gap: 4px; margin-bottom: 8px; }
-.pw-bar { height: 3px; flex: 1; background: var(--border); transition: background .3s; }
-.pw-bar.f1 { background: var(--red); }
-.pw-bar.f2 { background: var(--amber); }
-.pw-bar.f3 { background: var(--blue); }
-.pw-bar.f4 { background: var(--green); }
-.pw-score-row { display: flex; justify-content: space-between; margin-bottom: 16px; }
-.pw-score-label { font-family: var(--mono); font-size: 12px; }
-.pw-crack { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
-
-.pw-criteria { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 20px; }
-@media (max-width: 500px) { .pw-criteria { grid-template-columns: 1fr 1fr; } }
-.pw-crit {
-  display: flex; align-items: center; gap: 8px;
-  padding: 10px 12px; background: var(--surface); border: 1px solid var(--border);
-  font-family: var(--mono); font-size: 11px; color: var(--text-dim);
-  transition: all .2s; letter-spacing: .5px;
-}
-.pw-crit.pass { border-color: rgba(0,255,135,.3); color: var(--green); background: var(--green-dim); }
-.pw-cc { font-size: 10px; flex-shrink: 0; }
-
-.btn-gen {
-  width: 100%; padding: 14px; background: transparent;
-  border: 1px solid var(--border2); color: var(--text-mid);
-  font-family: var(--mono); font-size: 12px; letter-spacing: 1px; text-transform: lowercase;
-  cursor: pointer; transition: all .2s; margin-bottom: 12px;
-}
-.btn-gen:hover { border-color: var(--green); color: var(--green); }
-
-.pw-generated { background: var(--surface); border: 1px solid var(--border); padding: 16px; display: none; margin-bottom: 16px; }
-.pw-gen-val { font-family: var(--mono); font-size: 14px; color: var(--green); word-break: break-all; line-height: 1.6; margin-bottom: 12px; }
-.btn-copy {
-  padding: 8px 14px; background: transparent;
-  border: 1px solid var(--border2); color: var(--text-dim);
-  font-family: var(--mono); font-size: 11px; cursor: pointer; transition: all .2s;
-}
-.btn-copy.copied { border-color: var(--green); color: var(--green); }
-
-.pw-tips { margin-top: 8px; }
-.pw-tip { display: flex; align-items: flex-start; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text-mid); line-height: 1.55; }
-.pw-tip:last-child { border: none; }
-.pw-tip-icon { font-size: 14px; flex-shrink: 0; font-family: var(--mono); color: var(--green); }
-
-/* ============================================================
-   BREACH SIMULATOR
-   ============================================================ */
-.breach-intro {
-  background: rgba(255,68,68,.05); border: 1px solid rgba(255,68,68,.2);
-  padding: 16px; margin-bottom: 24px;
-  font-size: 13px; color: var(--text-mid); line-height: 1.65;
-}
-.breach-intro strong { color: var(--red); }
-
-.scenario-tabs { display: flex; gap: 0; margin-bottom: 20px; overflow-x: auto; }
-.scenario-tabs::-webkit-scrollbar { display: none; }
-.sc-tab {
-  flex-shrink: 0; padding: 9px 16px;
-  background: var(--bg); border: 1px solid var(--border); border-right: none;
-  font-family: var(--mono); font-size: 11px; color: var(--text-dim);
-  letter-spacing: 1px; cursor: pointer; transition: all .15s;
-}
-.sc-tab:last-child { border-right: 1px solid var(--border); }
-.sc-tab.active { color: var(--red); border-bottom-color: var(--bg); background: var(--surface); }
-.sc-tab:active { opacity: .7; }
-
-.breach-controls { display: flex; gap: 10px; margin-bottom: 24px; }
-.btn-breach {
-  flex: 1; padding: 13px; background: transparent; border: 1px solid;
-  font-family: var(--mono); font-size: 11px; letter-spacing: 1px; text-transform: lowercase;
-  cursor: pointer; transition: all .15s;
-}
-.bb-start { border-color: var(--red); color: var(--red); }
-.bb-start:hover { background: var(--red); color: #fff; }
-.bb-reset { border-color: var(--border2); color: var(--text-dim); }
-.bb-reset:hover { border-color: var(--text-dim); color: var(--text); }
-
-.timeline { padding-left: 24px; position: relative; }
-.timeline::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 1px; background: var(--border); }
-.tl-item { position: relative; margin-bottom: 0; }
-.tl-dot {
-  position: absolute; left: -20px; top: 20px;
-  width: 10px; height: 10px; border-radius: 50%;
-  border: 1px solid var(--border); background: var(--bg);
-  transition: all .4s;
-}
-.tl-dot.active { border-color: var(--red); background: var(--red); box-shadow: 0 0 10px rgba(255,68,68,.5); }
-.tl-dot.done { border-color: var(--green); background: var(--green); }
-.tl-card {
-  background: var(--bg); border: 1px solid var(--border);
-  padding: 16px; margin-bottom: 8px; transition: all .3s;
-}
-.tl-card.active { border-color: rgba(255,68,68,.35); background: rgba(255,68,68,.03); }
-.tl-card.done { opacity: .55; }
-.tl-hour { font-family: var(--mono); font-size: 10px; color: var(--text-dim); margin-bottom: 4px; }
-.tl-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
-.tl-desc { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
-.tl-impact { margin-top: 10px; padding: 8px 12px; border-left: 2px solid var(--red); background: rgba(255,68,68,.05); font-size: 11px; color: var(--red); line-height: 1.5; display: none; font-family: var(--mono); }
-
-.breach-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 24px; display: none; }
-@media (max-width: 600px) { .breach-stats { grid-template-columns: 1fr 1fr; } }
-.bstat { background: var(--surface); padding: 16px; text-align: center; }
-.bstat-n { font-family: var(--mono); font-size: 20px; color: var(--red); }
-.bstat-l { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; line-height: 1.3; }
-
-/* ============================================================
-   POLICIES
-   ============================================================ */
-.policy-tabs { display: flex; overflow-x: auto; margin-bottom: 16px; gap: 0; }
-.policy-tabs::-webkit-scrollbar { display: none; }
-.ptab {
-  flex-shrink: 0; padding: 10px 16px;
-  background: var(--bg); border: 1px solid var(--border); border-right: none;
-  font-family: var(--mono); font-size: 11px; color: var(--text-dim);
-  letter-spacing: 1px; cursor: pointer; transition: all .15s; text-transform: lowercase;
-}
-.ptab:last-child { border-right: 1px solid var(--border); }
-.ptab.active { color: var(--green); background: var(--surface); border-bottom-color: var(--surface); }
-.ptab:active { opacity: .7; }
-
-.pol-section { margin-bottom: 2px; background: var(--bg); border: 1px solid var(--border); overflow: hidden; }
-.pol-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 16px; cursor: pointer; transition: background .15s;
-}
-.pol-header:hover { background: var(--surface); }
-.pol-htitle { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--text); }
-.pol-icon { font-size: 16px; }
-.pol-ch { font-family: var(--mono); font-size: 12px; color: var(--text-dim); transition: transform .2s; }
-.pol-header.open .pol-ch { transform: rotate(90deg); }
-.pol-body { display: none; padding: 0 16px 16px; border-top: 1px solid var(--border); }
-.pol-body.open { display: block; }
-.pol-rule {
-  display: flex; align-items: flex-start; gap: 10px;
-  padding: 10px 0; border-bottom: 1px solid var(--border);
-  font-size: 13px; color: var(--text-mid); line-height: 1.55;
-}
-.pol-rule:last-child { border: none; }
-.pol-dot { font-family: var(--mono); font-size: 10px; flex-shrink: 0; margin-top: 2px; }
-.pol-dot.m { color: var(--red); }
-.pol-dot.r { color: var(--amber); }
-.pol-badge {
-  display: inline-block; margin-left: 6px; padding: 1px 6px;
-  font-family: var(--mono); font-size: 9px; letter-spacing: 1px; text-transform: uppercase; vertical-align: middle;
-}
-.pb-m { background: rgba(255,68,68,.1); color: var(--red); border: 1px solid rgba(255,68,68,.25); }
-.pb-r { background: rgba(255,170,0,.1); color: var(--amber); border: 1px solid rgba(255,170,0,.25); }
-
-/* ============================================================
-   TOAST
-   ============================================================ */
-.toast {
-  position: fixed; bottom: calc(var(--bottom-h) + 16px); left: 50%;
-  transform: translateX(-50%) translateY(12px);
-  background: var(--green); color: #000;
-  padding: 10px 20px; font-family: var(--mono); font-size: 12px; font-weight: 500;
-  opacity: 0; transition: all .3s; pointer-events: none; z-index: 999;
-  white-space: nowrap;
-}
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-.footer {
-  padding: 32px 40px; border-top: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between; flex-wrap: gap;
-  font-family: var(--mono); font-size: 11px; color: var(--text-dim); gap: 12px;
-}
-@media (max-width: 600px) { .footer { padding: 24px 16px; flex-direction: column; text-align: center; } }
-.footer a { color: var(--text-dim); text-decoration: none; transition: color .2s; }
-.footer a:hover { color: var(--green); }
-
-/* ── CURSOR CUSTOM ── */
-*{cursor:none!important;}
-#cursor{position:fixed;width:12px;height:12px;background:#00ff88;border-radius:50%;pointer-events:none;z-index:9999;opacity:0;left:-50px;top:-50px;}
-#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(0,255,136,0.4);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;left:-50px;top:-50px;transition:width 0.2s,height 0.2s,border-color 0.2s;}
-body:has(a:hover) #cursor-ring,body:has(button:hover) #cursor-ring{width:56px;height:56px;border-color:#00ff88;}
 </style>
-
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
-<body data-page="formacion">
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
-
-
-<!-- ============================================================
-     NAVIGATION — identical to aegis8.org
-     ============================================================ -->
-
-
-<!-- ============================================================
-     APP SHELL
-     ============================================================ -->
-<div id="shell">
-  <div class="scroll-area" id="scrollArea">
-
-    <!-- HOME -->
-    <section id="home" class="section active">
-      <div class="hero">
-        <div class="page-label">plataforma de entrenamiento</div>
-        <h1 class="page-title">Formación<em>sin humo.</em></h1>
-        <p class="page-sub">Quiz interactivo, simulador de phishing, análisis de contraseñas y escenarios de brecha reales. Entrena a tu equipo con herramientas concretas.</p>
-        <div class="cta-row">
-          <button class="btn-primary" onclick="goTo('quiz',1)">▶ empezar quiz</button>
-          <button class="btn-ghost" onclick="goTo('breach',6)">ver simulador de brecha</button>
-        </div>
-      </div>
-
-      <div class="stats-strip">
-        <div class="stat-box"><div class="stat-n r counting" data-t="95">0</div><div class="stat-l">% de brechas por error humano</div></div>
-        <div class="stat-box"><div class="stat-n a counting" data-t="287">0</div><div class="stat-l">días promedio sin detectar una brecha</div></div>
-        <div class="stat-box"><div class="stat-n r counting" data-t="60">0</div><div class="stat-l">% de pymes cierran tras un incidente</div></div>
-        <div class="stat-box"><div class="stat-n g counting" data-t="72">0</div><div class="stat-l">% reducción del riesgo con formación continua</div></div>
-      </div>
-
-      <div class="sec-label">módulos disponibles</div>
-      <div class="module-grid">
-        <div class="mod-card" onclick="goTo('quiz',1)">
-          <div class="mod-icon">🎯</div>
-          <div class="mod-name">Quiz</div>
-          <div class="mod-desc">10 preguntas sobre situaciones reales de ciberseguridad empresarial.</div>
-        </div>
-        <div class="mod-card" onclick="goTo('threats',2)">
-          <div class="mod-icon">⚠️</div>
-          <div class="mod-name">Amenazas</div>
-          <div class="mod-desc">Explora los vectores de ataque más comunes y cómo defenderte.</div>
-        </div>
-        <div class="mod-card" onclick="goTo('checklist',3)">
-          <div class="mod-icon">✅</div>
-          <div class="mod-name">Checklist</div>
-          <div class="mod-desc">Audita el nivel de seguridad de tu empresa con 25 controles clave.</div>
-        </div>
-        <div class="mod-card" onclick="goTo('phishing',4)">
-          <div class="mod-icon">🎣</div>
-          <div class="mod-name">Phishing</div>
-          <div class="mod-desc">Identifica correos maliciosos en escenarios reales de suplantación.</div>
-        </div>
-        <div class="mod-card" onclick="goTo('password',5)">
-          <div class="mod-icon">🔐</div>
-          <div class="mod-name">Contraseñas</div>
-          <div class="mod-desc">Analiza la fortaleza de contraseñas y genera claves seguras.</div>
-        </div>
-        <div class="mod-card" onclick="goTo('breach',6)">
-          <div class="mod-icon">💥</div>
-          <div class="mod-name">Si me hackean</div>
-          <div class="mod-desc">Simula una brecha real paso a paso y ve el impacto económico.</div>
-        </div>
-        <div class="mod-card" onclick="goTo('policies',7)">
-          <div class="mod-icon">📋</div>
-          <div class="mod-name">Políticas</div>
-          <div class="mod-desc">Normas de seguridad que todo empleado debe conocer y aplicar.</div>
-        </div>
-        <div class="mod-card" onclick="goTo('smishing',8)">
-          <div class="mod-icon">📱</div>
-          <div class="mod-name">Smishing</div>
-          <div class="mod-desc">Detecta SMS y mensajes de texto falsos.</div>
-        </div>
-        <div class="mod-card" onclick="goTo('deepfake',9)">
-          <div class="mod-icon">🎭</div>
-          <div class="mod-name">Deepfake</div>
-          <div class="mod-desc">Aprende a detectar audio y video generado por IA.</div>
-        </div>
-        <div class="mod-card mod-soon">
-          <div class="mod-icon">📊</div>
-          <div class="mod-name">Dashboard</div>
-          <div class="mod-desc">Panel de seguimiento del equipo. Próximamente.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- QUIZ -->
-    <section id="quiz" class="section">
-      <div class="sec-label">quiz · concienciación</div>
-      <div class="q-wrap">
-        <div class="q-prog"><div class="q-prog-fill" id="qProg" style="width:0%"></div></div>
-        <div id="qCard"></div>
-        <div id="qResult" class="q-result">
-          <div class="qr-label">puntuación final</div>
-          <div class="qr-score" id="qScore"></div>
-          <div id="qMsg" class="qr-msg"></div>
-          <button class="btn-restart" onclick="restartQuiz()">↺ repetir quiz</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- THREATS -->
-    <section id="threats" class="section">
-      <div class="sec-label">vectores de ataque</div>
-      <div id="threatList"></div>
-    </section>
-
-    <!-- CHECKLIST -->
-    <section id="checklist" class="section">
-      <div class="sec-label">checklist · seguridad empresarial</div>
-      <div class="ck-header">
-        <div class="ck-bar-wrap"><div class="ck-bar-fill" id="ckFill" style="width:0%"></div></div>
-        <div class="ck-pct" id="ckPct">0%</div>
-      </div>
-      <div id="ckGrid"></div>
-    </section>
-
-    <!-- PHISHING -->
-    <section id="phishing" class="section">
-      <div class="sec-label">simulador · phishing</div>
-      <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px;">Analiza el correo y decide si es legítimo o un ataque.</p>
-      <div id="phEmail"></div>
-      <div class="ph-actions">
-        <button class="ph-btn ph-safe" onclick="phAns(false)">✓ es legítimo</button>
-        <button class="ph-btn ph-danger" onclick="phAns(true)">⚠ es phishing</button>
-        <button class="ph-btn ph-report" onclick="phAns('report')">↗ reportar y eliminar</button>
-      </div>
-      <div id="phVerdict" class="ph-verdict"></div>
-      <button class="btn-nphish" id="btnNph" onclick="nextPhish()">siguiente correo →</button>
-    </section>
-
-    <!-- PASSWORD -->
-    <!-- SMISHING -->
-    <section id="smishing" class="section">
-      <div class="sec-label">simulador · smishing</div>
-      <div id="smishMsg" class="panel" style="max-width:480px;margin:0 auto 16px;"></div>
-      <div id="smishVerdict" style="display:none;" class="panel"></div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
-        <button class="ph-btn ph-safe" onclick="smishAns(false)">✓ es legítimo</button>
-        <button class="ph-btn ph-danger" onclick="smishAns(true)">⚠ es smishing</button>
-        <button class="ph-btn ph-report" onclick="smishAns('report')">↗ reportar y bloquear</button>
-      </div>
-      <button id="btnNsm" class="btn-ghost" style="display:none;margin-top:16px;" onclick="nextSmish()">siguiente mensaje →</button>
-    </section>
-
-    <section id="password" class="section">
-      <div class="sec-label">analizador · contraseñas</div>
-      <div class="pw-wrap">
-        <div class="pw-input-row">
-          <input type="password" class="pw-input" id="pwIn" placeholder="escribe una contraseña…" oninput="analyzePw(this.value)" autocomplete="new-password">
-          <button class="pw-eye" onclick="toggleEye()" id="pwEye">👁</button>
-        </div>
-        <div class="pw-bars" id="pwBars">
-          <div class="pw-bar" id="pb1"></div><div class="pw-bar" id="pb2"></div>
-          <div class="pw-bar" id="pb3"></div><div class="pw-bar" id="pb4"></div>
-        </div>
-        <div class="pw-score-row">
-          <span class="pw-score-label" id="pwLabel" style="color:var(--text-dim)">sin contraseña</span>
-          <span class="pw-crack" id="pwCrack"></span>
-        </div>
-        <div class="pw-criteria">
-          <div class="pw-crit" id="pc-len"><span class="pw-cc">○</span> 12+ caracteres</div>
-          <div class="pw-crit" id="pc-up"><span class="pw-cc">○</span> Mayúsculas</div>
-          <div class="pw-crit" id="pc-lo"><span class="pw-cc">○</span> Minúsculas</div>
-          <div class="pw-crit" id="pc-nu"><span class="pw-cc">○</span> Números</div>
-          <div class="pw-crit" id="pc-sy"><span class="pw-cc">○</span> Símbolos</div>
-          <div class="pw-crit" id="pc-nd"><span class="pw-cc">○</span> No es común</div>
-        </div>
-        <button class="btn-gen" onclick="generatePw()">⚡ generar contraseña segura</button>
-        <div id="pwGen" class="pw-generated">
-          <div class="pw-gen-val" id="pwGenVal"></div>
-          <button class="btn-copy" id="pwCopy" onclick="copyPw()">copiar contraseña</button>
-        </div>
-        <div class="pw-tips">
-          <div class="pw-tip"><span class="pw-tip-icon">!</span><span>Nunca reutilices contraseñas. Una filtración en cualquier servicio expone todos tus accesos.</span></div>
-          <div class="pw-tip"><span class="pw-tip-icon">!</span><span>Usa un gestor de contraseñas (Bitwarden, 1Password). Solo necesitas recordar una contraseña maestra.</span></div>
-          <div class="pw-tip"><span class="pw-tip-icon">!</span><span>Activa MFA siempre. Una contraseña robada sin MFA da acceso inmediato y completo.</span></div>
-          <div class="pw-tip"><span class="pw-tip-icon">!</span><span>Cambia contraseñas solo ante sospecha de brecha, no por calendario sin razón específica.</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- BREACH -->
-    <section id="breach" class="section">
-      <div class="sec-label">simulador · brecha real</div>
-      <div class="breach-intro">
-        Esto es lo que ocurre cuando un ataque tiene éxito. <strong>Cada hora sin respuesta multiplica el daño.</strong> La mayoría de empresas descubren la brecha días o semanas después.
-      </div>
-      <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;margin-bottom:8px;">// escenario</div>
-      <div class="scenario-tabs">
-        <button class="sc-tab active" onclick="selectSc(0,this)">smishing bancario</button>
-        <button class="sc-tab" onclick="selectSc(1,this)">deepfake CEO</button>
-        <button class="sc-tab" onclick="selectSc(2,this)">phishing + ransomware</button>
-        <button class="sc-tab" onclick="selectSc(3,this)">credenciales robadas</button>
-        <button class="sc-tab" onclick="selectSc(4,this)">malware interno</button>
-      </div>
-      <div class="breach-controls">
-        <button class="btn-breach bb-start" id="bStartBtn" onclick="startBreach()">▶ iniciar simulación</button>
-        <button class="btn-breach bb-reset" onclick="resetBreach()">↺ reiniciar</button>
-      </div>
-      <div class="timeline" id="bTimeline"></div>
-      <div class="breach-stats" id="bStats"></div>
-    </section>
-
-    <!-- POLICIES -->
-    <section id="policies" class="section">
-      <div class="sec-label">políticas · seguridad interna</div>
-      <div class="policy-tabs" id="polTabs">
-        <button class="ptab active" onclick="switchPol(0,this)">accesos</button>
-        <button class="ptab" onclick="switchPol(1,this)">dispositivos</button>
-        <button class="ptab" onclick="switchPol(2,this)">datos</button>
-        <button class="ptab" onclick="switchPol(3,this)">incidentes</button>
-        <button class="ptab" onclick="switchPol(4,this)">teletrabajo</button>
-      </div>
-      <div id="polContent"></div>
-    </section>
-
-    <!-- DEEPFAKE -->
-    <section id="deepfake" class="section">
-      <div class="sec-label">simulador · deepfake y fraude por IA</div>
-      <div id="dfCard" class="panel" style="max-width:560px;margin:0 auto 16px;"></div>
-      <div id="dfVerdict" style="display:none;" class="panel"></div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
-        <button class="ph-btn ph-safe" onclick="dfAns(false)">✓ parece legítimo</button>
-        <button class="ph-btn ph-danger" onclick="dfAns(true)">⚠ podría ser deepfake/fraude</button>
-      </div>
-      <button id="btnNdf" class="btn-ghost" style="display:none;margin-top:16px;" onclick="nextDf()">siguiente escenario →</button>
-    </section>
-
-    <!-- CTA FINAL -->
-    <section id="cta-final" style="padding:3rem 2rem;border-top:1px solid rgba(0,255,136,0.12);background:rgba(0,255,136,0.02);text-align:center;">
-      <div style="max-width:560px;margin:0 auto;">
-        <div style="font-family:var(--mono,'monospace');font-size:0.65rem;color:var(--green);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;">// siguiente paso</div>
-        <h2 style="font-size:clamp(1.4rem,4vw,2rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:0.75rem;line-height:1.1;">
-          ¿Tu web tiene estas<br/>vulnerabilidades ahora mismo?
-        </h2>
-        <p style="color:var(--text-dim);font-size:0.9rem;max-width:42ch;margin:0 auto 1.75rem;line-height:1.6;">
-          La formación es el primer paso. El segundo es saber exactamente qué tiene expuesto tu negocio — y cerrarlo.
-        </p>
-        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-          <a href="https://aegis8.org/contactos.html" style="display:inline-block;padding:0.75rem 1.5rem;background:var(--green);color:#000;font-family:var(--mono,'monospace');font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;">Quiero que lo revisen →</a>
-          <a href="/propuesta.html" style="display:inline-block;padding:0.75rem 1.5rem;border:1px solid rgba(0,255,136,0.35);color:var(--green);font-family:var(--mono,'monospace');font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;">Ver la propuesta</a>
-        </div>
-        <p style="margin-top:1.25rem;font-family:var(--mono,'monospace');font-size:0.6rem;color:var(--text-dim);letter-spacing:0.1em;">sin contratos · sin permanencia · sin jerga técnica</p>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-      <span>© 2026 <a href="https://aegis8.org">aegis8</a> · consultora de ciberseguridad</span>
-      <span>formación interactiva · <a href="/propuesta.html">propuesta →</a> · <a href="https://aegis8.org/contactos.html">contacto →</a></span>
-    </footer>
-
-  </div><!-- /scroll-area -->
-
-  <!-- BOTTOM NAV (mobile only) -->
-  
-
-  <!-- MORE DRAWER -->
-  <div class="more-drawer" id="moreDrawer">
-    <div class="md-item" onclick="goTo('phishing',4);closeMore()"><span class="md-icon">🎣</span><span>phishing</span></div>
-    <div class="md-item" onclick="goTo('password',5);closeMore()"><span class="md-icon">🔐</span><span>contraseñas</span></div>
-    <div class="md-item" onclick="goTo('breach',6);closeMore()"><span class="md-icon">💥</span><span>si me hackean</span></div>
-    <div class="md-item" onclick="goTo('policies',7);closeMore()"><span class="md-icon">📋</span><span>políticas</span></div>
-    <div class="md-item" onclick="goTo('smishing',8);closeMore()"><span class="md-icon">📱</span><span>smishing</span></div>
-    <div class="md-item" onclick="goTo('deepfake',9);closeMore()"><span class="md-icon">🎭</span><span>deepfake</span></div>
-  </div>
-</div><!-- /shell -->
-
-<div class="toast" id="toast"></div>
-
-<!-- ============================================================
-     JAVASCRIPT
-     ============================================================ -->
-<script>
-// ── NAV ──────────────────────────────────────────────────────
-function goTo(id, idx) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.getElementById('scrollArea').scrollTop = 0;
-  const bns = document.querySelectorAll('#bnav .bn-item');
-  bns.forEach((b,i) => b.classList.toggle('active', i === Math.min(idx,3) || (idx > 3 && i === 4)));
-}
-function toggleMore() { document.getElementById('moreDrawer').classList.toggle('open'); }
-function closeMore()  { document.getElementById('moreDrawer').classList.remove('open'); }
-document.addEventListener('click', e => {
-  if (!e.target.closest('#moreDrawer') && !document.getElementById('moreBtn').contains(e.target)) closeMore();
-});
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
-}
-
-// ── COUNTERS ─────────────────────────────────────────────────
-window.addEventListener('load', () => {
-  document.querySelectorAll('.counting').forEach(el => {
-    const target = parseInt(el.dataset.t), dur = 1600, step = target / (dur / 16);
-    let cur = 0;
-    const id = setInterval(() => { cur = Math.min(cur + step, target); el.textContent = Math.round(cur); if (cur >= target) clearInterval(id); }, 16);
-  });
-});
-
-// ── QUIZ ─────────────────────────────────────────────────────
-const QBANK = [
-  // CONTRASEÑAS (6)
-  {cat:'contraseñas', q:'¿Cuál es la contraseña más segura?', opts:['Empresa2024','P@ssw0rd!','7hK#mQ2!vLpN9x','contraseña123'], c:2, fb:'Una contraseña segura combina mayúsculas, minúsculas, números y símbolos con 12+ caracteres aleatorios. Evita palabras del diccionario o nombres de empresa.'},
-  {cat:'contraseñas', q:'¿Con qué frecuencia debes cambiar tu contraseña si sospechas que fue comprometida?', opts:['En el próximo ciclo mensual','Inmediatamente y avisar a IT','Solo si notas actividad rara','No es necesario si tienes antivirus'], c:1, fb:'Ante sospecha de compromiso, el cambio debe ser inmediato. Cada minuto de espera es tiempo que el atacante puede usar para moverse lateralmente.'},
-  {cat:'contraseñas', q:'¿Qué es un gestor de contraseñas?', opts:['Un cuaderno donde anotar contraseñas','Software que genera y almacena contraseñas cifradas','Un sistema que usa la misma contraseña en todo','Una app que cambia tu contraseña automáticamente'], c:1, fb:'Un gestor como Bitwarden o 1Password genera contraseñas únicas y largas para cada servicio. Solo necesitas recordar una contraseña maestra.'},
-  {cat:'contraseñas', q:'Tienes la misma contraseña en tu email y en tu banco. ¿Cuál es el riesgo principal?', opts:['Ninguno si es una contraseña fuerte','Si una se filtra, la otra también queda expuesta','Solo si usas WiFi público','El riesgo es bajo si cambias cada 90 días'], c:1, fb:'La reutilización es uno de los vectores más explotados. Las credenciales filtradas se prueban automáticamente en miles de servicios (credential stuffing).'},
-  {cat:'contraseñas', q:'¿Qué longitud mínima se recomienda para una contraseña corporativa?', opts:['6 caracteres','8 caracteres','12 caracteres','4 caracteres con símbolo'], c:2, fb:'El estándar actual es 12+ caracteres. Con hardware moderno, una contraseña de 8 caracteres puede romperse por fuerza bruta en horas.'},
-  {cat:'contraseñas', q:'Un compañero te pide tu contraseña para acceder a un archivo mientras estás de vacaciones. ¿Qué haces?', opts:['Se la das si es de confianza','Rechazas y le pides que solicite acceso oficial','Se la mandas cifrada por WhatsApp','Se la das solo si es urgente'], c:1, fb:'Nunca compartas credenciales, ni con compañeros de confianza. El protocolo correcto es solicitar acceso temporal a través de IT o el responsable.'},
-
-  // PHISHING (7)
-  {cat:'phishing', q:'Recibes un email urgente de "soporte@micr0soft-support.net" pidiendo tus credenciales. ¿Qué haces?', opts:['Haces clic para verificar tu cuenta','Ignoras y eliminas el correo','Reportas a IT antes de eliminar','Respondes confirmando tu identidad'], c:2, fb:'Reportar a IT preserva evidencia forense valiosa. El dominio "micr0soft" (con cero) es suplantación clásica. Microsoft nunca pide credenciales por email.'},
-  {cat:'phishing', q:'¿Cuál es la señal más fiable de que un email es phishing?', opts:['Tiene faltas de ortografía','El remitente usa un dominio ligeramente diferente al legítimo','Llegó fuera del horario laboral','Pide que respondas con información'], c:1, fb:'El typosquatting (dominios falsos parecidos) es la técnica más usada. "paypa1.com" o "arnazon.com" engañan a miles de personas al día.'},
-  {cat:'phishing', q:'Recibes un enlace de un colega por Slack. Al pasar el mouse por encima, la URL no coincide con lo que dice el texto. ¿Qué haces?', opts:['Lo abres igual porque confías en tu colega','No lo abres y le preguntas por otro canal si lo envió él','Lo abres en modo incógnito','Lo reenvías a otros para que lo verifiquen'], c:1, fb:'Las cuentas de compañeros también pueden ser comprometidas. Verificar por otro canal (llamada, otro chat) antes de abrir enlaces sospechosos es la práctica correcta.'},
-  {cat:'phishing', q:'Un email dice que ganaste un iPhone y solo necesitas pagar el envío. ¿Qué es?', opts:['Una oferta legítima de marketing','Phishing con gancho de recompensa (baiting)','Un error del sistema de premios','Spam inofensivo'], c:1, fb:'El baiting usa la promesa de recompensa para bajar la guardia. El objetivo es obtener datos de tarjeta o instalar malware al pagar el falso "envío".'},
-  {cat:'phishing', q:'¿Qué es el spear phishing?', opts:['Phishing masivo enviado a miles de personas','Ataque dirigido a una persona específica usando información real sobre ella','Phishing a través de SMS','Un tipo de malware que roba contraseñas'], c:1, fb:'El spear phishing usa datos reales (nombre, empresa, cargo, proyectos) para crear mensajes creíbles. Tiene tasas de éxito mucho mayores que el phishing masivo.'},
-  {cat:'phishing', q:'¿Qué significa que un sitio tenga HTTPS con candado verde?', opts:['Que el sitio es completamente seguro y legítimo','Que el tráfico está cifrado, pero no garantiza que el sitio sea legítimo','Que fue verificado por el gobierno','Que no puede robar datos'], c:1, fb:'HTTPS solo cifra la comunicación. Un sitio de phishing puede tener HTTPS perfectamente. El candado no significa que quien está al otro lado sea quien dice ser.'},
-  {cat:'phishing', q:'Tu jefe te manda un email muy urgente pidiendo que transfieras dinero a una cuenta nueva. ¿Qué haces?', opts:['Lo haces porque es tu jefe','Llamas a tu jefe por teléfono para confirmar antes de hacer nada','Le respondes el email pidiendo confirmación','Lo haces y luego avisas a contabilidad'], c:1, fb:'El "fraude del CEO" (BEC - Business Email Compromise) es uno de los ataques más rentables. Siempre confirma transferencias urgentes por voz, nunca solo por email.'},
-
-  // SMISHING (5)
-  {cat:'smishing', q:'Recibes un SMS de "Banco Santander" con un enlace para desbloquear tu cuenta. ¿Qué haces?', opts:['Haces clic para evitar que bloqueen tu cuenta','Llamas al número oficial del banco en su web','Respondes el SMS pidiendo más información','Lo ignoras y esperas que se resuelva solo'], c:1, fb:'Los bancos nunca envían SMS con enlaces para gestionar cuentas. Llama siempre al número que está en tu tarjeta o en la web oficial, nunca uses el del SMS.'},
-  {cat:'smishing', q:'¿Qué es el smishing?', opts:['Phishing a través de llamadas telefónicas','Phishing a través de SMS o mensajes de texto','Malware que infecta smartphones','Robo de datos por Bluetooth'], c:1, fb:'Smishing = SMS + phishing. Es especialmente efectivo porque la gente baja la guardia con SMS y los mensajes se ven en pantallas pequeñas donde es difícil verificar URLs.'},
-  {cat:'smishing', q:'Recibes un SMS que dice: "Tu paquete está retenido. Paga 1.200 pesos de aduana aquí: [enlace]". ¿Qué haces?', opts:['Pagas porque es una cantidad pequeña','Entras al enlace para ver si es real','Buscas el número de seguimiento en la web oficial del courier','Llamas al número del SMS'], c:2, fb:'El smishing de paquetes es uno de los más comunes. Siempre verifica directamente en el sitio oficial del courier usando el número de seguimiento que tienes.'},
-  {cat:'smishing', q:'Un SMS dice que ganaste un sorteo y pide tus datos bancarios para depositar el premio. ¿Qué haces?', opts:['Proporcionas los datos porque ganaste legítimamente','No proporcionas nada — es una estafa clásica','Preguntas más detalles antes de dar datos','Das solo el número de cuenta, no el CVV'], c:1, fb:'Ningún sorteo legítimo pide datos bancarios por SMS. Para depositar un premio, una empresa legítima solo necesita tus datos fiscales básicos, nunca datos de tarjeta.'},
-  {cat:'smishing', q:'¿Cuál es la principal diferencia entre detectar phishing por email vs smishing por SMS?', opts:['No hay diferencia','En SMS no puedes ver la URL completa antes de hacer clic','Los SMS siempre son más peligrosos','El email es más fácil de falsificar'], c:1, fb:'En SMS, las URLs aparecen acortadas y en pantallas pequeñas. Es mucho más difícil verificar el dominio real. Por eso el smishing tiene tasas de clic más altas que el email.'},
-
-  // DEEPFAKE / IA (5)
-  {cat:'deepfake', q:'Recibes una videollamada de tu CEO pidiendo una transferencia urgente. La imagen y voz parecen perfectamente reales. ¿Qué haces?', opts:['Realizas la transferencia — es tu CEO','Cuelgas y llamas al CEO por su número habitual para verificar','Pides que te mande el mismo pedido por email','Le preguntas datos que solo él sabría'], c:1, fb:'Los deepfakes de voz y video son hoy una realidad. En 2024 una empresa perdió 25M USD por una videollamada deepfake. El protocolo: siempre verificar transferencias por canal separado.'},
-  {cat:'deepfake', q:'¿Qué es un deepfake de voz?', opts:['Una grabación editada con efectos de sonido','Audio generado por IA que imita la voz de una persona real','Una llamada con mala calidad de audio','Un tipo de malware que graba conversaciones'], c:1, fb:'Con solo unos segundos de audio real, la IA puede clonar una voz. Se usa en ataques de ingeniería social para suplantar a directivos, familiares o colegas por teléfono.'},
-  {cat:'deepfake', q:'Tu familia te manda un audio de WhatsApp que suena exactamente como tu voz, pidiendo dinero urgente. ¿Qué haces?', opts:['Mandas el dinero porque reconoces la voz','Llamas directamente a esa persona para verificar','Le mandas un mensaje escrito preguntando','Ignoras el mensaje'], c:1, fb:'El clonado de voz se usa en estafas familiares. Los atacantes usan audios de redes sociales para clonar voces. Siempre llama directamente a la persona por su número.'},
-  {cat:'deepfake', q:'¿Qué señales pueden indicar que un video es un deepfake?', opts:['Parpadeo extraño o inconsistente, bordes del rostro borrosos, sincronía labial imperfecta','Solo los videos de baja resolución pueden ser deepfakes','Si el video tiene buena calidad no puede ser falso','Los deepfakes siempre tienen un sello de agua visible'], c:0, fb:'Aunque la tecnología mejora constantemente, los deepfakes actuales aún pueden mostrar artefactos en el parpadeo, los bordes del pelo o la sincronía labial. La verificación por otro canal es más fiable que intentar detectarlos visualmente.'},
-  {cat:'deepfake', q:'Una IA generó un comunicado de prensa falso de tu empresa y lo publicó online. ¿Qué riesgo representa?', opts:['Ninguno si el sitio no es conocido','Puede dañar la reputación y provocar acciones de clientes o inversores basadas en información falsa','Solo es un problema legal','Es fácil de desmentir y no tiene impacto real'], c:1, fb:'La desinformación generada por IA afecta reputación, precio de acciones y confianza de clientes. Las empresas necesitan protocolos de comunicación oficial verificables y monitoreo de menciones.'},
-
-  // WIFI Y REDES (4)
-  {cat:'redes', q:'En un aeropuerto necesitas acceder al ERP de la empresa. ¿Qué haces?', opts:['WiFi del aeropuerto directamente','Datos móviles del teléfono','WiFi del aeropuerto con VPN corporativa','Esperar a llegar a la oficina'], c:2, fb:'La VPN cifra todo el tráfico incluso en redes públicas no seguras. Nunca accedas a sistemas sensibles sin VPN desde WiFi público.'},
-  {cat:'redes', q:'¿Qué es un ataque "evil twin"?', opts:['Un malware que crea copias de tus archivos','Una red WiFi falsa con nombre idéntico a una legítima para interceptar tráfico','Un virus que duplica procesos del sistema','Un ataque de fuerza bruta a routers'], c:1, fb:'El "evil twin" crea una red WiFi con el mismo nombre que la del hotel, café o aeropuerto. Tu dispositivo se conecta automáticamente y el atacante intercepta todo el tráfico.'},
-  {cat:'redes', q:'¿Es seguro usar el WiFi de un hotel para revisar tu email corporativo sin VPN?', opts:['Sí, los hoteles tienen redes seguras','No, cualquier red pública puede ser interceptada','Sí, si usas HTTPS','Solo si el hotel tiene certificación de seguridad'], c:1, fb:'Las redes de hotel son frecuentemente objetivo de ataques. Incluso con HTTPS, un atacante puede realizar ataques de tipo MITM en redes que controla. Usa siempre VPN.'},
-  {cat:'redes', q:'Tu router doméstico sigue usando la contraseña por defecto del fabricante. ¿Cuál es el riesgo?', opts:['Ninguno si el ISP lo configuró','Es uno de los vectores más explotados — contraseñas default son públicas','Solo es un riesgo si tienes vecinos con conocimientos técnicos','El riesgo es bajo si tienes antivirus'], c:1, fb:'Las contraseñas por defecto de routers son públicas y están en bases de datos online. Cambiar la contraseña del router es una de las acciones más básicas y más ignoradas.'},
-
-  // DISPOSITIVOS Y FÍSICO (5)
-  {cat:'dispositivos', q:'Encuentras un USB en el parking de la empresa. ¿Qué haces?', opts:['Lo conectas para ver el contenido','Lo llevas a IT para análisis','Lo tiras a la basura','Lo guardas por si alguien lo busca'], c:1, fb:'Los USB abandonados ("USB drop attack") son un ataque real documentado. Conectarlo puede instalar malware automáticamente. Entrega siempre a IT.'},
-  {cat:'dispositivos', q:'¿Con qué frecuencia debes bloquear tu equipo al alejarte?', opts:['Solo al final del día','Al ir a almorzar','Siempre, aunque sea 30 segundos','Solo en zonas con visitas externas'], c:2, fb:'Win+L o Cmd+Ctrl+Q bloquean en un segundo. Configura bloqueo automático a 5 minutos máximo. Un equipo sin bloquear es un vector de ataque.'},
-  {cat:'dispositivos', q:'¿Qué es el "shoulder surfing"?', opts:['Un tipo de ataque de red inalámbrica','Espiar la pantalla de alguien por encima del hombro para obtener información','Un malware que activa la cámara del portátil','Un ataque a dispositivos Bluetooth'], c:1, fb:'El shoulder surfing es bajo tech pero muy efectivo. En espacios públicos, trenes o cafés, siempre usa filtro de privacidad en tu pantalla o posiciona el equipo contra la pared.'},
-  {cat:'dispositivos', q:'Vas a desechar un disco duro antiguo con datos de clientes. ¿Qué haces?', opts:['Lo formateas y lo tiras','Lo rompes físicamente','Usas software de borrado seguro (mínimo 3 pasadas) o destrucción física certificada','Lo guardas en un cajón por si acaso'], c:2, fb:'El formateo normal NO borra los datos de forma segura — pueden recuperarse con herramientas básicas. El estándar es borrado de 3 pasadas (DoD 5220.22-M) o trituración física.'},
-  {cat:'dispositivos', q:'Tu portátil corporativo fue robado. ¿Cuál es el primer paso?', opts:['Comprar uno nuevo y reinstalar todo','Reportar a IT inmediatamente para revocar accesos y activar borrado remoto','Cambiar tus contraseñas personales','Esperar a ver si aparece'], c:1, fb:'El tiempo es crítico. IT debe revocar tokens, cerrar sesiones activas y activar borrado remoto antes de que el atacante acceda a los datos o la red corporativa.'},
-
-  // ACTUALIZACIONES Y VULNERABILIDADES (4)
-  {cat:'actualizaciones', q:'El sistema muestra una actualización de seguridad crítica. ¿Cuándo la instalas?', opts:['La pospongo indefinidamente','En el siguiente ciclo mensual','En las próximas 24-48 horas','La ignoro si todo funciona bien'], c:2, fb:'El 60% de las brechas explotan vulnerabilidades para las que ya existía parche. Los críticos deben aplicarse en 24-48h máximo.'},
-  {cat:'actualizaciones', q:'¿Qué es un "zero-day"?', opts:['Una vulnerabilidad descubierta por los investigadores de seguridad','Una vulnerabilidad explotada antes de que exista un parche disponible','Un ataque que ocurre a medianoche','Un tipo de ransomware nuevo'], c:1, fb:'Los zero-days son especialmente peligrosos porque no hay defensa técnica inmediata. La mitigación es detección de comportamiento anómalo y segmentación de red.'},
-  {cat:'actualizaciones', q:'Tienes un plugin de WordPress que no usas pero está instalado. ¿Qué riesgo representa?', opts:['Ninguno si está desactivado','Puede contener vulnerabilidades explotables aunque esté inactivo','Solo es un riesgo si está activado','Solo importa si el plugin tiene acceso a la base de datos'], c:1, fb:'Los plugins desactivados pero instalados siguen siendo superficie de ataque. Sus archivos están accesibles y pueden tener vulnerabilidades conocidas. Desinstala todo lo que no uses.'},
-  {cat:'actualizaciones', q:'¿Qué es la gestión de vulnerabilidades?', opts:['Instalar antivirus en todos los equipos','Proceso continuo de identificar, priorizar y remediar debilidades en sistemas','Hacer backup semanal de los datos','Cambiar contraseñas cada 90 días'], c:1, fb:'La gestión de vulnerabilidades es un proceso continuo, no un evento puntual. Incluye escaneo regular, priorización por criticidad e impacto, y seguimiento de remediación.'},
-
-  // ACCESOS Y PERMISOS (5)
-  {cat:'accesos', q:'Un compañero pide acceso a archivos confidenciales de clientes "para un proyecto". ¿Qué haces?', opts:['Se los envías por email','Compartes el enlace de la carpeta','Verificas con su responsable y sigues el protocolo','Acceso temporal sin avisar a nadie'], c:2, fb:'Principio de mínimo privilegio: verifica siempre la necesidad real. Toda solicitud debe seguir el protocolo formal, sin excepciones.'},
-  {cat:'accesos', q:'¿Qué es el principio de mínimo privilegio?', opts:['Dar acceso completo a todos para maximizar productividad','Cada usuario solo tiene acceso a lo estrictamente necesario para su función','Rotar contraseñas cada 30 días','Usar el mismo usuario para todas las aplicaciones'], c:1, fb:'El mínimo privilegio limita el daño de una cuenta comprometida. Si un atacante obtiene acceso a una cuenta con privilegios limitados, su capacidad de moverse lateralmente es mínima.'},
-  {cat:'accesos', q:'Un empleado deja la empresa. ¿Cuándo deben desactivarse sus accesos?', opts:['En los próximos 30 días','En su último día laboral o antes','Cuando IT tenga tiempo','Solo si era de un departamento sensible'], c:1, fb:'Las cuentas de exempleados activas son uno de los vectores más frecuentes. La desactivación debe ser parte del proceso de offboarding, idealmente el mismo día de salida.'},
-  {cat:'accesos', q:'¿Qué es la autenticación multifactor (MFA)?', opts:['Usar contraseñas distintas en cada sistema','Verificar identidad con algo que sabes + algo que tienes o eres','Cambiar contraseña mensualmente','Usar un gestor de contraseñas'], c:1, fb:'El MFA bloquea el 99.9% de los ataques automatizados de cuentas (Microsoft). Combina contraseña + código temporal (TOTP) o biometría. Es la medida de mayor impacto por menor costo.'},
-  {cat:'accesos', q:'Tu empresa usa cuentas de administrador compartidas entre el equipo de IT. ¿Cuál es el riesgo?', opts:['Ninguno si el equipo es de confianza','No hay trazabilidad de quién hizo qué — imposible auditar o investigar incidentes','Solo es un problema de organización interna','El riesgo es bajo si la contraseña es fuerte'], c:1, fb:'Las cuentas compartidas eliminan la trazabilidad. En una brecha, es imposible saber qué usuario realizó qué acción. Cada administrador debe tener cuenta nominal individual.'},
-
-  // BACKUPS Y CONTINUIDAD (4)
-  {cat:'backups', q:'¿Cuál es la estrategia de backup recomendada para datos críticos?', opts:['1 copia en el mismo disco','Solo backup en la nube','Regla 3-2-1: 3 copias, 2 medios, 1 offsite','Backup semanal en USB externo'], c:2, fb:'La regla 3-2-1 es el estándar de la industria. Una copia offline (sin conexión a la red) es la diferencia entre recuperación y desastre total ante ransomware.'},
-  {cat:'backups', q:'Tienes backups automáticos diarios pero nunca los has probado. ¿Qué problema representa?', opts:['Ninguno si el sistema no ha dado errores','Un backup no probado es un backup que no existe — puede fallar justo cuando lo necesitas','Solo es relevante si tienes datos muy críticos','Es suficiente con verificar el log de completado'], c:1, fb:'El 58% de los backups fallan al restaurar por primera vez. Probar la restauración al menos trimestralmente es la única forma de saber que el backup funciona realmente.'},
-  {cat:'backups', q:'El ransomware cifró todos tus archivos incluyendo las copias de backup conectadas a la red. ¿Qué lección aplica?', opts:['Que el antivirus falló','Que necesitas una copia offline no conectada a la red (aire gap)','Que el backup en la nube es suficiente','Que deberías haber pagado el rescate antes'], c:1, fb:'El ransomware moderno busca y cifra los backups conectados antes de cifrar los datos principales. El backup offline (disco desconectado o cinta) es la única defensa real.'},
-  {cat:'backups', q:'¿Qué debe incluir un plan básico de respuesta a incidentes?', opts:['Solo el número del proveedor de antivirus','Contactos clave, pasos de contención, procedimiento de restauración y comunicación a afectados','Un manual técnico de más de 100 páginas','Solo aplica a empresas grandes'], c:1, fb:'Un plan de respuesta no tiene que ser complejo para ser útil. Lo esencial: saber a quién llamar, cómo aislar sistemas afectados, cómo restaurar y cómo comunicar el incidente.'},
-
-  // INGENIERÍA SOCIAL (5)
-  {cat:'ingeniería social', q:'Alguien llama afirmando ser de IT y pide tu contraseña para "actualizar tu cuenta". ¿Qué haces?', opts:['La das si parece urgente','Pides su nombre y cuelgas','Niegas tener contraseña','Te niegas y reportas la llamada'], c:3, fb:'IT legítimo NUNCA pedirá tu contraseña por teléfono o email. Es vishing (phishing por voz). Reporta siempre estas llamadas.'},
-  {cat:'ingeniería social', q:'Un extraño se acerca a la puerta de la oficina con las manos llenas y te pide que le abras "solo un momento". ¿Qué haces?', opts:['Le abres porque parece inofensivo','Le pides que espere y llamas a recepción o seguridad','Le abres si lleva uniforme de empresa','Le preguntas su nombre y le abres'], c:1, fb:'Es tailgating o piggybacking — una técnica clásica de intrusión física. El acceso físico no autorizado puede ser tan dañino como un ciberataque. Sigue siempre el protocolo.'},
-  {cat:'ingeniería social', q:'Recibes una llamada de "tu banco" diciendo que detectaron un cargo fraudulento y necesitan tu CVV para cancelarlo. ¿Qué haces?', opts:['Das el CVV para proteger tu cuenta','Cuelgas y llamas al banco por el número oficial','Pides que te lo confirmen por email antes','Das solo los últimos 4 dígitos de la tarjeta'], c:1, fb:'Los bancos nunca piden CVV, PIN ni contraseñas por teléfono. Es vishing. Cuelga y llama tú al número que está en el reverso de tu tarjeta.'},
-  {cat:'ingeniería social', q:'¿Qué es el pretexting?', opts:['Enviar emails con virus adjuntos','Crear una historia falsa creíble para manipular a alguien y obtener información','Hackear el sistema de contraseñas','Un tipo de malware que se oculta en documentos'], c:1, fb:'El pretexting construye un escenario falso (ser del banco, de IT, de un proveedor) para ganar confianza. Es la base de la mayoría de ataques de ingeniería social sofisticados.'},
-  {cat:'ingeniería social', q:'Te llaman diciendo que eres el ganador de un sorteo de tu empresa y piden tus datos personales para "tramitar el premio". ¿Qué haces?', opts:['Das los datos porque confías en tu empresa','Verificas con RRHH directamente antes de dar cualquier dato','Das solo nombre y email','Pides que te lo confirmen por escrito'], c:1, fb:'Los atacantes investigan a sus víctimas en LinkedIn y redes sociales para personalizar el engaño. Verifica siempre con la fuente directamente, nunca a través del canal del atacante.'},
-];
-
-// Shuffle helper
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-// Pick 10 questions ensuring category variety
-function pickQuestions() {
-  const cats = {};
-  QBANK.forEach(q => { if (!cats[q.cat]) cats[q.cat] = []; cats[q.cat].push(q); });
-  const picked = [];
-  // First pass: one from each category
-  const catKeys = shuffle(Object.keys(cats));
-  catKeys.forEach(c => { if (picked.length < 10) picked.push(shuffle(cats[c])[0]); });
-  // Second pass: fill remaining slots randomly
-  const remaining = shuffle(QBANK.filter(q => !picked.includes(q)));
-  while (picked.length < 10 && remaining.length > 0) picked.push(remaining.shift());
-  return shuffle(picked);
-}
-
-let Q = pickQuestions();
-let qIdx = 0, qScore = 0, qAnswered = false;
-function renderQ() {
-  const d = Q[qIdx];
-  document.getElementById('qProg').style.width = (qIdx / Q.length * 100) + '%';
-  document.getElementById('qCard').innerHTML = `
-    <div class="panel panel-accent">
-      <div class="q-cat">// ${d.cat}</div>
-      <div class="q-text">${d.q}</div>
-      <div class="q-opts">${d.opts.map((o,i) => `<button class="q-opt" onclick="selectQ(${i})"><span class="q-letter">${String.fromCharCode(65+i)}</span>${o}</button>`).join('')}</div>
-      <div class="q-fb" id="qFb"></div>
-      <div class="q-foot">
-        <span class="q-count">${qIdx+1} / ${Q.length}</span>
-        <button class="btn-qnext" id="btnQN" onclick="nextQ()">${qIdx < Q.length-1 ? 'siguiente →' : 'ver resultado'}</button>
-      </div>
-    </div>`;
-  qAnswered = false;
-}
-function selectQ(i) {
-  if (qAnswered) return; qAnswered = true;
-  const d = Q[qIdx];
-  document.querySelectorAll('.q-opt').forEach(o => o.classList.add('disabled'));
-  document.querySelectorAll('.q-opt')[i].classList.add(i === d.c ? 'correct' : 'wrong');
-  if (i !== d.c) document.querySelectorAll('.q-opt')[d.c].classList.add('correct');
-  if (i === d.c) qScore++;
-  const fb = document.getElementById('qFb');
-  fb.textContent = d.fb; fb.className = 'q-fb' + (i !== d.c ? ' wrong' : ''); fb.style.display = 'block';
-  document.getElementById('btnQN').style.display = 'inline-block';
-}
-function nextQ() { qIdx++; if (qIdx >= Q.length) showQResult(); else renderQ(); }
-function showQResult() {
-  document.getElementById('qCard').style.display = 'none';
-  document.getElementById('qProg').style.width = '100%';
-  const pct = Math.round(qScore / Q.length * 100);
-  document.getElementById('qResult').style.display = 'block';
-  document.getElementById('qScore').textContent = `${qScore}/${Q.length}`;
-  document.getElementById('qScore').style.color = pct >= 70 ? 'var(--green)' : 'var(--red)';
-  document.getElementById('qMsg').textContent =
-    pct >= 90 ? 'Excelente. Eres un activo clave para la seguridad de tu equipo.' :
-    pct >= 70 ? 'Buen nivel. Refuerza los conceptos en los que fallaste.' :
-    pct >= 50 ? 'Nivel básico. Hay vectores de ataque que aún te exponen.' :
-    'Riesgo alto. Completa los módulos de formación — tu equipo depende de ti.';
-}
-function restartQuiz() { Q = pickQuestions(); qIdx = 0; qScore = 0; document.getElementById('qResult').style.display = 'none'; document.getElementById('qCard').style.display = 'block'; renderQ(); }
-
-// ── THREATS ──────────────────────────────────────────────────
-const T = [
-  {ic:'🎣', nm:'Phishing / Spear Phishing', ds:'suplantación por correo electrónico', sv:'critical',
-   what:'El phishing es el vector de ataque #1 en empresas. El spear phishing personaliza el ataque usando datos reales de la víctima para aumentar la tasa de éxito significativamente.',
-   how:['Email con dominio falsificado o typosquatting','Enlace a web clonada con SSL falso','Harvesting de credenciales en tiempo real','Acceso a sistemas internos con las credenciales robadas'],
-   protect:['Filtros antiphishing con IA en el gateway de email','Formación continua con simulaciones reales','MFA obligatorio para todos los accesos','DMARC/DKIM/SPF configurados en el dominio']},
-  {ic:'💰', nm:'Ransomware', ds:'cifrado de datos con extorsión económica', sv:'critical',
-   what:'El ransomware cifra archivos críticos y exige rescate. Los grupos modernos aplican doble extorsión: cifran Y amenazan publicar los datos. El coste medio supera los 1,8M€ por incidente.',
-   how:['Entrada inicial vía phishing o RDP expuesto','Movimiento lateral silencioso (días o semanas)','Exfiltración de datos antes del cifrado','Activación sincronizada del payload'],
-   protect:['Backups 3-2-1 con copia offline verificada','Segmentación de red para limitar propagación','EDR con análisis de comportamiento','Plan de respuesta a incidentes documentado y probado']},
-  {ic:'🕵️', nm:'Ingeniería Social', ds:'manipulación psicológica del factor humano', sv:'high',
-   what:'Los atacantes explotan sesgos cognitivos: urgencia, autoridad, miedo o recompensa. Una llamada puede dar acceso completo sin explotar ninguna vulnerabilidad técnica.',
-   how:['Vishing: llamadas suplantando IT, banco o proveedor','Pretexting: crear una historia creíble y detallada','Baiting: USB infectados en zonas comunes','Quid pro quo: ofrecer ayuda a cambio de acceso'],
-   protect:['Protocolo estricto de verificación de identidad','Formación en reconocimiento de técnicas sociales','Política de no compartir credenciales nunca','Cultura de "si tienes duda, reporta"']},
-  {ic:'🔓', nm:'Credenciales Comprometidas', ds:'acceso con contraseñas robadas o filtradas', sv:'high',
-   what:'+24.000 millones de credenciales disponibles en la dark web. La reutilización de contraseñas convierte una filtración menor en acceso a sistemas críticos de la empresa.',
-   how:['Credential stuffing con bases de datos filtradas','Brute force en portales sin rate limiting','Password spraying con contraseñas comunes','Compra de credenciales en mercados clandestinos'],
-   protect:['Gestor de contraseñas corporativo obligatorio','Contraseñas únicas de 16+ caracteres','MFA en todos los sistemas sin excepción','Monitorización de credenciales en dark web']},
-  {ic:'💻', nm:'Malware / RATs', ds:'software malicioso con control remoto', sv:'critical',
-   what:'Los RATs dan control total del equipo: captura de pantalla, keylogging, acceso a cámara/micrófono, descarga de archivos y movimiento lateral por la red corporativa.',
-   how:['Adjunto malicioso con macro ofuscada','Descarga drive-by en sitio web comprometido','Software pirata o herramientas "crackeadas"','Actualización falsa de software legítimo'],
-   protect:['EDR actualizado con análisis de comportamiento','Control de aplicaciones (application whitelist)','Navegación segura con proxy y filtrado DNS','Deshabilitar macros de Office por defecto']},
-  {ic:'📡', nm:'Ataques a Red WiFi', ds:'interceptación en redes inalámbricas', sv:'medium',
-   what:'Las WiFi mal configuradas permiten interceptar comunicaciones y ataques man-in-the-middle. El "evil twin" crea una red falsa con el mismo nombre de la red legítima.',
-   how:['Evil Twin: punto de acceso falso con SSID clonado','Cracking de WPA2 con handshake capturado','Desautenticación forzada para capturar credenciales','Acceso físico a red con puerto abierto'],
-   protect:['WPA3 Enterprise con autenticación 802.1X','Red de invitados completamente aislada','VPN obligatoria en todos los dispositivos','Auditorías periódicas de puntos de acceso']},
-];
-let openT = -1;
-function renderThreats() {
-  document.getElementById('threatList').innerHTML = T.map((t,i) => `
-    <div class="threat-row" id="tr${i}" onclick="toggleT(${i})">
-      <span class="ti">${t.ic}</span>
-      <div style="flex:1;min-width:0"><div class="tn">${t.nm}</div><div class="td">${t.ds}</div></div>
-      <span class="ts tag tag-${t.sv === 'critical' ? 'r' : t.sv === 'high' ? 'a' : 'b'}">${t.sv}</span>
-      <span class="chev">›</span>
+<body data-page="profesores">
+<section class="page-hero-s page-inner">
+  <div class="wrap">
+    <div style="margin-bottom:16px;opacity:0;animation:fadeInLogo .6s ease forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="40" height="40" style="flex-shrink:0;" fill="none">
+  <defs>
+    <filter id="g"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="og" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5a823"/><stop offset="100%" stop-color="#f07830"/>
+    </linearGradient>
+  </defs>
+  <path d="M40 5 L67 16 L67 41 C67 55 53 64 40 72 C27 64 13 55 13 41 L13 16 Z"
+    fill="#0d1422" stroke="url(#og)" stroke-width="2">
+    <animate attributeName="stroke-opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/>
+  </path>
+  <circle cx="40" cy="31" r="9" fill="none" stroke="url(#og)" stroke-width="2" filter="url(#g)">
+    <animate attributeName="r" values="9;9.5;9" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="40" cy="48" r="9" fill="none" stroke="url(#og)" stroke-width="2" filter="url(#g)">
+    <animate attributeName="r" values="9;9.5;9" dur="3s" repeatCount="indefinite" begin="0.5s"/>
+  </circle>
+  <line x1="31" y1="39.5" x2="49" y2="39.5" stroke="url(#og)" stroke-width="2" filter="url(#g)"/>
+  <circle cx="31" cy="39.5" r="2" fill="#f07830"/>
+  <circle cx="49" cy="39.5" r="2" fill="#f07830"/>
+  <circle cx="40" cy="39.5" r="14" fill="rgba(240,120,48,0.04)">
+    <animate attributeName="r" values="14;18;14" dur="3s" repeatCount="indefinite" begin="1s"/>
+    <animate attributeName="opacity" values="0.04;0.08;0.04" dur="3s" repeatCount="indefinite" begin="1s"/>
+  </circle>
+</svg></div>
+    <div class="hero-ey"><div class="hero-ey-line"></div>Aegis Educa · Para Docentes</div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,6vw,5rem);line-height:.95;letter-spacing:-1.5px;margin-bottom:20px;">
+      Enseña ciberseguridad<br><span style="color:var(--accent);font-style:italic;">sin ser experto.</span>
+    </h1>
+    <p style="font-size:1rem;line-height:1.8;color:var(--ink2);max-width:520px;margin-bottom:32px;">
+      Planes de clase listos, recursos descargables y un agente IA que responde tus dudas antes de entrar al aula. Para docentes de todos los niveles, sin presupuesto extra.
+    </p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="#planes" class="btn-p"><span>Ver planes de clase →</span></a>
+      <a href="#agente" class="btn-g">Consultar al agente IA</a>
     </div>
-    <div class="threat-detail" id="td${i}">
-      <div class="dt-h">qué es</div><div class="dt-p">${t.what}</div>
-      <div class="dt-h">cómo funciona el ataque</div>
-      <ul class="dt-list">${t.how.map(s=>`<li>${s}</li>`).join('')}</ul>
-      <div class="dt-h">cómo protegerse</div>
-      <ul class="dt-list">${t.protect.map(s=>`<li>${s}</li>`).join('')}</ul>
-    </div>`).join('');
-}
-function toggleT(i) {
-  const same = openT === i;
-  if (openT >= 0) { document.getElementById('tr'+openT).classList.remove('open'); document.getElementById('td'+openT).classList.remove('open'); }
-  if (!same) { document.getElementById('tr'+i).classList.add('open'); document.getElementById('td'+i).classList.add('open'); openT = i; }
-  else openT = -1;
-}
+  </div>
+</section>
 
-// ── CHECKLIST ────────────────────────────────────────────────
-const CL = [
-  {g:'🔑 acceso e identidad', items:['MFA habilitado en todos los sistemas críticos','Gestor de contraseñas corporativo implantado','Política de contraseñas de mínimo 14 caracteres','Revisión trimestral de accesos y privilegios','Baja inmediata de accesos al finalizar relación laboral']},
-  {g:'💻 dispositivos y endpoints', items:['EDR instalado en todos los endpoints','Actualizaciones automáticas habilitadas','Cifrado de disco completo (BitLocker/FileVault)','Bloqueo automático a los 5 minutos','Inventario actualizado de todos los dispositivos']},
-  {g:'📡 red y conectividad', items:['VPN obligatoria para acceso remoto','Segmentación de red implementada','NGFW configurado y actualizado','Monitorización de tráfico 24/7','Red WiFi de invitados aislada de la LAN']},
-  {g:'💾 datos y backups', items:['Clasificación de datos sensibles documentada','Backup 3-2-1 con prueba de restauración mensual','Cifrado de datos en reposo y en tránsito','DLP (Data Loss Prevention) configurado','Política de retención de datos definida']},
-  {g:'🎓 formación y cultura', items:['Formación de concienciación anual para toda la plantilla','Simulaciones de phishing trimestrales','Canal de reporte de incidentes conocido por todos','Plan de respuesta a incidentes documentado','Responsable de seguridad (CISO/DPO) designado']},
-];
-let ckState = {};
-function renderChecklist() {
-  CL.forEach((g,gi) => g.items.forEach((_,ii) => { ckState[`${gi}-${ii}`] = false; }));
-  document.getElementById('ckGrid').innerHTML = CL.map((g,gi) => `
-    <div class="ck-group">
-      <div class="ck-g-title open" id="cgt${gi}" onclick="toggleCkG(${gi})">
-        <span>${g.g}</span><span class="ck-g-ch">›</span>
+<div class="wrap page-inner">
+
+<div class="sw" id="planes">
+  <div class="sl">// Planes de clase</div>
+  <h2 class="st">Listos para<br><em>usar mañana.</em></h2>
+  <p class="si">6 planes de clase completos con objetivos, actividades y materiales. Adaptados al currículo chileno, desde 1° básico hasta 4° medio.</p>
+  <div class="planes-g">
+    <div class="plan-c">
+      <div class="plan-n">PLAN 01</div>
+      <div class="plan-title">¿Qué es seguro compartir?</div>
+      <div class="plan-meta">1° – 4° básico · 45 min · Grupal</div>
+      <div class="plan-desc">Actividad de clasificación: datos públicos vs privados. Incluye tarjetas imprimibles y dinámica de roles.</div>
+      <div class="plan-pills"><span class="pp">datos personales</span><span class="pp">privacidad</span></div>
+    </div>
+    <div class="plan-c">
+      <div class="plan-n">PLAN 02</div>
+      <div class="plan-title">Contraseñas que protegen</div>
+      <div class="plan-meta">5° – 8° básico · 45 min · Individual</div>
+      <div class="plan-desc">Taller práctico de creación de contraseñas seguras con el medidor interactivo de Aegis8.</div>
+      <div class="plan-pills"><span class="pp">contraseñas</span><span class="pp">autenticación</span></div>
+    </div>
+    <div class="plan-c">
+      <div class="plan-n">PLAN 03</div>
+      <div class="plan-title">Reconocer el phishing</div>
+      <div class="plan-meta">7° básico – 2° medio · 60 min · Grupal</div>
+      <div class="plan-desc">Análisis de casos reales chilenos. Debate grupal y checklist de verificación. Usa el analizador de Aegis8.</div>
+      <div class="plan-pills"><span class="pp">phishing</span><span class="pp">análisis crítico</span></div>
+    </div>
+    <div class="plan-c">
+      <div class="plan-n">PLAN 04</div>
+      <div class="plan-title">Grooming: señales y respuestas</div>
+      <div class="plan-meta">7° básico – 2° medio · 60 min · Grupal</div>
+      <div class="plan-desc">Simulación de conversaciones. Identificación de señales de alerta. Protocolo de denuncia en Chile.</div>
+      <div class="plan-pills"><span class="pp">grooming</span><span class="pp">Ley 20.526</span></div>
+    </div>
+    <div class="plan-c">
+      <div class="plan-n">PLAN 05</div>
+      <div class="plan-title">Huella digital y reputación</div>
+      <div class="plan-meta">1° – 3° medio · 45 min · Individual</div>
+      <div class="plan-desc">Actividad de googleo propio y reflexión sobre permanencia de la información online.</div>
+      <div class="plan-pills"><span class="pp">redes sociales</span><span class="pp">privacidad</span></div>
+    </div>
+    <div class="plan-c">
+      <div class="plan-n">PLAN 06</div>
+      <div class="plan-title">Ciberbullying: roles y derechos</div>
+      <div class="plan-meta">5° básico – 4° medio · 60 min · Grupal</div>
+      <div class="plan-desc">Teatro fórum con situaciones reales. Revisión de la Ley 20.536 y derechos del alumno.</div>
+      <div class="plan-pills"><span class="pp">ciberbullying</span><span class="pp">convivencia escolar</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="sw" id="recursos">
+  <div class="sl">// Recursos descargables</div>
+  <h2 class="st">Todo listo<br><em>para imprimir.</em></h2>
+  <p class="si">Materiales de apoyo gratuitos para complementar tus clases.</p>
+  <div class="recursos-g">
+    <div class="rec"><div class="rec-ico">📋</div><div><div class="rec-title">Guía de conversación para apoderados</div><div class="rec-desc">Cómo hablar con tus hijos sobre internet. En lenguaje simple, con ejemplos reales.</div></div></div>
+    <div class="rec"><div class="rec-ico">🗓️</div><div><div class="rec-title">Calendario anual de seguridad digital</div><div class="rec-desc">Un tema por mes con actividades sugeridas para cada nivel.</div></div></div>
+    <div class="rec"><div class="rec-ico">🎯</div><div><div class="rec-title">Póster "Reglas del Internauta"</div><div class="rec-desc">Para imprimir y pegar en la sala. 5 reglas en lenguaje de niños.</div></div></div>
+    <div class="rec"><div class="rec-ico">⚠️</div><div><div class="rec-title">Protocolo ante incidente digital</div><div class="rec-desc">Qué hacer paso a paso si un alumno sufre grooming, ciberbullying o sextorsión.</div></div></div>
+  </div>
+</div>
+
+<div class="sw">
+  <div class="sl">// Consejos para el aula</div>
+  <h2 class="st">Sin ser experto<br><em>igual puedes.</em></h2>
+  <div class="tip-g">
+    <div class="tip"><div class="tip-n">01</div><div class="tip-text"><strong>No necesitas saber todo.</strong> Tu rol es facilitar la reflexión, no ser el experto técnico. Los alumnos traen la experiencia.</div></div>
+    <div class="tip"><div class="tip-n">02</div><div class="tip-text"><strong>Usa casos reales chilenos.</strong> El phishing de Banco Estado o el ciberbullying en WhatsApp conectan más que ejemplos abstractos.</div></div>
+    <div class="tip"><div class="tip-n">03</div><div class="tip-text"><strong>La IA es tu aliada.</strong> El agente docente de Aegis8 responde preguntas difíciles en tiempo real, incluso durante la clase.</div></div>
+  </div>
+</div>
+
+<div class="sw" id="agente">
+  <div class="sl">// Agente IA para docentes</div>
+  <h2 class="st">Pregunta lo que<br><em>necesites saber.</em></h2>
+  <p class="si">El Agente Docente de Aegis8 responde dudas sobre cómo enseñar ciberseguridad, qué hacer ante incidentes y cómo hablar con alumnos y apoderados.</p>
+  <div class="chat-box">
+    <div class="chat-hd">
+      <div class="chat-hd-l">
+        <div class="chat-ava">🧑‍🏫</div>
+        <div>
+          <div class="chat-name">Agente Docente · Aegis8</div>
+          <div class="chat-status">● activo</div>
+        </div>
       </div>
-      <div class="ck-items open" id="cgi${gi}">
-        ${g.items.map((item,ii) => `
-          <div class="ck-item" id="ci${gi}-${ii}" onclick="toggleCk(${gi},${ii})">
-            <div class="ck-box" id="cb${gi}-${ii}"></div>
-            <div class="ck-text">${item}</div>
-          </div>`).join('')}
+      <div class="chat-live"></div>
+    </div>
+    <div class="chat-msgs" id="chatMsgs">
+      <div class="msg bot">
+        <div class="msg-ava">🧑‍🏫</div>
+        <div class="msg-bubble">¡Hola! Soy el Agente Docente de Aegis8 👋 Puedo ayudarte con planes de clase, qué hacer ante incidentes con alumnos, cómo hablar con apoderados, y cualquier duda sobre enseñar ciberseguridad. ¿En qué necesitas ayuda hoy?</div>
       </div>
-    </div>`).join('');
-  updateCkP();
-}
-function toggleCkG(gi) { document.getElementById('cgt'+gi).classList.toggle('open'); document.getElementById('cgi'+gi).classList.toggle('open'); }
-function toggleCk(gi,ii) {
-  const k = `${gi}-${ii}`; ckState[k] = !ckState[k];
-  document.getElementById(`ci${gi}-${ii}`).classList.toggle('done', ckState[k]);
-  document.getElementById(`cb${gi}-${ii}`).textContent = ckState[k] ? '✓' : '';
-  updateCkP();
-}
-function updateCkP() {
-  const tot = Object.keys(ckState).length, done = Object.values(ckState).filter(Boolean).length;
-  const pct = Math.round(done/tot*100);
-  document.getElementById('ckFill').style.width = pct + '%';
-  document.getElementById('ckPct').textContent = pct + '%';
-}
+    </div>
+    <div class="chat-quick">
+      <button class="qbtn" onclick="qa('¿Cómo explico el grooming a alumnos de 7° básico?')">Explicar grooming</button>
+      <button class="qbtn" onclick="qa('¿Qué hago si un alumno me cuenta que sufre ciberbullying?')">Protocolo ciberbullying</button>
+      <button class="qbtn" onclick="qa('¿Cómo involucro a los apoderados en la educación digital?')">Involucrar apoderados</button>
+      <button class="qbtn" onclick="qa('¿Qué dice la ley chilena sobre acoso digital entre menores?')">Marco legal Chile</button>
+    </div>
+    <div class="chat-row">
+      <input class="chat-in" id="chatIn" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendMsg()" maxlength="1000"/>
+      <button class="send-btn" onclick="sendMsg()">➤</button>
+    </div>
+  </div>
+</div>
 
-// ── PHISHING ─────────────────────────────────────────────────
-const PE_BANK = [
-  // PHISHING (10)
-  {from:'soporte@micr0soft-365.net',fn:'Microsoft Support',to:'empleado@tuempresa.com',subj:'⚠️ URGENTE: Su cuenta expirará en 24 horas',
-   body:`<p>Estimado usuario,</p><p>Hemos detectado actividad inusual en su cuenta de Microsoft 365. Para evitar la suspensión inmediata debe verificar su identidad en las próximas <strong>24 horas</strong>.</p><p>Confirme sus datos aquí:</p><p><span class="elink">https://micr0soft-365-verify.net/confirm?token=xK92mP</span></p><p><span class="ecta">Verificar cuenta ahora</span></p><p>Si no actúa, su cuenta será suspendida permanentemente.</p><p>Equipo de Seguridad Microsoft</p>`,
-   phish:true, clues:['Dominio falso: "micr0soft-365.net" usa cero en lugar de la letra o','Urgencia artificial para presionar sin reflexionar','URL no pertenece a ningún dominio oficial de Microsoft','Microsoft nunca solicita credenciales por correo electrónico','Amenaza de pérdida permanente de cuenta']},
-  {from:'it-helpdesk@emp1esa-soporte.com',fn:'IT Helpdesk',to:'empleado@tuempresa.com',subj:'Tu contraseña expira HOY – Acción requerida',
-   body:`<p>Tu contraseña corporativa expirará <strong>hoy a las 23:59</strong>. Para no perder acceso a los sistemas debes renovarla inmediatamente.</p><p>Proporciona tu contraseña actual y la nueva en el siguiente formulario:</p><p><span class="elink">http://password-reset-corp.xyz/renew</span></p><p>Si no lo haces antes de medianoche tu acceso quedará bloqueado permanentemente.</p><p>IT Helpdesk</p>`,
-   phish:true, clues:['Dominio falso: "emp1esa-soporte.com" usa el número 1 en lugar de la letra i','IT nunca solicita tu contraseña actual — solo te pedirá que la cambies tú mismo','URL externa desconocida con HTTP sin cifrado','Amenaza de bloqueo permanente para crear urgencia artificial']},
-  {from:'no-reply@paypa1-seguridad.com',fn:'PayPal Seguridad',to:'empleado@tuempresa.com',subj:'Actividad sospechosa en tu cuenta PayPal — Verifica ahora',
-   body:`<p>Hemos detectado un intento de acceso desde Chile no reconocido.</p><p>Para proteger tu cuenta, confirma tu identidad en las próximas 2 horas:</p><p><span class="elink">https://paypa1-seguridad.com/verify?id=88342</span></p><p>Si no lo haces, tu cuenta quedará suspendida por seguridad.</p><p>El equipo de PayPal</p>`,
-   phish:true, clues:['Dominio "paypa1-seguridad.com" usa el número 1 en lugar de la letra l','PayPal envía desde paypal.com, no desde dominios externos','Urgencia artificial: 2 horas para actuar','La URL no pertenece a paypal.com','Amenaza de suspensión para presionar la acción impulsiva']},
-  {from:'ceo.martinez@tuempresa-corp.net',fn:'Carlos Martínez CEO',to:'contador@tuempresa.com',subj:'Transferencia urgente y confidencial',
-   body:`<p>Hola,</p><p>Necesito que realices una transferencia urgente de $4.800.000 CLP a la siguiente cuenta bancaria como parte de una adquisición confidencial.</p><p>Banco: Santander Chile<br>RUT: 76.432.891-2<br>Cuenta: 000-7-432891-9</p><p>Es confidencial, no lo menciones a nadie todavía. Lo explicaré en la reunión de mañana.</p><p>Carlos</p>`,
-   phish:true, clues:['Dominio "tuempresa-corp.net" no es el dominio oficial de la empresa','Solicitud de confidencialidad — diseñada para evitar verificación','Los CEO no solicitan transferencias urgentes por email sin proceso formal','Sin documentación ni contrato adjunto','Presión temporal y emocional combinadas']},
-  {from:'descuentos@am4z0n-ofertas.cl',fn:'Amazon Ofertas Chile',to:'empleado@tuempresa.com',subj:'🎁 Has ganado un vale de $50.000 — Reclama antes de las 12:00',
-   body:`<p>¡Felicitaciones! Fuiste seleccionado para recibir un vale de compras de <strong>$50.000 CLP</strong> en Amazon.</p><p>Para reclamarlo, confirma tus datos de envío y datos de tarjeta para cubrir los gastos de emisión ($990 CLP):</p><p><span class="ecta">Reclamar mi vale ahora</span></p><p>Oferta válida solo hasta las 12:00 de hoy.</p>`,
-   phish:true, clues:['Dominio "am4z0n-ofertas.cl" usa el número 4 en lugar de la letra a','Amazon no opera tienda directa en Chile con dominio .cl','Pedir datos de tarjeta para "gastos de emisión" es una estafa clásica','Urgencia artificial: solo hasta las 12:00','Premia inesperada sin haber participado en ningún sorteo']},
-  {from:'soporte@banco-chile-seguro.com',fn:'Banco de Chile',to:'cliente@email.com',subj:'Su tarjeta ha sido bloqueada por actividad inusual',
-   body:`<p>Estimado cliente,</p><p>Hemos bloqueado su tarjeta de crédito terminada en **4521 por detección de actividad fraudulenta.</p><p>Para desbloquearla y confirmar su identidad, ingrese a:</p><p><span class="elink">https://banco-chile-seguro.com/desbloqueo</span></p><p>Tiene 4 horas para actuar o la tarjeta será cancelada definitivamente.</p>`,
-   phish:true, clues:['Dominio "banco-chile-seguro.com" no es bancochile.cl','El Banco de Chile envía desde bancochile.cl','Amenaza de cancelación definitiva para crear urgencia','Los bancos nunca desbloquean tarjetas a través de enlaces por email','Sin mención del nombre completo del cliente']},
-  {from:'admin@dropb0x-storage.net',fn:'Dropbox',to:'empleado@tuempresa.com',subj:'[Acción requerida] Documento compartido contigo',
-   body:`<p>Carlos Rodríguez ha compartido un documento confidencial contigo a través de Dropbox.</p><p>Para ver el documento, inicia sesión con tus credenciales corporativas:</p><p><span class="elink">https://dropb0x-storage.net/view?doc=conf_2024_Q4</span></p><p>El enlace expirará en 48 horas.</p>`,
-   phish:true, clues:['Dominio "dropb0x-storage.net" usa cero en lugar de la letra o','Dropbox envía desde dropbox.com, no desde dominios externos','Solicita credenciales corporativas en un dominio no corporativo','El nombre "Carlos Rodríguez" puede ser real — el ataque está personalizado','Plazo de expiración para crear urgencia moderada']},
-  {from:'facturacion@sii-chile-gov.cl',fn:'SII Chile',to:'empresa@tuempresa.com',subj:'URGENTE: Deuda tributaria pendiente — Evite multas',
-   body:`<p>Se ha detectado una inconsistencia en sus declaraciones tributarias del período 2023-2024.</p><p>Deuda pendiente: <strong>$1.247.890 CLP</strong></p><p>Para regularizar su situación y evitar multas e intereses, acceda al siguiente enlace:</p><p><span class="elink">https://sii-chile-gov.cl/regularizar?rut=xxxxx</span></p><p>Plazo máximo: 72 horas.</p>`,
-   phish:true, clues:['El SII opera desde sii.cl, no desde "sii-chile-gov.cl"','El SII notifica deudas mediante carta certificada o Mipyme Portal, no por email con enlaces','Cifra exacta de deuda para dar credibilidad falsa','Urgencia de 72 horas para evitar verificación','El SII nunca pide regularización a través de enlaces en emails no solicitados']},
-  {from:'noreply@l1nked1n-alerts.com',fn:'LinkedIn',to:'profesional@email.com',subj:'Tienes 3 solicitudes de conexión pendientes de empresas reconocidas',
-   body:`<p>Hola,</p><p>Tres reclutadores de empresas como Google, Mercado Libre y Falabella han visto tu perfil y quieren conectar contigo.</p><p>Para ver sus perfiles y aceptar las solicitudes:</p><p><span class="elink">https://l1nked1n-alerts.com/connections?token=abc123</span></p><p>Este aviso expirará en 24 horas.</p>`,
-   phish:true, clues:['Dominio "l1nked1n-alerts.com" usa el número 1 en lugar de la letra i','LinkedIn envía desde linkedin.com o e.linkedin.com, no desde dominios externos','Mención de empresas de alto perfil para aumentar credibilidad','El token en la URL es único para rastrear clics','LinkedIn nunca requiere login desde emails — siempre dirige a linkedin.com']},
-  {from:'alertas@mercadolibre-pago-seguro.net',fn:'Mercado Pago',to:'vendedor@email.com',subj:'Tu pago de $89.990 está retenido — Verifica tu cuenta',
-   body:`<p>Tu pago por venta reciente está retenido por una verificación de seguridad.</p><p>Para liberar los fondos a tu cuenta bancaria, confirma tu identidad:</p><p><span class="elink">https://mercadolibre-pago-seguro.net/liberar?id=venta_9823</span></p><p>Si no verificas en 24 horas, el pago será devuelto al comprador.</p>`,
-   phish:true, clues:['Mercado Pago opera desde mercadopago.com, no desde dominios externos','Amenaza de perder el pago para presionar la acción','Los pagos retenidos se gestionan desde la app o web oficial','URL con dominio inventado que intenta imitar la marca','Sin detalles específicos de la venta que lo hagan verificable']},
+</div><!-- /wrap -->
 
-  // LEGÍTIMOS (5)
-  {from:'rrhh@tuempresa.com',fn:'Recursos Humanos',to:'empleado@tuempresa.com',subj:'Recordatorio: Actualización del portal de nóminas',
-   body:`<p>Hola,</p><p>Te recordamos que el portal de gestión de nóminas ha sido actualizado. Puedes acceder con tus credenciales habituales desde la intranet corporativa.</p><p>Para cualquier duda escribe a <span class="elink">rrhh@tuempresa.com</span> o llama a la extensión 3401.</p><p>Un saludo,<br>Departamento de RRHH</p>`,
-   phish:false, clues:['Dominio corporativo legítimo (@tuempresa.com)','No solicita credenciales ni datos personales','Proporciona canales de contacto internos verificables','Sin urgencia ni amenazas','Dirige a la intranet, no a URL externa']},
-  {from:'noreply@github.com',fn:'GitHub',to:'desarrollador@email.com',subj:'[GitHub] Nuevo inicio de sesión desde Santiago, Chile',
-   body:`<p>Hola,</p><p>Detectamos un nuevo inicio de sesión en tu cuenta GitHub desde Santiago, Chile el 10 de marzo de 2026 a las 14:32.</p><p>Si fuiste tú, no necesitas hacer nada.</p><p>Si no reconoces este acceso, protege tu cuenta desde: github.com/settings/security</p><p>El equipo de GitHub</p>`,
-   phish:false, clues:['El remitente es noreply@github.com — dominio oficial','No incluye enlaces directos de clic — dirige a navegar manualmente','No crea urgencia artificial ni amenaza consecuencias','Proporciona información específica: fecha, hora y ubicación','Ofrece acción solo si el usuario NO reconoce el acceso']},
-  {from:'facturas@proveedor-legitimo.cl',fn:'Proveedor Legítimo SpA',to:'compras@tuempresa.com',subj:'Factura N°4521 — Servicios marzo 2026',
-   body:`<p>Estimados,</p><p>Adjuntamos la factura N°4521 por los servicios de consultoría prestados durante marzo 2026, por un total de $850.000 CLP + IVA.</p><p>Pueden verificar el documento en el SII con el folio adjunto o contactarnos en el +56 2 2345 6789.</p><p>Saludos,<br>Administración · Proveedor Legítimo SpA</p>`,
-   phish:false, clues:['Dominio .cl consistente con empresa chilena registrada','Proporciona número de factura verificable en SII','Incluye número de teléfono de contacto directo','No solicita credenciales ni acciones urgentes','Referencia a una relación comercial previa existente']},
-  {from:'security-alerts@google.com',fn:'Google',to:'usuario@gmail.com',subj:'Nuevo dispositivo conectado a tu cuenta',
-   body:`<p>Se conectó un nuevo dispositivo a tu cuenta Google.</p><p>Dispositivo: Chrome en Windows 11 · Santiago, Chile · 11 mar 2026, 09:15</p><p>Si fuiste tú: no necesitas hacer nada.</p><p>Si no fuiste tú: visita myaccount.google.com/security para revisar tu actividad.</p>`,
-   phish:false, clues:['Remitente desde google.com — dominio oficial de Google','No incluye enlaces directos — indica navegar manualmente a myaccount.google.com','Proporciona detalles específicos verificables del dispositivo','No crea urgencia — solo informa','No solicita credenciales ni datos adicionales']},
-  {from:'notificaciones@linkedin.com',fn:'LinkedIn',to:'profesional@email.com',subj:'Tu solicitud de conexión fue aceptada',
-   body:`<p>Hola,</p><p>Ana González aceptó tu solicitud de conexión en LinkedIn.</p><p>Ahora son contactos de primer nivel. Puedes ver su perfil en linkedin.com.</p><p>El equipo de LinkedIn</p>`,
-   phish:false, clues:['Remitente desde linkedin.com — dominio oficial','Mensaje simple sin solicitud de acción urgente','No incluye enlaces directos que requieran login','Referencia a una acción iniciada por el propio usuario','Sin urgencia, sin amenaza, sin solicitud de datos']},
-];
-
-function shufflePE(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-const PE = shufflePE(PE_BANK);
-let pIdx = 0;
-function renderPhish() {
-  const p = PE[pIdx];
-  document.getElementById('phEmail').innerHTML = `
-    <div class="email-frame">
-      <div class="em-hdr"><div class="em-field"><strong>de:</strong> ${p.fn} &lt;${p.from}&gt;</div><div class="em-field"><strong>para:</strong> ${p.to}</div></div>
-      <div class="em-subj">${p.subj}</div>
-      <div class="em-body">${p.body}</div>
-    </div>`;
-  document.getElementById('phVerdict').style.display = 'none';
-  document.getElementById('btnNph').style.display = 'none';
-  document.querySelectorAll('.ph-btn').forEach(b => { b.disabled = false; b.style.opacity = '1'; });
-}
-function phAns(action) {
-  const p = PE[pIdx];
-  document.querySelectorAll('.ph-btn').forEach(b => { b.disabled = true; b.style.opacity = '.4'; });
-  let ok, title, color;
-  if (p.phish) { ok = action === true || action === 'report'; title = ok ? (action === 'report' ? '✓ acción óptima. reportar preserva evidencia forense.' : '✓ correcto. es un ataque de phishing.') : '✗ incorrecto. este correo sí es phishing.'; color = ok ? 'var(--green)' : 'var(--red)'; }
-  else { ok = action === false; title = ok ? '✓ correcto. este correo es legítimo.' : '✗ incorrecto. este correo es legítimo, no es phishing.'; color = ok ? 'var(--green)' : 'var(--red)'; }
-  const v = document.getElementById('phVerdict');
-  v.innerHTML = `<div class="pv-title" style="color:${color};font-family:var(--mono);font-size:13px">${title}</div>
-    <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;margin-top:12px;">// indicadores ${p.phish ? 'de phishing' : 'de legitimidad'}</div>
-    ${p.clues.map(c => `<div class="pv-clue"><span>${p.phish ? '!' : '✓'}</span><span>${c}</span></div>`).join('')}`;
-  v.style.display = 'block';
-  if (pIdx < PE.length - 1) document.getElementById('btnNph').style.display = 'block';
-  else v.innerHTML += `<p style="margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--green)">// fin del simulador — todos los escenarios completados.</p>`;
-}
-function nextPhish() { pIdx = (pIdx + 1) % PE.length; renderPhish(); }
-
-// ── PASSWORD ─────────────────────────────────────────────────
-const COMMON = ['123456','password','contraseña','qwerty','abc123','111111','password1','admin','letmein','welcome','monkey','dragon'];
-function analyzePw(val) {
-  if (!val) { resetPw(); return; }
-  const ch = { len:val.length>=12, up:/[A-Z]/.test(val), lo:/[a-z]/.test(val), nu:/[0-9]/.test(val), sy:/[^A-Za-z0-9]/.test(val), nd:!COMMON.some(c=>val.toLowerCase().includes(c)) };
-  [['len','len'],['up','up'],['lo','lo'],['nu','nu'],['sy','sy'],['nd','nd']].forEach(([k,id]) => {
-    const el = document.getElementById('pc-'+id);
-    el.classList.toggle('pass', ch[k]);
-    el.querySelector('.pw-cc').textContent = ch[k] ? '●' : '○';
-  });
-  const score = Object.values(ch).filter(Boolean).length;
-  const filled = Math.round(score / 6 * 4);
-  [1,2,3,4].forEach(i => { const b = document.getElementById('pb'+i); b.className = 'pw-bar' + (i <= filled ? ' f' + filled : ''); });
-  const labels = ['','muy débil','débil','moderada','fuerte','muy fuerte','excelente'];
-  const colors = ['var(--text-dim)','var(--red)','var(--red)','var(--amber)','var(--blue)','var(--green)','var(--green)'];
-  document.getElementById('pwLabel').textContent = labels[score] || 'sin contraseña';
-  document.getElementById('pwLabel').style.color = colors[score] || 'var(--text-dim)';
-  const cracks = ['instantáneo','segundos','minutos','horas','años','siglos'];
-  document.getElementById('pwCrack').textContent = '⏱ tiempo de crackeo estimado: ' + (cracks[Math.min(score,5)] || 'instantáneo');
-}
-function resetPw() {
-  [1,2,3,4].forEach(i => document.getElementById('pb'+i).className='pw-bar');
-  document.getElementById('pwLabel').textContent = 'sin contraseña'; document.getElementById('pwLabel').style.color='var(--text-dim)';
-  document.getElementById('pwCrack').textContent='';
-  ['len','up','lo','nu','sy','nd'].forEach(k => { const el=document.getElementById('pc-'+k); el.classList.remove('pass'); el.querySelector('.pw-cc').textContent='○'; });
-}
-function toggleEye() { const i=document.getElementById('pwIn'); i.type=i.type==='password'?'text':'password'; document.getElementById('pwEye').textContent=i.type==='password'?'👁':'🙈'; }
-function generatePw() {
-  const chars='abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789!@#$%^&*-_=+';
-  let pw=''; for(let i=0;i<16;i++) pw+=chars[Math.floor(Math.random()*chars.length)];
-  pw=pw.slice(0,14)+String.fromCharCode(65+Math.floor(Math.random()*26))+'7!';
-  document.getElementById('pwGenVal').textContent=pw;
-  document.getElementById('pwGen').style.display='block';
-  document.getElementById('pwCopy').textContent='copiar contraseña'; document.getElementById('pwCopy').classList.remove('copied');
-}
-function copyPw() {
-  navigator.clipboard.writeText(document.getElementById('pwGenVal').textContent)
-    .then(() => { document.getElementById('pwCopy').textContent='✓ copiada'; document.getElementById('pwCopy').classList.add('copied'); showToast('contraseña copiada'); })
-    .catch(() => showToast('copia manualmente'));
-}
-
-// ── BREACH ───────────────────────────────────────────────────
-const SCENARIOS = [
-  {name:'smishing → fraude bancario', currency:'CLP', events:[
-    {h:'Min 0', title:'SMS de banco falso recibido', desc:'Empleada recibe SMS: "Banco Estado: cargo no autorizado de $340.000. Cancela aquí: [enlace]". El número parece oficial.', impact:'La empleada hace clic en el enlace — página idéntica al banco real pero en dominio falso.', cost:0},
-    {h:'Min 2', title:'credenciales capturadas', desc:'La empleada ingresa RUT, clave internet y tarjeta de coordenadas en el sitio falso.', impact:'El atacante captura las credenciales en tiempo real y las usa simultáneamente en el banco legítimo.', cost:0},
-    {h:'Min 5', title:'transferencia ejecutada', desc:'Desde la sesión real del banco, el atacante realiza una transferencia de $4.800.000 a una cuenta mula.', impact:'Transacción completada. El dinero sale hacia cuenta intermedia antes de que el banco pueda bloquearla.', cost:4800000},
-    {h:'Min 15', title:'cuenta bloqueada', desc:'El banco detecta actividad inusual y bloquea la cuenta. La empleada intenta llamar al banco.', impact:'El bloqueo llega tarde. El dinero ya fue movido a una segunda cuenta mula.', cost:0},
-    {h:'H+1', title:'denuncia y investigación', desc:'La empleada denuncia en el banco y en la PDI. Se inicia investigación de la cuenta mula.', impact:'La cuenta mula ya está vacía. Recuperación del dinero: improbable.', cost:0},
-  ]},
-  {name:'deepfake CEO → transferencia', currency:'CLP', events:[
-    {h:'14:00', title:'videollamada deepfake del CEO', desc:'El contador recibe videollamada de Teams del "Director General". Imagen y voz perfectamente realistas. Pide transferencia urgente de $18M CLP a proveedor nuevo antes de las 16:00.', impact:'El contador intenta verificar pero el "CEO" insiste: no hay tiempo, el CFO ya aprobó.', cost:0},
-    {h:'14:20', title:'transferencia ejecutada sin verificar', desc:'El contador realiza la transferencia sin llamar al CEO por canal separado. Confía en lo que vio y escuchó.', impact:'$18.000.000 CLP transferidos a cuenta de proveedor desconocido.', cost:18000000},
-    {h:'17:00', title:'el CEO real llama', desc:'El CEO real contacta al contador preguntando por la reunión de mañana. No sabe nada de ninguna transferencia.', impact:'El equipo confirma que la videollamada de las 14:00 fue generada por IA.', cost:0},
-    {h:'17:30', title:'investigación de la transferencia', desc:'El banco es contactado para detener la transferencia. Ya fue procesada y enviada al exterior.', impact:'El dinero pasó por tres cuentas mula internacionales. Indetectable.', cost:0},
-    {h:'H+24', title:'denuncia y crisis interna', desc:'Se denuncia ante la PDI y SBIF. Se contrata equipo forense. Se notifica a directorio.', impact:'Costo total: $18M perdidos + costos legales + daño reputacional con directorio.', cost:5000000},
-  ]},
-  {name:'phishing + ransomware', events:[
-    {h:'H+0', title:'email de phishing recibido', desc:'Un empleado del área financiera recibe un email que suplanta a un proveedor habitual. El adjunto contiene una macro maliciosa.', impact:'El empleado abre el adjunto. La macro se ejecuta silenciosamente en segundo plano.', cost:0},
-    {h:'H+1', title:'malware instalado — RAT activo', desc:'El malware establece comunicación con el servidor C2 del atacante. El equipo parece funcionar con normalidad. Nadie lo sabe aún.', impact:'El atacante tiene acceso remoto completo. Ve la pantalla, lee el teclado, navega la red.', cost:0},
-    {h:'H+6', title:'reconocimiento interno', desc:'El atacante explora la red interna buscando servidores de ficheros, backups y controladores de dominio. Mapea la infraestructura completa.', impact:'El atacante conoce la arquitectura. Ha identificado los objetivos de mayor valor.', cost:0},
-    {h:'H+24', title:'movimiento lateral — propagación', desc:'Usando credenciales obtenidas del equipo infectado, el atacante accede a 12 servidores y 8 equipos de otros empleados.', impact:'El 40% de los sistemas críticos están comprometidos. Sin alertas activadas.', cost:15000},
-    {h:'H+36', title:'exfiltración de datos', desc:'Se transfieren 127 GB de datos: contratos, datos de clientes, información financiera y propiedad intelectual.', impact:'Brecha de datos confirmada. Obligación legal de notificar a la AEPD en 72 horas.', cost:85000},
-    {h:'H+48', title:'activación del ransomware', desc:'A las 3:00 AM, el ransomware cifra simultáneamente todos los sistemas accesibles. Los empleados llegan y no pueden trabajar.', impact:'Operaciones completamente paralizadas. Rescate exigido: 450.000€ en Bitcoin.', cost:450000},
-    {h:'H+72', title:'respuesta al incidente', desc:'Se contrata equipo de incident response externo. Se notifica a la AEPD. Se contacta con abogados especializados.', impact:'72 horas de negocio paralizado. Clientes notificados. Reputación gravemente dañada.', cost:120000},
-    {h:'H+168', title:'recuperación parcial — 7 días', desc:'Con backups offsite (actualizados) se restauran los sistemas críticos. La investigación forense continúa durante semanas.', impact:'Coste total del incidente: ~870.000€ + daño reputacional difícil de cuantificar.', cost:200000},
-  ]},
-  {name:'credenciales robadas', events:[
-    {h:'H+0', title:'credenciales filtradas en dark web', desc:'Las credenciales del responsable de IT aparecen en una base de datos filtrada de un servicio externo. Sin alerta ni detección.', impact:'El atacante adquiere usuario y contraseña válidos por menos de 50€.', cost:0},
-    {h:'H+2', title:'login en vpn corporativa', desc:'El atacante usa las credenciales para conectarse a la VPN corporativa desde una IP extranjera. Sin MFA, el acceso es inmediato.', impact:'Acceso "legítimo" a toda la red interna. Sin alertas. Sin bloqueos.', cost:0},
-    {h:'H+8', title:'escalada de privilegios', desc:'Desde el equipo del IT, el atacante accede a Active Directory y se otorga permisos de administrador de dominio.', impact:'Control total sobre toda la infraestructura de usuarios y sistemas de la empresa.', cost:0},
-    {h:'H+24', title:'persistencia instalada', desc:'Se crean cuentas backdoor, se deshabilitan logs de seguridad y se instalan herramientas de control remoto adicionales.', impact:'El atacante puede volver cuando quiera, incluso si detectan y cambian la contraseña original.', cost:25000},
-    {h:'H+72', title:'exfiltración masiva de datos', desc:'Durante tres días se exfiltran bases de datos de clientes, datos financieros y código fuente de productos.', impact:'Brecha masiva de datos personales. RGPD: notificación urgente a AEPD y clientes afectados.', cost:200000},
-    {h:'H+96', title:'detección accidental', desc:'Un empleado nota comportamiento extraño en su cuenta. Se alerta a IT. Al revisar logs, descubren el acceso no autorizado hace 4 días.', impact:'4 días de brecha sin detectar. El daño ya está hecho. La investigación empieza tarde.', cost:150000},
-  ]},
-  {name:'malware interno (usb)', events:[
-    {h:'H+0', title:'usb infectado conectado', desc:'Un empleado encuentra un USB en la sala de reuniones y lo conecta a su equipo "para ver de quién es". El malware se instala automáticamente.', impact:'Infección inicial completada. El malware establece persistencia y empieza a ejecutarse.', cost:0},
-    {h:'H+3', title:'keylogger activo', desc:'El keylogger captura credenciales, conversaciones internas y datos confidenciales que el empleado teclea durante su jornada.', impact:'En 3 horas se han capturado credenciales de 4 sistemas críticos de la empresa.', cost:0},
-    {h:'H+12', title:'propagación por red interna', desc:'El malware explora la red buscando vulnerabilidades. Infecta 6 equipos adicionales a través de una vulnerabilidad sin parchear.', impact:'La infección se ha extendido a múltiples departamentos. Nadie es consciente aún.', cost:30000},
-    {h:'H+48', title:'activación del payload destructivo', desc:'El malware activa su carga: elimina archivos críticos, corrompe bases de datos y envía spam desde los servidores de correo corporativos.', impact:'Datos críticos perdidos. Servidores en lista negra. Pérdida de confianza de clientes.', cost:300000},
-  ]},
-];
-let selSc = 0, bRunning = false, bStep = 0, bTimer = null;
-function selectSc(i, btn) { selSc = i; document.querySelectorAll('.sc-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); resetBreach(); }
-function renderBreachTL() {
-  const s = SCENARIOS[selSc];
-  document.getElementById('bTimeline').innerHTML = s.events.map((e,i) => {
-    const hour = e.h || '';
-    const title = e.title || '';
-    const desc = e.desc || '';
-    const impact = e.impact || '';
-    const cost = e.cost || 0;
-    const costLabel = s.currency === 'CLP'
-      ? `impacto estimado: $${cost.toLocaleString('es')} CLP`
-      : `coste acumulado estimado: +${cost.toLocaleString('es')}€`;
-    const impactHtml = cost > 0
-      ? `<div class="tl-impact" id="bI${i}">${costLabel}</div>`
-      : `<div class="tl-impact" id="bI${i}">${impact}</div>`;
-    return `
-    <div class="tl-item">
-      <div class="tl-dot" id="bD${i}"></div>
-      <div class="tl-card" id="bC${i}">
-        <div class="tl-hour">${hour}</div>
-        <div class="tl-title">${title}</div>
-        <div class="tl-desc">${desc}</div>
-        ${impactHtml}
-      </div>
-    </div>`;
-  }).join('');
-  document.getElementById('bStats').style.display = 'none';
-}
-function startBreach() {
-  if (bRunning) return; bRunning = true;
-  document.getElementById('bStartBtn').textContent = '⏳ ejecutando…'; document.getElementById('bStartBtn').disabled = true;
-  runStep();
-}
-function runStep() {
-  const s = SCENARIOS[selSc];
-  if (bStep >= s.events.length) { showBreachResult(); return; }
-  if (bStep > 0) { document.getElementById('bD'+(bStep-1)).className='tl-dot done'; document.getElementById('bC'+(bStep-1)).classList.remove('active'); document.getElementById('bC'+(bStep-1)).classList.add('done'); }
-  document.getElementById('bD'+bStep).className='tl-dot active';
-  document.getElementById('bC'+bStep).classList.add('active');
-  document.getElementById('bI'+bStep).style.display = 'block';
-  document.getElementById('bC'+bStep).scrollIntoView({behavior:'smooth',block:'nearest'});
-  bStep++; bTimer = setTimeout(runStep, 1800);
-}
-function showBreachResult() {
-  const s = SCENARIOS[selSc];
-  if (bStep > 0) { document.getElementById('bD'+(bStep-1)).className='tl-dot done'; document.getElementById('bC'+(bStep-1)).classList.remove('active'); }
-  const totalCost = s.events.reduce((a,e) => a+e.cost, 0);
-  const bs = document.getElementById('bStats'); bs.style.display = 'grid';
-  bs.innerHTML = `
-    <div class="bstat"><div class="bstat-n">${s.events.length}</div><div class="bstat-l">fases del ataque</div></div>
-    <div class="bstat"><div class="bstat-n">${s.events.filter(e=>e.cost>0).length}</div><div class="bstat-l">con impacto económico</div></div>
-    <div class="bstat"><div class="bstat-n">${s.currency==='CLP' ? '$'+(totalCost/1000000).toFixed(1)+'M CLP' : (totalCost/1000).toFixed(0)+'K€'}</div><div class="bstat-l">impacto estimado total</div></div>
-    <div class="bstat"><div class="bstat-n" style="color:var(--green)">${s.currency==='CLP' ? '$0' : '0€'}</div><div class="bstat-l">con controles preventivos</div></div>`;
-  bs.scrollIntoView({behavior:'smooth',block:'nearest'});
-  document.getElementById('bStartBtn').textContent = '✓ completado'; bRunning = false;
-}
-function resetBreach() { clearTimeout(bTimer); bRunning=false; bStep=0; document.getElementById('bStartBtn').textContent='▶ iniciar simulación'; document.getElementById('bStartBtn').disabled=false; renderBreachTL(); }
-
-// ── SMISHING ─────────────────────────────────────────────────
-const SM_BANK = [
-  // SMISHING (8)
-  {from:'+56 9 8823 1042',fn:'Banco Santander',subj:'SMS de tu banco',
-   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0"><strong>SANTANDER:</strong> Detectamos un cargo no reconocido de $89.990 en tu tarjeta. Si no fuiste tú, cancela aquí: <span class="elink">http://sntandr-seguro.cl/cancelar?id=4521</span></div>`,
-   smish:true, clues:['Los bancos nunca envían SMS con enlaces para gestionar cargos','Dominio "sntandr-seguro.cl" no es santander.cl','URL con HTTP sin cifrado','El número no es el número oficial de Santander Chile (+56 2 2320 1111)','Para bloquear un cargo, llama al número del reverso de tu tarjeta']},
-  {from:'+56 2 2345 6789',fn:'Correos de Chile',subj:'SMS de Correos',
-   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Correos de Chile: Tu paquete N°CL-8823491 no pudo ser entregado. Reprograma tu entrega: <span class="elink">https://correoschile-entregas.net/reagendar</span></div>`,
-   smish:true, clues:['Correos de Chile opera desde correos.cl, no desde "correoschile-entregas.net"','El número de seguimiento parece válido — es una técnica para dar credibilidad','Correos de Chile no envía SMS con enlaces para reagendar','Verifica siempre en correos.cl con tu número de seguimiento real']},
-  {from:'+1 (415) 555-0182',fn:'Apple',subj:'SMS de Apple',
-   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Apple: Tu ID de Apple ha sido bloqueado por actividad inusual. Desbloquea en: <span class="elink">https://apple-id-chile.com/unlock</span></div>`,
-   smish:true, clues:['Apple nunca envía SMS con enlaces para desbloquear cuentas','Número de EE.UU. (+1) sospechoso para comunicaciones de Apple Chile','Dominio "apple-id-chile.com" no es apple.com','Para problemas con Apple ID, ve directamente a appleid.apple.com']},
-  {from:'+56 9 7723 4401',fn:'Desconocido',subj:'SMS de número desconocido',
-   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Hola! Soy Ana de RRHH. Mañana es el cumpleaños de Carlos y estamos juntando para un regalo grupal. ¿Puedes transferir $5.000 a este número? Te lo devuelvo el viernes 😊</div>`,
-   smish:true, clues:['Número no registrado en tus contactos','Solicitud de dinero sin verificación previa de identidad','El tono amistoso busca bajar la guardia','Antes de transferir, llama directamente a Ana para confirmar','Las estafas de "colecta grupal" son comunes y usan nombres reales del directorio de la empresa']},
-  {from:'+56 9 4412 8830',fn:'Desconocido',subj:'SMS de número desconocido',
-   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">URGENTE: Tu RUT fue usado en una declaración de impuestos fraudulenta. Debes responder este SMS con tu número de serie de cédula para bloquear el proceso. Plazo: 2 horas.</div>`,
-   smish:true, clues:['El SII nunca contacta por SMS solicitando datos de identidad','Nunca envíes datos de cédula o RUT por SMS','Urgencia artificial de 2 horas','Si tienes una duda real con el SII, ingresa directamente a sii.cl o llama al 22395 1115']},
-  {from:'+56 9 3341 2290',fn:'Desconocido',subj:'SMS de sorteo',
-   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Jumbo: Ganaste un Gift Card de $100.000 en nuestro sorteo de marzo. Reclama antes del viernes en: <span class="elink">http://jumbo-premios.net/reclamar?code=GC8823</span></div>`,
-   smish:true, clues:['Jumbo opera desde jumbo.cl, no desde "jumbo-premios.net"','URL con HTTP sin cifrado','No participaste en ningún sorteo','Los premios legítimos se reciben por correo certificado o en tienda, no por SMS con enlace','El código de regalo en la URL es único para rastrear clics']},
-  {from:'+56 9 1123 9987',fn:'Desconocido',subj:'SMS de trabajo',
-   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Hola! Vimos tu CV en LinkedIn. Ofrecemos trabajo remoto $850.000/mes. Solo necesitas una inversión inicial de $30.000 para el kit de materiales. Interesado? Responde SÍ.</div>`,
-   smish:true, clues:['Las ofertas de trabajo legítimas nunca piden inversión inicial al candidato','"Inversión inicial para materiales" es una estafa clásica de trabajo remoto falso','El número no corresponde a ninguna empresa reconocida','Si fuera legítimo, el reclutador contactaría por LinkedIn, no por SMS']},
-  {from:'+56 9 8845 0023',fn:'Desconocido',subj:'SMS de tu médico',
-   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Clínica Alemana: Tiene un resultado de examen pendiente de revisar. Acceda con su RUN y fecha de nacimiento en: <span class="elink">https://cl-alemana-resultados.com/ver</span></div>`,
-   smish:true, clues:['Clínica Alemana opera desde clinicaalemana.cl, no desde dominios externos','Las clínicas no envían resultados por SMS con enlace a dominios no oficiales','Pedir RUN + fecha de nacimiento expone datos personales sensibles','Verifica siempre en la aplicación o web oficial de tu clínica']},
-
-  // LEGÍTIMOS (4)
-  {from:'+56 9 800 123 456',fn:'Banco Estado',subj:'SMS de Banco Estado',
-   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">BancoEstado: Tu transferencia de $45.000 a Juan Pérez fue procesada exitosamente el 11/03/2026 a las 14:32. Si no reconoces esta operación llama al 600 200 7000.</div>`,
-   smish:false, clues:['Número de contacto oficial de Banco Estado (600 200 7000) verificable','No incluye enlaces — solo informa de la transacción','No solicita datos ni acciones','Proporciona detalles específicos de la transacción','Dirige a llamar, no a hacer clic']},
-  {from:'+56 2 2354 6000',fn:'Clínica',subj:'SMS de confirmación',
-   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Recordatorio: Tienes una cita médica mañana 12 de marzo a las 10:30 con Dr. Rodríguez. Para cancelar llama al +56 2 2354 6000. No respondas este SMS.</div>`,
-   smish:false, clues:['No incluye enlaces','Proporciona número de teléfono para cancelar — no un enlace','No solicita datos personales ni credenciales','Mensaje informativo simple sin urgencia ni amenaza']},
-  {from:'+56 9 800 700 100',fn:'Uber',subj:'SMS de código Uber',
-   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Tu código de verificación de Uber es: 847392. No lo compartas con nadie. Uber nunca te pedirá este código.</div>`,
-   smish:false, clues:['El mensaje advierte explícitamente que no se comparta el código','Tú iniciaste el proceso de verificación en la app','No incluye enlaces','El aviso "Uber nunca te pedirá este código" es una señal de legitimidad','Mensaje corto y específico para la acción que el usuario realizó']},
-  {from:'+56 9 800 400 700',fn:'Entel',subj:'SMS de Entel',
-   body:`<div style="font-size:13px;line-height:1.7;padding:8px 0">Entel: Tu factura de febrero de $18.990 está disponible. Puedes verla en Mi Entel en entel.cl o en la app. Si ya pagaste, ignora este mensaje.</div>`,
-   smish:false, clues:['Dirige a entel.cl — dominio oficial','No incluye un enlace directo de clic — indica navegar manualmente','No solicita datos ni acciones urgentes','Proporciona alternativa (app) para verificar','Sin urgencia ni amenaza de corte de servicio']},
-];
-
-function shuffleSM(arr) { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a; }
-const SM = shuffleSM(SM_BANK);
-let smIdx = 0;
-function renderSmish() {
-  const s = SM[smIdx];
-  document.getElementById('smishMsg').innerHTML = `
-    <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">// mensaje recibido</div>
-    <div style="background:#1a1f2e;border-radius:4px;padding:12px 14px;margin-bottom:8px;">
-      <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">De: <strong style="color:var(--text)">${s.fn}</strong> · ${s.from}</div>
-      ${s.body}
-    </div>`;
-  document.getElementById('smishVerdict').style.display = 'none';
-  document.getElementById('btnNsm').style.display = 'none';
-  document.querySelectorAll('.ph-btn').forEach(b => { b.disabled = false; b.style.opacity = '1'; });
-}
-function smishAns(action) {
-  const s = SM[smIdx];
-  document.querySelectorAll('.ph-btn').forEach(b => { b.disabled = true; b.style.opacity = '.4'; });
-  let ok, title, color;
-  if (s.smish) { ok = action === true || action === 'report'; title = ok ? (action === 'report' ? '✓ acción óptima. bloquear y reportar.' : '✓ correcto. es smishing.') : '✗ incorrecto. este SMS sí es smishing.'; color = ok ? 'var(--green)' : 'var(--red)'; }
-  else { ok = action === false; title = ok ? '✓ correcto. este SMS es legítimo.' : '✗ incorrecto. este SMS es legítimo.'; color = ok ? 'var(--green)' : 'var(--red)'; }
-  const v = document.getElementById('smishVerdict');
-  v.innerHTML = `<div style="color:${color};font-family:var(--mono);font-size:13px;margin-bottom:12px">${title}</div>
-    <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">// ${s.smish ? 'señales de smishing' : 'señales de legitimidad'}</div>
-    ${s.clues.map(c => `<div class="pv-clue"><span>${s.smish ? '!' : '✓'}</span><span>${c}</span></div>`).join('')}`;
-  v.style.display = 'block';
-  const remaining = smIdx < SM.length - 1;
-  document.getElementById('btnNsm').style.display = remaining ? 'block' : 'none';
-  if (!remaining) v.innerHTML += `<p style="margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--green)">// fin del simulador de smishing — todos los mensajes completados.</p>`;
-}
-function nextSmish() { smIdx = (smIdx + 1) % SM.length; renderSmish(); }
-
-// ── DEEPFAKE ──────────────────────────────────────────────────
-const DF_BANK = [
-  {type:'videollamada', title:'Videollamada del CEO',
-   scene:`<div style="background:#0d1117;border:1px solid #2d2d2d;border-radius:4px;padding:16px;margin-bottom:12px;">
-     <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-bottom:10px;">📹 VIDEOLLAMADA ENTRANTE · Microsoft Teams · 14:23</div>
-     <div style="background:#161b22;padding:12px;border-radius:3px;margin-bottom:10px;">
-       <div style="font-size:12px;color:#58a6ff;margin-bottom:6px;">👤 Roberto Sánchez — Director General</div>
-       <div style="font-size:13px;color:var(--text);line-height:1.6">"Hola, necesito que hagas una transferencia urgente de $15M CLP a una cuenta nueva de proveedor. Es para cerrar un contrato hoy. El CFO ya sabe. Hazlo antes de las 16:00."</div>
-     </div>
-     <div style="font-size:11px;color:var(--text-dim);">La imagen y voz del director parecen completamente reales. La llamada tiene buena calidad de video.</div>
-   </div>`,
-   fake:true, clues:['Los ejecutivos no solicitan transferencias urgentes por videollamada sin proceso formal','El deepfake de video es hoy una realidad — en 2024 una empresa perdió 25M USD así','Nunca realices una transferencia sin verificar por canal separado (llamada al móvil del director)','Si el CFO ya sabe, él puede confirmarlo directamente','La urgencia y confidencialidad son señales de ingeniería social']},
-  {type:'audio', title:'Audio de WhatsApp de tu familiar',
-   scene:`<div style="background:#0d1117;border:1px solid #2d2d2d;border-radius:4px;padding:16px;margin-bottom:12px;">
-     <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-bottom:10px;">🎵 AUDIO DE WHATSAPP · 0:08 · Mamá 📱</div>
-     <div style="background:#161b22;padding:12px;border-radius:3px;margin-bottom:10px;">
-       <div style="font-size:13px;color:var(--text);line-height:1.6;font-style:italic;">"[audio de 8 segundos] Hola amor, tuve un accidente menor con el auto y necesito $80.000 para el mecánico. ¿Me puedes transferir ahora? Estoy apurada."</div>
-     </div>
-     <div style="font-size:11px;color:var(--text-dim);">La voz suena exactamente como la de tu madre. El tono es urgente pero no desesperado.</div>
-   </div>`,
-   fake:true, clues:['Con 3-5 segundos de audio real, la IA puede clonar una voz perfectamente','Los atacantes obtienen muestras de voz de videos en redes sociales','Llama directamente a tu familiar al número que siempre usas para verificar','Las estafas de clonado de voz familiar están aumentando en Chile','Antes de transferir dinero a un familiar por urgencia, siempre llama']},
-  {type:'email', title:'Email con foto adjunta del CEO',
-   scene:`<div style="background:#0d1117;border:1px solid #2d2d2d;border-radius:4px;padding:16px;margin-bottom:12px;">
-     <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-bottom:10px;">📧 EMAIL · De: ceo@tuempresa.com · 09:15</div>
-     <div style="background:#161b22;padding:12px;border-radius:3px;margin-bottom:10px;">
-       <div style="font-size:13px;color:var(--text);line-height:1.6">Hola equipo,<br><br>Adjunto foto del evento de ayer. Fue un gran día para la empresa. Pueden compartirla en redes.<br><br>— Carlos</div>
-       <div style="margin-top:10px;padding:8px;background:#21262d;border-radius:3px;font-size:11px;color:#58a6ff;">📎 evento_empresa_11marzo.jpg (2.3MB)</div>
-     </div>
-   </div>`,
-   fake:false, clues:['Email desde el dominio corporativo oficial','No solicita acción urgente ni datos sensibles','El adjunto es una imagen JPG — aunque siempre es recomendable verificar con IT antes de abrir adjuntos inesperados','No hay presión de tiempo ni amenaza','El tono es casual y consistente con comunicaciones internas normales']},
-  {type:'llamada', title:'Llamada de soporte técnico',
-   scene:`<div style="background:#0d1117;border:1px solid #2d2d2d;border-radius:4px;padding:16px;margin-bottom:12px;">
-     <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-bottom:10px;">📞 LLAMADA ENTRANTE · +56 2 2891 0034 · 11:40</div>
-     <div style="background:#161b22;padding:12px;border-radius:3px;margin-bottom:10px;">
-       <div style="font-size:13px;color:var(--text);line-height:1.6;font-style:italic;">"Buenos días, soy Miguel de soporte técnico. Detectamos actividad inusual en su equipo y necesitamos acceso remoto para verificar. ¿Puede instalar AnyDesk ahora?"</div>
-     </div>
-     <div style="font-size:11px;color:var(--text-dim);">La voz suena profesional y usa terminología técnica correcta.</div>
-   </div>`,
-   fake:true, clues:['IT legítimo no llama pidiendo instalar software de acceso remoto sin ticket previo','AnyDesk es frecuentemente usado en estafas de soporte técnico falso','Nunca instales software por instrucción telefónica sin verificar con IT interno','Pide el número de ticket o cuelga y llama tú a IT','El uso de terminología técnica correcta es parte del script del atacante']},
-  {type:'video', title:'Video en redes sociales del directivo',
-   scene:`<div style="background:#0d1117;border:1px solid #2d2d2d;border-radius:4px;padding:16px;margin-bottom:12px;">
-     <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-bottom:10px;">🎬 VIDEO · LinkedIn · Publicado hace 2 horas</div>
-     <div style="background:#161b22;padding:12px;border-radius:3px;margin-bottom:10px;">
-       <div style="font-size:12px;color:#58a6ff;margin-bottom:6px;">👤 Andrés Vidal — Gerente General TechCorp Chile</div>
-       <div style="font-size:13px;color:var(--text);line-height:1.6">[Video de 45 segundos donde el ejecutivo anuncia una "oportunidad de inversión exclusiva" para empleados con retornos garantizados del 30% mensual. Pide contactar por WhatsApp.]</div>
-     </div>
-     <div style="font-size:11px;color:var(--text-dim);">El video tiene buena calidad. La voz y movimientos se ven naturales.</div>
-   </div>`,
-   fake:true, clues:['Los ejecutivos no anuncian "oportunidades de inversión exclusivas" por video en redes','Retornos garantizados del 30% mensual no existen — es una estafa piramidal','Verificar el perfil oficial del ejecutivo para confirmar si publicó el video','Contactar directamente a la empresa para verificar','Los deepfakes de ejecutivos para fraude financiero son uno de los usos más comunes']},
-  {type:'audio', title:'Mensaje de voz del jefe directo',
-   scene:`<div style="background:#0d1117;border:1px solid #2d2d2d;border-radius:4px;padding:16px;margin-bottom:12px;">
-     <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-bottom:10px;">🎵 WHATSAPP BUSINESS · 0:12 · Tu jefe directo</div>
-     <div style="background:#161b22;padding:12px;border-radius:3px;margin-bottom:10px;">
-       <div style="font-size:13px;color:var(--text);line-height:1.6;font-style:italic;">[audio de 12 segundos] "Hola, te llamo porque mañana tenemos la presentación con el cliente. ¿Puedes enviarme el informe final antes de las 18:00? Gracias."</div>
-     </div>
-     <div style="font-size:11px;color:var(--text-dim);">La voz es la de tu jefe. El tono es normal, sin urgencia excesiva.</div>
-   </div>`,
-   fake:false, clues:['Solicitud razonable y verificable — puedes confirmar la reunión en el calendario','No pide dinero, credenciales ni datos sensibles','El canal (WhatsApp Business) es consistente con comunicaciones habituales','Sin urgencia artificial ni amenaza','Puedes responder el mensaje o llamar para confirmar sin riesgo']},
-];
-
-function shuffleDF(arr) { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a; }
-const DF = shuffleDF(DF_BANK);
-let dfIdx = 0;
-function renderDf() {
-  const d = DF[dfIdx];
-  document.getElementById('dfCard').innerHTML = `
-    <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">// escenario: ${d.type}</div>
-    <div style="font-weight:600;margin-bottom:10px;">${d.title}</div>
-    ${d.scene}
-    <div style="font-size:12px;color:var(--text-dim);">¿Este escenario podría ser un deepfake o fraude por IA?</div>`;
-  document.getElementById('dfVerdict').style.display = 'none';
-  document.getElementById('btnNdf').style.display = 'none';
-  document.querySelectorAll('.ph-btn').forEach(b => { b.disabled = false; b.style.opacity = '1'; });
-}
-function dfAns(action) {
-  const d = DF[dfIdx];
-  document.querySelectorAll('.ph-btn').forEach(b => { b.disabled = true; b.style.opacity = '.4'; });
-  const ok = action === d.fake;
-  const title = d.fake
-    ? (ok ? '✓ correcto. este escenario es una señal de fraude por IA.' : '✗ incorrecto. este escenario sí es una alerta de deepfake/fraude.')
-    : (ok ? '✓ correcto. este escenario parece legítimo.' : '✗ incorrecto. este escenario es legítimo.');
-  const color = ok ? 'var(--green)' : 'var(--red)';
-  const v = document.getElementById('dfVerdict');
-  v.innerHTML = `<div style="color:${color};font-family:var(--mono);font-size:13px;margin-bottom:12px">${title}</div>
-    <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">// ${d.fake ? 'por qué es una alerta' : 'por qué es legítimo'}</div>
-    ${d.clues.map(c => `<div class="pv-clue"><span>${d.fake ? '!' : '✓'}</span><span>${c}</span></div>`).join('')}`;
-  v.style.display = 'block';
-  const remaining = dfIdx < DF.length - 1;
-  document.getElementById('btnNdf').style.display = remaining ? 'block' : 'none';
-  if (!remaining) v.innerHTML += `<p style="margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--green)">// fin del simulador de deepfake — todos los escenarios completados.</p>`;
-}
-function nextDf() { dfIdx = (dfIdx + 1) % DF.length; renderDf(); }
-
-// ── POLICIES ─────────────────────────────────────────────────
-const POL = [
-  {name:'accesos', sections:[
-    {icon:'🔑', title:'gestión de contraseñas', rules:[
-      {t:'Contraseñas de mínimo 14 caracteres con complejidad requerida.',m:true},
-      {t:'Uso obligatorio del gestor de contraseñas corporativo.',m:true},
-      {t:'Prohibida la reutilización de contraseñas entre servicios.',m:true},
-      {t:'Cambio inmediato ante cualquier sospecha de compromiso.',m:true},
-      {t:'Cambio periódico recomendado cada 12 meses si no hay incidentes.',m:false},
-    ]},
-    {icon:'📱', title:'autenticación multifactor (MFA)', rules:[
-      {t:'MFA obligatorio para todos los accesos a sistemas corporativos sin excepción.',m:true},
-      {t:'Uso preferente de apps autenticadoras (no SMS cuando sea posible).',m:false},
-      {t:'Notificar a IT inmediatamente si se recibe un código MFA sin haberlo solicitado.',m:true},
-    ]},
-    {icon:'👥', title:'gestión de accesos y privilegios', rules:[
-      {t:'Principio de mínimo privilegio: acceso solo a lo estrictamente necesario para el trabajo.',m:true},
-      {t:'Revisión trimestral de todos los accesos y permisos activos.',m:true},
-      {t:'Revocación inmediata de accesos al finalizar la relación laboral o contractual.',m:true},
-      {t:'Cuentas de administrador separadas de las cuentas de usuario diario.',m:true},
-    ]},
-  ]},
-  {name:'dispositivos', sections:[
-    {icon:'💻', title:'equipos corporativos', rules:[
-      {t:'Solo software aprobado por IT puede instalarse en equipos corporativos.',m:true},
-      {t:'Actualizaciones de seguridad críticas aplicadas en máximo 48h desde publicación.',m:true},
-      {t:'Cifrado de disco completo activado obligatoriamente (BitLocker o FileVault).',m:true},
-      {t:'Bloqueo automático de pantalla configurado a máximo 5 minutos de inactividad.',m:true},
-    ]},
-    {icon:'🔌', title:'dispositivos externos', rules:[
-      {t:'Prohibido conectar dispositivos USB no corporativos sin autorización explícita de IT.',m:true},
-      {t:'Dispositivos USB encontrados: nunca conectar. Entregar a IT inmediatamente.',m:true},
-      {t:'Uso de almacenamiento en la nube corporativo en lugar de USB siempre que sea posible.',m:false},
-    ]},
-  ]},
-  {name:'datos', sections:[
-    {icon:'📊', title:'clasificación de datos', rules:[
-      {t:'Datos clasificados en 4 niveles: Público, Interno, Confidencial, Secreto.',m:true},
-      {t:'Datos Confidenciales y Secretos requieren cifrado en reposo y en tránsito.',m:true},
-      {t:'Datos de clientes y personales (RGPD) se tratan como Confidencial mínimo.',m:true},
-    ]},
-    {icon:'📤', title:'compartición de datos', rules:[
-      {t:'Datos confidenciales solo por canales corporativos cifrados aprobados.',m:true},
-      {t:'Prohibido el uso de servicios de transferencia de archivos no aprobados por IT.',m:true},
-      {t:'Datos de clientes nunca se envían a servicios externos sin DPA firmado.',m:true},
-    ]},
-  ]},
-  {name:'incidentes', sections:[
-    {icon:'🚨', title:'qué reportar', rules:[
-      {t:'Emails sospechosos de phishing, aunque no hayas hecho clic en ningún enlace.',m:true},
-      {t:'Haber hecho clic accidentalmente en un enlace sospechoso o abierto un adjunto.',m:true},
-      {t:'Pérdida o robo de dispositivos corporativos o con acceso a sistemas de la empresa.',m:true},
-      {t:'Mensajes MFA recibidos sin haberlos solicitado tú.',m:true},
-      {t:'Dispositivos USB u objetos encontrados en zonas comunes de la empresa.',m:true},
-    ]},
-    {icon:'📞', title:'cómo y cuándo reportar', rules:[
-      {t:'Incidente crítico (brecha activa): reporte en menos de 15 minutos.',m:true},
-      {t:'Incidente alto (phishing con clic): reporte en menos de 1 hora.',m:true},
-      {t:'No intentar resolver el incidente por cuenta propia antes de reportar a IT.',m:true},
-      {t:'Preservar evidencia: no apagar equipos ni borrar correos sospechosos.',m:true},
-      {t:'La empresa está obligada a notificar a la AEPD en 72h si hay datos personales implicados.',m:true},
-    ]},
-  ]},
-  {name:'teletrabajo', sections:[
-    {icon:'🏠', title:'entorno de trabajo remoto', rules:[
-      {t:'VPN corporativa activa siempre que se acceda a sistemas de la empresa.',m:true},
-      {t:'Prohibido trabajar desde redes WiFi públicas sin VPN activa.',m:true},
-      {t:'Router doméstico con contraseña segura y firmware actualizado.',m:false},
-      {t:'Pantalla orientada para que no sea visible por otras personas al trabajar con datos sensibles.',m:true},
-    ]},
-    {icon:'👨‍👩‍👧', title:'uso del equipo en el hogar', rules:[
-      {t:'Prohibido el uso del equipo corporativo por parte de familiares o convivientes.',m:true},
-      {t:'No descargar contenido personal ni acceder a cuentas personales en equipos corporativos.',m:true},
-      {t:'Sesión cerrada o bloqueada cuando no se esté trabajando activamente.',m:true},
-    ]},
-    {icon:'☁️', title:'almacenamiento y colaboración', rules:[
-      {t:'Usar únicamente las soluciones de almacenamiento cloud aprobadas por IT.',m:true},
-      {t:'Prohibido almacenar datos corporativos en cuentas personales de servicios cloud.',m:true},
-      {t:'Herramientas de colaboración: solo las aprobadas oficialmente por la empresa.',m:true},
-    ]},
-  ]},
-];
-function renderPolicies() { renderPolContent(0); }
-function switchPol(i, btn) { document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active')); btn.classList.add('active'); renderPolContent(i); }
-function renderPolContent(i) {
-  const p = POL[i];
-  document.getElementById('polContent').innerHTML = p.sections.map((s,si) => `
-    <div class="pol-section">
-      <div class="pol-header ${si===0?'open':''}" id="ph${si}" onclick="togglePol(${si})">
-        <div class="pol-htitle"><span class="pol-icon">${s.icon}</span>${s.title}</div>
-        <span class="pol-ch">›</span>
-      </div>
-      <div class="pol-body ${si===0?'open':''}" id="pb${si}">
-        ${s.rules.map(r => `<div class="pol-rule"><span class="pol-dot ${r.m?'m':'r'}">${r.m?'●':'○'}</span><span>${r.t}<span class="pol-badge ${r.m?'pb-m':'pb-r'}">${r.m?'obligatorio':'recomendado'}</span></span></div>`).join('')}
-      </div>
-    </div>`).join('');
-}
-function togglePol(i) { document.getElementById('ph'+i).classList.toggle('open'); document.getElementById('pb'+i).classList.toggle('open'); }
-
-// ── INIT ─────────────────────────────────────────────────────
-renderQ(); renderThreats(); renderChecklist(); renderPhish(); renderBreachTL(); renderPolicies(); renderSmish(); renderDf();
-</script>
-<script src="/aegis-nav.js"></script>
-<style>
-/* cursor override - siempre al final */
-*, *::before, *::after { cursor: none !important; }
-#cursor { display: block !important; }
-#cursor-ring { display: block !important; }
-</style>
+<footer class="page-footer">
+  <a href="/" class="fl">AEGIS<span>8</span></a>
+  <ul class="flinks">
+    <li><a href="/educa.html">Educa</a></li>
+    <li><a href="/educa/profesores.html">Docentes</a></li>
+    <li><a href="/educa/padres.html">Familias</a></li>
+    <li><a href="/analizador-phishing.html">Herramientas</a></li>
+    <li><a href="/contactos.html">Contacto</a></li>
+  </ul>
+  <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+    <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
+    <a href="/educa.html" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;" onmouseover="this.style.color='#f07830'" onmouseout="this.style.color=''">← Volver a Educa</a>
+  </div>
+</footer>
 <script>
-/* CURSOR */
-(function(){
-  var cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring'),moved=false;
-  if(!cur||!ring)return;
-  document.addEventListener('mousemove',function(e){
-    cur.style.left=(e.clientX-6)+'px';cur.style.top=(e.clientY-6)+'px';
-    ring.style.left=(e.clientX-18)+'px';ring.style.top=(e.clientY-18)+'px';
-    if(!moved){cur.style.opacity='1';ring.style.opacity='1';moved=true;}
-  },true);
-  document.addEventListener('mouseleave',function(){cur.style.opacity='0';ring.style.opacity='0';});
-  document.addEventListener('mouseenter',function(){if(moved){cur.style.opacity='1';ring.style.opacity='1';}});
-})();
+const SYS=`Eres el Agente Docente de Aegis8, especializado en ayudar a profesores y educadores chilenos a enseñar ciberseguridad en el aula.
+Tu tono es profesional pero cercano. Conoces el currículo chileno, las realidades de los colegios SLEP y municipales, y las dificultades de implementar tecnología en el aula.
+Cuando el docente pregunta sobre situaciones con alumnos, da respuestas prácticas y accionables.
+Menciona leyes chilenas cuando sea relevante (Ley 20.536 de Convivencia Escolar, Ley 21.459 de delitos informáticos, Ley Karin).
+Máximo 4-5 oraciones. Responde en español.`;
+
+const WORKER='https://aegis8-agent.christianmora705.workers.dev';
+let hist=[];
+async function sendMsg(){
+  const el=document.getElementById('chatIn');
+  const t=el.value.trim();if(!t)return;el.value='';
+  addM('user',t);hist.push({role:'user',content:t});showT();
+  try{
+    const r=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,system:SYS,messages:hist})});
+    const d=await r.json();removeT();
+    const rep=d.content?.[0]?.text||'Error al conectar.';
+    hist.push({role:'assistant',content:rep});addM('bot',rep);
+    if(hist.length>18)hist=hist.slice(-18);
+  }catch{removeT();addM('bot','Error de conexión. Intenta de nuevo.');}
+}
+function qa(q){document.getElementById('chatIn').value=q;sendMsg();}
+function addM(r,t){
+  const c=document.getElementById('chatMsgs');
+  const d=document.createElement('div');d.className='msg '+r;
+  const a=document.createElement('div');a.className='msg-ava';a.textContent=r==='bot'?'🤖':'👤';
+  const b=document.createElement('div');b.className='msg-bubble';b.textContent=t;
+  d.appendChild(a);d.appendChild(b);c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+function showT(){
+  const c=document.getElementById('chatMsgs');
+  const d=document.createElement('div');d.className='msg bot';d.id='tMsg';
+  d.innerHTML='<div class="msg-ava">🤖</div><div class="msg-bubble"><div class="typing-wrap"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div></div>';
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+function removeT(){document.getElementById('tMsg')?.remove();}
+
+
+const ro=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});
+},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.sw').forEach(el=>ro.observe(el));
+
 </script>
 </body>
 </html>

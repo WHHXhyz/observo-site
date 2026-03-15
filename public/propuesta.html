@@ -1,377 +1,368 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Aegis8 — Qué hacemos y qué recibes</title>
-  <meta name="description" content="Aegis8 revisa tu web, encuentra vulnerabilidades y las cerramos juntos en una semana. Sin contratos, sin jerga, con entregables claros."/>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@300;400;500;600&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>El Proyecto · Aegis8</title>
+<meta name="description" content="Aegis8 es un proyecto social de ciberseguridad educativa para familias y docentes de Chile. Gratuito, sin humo, hecho para proteger a los que más importan."/>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
   <script src="/aegis-nav.js"></script>
-  <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --bg:#04060a;--bg2:#070a10;--surface:#0b0f18;
-  --border:#131928;--border2:#1a2235;
-  --green:#00ff88;--green2:#00cc6a;--red:#ff2244;
-  --text:#dde4f0;--muted:#4a5568;
-  --mono:'IBM Plex Mono',monospace;
-  --disp:'Bebas Neue',sans-serif;
-  --body:'DM Sans',sans-serif;
-}
-*{cursor:none!important;}
-#cursor{position:fixed;width:12px;height:12px;background:var(--green);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;left:-50px;top:-50px;}
-#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(0,255,136,0.4);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;left:-50px;top:-50px;transition:width 0.2s,height 0.2s,border-color 0.2s;}
-body:has(a:hover) #cursor-ring,body:has(button:hover) #cursor-ring{width:56px;height:56px;border-color:var(--green);}
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.6;overflow-x:hidden;padding-top:64px;}
-body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.06) 2px,rgba(0,0,0,0.06) 4px);pointer-events:none;z-index:9990;}
-#particles{position:fixed;inset:0;z-index:0;pointer-events:none;}
-.wrap{max-width:1080px;margin:0 auto;padding:0 3rem;}
-
-.btn-main{position:relative;overflow:hidden;background:var(--green);color:#000;font-family:var(--mono);font-size:0.75rem;font-weight:700;padding:1rem 2.5rem;text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;transition:transform 0.2s;display:inline-block;border:none;}
-.btn-main::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,0.2);transform:translateX(-100%);transition:transform 0.3s;}
-.btn-main:hover{transform:translateY(-2px);}
-.btn-main:hover::before{transform:translateX(0);}
-.btn-out{background:transparent;color:var(--text);font-family:var(--mono);font-size:0.75rem;padding:1rem 2.5rem;border:1px solid var(--border2);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;transition:border-color 0.2s,color 0.2s;display:inline-block;}
-.btn-out:hover{border-color:var(--green);color:var(--green);}
-
-.marquee-wrap{background:var(--green);padding:0.55rem 0;overflow:hidden;border-bottom:1px solid rgba(0,255,136,0.3);}
-.marquee{display:flex;gap:3rem;width:max-content;animation:marquee 30s linear infinite;}
-@keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-.marquee-item{font-family:var(--mono);font-size:0.68rem;color:#000;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:0.75rem;}
-.marquee-sep{opacity:0.35;}
-
-.section-label{font-family:var(--mono);font-size:0.62rem;color:var(--green);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.75rem;display:flex;align-items:center;gap:0.75rem;}
-.section-label::before{content:'';width:20px;height:1px;background:var(--green);}
-.section-h{font-family:var(--disp);font-size:clamp(2.2rem,4.5vw,4.5rem);line-height:0.95;letter-spacing:0.02em;margin-bottom:1rem;}
-.section-h em{color:var(--green);font-style:normal;}
-.section-p{color:var(--muted);max-width:52ch;font-size:0.95rem;line-height:1.7;}
-
-footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:0.65rem;color:var(--muted);}
-footer a{color:var(--muted);text-decoration:none;transition:color 0.2s;}
-footer a:hover{color:var(--green);}
-
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
-.reveal.visible{opacity:1;transform:none;}
-
-/* HERO */
-.page-hero{position:relative;z-index:1;padding:4rem 0 5rem;border-bottom:1px solid var(--border);overflow:hidden;}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,136,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,0.025) 1px,transparent 1px);background-size:80px 80px;animation:grid-drift 24s linear infinite;}
-@keyframes grid-drift{0%{background-position:0 0;}100%{background-position:80px 80px;}}
-.hero-glow{position:absolute;top:40%;left:35%;transform:translate(-50%,-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(0,255,136,0.05) 0%,transparent 70%);pointer-events:none;}
-.hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1fr 400px;gap:3rem;align-items:start;max-width:1080px;margin:0 auto;padding:0 3rem;}
-.hero-eyebrow{display:flex;align-items:center;gap:0.75rem;font-family:var(--mono);font-size:0.68rem;color:var(--green);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1.5rem;}
-.hero-eyebrow-line{width:32px;height:1px;background:var(--green);}
-.page-h1{font-family:var(--disp);font-size:clamp(2.5rem,5vw,5rem);line-height:0.9;letter-spacing:0.02em;margin-bottom:1.5rem;}
-.page-h1 em{color:var(--green);font-style:normal;}
-.hero-sub{font-size:1rem;color:var(--muted);max-width:42ch;margin-bottom:2.5rem;font-weight:300;line-height:1.7;}
-.hero-sub strong{color:var(--text);font-weight:500;}
-.cta-group{display:flex;gap:1rem;flex-wrap:wrap;}
-.info-panel{border:1px solid var(--border2);background:rgba(7,10,16,0.9);backdrop-filter:blur(10px);overflow:hidden;}
-.panel-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:0.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;}
-.panel-bar-title{font-family:var(--mono);font-size:0.62rem;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;}
-.panel-live{display:flex;align-items:center;gap:0.4rem;font-family:var(--mono);font-size:0.58rem;color:var(--green);letter-spacing:0.1em;}
-.panel-live-dot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:blink 1.5s step-end infinite;}
-@keyframes blink{50%{opacity:0;}}
-.panel-body{padding:1.25rem;}
-.panel-row{display:flex;align-items:flex-start;gap:1rem;padding:0.85rem 0;border-bottom:1px solid rgba(255,255,255,0.04);font-family:var(--mono);font-size:0.72rem;line-height:1.5;}
-.panel-row:last-child{border-bottom:none;}
-.panel-row-icon{font-size:1rem;flex-shrink:0;margin-top:1px;}
-.panel-row strong{color:var(--green);}
-
-/* PROCESO */
-.proceso-section{position:relative;z-index:1;padding:5rem 0;border-bottom:1px solid var(--border);}
-.proceso-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:3rem;}
-.proceso-step{background:var(--bg2);padding:2.5rem 2rem;position:relative;}
-.step-num{font-family:var(--disp);font-size:5rem;color:rgba(0,255,136,0.06);line-height:1;position:absolute;top:1.5rem;right:1.5rem;}
-.step-day{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--green);margin-bottom:0.75rem;}
-.step-title{font-family:var(--mono);font-size:0.88rem;color:var(--text);font-weight:500;margin-bottom:0.75rem;line-height:1.4;}
-.step-body{font-size:0.83rem;color:var(--muted);line-height:1.7;}
-.step-body strong{color:var(--text);}
-
-/* ENTREGABLES */
-.entregables-section{position:relative;z-index:1;padding:5rem 0;border-bottom:1px solid var(--border);}
-.entregables-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);margin-top:3rem;}
-.del-item{background:var(--bg2);padding:2rem;display:flex;gap:1.25rem;transition:background 0.2s;}
-.del-item:hover{background:var(--surface);}
-.del-icon{font-size:1.75rem;flex-shrink:0;margin-top:2px;}
-.del-title{font-family:var(--mono);font-size:0.78rem;color:var(--text);font-weight:500;margin-bottom:0.4rem;letter-spacing:0.04em;}
-.del-body{font-size:0.82rem;color:var(--muted);line-height:1.65;}
-
-/* PARA QUIÉN + POR QUÉ */
-.context-section{position:relative;z-index:1;padding:5rem 0;border-bottom:1px solid var(--border);}
-.context-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem;}
-.context-col-title{font-family:var(--mono);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--green);margin-bottom:1.25rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border2);}
-.context-list{display:flex;flex-direction:column;gap:1px;background:var(--border);}
-.context-item{background:var(--bg2);padding:1.1rem 1.25rem;display:flex;align-items:flex-start;gap:0.85rem;}
-.context-item-icon{font-size:0.95rem;flex-shrink:0;margin-top:3px;}
-.context-item strong{color:var(--text);font-weight:500;display:block;margin-bottom:0.15rem;font-size:0.82rem;font-family:var(--mono);}
-.context-item span{color:var(--muted);font-size:0.8rem;line-height:1.55;}
-.stat-callout{margin-top:1.5rem;background:rgba(0,255,136,0.03);border:1px solid rgba(0,255,136,0.12);padding:1rem 1.25rem;}
-.stat-callout-num{font-family:var(--disp);font-size:2.5rem;color:var(--green);line-height:1;}
-.stat-callout-text{font-family:var(--mono);font-size:0.68rem;color:var(--muted);margin-top:0.2rem;line-height:1.5;}
-
-/* CHECKLIST BANNER */
-.checklist-banner{position:relative;z-index:1;padding:3rem 0;border-bottom:1px solid var(--border);}
-.checklist-banner-inner{display:flex;align-items:center;justify-content:space-between;gap:2rem;background:var(--bg2);border:1px solid var(--border2);border-left:3px solid var(--green);padding:2rem 2.5rem;text-decoration:none;color:var(--text);transition:background 0.2s;}
-.checklist-banner-inner:hover{background:var(--surface);}
-.checklist-banner-tag{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--green);margin-bottom:0.4rem;}
-.checklist-banner-title{font-family:var(--disp);font-size:1.6rem;text-transform:uppercase;line-height:1;margin-bottom:0.4rem;}
-.checklist-banner-desc{font-size:0.85rem;color:var(--muted);line-height:1.5;max-width:480px;}
-.checklist-banner-cta{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);border:1px solid rgba(0,255,136,0.3);padding:0.75rem 1.5rem;white-space:nowrap;flex-shrink:0;transition:background 0.2s;}
-.checklist-banner-inner:hover .checklist-banner-cta{background:rgba(0,255,136,0.07);}
-
-/* CTA */
-.cta-section{position:relative;z-index:1;padding:6rem 0;text-align:center;background:radial-gradient(ellipse at 50% 100%,rgba(0,255,136,0.04) 0%,transparent 60%);}
-.cta-inner{max-width:600px;margin:0 auto;}
-.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem;}
-.cta-tags{font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;}
-
-@media(max-width:1024px){
-  .hero-inner{grid-template-columns:1fr;gap:2rem;}
-  .info-panel{display:none;}
-  .context-grid{grid-template-columns:1fr;}
+:root{
+  --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
+  --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
+  --card:rgba(255,255,255,.03);--radius:4px;
 }
-@media(max-width:768px){
-  .wrap,.hero-inner{padding:0 1.25rem;}
-  .proceso-grid,.entregables-grid{grid-template-columns:1fr;}
-  footer{flex-direction:column;gap:0.75rem;text-align:center;padding:1.5rem 1.25rem;}
-  .checklist-banner-inner{flex-direction:column;align-items:flex-start;}
-}
-  </style>
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(58,127,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.025) 1px,transparent 1px);
+  background-size:80px 80px;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+.page-inner{position:relative;z-index:10;}
+.sl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+  color:var(--accent);text-transform:uppercase;margin-bottom:12px;}
+.st{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.6rem);
+  line-height:1.05;color:var(--ink);margin-bottom:20px;letter-spacing:-1px;}
+.st em{font-style:italic;color:var(--accent);}
+.si{font-size:1rem;line-height:1.9;color:var(--ink2);max-width:640px;margin-bottom:40px;}
+.sw{padding:80px 0 48px;border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
+.sw.vis{opacity:1;transform:none;}
+.sw:last-child{border-bottom:none;}
+.btn-p{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--bg);background:var(--accent);border:none;padding:14px 28px;border-radius:var(--radius);
+  text-decoration:none;transition:all .25s;position:relative;overflow:hidden;display:inline-block;cursor:pointer!important;}
+.btn-p::before{content:'';position:absolute;inset:0;background:var(--accent2);transform:translateX(-100%);transition:transform .3s;}
+.btn-p:hover::before{transform:translateX(0);}
+.btn-p span,.btn-p{position:relative;z-index:1;}
+.btn-p:hover{box-shadow:0 0 28px rgba(240,120,48,.4);transform:translateY(-2px);}
+.btn-g{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink2);background:transparent;border:1px solid var(--border);
+  padding:14px 28px;border-radius:var(--radius);text-decoration:none;transition:all .25s;display:inline-block;}
+.btn-g:hover{color:var(--ink);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
+/* CHAT SHARED */
+.chat-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;}
+.chat-hd{background:rgba(240,120,48,.05);border-bottom:1px solid var(--border2);
+  padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.chat-hd-l{display:flex;align-items:center;gap:.75rem;}
+.chat-ava{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  background:rgba(240,120,48,.12);}
+.chat-name{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;color:var(--ink);}
+.chat-status{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--green);letter-spacing:1px;}
+.chat-live{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+.chat-msgs{height:320px;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;}
+.chat-msgs::-webkit-scrollbar{width:3px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.msg{display:flex;gap:.6rem;align-items:flex-start;}
+.msg.user{flex-direction:row-reverse;}
+.msg-ava{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;flex-shrink:0;background:var(--card);}
+.msg-bubble{background:var(--card);border:1px solid var(--border);padding:.65rem .9rem;
+  font-size:.84rem;line-height:1.6;max-width:85%;border-radius:2px;color:var(--ink2);}
+.msg.user .msg-bubble{background:rgba(240,120,48,.06);border-color:var(--border2);color:var(--ink);}
+.chat-quick{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.4rem;}
+.qbtn{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1px;
+  color:var(--accent);border:1px solid var(--border2);background:rgba(240,120,48,.04);
+  padding:.3rem .7rem;border-radius:var(--radius);cursor:pointer!important;transition:all .2s;}
+.qbtn:hover{background:rgba(240,120,48,.1);border-color:var(--accent);}
+.chat-row{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:.5rem;}
+.chat-in{flex:1;background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);
+  padding:.65rem 1rem;font-family:'Lato',sans-serif;font-size:.88rem;color:var(--ink);
+  outline:none;transition:border-color .2s;}
+.chat-in:focus{border-color:var(--accent);}
+.chat-in::placeholder{color:var(--ink3);}
+.send-btn{background:var(--accent);color:var(--bg);border:none;padding:.65rem 1.1rem;
+  border-radius:var(--radius);font-weight:700;cursor:pointer!important;transition:background .2s;}
+.send-btn:hover{background:var(--accent2);}
+.typing-wrap{display:flex;gap:4px;align-items:center;}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.3;
+  animation:tdot 1.2s ease-in-out infinite;}
+.tdot:nth-child(2){animation-delay:.2s;}.tdot:nth-child(3){animation-delay:.4s;}
+@keyframes tdot{0%,80%,100%{opacity:.2;transform:scale(.8);}40%{opacity:1;transform:scale(1);}}
+/* FOOTER */
+.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);
+  padding:48px 32px 32px;max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;
+  letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.fl span{color:var(--accent);}
+.flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.flinks a:hover{color:var(--accent);}
+.fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
+/* SCROLL REVEAL JS inline */
+@media(max-width:640px){.wrap{padding:0 16px;}.page-footer{padding:32px 16px;}}
+
+
+.hero-p{position:relative;z-index:10;padding:80px 0 60px;border-bottom:1px solid var(--border);overflow:hidden;text-align:center;}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
+.b1{width:500px;height:500px;top:-80px;right:-100px;background:radial-gradient(circle,rgba(240,120,48,.09) 0%,transparent 70%);animation:fl1 8s ease-in-out infinite;}
+.b2{width:400px;height:400px;bottom:-60px;left:-80px;background:radial-gradient(circle,rgba(58,127,212,.08) 0%,transparent 70%);animation:fl2 10s ease-in-out infinite;}
+@keyframes fl1{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,20px);}}
+@keyframes fl2{0%,100%{transform:translate(0,0);}50%{transform:translate(20px,-30px);}}
+.pilares{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+@media(max-width:640px){.pilares{grid-template-columns:1fr;}}
+.pilar{padding:32px 28px;background:var(--card);border:1px solid var(--border);transition:all .25s;position:relative;overflow:hidden;}
+.pilar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.pilar:hover::before{transform:scaleX(1);}
+.pilar:hover{background:rgba(255,255,255,.04);}
+.p1::before{background:var(--accent);}
+.p2::before{background:var(--blue);}
+.p3::before{background:var(--green);}
+.p4::before{background:var(--gold);}
+.pilar-n{font-family:'DM Serif Display',serif;font-size:3rem;line-height:1;opacity:.07;margin-bottom:12px;}
+.pilar-i{font-size:1.6rem;margin-bottom:10px;}
+.pilar-nm{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);margin-bottom:6px;}
+.pilar-d{font-size:.84rem;line-height:1.7;color:var(--ink2);}
+.impacto-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+@media(max-width:640px){.impacto-g{grid-template-columns:1fr;}}
+.imp{padding:28px 20px;background:var(--card);border:1px solid var(--border);text-align:center;}
+.imp-n{font-family:'DM Serif Display',serif;font-size:2.8rem;color:var(--accent);line-height:1;margin-bottom:6px;font-style:italic;}
+.imp-l{font-size:.82rem;line-height:1.55;color:var(--ink2);}
+.imp-s{font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--ink3);letter-spacing:1px;margin-top:5px;}
+.quienes-g{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);}
+@media(max-width:640px){.quienes-g{grid-template-columns:1fr;}}
+.quien{background:var(--bg2);padding:2rem 1.75rem;display:flex;gap:1rem;align-items:flex-start;}
+.quien-ico{font-size:1.8rem;flex-shrink:0;}
+.quien-title{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--ink);font-weight:600;margin-bottom:.35rem;}
+.quien-desc{font-size:.84rem;color:var(--ink2);line-height:1.6;}
+.como-g{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);}
+@media(max-width:720px){.como-g{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.como-g{grid-template-columns:1fr;}}
+.como{background:var(--bg2);padding:2rem 1.5rem;text-align:center;}
+.como-n{font-family:'DM Serif Display',serif;font-size:2.5rem;color:rgba(240,120,48,.15);line-height:1;margin-bottom:.6rem;font-style:italic;}
+.como-ico{font-size:1.5rem;margin-bottom:.5rem;}
+.como-title{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink);font-weight:600;margin-bottom:.35rem;}
+.como-desc{font-size:.8rem;color:var(--ink2);line-height:1.55;}
+.participa-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+@media(max-width:640px){.participa-g{grid-template-columns:1fr;}}
+.part{border:1px solid var(--border);border-radius:var(--radius);padding:2rem 1.75rem;background:var(--card);
+  text-decoration:none;transition:all .25s;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;}
+.part::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.part:hover::after{transform:scaleX(1);}
+.part:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.1);}
+.pa1::after{background:var(--accent);}
+.pa2::after{background:var(--blue);}
+.pa3::after{background:var(--green);}
+.part-ico{font-size:1.8rem;}
+.part-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;}
+.part-name{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);line-height:1.15;}
+.part-desc{font-size:.83rem;line-height:1.6;color:var(--ink2);flex:1;}
+.part-cta{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;color:var(--accent);display:flex;align-items:center;gap:5px;transition:gap .2s;}
+.part:hover .part-cta{gap:9px;}
+.mf{padding:56px;background:rgba(240,120,48,.03);border:1px solid var(--border2);border-radius:var(--radius);text-align:center;position:relative;overflow:hidden;}
+.mf::before{content:'"';position:absolute;top:-20px;left:24px;font-family:'DM Serif Display',serif;font-size:12rem;color:rgba(240,120,48,.05);line-height:1;pointer-events:none;}
+.mf-text{font-family:'DM Serif Display',serif;font-size:clamp(1.3rem,2.8vw,2rem);line-height:1.5;color:var(--ink);max-width:700px;margin:0 auto;font-style:italic;position:relative;z-index:1;}
+.mf-text em{color:var(--accent);font-style:normal;}
+.mf-sig{margin-top:20px;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:3px;}
+@media(max-width:640px){.mf{padding:32px 24px;}}
+
+@keyframes fadeInLogo{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
+</style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body data-page="propuesta">
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
-<canvas id="particles"></canvas>
+<section class="hero-p">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap" style="position:relative;z-index:2;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ink3);margin-bottom:24px;display:flex;align-items:center;justify-content:center;gap:10px;">
+      <div style="width:28px;height:1px;background:var(--accent);"></div>
+      PROYECTO SOCIAL · EDUCACIÓN DIGITAL · CHILE · GRATUITO
+      <div style="width:28px;height:1px;background:var(--accent);"></div>
+    </div>
+    
+    <div style="margin-bottom:20px;opacity:0;animation:fadeInLogo .8s cubic-bezier(.34,1.56,.64,1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="100" height="100" fill="none">
+  <defs>
+    <filter id="p1" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="p2" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="p3" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="pg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5c842"/>
+      <stop offset="50%" stop-color="#f07830"/>
+      <stop offset="100%" stop-color="#e0531a"/>
+    </linearGradient>
+    <radialGradient id="pg-core" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="rgba(240,120,48,0.18)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+    <clipPath id="pc"><path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z"/></clipPath>
+  </defs>
+  <ellipse cx="120" cy="115" rx="88" ry="95" fill="url(#pg-core)" filter="url(#p2)">
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite"/>
+  </ellipse>
+  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="#0d1422"/>
+  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="none" stroke="url(#pg)" stroke-width="3">
+    <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="3.5s" repeatCount="indefinite"/>
+  </path>
+  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="none" stroke="#f07830" stroke-width="3" stroke-dasharray="590" stroke-dashoffset="590" filter="url(#p1)">
+    <animate attributeName="stroke-dashoffset" from="590" to="0" dur="1.8s" fill="freeze" begin="0.2s" calcMode="spline" keySplines="0.4 0 0.2 1"/>
+  </path>
+  <!-- Chile silhouette simplified — elongated thin shape -->
+  <path d="M112,58 C108,62 105,72 104,85 C103,98 105,110 107,124 C109,138 110,150 109,162 C108,170 107,176 108,182 L112,182 C113,176 114,170 115,162 C116,150 115,138 113,124 C111,110 109,98 110,85 C111,72 114,62 118,58 Z" fill="rgba(240,120,48,0.1)" stroke="url(#pg)" stroke-width="2" filter="url(#p1)">
+    <animate attributeName="stroke-dasharray" values="0 220;220 0" dur="1s" fill="freeze" begin="1.2s"/>
+    <animate attributeName="fill" values="rgba(240,120,48,0.05);rgba(240,120,48,0.18);rgba(240,120,48,0.05)" dur="3.5s" repeatCount="indefinite" begin="3s"/>
+  </path>
+  <!-- Heart overlaid on Chile -->
+  <path d="M120,92 C120,92 108,82 108,72 C108,65 113,60 120,60 C127,60 132,65 132,72 C132,82 120,92 120,92 Z" fill="none" stroke="url(#pg)" stroke-width="3" stroke-linejoin="round" filter="url(#p1)">
+    <animate attributeName="stroke-dasharray" values="0 80;80 0" dur="0.6s" fill="freeze" begin="2.2s"/>
+    <animate attributeName="fill" values="rgba(240,120,48,0);rgba(240,120,48,0.2);rgba(240,120,48,0)" dur="2s" repeatCount="indefinite" begin="3s"/>
+  </path>
+  <!-- Heartbeat line -->
+  <polyline points="54,115 70,115 78,95 86,135 94,115 146,115 154,100 162,130 170,115 186,115" fill="none" stroke="url(#pg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" filter="url(#p1)">
+    <animate attributeName="stroke-dasharray" values="0 200;200 0" dur="0.9s" fill="freeze" begin="2.5s"/>
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" begin="3.5s"/>
+  </polyline>
+  <!-- People icons — community dots -->
+  <circle cx="60" cy="82" r="5" fill="rgba(240,120,48,0.15)" stroke="#f07830" stroke-width="1.5"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.8s"/><animate attributeName="r" values="5;7;5" dur="2.5s" repeatCount="indefinite" begin="3.5s"/></circle>
+  <circle cx="60" cy="152" r="5" fill="rgba(240,120,48,0.15)" stroke="#f07830" stroke-width="1.5"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.9s"/><animate attributeName="r" values="5;7;5" dur="2.5s" repeatCount="indefinite" begin="3.8s"/></circle>
+  <circle cx="180" cy="82" r="5" fill="rgba(240,120,48,0.15)" stroke="#f07830" stroke-width="1.5"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="3s"/><animate attributeName="r" values="5;7;5" dur="2.5s" repeatCount="indefinite" begin="4.1s"/></circle>
+  <circle cx="180" cy="152" r="5" fill="rgba(240,120,48,0.15)" stroke="#f07830" stroke-width="1.5"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="3.1s"/><animate attributeName="r" values="5;7;5" dur="2.5s" repeatCount="indefinite" begin="4.4s"/></circle>
+  <!-- Connecting lines community -->
+  <line x1="65" y1="82" x2="104" y2="68" stroke="rgba(240,120,48,0.2)" stroke-width="1" stroke-dasharray="3 5"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="3.2s"/></line>
+  <line x1="65" y1="152" x2="104" y2="162" stroke="rgba(240,120,48,0.2)" stroke-width="1" stroke-dasharray="3 5"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="3.3s"/></line>
+  <line x1="175" y1="82" x2="136" y2="68" stroke="rgba(240,120,48,0.2)" stroke-width="1" stroke-dasharray="3 5"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="3.4s"/></line>
+  <line x1="175" y1="152" x2="136" y2="162" stroke="rgba(240,120,48,0.2)" stroke-width="1" stroke-dasharray="3 5"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="3.5s"/></line>
+  <!-- Scan, corners, bottom -->
+  <rect x="26" y="0" width="188" height="2" fill="url(#pg)" clip-path="url(#pc)"><animate attributeName="y" from="18" to="212" dur="3.5s" repeatCount="indefinite" begin="3.5s"/><animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.04;0.96;1" dur="3.5s" repeatCount="indefinite" begin="3.5s"/></rect>
+  <polyline points="44,68 44,54 58,54" fill="none" stroke="url(#pg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="stroke-dasharray" values="0 30;30 0" dur="0.3s" fill="freeze" begin="2s"/></polyline>
+  <polyline points="196,68 196,54 182,54" fill="none" stroke="url(#pg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="stroke-dasharray" values="0 30;30 0" dur="0.3s" fill="freeze" begin="2.1s"/></polyline>
+  <circle cx="120" cy="204" r="3.5" fill="#f07830" filter="url(#p1)"><animate attributeName="opacity" values="0;1" dur="0.2s" fill="freeze" begin="2s"/><animate attributeName="r" values="3.5;5;3.5" dur="2s" repeatCount="indefinite" begin="3.5s"/></circle>
+  <line x1="68" y1="24" x2="172" y2="24" stroke="rgba(245,200,66,0.18)" stroke-width="1" stroke-linecap="round"><animate attributeName="stroke-dasharray" values="0 104;104 0" dur="0.8s" fill="freeze" begin="0.5s"/></line>
+</svg></div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(3rem,8vw,6.5rem);line-height:.9;letter-spacing:-2px;margin-bottom:24px;">
+      Ciberseguridad<br>
+      <span style="color:var(--accent);font-style:italic;">para todos.</span><br>
+      <span style="color:transparent;-webkit-text-stroke:1px rgba(234,240,248,.1);">Sin excusas.</span>
+    </h1>
+    <p style="font-size:1.05rem;line-height:1.8;color:var(--ink2);max-width:520px;margin:0 auto 36px;">
+      Aegis8 enseña a familias y docentes de Chile a proteger a los niños en el mundo digital —
+      <strong style="color:var(--ink);font-weight:400;">gratis, sin tecnicismos y sin miedo innecesario.</strong>
+    </p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <a href="/educa.html" class="btn-p"><span>Ir a Aegis Educa →</span></a>
+      <a href="/contactos.html" class="btn-g">Organizar un taller</a>
+    </div>
+  </div>
+</section>
 
-<div class="marquee-wrap">
-  <div class="marquee">
-    <span class="marquee-item">Una semana <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">Sin contratos <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">Sin jerga técnica <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">Informe real <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">Lo cerramos juntos <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">Precio acordado antes <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">Una semana <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">Sin contratos <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">Sin jerga técnica <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">Informe real <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">Lo cerramos juntos <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">Precio acordado antes <span class="marquee-sep">·</span></span>
+<div class="wrap page-inner">
+
+<div class="sw">
+  <div class="sl">// Qué es Aegis8</div>
+  <h2 class="st">Un proyecto social.<br><em>No una empresa.</em></h2>
+  <p class="si">Aegis8 nació con una convicción simple: la ciberseguridad no debería ser un privilegio. Los niños, las familias y los docentes también merecen herramientas concretas para protegerse en el mundo digital — sin pagar, sin tecnicismos, sin miedo innecesario.</p>
+  <div class="pilares">
+    <div class="pilar p1"><div class="pilar-n">01</div><div class="pilar-i">🎓</div><div class="pilar-nm">100% gratuito</div><div class="pilar-d">Sin freemium, sin versión de pago, sin sorpresas. Todo siempre disponible para todos.</div></div>
+    <div class="pilar p2"><div class="pilar-n">02</div><div class="pilar-i">🇨🇱</div><div class="pilar-nm">Hecho para Chile</div><div class="pilar-d">Datos chilenos, contexto legal chileno, ejemplos reales de nuestras escuelas y hogares.</div></div>
+    <div class="pilar p3"><div class="pilar-n">03</div><div class="pilar-i">🤝</div><div class="pilar-nm">Sin agenda</div><div class="pilar-d">Sin patrocinadores, sin fear marketing, sin vender nada. Solo educación real y con criterio.</div></div>
   </div>
 </div>
 
-<!-- HERO -->
-<section class="page-hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-inner">
-    <div class="reveal">
-      <div class="hero-eyebrow">
-        <div class="hero-eyebrow-line"></div>
-        hardening · web · una semana
-      </div>
-      <h1 class="page-h1">REVISAMOS<br/>TU WEB.<br/><em>LO CERRAMOS</em><br/><em>JUNTOS.</em></h1>
-      <p class="hero-sub">En una semana sabés qué tiene expuesto tu negocio — y <strong>lo cerramos juntos</strong>. No solo un PDF. Acompañamos la implementación.</p>
-      <div class="cta-group">
-        <a href="/contactos.html" class="btn-main">Quiero que lo revisen →</a>
-        <a href="#proceso" class="btn-out">Cómo funciona ↓</a>
-      </div>
-    </div>
-    <div class="info-panel reveal">
-      <div class="panel-bar">
-        <span class="panel-bar-title">// qué incluye</span>
-        <div class="panel-live"><div class="panel-live-dot"></div>activo</div>
-      </div>
-      <div class="panel-body">
-        <div class="panel-row"><span class="panel-row-icon">🔍</span><span>Revisión completa — <strong>vulnerabilidades reales documentadas</strong>.</span></div>
-        <div class="panel-row"><span class="panel-row-icon">📋</span><span>Informe en lenguaje humano: <strong>qué hay, qué riesgo tiene, cómo se cierra</strong>.</span></div>
-        <div class="panel-row"><span class="panel-row-icon">🤝</span><span>Acompañamiento en la implementación — <strong>no te dejamos solo</strong>.</span></div>
-        <div class="panel-row"><span class="panel-row-icon">⚡</span><span>Sin contratos, sin permanencia. <strong>Precio acordado antes de empezar.</strong></span></div>
-      </div>
-    </div>
+<div class="sw">
+  <div class="sl">// El problema que queremos resolver</div>
+  <h2 class="st">Los niños son<br><em>el blanco.</em></h2>
+  <p class="si">El grooming, el phishing disfrazado de juego y el robo de identidad afectan a niños y jóvenes cada vez más. La educación digital temprana es la única defensa real — y la mayoría de los colegios todavía no la imparte.</p>
+  <div class="impacto-g">
+    <div class="imp"><div class="imp-n">+50%</div><div class="imp-l">Crecimiento del phishing en Chile el último año — muchas campañas dirigidas a menores</div><div class="imp-s">ANCI 2025</div></div>
+    <div class="imp"><div class="imp-n">1 de 3</div><div class="imp-l">Menores expuestos a contacto no deseado en plataformas digitales sin supervisión</div><div class="imp-s">UNICEF / SERNAC</div></div>
+    <div class="imp"><div class="imp-n">22M</div><div class="imp-l">Intentos de phishing bloqueados en Chile en 2024 — 42 ataques por minuto</div><div class="imp-s">Kaspersky 2025</div></div>
   </div>
-</section>
+</div>
 
-<!-- PROCESO -->
-<section class="proceso-section" id="proceso">
-  <div class="wrap">
-    <div class="reveal">
-      <div class="section-label">Cómo funciona</div>
-      <h2 class="section-h">DE CERO A <em>CERRADO</em><br/>EN UNA SEMANA</h2>
-      <p class="section-p">Sin reuniones interminables. Sin diagnósticos eternos. Una semana y tienes resultados concretos.</p>
-    </div>
-    <div class="proceso-grid reveal">
-      <div class="proceso-step">
-        <div class="step-num">01</div>
-        <div class="step-day">Día 1</div>
-        <div class="step-title">Nos contactas y coordinamos</div>
-        <div class="step-body">Cuéntanos qué tienes. Acordamos alcance, formato y precio antes de empezar. <strong>Sin letra chica.</strong></div>
-      </div>
-      <div class="proceso-step">
-        <div class="step-num">02</div>
-        <div class="step-day">Días 2–5</div>
-        <div class="step-title">Revisamos tu web a fondo</div>
-        <div class="step-body">Analizamos configuraciones, accesos, plugins, exposición de datos y más. Todo documentado con <strong>nivel de riesgo claro</strong>.</div>
-      </div>
-      <div class="proceso-step">
-        <div class="step-num">03</div>
-        <div class="step-day">Días 6–7</div>
-        <div class="step-title">Informe + lo cerramos juntos</div>
-        <div class="step-body">Entregamos el informe y <strong>acompañamos los cierres prioritarios</strong>. No te dejamos con un PDF y un "suerte".</div>
-      </div>
-    </div>
+<div class="sw">
+  <div class="sl">// Para quién es</div>
+  <h2 class="st">Contenido diferenciado<br><em>para cada perfil.</em></h2>
+  <p class="si">El mismo tema se enseña distinto a un niño de 8 años y a un docente que tiene clase mañana. Aegis8 tiene materiales específicos para cada grupo.</p>
+  <div class="quienes-g">
+    <div class="quien"><div class="quien-ico">🧒</div><div><div class="quien-title">Niños (6–12 años)</div><div class="quien-desc">Juegos interactivos, actividades y CiberBot — un agente IA que responde preguntas en lenguaje de niños. Aprenden qué compartir, cómo reconocer peligros y a quién contarle.</div></div></div>
+    <div class="quien"><div class="quien-ico">🧑‍💻</div><div><div class="quien-title">Adolescentes (13–17 años)</div><div class="quien-desc">Quiz con casos reales de videojuegos y redes sociales, privacidad digital, grooming y ciberbullying. Sin condescendencia — con respeto y sin bajarles el perfil.</div></div></div>
+    <div class="quien"><div class="quien-ico">👨‍👩‍👧</div><div><div class="quien-title">Familias y apoderados</div><div class="quien-desc">Guías prácticas de conversación por edad, checklist de seguridad familiar y agente IA para cuando algo pasa y no saben qué hacer.</div></div></div>
+    <div class="quien"><div class="quien-ico">👩‍🏫</div><div><div class="quien-title">Docentes y educadores</div><div class="quien-desc">Planes de clase listos para usar, recursos imprimibles, agente IA especializado y newsletter mensual con la amenaza del mes + actividad lista para el aula.</div></div></div>
   </div>
-</section>
+</div>
 
-<!-- ENTREGABLES -->
-<section class="entregables-section" id="entregables">
-  <div class="wrap">
-    <div class="reveal">
-      <div class="section-label">Qué recibes</div>
-      <h2 class="section-h">ENTREGABLES <em>CONCRETOS</em></h2>
-      <p class="section-p">No prometemos "seguridad total". Entregamos esto — específico, medible y tuyo.</p>
-    </div>
-    <div class="entregables-grid reveal">
-      <div class="del-item">
-        <div class="del-icon">📋</div>
-        <div>
-          <div class="del-title">Informe de vulnerabilidades</div>
-          <div class="del-body">Cada hallazgo con descripción en lenguaje humano, nivel de riesgo y recomendación específica. Sin jerga innecesaria.</div>
-        </div>
-      </div>
-      <div class="del-item">
-        <div class="del-icon">✅</div>
-        <div>
-          <div class="del-title">Checklist de remediación priorizada</div>
-          <div class="del-body">Lista ordenada por impacto. Primero lo que más duele, luego lo más fácil de cerrar. Sabes exactamente por dónde empezar.</div>
-        </div>
-      </div>
-      <div class="del-item">
-        <div class="del-icon">🤝</div>
-        <div>
-          <div class="del-title">Acompañamiento en implementación</div>
-          <div class="del-body">Disponibles mientras cierras los hallazgos — por llamada, video o chat. El resultado importa, no solo el diagnóstico.</div>
-        </div>
-      </div>
-      <div class="del-item">
-        <div class="del-icon">📖</div>
-        <div>
-          <div class="del-title">Guía de mantenimiento</div>
-          <div class="del-body">Qué revisar cada mes para mantener lo que cerramos. Hábitos simples para que la seguridad no dependa de que volvamos.</div>
-        </div>
-      </div>
-    </div>
+<div class="sw">
+  <div class="sl">// Cómo funciona</div>
+  <h2 class="st">Gratis, accesible<br><em>y sin registro.</em></h2>
+  <p class="si">Todo en Aegis8 está diseñado para usarse sin barreras. No se necesita crear cuenta, no se recopilan datos personales, no hay pasos previos.</p>
+  <div class="como-g">
+    <div class="como"><div class="como-n">01</div><div class="como-ico">🎯</div><div class="como-title">Elige tu perfil</div><div class="como-desc">Niños, adolescentes, familia o docente. Contenido adaptado para cada uno.</div></div>
+    <div class="como"><div class="como-n">02</div><div class="como-ico">📚</div><div class="como-title">Accede al contenido</div><div class="como-desc">Juegos, guías, planes de clase, herramientas IA. Todo disponible de inmediato.</div></div>
+    <div class="como"><div class="como-n">03</div><div class="como-ico">🤖</div><div class="como-title">Consulta al agente IA</div><div class="como-desc">Cada sección tiene un agente especializado para responder preguntas en tiempo real.</div></div>
+    <div class="como"><div class="como-n">04</div><div class="como-ico">🏫</div><div class="como-title">Llévalo al aula</div><div class="como-desc">Los planes de clase y recursos son descargables. Sin costo, sin licencia.</div></div>
   </div>
-</section>
+</div>
 
-<!-- PARA QUIÉN + POR QUÉ NOSOTROS -->
-<section class="context-section">
-  <div class="wrap">
-    <div class="reveal">
-      <div class="section-label">Contexto</div>
-      <h2 class="section-h">PARA QUIÉN —<br/><em>Y POR QUÉ NOSOTROS</em></h2>
-    </div>
-    <div class="context-grid reveal">
-      <div>
-        <div class="context-col-title">// para quién es Aegis8</div>
-        <div class="context-list">
-          <div class="context-item"><span class="context-item-icon">🧑‍💻</span><div><strong>Freelancers y consultores</strong><span>Tu web es tu carta de presentación — y una puerta de entrada si no está bien configurada.</span></div></div>
-          <div class="context-item"><span class="context-item-icon">🚀</span><div><strong>Startups early-stage</strong><span>El peor momento para descubrir una brecha es cuando ya tienes clientes y datos reales.</span></div></div>
-          <div class="context-item"><span class="context-item-icon">🛒</span><div><strong>Negocios con tienda online</strong><span>Si procesas pagos o guardas datos de clientes, tienes obligaciones y riesgos reales.</span></div></div>
-          <div class="context-item"><span class="context-item-icon">🏢</span><div><strong>Pymes y agencias</strong><span>Que quieren entregar a sus clientes algo más que un sitio bonito — con seguridad de base.</span></div></div>
-        </div>
-        <div class="stat-callout">
-          <div class="stat-callout-num">43%</div>
-          <div class="stat-callout-text">de los ciberataques van a pequeños negocios.<br/>El 60% cierra en los 6 meses siguientes a un incidente grave.</div>
-        </div>
-      </div>
-      <div>
-        <div class="context-col-title">// por qué Aegis8 y no otra opción</div>
-        <div class="context-list">
-          <div class="context-item"><span class="context-item-icon">💬</span><div><strong>Lenguaje humano</strong><span>Cada hallazgo explicado para que lo entiendas sin saber de tecnología. Sin siglas, sin jerga.</span></div></div>
-          <div class="context-item"><span class="context-item-icon">🤝</span><div><strong>Acompañamiento real</strong><span>Estamos mientras cierras los hallazgos. Las consultorías grandes te dan el informe y se van.</span></div></div>
-          <div class="context-item"><span class="context-item-icon">💰</span><div><strong>Precio que refleja tu realidad</strong><span>No cobramos como si fueras un banco. Alcance y precio acordados antes de empezar.</span></div></div>
-          <div class="context-item"><span class="context-item-icon">🔓</span><div><strong>Sin dependencia</strong><span>El objetivo es que no nos necesites para el día a día. Dejamos criterio y guías.</span></div></div>
-        </div>
-        <div class="stat-callout">
-          <div class="stat-callout-num">1 sem.</div>
-          <div class="stat-callout-text">vs 4–12 semanas de una consultoría grande.<br/>Sin contratos de permanencia. Sin letra chica.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CHECKLIST BANNER -->
-<section class="checklist-banner">
-  <div class="wrap">
-    <a href="/checklist.html" class="checklist-banner-inner reveal">
-      <div>
-        <div class="checklist-banner-tag">⚡ Herramienta gratuita · IA</div>
-        <div class="checklist-banner-title">¿Por dónde empezar?</div>
-        <div class="checklist-banner-desc">Describe tu empresa en 4 preguntas. La IA genera un checklist de seguridad priorizado y personalizado para tu caso — gratis, sin registro.</div>
-      </div>
-      <div class="checklist-banner-cta">Generar mi checklist →</div>
+<div class="sw">
+  <div class="sl">// Cómo participar</div>
+  <h2 class="st">¿Quieres ser<br><em>parte del proyecto?</em></h2>
+  <p class="si">Aegis8 crece con la comunidad. Hay tres formas de participar.</p>
+  <div class="participa-g">
+    <a href="/educa.html" class="part pa1">
+      <div class="part-ico">📖</div>
+      <div class="part-tag">Aprender</div>
+      <div class="part-name">Usar los materiales</div>
+      <div class="part-desc">Accede a todos los recursos, compártelos con tu familia, tu curso o tu comunidad. Es todo lo que necesitamos.</div>
+      <div class="part-cta">Ir a Aegis Educa →</div>
+    </a>
+    <a href="/contactos.html" class="part pa2">
+      <div class="part-ico">🏫</div>
+      <div class="part-tag">Talleres</div>
+      <div class="part-name">Organizar un taller</div>
+      <div class="part-desc">Llevamos talleres presenciales a colegios, juntas de vecinos y organizaciones comunitarias. Gratuitos para instituciones educativas.</div>
+      <div class="part-cta">Solicitar taller →</div>
+    </a>
+    <a href="/educa/newsletter.html" class="part pa3">
+      <div class="part-ico">📬</div>
+      <div class="part-tag">Docentes</div>
+      <div class="part-name">Suscribirse al newsletter</div>
+      <div class="part-desc">Un correo mensual con la amenaza digital más relevante para tus alumnos + actividad lista para usar en clases.</div>
+      <div class="part-cta">Suscribirse gratis →</div>
     </a>
   </div>
-</section>
+</div>
 
-<!-- CTA -->
-<section class="cta-section">
-  <div class="wrap">
-    <div class="cta-inner reveal">
-      <div class="section-label" style="justify-content:center;">¿Tu web está expuesta ahora mismo?</div>
-      <h2 class="section-h">EN UNA SEMANA<br/>LO SABES — Y <em>LO CERRAMOS.</em></h2>
-      <p class="section-p" style="margin:0 auto 2.5rem;">Cuéntanos qué tienes. Coordinamos alcance y precio antes de empezar. Sin compromisos hasta que estés de acuerdo.</p>
-      <div class="cta-btns">
-        <a href="/contactos.html" class="btn-main">Quiero que lo revisen →</a>
-        <a href="/formacion.html" class="btn-out">Ver formación gratuita</a>
-      </div>
-      <div class="cta-tags">sin contratos · sin permanencia · sin jerga técnica</div>
-    </div>
+<div class="sw">
+  <div class="mf">
+    <div class="mf-text">La educación digital temprana es la única defensa real — y la mayoría de los colegios todavía no la imparte. <em>Aegis8 existe para cambiar eso.</em> Gratis. Para todos. Sin excusas.</div>
+    <div class="mf-sig">// Aegis8 · Proyecto Social · Chile · 2026</div>
   </div>
-</section>
+</div>
 
-<footer>
-  <a href="/" style="color:var(--green);font-family:var(--mono);letter-spacing:0.1em;">AEGIS8</a>
-  <span>© 2026 · Ciberseguridad para startups y pymes · Chile · LATAM</span>
-  <a href="/contactos.html">contacto →</a>
+</div>
+
+<footer class="page-footer">
+  <a href="/" class="fl">AEGIS<span>8</span></a>
+  <ul class="flinks">
+    <li><a href="/educa.html">Educa</a></li>
+    <li><a href="/educa/profesores.html">Docentes</a></li>
+    <li><a href="/educa/padres.html">Familias</a></li>
+    <li><a href="/analizador-phishing.html">Herramientas</a></li>
+    <li><a href="/contactos.html">Contacto</a></li>
+  </ul>
+  <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+    <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
+    
+  </div>
 </footer>
-
 <script>
-var cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring'),moved=false;
-document.addEventListener('mousemove',function(e){
-  cur.style.left=(e.clientX-6)+'px';cur.style.top=(e.clientY-6)+'px';
-  ring.style.left=(e.clientX-18)+'px';ring.style.top=(e.clientY-18)+'px';
-  if(!moved){cur.style.opacity='1';ring.style.opacity='1';moved=true;}
-},true);
-document.addEventListener('mouseleave',function(){cur.style.opacity='0';ring.style.opacity='0';});
-document.addEventListener('mouseenter',function(){if(moved){cur.style.opacity='1';ring.style.opacity='1';}});
 
-(function(){
-  var c=document.getElementById('particles'),ctx=c.getContext('2d'),pts=[];
-  function resize(){c.width=innerWidth;c.height=innerHeight;}resize();
-  window.addEventListener('resize',resize);
-  for(var i=0;i<50;i++)pts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,r:Math.random()*1.2+0.3,a:Math.random()});
-  function draw(){ctx.clearRect(0,0,c.width,c.height);pts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;
-    if(p.x<0)p.x=c.width;if(p.x>c.width)p.x=0;if(p.y<0)p.y=c.height;if(p.y>c.height)p.y=0;
-    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(0,255,136,'+p.a*0.35+')';ctx.fill();
-  });requestAnimationFrame(draw);}draw();
-})();
+const ro=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});
+},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.sw').forEach(el=>ro.observe(el));
 
-(function(){
-  var els=document.querySelectorAll('.reveal');
-  if(!('IntersectionObserver' in window)){els.forEach(function(el){el.classList.add('visible');});return;}
-  var obs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
-  },{threshold:0.08});
-  els.forEach(function(el){obs.observe(el);});
-})();
+
 </script>
 </body>
 </html>
