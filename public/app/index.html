@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#080c14"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Aegis8"/>
+<link rel="manifest" href="/app/manifest.json"/>
+<link rel="apple-touch-icon" href="/favicon.svg"/>
+<title>Aegis8 App</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+/* ── RESET & BASE ── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+:root{
+  --bg:#080c14;--bg2:#0d1422;--bg3:#111a2e;
+  --ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+  --accent:#f07830;--accent2:#d4611a;
+  --blue:#3a7fd4;--blue2:#1e4d8c;
+  --green:#2ecc80;--gold:#f5a823;
+  --border:rgba(58,127,212,.12);--border-o:rgba(240,120,48,.15);
+  --card:rgba(255,255,255,.03);
+  --radius:6px;
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bot:env(safe-area-inset-bottom,0px);
+}
+
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:'Lato',sans-serif;font-weight:300;
+  display:flex;flex-direction:column;
+}
+
+/* noise texture */
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");}
+
+/* ── SCREENS ── */
+.screen{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;
+  z-index:10;
+  transition:opacity .3s, transform .3s;
+}
+.screen.hidden{opacity:0;pointer-events:none;transform:translateY(20px);}
+
+/* ── ONBOARDING ── */
+#screen-onboard{
+  background:var(--bg);
+  align-items:center;justify-content:center;
+  padding:32px 20px;text-align:center;
+  overflow-y:auto;
+}
+.ob-logo{margin-bottom:32px;animation:fadeUp .8s ease both;}
+.ob-logo svg{filter:drop-shadow(0 0 24px rgba(240,120,48,.4));}
+.ob-title{font-family:'DM Serif Display',serif;font-size:clamp(2.2rem,8vw,3.5rem);
+  line-height:.92;letter-spacing:-1px;margin-bottom:12px;
+  animation:fadeUp .8s .15s ease both;}
+.ob-title em{color:var(--accent);font-style:italic;display:block;}
+.ob-sub{font-size:.95rem;line-height:1.7;color:var(--ink2);
+  max-width:320px;margin:0 auto 40px;animation:fadeUp .8s .3s ease both;}
+.ob-modes{display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  width:100%;max-width:360px;animation:fadeUp .8s .45s ease both;}
+@media(max-width:320px){.ob-modes{grid-template-columns:1fr;}}
+.ob-mode{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px 16px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;gap:8px;min-height:130px;
+  justify-content:center;}
+.ob-mode::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;}
+.ob-mode:hover::before,.ob-mode:active::before{opacity:1;}
+.ob-mode-d::before{background:rgba(58,127,212,.08);}
+.ob-mode-f::before{background:rgba(240,120,48,.08);}
+.ob-mode:hover{transform:translateY(-3px);}
+.ob-mode-d:hover{border-color:rgba(58,127,212,.4);}
+.ob-mode-f:hover{border-color:rgba(240,120,48,.4);}
+.ob-mode-ico{font-size:2.4rem;margin-bottom:4px;}
+.ob-mode-title{font-family:'JetBrains Mono',monospace;font-size:.72rem;
+  font-weight:600;letter-spacing:1px;color:var(--ink);}
+.ob-mode-desc{font-size:.72rem;color:var(--ink3);line-height:1.4;text-align:center;}
+.ob-mode-d .ob-mode-title{color:var(--blue);}
+.ob-mode-f .ob-mode-title{color:var(--accent);}
+
+/* ── SETUP FORM ── */
+#screen-setup{background:var(--bg);padding:0;}
+.setup-inner{flex:1;display:flex;flex-direction:column;justify-content:center;
+  padding:24px;max-width:400px;margin:0 auto;width:100%;}
+.setup-back{position:absolute;top:calc(16px + var(--safe-top));left:16px;
+  background:none;border:none;color:var(--ink3);font-size:1.2rem;cursor:pointer;padding:8px;}
+.setup-tag{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+  color:var(--accent);margin-bottom:12px;}
+.setup-title{font-family:'DM Serif Display',serif;font-size:2rem;line-height:1;
+  letter-spacing:-1px;margin-bottom:8px;}
+.setup-sub{font-size:.9rem;color:var(--ink2);margin-bottom:32px;line-height:1.6;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:.58rem;
+  letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+.field input,.field select{width:100%;background:var(--bg2);border:1px solid var(--border-o);
+  border-radius:var(--radius);color:var(--ink);font-family:'Lato',sans-serif;font-size:.95rem;
+  padding:12px 14px;outline:none;transition:border-color .2s;-webkit-appearance:none;}
+.field input:focus,.field select:focus{border-color:var(--accent);}
+.field select{cursor:pointer;}
+.field select option{background:var(--bg2);}
+.field input::placeholder{color:var(--ink3);}
+.btn-primary{width:100%;padding:14px;font-family:'JetBrains Mono',monospace;
+  font-size:.75rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--bg);background:var(--accent);border:none;border-radius:var(--radius);
+  cursor:pointer;transition:background .2s;margin-top:8px;}
+.btn-primary:hover{background:var(--accent2);}
+.btn-primary.blue{background:var(--blue);}
+.btn-primary.blue:hover{background:var(--blue2);}
+
+/* ── BOTTOM TAB BAR ── */
+.tab-bar{
+  position:fixed;bottom:0;left:0;right:0;z-index:100;
+  background:rgba(8,12,20,.96);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  display:flex;align-items:stretch;
+  padding-bottom:var(--safe-bot);
+  display:none;
+}
+.tab-bar.visible{display:flex;}
+.tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;padding:10px 4px 8px;background:none;border:none;cursor:pointer;
+  color:var(--ink3);transition:color .2s;position:relative;}
+.tab-btn.active{color:var(--accent);}
+.tab-btn.active-blue{color:var(--blue);}
+.tab-ico{font-size:1.25rem;line-height:1;}
+.tab-lbl{font-family:'JetBrains Mono',monospace;font-size:.48rem;letter-spacing:1px;text-transform:uppercase;}
+.tab-dot{position:absolute;top:8px;right:calc(50% - 14px);
+  width:6px;height:6px;border-radius:50%;background:var(--accent);
+  display:none;}
+.tab-dot.show{display:block;animation:dot-pulse 2s infinite;}
+@keyframes dot-pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+/* ── TOP BAR ── */
+.top-bar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:calc(56px + var(--safe-top));padding-top:var(--safe-top);
+  background:rgba(8,12,20,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding-left:16px;padding-right:16px;
+  display:none;
+}
+.top-bar.visible{display:flex;}
+.top-bar-logo{font-family:'JetBrains Mono',monospace;font-size:.9rem;font-weight:600;
+  letter-spacing:3px;color:var(--ink);}
+.top-bar-logo span{color:var(--accent);}
+.top-bar-mode{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:2px;
+  text-transform:uppercase;padding:3px 8px;border-radius:20px;}
+.mode-d{color:var(--blue);background:rgba(58,127,212,.1);border:1px solid rgba(58,127,212,.2);}
+.mode-f{color:var(--accent);background:rgba(240,120,48,.08);border:1px solid rgba(240,120,48,.2);}
+
+/* ── MAIN CONTENT AREA ── */
+.app-content{
+  position:fixed;top:56px;left:0;right:0;
+  bottom:60px;
+  overflow-y:auto;z-index:10;
+  padding-top:var(--safe-top);
+  padding-bottom:8px;
+  -webkit-overflow-scrolling:touch;
+  display:none;
+}
+.app-content.visible{display:block;}
+.app-content::-webkit-scrollbar{display:none;}
+
+/* ── DASHBOARD DOCENTE ── */
+.dash{padding:20px 16px;}
+.dash-greet{margin-bottom:24px;}
+.dash-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
+  color:var(--blue);text-transform:uppercase;margin-bottom:4px;}
+.dash-name{font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--ink);
+  letter-spacing:-0.5px;line-height:1.1;}
+.dash-name em{color:var(--blue);font-style:italic;}
+.dash-sub{font-size:.82rem;color:var(--ink2);margin-top:4px;line-height:1.5;}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:24px;}
+.stat-c{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 10px;text-align:center;}
+.stat-n{font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--blue);
+  line-height:1;margin-bottom:2px;font-style:italic;}
+.stat-l{font-family:'JetBrains Mono',monospace;font-size:.5rem;color:var(--ink3);
+  letter-spacing:1px;text-transform:uppercase;line-height:1.3;}
+
+/* Section label */
+.sec-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;
+  text-transform:uppercase;color:var(--ink3);margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* Class cards */
+.clase-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px;margin-bottom:8px;cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;gap:12px;position:relative;overflow:hidden;}
+.clase-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--blue);}
+.clase-card:hover{background:rgba(255,255,255,.04);transform:translateX(2px);}
+.clase-ico{width:40px;height:40px;border-radius:8px;background:rgba(58,127,212,.1);
+  display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.clase-info{flex:1;}
+.clase-name{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;
+  color:var(--ink);margin-bottom:3px;}
+.clase-meta{font-size:.75rem;color:var(--ink3);}
+.clase-badge{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:1px;
+  color:var(--green);background:rgba(46,204,128,.08);border:1px solid rgba(46,204,128,.2);
+  padding:2px 7px;border-radius:20px;flex-shrink:0;}
+.clase-badge.pending{color:var(--gold);background:rgba(245,168,35,.08);border-color:rgba(245,168,35,.2);}
+
+/* Nueva clase CTA */
+.nueva-clase-btn{width:100%;padding:14px;border-radius:var(--radius);
+  border:1px dashed rgba(58,127,212,.3);background:rgba(58,127,212,.04);
+  color:var(--blue);font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  letter-spacing:2px;text-transform:uppercase;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:all .2s;margin-top:4px;}
+.nueva-clase-btn:hover{background:rgba(58,127,212,.08);border-color:rgba(58,127,212,.5);}
+
+/* Amenaza del mes card */
+.amenaza-card{background:var(--bg2);border:1px solid var(--border-o);border-radius:var(--radius);
+  padding:16px;margin-bottom:24px;position:relative;overflow:hidden;}
+.amenaza-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--gold));}
+.amenaza-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;
+  color:var(--accent);text-transform:uppercase;margin-bottom:6px;}
+.amenaza-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);
+  margin-bottom:6px;line-height:1.2;}
+.amenaza-desc{font-size:.82rem;color:var(--ink2);line-height:1.6;margin-bottom:10px;}
+.amenaza-link{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--accent);text-decoration:none;text-transform:uppercase;
+  display:flex;align-items:center;gap:5px;}
+
+/* ── DASHBOARD FAMILIA ── */
+.hijo-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px;margin-bottom:8px;cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;gap:12px;position:relative;overflow:hidden;}
+.hijo-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);}
+.hijo-card:hover{background:rgba(255,255,255,.04);}
+.hijo-ava{width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;}
+.hijo-ava-d{background:rgba(58,127,212,.12);}
+.hijo-ava-f{background:rgba(240,120,48,.12);}
+.hijo-name{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.hijo-meta{font-size:.75rem;color:var(--ink3);}
+.hijo-prog{flex-shrink:0;text-align:right;}
+.hijo-pct{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--accent);line-height:1;}
+.hijo-pct-l{font-family:'JetBrains Mono',monospace;font-size:.5rem;color:var(--ink3);letter-spacing:1px;}
+
+/* Progress bar */
+.prog-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:6px;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));
+  border-radius:2px;transition:width .6s cubic-bezier(.34,1.56,.64,1);}
+
+/* ── QR MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;
+  display:none;align-items:flex-end;justify-content:center;
+  backdrop-filter:blur(4px);}
+.modal-overlay.open{display:flex;}
+.modal-sheet{background:var(--bg2);border-radius:16px 16px 0 0;
+  padding:24px 20px calc(24px + var(--safe-bot));width:100%;max-width:480px;
+  animation:slideUp .3s cubic-bezier(.34,1.56,.64,1);}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.modal-handle{width:36px;height:4px;background:var(--ink3);border-radius:2px;
+  margin:0 auto 20px;}
+.modal-title{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--ink);
+  margin-bottom:4px;}
+.modal-sub{font-size:.84rem;color:var(--ink2);margin-bottom:20px;line-height:1.5;}
+.qr-container{background:white;border-radius:8px;padding:16px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:16px;min-height:200px;}
+.qr-placeholder{text-align:center;}
+.qr-big{font-size:4rem;margin-bottom:8px;}
+.qr-code-text{font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:600;
+  color:#080c14;letter-spacing:4px;}
+.qr-hint{font-size:.75rem;color:#6b7280;margin-top:6px;}
+.share-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.share-btn{padding:12px;border-radius:var(--radius);border:none;cursor:pointer;
+  font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:1px;
+  text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:all .2s;}
+.share-wa{background:#25d366;color:white;}
+.share-wa:hover{background:#1da851;}
+.share-copy{background:var(--bg3);color:var(--ink2);border:1px solid var(--border);}
+.share-copy:hover{background:rgba(255,255,255,.06);}
+
+/* ── CREAR CLASE ── */
+.crear-form{padding:16px;}
+.modulo-grid{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.modulo-opt{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:12px;}
+.modulo-opt:hover,.modulo-opt.sel{border-color:var(--blue);background:rgba(58,127,212,.06);}
+.modulo-opt.sel .modulo-check{background:var(--blue);border-color:var(--blue);}
+.modulo-ico{font-size:1.2rem;flex-shrink:0;}
+.modulo-name{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.modulo-desc{font-size:.75rem;color:var(--ink3);}
+.modulo-check{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--border);
+  flex-shrink:0;margin-left:auto;transition:all .2s;}
+
+/* ── RESULTADOS ── */
+.result-row{display:flex;align-items:center;gap:10px;
+  padding:12px 0;border-bottom:1px solid var(--border);}
+.result-row:last-child{border-bottom:none;}
+.result-ava{width:32px;height:32px;border-radius:50%;background:var(--bg3);
+  display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;}
+.result-name{flex:1;font-size:.84rem;color:var(--ink);}
+.result-score{font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;}
+.score-hi{color:var(--green);}
+.score-md{color:var(--gold);}
+.score-lo{color:#ef4444;}
+
+/* ── AGENTE IA ── */
+.ia-screen{display:flex;flex-direction:column;height:100%;}
+.ia-msgs{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:8px;}
+.ia-msgs::-webkit-scrollbar{display:none;}
+.msg{display:flex;gap:8px;align-items:flex-end;}
+.msg.user{flex-direction:row-reverse;}
+.msg-bub{background:var(--bg2);border:1px solid var(--border);padding:10px 12px;
+  font-size:.86rem;line-height:1.6;max-width:85%;border-radius:12px;color:var(--ink2);}
+.msg.user .msg-bub{background:rgba(240,120,48,.08);border-color:var(--border-o);color:var(--ink);border-radius:12px 12px 2px 12px;}
+.msg.bot .msg-bub{border-radius:12px 12px 12px 2px;}
+.msg-ava{width:28px;height:28px;border-radius:50%;background:var(--bg3);
+  display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+.ia-input-row{padding:10px 12px calc(10px + var(--safe-bot));
+  border-top:1px solid var(--border);display:flex;gap:8px;
+  background:rgba(8,12,20,.96);}
+.ia-input{flex:1;background:var(--bg2);border:1px solid var(--border-o);
+  border-radius:20px;color:var(--ink);font-family:'Lato',sans-serif;font-size:.88rem;
+  padding:10px 14px;outline:none;transition:border-color .2s;}
+.ia-input:focus{border-color:var(--accent);}
+.ia-input::placeholder{color:var(--ink3);}
+.ia-send{background:var(--accent);color:var(--bg);border:none;
+  width:40px;height:40px;border-radius:50%;font-size:1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:background .2s;}
+.ia-send:hover{background:var(--accent2);}
+.typing-w{display:flex;gap:4px;align-items:center;padding:4px 0;}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.3;
+  animation:tdot 1.2s ease-in-out infinite;}
+.tdot:nth-child(2){animation-delay:.2s;}.tdot:nth-child(3){animation-delay:.4s;}
+@keyframes tdot{0%,80%,100%{opacity:.2;transform:scale(.8);}40%{opacity:1;transform:scale(1);}}
+
+/* ── CHECKLIST APP ── */
+.cl-hijo-select{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px;}
+.cl-hijo-select::-webkit-scrollbar{display:none;}
+.cl-hijo-chip{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:1px;
+  padding:6px 12px;border-radius:20px;border:1px solid var(--border);
+  background:var(--bg2);color:var(--ink3);cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0;}
+.cl-hijo-chip.sel{border-color:var(--accent);color:var(--accent);background:rgba(240,120,48,.06);}
+
+.cl-section{margin-bottom:20px;}
+.cl-section-title{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--accent);margin-bottom:10px;
+  padding-bottom:6px;border-bottom:1px solid var(--border-o);}
+.cl-item{display:flex;align-items:flex-start;gap:10px;
+  padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer;
+  transition:background .1s;}
+.cl-item:last-child{border-bottom:none;}
+.cl-check-box{width:20px;height:20px;border-radius:4px;border:1.5px solid var(--border-o);
+  flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;font-size:.8rem;}
+.cl-item.done .cl-check-box{background:var(--green);border-color:var(--green);color:white;}
+.cl-item.done .cl-text{color:var(--ink3);text-decoration:line-through;}
+.cl-text{font-size:.86rem;color:var(--ink);line-height:1.5;}
+.cl-prog-summary{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.cl-prog-n{font-family:'DM Serif Display',serif;font-size:2rem;color:var(--green);
+  font-style:italic;line-height:1;flex-shrink:0;}
+.cl-prog-info{flex:1;}
+.cl-prog-title{font-size:.84rem;color:var(--ink);font-weight:700;margin-bottom:4px;}
+.cl-prog-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.cl-prog-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--blue));
+  border-radius:2px;transition:width .6s cubic-bezier(.34,1.56,.64,1);}
+
+/* ── PERFIL SCREEN ── */
+.perfil-header{padding:24px 16px 16px;text-align:center;}
+.perfil-ava-big{font-size:3.5rem;margin-bottom:8px;}
+.perfil-name{font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink);}
+.perfil-role{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;
+  color:var(--ink3);text-transform:uppercase;margin-top:4px;}
+.perfil-item{padding:14px 16px;display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid var(--border);cursor:pointer;transition:background .2s;}
+.perfil-item:hover{background:rgba(255,255,255,.03);}
+.perfil-item-ico{font-size:1.1rem;width:32px;text-align:center;flex-shrink:0;}
+.perfil-item-text{flex:1;}
+.perfil-item-title{font-size:.88rem;color:var(--ink);margin-bottom:1px;}
+.perfil-item-sub{font-size:.75rem;color:var(--ink3);}
+.perfil-item-arr{color:var(--ink3);font-size:.8rem;}
+.perfil-danger{color:#ef4444!important;}
+
+/* ── INSTALL PROMPT ── */
+.install-banner{position:fixed;bottom:calc(60px + var(--safe-bot));left:12px;right:12px;
+  background:var(--bg2);border:1px solid var(--border-o);border-radius:var(--radius);
+  padding:12px 14px;display:flex;align-items:center;gap:10px;z-index:150;
+  animation:fadeUp .4s ease;display:none;}
+.install-banner.show{display:flex;}
+.install-ico{font-size:1.4rem;flex-shrink:0;}
+.install-text{flex:1;}
+.install-title{font-size:.82rem;color:var(--ink);font-weight:700;margin-bottom:1px;}
+.install-sub{font-size:.72rem;color:var(--ink3);}
+.install-btn{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1px;
+  text-transform:uppercase;color:var(--bg);background:var(--accent);
+  border:none;padding:6px 12px;border-radius:4px;cursor:pointer;flex-shrink:0;}
+.install-close{color:var(--ink3);background:none;border:none;font-size:1rem;
+  cursor:pointer;flex-shrink:0;padding:4px;}
+
+/* ── UTILS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+.empty-state{text-align:center;padding:40px 24px;}
+.empty-ico{font-size:2.5rem;margin-bottom:12px;opacity:.4;}
+.empty-title{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink2);margin-bottom:6px;}
+.empty-sub{font-size:.82rem;color:var(--ink3);line-height:1.6;}
+.badge-live{display:inline-flex;align-items:center;gap:4px;
+  font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:2px;
+  color:var(--green);text-transform:uppercase;}
+.badge-live::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--green);
+  animation:an-blink 1.5s step-end infinite;}
+@keyframes an-blink{0%,100%{opacity:1;}50%{opacity:.15;}}
+
+/* scrollbar hidden global */
+*{scrollbar-width:none;}
+*::-webkit-scrollbar{display:none;}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     SCREEN 1: ONBOARDING
+══════════════════════════════════════ -->
+<div class="screen" id="screen-onboard">
+  <div class="ob-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none" width="72" height="72">
+      <defs>
+        <linearGradient id="og" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f5c842"/>
+          <stop offset="100%" stop-color="#f07830"/>
+        </linearGradient>
+      </defs>
+      <path d="M100 10 C84 10 58 17 38 28 L20 38 L20 102 C20 134 58 155 100 174 C142 155 180 134 180 102 L180 38 L162 28 C142 17 116 10 100 10 Z"
+        fill="#0d1422" stroke="url(#og)" stroke-width="2.5"/>
+      <path d="M100 48 C88 48 78 56 78 66 C78 73 83 79 91 83 C83 87 76 95 76 104 C76 117 87 126 100 126 C113 126 124 117 124 104 C124 95 117 87 109 83 C117 79 122 73 122 66 C122 56 112 48 100 48 Z"
+        fill="none" stroke="url(#og)" stroke-width="3.5" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <h1 class="ob-title">AEGIS<em>8</em></h1>
+  <p class="ob-sub">Ciberseguridad educativa para docentes y familias de Chile</p>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;margin-bottom:12px;animation:fadeUp .8s .38s ease both;">¿Quién eres?</p>
+  <div class="ob-modes">
+    <div class="ob-mode ob-mode-d" onclick="startSetup('docente')">
+      <div class="ob-mode-ico">👩‍🏫</div>
+      <div class="ob-mode-title">Docente</div>
+      <div class="ob-mode-desc">Gestiona clases y asigna módulos</div>
+    </div>
+    <div class="ob-mode ob-mode-f" onclick="startSetup('familia')">
+      <div class="ob-mode-ico">👨‍👩‍👧</div>
+      <div class="ob-mode-title">Familia</div>
+      <div class="ob-mode-desc">Protege a tus hijos online</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SCREEN 2: SETUP DOCENTE
+══════════════════════════════════════ -->
+<div class="screen hidden" id="screen-setup-d">
+  <button class="setup-back" onclick="showScreen('screen-onboard')">←</button>
+  <div class="setup-inner">
+    <div class="setup-tag">// Modo Docente</div>
+    <h2 class="setup-title">Cuéntanos<br>quién eres.</h2>
+    <p class="setup-sub">Solo para personalizar tu experiencia. Nada se envía a ningún servidor.</p>
+    <div class="field">
+      <label for="d-nombre">Tu nombre</label>
+      <input id="d-nombre" type="text" placeholder="Profe Ana" maxlength="50"/>
+    </div>
+    <div class="field">
+      <label for="d-colegio">Colegio o institución</label>
+      <input id="d-colegio" type="text" placeholder="Colegio San Pedro" maxlength="80"/>
+    </div>
+    <div class="field">
+      <label for="d-nivel">Nivel que enseñas</label>
+      <select id="d-nivel">
+        <option value="">Selecciona...</option>
+        <option>1° a 4° básico</option>
+        <option>5° a 8° básico</option>
+        <option>1° a 4° medio</option>
+        <option>Varios niveles</option>
+      </select>
+    </div>
+    <button class="btn-primary blue" onclick="saveDocente()">Empezar →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SCREEN 3: SETUP FAMILIA
+══════════════════════════════════════ -->
+<div class="screen hidden" id="screen-setup-f">
+  <button class="setup-back" onclick="showScreen('screen-onboard')">←</button>
+  <div class="setup-inner">
+    <div class="setup-tag">// Modo Familia</div>
+    <h2 class="setup-title">Hola,<br>apoderado/a.</h2>
+    <p class="setup-sub">Configura los perfiles de tus hijos para personalizar las recomendaciones.</p>
+    <div class="field">
+      <label for="f-nombre">Tu nombre</label>
+      <input id="f-nombre" type="text" placeholder="María" maxlength="50"/>
+    </div>
+    <div class="field">
+      <label for="h1-nombre">Nombre de tu hijo/a</label>
+      <input id="h1-nombre" type="text" placeholder="Matías" maxlength="30"/>
+    </div>
+    <div class="field">
+      <label for="h1-edad">Edad</label>
+      <select id="h1-edad">
+        <option value="">Selecciona...</option>
+        <option value="6-9">6 a 9 años</option>
+        <option value="10-12">10 a 12 años</option>
+        <option value="13-15">13 a 15 años</option>
+        <option value="16-17">16 a 17 años</option>
+      </select>
+    </div>
+    <button class="btn-primary" onclick="saveFamilia()">Empezar →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     TOP BAR (visible cuando app activa)
+══════════════════════════════════════ -->
+<div class="top-bar" id="top-bar">
+  <div class="top-bar-logo">AEGIS<span>8</span></div>
+  <button id="top-bar-mode" class="top-bar-mode mode-d" onclick="resetApp()" title="Cambiar modo" style="background:none;border:1px solid;cursor:pointer;">Docente ↻</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     APP CONTENT AREA
+══════════════════════════════════════ -->
+<div class="app-content" id="app-content">
+
+  <!-- ── TAB: INICIO DOCENTE ── -->
+  <div id="tab-inicio-d" class="tab-pane dash">
+    <div class="dash-greet">
+      <div class="dash-tag">// Buenos días</div>
+      <div class="dash-name" id="d-greet-name">Profe <em>Ana</em></div>
+      <div class="dash-sub" id="d-greet-sub">Tienes 0 clases activas</div>
+    </div>
+
+    <!-- Amenaza del mes -->
+    <div class="amenaza-card">
+      <div class="amenaza-tag">⚡ Amenaza del mes · Marzo 2026</div>
+      <div class="amenaza-title">Phishing en WhatsApp disfrazado de JUNAEB</div>
+      <div class="amenaza-desc">Campaña activa que suplanta comunicaciones de JUNAEB para robar datos de apoderados. Afecta principalmente a colegios de la RM.</div>
+      <a href="/educa/profesores.html" class="amenaza-link">Ver plan de clase →</a>
+    </div>
+
+    <div class="sec-label">Mis clases</div>
+    <div id="d-clases-list"></div>
+    <button class="nueva-clase-btn" onclick="showCrearClase()">+ Nueva clase</button>
+  </div>
+
+  <!-- ── TAB: CREAR CLASE ── -->
+  <div id="tab-crear" class="tab-pane crear-form" style="display:none;">
+    <div class="dash-greet">
+      <div class="dash-tag">// Nueva clase</div>
+      <div class="dash-name" style="font-size:1.5rem;">Elige el<br><em style="color:var(--blue)">módulo.</em></div>
+    </div>
+    <div class="field">
+      <label>Nombre de la clase (opcional)</label>
+      <input id="new-clase-nombre" type="text" placeholder="Ej: 7°A — Seguridad digital"/>
+    </div>
+    <p style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;margin-bottom:10px;">Módulo a trabajar</p>
+    <div class="modulo-grid" id="modulo-grid">
+      <div class="modulo-opt" data-mod="phishing" onclick="selMod(this)">
+        <div class="modulo-ico">🎣</div>
+        <div><div class="modulo-name">Phishing y estafas</div><div class="modulo-desc">Detectar mensajes falsos · 7°–4° medio</div></div>
+        <div class="modulo-check"></div>
+      </div>
+      <div class="modulo-opt" data-mod="grooming" onclick="selMod(this)">
+        <div class="modulo-ico">🛡️</div>
+        <div><div class="modulo-name">Grooming y señales</div><div class="modulo-desc">Reconocer patrones · 7°–4° medio</div></div>
+        <div class="modulo-check"></div>
+      </div>
+      <div class="modulo-opt" data-mod="privacidad" onclick="selMod(this)">
+        <div class="modulo-ico">🔒</div>
+        <div><div class="modulo-name">Privacidad en redes</div><div class="modulo-desc">Configuraciones y huella digital</div></div>
+        <div class="modulo-check"></div>
+      </div>
+      <div class="modulo-opt" data-mod="contraseñas" onclick="selMod(this)">
+        <div class="modulo-ico">🔑</div>
+        <div><div class="modulo-name">Contraseñas y 2FA</div><div class="modulo-desc">Seguridad de cuentas · básico–medio</div></div>
+        <div class="modulo-check"></div>
+      </div>
+      <div class="modulo-opt" data-mod="ciberbullying" onclick="selMod(this)">
+        <div class="modulo-ico">😰</div>
+        <div><div class="modulo-name">Ciberbullying</div><div class="modulo-desc">Reconocer y actuar · 5°–4° medio</div></div>
+        <div class="modulo-check"></div>
+      </div>
+      <div class="modulo-opt" data-mod="datospersonales" onclick="selMod(this)">
+        <div class="modulo-ico">🧒</div>
+        <div><div class="modulo-name">Datos personales</div><div class="modulo-desc">Qué compartir · 1°–6° básico</div></div>
+        <div class="modulo-check"></div>
+      </div>
+    </div>
+    <button class="btn-primary blue" onclick="crearClase()">Crear clase y generar código →</button>
+  </div>
+
+  <!-- ── TAB: QR / RESULTADOS ── -->
+  <div id="tab-clase-detail" class="tab-pane" style="display:none;padding:16px;">
+    <div class="dash-greet" style="margin-bottom:16px;">
+      <div class="dash-tag" id="detail-tag">// Clase activa</div>
+      <div class="dash-name" id="detail-name" style="font-size:1.4rem;"></div>
+    </div>
+    <div class="stats-row" id="detail-stats" style="margin-bottom:20px;"></div>
+    <div class="sec-label">Código para alumnos</div>
+    <div class="qr-container" style="margin-bottom:16px;">
+      <div class="qr-placeholder">
+        <div class="qr-big">📱</div>
+        <div class="qr-code-text" id="detail-code">A8-2049</div>
+        <div class="qr-hint">Los alumnos ingresan este código en aegis8.org/quiz</div>
+      </div>
+    </div>
+    <div class="share-btns" style="margin-bottom:20px;">
+      <button class="share-btn share-wa" onclick="shareWA()">💬 Compartir</button>
+      <button class="share-btn share-copy" onclick="copyLink()">📋 Copiar link</button>
+    </div>
+    <div class="sec-label">Resultados</div>
+    <div id="detail-results"></div>
+  </div>
+
+  <!-- ── TAB: INICIO FAMILIA ── -->
+  <div id="tab-inicio-f" class="tab-pane dash" style="display:none;">
+    <div class="dash-greet">
+      <div class="dash-tag">// Hola,</div>
+      <div class="dash-name" id="f-greet-name">María</div>
+      <div class="dash-sub">Revisa cómo están tus hijos esta semana</div>
+    </div>
+    <div class="amenaza-card">
+      <div class="amenaza-tag">⚡ Alerta para familias · Marzo 2026</div>
+      <div class="amenaza-title">Nueva estafa en Roblox afecta a menores de 12</div>
+      <div class="amenaza-desc">Cuentas falsas ofrecen Robux gratis a cambio de credenciales. Se han reportado más de 200 casos en Chile esta semana.</div>
+      <a href="/educa/ninos.html" class="amenaza-link">Ver guía para niños →</a>
+    </div>
+    <div class="sec-label">Mis hijos</div>
+    <div id="f-hijos-list"></div>
+    <button class="nueva-clase-btn" style="border-color:rgba(240,120,48,.3);color:var(--accent);background:rgba(240,120,48,.04);" onclick="addHijo()">+ Agregar hijo/a</button>
+  </div>
+
+  <!-- ── TAB: CHECKLIST FAMILIA ── -->
+  <div id="tab-checklist" class="tab-pane" style="display:none;padding:16px;">
+    <div class="dash-greet" style="margin-bottom:12px;">
+      <div class="dash-tag">// Seguridad familiar</div>
+      <div class="dash-name" style="font-size:1.4rem;">Checklist<br><em>del hogar.</em></div>
+    </div>
+    <div id="cl-hijo-chips" class="cl-hijo-select"></div>
+    <div id="cl-prog-summary" class="cl-prog-summary">
+      <div class="cl-prog-n" id="cl-pct">0%</div>
+      <div class="cl-prog-info">
+        <div class="cl-prog-title" id="cl-status">Sin completar</div>
+        <div class="cl-prog-bar"><div class="cl-prog-fill" id="cl-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div id="cl-content"></div>
+  </div>
+
+  <!-- ── TAB: AGENTE IA ── -->
+  <div id="tab-ia" class="tab-pane ia-screen" style="display:none;height:100%;">
+    <div class="ia-msgs" id="ia-msgs"></div>
+    <div class="ia-input-row">
+      <input class="ia-input" id="ia-input" placeholder="Pregunta lo que necesites..." maxlength="500"
+        onkeydown="if(event.key==='Enter')sendIA()"/>
+      <button class="ia-send" onclick="sendIA()">➤</button>
+    </div>
+  </div>
+
+  <!-- ── TAB: PERFIL ── -->
+  <div id="tab-perfil" class="tab-pane" style="display:none;">
+    <div class="perfil-header">
+      <div class="perfil-ava-big" id="perfil-ava">👩‍🏫</div>
+      <div class="perfil-name" id="perfil-name">Ana</div>
+      <div class="perfil-role" id="perfil-role">Docente · Colegio San Pedro</div>
+    </div>
+    <div id="perfil-items"></div>
+  </div>
+
+</div><!-- /app-content -->
+
+<!-- ══════════════════════════════════════
+     TAB BAR
+══════════════════════════════════════ -->
+<nav class="tab-bar" id="tab-bar">
+  <button class="tab-btn active" id="tb-inicio" onclick="switchTab('inicio')">
+    <div class="tab-ico">🏠</div>
+    <div class="tab-lbl">Inicio</div>
+    <div class="tab-dot" id="dot-inicio"></div>
+  </button>
+  <button class="tab-btn" id="tb-clases" onclick="switchTab('clases')" style="display:none;">
+    <div class="tab-ico">📋</div>
+    <div class="tab-lbl">Clases</div>
+    <div class="tab-dot" id="dot-clases"></div>
+  </button>
+  <button class="tab-btn" id="tb-checklist" onclick="switchTab('checklist')" style="display:none;">
+    <div class="tab-ico">✅</div>
+    <div class="tab-lbl">Checklist</div>
+  </button>
+  <button class="tab-btn" id="tb-ia" onclick="switchTab('ia')">
+    <div class="tab-ico">🤖</div>
+    <div class="tab-lbl">Agente IA</div>
+  </button>
+  <button class="tab-btn" id="tb-perfil" onclick="switchTab('perfil')">
+    <div class="tab-ico">👤</div>
+    <div class="tab-lbl">Perfil</div>
+  </button>
+</nav>
+
+<!-- Install banner -->
+<div class="install-banner" id="install-banner">
+  <div class="install-ico">📲</div>
+  <div class="install-text">
+    <div class="install-title">Instalar Aegis8</div>
+    <div class="install-sub">Agrega al inicio para acceso rápido</div>
+  </div>
+  <button class="install-btn" id="install-btn">Instalar</button>
+  <button class="install-close" onclick="closeInstall()">×</button>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const WORKER = 'https://aegis8-agent.christianmora705.workers.dev';
+let STATE = {
+  mode: null,      // 'docente' | 'familia'
+  docente: null,   // { nombre, colegio, nivel }
+  familia: null,   // { nombre, hijos: [{nombre, edad}] }
+  clases: [],      // [{ id, nombre, modulo, code, resultados:[], ts }]
+  ia_hist: [],     // conversation history
+  cl_state: {},    // checklist state per hijo
+  active_tab: 'inicio',
+  active_clase: null,
+  active_hijo: 0,
+};
+
+// ═══════════════════════════════════════
+// PERSISTENCE
+// ═══════════════════════════════════════
+function save() {
+  try { localStorage.setItem('aegis8_pwa', JSON.stringify(STATE)); } catch(e){}
+}
+function load() {
+  try {
+    const d = localStorage.getItem('aegis8_pwa');
+    if (d) { STATE = { ...STATE, ...JSON.parse(d) }; return true; }
+  } catch(e){}
+  return false;
+}
+
+// ═══════════════════════════════════════
+// SCREEN ROUTING
+// ═══════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.toggle('hidden', s.id !== id);
+  });
+}
+
+function startSetup(mode) {
+  showScreen(mode === 'docente' ? 'screen-setup-d' : 'screen-setup-f');
+}
+
+function saveDocente() {
+  const n = document.getElementById('d-nombre').value.trim();
+  const c = document.getElementById('d-colegio').value.trim();
+  const v = document.getElementById('d-nivel').value;
+  if (!n) { alert('Ingresa tu nombre'); return; }
+  STATE.mode = 'docente';
+  STATE.docente = { nombre: n, colegio: c, nivel: v };
+  save(); launchApp();
+}
+
+function saveFamilia() {
+  const n = document.getElementById('f-nombre').value.trim();
+  const h = document.getElementById('h1-nombre').value.trim();
+  const e = document.getElementById('h1-edad').value;
+  if (!n) { alert('Ingresa tu nombre'); return; }
+  STATE.mode = 'familia';
+  STATE.familia = { nombre: n, hijos: h ? [{ nombre: h, edad: e }] : [] };
+  save(); launchApp();
+}
+
+// ═══════════════════════════════════════
+// APP LAUNCH
+// ═══════════════════════════════════════
+function launchApp() {
+  // Hide all screens
+  document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+
+  const mode = STATE.mode;
+
+  // Show top bar
+  const tb = document.getElementById('top-bar');
+  tb.classList.add('visible');
+  const tbm = document.getElementById('top-bar-mode');
+  if (mode === 'docente') {
+    tbm.textContent = 'Docente'; tbm.className = 'top-bar-mode mode-d';
+  } else {
+    tbm.textContent = 'Familia'; tbm.className = 'top-bar-mode mode-f';
+  }
+
+  // Show content
+  document.getElementById('app-content').classList.add('visible');
+
+  // Configure tab bar
+  const tabBar = document.getElementById('tab-bar');
+  tabBar.classList.add('visible');
+
+  if (mode === 'docente') {
+    document.getElementById('tb-clases').style.display = 'flex';
+    document.getElementById('tb-checklist').style.display = 'none';
+    renderDashDocente();
+    setupIAdocente();
+  } else {
+    document.getElementById('tb-clases').style.display = 'none';
+    document.getElementById('tb-checklist').style.display = 'flex';
+    renderDashFamilia();
+    setupIAfamilia();
+  }
+
+  renderPerfil();
+  switchTab('inicio');
+  showInstallBanner();
+}
+
+// ═══════════════════════════════════════
+// TAB SWITCHING
+// ═══════════════════════════════════════
+function switchTab(tab) {
+  STATE.active_tab = tab;
+
+  // Hide all tab panes
+  document.querySelectorAll('.tab-pane').forEach(p => p.style.display = 'none');
+
+  // Update tab bar buttons
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active', 'active-blue'));
+
+  const mode = STATE.mode;
+
+  if (tab === 'inicio') {
+    if (mode === 'docente') {
+      document.getElementById('tab-inicio-d').style.display = 'block';
+      document.getElementById('tb-inicio').classList.add('active-blue');
+    } else {
+      document.getElementById('tab-inicio-f').style.display = 'block';
+      document.getElementById('tb-inicio').classList.add('active');
+    }
+  } else if (tab === 'clases') {
+    showCrearClase();
+    document.getElementById('tb-clases').classList.add('active-blue');
+  } else if (tab === 'checklist') {
+    document.getElementById('tab-checklist').style.display = 'block';
+    renderChecklist();
+    document.getElementById('tb-checklist').classList.add('active');
+  } else if (tab === 'ia') {
+    document.getElementById('tab-ia').style.display = 'flex';
+    document.getElementById('tb-ia').classList.add('active');
+    if (STATE.ia_hist.length === 0) renderIAWelcome();
+  } else if (tab === 'perfil') {
+    document.getElementById('tab-perfil').style.display = 'block';
+    document.getElementById('tb-perfil').classList.add('active');
+  }
+}
+
+// ═══════════════════════════════════════
+// DOCENTE DASHBOARD
+// ═══════════════════════════════════════
+function renderDashDocente() {
+  const d = STATE.docente;
+  const nombre = d?.nombre || 'Docente';
+  const first = nombre.split(' ')[0];
+  document.getElementById('d-greet-name').innerHTML = `Profe <em>${first}</em>`;
+  document.getElementById('d-greet-sub').textContent =
+    `${STATE.clases.length} ${STATE.clases.length === 1 ? 'clase activa' : 'clases activas'}`;
+
+  const list = document.getElementById('d-clases-list');
+  if (STATE.clases.length === 0) {
+    list.innerHTML = `<div class="empty-state">
+      <div class="empty-ico">📋</div>
+      <div class="empty-title">Sin clases todavía</div>
+      <div class="empty-sub">Crea tu primera clase y genera el código QR para tus alumnos.</div>
+    </div>`;
+    return;
+  }
+  list.innerHTML = STATE.clases.map(c => `
+    <div class="clase-card" onclick="showClaseDetail('${c.id}')">
+      <div class="clase-ico">${moduloIco(c.modulo)}</div>
+      <div class="clase-info">
+        <div class="clase-name">${c.nombre || c.modulo}</div>
+        <div class="clase-meta">${c.resultados.length} respuestas · Código: ${c.code}</div>
+      </div>
+      <div class="clase-badge ${c.resultados.length > 0 ? '' : 'pending'}">
+        ${c.resultados.length > 0 ? `${c.resultados.length} completos` : 'Esperando'}
+      </div>
+    </div>
+  `).join('');
+}
+
+function moduloIco(mod) {
+  const map = { phishing:'🎣', grooming:'🛡️', privacidad:'🔒',
+    'contraseñas':'🔑', ciberbullying:'😰', datospersonales:'🧒' };
+  return map[mod] || '📚';
+}
+
+// ═══════════════════════════════════════
+// CREAR CLASE
+// ═══════════════════════════════════════
+let selectedMod = null;
+
+function showCrearClase() {
+  document.querySelectorAll('.tab-pane').forEach(p => p.style.display = 'none');
+  document.getElementById('tab-crear').style.display = 'block';
+  selectedMod = null;
+  document.querySelectorAll('.modulo-opt').forEach(o => {
+    o.classList.remove('sel');
+    o.querySelector('.modulo-check').textContent = '';
+  });
+  document.getElementById('new-clase-nombre').value = '';
+}
+
+function selMod(el) {
+  document.querySelectorAll('.modulo-opt').forEach(o => {
+    o.classList.remove('sel');
+    o.querySelector('.modulo-check').textContent = '';
+  });
+  el.classList.add('sel');
+  el.querySelector('.modulo-check').textContent = '✓';
+  selectedMod = el.dataset.mod;
+}
+
+function crearClase() {
+  if (!selectedMod) { alert('Elige un módulo'); return; }
+  const nombre = document.getElementById('new-clase-nombre').value.trim();
+  const id = 'c_' + Date.now();
+  const code = 'A8-' + Math.floor(1000 + Math.random() * 9000);
+  const clase = { id, nombre: nombre || selectedMod, modulo: selectedMod, code, resultados: [], ts: Date.now() };
+  STATE.clases.unshift(clase);
+  STATE.active_clase = id;
+  save();
+  showClaseDetail(id);
+  renderDashDocente();
+}
+
+// ═══════════════════════════════════════
+// CLASE DETAIL
+// ═══════════════════════════════════════
+function showClaseDetail(id) {
+  STATE.active_clase = id;
+  const c = STATE.clases.find(x => x.id === id);
+  if (!c) return;
+
+  document.querySelectorAll('.tab-pane').forEach(p => p.style.display = 'none');
+  document.getElementById('tab-clase-detail').style.display = 'block';
+
+  document.getElementById('detail-tag').textContent = '// ' + c.modulo;
+  document.getElementById('detail-name').innerHTML = (c.nombre || c.modulo) + '<br><em style="color:var(--blue);font-size:.8em;">Código: ' + c.code + '</em>';
+  document.getElementById('detail-code').textContent = c.code;
+
+  // Stats
+  const total = c.resultados.length;
+  const avg = total > 0 ? Math.round(c.resultados.reduce((a,r) => a + r.puntaje, 0) / total) : 0;
+  const hi = c.resultados.filter(r => r.puntaje >= 70).length;
+  document.getElementById('detail-stats').innerHTML = `
+    <div class="stat-c"><div class="stat-n" style="color:var(--blue)">${total}</div><div class="stat-l">Completaron</div></div>
+    <div class="stat-c"><div class="stat-n" style="color:var(--green)">${avg}%</div><div class="stat-l">Promedio</div></div>
+    <div class="stat-c"><div class="stat-n" style="color:var(--gold)">${hi}</div><div class="stat-l">Sobre 70%</div></div>
+  `;
+
+  // Results
+  const res = document.getElementById('detail-results');
+  if (total === 0) {
+    res.innerHTML = `<div class="empty-state" style="padding:20px 0;">
+      <div class="empty-ico">⏳</div>
+      <div class="empty-title">Esperando alumnos</div>
+      <div class="empty-sub">Comparte el código o link con tu clase.</div>
+    </div>
+    <button class="nueva-clase-btn" onclick="addFakeResult('${id}')" style="margin-top:8px;opacity:.4;">
+      + Simular resultado (demo)
+    </button>`;
+  } else {
+    res.innerHTML = c.resultados.map(r => {
+      const cls = r.puntaje >= 70 ? 'score-hi' : r.puntaje >= 40 ? 'score-md' : 'score-lo';
+      return `<div class="result-row">
+        <div class="result-ava">${r.nombre[0].toUpperCase()}</div>
+        <div class="result-name">${r.nombre}</div>
+        <div class="result-score ${cls}">${r.puntaje}%</div>
+      </div>`;
+    }).join('') +
+    `<button class="nueva-clase-btn" onclick="addFakeResult('${id}')" style="margin-top:8px;opacity:.4;">
+      + Simular resultado (demo)
+    </button>`;
+  }
+}
+
+// Demo: simulate a student result
+const nombres_demo = ['Sofía M.','Matías R.','Valentina C.','Diego F.','Camila T.','Benjamín L.','Isabella N.','Sebastián O.'];
+function addFakeResult(id) {
+  const c = STATE.clases.find(x => x.id === id);
+  if (!c) return;
+  const nombre = nombres_demo[Math.floor(Math.random() * nombres_demo.length)];
+  const puntaje = Math.floor(30 + Math.random() * 70);
+  c.resultados.push({ nombre, puntaje, ts: Date.now() });
+  save();
+  showClaseDetail(id);
+  renderDashDocente();
+}
+
+function shareWA() {
+  const c = STATE.clases.find(x => x.id === STATE.active_clase);
+  if (!c) return;
+  const msg = encodeURIComponent(`Hola! Para el módulo de ciberseguridad, ingresa a aegis8.org/quiz con el código: *${c.code}*`);
+  window.open(`https://wa.me/?text=${msg}`, '_blank');
+}
+
+function copyLink() {
+  const c = STATE.clases.find(x => x.id === STATE.active_clase);
+  if (!c) return;
+  const url = `https://aegis8.org/quiz?code=${c.code}`;
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.querySelector('.share-copy');
+    btn.textContent = '✓ Copiado';
+    setTimeout(() => btn.innerHTML = '📋 Copiar link', 2000);
+  });
+}
+
+// ═══════════════════════════════════════
+// FAMILIA DASHBOARD
+// ═══════════════════════════════════════
+function renderDashFamilia() {
+  const f = STATE.familia;
+  const nombre = f?.nombre || 'Apoderado';
+  document.getElementById('f-greet-name').textContent = nombre;
+
+  const list = document.getElementById('f-hijos-list');
+  const hijos = f?.hijos || [];
+
+  if (hijos.length === 0) {
+    list.innerHTML = `<div class="empty-state">
+      <div class="empty-ico">👶</div>
+      <div class="empty-title">Agrega a tus hijos</div>
+      <div class="empty-sub">Para personalizar las recomendaciones según la edad.</div>
+    </div>`;
+    return;
+  }
+
+  list.innerHTML = hijos.map((h, i) => {
+    const cl_state = STATE.cl_state[i] || {};
+    const done = Object.values(cl_state).filter(Boolean).length;
+    const total = 12;
+    const pct = Math.round(done / total * 100);
+    return `
+    <div class="hijo-card" onclick="goChecklist(${i})">
+      <div class="hijo-ava hijo-ava-${h.edad && parseInt(h.edad) < 13 ? 'd' : 'f'}">${h.edad && parseInt(h.edad) < 13 ? '🧒' : '🧑‍💻'}</div>
+      <div class="hijo-info" style="flex:1;">
+        <div class="hijo-name">${h.nombre}</div>
+        <div class="hijo-meta">${edadLabel(h.edad)}</div>
+        <div class="prog-bar" style="margin-top:6px;"><div class="prog-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div class="hijo-prog">
+        <div class="hijo-pct">${pct}%</div>
+        <div class="hijo-pct-l">Seguridad</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function edadLabel(e) {
+  const map = { '6-9':'6 a 9 años · Primaria', '10-12':'10 a 12 años · Básico', '13-15':'13 a 15 años · Adolescente', '16-17':'16 a 17 años · Adolescente' };
+  return map[e] || 'Edad no configurada';
+}
+
+function goChecklist(idx) {
+  STATE.active_hijo = idx;
+  switchTab('checklist');
+}
+
+function addHijo() {
+  const n = prompt('Nombre del hijo/a:');
+  if (!n) return;
+  const e = prompt('Edad (6-9, 10-12, 13-15, 16-17):') || '10-12';
+  if (!STATE.familia) STATE.familia = { nombre: '', hijos: [] };
+  STATE.familia.hijos.push({ nombre: n, edad: e });
+  save();
+  renderDashFamilia();
+}
+
+// ═══════════════════════════════════════
+// CHECKLIST
+// ═══════════════════════════════════════
+const CL_DATA = {
+  'contraseñas': [
+    'Cada cuenta tiene contraseña distinta',
+    '2FA activado en email y redes sociales',
+    'Las contraseñas tienen 12+ caracteres',
+    'Nunca comparte contraseñas con amigos',
+  ],
+  'dispositivos': [
+    'Control parental activado en su dispositivo',
+    'Ubicación desactivada en redes sociales',
+    'Cuenta de redes en modo privado',
+    'Actualizaciones automáticas activadas',
+  ],
+  'conversaciones': [
+    'Sabe no compartir datos personales online',
+    'Conoce qué es el grooming y cómo reconocerlo',
+    'Sabe que puede contarme si algo raro pasa',
+    'Acordamos reglas de uso de pantallas',
+  ],
+};
+
+function renderChecklist() {
+  const f = STATE.familia;
+  const hijos = f?.hijos || [];
+
+  // Chips
+  const chips = document.getElementById('cl-hijo-chips');
+  if (hijos.length === 0) {
+    chips.innerHTML = '';
+    document.getElementById('cl-content').innerHTML = '<div class="empty-state"><div class="empty-ico">👶</div><div class="empty-title">Agrega un hijo primero</div></div>';
+    return;
+  }
+  chips.innerHTML = hijos.map((h,i) =>
+    `<div class="cl-hijo-chip ${i === STATE.active_hijo ? 'sel' : ''}" onclick="selectHijo(${i})">${h.nombre}</div>`
+  ).join('');
+
+  // Content
+  const idx = STATE.active_hijo;
+  const cl = STATE.cl_state[idx] || {};
+  let done = 0, total = 0;
+
+  let html = '';
+  Object.entries(CL_DATA).forEach(([sec, items]) => {
+    const labels = { 'contraseñas':'🔑 Contraseñas y cuentas', 'dispositivos':'📱 Dispositivos', 'conversaciones':'💬 Conversaciones' };
+    html += `<div class="cl-section"><div class="cl-section-title">${labels[sec]}</div>`;
+    items.forEach((item, i) => {
+      const key = `${sec}_${i}`;
+      const checked = !!cl[key];
+      if (checked) done++;
+      total++;
+      html += `<div class="cl-item ${checked ? 'done' : ''}" onclick="toggleCL(${idx},'${key}',this)">
+        <div class="cl-check-box">${checked ? '✓' : ''}</div>
+        <div class="cl-text">${item}</div>
+      </div>`;
+    });
+    html += '</div>';
+  });
+
+  document.getElementById('cl-content').innerHTML = html;
+
+  const pct = total > 0 ? Math.round(done/total*100) : 0;
+  document.getElementById('cl-pct').textContent = pct + '%';
+  document.getElementById('cl-fill').style.width = pct + '%';
+  document.getElementById('cl-status').textContent = pct === 100 ? '¡Todo completo! 🎉' : `${done} de ${total} completados`;
+}
+
+function selectHijo(i) {
+  STATE.active_hijo = i;
+  renderChecklist();
+}
+
+function toggleCL(hijoIdx, key, el) {
+  if (!STATE.cl_state[hijoIdx]) STATE.cl_state[hijoIdx] = {};
+  STATE.cl_state[hijoIdx][key] = !STATE.cl_state[hijoIdx][key];
+  save();
+  renderChecklist();
+}
+
+// ═══════════════════════════════════════
+// AGENTE IA
+// ═══════════════════════════════════════
+const SYS_DOCENTE = `Eres el Agente Docente de Aegis8, especializado en ayudar a profesores chilenos a enseñar ciberseguridad.
+Tono profesional pero cercano. Conoces el currículo chileno y las leyes relevantes (Ley 20.536, Ley 21.459, Ley Karin).
+Máximo 4-5 oraciones. Responde en español.`;
+
+const SYS_FAMILIA = `Eres el Agente Familiar de Aegis8, asesor de ciberseguridad para familias chilenas.
+Tono cálido y práctico. Sin tecnicismos. Menciona PDI Cibercrimen +56 2 2708 0000 cuando sea urgente.
+Leyes relevantes: Ley 20.526 (grooming), Ley 20.536 (convivencia escolar).
+Máximo 4-5 oraciones. Responde en español.`;
+
+function setupIAdocente() { renderIAWelcome('docente'); }
+function setupIAfamilia() { renderIAWelcome('familia'); }
+
+function renderIAWelcome(mode) {
+  mode = mode || STATE.mode;
+  const msgs = document.getElementById('ia-msgs');
+  msgs.innerHTML = '';
+  STATE.ia_hist = [];
+  const welcome = mode === 'docente'
+    ? '¡Hola! Soy tu Agente Docente 👋 Puedo ayudarte con planes de clase, qué hacer ante incidentes y cómo abordar temas difíciles con tus alumnos. ¿En qué necesitas ayuda?'
+    : '¡Hola! Soy tu Agente Familiar 👋 Puedo ayudarte a proteger a tus hijos en internet, qué hacer si algo preocupante ocurre y cómo tener conversaciones difíciles. ¿En qué te ayudo?';
+  addIAMsg('bot', welcome);
+}
+
+function addIAMsg(role, text) {
+  const msgs = document.getElementById('ia-msgs');
+  const d = document.createElement('div');
+  d.className = 'msg ' + role;
+  d.innerHTML = `<div class="msg-ava">${role === 'bot' ? '🛡️' : '👤'}</div>
+    <div class="msg-bub">${text}</div>`;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+  const msgs = document.getElementById('ia-msgs');
+  const d = document.createElement('div');
+  d.className = 'msg bot'; d.id = 'typing';
+  d.innerHTML = `<div class="msg-ava">🛡️</div>
+    <div class="msg-bub"><div class="typing-w">
+      <div class="tdot"></div><div class="tdot"></div><div class="tdot"></div>
+    </div></div>`;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+async function sendIA() {
+  const inp = document.getElementById('ia-input');
+  const t = inp.value.trim();
+  if (!t) return;
+  inp.value = '';
+  addIAMsg('user', t);
+  STATE.ia_hist.push({ role: 'user', content: t });
+  showTyping();
+  const sys = STATE.mode === 'docente' ? SYS_DOCENTE : SYS_FAMILIA;
+  try {
+    const r = await fetch(WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 500, system: sys, messages: STATE.ia_hist })
+    });
+    const data = await r.json();
+    document.getElementById('typing')?.remove();
+    const rep = data.content?.[0]?.text || 'Error al conectar.';
+    STATE.ia_hist.push({ role: 'assistant', content: rep });
+    addIAMsg('bot', rep);
+    if (STATE.ia_hist.length > 20) STATE.ia_hist = STATE.ia_hist.slice(-20);
+    save();
+  } catch {
+    document.getElementById('typing')?.remove();
+    addIAMsg('bot', 'Error de conexión. Intenta de nuevo.');
+  }
+}
+
+// ═══════════════════════════════════════
+// PERFIL
+// ═══════════════════════════════════════
+function renderPerfil() {
+  const mode = STATE.mode;
+  if (mode === 'docente') {
+    const d = STATE.docente;
+    document.getElementById('perfil-ava').textContent = '👩‍🏫';
+    document.getElementById('perfil-name').textContent = d?.nombre || 'Docente';
+    document.getElementById('perfil-role').textContent = (d?.nivel || '') + (d?.colegio ? ' · ' + d.colegio : '');
+    document.getElementById('perfil-items').innerHTML = `
+      <div class="perfil-item" onclick="switchTab('clases')"><div class="perfil-item-ico">📋</div><div class="perfil-item-text"><div class="perfil-item-title">Mis clases</div><div class="perfil-item-sub">${STATE.clases.length} clases creadas</div></div><div class="perfil-item-arr">›</div></div>
+      <div class="perfil-item" onclick="window.open('/educa/profesores.html','_blank')"><div class="perfil-item-ico">📄</div><div class="perfil-item-text"><div class="perfil-item-title">PDFs y recursos</div><div class="perfil-item-sub">Planes de clase y guías</div></div><div class="perfil-item-arr">›</div></div>
+      <div class="perfil-item" onclick="window.open('/educa/newsletter.html','_blank')"><div class="perfil-item-ico">📬</div><div class="perfil-item-text"><div class="perfil-item-title">Newsletter mensual</div><div class="perfil-item-sub">Amenaza del mes + actividad</div></div><div class="perfil-item-arr">›</div></div>
+      <div class="perfil-item" onclick="resetApp()"><div class="perfil-item-ico perfil-danger">🚪</div><div class="perfil-item-text"><div class="perfil-item-title perfil-danger">Cambiar perfil</div><div class="perfil-item-sub">Volver al inicio</div></div><div class="perfil-item-arr">›</div></div>
+    `;
+  } else {
+    const f = STATE.familia;
+    document.getElementById('perfil-ava').textContent = '👨‍👩‍👧';
+    document.getElementById('perfil-name').textContent = f?.nombre || 'Familia';
+    document.getElementById('perfil-role').textContent = `${f?.hijos?.length || 0} hijo${f?.hijos?.length !== 1 ? 's' : ''} registrado${f?.hijos?.length !== 1 ? 's' : ''}`;
+    document.getElementById('perfil-items').innerHTML = `
+      <div class="perfil-item" onclick="switchTab('checklist')"><div class="perfil-item-ico">✅</div><div class="perfil-item-text"><div class="perfil-item-title">Checklist familiar</div><div class="perfil-item-sub">Seguridad digital del hogar</div></div><div class="perfil-item-arr">›</div></div>
+      <div class="perfil-item" onclick="window.open('/educa/padres.html','_blank')"><div class="perfil-item-ico">📖</div><div class="perfil-item-text"><div class="perfil-item-title">Guías para padres</div><div class="perfil-item-sub">Recursos y PDFs descargables</div></div><div class="perfil-item-arr">›</div></div>
+      <div class="perfil-item" onclick="window.open('/educa.html','_blank')"><div class="perfil-item-ico">🎓</div><div class="perfil-item-text"><div class="perfil-item-title">Aegis Educa</div><div class="perfil-item-sub">Módulos para tus hijos</div></div><div class="perfil-item-arr">›</div></div>
+      <div class="perfil-item" onclick="resetApp()"><div class="perfil-item-ico perfil-danger">🚪</div><div class="perfil-item-text"><div class="perfil-item-title perfil-danger">Cambiar perfil</div></div><div class="perfil-item-arr">›</div></div>
+    `;
+  }
+}
+
+function resetApp() {
+  if (!confirm('¿Seguro que quieres cambiar de perfil? Se borrarán tus datos guardados.')) return;
+  localStorage.removeItem('aegis8_pwa');
+  location.reload();
+}
+
+// ═══════════════════════════════════════
+// INSTALL PROMPT (PWA)
+// ═══════════════════════════════════════
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+});
+
+function showInstallBanner() {
+  const installed = localStorage.getItem('aegis8_installed');
+  if (installed || window.matchMedia('(display-mode: standalone)').matches) return;
+  setTimeout(() => {
+    document.getElementById('install-banner').classList.add('show');
+  }, 3000);
+}
+
+document.getElementById('install-btn').addEventListener('click', () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(c => {
+      if (c.outcome === 'accepted') localStorage.setItem('aegis8_installed', '1');
+      deferredPrompt = null;
+    });
+  } else {
+    alert('Para instalar: menú del navegador → "Agregar a pantalla de inicio"');
+  }
+  closeInstall();
+});
+
+function closeInstall() {
+  document.getElementById('install-banner').classList.remove('show');
+  localStorage.setItem('aegis8_installed', '1');
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+(function init() {
+  if (load() && STATE.mode) {
+    launchApp();
+  }
+  // Register service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/app/sw.js').catch(() => {});
+  }
+})();
+</script>
+</body>
+</html>
