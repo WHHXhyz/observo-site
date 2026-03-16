@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Aegis Educa · Ciberseguridad para familias y docentes</title>
-<meta name="description" content="Recursos gratuitos de ciberseguridad para niños, adolescentes, familias y docentes de Chile."/>
+<title>Aegis Educa · Ciberseguridad para todos</title>
+<meta name="description" content="Hub educativo de Aegis8. Módulos para niños, adolescentes, familias y docentes. Gratis, sin registro."/>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
   <script src="/aegis-nav.js"></script>
@@ -104,294 +104,326 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 @media(max-width:640px){.wrap{padding:0 16px;}.page-footer{padding:32px 16px;}}
 
 
-.educa-hero{position:relative;z-index:10;padding:80px 0 60px;border-bottom:1px solid var(--border);overflow:hidden;text-align:center;}
+/* HERO HUB — compacto, no vitrina */
+.hero-hub{padding:64px 0 48px;border-bottom:1px solid var(--border);
+  position:relative;overflow:hidden;}
 .blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
-.b1{width:500px;height:500px;top:-80px;right:-100px;background:radial-gradient(circle,rgba(240,120,48,.09) 0%,transparent 70%);animation:fl1 8s ease-in-out infinite;}
-.b2{width:400px;height:400px;bottom:-60px;left:-80px;background:radial-gradient(circle,rgba(58,127,212,.08) 0%,transparent 70%);animation:fl2 10s ease-in-out infinite;}
-@keyframes fl1{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,20px);}}
-@keyframes fl2{0%,100%{transform:translate(0,0);}50%{transform:translate(20px,-30px);}}
-.why-s{position:relative;z-index:10;background:rgba(13,20,34,.85);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-.why-in{max-width:1080px;margin:0 auto;padding:72px 24px;display:grid;grid-template-columns:1fr 2fr;gap:56px;align-items:center;}
-@media(max-width:720px){.why-in{grid-template-columns:1fr;gap:32px;}}
-.why-h{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.1;color:var(--ink);letter-spacing:-1px;}
-.why-h em{color:var(--accent);font-style:italic;display:block;}
-.why-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
-@media(max-width:480px){.why-stats{grid-template-columns:1fr;}}
-.wst{padding:24px 18px;background:var(--card);border:1px solid var(--border);text-align:center;}
-.wst-n{font-family:'DM Serif Display',serif;font-size:2.4rem;color:var(--accent);line-height:1;margin-bottom:6px;font-style:italic;}
-.wst-l{font-size:.8rem;line-height:1.5;color:var(--ink2);}
-.wst-s{font-family:'JetBrains Mono',monospace;font-size:.52rem;color:var(--ink3);letter-spacing:1px;margin-top:4px;}
-.pg{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-@media(max-width:640px){.pg{grid-template-columns:1fr;}}
-.pc{position:relative;border:1px solid var(--border);border-radius:var(--radius);padding:32px 28px 24px;
-  background:var(--card);text-decoration:none;overflow:hidden;transition:all .3s;display:flex;flex-direction:column;gap:12px;}
-.pc-bgn{position:absolute;right:-10px;bottom:-20px;font-family:'DM Serif Display',serif;
-  font-size:8rem;line-height:1;font-style:italic;opacity:.04;pointer-events:none;color:var(--ink);transition:opacity .3s;}
-.pc:hover .pc-bgn{opacity:.07;}
-.pc:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.1);box-shadow:0 18px 50px rgba(0,0,0,.3);}
-.pcn::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:var(--radius);background:radial-gradient(circle at 70% 30%,rgba(58,127,212,.08),transparent 60%);}
-.pca::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:var(--radius);background:radial-gradient(circle at 70% 30%,rgba(155,109,255,.07),transparent 60%);}
-.pcp::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:var(--radius);background:radial-gradient(circle at 70% 30%,rgba(46,204,128,.07),transparent 60%);}
-.pcd::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:var(--radius);background:radial-gradient(circle at 70% 30%,rgba(240,120,48,.08),transparent 60%);}
-.pc:hover::before{opacity:1;}
-.pc-top{display:flex;align-items:center;gap:12px;}
-.pc-ico{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;}
-.pcn .pc-ico{background:rgba(58,127,212,.12);}
-.pca .pc-ico{background:rgba(155,109,255,.1);}
-.pcp .pc-ico{background:rgba(46,204,128,.1);}
-.pcd .pc-ico{background:rgba(240,120,48,.1);}
-.pc-tag{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:3px;color:var(--ink3);margin-bottom:3px;}
-.pc-name{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--ink);line-height:1.1;}
-.pc-desc{font-size:.86rem;line-height:1.7;color:var(--ink2);flex:1;}
-.pc-pills{display:flex;flex-wrap:wrap;gap:5px;}
-.pp{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:1px;
-  padding:2px 8px;border-radius:20px;border:1px solid var(--border);color:var(--ink3);}
-.pc-cta{display:flex;align-items:center;justify-content:space-between;margin-top:4px;}
-.pc-cta-t{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;color:var(--accent);}
-.pc-arr{width:30px;height:30px;border-radius:50%;border:1px solid var(--border2);
-  display:flex;align-items:center;justify-content:center;font-size:.85rem;color:var(--accent);transition:all .25s;}
-.pc:hover .pc-arr{background:var(--accent);color:var(--bg);border-color:var(--accent);transform:translateX(3px);}
-.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-@media(max-width:720px){.tg{grid-template-columns:1fr;}}
-.tc{border:1px solid var(--border);border-radius:var(--radius);padding:24px 20px;background:var(--card);
-  text-decoration:none;transition:all .25s;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden;}
-.tc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
-.tc:hover::after{transform:scaleX(1);}
-.tc:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.1);box-shadow:0 14px 40px rgba(0,0,0,.2);}
-.t1::after{background:var(--accent);}
-.t2::after{background:var(--blue);}
-.t3::after{background:var(--green);}
-.tc-ico{font-size:1.6rem;}
-.tc-tag{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;}
-.tc-name{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink);line-height:1.15;}
-.tc-desc{font-size:.82rem;line-height:1.6;color:var(--ink2);flex:1;}
-.tc-cta{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;color:var(--accent);
-  display:flex;align-items:center;gap:5px;transition:gap .2s;}
-.tc:hover .tc-cta{gap:9px;}
-.nl{border:1px solid var(--border);border-radius:var(--radius);padding:40px;background:var(--card);
-  display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;position:relative;overflow:hidden;}
-.nl::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--accent),var(--blue),var(--green));}
-@media(max-width:640px){.nl{grid-template-columns:1fr;}}
-.nl-lbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;color:var(--accent);margin-bottom:8px;}
-.nl-title{font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink);margin-bottom:6px;}
-.nl-desc{font-size:.86rem;line-height:1.7;color:var(--ink2);}
-.mf{padding:56px;background:rgba(240,120,48,.03);border:1px solid var(--border2);border-radius:var(--radius);text-align:center;position:relative;overflow:hidden;}
-.mf::before{content:'"';position:absolute;top:-20px;left:24px;font-family:'DM Serif Display',serif;font-size:12rem;color:rgba(240,120,48,.05);line-height:1;pointer-events:none;}
-.mf-text{font-family:'DM Serif Display',serif;font-size:clamp(1.3rem,2.8vw,2rem);line-height:1.5;color:var(--ink);max-width:700px;margin:0 auto;font-style:italic;position:relative;z-index:1;}
-.mf-text em{color:var(--accent);font-style:normal;}
-.mf-sig{margin-top:20px;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:3px;}
-@media(max-width:640px){.mf{padding:32px 24px;}}
+.b1{width:500px;height:500px;top:-80px;right:-80px;
+  background:radial-gradient(circle,rgba(58,127,212,.08) 0%,transparent 70%);
+  animation:fl1 9s ease-in-out infinite;}
+@keyframes fl1{0%,100%{transform:translate(0,0);}50%{transform:translate(-20px,15px);}}
 
-@keyframes fadeInLogo{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
+/* PERFILES GRID — más denso que index */
+.educa-g{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--border);}
+@media(max-width:640px){.educa-g{grid-template-columns:1fr;}}
+.educa-card{background:var(--bg2);padding:2.5rem 2rem;text-decoration:none;
+  display:flex;flex-direction:column;gap:12px;transition:background .2s;
+  position:relative;overflow:hidden;}
+.educa-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;
+  transform:scaleY(0);transform-origin:top;transition:transform .4s;}
+.educa-card:hover::before{transform:scaleY(1);}
+.educa-card:hover{background:rgba(255,255,255,.03);}
+.ec-n::before{background:var(--blue);}
+.ec-a::before{background:#9b6dff;}
+.ec-p::before{background:var(--green);}
+.ec-d::before{background:var(--accent);}
+.ec-top{display:flex;align-items:center;gap:14px;}
+.ec-ico{width:48px;height:48px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ec-n .ec-ico{background:rgba(58,127,212,.12);}
+.ec-a .ec-ico{background:rgba(155,109,255,.1);}
+.ec-p .ec-ico{background:rgba(46,204,128,.1);}
+.ec-d .ec-ico{background:rgba(240,120,48,.1);}
+.ec-meta{flex:1;}
+.ec-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;
+  color:var(--ink3);text-transform:uppercase;margin-bottom:3px;}
+.ec-name{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--ink);line-height:1.1;}
+.ec-desc{font-size:.86rem;color:var(--ink2);line-height:1.65;flex:1;}
+.ec-pills{display:flex;flex-wrap:wrap;gap:5px;}
+.ep{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:1px;
+  padding:2px 8px;border-radius:20px;border:1px solid var(--border);color:var(--ink3);}
+.ec-cta{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
+  text-transform:uppercase;display:flex;align-items:center;gap:5px;transition:gap .2s;}
+.ec-n .ec-cta{color:var(--blue);}
+.ec-a .ec-cta{color:#9b6dff;}
+.ec-p .ec-cta{color:var(--green);}
+.ec-d .ec-cta{color:var(--accent);}
+.educa-card:hover .ec-cta{gap:9px;}
+
+/* HERRAMIENTAS — fila horizontal */
+.tools-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
+@media(max-width:640px){.tools-g{grid-template-columns:1fr;}}
+.tool-c{background:var(--bg2);padding:1.75rem 1.5rem;text-decoration:none;
+  transition:background .2s;display:flex;flex-direction:column;gap:8px;
+  position:relative;overflow:hidden;}
+.tool-c::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.tool-c:hover::after{transform:scaleX(1);}
+.tool-c:hover{background:rgba(255,255,255,.03);}
+.tt1::after{background:var(--accent);}
+.tt2::after{background:var(--blue);}
+.tt3::after{background:var(--green);}
+.tool-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;
+  color:var(--ink3);text-transform:uppercase;}
+.tool-name{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);line-height:1.2;}
+.tool-desc{font-size:.82rem;color:var(--ink2);line-height:1.55;flex:1;}
+.tool-cta{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--ink3);transition:color .2s;}
+.tt1:hover .tool-cta{color:var(--accent);}
+.tt2:hover .tool-cta{color:var(--blue);}
+.tt3:hover .tool-cta{color:var(--green);}
+
+/* DESCARGABLES STRIP */
+.dl-strip{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.dl-row{background:var(--bg2);padding:1rem 1.5rem;display:flex;align-items:center;gap:1rem;
+  text-decoration:none;transition:background .2s;position:relative;overflow:hidden;}
+.dl-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--accent);transform:scaleY(0);transition:transform .3s;}
+.dl-row:hover::before{transform:scaleY(1);}
+.dl-row:hover{background:rgba(255,255,255,.03);}
+.dl-ico{width:32px;height:32px;border-radius:6px;background:rgba(240,120,48,.08);
+  border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;}
+.dl-info{flex:1;}
+.dl-name{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--ink);
+  font-weight:600;margin-bottom:2px;}
+.dl-for{font-size:.75rem;color:var(--ink3);}
+.dl-btn{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:1px;
+  color:var(--accent);border:1px solid var(--border2);padding:.25rem .65rem;
+  border-radius:3px;flex-shrink:0;white-space:nowrap;transition:all .2s;}
+.dl-row:hover .dl-btn{background:rgba(240,120,48,.08);}
+
 </style>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body data-page="educa">
-<section class="educa-hero">
-  <div class="blob b1"></div><div class="blob b2"></div>
+<section class="hero-hub">
+  <div class="blob b1"></div>
   <div class="wrap" style="position:relative;z-index:2;">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ink3);margin-bottom:24px;display:flex;align-items:center;justify-content:center;gap:10px;">
-      <div style="width:28px;height:1px;background:var(--accent);"></div>
-      PROYECTO SOCIAL · EDUCACIÓN DIGITAL · CHILE · GRATUITO
-      <div style="width:28px;height:1px;background:var(--accent);"></div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+      color:var(--ink3);margin-bottom:20px;display:flex;align-items:center;gap:10px;">
+      <div style="width:24px;height:1px;background:var(--accent);"></div>
+      HUB EDUCATIVO · CONTENIDO GRATUITO · CHILE 2025
     </div>
-    
-    <div style="margin-bottom:20px;opacity:0;animation:fadeInLogo .8s cubic-bezier(.34,1.56,.64,1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="100" height="100" fill="none">
-  <defs>
-    <filter id="e1" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <filter id="e2" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <filter id="e3" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <linearGradient id="eg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f5c842"/>
-      <stop offset="50%" stop-color="#f07830"/>
-      <stop offset="100%" stop-color="#e0531a"/>
-    </linearGradient>
-    <linearGradient id="eg2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#60c8f5"/>
-      <stop offset="100%" stop-color="#3a7fd4"/>
-    </linearGradient>
-    <radialGradient id="eg-core" cx="50%" cy="45%" r="55%">
-      <stop offset="0%" stop-color="rgba(240,120,48,0.16)"/>
-      <stop offset="60%" stop-color="rgba(58,127,212,0.06)"/>
-      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
-    </radialGradient>
-    <clipPath id="ec"><path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z"/></clipPath>
-  </defs>
-  <ellipse cx="120" cy="115" rx="88" ry="95" fill="url(#eg-core)" filter="url(#e2)">
-    <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite"/>
-  </ellipse>
-  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="#0d1422"/>
-  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="none" stroke="url(#eg)" stroke-width="3">
-    <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="3.5s" repeatCount="indefinite"/>
-  </path>
-  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="none" stroke="#f07830" stroke-width="3" stroke-dasharray="590" stroke-dashoffset="590" filter="url(#e1)">
-    <animate attributeName="stroke-dashoffset" from="590" to="0" dur="1.8s" fill="freeze" begin="0.2s" calcMode="spline" keySplines="0.4 0 0.2 1"/>
-  </path>
-  <!-- Open book -->
-  <!-- Spine -->
-  <line x1="120" y1="72" x2="120" y2="162" stroke="url(#eg)" stroke-width="3" stroke-linecap="round" filter="url(#e1)">
-    <animate attributeName="stroke-dasharray" values="0 90;90 0" dur="0.5s" fill="freeze" begin="1.2s"/>
-  </line>
-  <!-- Left page curve -->
-  <path d="M120,72 Q82,78 76,117 Q82,156 120,162" fill="rgba(240,120,48,0.07)" stroke="url(#eg)" stroke-width="2.5" filter="url(#e1)">
-    <animate attributeName="stroke-dasharray" values="0 150;150 0" dur="0.7s" fill="freeze" begin="1.5s"/>
-    <animate attributeName="fill" values="rgba(240,120,48,0.04);rgba(240,120,48,0.12);rgba(240,120,48,0.04)" dur="3s" repeatCount="indefinite" begin="3s"/>
-  </path>
-  <!-- Right page curve -->
-  <path d="M120,72 Q158,78 164,117 Q158,156 120,162" fill="rgba(240,120,48,0.07)" stroke="url(#eg)" stroke-width="2.5" filter="url(#e1)">
-    <animate attributeName="stroke-dasharray" values="0 150;150 0" dur="0.7s" fill="freeze" begin="1.7s"/>
-    <animate attributeName="fill" values="rgba(240,120,48,0.04);rgba(240,120,48,0.12);rgba(240,120,48,0.04)" dur="3s" repeatCount="indefinite" begin="3.3s"/>
-  </path>
-  <!-- Text lines left page -->
-  <line x1="83" y1="96" x2="114" y2="94" stroke="rgba(240,120,48,0.5)" stroke-width="1.5" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.2s"/></line>
-  <line x1="81" y1="108" x2="114" y2="106" stroke="rgba(240,120,48,0.4)" stroke-width="1.5" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.3s"/></line>
-  <line x1="82" y1="120" x2="114" y2="118" stroke="rgba(240,120,48,0.3)" stroke-width="1.5" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.4s"/></line>
-  <line x1="83" y1="132" x2="114" y2="130" stroke="rgba(240,120,48,0.25)" stroke-width="1.5" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.5s"/></line>
-  <!-- Text lines right page -->
-  <line x1="126" y1="96" x2="157" y2="94" stroke="rgba(240,120,48,0.5)" stroke-width="1.5" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.3s"/></line>
-  <line x1="126" y1="108" x2="159" y2="106" stroke="rgba(240,120,48,0.4)" stroke-width="1.5" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.4s"/></line>
-  <line x1="126" y1="120" x2="158" y2="118" stroke="rgba(240,120,48,0.3)" stroke-width="1.5" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.5s"/></line>
-  <!-- 4 profile icons above book — representing the 4 audiences -->
-  <circle cx="76" cy="58" r="7" fill="rgba(58,127,212,0.15)" stroke="#3a7fd4" stroke-width="2" filter="url(#e3)">
-    <animate attributeName="opacity" values="0;1" dur="0.15s" fill="freeze" begin="2.6s"/>
-    <animate attributeName="r" values="7;9;7" dur="2.5s" repeatCount="indefinite" begin="3.5s"/>
-  </circle>
-  <circle cx="98" cy="52" r="7" fill="rgba(155,109,255,0.15)" stroke="#9b6dff" stroke-width="2" filter="url(#e3)">
-    <animate attributeName="opacity" values="0;1" dur="0.15s" fill="freeze" begin="2.7s"/>
-    <animate attributeName="r" values="7;9;7" dur="2.5s" repeatCount="indefinite" begin="3.8s"/>
-  </circle>
-  <circle cx="142" cy="52" r="7" fill="rgba(46,204,128,0.15)" stroke="#2ecc80" stroke-width="2" filter="url(#e3)">
-    <animate attributeName="opacity" values="0;1" dur="0.15s" fill="freeze" begin="2.8s"/>
-    <animate attributeName="r" values="7;9;7" dur="2.5s" repeatCount="indefinite" begin="4.1s"/>
-  </circle>
-  <circle cx="164" cy="58" r="7" fill="rgba(245,158,11,0.15)" stroke="#f59e0b" stroke-width="2" filter="url(#e3)">
-    <animate attributeName="opacity" values="0;1" dur="0.15s" fill="freeze" begin="2.9s"/>
-    <animate attributeName="r" values="7;9;7" dur="2.5s" repeatCount="indefinite" begin="4.4s"/>
-  </circle>
-  <!-- Connecting arcs between profiles and book -->
-  <path d="M76,65 Q88,70 105,72" stroke="rgba(58,127,212,0.3)" stroke-width="1.5" stroke-dasharray="3 4" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.2s" fill="freeze" begin="3.2s"/></path>
-  <path d="M164,65 Q152,70 135,72" stroke="rgba(245,158,11,0.3)" stroke-width="1.5" stroke-dasharray="3 4" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.2s" fill="freeze" begin="3.3s"/></path>
-  <!-- Scan, corners, bottom -->
-  <rect x="26" y="0" width="188" height="2" fill="url(#eg)" clip-path="url(#ec)">
-    <animate attributeName="y" from="18" to="212" dur="3.5s" repeatCount="indefinite" begin="3.5s"/>
-    <animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.04;0.96;1" dur="3.5s" repeatCount="indefinite" begin="3.5s"/>
-  </rect>
-  <polyline points="44,68 44,54 58,54" fill="none" stroke="url(#eg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="stroke-dasharray" values="0 30;30 0" dur="0.3s" fill="freeze" begin="2s"/></polyline>
-  <polyline points="196,68 196,54 182,54" fill="none" stroke="url(#eg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="stroke-dasharray" values="0 30;30 0" dur="0.3s" fill="freeze" begin="2.1s"/></polyline>
-  <circle cx="120" cy="204" r="3.5" fill="#f07830" filter="url(#e1)"><animate attributeName="opacity" values="0;1" dur="0.2s" fill="freeze" begin="2s"/><animate attributeName="r" values="3.5;5;3.5" dur="2s" repeatCount="indefinite" begin="3.5s"/></circle>
-  <circle cx="120" cy="115" r="30" fill="none" stroke="rgba(240,120,48,0.06)" stroke-width="1"><animate attributeName="r" values="30;44;30" dur="4s" repeatCount="indefinite" begin="3.5s"/><animate attributeName="stroke-opacity" values="0.06;0.02;0.06" dur="4s" repeatCount="indefinite" begin="3.5s"/></circle>
-  <line x1="68" y1="24" x2="172" y2="24" stroke="rgba(245,200,66,0.18)" stroke-width="1" stroke-linecap="round"><animate attributeName="stroke-dasharray" values="0 104;104 0" dur="0.8s" fill="freeze" begin="0.5s"/></line>
-</svg></div>
-    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(3rem,9vw,7rem);line-height:.9;letter-spacing:-2px;margin-bottom:20px;">
-      Ciberseguridad<br>
-      <span style="color:var(--accent);font-style:italic;">para todos.</span>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,7vw,5rem);
+      line-height:.92;letter-spacing:-1.5px;margin-bottom:16px;">
+      Todo el contenido.<br>
+      <span style="color:var(--accent);font-style:italic;">Elige tu perfil.</span>
     </h1>
-    <p style="font-size:1.05rem;line-height:1.8;color:var(--ink2);max-width:520px;margin:0 auto 32px;">
-      Materiales gratuitos para <strong style="color:var(--ink);font-weight:400;">niños, adolescentes, familias y docentes</strong> de Chile. Sin tecnicismos. Sin miedo innecesario.
+    <p style="font-size:.95rem;line-height:1.8;color:var(--ink2);max-width:500px;">
+      Módulos para niños, adolescentes, familias y docentes. 
+      Sin registro, sin costo, sin tecnicismos.
     </p>
-    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
-      <a href="#secciones" class="btn-p"><span>Ver secciones →</span></a>
-      <a href="/analizador-phishing.html" class="btn-g">Herramientas IA</a>
-    </div>
   </div>
 </section>
 
-<!-- POR QUÉ IMPORTA -->
-<div class="why-s">
-  <div class="why-in">
-    <div class="why-h">El problema <em>es real.</em></div>
-    <div class="why-stats">
-      <div class="wst"><div class="wst-n">+50%</div><div class="wst-l">Crecimiento del phishing en Chile — muchas campañas dirigidas a menores</div><div class="wst-s">ANCI 2025</div></div>
-      <div class="wst"><div class="wst-n">1 de 3</div><div class="wst-l">Menores expuestos a contacto no deseado en plataformas digitales</div><div class="wst-s">UNICEF / SERNAC</div></div>
-      <div class="wst"><div class="wst-n">22M</div><div class="wst-l">Intentos de phishing bloqueados en Chile — 42 por minuto</div><div class="wst-s">Kaspersky 2025</div></div>
-    </div>
-  </div>
-</div>
-
 <div class="wrap page-inner">
 
-<div class="sw" id="secciones">
-  <div class="sl">// ¿Para quién es?</div>
-  <h2 class="st">Elige tu <em>camino.</em></h2>
-  <p class="si">Contenido diferenciado para cada perfil. El mismo tema se enseña distinto a un niño de 8 años y a un docente que tiene clase mañana.</p>
-  <div class="pg">
-    <a href="/educa/ninos.html" class="pc pcn">
-      <div class="pc-bgn">01</div>
-      <div class="pc-top"><div class="pc-ico">🧒</div><div><div class="pc-tag">01 · Niños</div><div class="pc-name">Niños</div></div></div>
-      <div class="pc-desc">Juegos interactivos y actividades para aprender qué es seguro compartir, cómo reconocer a un extraño online y qué hacer cuando algo no se siente bien.</div>
-      <div class="pc-pills"><span class="pp">6–12 años</span><span class="pp">juegos</span><span class="pp">actividades</span><span class="pp">agente IA</span></div>
-      <div class="pc-cta"><span class="pc-cta-t">ENTRAR</span><div class="pc-arr">→</div></div>
-    </a>
-    <a href="/educa/adolescentes.html" class="pc pca">
-      <div class="pc-bgn">02</div>
-      <div class="pc-top"><div class="pc-ico">🧑‍💻</div><div><div class="pc-tag">02 · Adolescentes</div><div class="pc-name">Adolescentes</div></div></div>
-      <div class="pc-desc">Quiz con puntaje real, privacidad en redes, grooming, phishing y reputación digital. Sin condescendencia — con respeto y sin bajarles el perfil.</div>
-      <div class="pc-pills"><span class="pp">13–17 años</span><span class="pp">quiz</span><span class="pp">redes sociales</span><span class="pp">agente IA</span></div>
-      <div class="pc-cta"><span class="pc-cta-t">ENTRAR</span><div class="pc-arr">→</div></div>
-    </a>
-    <a href="/educa/padres.html" class="pc pcp">
-      <div class="pc-bgn">03</div>
-      <div class="pc-top"><div class="pc-ico">👨‍👩‍👧</div><div><div class="pc-tag">03 · Familias</div><div class="pc-name">Familias</div></div></div>
-      <div class="pc-desc">Guías prácticas, conversaciones reales para tener con tus hijos y un agente IA para cuando algo pasa y no sabes qué hacer.</div>
-      <div class="pc-pills"><span class="pp">guías</span><span class="pp">PDF descargable</span><span class="pp">agente IA</span></div>
-      <div class="pc-cta"><span class="pc-cta-t">ENTRAR</span><div class="pc-arr">→</div></div>
-    </a>
-    <a href="/educa/profesores.html" class="pc pcd">
-      <div class="pc-bgn">04</div>
-      <div class="pc-top"><div class="pc-ico">👩‍🏫</div><div><div class="pc-tag">04 · Docentes</div><div class="pc-name">Docentes</div></div></div>
-      <div class="pc-desc">Planes de clase listos para usar mañana, generador de actividades con IA y agente docente para situaciones difíciles.</div>
-      <div class="pc-pills"><span class="pp">planes de clase</span><span class="pp">generador IA</span><span class="pp">1°básico–4°medio</span></div>
-      <div class="pc-cta"><span class="pc-cta-t">ENTRAR</span><div class="pc-arr">→</div></div>
-    </a>
-  </div>
-</div>
-
-<div class="sw" id="herramientas">
-  <div class="sl">// Herramientas gratuitas · Con IA</div>
-  <h2 class="st">Detecta. Evalúa.<br><em>Actúa ahora.</em></h2>
-  <p class="si">Tres herramientas concretas que resuelven un problema real en menos de 2 minutos. Sin registro, sin datos personales.</p>
-  <div class="tg">
-    <a href="/analizador-phishing.html" class="tc t1">
-      <div class="tc-ico">🎣</div><div class="tc-tag">IA EN TIEMPO REAL</div>
-      <div class="tc-name">Analizador de Phishing</div>
-      <div class="tc-desc">Pega una URL o mensaje sospechoso. La IA detecta si es un engaño y te explica exactamente por qué.</div>
-      <div class="tc-cta">Analizar ahora →</div>
-    </a>
-    <a href="/checklist.html" class="tc t2">
-      <div class="tc-ico">✅</div><div class="tc-tag">PARA FAMILIAS</div>
-      <div class="tc-name">Checklist Familiar</div>
-      <div class="tc-desc">4 preguntas y recibes un plan personalizado para proteger tu hogar digital. Concreto, sin tecnicismos.</div>
-      <div class="tc-cta">Crear mi plan →</div>
-    </a>
-    <a href="/agente-seguridad.html" class="tc t3">
-      <div class="tc-ico">🤖</div><div class="tc-tag">AGENTE IA · SIEMPRE DISPONIBLE</div>
-      <div class="tc-name">Agente de Seguridad</div>
-      <div class="tc-desc">¿Pasó algo y no sabes qué hacer? El agente IA responde preguntas adaptadas a familias y docentes.</div>
-      <div class="tc-cta">Consultar →</div>
-    </a>
-  </div>
-</div>
-
-<div class="sw" id="newsletter">
-  <div class="nl">
-    <div>
-      <div class="nl-lbl">// NEWSLETTER MENSUAL · SOLO PARA DOCENTES</div>
-      <div class="nl-title">La amenaza del mes</div>
-      <div class="nl-desc">Un correo mensual con la amenaza digital más relevante para tus alumnos + una actividad lista para usar en clases. Sin spam. Sin vender nada.</div>
-    </div>
-    <a href="/educa/newsletter.html" class="btn-p" style="white-space:nowrap"><span>Suscribirse gratis →</span></a>
-  </div>
-</div>
-
+<!-- PERFILES — el corazón del hub -->
 <div class="sw">
-  <div class="mf">
-    <div class="mf-text">La educación digital temprana es la única defensa real — y la mayoría de los colegios todavía no la imparte. <em>Aegis8 existe para cambiar eso.</em> Gratis. Para todos. Sin excusas.</div>
-    <div class="mf-sig">// Aegis8 · Proyecto Social · Chile · 2026</div>
+  <div class="sl">// Elige tu perfil</div>
+  <div class="educa-g">
+
+    <a href="/educa/ninos.html" class="educa-card ec-n">
+      <div class="ec-top">
+        <div class="ec-ico">
+          <svg viewBox="0 0 24 24" fill="none" width="26" height="26">
+            <circle cx="12" cy="8" r="4" stroke="#3a7fd4" stroke-width="1.5"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#3a7fd4" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="ec-meta">
+          <div class="ec-tag">6 — 12 años</div>
+          <div class="ec-name">Niños</div>
+        </div>
+      </div>
+      <div class="ec-desc">Juegos interactivos y actividades para aprender qué es seguro compartir, cómo reconocer a un extraño online y qué hacer cuando algo no se siente bien.</div>
+      <div class="ec-pills">
+        <span class="ep">juegos</span><span class="ep">actividades</span><span class="ep">CiberBot IA</span>
+      </div>
+      <div class="ec-cta">Entrar →</div>
+    </a>
+
+    <a href="/educa/adolescentes.html" class="educa-card ec-a">
+      <div class="ec-top">
+        <div class="ec-ico">
+          <svg viewBox="0 0 24 24" fill="none" width="26" height="26">
+            <rect x="3" y="4" width="18" height="13" rx="2" stroke="#9b6dff" stroke-width="1.5"/>
+            <path d="M8 21h8M12 17v4" stroke="#9b6dff" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="ec-meta">
+          <div class="ec-tag">13 — 17 años</div>
+          <div class="ec-name">Adolescentes</div>
+        </div>
+      </div>
+      <div class="ec-desc">Quiz con casos reales, privacidad en redes, grooming, phishing y reputación digital. Sin condescendencia — con respeto y sin bajarles el perfil.</div>
+      <div class="ec-pills">
+        <span class="ep">quiz</span><span class="ep">redes sociales</span><span class="ep">agente IA</span>
+      </div>
+      <div class="ec-cta">Entrar →</div>
+    </a>
+
+    <a href="/educa/padres.html" class="educa-card ec-p">
+      <div class="ec-top">
+        <div class="ec-ico">
+          <svg viewBox="0 0 24 24" fill="none" width="26" height="26">
+            <circle cx="8" cy="8" r="3" stroke="#2ecc80" stroke-width="1.5"/>
+            <circle cx="16" cy="8" r="3" stroke="#2ecc80" stroke-width="1.5"/>
+            <circle cx="12" cy="16" r="2.5" stroke="#2ecc80" stroke-width="1.5"/>
+            <path d="M3 20c0-3 2-5 5-5M16 15c3 0 5 2 5 5" stroke="#2ecc80" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="ec-meta">
+          <div class="ec-tag">Apoderados</div>
+          <div class="ec-name">Familias</div>
+        </div>
+      </div>
+      <div class="ec-desc">Guías de conversación por edad, checklist de seguridad familiar, controles parentales y qué hacer si algo ya pasó. Lenguaje simple, sin tecnicismos.</div>
+      <div class="ec-pills">
+        <span class="ep">guías</span><span class="ep">checklist</span><span class="ep">PDFs</span>
+      </div>
+      <div class="ec-cta">Entrar →</div>
+    </a>
+
+    <a href="/educa/profesores.html" class="educa-card ec-d">
+      <div class="ec-top">
+        <div class="ec-ico">
+          <svg viewBox="0 0 24 24" fill="none" width="26" height="26">
+            <rect x="3" y="3" width="13" height="16" rx="1" stroke="#f07830" stroke-width="1.5"/>
+            <path d="M7 7h9M7 10h6M7 13h4" stroke="#f07830" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M19 10l2 2-2 2" stroke="#f07830" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="ec-meta">
+          <div class="ec-tag">Educadores</div>
+          <div class="ec-name">Docentes</div>
+        </div>
+      </div>
+      <div class="ec-desc">Planes de clase completos, protocolos ante incidentes, guías técnicas y newsletter mensual con la amenaza del mes lista para enseñar.</div>
+      <div class="ec-pills">
+        <span class="ep">planes de clase</span><span class="ep">protocolos</span><span class="ep">newsletter</span>
+      </div>
+      <div class="ec-cta">Entrar →</div>
+    </a>
+
   </div>
 </div>
 
-</div><!-- /wrap -->
+<!-- HERRAMIENTAS IA -->
+<div class="sw">
+  <div class="sl">// Herramientas · Con IA</div>
+  <h2 class="st">Detecta. Evalúa.<br><em>Actúa ahora.</em></h2>
+  <p class="si">Herramientas gratuitas impulsadas por IA. Cualquier persona las usa — sin saber nada de tecnología.</p>
+  <div class="tools-g">
+    <a href="/analizador-phishing.html" class="tool-c tt1">
+      <div style="width:36px;height:36px;border-radius:8px;background:rgba(240,120,48,.08);
+        border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;margin-bottom:4px;">
+        <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+          <path d="M4 4l16 16M4 20L20 4" stroke="#f07830" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="12" cy="12" r="9" stroke="#f07830" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="tool-tag">Análisis en tiempo real</div>
+      <div class="tool-name">Analizador de Phishing</div>
+      <div class="tool-desc">Pega una URL o mensaje sospechoso. La IA detecta si es un engaño y explica exactamente por qué.</div>
+      <div class="tool-cta">Analizar ahora →</div>
+    </a>
+    <a href="/checklist.html" class="tool-c tt2">
+      <div style="width:36px;height:36px;border-radius:8px;background:rgba(58,127,212,.08);
+        border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:4px;">
+        <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+          <rect x="4" y="4" width="16" height="16" rx="2" stroke="#3a7fd4" stroke-width="1.5"/>
+          <path d="M8 12l3 3 5-5" stroke="#3a7fd4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="tool-tag">Para familias</div>
+      <div class="tool-name">Checklist Familiar</div>
+      <div class="tool-desc">4 preguntas y recibes un plan personalizado para proteger tu hogar digital. Concreto, sin tecnicismos.</div>
+      <div class="tool-cta">Crear mi plan →</div>
+    </a>
+    <a href="/agente-seguridad.html" class="tool-c tt3">
+      <div style="width:36px;height:36px;border-radius:8px;background:rgba(46,204,128,.08);
+        border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:4px;">
+        <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+          <circle cx="12" cy="12" r="9" stroke="#2ecc80" stroke-width="1.5"/>
+          <path d="M9 12l2 2 4-4" stroke="#2ecc80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="12" r="3" stroke="#2ecc80" stroke-width="1" stroke-dasharray="2 2"/>
+        </svg>
+      </div>
+      <div class="tool-tag">Siempre disponible · IA</div>
+      <div class="tool-name">Agente de Seguridad</div>
+      <div class="tool-desc">¿Pasó algo y no sabes qué hacer? El agente responde preguntas adaptadas a familias y docentes, 24/7.</div>
+      <div class="tool-cta">Consultar →</div>
+    </a>
+  </div>
+</div>
+
+<!-- DESCARGABLES — acceso rápido -->
+<div class="sw">
+  <div class="sl">// Descargables · PDF</div>
+  <h2 class="st">Todo listo<br><em>para imprimir.</em></h2>
+  <p class="si">Los recursos más usados — acceso directo sin tener que buscar en cada sección.</p>
+  <div class="dl-strip">
+    <a href="/descargas/pdf-checklist-familiar.pdf" download class="dl-row">
+      <div class="dl-ico"><svg viewBox="0 0 16 16" fill="none" width="16" height="16"><rect x="2" y="2" width="12" height="12" rx="1" stroke="#f07830" stroke-width="1.2"/><path d="M5 8l2.5 2.5L11 5" stroke="#f07830" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="dl-info"><div class="dl-name">Checklist Familiar de Seguridad Digital</div><div class="dl-for">Familias · Revisión anual</div></div>
+      <div class="dl-btn">↓ PDF</div>
+    </a>
+    <a href="/descargas/pdf-protocolo-docentes.pdf" download class="dl-row">
+      <div class="dl-ico"><svg viewBox="0 0 16 16" fill="none" width="16" height="16"><rect x="2" y="2" width="12" height="12" rx="1" stroke="#f07830" stroke-width="1.2"/><path d="M5 8l2.5 2.5L11 5" stroke="#f07830" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="dl-info"><div class="dl-name">Protocolo ante Incidente Digital</div><div class="dl-for">Docentes · Grooming, ciberbullying, phishing</div></div>
+      <div class="dl-btn">↓ PDF</div>
+    </a>
+    <a href="/descargas/pdf-reglas-internauta.pdf" download class="dl-row">
+      <div class="dl-ico"><svg viewBox="0 0 16 16" fill="none" width="16" height="16"><rect x="2" y="2" width="12" height="12" rx="1" stroke="#f07830" stroke-width="1.2"/><path d="M5 8l2.5 2.5L11 5" stroke="#f07830" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="dl-info"><div class="dl-name">5 Reglas del Internauta</div><div class="dl-for">Niños 6–12 · Póster para imprimir en sala</div></div>
+      <div class="dl-btn">↓ PDF</div>
+    </a>
+    <a href="/descargas/pdf-plan-clase-phishing.pdf" download class="dl-row">
+      <div class="dl-ico"><svg viewBox="0 0 16 16" fill="none" width="16" height="16"><rect x="2" y="2" width="12" height="12" rx="1" stroke="#f07830" stroke-width="1.2"/><path d="M5 8l2.5 2.5L11 5" stroke="#f07830" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="dl-info"><div class="dl-name">Plan de Clase: Phishing</div><div class="dl-for">Docentes · 60 min · 7° básico – 2° medio</div></div>
+      <div class="dl-btn">↓ PDF</div>
+    </a>
+    <a href="/descargas/pdf-guia-grooming.pdf" download class="dl-row">
+      <div class="dl-ico"><svg viewBox="0 0 16 16" fill="none" width="16" height="16"><rect x="2" y="2" width="12" height="12" rx="1" stroke="#f07830" stroke-width="1.2"/><path d="M5 8l2.5 2.5L11 5" stroke="#f07830" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="dl-info"><div class="dl-name">Guía de Grooming para Familias</div><div class="dl-for">Familias · Señales, etapas y qué hacer</div></div>
+      <div class="dl-btn">↓ PDF</div>
+    </a>
+    <a href="/descargas/pdf-amenazas-chile-2025.pdf" download class="dl-row">
+      <div class="dl-ico"><svg viewBox="0 0 16 16" fill="none" width="16" height="16"><rect x="2" y="2" width="12" height="12" rx="1" stroke="#f07830" stroke-width="1.2"/><path d="M5 8l2.5 2.5L11 5" stroke="#f07830" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="dl-info"><div class="dl-name">Amenazas Digitales en Chile 2025</div><div class="dl-for">Docentes · Infografía con datos actualizados</div></div>
+      <div class="dl-btn">↓ PDF</div>
+    </a>
+  </div>
+  <a href="/educa/profesores.html#descargas" style="display:inline-flex;align-items:center;gap:6px;
+    font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+    color:var(--ink3);text-decoration:none;text-transform:uppercase;margin-top:16px;
+    transition:color .2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink3)'">
+    Ver todos los PDFs →
+  </a>
+</div>
+
+<!-- NEWSLETTER CTA -->
+<div class="sw">
+  <div style="border:1px solid var(--border);border-radius:4px;padding:48px;
+    background:var(--card);display:grid;grid-template-columns:1fr auto;gap:32px;
+    align-items:center;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,var(--accent),var(--blue),var(--green));"></div>
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;
+        color:var(--accent);margin-bottom:10px;text-transform:uppercase;">Newsletter mensual · Solo docentes</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.7rem;color:var(--ink);
+        margin-bottom:8px;letter-spacing:-.5px;">La amenaza del mes</div>
+      <div style="font-size:.88rem;line-height:1.7;color:var(--ink2);">
+        Un correo mensual con la amenaza más relevante para tus alumnos + actividad lista para usar en clases esa semana. Sin spam. Sin vender nada.
+      </div>
+    </div>
+    <a href="/educa/newsletter.html" class="btn-p" style="white-space:nowrap;"><span>Suscribirse gratis →</span></a>
+  </div>
+</div>
+
+</div>
 
 <footer class="page-footer">
   <a href="/" class="fl">AEGIS<span>8</span></a>
