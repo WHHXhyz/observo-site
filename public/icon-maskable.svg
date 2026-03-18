@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Solid background — fills entire square including masked area -->
+  <rect width="512" height="512" fill="#080c14"/>
+  
+  <!-- Background circle gradient for depth -->
+  <circle cx="256" cy="256" r="220" fill="rgba(13,20,34,0.8)"/>
+  
+  <defs>
+    <linearGradient id="ogm" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5c842"/>
+      <stop offset="55%" stop-color="#f07830"/>
+      <stop offset="100%" stop-color="#d4611a"/>
+    </linearGradient>
+    <filter id="gfm">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Decorative ring -->
+  <circle cx="256" cy="256" r="185" fill="none" stroke="rgba(240,120,48,0.06)" stroke-width="1.5"/>
+
+  <!-- Shield — scaled to ~72% to ensure safe zone compliance -->
+  <path d="M256 88 C226 88 180 102 152 118 L130 130 L130 264 C130 316 178 350 256 386 C334 350 382 316 382 264 L382 130 L360 118 C332 102 286 88 256 88 Z"
+    fill="#0d1422" stroke="url(#ogm)" stroke-width="4.5"/>
+
+  <!-- "8" numeral -->
+  <path d="M256 150 C234 150 217 164 217 182 C217 196 225 207 237 213 C225 219 215 232 215 248 C215 272 234 288 256 288 C278 288 297 272 297 248 C297 232 287 219 275 213 C287 207 295 196 295 182 C295 164 278 150 256 150 Z"
+    fill="none" stroke="url(#ogm)" stroke-width="8.5" stroke-linejoin="round" filter="url(#gfm)"/>
+
+  <!-- Corner brackets -->
+  <polyline points="136,148 136,120 164,120" fill="none" stroke="#f07830" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="376,148 376,120 348,120" fill="none" stroke="#f07830" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- AEGIS8 text — subtle, below shield -->
+  <text x="256" y="410" font-family="monospace" font-size="18" font-weight="bold" 
+    fill="rgba(240,120,48,0.5)" text-anchor="middle" letter-spacing="6">AEGIS8</text>
+</svg>

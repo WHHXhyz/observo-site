@@ -193,6 +193,8 @@ const NAV = [
       {href:'/propuesta.html#roadmap', label:'Hoja de ruta — pendiente añadir id'},
       'div',
       {href:'/guias.html', label:'Guías técnicas'},
+      'div',
+      {href:'/violencia-digital.html', label:'Violencia digital', purple:true},
     ]
   },
   {
@@ -209,6 +211,8 @@ const NAV = [
       {href:'/educa/profesores.html', label:'Docentes'},
       'div',
       {href:'/educa/newsletter.html', label:'Newsletter mensual'},
+      'div',
+      {href:'/violencia-digital.html', label:'Violencia digital'},
     ]
   },
   {
@@ -257,6 +261,7 @@ function buildDesktop(page, ul) {
           da.href = d.href;
           da.textContent = d.label;
           if (d.agent) da.style.color = '#f07830';
+        if (d.purple) da.style.color = '#9b6dff';
           drop.appendChild(da);
         }
       });
@@ -299,6 +304,7 @@ function buildMobile(page, drawer) {
       a.textContent = item.label;
       a.className = item.cls;
       if (item.pg && page === item.pg) a.classList.add('an-m-active');
+      if (item.purple) a.style.color = '#9b6dff';
       a.addEventListener('click', closeMenu);
       drawer.appendChild(a);
     }

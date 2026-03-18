@@ -3,30 +3,9 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Adolescentes · Aegis8 Educa</title>
-<meta name="description" content="Quiz, guías y agente IA de ciberseguridad para adolescentes. Redes sociales, videojuegos, grooming y privacidad digital."/>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T">
-// Section particle burst
-(function(){
-  var hero = document.querySelector('.page-hero-s');
-  if(!hero) return;
-  var colors = ['#9b6dff', '#c084fc', '#9b6dff88'];
-  for(var i=0; i<12; i++){
-    var p = document.createElement('div');
-    var size = Math.random()*4+2;
-    p.style.cssText = 'position:absolute;border-radius:50%;pointer-events:none;z-index:1;' +
-      'width:'+size+'px;height:'+size+'px;' +
-      'background:'+colors[Math.floor(Math.random()*colors.length)]+';' +
-      'left:'+Math.random()*100+'%;' +
-      'top:'+Math.random()*100+'%;' +
-      'opacity:'+( Math.random()*.5+.1)+';' +
-      'animation:fadeInLogo '+(Math.random()*2+2)+'s ease '+(Math.random()*2)+'s both,' +
-      'breathe-hero '+(Math.random()*3+3)+'s ease-in-out infinite;';
-    hero.appendChild(p);
-  }
-})();
-
-</script>
+<title>Aegis8 para Adolescentes · Ciberseguridad Real</title>
+<meta name="description" content="Privacidad en redes, grooming, sexting, sextorsión y tus derechos digitales en Chile. Sin condescendencia. Directo."/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
   <script src="/aegis-nav.js"></script>
 <style>
@@ -70,7 +49,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   padding:14px 28px;border-radius:var(--radius);text-decoration:none;transition:all .25s;display:inline-block;}
 .btn-g:hover{color:var(--ink);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
 /* CHAT SHARED */
-.chat-box{background:var(--bg2);border:1px solid #9b6dff30;border-radius:var(--radius);overflow:hidden;}
+.chat-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;}
 .chat-hd{background:rgba(240,120,48,.05);border-bottom:1px solid var(--border2);
   padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
 .chat-hd-l{display:flex;align-items:center;gap:.75rem;}
@@ -125,403 +104,376 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 @media(max-width:640px){.wrap{padding:0 16px;}.page-footer{padding:32px 16px;}}
 
 
-.page-hero-s{position:relative;z-index:10;padding:64px 0 40px;border-bottom:1px solid var(--border);}
-.hero-ey{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ink3);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
-.hero-ey-line{width:24px;height:1px;background:var(--accent);}
-.quiz-card{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;}
-.quiz-top{background:rgba(240,120,48,.04);border-bottom:1px solid var(--border);padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
-.quiz-prog{flex:1;}
-.quiz-prog-lbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ink3);margin-bottom:.35rem;display:flex;justify-content:space-between;}
-.quiz-bar-bg{height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
-.quiz-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:2px;transition:width .4s ease;width:0%;}
-.quiz-score-box{background:rgba(245,168,35,.08);border:1px solid rgba(245,168,35,.2);padding:.25rem .7rem;text-align:center;}
-.quiz-score-n{font-family:'DM Serif Display',serif;font-size:1.3rem;font-weight:700;color:var(--gold);display:block;line-height:1;}
-.quiz-score-l{font-family:'JetBrains Mono',monospace;font-size:.52rem;color:var(--ink3);letter-spacing:1px;}
-.quiz-body{padding:2rem 1.75rem;}
-.quiz-cat{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;color:var(--accent);margin-bottom:.6rem;}
-.quiz-q{font-size:1rem;font-weight:700;line-height:1.5;margin-bottom:1.25rem;color:var(--ink);}
-.quiz-opts{display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.25rem;}
-.quiz-opt{background:var(--card);border:1.5px solid var(--border2);border-radius:var(--radius);padding:.85rem 1rem;font-family:'Lato',sans-serif;font-size:.88rem;color:var(--ink);text-align:left;cursor:pointer!important;transition:all .2s;display:flex;align-items:center;gap:.75rem;}
-.quiz-opt:hover:not(:disabled){border-color:var(--accent);background:rgba(240,120,48,.05);}
-.quiz-opt.correct{border-color:var(--green);background:rgba(46,204,128,.07);color:var(--green);}
-.quiz-opt.wrong{border-color:var(--accent);background:rgba(240,120,48,.07);color:var(--accent);}
-.quiz-opt:disabled{cursor:default!important;}
-.opt-letter{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--ink3);flex-shrink:0;}
-.q-next-btn{display:none;width:100%;padding:.85rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--bg);background:var(--accent);border:none;border-radius:var(--radius);cursor:pointer!important;transition:background .2s;margin-top:.75rem;}
-.q-next-btn:hover{background:var(--accent2);}
-.quiz-result{display:none;padding:2.5rem 2rem;text-align:center;}
-.rr-emoji{font-size:3.5rem;margin-bottom:.75rem;display:block;}
-.rr-title{font-family:'DM Serif Display',serif;font-size:1.8rem;margin-bottom:.4rem;}
-.rr-sub{font-size:.86rem;color:var(--ink2);margin-bottom:1.75rem;line-height:1.6;}
-.rr-restart{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--bg);background:var(--accent);border:none;border-radius:var(--radius);padding:.85rem 2rem;cursor:pointer!important;transition:background .2s;}
-.rr-restart:hover{background:var(--accent2);}
-/* GUÍAS */
-.guias-g{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
-@media(max-width:640px){.guias-g{grid-template-columns:1fr;}}
-.guia{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:2rem 1.75rem;position:relative;overflow:hidden;transition:all .25s;}
-.guia::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transform:scaleX(0);transform-origin:left;transition:transform .4s;}
-.guia:hover::before{transform:scaleX(1);}
-.guia:hover{background:rgba(255,255,255,.03);}
-.g1::before{background:var(--accent);}
-.g2::before{background:var(--blue);}
-.g3::before{background:var(--green);}
-.g4::before{background:var(--gold);}
-.guia-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;margin-bottom:.5rem;}
-.guia-title{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);margin-bottom:.6rem;line-height:1.15;}
-.guia-body{font-size:.84rem;color:var(--ink2);line-height:1.7;}
-.guia-body strong{color:var(--ink);}
-.guia-body ul{margin:.4rem 0 .4rem 1.1rem;}
-.guia-body li{margin-bottom:.25rem;}
-/* AMENAZAS */
-.amenazas-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
-@media(max-width:640px){.amenazas-g{grid-template-columns:1fr;}}
-.amenaza{background:var(--bg2);padding:1.75rem 1.5rem;}
-.amenaza-ico{font-size:1.6rem;margin-bottom:.6rem;}
-.amenaza-title{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink);font-weight:600;margin-bottom:.4rem;}
-.amenaza-body{font-size:.8rem;color:var(--ink2);line-height:1.6;}
-.amenaza-body strong{color:var(--accent);}
+.hero-ad{position:relative;z-index:10;min-height:90vh;display:flex;flex-direction:column;
+  justify-content:center;padding:80px 0 64px;border-bottom:1px solid var(--border);overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
+.b1{width:600px;height:600px;top:-100px;right:-100px;
+  background:radial-gradient(circle,rgba(155,109,255,.1) 0%,transparent 70%);
+  animation:fl1 9s ease-in-out infinite;}
+.b2{width:400px;height:400px;bottom:-80px;left:-80px;
+  background:radial-gradient(circle,rgba(240,120,48,.07) 0%,transparent 70%);
+  animation:fl2 11s ease-in-out infinite;}
+@keyframes fl1{0%,100%{transform:translate(0,0);}50%{transform:translate(-20px,15px);}}
+@keyframes fl2{0%,100%{transform:translate(0,0);}50%{transform:translate(15px,-20px);}}
+
+/* TEMAS GRID */
+.temas-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
+@media(max-width:720px){.temas-g{grid-template-columns:1fr;}}
+.tema-c{background:var(--bg2);padding:2rem 1.5rem;text-decoration:none;
+  transition:background .2s;display:flex;flex-direction:column;gap:10px;
+  position:relative;overflow:hidden;}
+.tema-c::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.tema-c:hover::before{transform:scaleX(1);}
+.tema-c:hover{background:rgba(255,255,255,.03);}
+.tc-purple::before{background:#9b6dff;}
+.tc-red::before{background:#ef4444;}
+.tc-orange::before{background:var(--accent);}
+.tc-blue::before{background:var(--blue);}
+.tc-green::before{background:var(--green);}
+.tc-gold::before{background:var(--gold);}
+.tema-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;
+  text-transform:uppercase;}
+.tc-purple .tema-tag{color:#9b6dff;}
+.tc-red .tema-tag{color:#ef4444;}
+.tc-orange .tema-tag{color:var(--accent);}
+.tc-blue .tema-tag{color:var(--blue);}
+.tc-green .tema-tag{color:var(--green);}
+.tc-gold .tema-tag{color:var(--gold);}
+.tema-title{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink);line-height:1.2;}
+.tema-desc{font-size:.84rem;color:var(--ink2);line-height:1.65;flex:1;}
+.tema-cta{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  text-transform:uppercase;transition:color .2s;}
+.tc-purple .tema-cta{color:#9b6dff;}
+.tc-red .tema-cta{color:#ef4444;}
+.tc-orange .tema-cta{color:var(--accent);}
+.tc-blue .tema-cta{color:var(--blue);}
+.tc-green .tema-cta{color:var(--green);}
+.tc-gold .tema-cta{color:var(--gold);}
+
+/* SITUACIONES REALES */
+.sit-g{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.sit{background:var(--bg2);padding:1.5rem 1.75rem;display:flex;gap:1.5rem;align-items:flex-start;}
+.sit-num{font-family:'DM Serif Display',serif;font-size:2.8rem;
+  color:rgba(155,109,255,.15);line-height:1;flex-shrink:0;width:48px;font-style:italic;}
+.sit-content{flex:1;}
+.sit-scenario{font-size:.88rem;color:var(--ink);line-height:1.6;margin-bottom:.5rem;font-style:italic;}
+.sit-scenario::before{content:'"';color:#9b6dff;}
+.sit-scenario::after{content:'"';color:#9b6dff;}
+.sit-resp{font-size:.84rem;color:var(--ink2);line-height:1.65;}
+.sit-ley{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:1px;
+  color:#9b6dff;margin-top:.5rem;display:inline-block;}
+
 /* DERECHOS */
-.derechos-g{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);}
-@media(max-width:640px){.derechos-g{grid-template-columns:1fr;}}
-.derecho{background:var(--bg2);padding:1.75rem 1.5rem;display:flex;gap:1rem;}
-.derecho-ico{font-size:1.3rem;flex-shrink:0;margin-top:2px;}
-.derecho-title{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--green);font-weight:600;margin-bottom:.35rem;}
-.derecho-body{font-size:.82rem;color:var(--ink2);line-height:1.6;}
+.der-g{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);}
+@media(max-width:640px){.der-g{grid-template-columns:1fr;}}
+.der{background:var(--bg2);padding:1.75rem 1.5rem;display:flex;gap:1rem;align-items:flex-start;}
+.der-ico{width:32px;height:32px;border-radius:6px;background:rgba(155,109,255,.08);
+  border:1px solid rgba(155,109,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.der-title{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;
+  color:var(--ink);margin-bottom:.3rem;}
+.der-body{font-size:.83rem;color:var(--ink2);line-height:1.6;}
 
-
-/* Hero colored accent */
-.page-hero-s::before{content:'';position:absolute;top:-100px;right:-80px;width:400px;height:400px;
-  border-radius:50%;background:radial-gradient(circle,#9b6dff18 0%,transparent 70%);
-  pointer-events:none;z-index:0;animation:breathe-hero 5s ease-in-out infinite;}
-.page-hero-s{overflow:hidden;position:relative;}
-@keyframes breathe-hero{0%,100%{transform:scale(1);opacity:.6;}50%{transform:scale(1.15);opacity:1;}}
-/* hero-ey line color override */
-.hero-ey-line{background:#9b6dff;}
-
-/* ── ADOLESCENTES EXTRA ANIMATIONS ── */
-@keyframes glitch{0%{transform:translate(0);}20%{transform:translate(-2px,1px);}40%{transform:translate(2px,-1px);}60%{transform:translate(-1px,2px);}80%{transform:translate(1px,-2px);}100%{transform:translate(0);}}
-@keyframes scan-line{0%{top:-5%;opacity:0;}10%{opacity:.6;}90%{opacity:.6;}100%{top:105%;opacity:0;}}
-@keyframes type-cursor{0%,100%{opacity:1;}50%{opacity:0;}}
-@keyframes slide-up-stagger{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
-@keyframes pulse-vio{0%,100%{box-shadow:0 0 0 0 rgba(155,109,255,0);}50%{box-shadow:0 0 16px 4px rgba(155,109,255,0.25);}}
-@keyframes fadeInLogo{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
-@keyframes arc-ping{0%{transform:scale(1);opacity:.5;}100%{transform:scale(1.4);opacity:0;}}
-
-/* Hero scanline overlay */
-.page-hero-s::after{content:'';position:absolute;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,rgba(155,109,255,.5),transparent);
-  animation:scan-line 4s linear infinite;pointer-events:none;z-index:3;}
-
-/* Quiz card glitch on load */
-.quiz-card{animation:slide-up-stagger .5s ease .2s both;}
-
-/* Category label glitch effect on answer */
-.quiz-cat{font-family:'JetBrains Mono',monospace;}
-.quiz-cat.glitch{animation:glitch .3s steps(1) 3;}
-
-/* Option letter pulse on hover */
-.quiz-opt:hover .opt-letter{animation:pulse-vio .8s ease-in-out infinite;}
-
-/* Score number pop */
-.quiz-score-n{transition:transform .2s cubic-bezier(.34,1.56,.64,1);}
-
-/* Guide cards stagger in */
-.guia:nth-child(1){animation:slide-up-stagger .5s ease .1s both;}
-.guia:nth-child(2){animation:slide-up-stagger .5s ease .2s both;}
-.guia:nth-child(3){animation:slide-up-stagger .5s ease .3s both;}
-.guia:nth-child(4){animation:slide-up-stagger .5s ease .4s both;}
-
-/* Amenaza cards hover -->  */
-.amenaza{transition:background .2s,transform .2s;}
-.amenaza:hover{background:rgba(155,109,255,.05);transform:translateX(4px);}
-
-/* Derecho cards hover */
-.derecho{transition:background .2s;}
-.derecho:hover{background:rgba(155,109,255,.04);}
-
-/* Chat box */
-.chat-box{animation:slide-up-stagger .5s ease .4s both;}
-.qbtn{transition:all .2s cubic-bezier(.34,1.56,.64,1);}
-.qbtn:hover{transform:scale(1.06) translateY(-2px);}
+/* CONFIGURACIONES */
+.conf-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
+@media(max-width:640px){.conf-g{grid-template-columns:1fr;}}
+.conf-c{background:var(--bg2);padding:1.5rem 1.25rem;}
+.conf-plat{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;
+  color:var(--ink);margin-bottom:.6rem;}
+.conf-items{display:flex;flex-direction:column;gap:5px;}
+.conf-item{font-size:.82rem;color:var(--ink2);line-height:1.5;
+  display:flex;align-items:flex-start;gap:.5rem;}
+.conf-item::before{content:'✓';color:var(--green);flex-shrink:0;font-weight:700;}
 
 </style>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
-<body data-page="adolescentes">
-<section class="page-hero-s page-inner">
-  <div class="wrap">
-    <div class="hero-logo-wrap" style="margin-bottom:24px;opacity:0;animation:fadeInLogo .8s cubic-bezier(.34,1.56,.64,1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="110" height="110" fill="none">
-  <defs>
-    <filter id="glow-a"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <filter id="glow-a2"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <linearGradient id="vio-g" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#c084fc"/>
-      <stop offset="100%" stop-color="#9b6dff"/>
-    </linearGradient>
-  </defs>
-
-  <!-- Glow bg -->
-  <path d="M100 10 L172 36 L172 108 C172 144 136 164 100 182 C64 164 28 144 28 108 L28 36 Z"
-    fill="rgba(155,109,255,0.05)" filter="url(#glow-a2)">
-    <animate attributeName="opacity" values="0.05;0.12;0.05" dur="3s" repeatCount="indefinite"/>
-  </path>
-
-  <!-- Shield — sharp, angular -->
-  <path d="M100 10 L172 36 L172 108 C172 144 136 164 100 182 C64 164 28 144 28 108 L28 36 Z"
-    fill="#0d1422" stroke="url(#vio-g)" stroke-width="2.5">
-    <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="3s" repeatCount="indefinite"/>
-  </path>
-
-  <!-- Draw-on -->
-  <path d="M100 10 L172 36 L172 108 C172 144 136 164 100 182 C64 164 28 144 28 108 L28 36 Z"
-    fill="none" stroke="#9b6dff" stroke-width="2.5" stroke-dasharray="470" stroke-dashoffset="470" filter="url(#glow-a)">
-    <animate attributeName="stroke-dashoffset" from="470" to="0" dur="1.4s" fill="freeze" begin="0.3s"/>
-  </path>
-
-  <!-- WiFi / signal arcs — tech feeling, centered -->
-  <!-- Center dot -->
-  <circle cx="100" cy="115" r="5" fill="#9b6dff" filter="url(#glow-a)">
-    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="1.2s"/>
-    <animate attributeName="r" values="5;6.5;5" dur="2s" repeatCount="indefinite" begin="2s"/>
-  </circle>
-
-  <!-- Arc 1 — small -->
-  <path d="M82,102 A20,20 0 0,1 118,102" stroke="#9b6dff" stroke-width="3" stroke-linecap="round" filter="url(#glow-a)">
-    <animate attributeName="stroke-dasharray" values="0 44;44 0" dur="0.4s" fill="freeze" begin="1.4s"/>
-    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" begin="2.5s"/>
-  </path>
-
-  <!-- Arc 2 — medium -->
-  <path d="M68,85 A40,40 0 0,1 132,85" stroke="#9b6dff" stroke-width="2.5" stroke-linecap="round" opacity="0.8" filter="url(#glow-a)">
-    <animate attributeName="stroke-dasharray" values="0 76;76 0" dur="0.5s" fill="freeze" begin="1.7s"/>
-    <animate attributeName="opacity" values="0.5;0.9;0.5" dur="2s" repeatCount="indefinite" begin="2.8s"/>
-  </path>
-
-  <!-- Arc 3 — large -->
-  <path d="M52,68 A60,60 0 0,1 148,68" stroke="#9b6dff" stroke-width="2" stroke-linecap="round" opacity="0.5" filter="url(#glow-a)">
-    <animate attributeName="stroke-dasharray" values="0 112;112 0" dur="0.6s" fill="freeze" begin="2s"/>
-    <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2s" repeatCount="indefinite" begin="3.1s"/>
-  </path>
-
-  <!-- Arc 4 — outermost, faint -->
-  <path d="M38,52 A78,78 0 0,1 162,52" stroke="#c084fc" stroke-width="1.5" stroke-linecap="round" opacity="0.3">
-    <animate attributeName="stroke-dasharray" values="0 146;146 0" dur="0.7s" fill="freeze" begin="2.3s"/>
-    <animate attributeName="opacity" values="0.15;0.4;0.15" dur="2.5s" repeatCount="indefinite" begin="3.5s"/>
-  </path>
-
-  <!-- Circuit nodes on sides -->
-  <circle cx="50" cy="90" r="3" fill="none" stroke="#9b6dff" stroke-width="1.5">
-    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.5s"/>
-    <animate attributeName="r" values="3;4.5;3" dur="2s" repeatCount="indefinite" begin="3s"/>
-  </circle>
-  <circle cx="150" cy="90" r="3" fill="none" stroke="#9b6dff" stroke-width="1.5">
-    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.6s"/>
-    <animate attributeName="r" values="3;4.5;3" dur="2s" repeatCount="indefinite" begin="3.3s"/>
-  </circle>
-
-  <!-- Data packet traveling arc -->
-  <circle r="3" fill="#c084fc" opacity="0">
-    <animateMotion path="M52,68 A60,60 0 0,1 148,68" dur="2s" repeatCount="indefinite" begin="3s"/>
-    <animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.1;0.9;1" dur="2s" repeatCount="indefinite" begin="3s"/>
-  </circle>
-
-  <!-- Corner ticks -->
-  <polyline points="42,50 42,42 50,42" fill="none" stroke="#9b6dff" stroke-width="2" stroke-linecap="round">
-    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="1.8s"/>
-  </polyline>
-  <polyline points="158,50 158,42 150,42" fill="none" stroke="#9b6dff" stroke-width="2" stroke-linecap="round">
-    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="1.9s"/>
-  </polyline>
-
-  <!-- Scan line -->
-  <clipPath id="sc-a">
-    <path d="M100 10 L172 36 L172 108 C172 144 136 164 100 182 C64 164 28 144 28 108 L28 36 Z"/>
-  </clipPath>
-  <rect x="28" y="0" width="144" height="1.5" fill="#9b6dff" opacity="0" clip-path="url(#sc-a)">
-    <animate attributeName="y" from="10" to="182" dur="2.5s" repeatCount="indefinite" begin="3s"/>
-    <animate attributeName="opacity" values="0;0.5;0.5;0" keyTimes="0;0.05;0.95;1" dur="2.5s" repeatCount="indefinite" begin="3s"/>
-  </rect>
-
-  <!-- Pulsing glow -->
-  <circle cx="100" cy="100" r="50" fill="rgba(155,109,255,0.04)">
-    <animate attributeName="r" values="50;60;50" dur="3s" repeatCount="indefinite" begin="2.5s"/>
-    <animate attributeName="opacity" values="0.04;0.09;0.04" dur="3s" repeatCount="indefinite" begin="2.5s"/>
-  </circle>
-</svg></div>
-    <div class="hero-ey"><div class="hero-ey-line"></div>Aegis Educa · 13–17 años</div>
-    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,7vw,5.5rem);line-height:.92;letter-spacing:-1px;margin-bottom:18px;">
-      ¿Cuánto sabes<br><span style="color:var(--accent);font-style:italic;">de verdad? 🧑‍💻</span>
+<body data-page="educa">
+<section class="hero-ad">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap" style="position:relative;z-index:2;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+      color:var(--ink3);margin-bottom:24px;display:flex;align-items:center;gap:10px;">
+      <div style="width:28px;height:1px;background:#9b6dff;"></div>
+      AEGIS8 EDUCA · 13–17 AÑOS · CHILE
+    </div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(3rem,9vw,7rem);
+      line-height:.88;letter-spacing:-2px;margin-bottom:20px;max-width:800px;">
+      Internet no es<br>tan simple<br>
+      <span style="color:#9b6dff;font-style:italic;">como parece.</span>
     </h1>
-    <p style="font-size:1rem;line-height:1.8;color:var(--ink2);max-width:520px;margin-bottom:28px;">
-      Quiz con casos reales, guías sobre grooming, privacidad y ciberbullying, y un agente IA para tus dudas. Sin condescendencia — con respeto.
+    <p style="font-size:1rem;line-height:1.9;color:var(--ink2);max-width:580px;margin-bottom:12px;">
+      Privacidad, grooming, sexting, sextorsión y control digital en el pololeo. Lo que nadie te enseña en clases pero que puede afectarte esta semana.
     </p>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <a href="#quiz" class="btn-p"><span>Empezar quiz →</span></a>
-      <a href="#guias" class="btn-g">Ver guías</a>
+    <p style="font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:1px;
+      color:var(--ink3);margin-bottom:36px;">
+      // Sin condescendencia. Sin bajarle el perfil. Con respeto.
+    </p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="#temas" class="btn-p"><span>Ver los temas →</span></a>
+      <a href="/violencia-digital.html" style="font-family:'JetBrains Mono',monospace;
+        font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:#9b6dff;
+        background:transparent;border:1px solid rgba(155,109,255,.3);
+        padding:15px 28px;border-radius:3px;text-decoration:none;transition:all .25s;"
+        onmouseover="this.style.background='rgba(155,109,255,.08)'"
+        onmouseout="this.style.background='transparent'">
+        Violencia digital →
+      </a>
     </div>
   </div>
 </section>
 
 <div class="wrap page-inner">
 
-<div class="sw" id="quiz">
-  <div class="sl">// Quiz · Ciberseguridad real</div>
-  <h2 class="st">10 situaciones<br><em>reales.</em></h2>
-  <p class="si">Casos que pasan de verdad: videojuegos, redes sociales, phishing y privacidad. Puntaje real, feedback inmediato en cada pregunta.</p>
-  <div class="quiz-card">
-    <div class="quiz-top">
-      <div class="quiz-prog">
-        <div class="quiz-prog-lbl">
-          <span>Pregunta <span id="qNum">1</span> de 10</span>
-          <span id="qPct">0%</span>
-        </div>
-        <div class="quiz-bar-bg"><div class="quiz-fill" id="quizFill"></div></div>
-      </div>
-      <div class="quiz-score-box">
-        <span class="quiz-score-n" id="quizScore">0</span>
-        <span class="quiz-score-l">puntos</span>
-      </div>
-    </div>
-    <div class="quiz-body" id="quizMain">
-      <div class="quiz-cat" id="qCat">// Cargando</div>
-      <div class="quiz-q" id="qText">Cargando...</div>
-      <div class="quiz-opts" id="qOpts"></div>
-      <div id="qExp"></div>
-      <button class="q-next-btn" id="qNextBtn" onclick="nextQ()">Siguiente →</button>
-    </div>
-    <div class="quiz-result" id="quizResult">
-      <span class="rr-emoji" id="rEmoji">🏆</span>
-      <div class="rr-title" id="rTitle"></div>
-      <div class="rr-sub" id="rSub"></div>
-      <button class="rr-restart" onclick="restartQuiz()">Intentar de nuevo →</button>
-    </div>
+<!-- TEMAS -->
+<div class="sw" id="temas">
+  <div class="sl">// Qué vas a encontrar aquí</div>
+  <h2 class="st">Elige el tema<br><em>que más te importa.</em></h2>
+  <div class="temas-g">
+    <a href="/violencia-digital.html#temas" class="tema-c tc-purple">
+      <div class="tema-tag">Importante saber</div>
+      <div class="tema-title">Sexting y violencia digital</div>
+      <div class="tema-desc">Qué pasa si alguien difunde tus fotos, cómo funciona la sextorsión y qué dice la ley chilena. Incluyendo lo que nadie tiene derecho a pedirte.</div>
+      <div class="tema-cta">Ver información →</div>
+    </a>
+    <a href="#privacidad" class="tema-c tc-blue">
+      <div class="tema-tag">Configuraciones reales</div>
+      <div class="tema-title">Privacidad en redes</div>
+      <div class="tema-desc">Lo que revelan tus posts sin que lo sepas. Configuraciones mínimas en Instagram, TikTok y WhatsApp. Tu huella digital y por qué importa.</div>
+      <div class="tema-cta">Ver configuraciones →</div>
+    </a>
+    <a href="#grooming" class="tema-c tc-red">
+      <div class="tema-tag">Reconocer</div>
+      <div class="tema-title">Grooming y contacto no deseado</div>
+      <div class="tema-desc">Cómo funciona el proceso, por qué personas inteligentes caen, qué señales reconocer y qué hacer si algo ya pasó o le pasó a alguien que conoces.</div>
+      <div class="tema-cta">Ver señales →</div>
+    </a>
+    <a href="#pololeo" class="tema-c tc-orange">
+      <div class="tema-tag">Relaciones de pareja</div>
+      <div class="tema-title">Control digital en el pololeo</div>
+      <div class="tema-desc">Revisar el teléfono, exigir contraseñas, controlar quién te puede escribir. Qué es normal y qué es violencia — aunque "sea por amor".</div>
+      <div class="tema-cta">Ver red flags →</div>
+    </a>
+    <a href="#contrasenas" class="tema-c tc-green">
+      <div class="tema-tag">Seguridad básica</div>
+      <div class="tema-title">Contraseñas y cuentas</div>
+      <div class="tema-desc">Por qué roban cuentas de Instagram y cómo. Qué es el 2FA y por qué te salva. Cómo recuperar una cuenta hackeada.</div>
+      <div class="tema-cta">Ver guía →</div>
+    </a>
+    <a href="#derechos" class="tema-c tc-gold">
+      <div class="tema-tag">Marco legal Chile</div>
+      <div class="tema-title">Tus derechos digitales</div>
+      <div class="tema-desc">Qué leyes te protegen, qué es delito, cómo denunciar sin abogado y qué pasa con el agresor. La ley está más de tu lado de lo que crees.</div>
+      <div class="tema-cta">Ver derechos →</div>
+    </a>
   </div>
 </div>
 
-<div class="sw" id="guias">
-  <div class="sl">// Guías de ciberseguridad</div>
-  <h2 class="st">Lo que necesitas<br><em>saber.</em></h2>
-  <p class="si">Guías directas sobre los temas que más afectan a adolescentes en Chile. Sin rodeos.</p>
-  <div class="guias-g">
-    <div class="guia g1">
-      <div class="guia-tag">Grooming</div>
-      <div class="guia-title">Cómo reconocer el grooming</div>
-      <div class="guia-body">
-        El grooming es cuando un adulto construye una relación de confianza con un menor para obtener fotos, encuentros o favores. Sigue un patrón claro:<br><br>
-        <ul>
-          <li>Contacto frecuente y amable sin razón aparente</li>
-          <li>Regalos virtuales (skins, Robux, Nitro, etc.)</li>
-          <li>Solicitud de secreto: "no le cuentes a nadie que hablamos"</li>
-          <li>Preguntas personales progresivas</li>
-          <li>Solicitud de fotos, primero inocentes, luego no</li>
-        </ul>
-        <strong>Qué hacer:</strong> Bloquear, no borrar los mensajes y contarle a un adulto o llamar a la PDI: <strong>+56 2 2708 0000</strong>.
-      </div>
-    </div>
-    <div class="guia g2">
-      <div class="guia-tag">Privacidad</div>
-      <div class="guia-title">Lo que revelan tus redes sin que sepas</div>
-      <div class="guia-body">
-        Cada post revela más de lo que parece. Una foto en el colegio revela dónde estudias. Un "estoy de vacaciones" revela que tu casa está sola. Tu horario de salida + uniforme revela cuándo y dónde encontrarte.<br><br>
-        <strong>Reglas básicas:</strong>
-        <ul>
-          <li>Cuenta privada, seguidores que conoces en persona</li>
-          <li>Sin ubicación activada en stories</li>
-          <li>Sin fotos en uniforme con el nombre del colegio visible</li>
-          <li>Sin publicar antes de volver de vacaciones</li>
-        </ul>
-        <strong>Tu huella digital dura para siempre.</strong> Lo que publicas hoy puede aparecer en búsquedas en 10 años.
-      </div>
-    </div>
-    <div class="guia g3">
-      <div class="guia-tag">Ciberbullying</div>
-      <div class="guia-title">Qué es y qué derechos tienes</div>
-      <div class="guia-body">
-        El ciberbullying es acoso repetido a través de medios digitales: mensajes, grupos de WhatsApp, publicaciones o videos. En Chile es abordado por la <strong>Ley 20.536</strong> de Convivencia Escolar.<br><br>
-        <strong>Qué hacer si lo sufres:</strong>
-        <ul>
-          <li>Guarda capturas de todo (con fecha visible)</li>
-          <li>No respondas — empeoraría la situación</li>
-          <li>Cuéntale a un adulto de confianza o al inspector</li>
-          <li>El colegio está obligado a actuar</li>
-        </ul>
-        <strong>Si lo presencias:</strong> Quedarte callado también es parte del problema. Apoyo privado a la víctima y reporte a un adulto marcan la diferencia.
-      </div>
-    </div>
-    <div class="guia g4">
-      <div class="guia-tag">Contraseñas y cuentas</div>
-      <div class="guia-title">Proteger tus cuentas de verdad</div>
-      <div class="guia-body">
-        <strong>Lo básico que nadie hace y todos deberían:</strong>
-        <ul>
-          <li><strong>2FA en todo:</strong> Steam, Discord, Instagram, Gmail. Es el paso más importante.</li>
-          <li><strong>Contraseñas distintas</strong> para cada cuenta importante. Si hackean Steam y usas la misma en Gmail, te roban todo.</li>
-          <li><strong>Nunca compartas tu contraseña</strong> a cambio de skins, Robux, Nitro ni nada.</li>
-          <li><strong>Revisa las sesiones activas</strong> en Discord e Instagram — puedes ver si alguien más tiene tu cuenta.</li>
-        </ul>
-        <strong>Si te hackean:</strong> Cambia la contraseña de inmediato, activa 2FA y reporta a soporte de la plataforma.
-      </div>
-    </div>
-  </div>
-</div>
-
+<!-- SITUACIONES REALES -->
 <div class="sw">
-  <div class="sl">// Amenazas más comunes</div>
-  <h2 class="st">Qué está pasando<br><em>en Chile ahora.</em></h2>
-  <div class="amenazas-g">
-    <div class="amenaza"><div class="amenaza-ico">🎮</div><div class="amenaza-title">Estafas en videojuegos</div><div class="amenaza-body">Ofrecimientos de moneda virtual, intercambio de cuentas y "mods exclusivos" que en realidad son malware. <strong>Afectan principalmente a menores de 14.</strong></div></div>
-    <div class="amenaza"><div class="amenaza-ico">📱</div><div class="amenaza-title">Phishing por WhatsApp</div><div class="amenaza-body">Mensajes de "tu cuenta será eliminada" con links falsos. <strong>El robo de cuentas de WhatsApp es el ataque más frecuente en Chile.</strong></div></div>
-    <div class="amenaza"><div class="amenaza-ico">💌</div><div class="amenaza-title">Sextorsión</div><div class="amenaza-body">Amenaza de publicar fotos íntimas a cambio de dinero o más fotos. <strong>En Chile es delito bajo la Ley 21.459.</strong> Nunca pagues — siempre denuncia.</div></div>
-    <div class="amenaza"><div class="amenaza-ico">🎭</div><div class="amenaza-title">Cuentas falsas (catfishing)</div><div class="amenaza-body">Personas que crean perfiles falsos para ganarse tu confianza. Común en redes de juegos y en grupos de fans. <strong>Nadie verificable pide fotos a menores.</strong></div></div>
-    <div class="amenaza"><div class="amenaza-ico">🗣️</div><div class="amenaza-title">Desinformación viral</div><div class="amenaza-body">Videos y posts diseñados para generar reacción emocional, sin verificar. <strong>Los comparte la gente de buena fe</strong> — por eso funcionan.</div></div>
-    <div class="amenaza"><div class="amenaza-ico">🔓</div><div class="amenaza-title">Robo de credenciales</div><div class="amenaza-body">Cuando hackean una plataforma y prueban tu contraseña en todas las demás. <strong>El 2FA bloquea el 99% de estos ataques.</strong></div></div>
+  <div class="sl">// Situaciones reales · ¿Qué harías?</div>
+  <h2 class="st">Casos que pasan<br><em>de verdad.</em></h2>
+  <p class="si">No son ejemplos inventados. Son situaciones que ocurren en colegios chilenos cada semana. ¿Sabes qué hacer en cada una?</p>
+  <div class="sit-g">
+    <div class="sit">
+      <div class="sit-num">1</div>
+      <div class="sit-content">
+        <div class="sit-scenario">Un desconocido en Discord dice tener 16 años, lleva semanas hablando contigo, te regala skins y ahora te pide una foto.</div>
+        <div class="sit-resp"><strong style="color:var(--ink);">Lo que está pasando:</strong> Es la etapa 4 del grooming — contacto, confianza, aislamiento y solicitud. Los regalos virtuales crean sensación de deuda. No importa cuánto tiempo llevan hablando. <strong style="color:var(--ink);">Qué hacer:</strong> No mandar nada. Bloquear. Guardar las conversaciones. Contarle a un adulto de confianza.</div>
+        <span class="sit-ley">Ley 20.526 — Grooming es delito en Chile</span>
+      </div>
+    </div>
+    <div class="sit">
+      <div class="sit-num">2</div>
+      <div class="sit-content">
+        <div class="sit-scenario">Tu ex amenaza con publicar fotos íntimas que le mandaste cuando estaban juntos si no vuelves con él/ella.</div>
+        <div class="sit-resp"><strong style="color:var(--ink);">Lo que está pasando:</strong> Es sextorsión — un delito. Que hayas enviado las fotos voluntariamente no le da ningún derecho a usarlas como chantaje. <strong style="color:var(--ink);">Qué hacer:</strong> No ceder. Guardar las amenazas como evidencia. Denunciar en PDI Cibercrimen: +56 2 2708 0000. Cada vez que cedes, el chantaje empeora.</div>
+        <span class="sit-ley">Ley 21.459 Art. 5 — hasta 5 años de prisión</span>
+      </div>
+    </div>
+    <div class="sit">
+      <div class="sit-num">3</div>
+      <div class="sit-content">
+        <div class="sit-scenario">Tu pololo/a revisa tu teléfono sin pedirte permiso y dice que si lo quisieras no tendrías nada que ocultar.</div>
+        <div class="sit-resp"><strong style="color:var(--ink);">Lo que está pasando:</strong> Es control digital — una forma de violencia en relaciones de pareja. La privacidad no es culpa. Nadie tiene derecho a tu teléfono, contraseñas o ubicación, aunque sean tu pareja. <strong style="color:var(--ink);">Qué hacer:</strong> Nombrar lo que pasa, poner límites claros. Si el comportamiento continúa, hablar con un adulto de confianza o SernamEG: 800 104 008.</div>
+        <span class="sit-ley">Ley 20.066 — Violencia intrafamiliar incluye parejas</span>
+      </div>
+    </div>
+    <div class="sit">
+      <div class="sit-num">4</div>
+      <div class="sit-content">
+        <div class="sit-scenario">Alguien hackeó tu Instagram y ahora está enviando mensajes a tus contactos haciéndose pasar por ti.</div>
+        <div class="sit-resp"><strong style="color:var(--ink);">Qué hacer en los próximos 10 minutos:</strong> Ve a Instagram.com/accounts/password/reset desde otro dispositivo. Activa 2FA apenas recuperes la cuenta. Avisa a tus contactos que no respondan mensajes recientes. Reporta la cuenta falsa. Si piden dinero o hay contenido íntimo involucrado — PDI: +56 2 2708 0000.</div>
+        <span class="sit-ley">Ley 21.459 — Acceso no autorizado a sistemas informáticos</span>
+      </div>
+    </div>
+    <div class="sit">
+      <div class="sit-num">5</div>
+      <div class="sit-content">
+        <div class="sit-scenario">Un compañero compartió en el grupo de curso un video íntimo de una compañera. El video está circulando.</div>
+        <div class="sit-resp"><strong style="color:var(--ink);">Lo que NO hacer:</strong> Ver el video, compartirlo o guardarlo — eso te hace parte del delito. <strong style="color:var(--ink);">Qué hacer:</strong> No participar en la circulación. Apoyar a la compañera en privado. Reportar al colegio — están legalmente obligados a actuar (Ley 20.536). Si el colegio no actúa, escalar a la Superintendencia de Educación.</div>
+        <span class="sit-ley">Ley 19.927 + Ley 21.459 — delito grave</span>
+      </div>
+    </div>
   </div>
 </div>
 
+<!-- PRIVACIDAD EN REDES -->
+<div class="sw" id="privacidad">
+  <div class="sl">// Privacidad en redes · Configuraciones mínimas</div>
+  <h2 class="st">Lo que revelan<br><em>tus posts.</em></h2>
+  <p class="si">Una story con tu ubicación + tu horario de salida del colegio es suficiente para que alguien sepa dónde encontrarte. Más de lo que crees.</p>
+  <div class="conf-g">
+    <div class="conf-c">
+      <div class="conf-plat">Instagram</div>
+      <div class="conf-items">
+        <div class="conf-item">Cuenta en modo privado</div>
+        <div class="conf-item">Ubicación desactivada en stories</div>
+        <div class="conf-item">Solo tus seguidores pueden enviarte mensajes</div>
+        <div class="conf-item">No apareces en búsquedas externas</div>
+        <div class="conf-item">2FA activado con app autenticadora</div>
+        <div class="conf-item">Revisa tu lista de seguidores — ¿los conoces a todos?</div>
+      </div>
+    </div>
+    <div class="conf-c">
+      <div class="conf-plat">TikTok</div>
+      <div class="conf-items">
+        <div class="conf-item">Cuenta privada</div>
+        <div class="conf-item">Mensajes directos: solo amigos</div>
+        <div class="conf-item">Duetos y Stitch: solo amigos</div>
+        <div class="conf-item">Descarga de tus videos: desactivada</div>
+        <div class="conf-item">Sugerir tu cuenta: desactivado</div>
+        <div class="conf-item">Sincronización de contactos: desactivada</div>
+      </div>
+    </div>
+    <div class="conf-c">
+      <div class="conf-plat">WhatsApp</div>
+      <div class="conf-items">
+        <div class="conf-item">Foto de perfil: solo mis contactos</div>
+        <div class="conf-item">Info y estado: solo mis contactos</div>
+        <div class="conf-item">Última vez: nadie o mis contactos</div>
+        <div class="conf-item">2FA activado con PIN de 6 dígitos</div>
+        <div class="conf-item">Nunca compartas el código de verificación</div>
+        <div class="conf-item">Activa "Bloqueo con huella" en ajustes</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:12px;">
+    <a href="/descargas/pdf-privacidad-adolescentes.pdf" download
+      style="display:inline-flex;align-items:center;gap:8px;
+      font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
+      text-transform:uppercase;color:var(--blue);border:1px solid var(--border);
+      padding:.5rem 1rem;border-radius:3px;text-decoration:none;transition:all .2s;"
+      onmouseover="this.style.background='rgba(58,127,212,.06)'"
+      onmouseout="this.style.background='transparent'">
+      ↓ Descargar guía completa de privacidad PDF
+    </a>
+  </div>
+</div>
+
+<!-- DERECHOS -->
+<div class="sw" id="derechos">
+  <div class="sl">// Tus derechos digitales en Chile</div>
+  <h2 class="st">La ley<br><em>está de tu lado.</em></h2>
+  <p class="si">La mayoría de las personas que hacen daño digital cuentan con que la víctima no sabe que es un delito. Ahora lo sabes.</p>
+  <div class="der-g">
+    <div class="der">
+      <div class="der-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M8 2l5 3v6l-5 3-5-3V5L8 2z" stroke="#9b6dff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="der-title">Difundir fotos íntimas sin permiso — delito</div>
+        <div class="der-body">Aunque las hayas enviado tú. Aunque sean "solo" de cara. La Ley 21.459 contempla penas de hasta 5 años. No necesitas abogado para denunciar.</div>
+      </div>
+    </div>
+    <div class="der">
+      <div class="der-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M8 2l5 3v6l-5 3-5-3V5L8 2z" stroke="#9b6dff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="der-title">Hackear tu cuenta — delito</div>
+        <div class="der-body">Acceder sin permiso a tu Instagram, correo o cualquier cuenta es delito bajo la Ley 21.459. Aplica aunque no hayan "robado" nada visible.</div>
+      </div>
+    </div>
+    <div class="der">
+      <div class="der-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M8 2l5 3v6l-5 3-5-3V5L8 2z" stroke="#9b6dff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="der-title">Derecho a que te eliminen contenido</div>
+        <div class="der-body">Instagram, TikTok y X tienen obligación de eliminar contenido íntimo difundido sin consentimiento. Puedes reportarlo directamente tú o un adulto.</div>
+      </div>
+    </div>
+    <div class="der">
+      <div class="der-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M8 2l5 3v6l-5 3-5-3V5L8 2z" stroke="#9b6dff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="der-title">El colegio está obligado a actuar</div>
+        <div class="der-body">Si el acoso, ciberbullying o la difusión de material involucra a estudiantes de tu colegio, el establecimiento tiene obligación legal de intervenir (Ley 20.536).</div>
+      </div>
+    </div>
+    <div class="der">
+      <div class="der-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M8 2l5 3v6l-5 3-5-3V5L8 2z" stroke="#9b6dff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="der-title">Puedes denunciar sin abogado</div>
+        <div class="der-body">PDI Cibercrimen, Fiscalía y Carabineros aceptan denuncias directas. Puedes ir con un adulto o sola/solo. Es gratuito. Puedes hacerlo aunque no tengas todo claro.</div>
+      </div>
+    </div>
+    <div class="der">
+      <div class="der-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M8 2l5 3v6l-5 3-5-3V5L8 2z" stroke="#9b6dff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="der-title">No es tu culpa — nunca</div>
+        <div class="der-body">Haber enviado fotos, haber dicho que sí antes, haber conocido a alguien online. Nada de eso te hace responsable del daño. La responsabilidad es siempre del agresor.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AGENTE IA + CTA VIOLENCIA -->
 <div class="sw">
-  <div class="sl">// Tus derechos digitales</div>
-  <h2 class="st">Lo que la ley<br><em>te garantiza.</em></h2>
-  <p class="si">En Chile, los adolescentes tienen derechos específicos en el mundo digital. Conocerlos es la primera línea de defensa.</p>
-  <div class="derechos-g">
-    <div class="derecho"><div class="derecho-ico">⚖️</div><div><div class="derecho-title">Ley 21.459 — Delitos informáticos</div><div class="derecho-body">Hackear cuentas, acceder a datos sin autorización y sabotaje informático son delitos penales en Chile desde 2022.</div></div></div>
-    <div class="derecho"><div class="derecho-ico">🛡️</div><div><div class="derecho-title">Ley 20.526 — Grooming</div><div class="derecho-body">El acoso sexual online a menores es delito con penas de hasta 3 años. Aplica aunque no haya encuentro físico.</div></div></div>
-    <div class="derecho"><div class="derecho-ico">🏫</div><div><div class="derecho-title">Ley 20.536 — Convivencia Escolar</div><div class="derecho-body">Los colegios están obligados a actuar ante el ciberbullying. Si no actúan, puedes escalar a la Superintendencia de Educación.</div></div></div>
-    <div class="derecho"><div class="derecho-ico">📸</div><div><div class="derecho-title">Derecho a imagen</div><div class="derecho-body">Nadie puede publicar fotos tuyas sin tu consentimiento. Puedes pedir su eliminación a plataformas y en casos graves, denunciar.</div></div></div>
-  </div>
-</div>
-
-<div class="sw" id="chat">
-  <div class="sl">// Agente IA</div>
-  <h2 class="st">Pregunta lo que<br><em>necesites saber.</em></h2>
-  <p class="si">Respuestas directas y sin rodeos sobre seguridad digital, leyes chilenas y situaciones reales. Sin juicios.</p>
-  <div class="chat-box">
-    <div class="chat-hd">
-      <div class="chat-hd-l">
-        <div class="chat-ava">🛡️</div>
-        <div>
-          <div class="chat-name">Agente Aegis8 · Teen</div>
-          <div class="chat-status">● activo</div>
-        </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);">
+    <a href="/agente-seguridad.html" style="background:var(--bg2);padding:2.5rem 2rem;
+      text-decoration:none;display:flex;flex-direction:column;gap:10px;transition:background .2s;
+      position:relative;overflow:hidden;"
+      onmouseover="this.style.background='rgba(255,255,255,.04)'"
+      onmouseout="this.style.background='var(--bg2)'">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--green);"></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
+        color:var(--green);text-transform:uppercase;display:flex;align-items:center;gap:6px;">
+        <div style="width:6px;height:6px;border-radius:50%;background:var(--green);
+          animation:blink 1.5s step-end infinite;"></div>
+        Agente IA · 24/7
       </div>
-      <div class="chat-live"></div>
-    </div>
-    <div class="chat-msgs" id="chatMsgs">
-      <div class="msg bot">
-        <div class="msg-ava">🛡️</div>
-        <div class="msg-bubble">Hola 👋 Soy el agente de ciberseguridad de Aegis8. Puedo ayudarte con preguntas sobre redes sociales, videojuegos, privacidad, grooming o cualquier situación online. ¿Qué quieres saber?</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink);line-height:1.1;">
+        ¿Pasó algo y<br><em style="color:var(--green);">no sabes qué hacer?</em>
       </div>
-    </div>
-    <div class="chat-quick">
-      <button class="qbtn" onclick="qa('¿Cómo sé si alguien me hackeó la cuenta?')">¿Me hackearon?</button>
-      <button class="qbtn" onclick="qa('¿Qué hago si recibo grooming?')">Grooming</button>
-      <button class="qbtn" onclick="qa('¿Cómo crear una contraseña segura?')">Contraseñas</button>
-      <button class="qbtn" onclick="qa('¿El ciberbullying es un delito en Chile?')">Ciberbullying legal</button>
-      <button class="qbtn" onclick="qa('¿Qué es el 2FA y cómo lo activo?')">Qué es el 2FA</button>
-    </div>
-    <div class="chat-row">
-      <input class="chat-in" id="chatIn" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendMsg()" maxlength="1000"/>
-      <button class="send-btn" onclick="sendMsg()">➤</button>
-    </div>
+      <div style="font-size:.86rem;color:var(--ink2);line-height:1.6;flex:1;">
+        El agente IA de Aegis8 responde preguntas concretas sobre seguridad digital, sin juicios y sin guardar lo que escribes.
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
+        color:var(--green);text-transform:uppercase;">Consultar ahora →</div>
+    </a>
+    <a href="/violencia-digital.html" style="background:rgba(155,109,255,.04);padding:2.5rem 2rem;
+      text-decoration:none;display:flex;flex-direction:column;gap:10px;transition:background .2s;
+      position:relative;overflow:hidden;border:1px solid rgba(155,109,255,.15);"
+      onmouseover="this.style.background='rgba(155,109,255,.08)'"
+      onmouseout="this.style.background='rgba(155,109,255,.04)'">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#9b6dff;"></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
+        color:#9b6dff;text-transform:uppercase;">Información y ayuda</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink);line-height:1.1;">
+        Violencia digital<br><em style="color:#9b6dff;">de género.</em>
+      </div>
+      <div style="font-size:.86rem;color:var(--ink2);line-height:1.6;flex:1;">
+        Sexting, sextorsión, ciberacoso y control en el pololeo. Qué es delito, qué hacer y dónde pedir ayuda en Chile hoy.
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
+        color:#9b6dff;text-transform:uppercase;">Ver información →</div>
+    </a>
   </div>
 </div>
 
@@ -538,128 +490,16 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   </ul>
   <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
     <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
-    <a href="/educa.html" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;" onmouseover="this.style.color='#f07830'" onmouseout="this.style.color=''">← Volver a Educa</a>
+    
   </div>
 </footer>
 <script>
-const SYS=`Eres el agente de ciberseguridad de Aegis8, hablando con adolescentes de 13-17 años.
-Sé directo, honesto y sin condescendencia. Usa un tono cercano pero informativo.
-Menciona leyes chilenas cuando sea relevante (Ley 19.223, Ley 21.459, Ley 20.526).
-Máximo 4 oraciones. Responde en español.`;
-
-const WORKER='https://aegis8-agent.christianmora705.workers.dev';
-let hist=[];
-async function sendMsg(){
-  const el=document.getElementById('chatIn');
-  const t=el.value.trim();if(!t)return;el.value='';
-  addM('user',t);hist.push({role:'user',content:t});showT();
-  try{
-    const r=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,system:SYS,messages:hist})});
-    const d=await r.json();removeT();
-    const rep=d.content?.[0]?.text||'Error al conectar.';
-    hist.push({role:'assistant',content:rep});addM('bot',rep);
-    if(hist.length>18)hist=hist.slice(-18);
-  }catch{removeT();addM('bot','Error de conexión. Intenta de nuevo.');}
-}
-function qa(q){document.getElementById('chatIn').value=q;sendMsg();}
-function addM(r,t){
-  const c=document.getElementById('chatMsgs');
-  const d=document.createElement('div');d.className='msg '+r;
-  const a=document.createElement('div');a.className='msg-ava';a.textContent=r==='bot'?'🤖':'👤';
-  const b=document.createElement('div');b.className='msg-bubble';b.textContent=t;
-  d.appendChild(a);d.appendChild(b);c.appendChild(d);c.scrollTop=c.scrollHeight;
-}
-function showT(){
-  const c=document.getElementById('chatMsgs');
-  const d=document.createElement('div');d.className='msg bot';d.id='tMsg';
-  d.innerHTML='<div class="msg-ava">🤖</div><div class="msg-bubble"><div class="typing-wrap"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div></div>';
-  c.appendChild(d);c.scrollTop=c.scrollHeight;
-}
-function removeT(){document.getElementById('tMsg')?.remove();}
-
-const qData=[
-  {cat:'Videojuegos',q:'Juegas Free Fire y alguien te ofrece diamonds gratis si le das tu contraseña. ¿Qué haces?',opts:['Le doy mis datos para tener diamonds','Lo bloqueo, es una trampa conocida','Le pregunto cuántos diamonds me dará','Acepto solo si me los da primero'],ans:1,exp:'Nadie regala diamonds gratis. Es una de las estafas más comunes en juegos mobile. Nunca compartas tu contraseña a cambio de moneda virtual.'},
-  {cat:'Redes Sociales',q:'Subes una historia en Instagram mostrando que estás de vacaciones con ubicación activada. ¿Qué riesgo implica?',opts:['Ninguno, es solo para amigos','Alguien puede saber que tu casa está vacía','Solo es peligroso si tienes muchos seguidores','El riesgo es que no tengas likes'],ans:1,exp:'Publicar que estás de vacaciones con ubicación activa avisa a posibles ladrones que tu casa está desocupada. Es mejor publicar las fotos después de volver.'},
-  {cat:'Videojuegos',q:'En Valorant, un jugador te dice que si le pasas tu cuenta la sube de rango y te la devuelve. ¿Qué haces?',opts:['Acepto porque quiero subir de rango','Rechazo, eso viola los términos y me robarán la cuenta','Le pregunto su rango primero','Acepto solo por un partido'],ans:1,exp:'Compartir cuentas viola los términos de servicio y casi siempre termina en robo. Una vez que alguien tiene tu contraseña, puede cambiarla y quedarse con todo.'},
-  {cat:'Privacidad',q:'¿Cuál de estos posts en TikTok revela más información peligrosa?',opts:['Me gustan los doritos','Voy al Liceo X, salgo a las 4pm todos los días','Mi película favorita es Avengers','Escucho reggaeton'],ans:1,exp:'Revelar tu colegio y horario de salida permite a cualquiera saber exactamente dónde estarás y cuándo. Es la información que usan el stalking y el grooming.'},
-  {cat:'Ciberbullying',q:'Un grupo de WhatsApp de tu curso comparte una foto editada de un compañero para burlarse. ¿Qué haces?',opts:['Me río porque no soy yo','Guardo evidencia y aviso a un adulto o reporto','Solo silencio el grupo','Reenvío la foto a otros grupos'],ans:1,exp:'El ciberbullying es delito en Chile (Ley 20.536). Aunque no seas quien inicia, reenviar o quedarte callado también tiene consecuencias.'},
-  {cat:'Videojuegos',q:'En Minecraft, un servidor pide que descargues un "mod exclusivo" desde un link externo. ¿Qué haces?',opts:['Lo descargo porque confío en el servidor','No descargo nada de links externos sin verificar','Lo descargo si otros jugadores también lo hacen','Lo descargo con el antivirus activado'],ans:1,exp:'Los links de mods externos son una forma común de distribuir malware. Siempre descarga mods de fuentes oficiales como CurseForge o Modrinth.'},
-  {cat:'Phishing',q:'Recibes un DM en Discord que dice "Nitro gratis por tiempo limitado, haz clic aquí". ¿Qué haces?',opts:['Hago clic rápido antes de que expire','Lo ignoro o reporto, es phishing clásico','Lo comparto con amigos para que decidan','Hago clic si el link parece de Discord'],ans:1,exp:'El phishing de "Nitro gratis" en Discord es uno de los más comunes. El link roba tu token de sesión y toma control de tu cuenta aunque no ingreses contraseña.'},
-  {cat:'Privacidad',q:'¿Cuál es el riesgo real de usar la misma contraseña en Steam, Discord y tu correo?',opts:['Ninguno si la contraseña es larga','Si hackean una cuenta, tienen acceso a todas','Solo si alguien te ve escribirla','Es más seguro porque la recuerdas bien'],ans:1,exp:'Si filtran la base de datos de Steam, los atacantes prueban esa contraseña en Discord, Gmail y todo lo demás. Usa contraseñas únicas o un gestor.'},
-  {cat:'Videojuegos',q:'En CS2, alguien te dice que si no le regalas tus skins va a hackear tu cuenta. ¿Qué haces?',opts:['Le regalo las skins para que no me hackee','No cedo, activo Steam Guard y reporto','Le pregunto si realmente puede hacerlo','Transfiero las skins a una cuenta de respaldo'],ans:1,exp:'Ceder a amenazas solo incentiva más extorsiones. Activa Steam Guard (2FA), cambia tu contraseña, reporta y bloquea al usuario.'},
-  {cat:'Seguridad',q:'¿Qué hace exactamente la autenticación de dos factores (2FA)?',opts:['Duplica tu contraseña','Requiere un segundo código además de tu contraseña','Crea una cuenta de respaldo','Encripta tus mensajes'],ans:1,exp:'El 2FA significa que aunque alguien robe tu contraseña, necesita también el código que llega a tu celular. Actívalo en Steam, Discord, Gmail y todo lo que puedas.'},
-  {cat:'Fake News',q:'Un video muestra a un político chileno diciendo algo escandaloso. Tiene millones de vistas. ¿Qué haces antes de compartirlo?',opts:['Lo comparto porque tiene muchas vistas','Busco si medios reconocidos lo cubren','Lo comparto con "no sé si es verdad"','Lo comparto solo a amigos cercanos'],ans:1,exp:'Los videos virales pueden ser deepfakes. Los millones de vistas no verifican nada. Busca en medios como La Tercera, Emol o T13 antes de compartir.'},
-  {cat:'Videojuegos',q:'Ves un hack para Apex Legends con aimbot gratis. Para instalarlo pide desactivar el antivirus. ¿Qué pasa si lo haces?',opts:['Funciona y nadie se da cuenta','Probablemente instalas malware que roba tus contraseñas','El juego te banea pero tu PC está bien','Nada malo, es solo el juego'],ans:1,exp:'Pedir que desactives el antivirus es señal clara de malware. Los "hacks gratuitos" casi siempre instalan software que roba contraseñas o permite acceso remoto a tu PC.'},
-  {cat:'Redes Sociales',q:'Tu ex publica capturas de tus conversaciones privadas en Twitter. ¿Qué recursos tienes?',opts:['No puedo hacer nada, ya se publicó','Puedo reportar, pedir eliminación y en casos graves denunciar','Solo puedo pedirle que las borre','Solo bloquearlo y esperar'],ans:1,exp:'En Chile, publicar conversaciones privadas sin consentimiento puede ser delito bajo la Ley 21.459. Puedes reportar en la plataforma y consultar opciones legales.'},
-  {cat:'Privacidad',q:'Tu número de teléfono está en tu bio de Instagram pública. ¿Qué riesgo tiene?',opts:['Ninguno, así me contactan mejor','Spam, estafas por WhatsApp y posible acoso','Solo si tienes la cuenta pública','El riesgo es recibir muchas llamadas'],ans:1,exp:'Tu número en la bio pública puede ser cosechado por bots para spam masivo, estafas de WhatsApp y en casos más graves, para acoso o stalking.'},
-  {cat:'Grooming',q:'Un desconocido en Discord te habla todos los días, te manda regalos virtuales y empieza a pedirte fotos. ¿Qué está pasando probablemente?',opts:['Es alguien que genuinamente le gustas','Es grooming — construcción de confianza para obtener material íntimo','Es solo alguien muy amable','Solo es problema si pide fotos íntimas'],ans:1,exp:'El grooming sigue ese patrón exacto: contacto frecuente, regalos, construcción de confianza, y luego solicitud de fotos. Bloquea, guarda capturas y cuéntale a un adulto.'},
-];
-function shuffle(a){return[...a].sort(()=>Math.random()-.5);}
-let qPool=shuffle(qData).slice(0,10),qi=0,qs=0,qcorrect=0,qanswered=false;
-
-function renderQ(){
-  const q=qPool[qi];
-  document.getElementById('qNum').textContent=qi+1;
-  document.getElementById('qPct').textContent=Math.round(qi/qPool.length*100)+'%';
-  document.getElementById('quizFill').style.width=(qi/qPool.length*100)+'%';
-  document.getElementById('qCat').textContent='// '+q.cat;
-  document.getElementById('qText').textContent=q.q;
-  const letters=['A','B','C','D'];
-  const optsEl=document.getElementById('qOpts');optsEl.innerHTML='';
-  q.opts.forEach((o,i)=>{
-    const btn=document.createElement('button');btn.className='quiz-opt';
-    btn.innerHTML=`<div class="opt-letter">${letters[i]}</div><div class="opt-text">${o}</div>`;
-    btn.onclick=()=>selectQ(i,q);optsEl.appendChild(btn);
-  });
-  document.getElementById('qExp').style.display='none';
-  document.getElementById('qExp').textContent='';
-  document.getElementById('qNextBtn').style.display='none';
-  qanswered=false;
-}
-function selectQ(i,q){
-  if(qanswered)return;qanswered=true;
-  const correct=i===q.ans;
-  if(correct)qcorrect++;qs+=correct?10:0;
-  document.getElementById('quizScore').textContent=qs;
-  document.querySelectorAll('.quiz-opt').forEach((b,idx)=>{
-    b.disabled=true;
-    if(idx===q.ans)b.classList.add('correct');
-    else if(idx===i&&!correct)b.classList.add('wrong');
-  });
-  const exp=document.getElementById('qExp');
-  exp.textContent=q.exp;
-  exp.style.cssText='display:block;margin-top:1rem;padding:.9rem 1.1rem;border-radius:4px;font-size:.83rem;line-height:1.65;'+(correct?'background:rgba(46,204,128,.06);border-left:3px solid var(--green);color:var(--green);':'background:rgba(240,120,48,.06);border-left:3px solid var(--accent);color:var(--accent);');
-  document.getElementById('qNextBtn').style.display='block';
-}
-function nextQ(){qi++;if(qi>=qPool.length)showQuizResult();else renderQ();}
-function showQuizResult(){
-  document.getElementById('quizMain').style.display='none';
-  document.getElementById('quizResult').style.display='block';
-  document.getElementById('quizFill').style.width='100%';
-  const pct=qcorrect/qPool.length;
-  let em,ti,su;
-  if(pct>=.9){em='🏆';ti='Nivel experto';su='Conoces muy bien los riesgos digitales. Comparte lo que sabes.';}
-  else if(pct>=.6){em='🌟';ti='Bien hecho';su='Buen nivel. Hay algunos puntos que vale la pena reforzar.';}
-  else if(pct>=.3){em='📚';ti='Sigue aprendiendo';su='Vas por buen camino. Repasa los temas donde fallaste.';}
-  else{em='💪';ti='Hay trabajo por hacer';su='Internet tiene más riesgos de los que crees. Vale la pena estudiarlo.';}
-  document.getElementById('rEmoji').textContent=em;
-  document.getElementById('rTitle').textContent=ti;
-  document.getElementById('rSub').textContent=su+` Puntaje: ${qs}/${qPool.length*10}`;
-}
-function restartQuiz(){
-  qPool=shuffle(qData).slice(0,10);qi=0;qs=0;qcorrect=0;qanswered=false;
-  document.getElementById('quizScore').textContent='0';
-  document.getElementById('quizMain').style.display='';
-  document.getElementById('quizResult').style.display='none';
-  renderQ();
-}
-renderQ();
 
 const ro=new IntersectionObserver(e=>{
   e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});
 },{threshold:.07,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.sw').forEach(el=>ro.observe(el));
+
 
 </script>
 </body>

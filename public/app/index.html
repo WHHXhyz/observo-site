@@ -727,6 +727,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 // STATE
 // ═══════════════════════════════════════
 const WORKER = 'https://aegis8-agent.christianmora705.workers.dev';
+const WORKER_QUIZ = WORKER; // misma URL, rutas distintas
 let STATE = {
   mode: null,      // 'docente' | 'familia'
   docente: null,   // { nombre, colegio, nivel }
@@ -934,7 +935,7 @@ function selMod(el) {
   selectedMod = el.dataset.mod;
 }
 
-function crearClase() {
+async function crearClase() {
   if (!selectedMod) { alert('Elige un módulo'); return; }
   const nombre = document.getElementById('new-clase-nombre').value.trim();
   const id = 'c_' + Date.now();
@@ -943,6 +944,22 @@ function crearClase() {
   STATE.clases.unshift(clase);
   STATE.active_clase = id;
   save();
+
+  // Guardar en KV para que alumnos puedan acceder
+  try {
+    await fetch(WORKER_QUIZ + '/quiz/clase', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        code,
+        nombre: clase.nombre,
+        modulo: selectedMod,
+        docenteNombre: STATE.docente?.nombre || '',
+        colegio: STATE.docente?.colegio || '',
+      })
+    });
+  } catch(e) { console.warn('KV save failed:', e); }
+
   showClaseDetail(id);
   renderDashDocente();
 }
@@ -950,17 +967,28 @@ function crearClase() {
 // ═══════════════════════════════════════
 // CLASE DETAIL
 // ═══════════════════════════════════════
-function showClaseDetail(id) {
+async function showClaseDetail(id) {
   STATE.active_clase = id;
   const c = STATE.clases.find(x => x.id === id);
   if (!c) return;
 
+  // Cargar resultados frescos desde KV
+  try {
+    const r = await fetch(WORKER_QUIZ + '/quiz/resultados?code=' + c.code);
+    if (r.ok) {
+      const data = await r.json();
+      c.resultados = data.resultados || [];
+      save();
+    }
+  } catch(e) { console.warn('KV fetch failed:', e); }
+
   document.querySelectorAll('.tab-pane').forEach(p => p.style.display = 'none');
   document.getElementById('tab-clase-detail').style.display = 'block';
 
-  document.getElementById('detail-tag').textContent = '// ' + c.modulo;
+  document.getElementById('detail-tag').innerHTML = '// ' + c.modulo + ' &nbsp;<span style="font-family:JetBrains Mono,monospace;font-size:.54rem;color:var(--green);letter-spacing:1px;">● EN VIVO</span>';
   document.getElementById('detail-name').innerHTML = (c.nombre || c.modulo) + '<br><em style="color:var(--blue);font-size:.8em;">Código: ' + c.code + '</em>';
   document.getElementById('detail-code').textContent = c.code;
+  startResultsRefresh(c.code);
 
   // Stats
   const total = c.resultados.length;
@@ -1009,6 +1037,32 @@ function addFakeResult(id) {
   save();
   showClaseDetail(id);
   renderDashDocente();
+}
+
+// Auto-refresh resultados cuando está en detalle de clase
+let _refreshInterval = null;
+function startResultsRefresh(code) {
+  stopResultsRefresh();
+  _refreshInterval = setInterval(async () => {
+    if (STATE.active_tab !== 'inicio' && STATE.active_clase) {
+      const c = STATE.clases.find(x => x.id === STATE.active_clase);
+      if (c && c.code === code) {
+        try {
+          const r = await fetch(WORKER_QUIZ + '/quiz/resultados?code=' + code);
+          if (r.ok) {
+            const data = await r.json();
+            const prev = c.resultados.length;
+            c.resultados = data.resultados || [];
+            save();
+            if (c.resultados.length !== prev) showClaseDetail(STATE.active_clase);
+          }
+        } catch(e) {}
+      }
+    }
+  }, 15000); // cada 15 segundos
+}
+function stopResultsRefresh() {
+  if (_refreshInterval) { clearInterval(_refreshInterval); _refreshInterval = null; }
 }
 
 function shareWA() {

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <!-- Solid dark background -->
+  <rect width="192" height="192" fill="#080c14"/>
+  
+  <!-- Subtle grid texture -->
+  <defs>
+    <linearGradient id="og" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5c842"/>
+      <stop offset="55%" stop-color="#f07830"/>
+      <stop offset="100%" stop-color="#d4611a"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Shield — centered, generous padding -->
+  <path d="M96 24 C80 24 56 31 40 41 L28 49 L28 104 C28 130 58 148 96 164 C134 148 164 130 164 104 L164 49 L152 41 C136 31 112 24 96 24 Z"
+    fill="#0d1422" stroke="url(#og)" stroke-width="3"/>
+
+  <!-- Outer glow -->
+  <path d="M96 24 C80 24 56 31 40 41 L28 49 L28 104 C28 130 58 148 96 164 C134 148 164 130 164 104 L164 49 L152 41 C136 31 112 24 96 24 Z"
+    fill="none" stroke="rgba(240,120,48,0.15)" stroke-width="8" filter="url(#glow)"/>
+
+  <!-- "8" numeral path — centered at 96,95 -->
+  <path d="M96 52 C86 52 78 59 78 68 C78 75 82 80 89 84 C82 88 76 95 76 104 C76 116 85 124 96 124 C107 124 116 116 116 104 C116 95 110 88 103 84 C110 80 114 75 114 68 C114 59 106 52 96 52 Z"
+    fill="none" stroke="url(#og)" stroke-width="4.5" stroke-linejoin="round" filter="url(#glow)"/>
+
+  <!-- Corner brackets -->
+  <polyline points="40,60 40,48 52,48" fill="none" stroke="#f07830" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="152,60 152,48 140,48" fill="none" stroke="#f07830" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Bottom accent dot -->
+  <circle cx="96" cy="158" r="4" fill="#f07830"/>
+</svg>
