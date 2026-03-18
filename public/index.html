@@ -26,6 +26,36 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background:linear-gradient(rgba(58,127,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.025) 1px,transparent 1px);
   background-size:80px 80px;}
 
+
+/* ── AMENAZAS REALES ── */
+.amenazas-real{position:relative;z-index:2;background:rgba(13,20,34,.92);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  opacity:0;animation:up .8s .9s forwards;}
+.ar-hd{display:flex;align-items:center;justify-content:space-between;
+  padding:13px 32px;border-bottom:1px solid var(--border);background:rgba(8,12,20,.5);}
+.ar-hd-l{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;
+  color:var(--ink3);display:flex;align-items:center;gap:10px;}
+.ar-live{width:7px;height:7px;border-radius:50%;background:#ef4444;
+  animation:blink 1.5s infinite;}
+.ar-hd-r{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ink3);letter-spacing:2px;}
+.ar-body{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);}
+@media(max-width:720px){.ar-body{grid-template-columns:1fr;}}
+.ar-item{padding:28px 28px;display:flex;align-items:flex-start;gap:18px;
+  border-right:1px solid var(--border);position:relative;overflow:hidden;}
+.ar-item:last-child{border-right:none;}
+@media(max-width:720px){.ar-item{border-right:none;border-bottom:1px solid var(--border);}}
+.ar-item::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.ar-1::before{background:var(--accent);}
+.ar-2::before{background:#ef4444;}
+.ar-3::before{background:#9b6dff;}
+.ar-n{font-family:'DM Serif Display',serif;font-size:2.4rem;line-height:1;
+  font-style:italic;flex-shrink:0;min-width:64px;}
+.ar-1 .ar-n{color:var(--accent);}
+.ar-2 .ar-n{color:#ef4444;}
+.ar-3 .ar-n{color:#9b6dff;}
+.ar-title{font-size:.86rem;color:var(--ink);line-height:1.4;margin-bottom:5px;font-weight:400;}
+.ar-sub{font-size:.78rem;color:var(--ink3);line-height:1.55;}
+
 /* ── HERO ── */
 .hero{position:relative;z-index:10;min-height:100vh;display:flex;flex-direction:column;padding:64px 0 0;overflow:hidden;}
 .blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
@@ -500,35 +530,39 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
     </div>
   </div>
 
-  <!-- Demo interactivo -->
-  <div class="demo">
-    <div class="demo-hd">
-      <div class="demo-hd-l"><div class="demo-live"></div>MINI DESAFÍO · ¿PUEDES DETECTAR EL PHISHING?</div>
-      <div class="demo-hd-r" id="demoHdScore">0 / 3 correctas</div>
+  <!-- AMENAZAS REALES -->
+  <div class="amenazas-real">
+    <div class="ar-hd">
+      <div class="ar-hd-l">
+        <div class="ar-live"></div>
+        AMENAZAS ACTIVAS EN CHILE · 2025
+      </div>
+      <div class="ar-hd-r">Datos: Kaspersky · PDI · SERNAMEG</div>
     </div>
-    <div class="demo-body">
-      <div class="demo-msg">
-        <div class="demo-msg-lbl">// MENSAJE RECIBIDO</div>
-        <div class="demo-box" id="demoBox">
-          <div class="demo-from" id="demoFrom"></div>
-          <div id="demoText"></div>
+    <div class="ar-body">
+      <div class="ar-item ar-1">
+        <div class="ar-n">22M</div>
+        <div class="ar-info">
+          <div class="ar-title">Intentos de phishing bloqueados en Chile en 2024</div>
+          <div class="ar-sub">42 ataques por minuto. La mayoría llegan como correos de bancos, JUNAEB o el MINEDUC.</div>
         </div>
       </div>
-      <div class="demo-act">
-        <div class="demo-act-lbl">// ¿ES LEGÍTIMO O UN ENGAÑO?</div>
-        <div class="demo-btns">
-          <button class="db db-ok" onclick="ans('safe')">✓ Parece legítimo</button>
-          <button class="db db-ph" onclick="ans('phishing')">⚠ Es phishing</button>
+      <div class="ar-item ar-2">
+        <div class="ar-n">14</div>
+        <div class="ar-info">
+          <div class="ar-title">Años — edad promedio de la primera víctima de grooming</div>
+          <div class="ar-sub">El contacto ocurre en juegos como Roblox, Discord y plataformas que usan a diario.</div>
         </div>
-        <div class="demo-res" id="demoRes"></div>
-        <button class="demo-nxt" id="demoNxt" onclick="nextMsg()">Siguiente mensaje →</button>
-        <div class="demo-sc">Correctas: <span id="demoSc">0</span>/3</div>
+      </div>
+      <div class="ar-item ar-3">
+        <div class="ar-n">+89%</div>
+        <div class="ar-info">
+          <div class="ar-title">Aumento de sextorsión en Chile en 2024</div>
+          <div class="ar-sub">Chantaje con imágenes íntimas. Afecta principalmente a adolescentes de 14 a 17 años.</div>
+        </div>
       </div>
     </div>
   </div>
-</section>
-</section>
-
 <!-- TICKER -->
 <!-- TICKER -->
 <div class="ticker">
@@ -629,7 +663,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
 <!-- CTA FINAL -->
 <div class="page">
 <div class="sw">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--border);">
     <a href="/talleres.html" style="background:var(--bg2);padding:2.5rem 2rem;text-decoration:none;
       display:flex;flex-direction:column;gap:10px;transition:background .2s;position:relative;overflow:hidden;"
       onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background='var(--bg2)'">
@@ -659,6 +693,21 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
       </div>
       <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
         color:var(--blue);text-transform:uppercase;">Suscribirse gratis →</div>
+    </a>
+    <a href="/violencia-digital.html" style="background:var(--bg2);padding:2.5rem 2rem;text-decoration:none;
+      display:flex;flex-direction:column;gap:10px;transition:background .2s;position:relative;overflow:hidden;"
+      onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background='var(--bg2)'">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#9b6dff;"></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
+        color:#9b6dff;text-transform:uppercase;">Información y ayuda</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink);line-height:1.1;">
+        Violencia<br><em style="font-style:italic;color:#9b6dff;">digital.</em>
+      </div>
+      <div style="font-size:.86rem;color:var(--ink2);line-height:1.6;flex:1;">
+        Sexting, sextorsión, ciberacoso y control digital. Qué es, qué hacer y dónde pedir ayuda en Chile.
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
+        color:#9b6dff;text-transform:uppercase;">Ver información →</div>
     </a>
   </div>
 </div>
@@ -712,74 +761,6 @@ function animCount(el){
 const statsObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.querySelectorAll('[data-target]').forEach(animCount);statsObs.unobserve(x.target);}});},{threshold:.4});
 const ss=document.querySelector('.stats-s');if(ss)statsObs.observe(ss);
 
-/* DEMO PHISHING */
-const msgs=[
-  {from:'Banco Estado <soporte@banco-estado-cl.net>',fromCls:'',
-   text:'Estimado cliente, su cuenta ha sido <span class="hl">BLOQUEADA</span> por actividad sospechosa. Verifique ahora: <span class="hl">http://bancoestado-verificar.com/cuenta</span>',
-   type:'phishing',boxCls:'ph',
-   exp:'⚠️ Phishing. El dominio "banco-estado-cl.net" es falso — Banco Estado usa @bancoestado.cl. La URL también es falsa. Nunca hagas clic; llama directamente al banco.',
-   wrongExp:'Incorrecto. Este es phishing clásico: dominio falso, urgencia artificial y URL sospechosa. El banco real nunca pide verificar por links en correos.'},
-  {from:'Directora Colegio <directora@colegio-san-pedro.cl>',fromCls:'ok',
-   text:'Estimados apoderados: mañana no hay clases por capacitación docente. El lunes retomamos con normalidad. Cualquier consulta, responder este correo.',
-   type:'safe',boxCls:'ok',
-   exp:'✅ Legítimo. Dominio del colegio real, mensaje claro, sin urgencia, sin links sospechosos, sin pedir datos personales.',
-   wrongExp:'Correcto. Este correo tiene todas las señales de ser legítimo: dominio oficial, mensaje claro, sin links extraños ni solicitud de información.'},
-  {from:'WhatsApp <no-reply@whatsapp-verificacion.co>',fromCls:'',
-   text:'Tu cuenta de WhatsApp será <span class="hl">ELIMINADA</span> en 24 horas. Para evitarlo envía tu código de verificación al número <span class="hl">+56 9 8843 2211</span> ahora mismo.',
-   type:'phishing',boxCls:'ph',
-   exp:'⚠️ Phishing peligroso. WhatsApp nunca pide el código de verificación. Si lo envías, el atacante toma control de tu cuenta. Es el ataque más frecuente en Chile.',
-   wrongExp:'Incorrecto. Este es el ataque de robo de cuenta WhatsApp más común. Jamás compartas el código de verificación con nadie.'}
-];
-let idx=0,score=0,answered=false;
-
-function loadMsg(){
-  const m=msgs[idx];
-  const fromEl=document.getElementById('demoFrom');
-  fromEl.className='demo-from'+(m.fromCls?' '+m.fromCls:'');
-  fromEl.textContent=m.from;
-  document.getElementById('demoText').innerHTML=m.text;
-  document.getElementById('demoBox').className='demo-box';
-  document.getElementById('demoRes').className='demo-res';
-  document.getElementById('demoNxt').className='demo-nxt';
-  document.querySelectorAll('.db').forEach(b=>b.classList.remove('sel'));
-  answered=false;
-}
-
-function ans(a){
-  if(answered)return;answered=true;
-  const m=msgs[idx];
-  const correct=a===m.type;
-  if(correct)score++;
-  const btnSel=document.querySelector('.db-'+a);
-  if(btnSel)btnSel.classList.add('sel');
-  const box=document.getElementById('demoBox');
-  if(box)box.className='demo-box '+m.boxCls;
-  const res=document.getElementById('demoRes');
-  if(res){
-    res.className='demo-res show '+(correct?'right':'wrong');
-    res.innerHTML=correct?m.exp:(a==='phishing'?m.wrongExp:m.exp);
-  }
-  const sc=document.getElementById('demoSc');
-  if(sc)sc.textContent=score;
-  const hd=document.getElementById('demoHdScore');
-  if(hd)hd.textContent=score+' / 3 correctas';
-  const nxt=document.getElementById('demoNxt');
-  if(nxt){
-    nxt.className='demo-nxt show';
-    nxt.style.display='block';
-    if(idx===msgs.length-1){
-      nxt.textContent=score===3?'¡Perfecto! Ir a Aegis Educa →':'Practicar más en Aegis Educa →';
-      nxt.onclick=function(){window.location.href='/educa.html';};
-    }
-  }
-}
-
-function nextMsg(){
-  if(idx<msgs.length-1){idx++;loadMsg();}
-  else{window.location.href='/educa.html';}
-}
-
-loadMsg();
 </script>
 
 </body>
