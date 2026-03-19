@@ -37,6 +37,15 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
 .sw.vis{opacity:1;transform:none;}
 .sw:last-child{border-bottom:none;}
+/* ── NEWSLETTER CTA RESPONSIVE ── */
+.nl-cta{border:1px solid var(--border);border-radius:4px;padding:48px;
+  background:var(--card);display:grid;grid-template-columns:1fr auto;gap:32px;
+  align-items:center;position:relative;overflow:hidden;}
+.nl-btn{white-space:nowrap;flex-shrink:0;}
+@media(max-width:640px){
+  .nl-cta{grid-template-columns:1fr;padding:32px 24px;gap:24px;}
+  .nl-btn{width:100%;text-align:center;}
+}
 .btn-p{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
   color:var(--bg);background:var(--accent);border:none;padding:14px 28px;border-radius:var(--radius);
   text-decoration:none;transition:all .25s;position:relative;overflow:hidden;display:inline-block;cursor:pointer!important;}
@@ -101,7 +110,15 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .flinks a:hover{color:var(--accent);}
 .fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
 /* SCROLL REVEAL JS inline */
-@media(max-width:640px){.wrap{padding:0 16px;}.page-footer{padding:32px 16px;}}
+@media(max-width:640px){
+  .wrap{padding:0 16px;}
+  .page-footer{padding:32px 16px;}
+}
+@media(max-width:720px){
+  [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr!important;}
+  [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;}
+  [style*="grid-template-columns:repeat(2,1fr)"]{grid-template-columns:1fr!important;}
+}
 
 
 /* HERO HUB — compacto, no vitrina */
@@ -206,21 +223,130 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     </div>
     <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,7vw,5rem);
       line-height:.92;letter-spacing:-1.5px;margin-bottom:16px;">
-      Todo el contenido.<br>
-      <span style="color:var(--accent);font-style:italic;">Elige tu perfil.</span>
+      Lo que no se enseña<br>
+      <span style="color:var(--accent);font-style:italic;">en el colegio.</span>
     </h1>
-    <p style="font-size:.95rem;line-height:1.8;color:var(--ink2);max-width:500px;">
-      Módulos para niños, adolescentes, familias y docentes. 
-      Sin registro, sin costo, sin tecnicismos.
+    <p style="font-size:.95rem;line-height:1.8;color:var(--ink2);max-width:560px;margin-bottom:28px;">
+      El 74% de los colegios chilenos no tiene protocolo ante incidentes digitales. Mientras tanto, cada semana un menor es víctima de grooming, sextorsión o ciberacoso. Este hub existe para cambiar eso — con contenido concreto para cada persona involucrada.
     </p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;">
+      <a href="#perfiles" class="btn-p"><span>Ver los módulos →</span></a>
+      <a href="/agente-seguridad.html" class="btn-g">Consultar al agente IA</a>
+    </div>
   </div>
 </section>
 
 <div class="wrap page-inner">
 
-<!-- PERFILES — el corazón del hub -->
+<!-- REALIDAD CHILENA — datos que justifican la urgencia -->
 <div class="sw">
-  <div class="sl">// Elige tu perfil</div>
+  <div class="sl">// Por qué esto importa · Chile 2025</div>
+  <h2 class="st">Los números<br><em>no mienten.</em></h2>
+  <p class="si">No es alarmismo. Es la realidad que docentes y familias enfrentan cada semana en Chile.</p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);margin-bottom:32px;">
+    <div style="background:var(--bg2);padding:2rem 1.75rem;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);"></div>
+      <div style="font-family:'DM Serif Display',serif;font-size:2.8rem;color:var(--accent);font-style:italic;line-height:1;">1 de 3</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--ink);letter-spacing:1px;margin:8px 0 6px;">adolescentes chilenos</div>
+      <div style="font-size:.82rem;color:var(--ink2);line-height:1.6;">ha vivido alguna forma de ciberacoso antes de los 17 años. La mayoría no lo reporta.</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--ink3);margin-top:10px;letter-spacing:1px;">Fuente: UNICEF Chile 2024</div>
+    </div>
+    <div style="background:var(--bg2);padding:2rem 1.75rem;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#ef4444;"></div>
+      <div style="font-family:'DM Serif Display',serif;font-size:2.8rem;color:#ef4444;font-style:italic;line-height:1;">74%</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--ink);letter-spacing:1px;margin:8px 0 6px;">de los colegios</div>
+      <div style="font-size:.82rem;color:var(--ink2);line-height:1.6;">no tiene ningún protocolo formal ante incidentes de seguridad digital. El docente queda solo.</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--ink3);margin-top:10px;letter-spacing:1px;">Fuente: MINEDUC 2024</div>
+    </div>
+    <div style="background:var(--bg2);padding:2rem 1.75rem;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#9b6dff;"></div>
+      <div style="font-family:'DM Serif Display',serif;font-size:2.8rem;color:#9b6dff;font-style:italic;line-height:1;">6 meses</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--ink);letter-spacing:1px;margin:8px 0 6px;">promedio</div>
+      <div style="font-size:.82rem;color:var(--ink2);line-height:1.6;">tarda un caso de grooming en ser detectado por un adulto. En ese tiempo el daño ya ocurrió.</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--ink3);margin-top:10px;letter-spacing:1px;">Fuente: PDI Chile 2023</div>
+    </div>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);
+    padding:20px 24px;font-size:.9rem;line-height:1.8;color:var(--ink2);border-radius:0 4px 4px 0;">
+    <strong style="color:var(--ink);font-weight:400;">La educación digital no es una materia extra.</strong> Es la diferencia entre un menor que reconoce una señal de grooming a tiempo y uno que no. Entre un padre que sabe qué hacer en las primeras 24 horas y uno que no. Aegis8 existe para cerrar esa brecha — gratis, en español, con foco en Chile.
+  </div>
+</div>
+
+<!-- TEMAS QUE SE CUBREN — qué aprende el usuario concreto -->
+<div class="sw">
+  <div class="sl">// Temas · Lo que cubre este hub</div>
+  <h2 class="st">Peligros reales.<br><em>Respuestas concretas.</em></h2>
+  <p class="si">Cada tema tiene módulo educativo, guía descargable y acceso al agente IA para consultas en tiempo real.</p>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--border);">
+
+    <div style="background:var(--bg2);padding:1.75rem 2rem;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#ef4444;flex-shrink:0;"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;color:#ef4444;">RIESGO ALTO</div>
+      </div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--ink);margin-bottom:8px;">Grooming</div>
+      <div style="font-size:.84rem;color:var(--ink2);line-height:1.7;margin-bottom:12px;">Un adulto construye confianza con un menor durante semanas o meses para obtener imágenes íntimas o acceso físico. Las señales son sutiles y fáciles de ignorar si no sabes qué buscar.</div>
+      <div style="font-size:.78rem;color:var(--ink3);line-height:1.6;"><strong style="color:var(--ink);font-weight:400;">Aprenderás:</strong> las 5 etapas del grooming, señales de alerta por edad, cómo hablar con el menor y qué hacer en las primeras 24 horas.</div>
+    </div>
+
+    <div style="background:var(--bg2);padding:1.75rem 2rem;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#ef4444;flex-shrink:0;"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;color:#ef4444;">RIESGO ALTO</div>
+      </div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--ink);margin-bottom:8px;">Sextorsión y sexting</div>
+      <div style="font-size:.84rem;color:var(--ink2);line-height:1.7;margin-bottom:12px;">Un adolescente comparte una imagen íntima y luego la usan para extorsionarlo. Es el delito digital de más rápido crecimiento en Chile entre menores de 18 años.</div>
+      <div style="font-size:.78rem;color:var(--ink3);line-height:1.6;"><strong style="color:var(--ink);font-weight:400;">Aprenderás:</strong> por qué ocurre, cómo responder sin culpar al menor, qué evidencia guardar y cómo denunciar en PDI.</div>
+    </div>
+
+    <div style="background:var(--bg2);padding:1.75rem 2rem;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;color:var(--gold);">RIESGO MEDIO-ALTO</div>
+      </div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--ink);margin-bottom:8px;">Ciberacoso</div>
+      <div style="font-size:.84rem;color:var(--ink2);line-height:1.7;margin-bottom:12px;">No es una pelea online. Es acoso sistemático, con desequilibrio de poder, que ocurre principalmente en grupos de WhatsApp los fines de semana. Sus efectos son tan graves como el acoso presencial.</div>
+      <div style="font-size:.78rem;color:var(--ink3);line-height:1.6;"><strong style="color:var(--ink);font-weight:400;">Aprenderás:</strong> cómo diferenciarlo de un conflicto normal, el protocolo docente paso a paso y cómo acompañar a la víctima.</div>
+    </div>
+
+    <div style="background:var(--bg2);padding:1.75rem 2rem;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;color:var(--gold);">RIESGO MEDIO-ALTO</div>
+      </div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--ink);margin-bottom:8px;">Phishing y estafas digitales</div>
+      <div style="font-size:.84rem;color:var(--ink2);line-height:1.7;margin-bottom:12px;">Mensajes falsos de bancos, concursos de premios, links de "verificación de cuenta". En Chile, el phishing aumentó 140% en 2024. Afecta a mayores y jóvenes por igual.</div>
+      <div style="font-size:.78rem;color:var(--ink3);line-height:1.6;"><strong style="color:var(--ink);font-weight:400;">Aprenderás:</strong> a identificar las señales en menos de 10 segundos, qué hacer si ya hiciste clic y cómo enseñarlo en el aula.</div>
+    </div>
+
+    <div style="background:var(--bg2);padding:1.75rem 2rem;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;color:var(--blue);">PREVENCIÓN ESENCIAL</div>
+      </div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--ink);margin-bottom:8px;">Privacidad y contraseñas</div>
+      <div style="font-size:.84rem;color:var(--ink2);line-height:1.7;margin-bottom:12px;">El 68% de los adolescentes usa la misma contraseña para todo. Configurar bien un perfil en redes sociales tarda 4 minutos. Nadie lo enseña en el colegio.</div>
+      <div style="font-size:.78rem;color:var(--ink3);line-height:1.6;"><strong style="color:var(--ink);font-weight:400;">Aprenderás:</strong> contraseñas seguras, 2FA, configuración de privacidad por red social y huella digital permanente.</div>
+    </div>
+
+    <div style="background:var(--bg2);padding:1.75rem 2rem;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#9b6dff;flex-shrink:0;"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;color:#9b6dff;">DERECHOS DIGITALES</div>
+      </div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--ink);margin-bottom:8px;">Violencia de género digital</div>
+      <div style="font-size:.84rem;color:var(--ink2);line-height:1.7;margin-bottom:12px;">Difusión de imágenes sin consentimiento, control digital en relaciones de pareja, acoso coordinado. La Ley 21.459 lo tipifica como delito en Chile. La mayoría de las víctimas no sabe que tiene opciones.</div>
+      <div style="font-size:.78rem;color:var(--ink3);line-height:1.6;"><strong style="color:var(--ink);font-weight:400;">Aprenderás:</strong> qué dice la ley, cómo acompañar a una víctima y dónde denunciar.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PERFILES — el corazón del hub -->
+<div class="sw" id="perfiles">
+  <div class="sl">// Elige tu perfil · Contenido adaptado</div>
+  <h2 class="st">El mismo tema.<br><em>Lenguaje distinto.</em></h2>
+  <p class="si">Grooming no se explica igual a un niño de 8 años que a un docente de media. Cada sección tiene el tono, las actividades y el nivel de detalle correcto para quien la lee.</p>
   <div class="educa-g">
 
     <a href="/educa/ninos.html" class="educa-card ec-n">
@@ -236,9 +362,12 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
           <div class="ec-name">Niños</div>
         </div>
       </div>
-      <div class="ec-desc">Juegos interactivos y actividades para aprender qué es seguro compartir, cómo reconocer a un extraño online y qué hacer cuando algo no se siente bien.</div>
+      <div class="ec-desc">Aprenden qué es seguro compartir en internet, cómo reconocer a un extraño online y qué hacer cuando algo no se siente bien — sin asustarlos, con juegos y personajes.</div>
+      <div style="font-size:.78rem;color:var(--ink3);line-height:1.6;margin-top:2px;">
+        Al terminar sabrán decir "no" a solicitudes de desconocidos, entenderán que los secretos online no son normales y sabrán a qué adulto acudir.
+      </div>
       <div class="ec-pills">
-        <span class="ep">juegos</span><span class="ep">actividades</span><span class="ep">CiberBot IA</span>
+        <span class="ep">juegos interactivos</span><span class="ep">CiberBot IA</span><span class="ep">actividades imprimibles</span>
       </div>
       <div class="ec-cta">Entrar →</div>
     </a>
@@ -256,9 +385,12 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
           <div class="ec-name">Adolescentes</div>
         </div>
       </div>
-      <div class="ec-desc">Quiz con casos reales, privacidad en redes, grooming, phishing y reputación digital. Sin condescendencia — con respeto y sin bajarles el perfil.</div>
+      <div class="ec-desc">Sin condescendencia. Quiz con casos reales de Chile, privacidad en Instagram y TikTok, qué hacer si alguien te extorsiona con imágenes y cómo proteger tus cuentas ahora mismo.</div>
+      <div style="font-size:.78rem;color:var(--ink3);line-height:1.6;margin-top:2px;">
+        Aprenden a reconocer manipulación digital, configurar su privacidad correctamente y qué hacer si algo ya pasó — sin miedo a ser juzgados.
+      </div>
       <div class="ec-pills">
-        <span class="ep">quiz</span><span class="ep">redes sociales</span><span class="ep">agente IA</span>
+        <span class="ep">quiz con casos reales</span><span class="ep">redes sociales</span><span class="ep">agente IA</span>
       </div>
       <div class="ec-cta">Entrar →</div>
     </a>
@@ -278,9 +410,12 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
           <div class="ec-name">Familias</div>
         </div>
       </div>
-      <div class="ec-desc">Guías de conversación por edad, checklist de seguridad familiar, controles parentales y qué hacer si algo ya pasó. Lenguaje simple, sin tecnicismos.</div>
+      <div class="ec-desc">No hay que ser experto en tecnología. Hay que saber qué señales buscar, cómo hablar de estos temas sin generar silencio y qué hacer en las primeras 24 horas si algo ocurre.</div>
+      <div style="font-size:.78rem;color:var(--ink3);line-height:1.6;margin-top:2px;">
+        Guías de conversación por edad del hijo, checklist de seguridad del hogar digital, controles parentales que funcionan y agente IA disponible 24/7 para cuando no sabes qué hacer.
+      </div>
       <div class="ec-pills">
-        <span class="ep">guías</span><span class="ep">checklist</span><span class="ep">PDFs</span>
+        <span class="ep">guías por edad</span><span class="ep">checklist familiar</span><span class="ep">agente IA</span>
       </div>
       <div class="ec-cta">Entrar →</div>
     </a>
@@ -295,18 +430,73 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
           </svg>
         </div>
         <div class="ec-meta">
-          <div class="ec-tag">Educadores</div>
+          <div class="ec-tag">Educadores · 1° básico – 4° medio</div>
           <div class="ec-name">Docentes</div>
         </div>
       </div>
-      <div class="ec-desc">Planes de clase completos, protocolos ante incidentes, guías técnicas y newsletter mensual con la amenaza del mes lista para enseñar.</div>
+      <div class="ec-desc">6 planes de clase listos para usar mañana. No necesitas saber de tecnología — necesitas saber de educación, que eso ya lo tienes. Nosotros ponemos el contenido técnico.</div>
+      <div style="font-size:.78rem;color:var(--ink3);line-height:1.6;margin-top:2px;">
+        Incluye: qué decir cuando un alumno te reporta algo, cómo no exponer a la víctima frente al curso, protocolo de derivación y cómo involucrar a los apoderados.
+      </div>
       <div class="ec-pills">
-        <span class="ep">planes de clase</span><span class="ep">protocolos</span><span class="ep">newsletter</span>
+        <span class="ep">6 planes de clase</span><span class="ep">protocolo ante incidentes</span><span class="ep">newsletter mensual</span>
       </div>
       <div class="ec-cta">Entrar →</div>
     </a>
 
   </div>
+</div>
+
+<!-- QUÉ GANAS · propuesta de valor explícita por audiencia -->
+<div class="sw">
+  <div class="sl">// Para docentes · Lo concreto</div>
+  <h2 class="st">Entra hoy.<br><em>Enseña mañana.</em></h2>
+  <p class="si">Diseñado para profesores sin tiempo y sin formación técnica previa. Todo listo para usar.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);margin-bottom:32px;">
+    <div style="background:var(--bg2);padding:2rem;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:2px;color:var(--accent);margin-bottom:12px;">LO QUE OBTIENES</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+        <li style="display:flex;gap:10px;align-items:flex-start;font-size:.86rem;color:var(--ink2);line-height:1.6;">
+          <span style="color:var(--green);margin-top:2px;flex-shrink:0;">✓</span>
+          <span><strong style="color:var(--ink);font-weight:400;">6 planes de clase completos</strong> — objetivos, actividades, evaluación y tiempo estimado. Desde 1° básico hasta 4° medio.</span>
+        </li>
+        <li style="display:flex;gap:10px;align-items:flex-start;font-size:.86rem;color:var(--ink2);line-height:1.6;">
+          <span style="color:var(--green);margin-top:2px;flex-shrink:0;">✓</span>
+          <span><strong style="color:var(--ink);font-weight:400;">Protocolo ante incidentes</strong> — qué hacer cuando un alumno reporta grooming, ciberacoso o sextorsión. Paso a paso, sin improvisación.</span>
+        </li>
+        <li style="display:flex;gap:10px;align-items:flex-start;font-size:.86rem;color:var(--ink2);line-height:1.6;">
+          <span style="color:var(--green);margin-top:2px;flex-shrink:0;">✓</span>
+          <span><strong style="color:var(--ink);font-weight:400;">Agente IA docente</strong> — consultas en tiempo real cuando estás frente a una situación y no sabes cómo responder.</span>
+        </li>
+        <li style="display:flex;gap:10px;align-items:flex-start;font-size:.86rem;color:var(--ink2);line-height:1.6;">
+          <span style="color:var(--green);margin-top:2px;flex-shrink:0;">✓</span>
+          <span><strong style="color:var(--ink);font-weight:400;">Newsletter mensual</strong> — la amenaza más relevante del mes + actividad lista para esa semana. Sin spam.</span>
+        </li>
+      </ul>
+    </div>
+    <div style="background:var(--bg2);padding:2rem;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:2px;color:var(--blue);margin-bottom:12px;">LO QUE NO NECESITAS</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+        <li style="display:flex;gap:10px;align-items:flex-start;font-size:.86rem;color:var(--ink2);line-height:1.6;">
+          <span style="color:var(--ink3);margin-top:2px;flex-shrink:0;">✗</span>
+          Saber de tecnología o ciberseguridad. El contenido está diseñado para educadores, no para técnicos.
+        </li>
+        <li style="display:flex;gap:10px;align-items:flex-start;font-size:.86rem;color:var(--ink2);line-height:1.6;">
+          <span style="color:var(--ink3);margin-top:2px;flex-shrink:0;">✗</span>
+          Preparar material desde cero. Todo está listo — tú decides si lo usas tal cual o lo adaptas.
+        </li>
+        <li style="display:flex;gap:10px;align-items:flex-start;font-size:.86rem;color:var(--ink2);line-height:1.6;">
+          <span style="color:var(--ink3);margin-top:2px;flex-shrink:0;">✗</span>
+          Registrarte ni pagar. Aegis8 es un proyecto social — todo gratuito, siempre.
+        </li>
+        <li style="display:flex;gap:10px;align-items:flex-start;font-size:.86rem;color:var(--ink2);line-height:1.6;">
+          <span style="color:var(--ink3);margin-top:2px;flex-shrink:0;">✗</span>
+          Manejar la situación solo. Tenemos protocolo para saber cuándo y cómo derivar a orientación o a PDI.
+        </li>
+      </ul>
+    </div>
+  </div>
+  <a href="/educa/profesores.html" class="btn-p"><span>Ver recursos para docentes →</span></a>
 </div>
 
 <!-- HERRAMIENTAS IA -->
@@ -405,12 +595,10 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 
 <!-- NEWSLETTER CTA -->
 <div class="sw">
-  <div style="border:1px solid var(--border);border-radius:4px;padding:48px;
-    background:var(--card);display:grid;grid-template-columns:1fr auto;gap:32px;
-    align-items:center;position:relative;overflow:hidden;">
+  <div class="nl-cta">
     <div style="position:absolute;top:0;left:0;right:0;height:2px;
       background:linear-gradient(90deg,var(--accent),var(--blue),var(--green));"></div>
-    <div>
+    <div class="nl-body">
       <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;
         color:var(--accent);margin-bottom:10px;text-transform:uppercase;">Newsletter mensual · Solo docentes</div>
       <div style="font-family:'DM Serif Display',serif;font-size:1.7rem;color:var(--ink);
@@ -419,7 +607,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
         Un correo mensual con la amenaza más relevante para tus alumnos + actividad lista para usar en clases esa semana. Sin spam. Sin vender nada.
       </div>
     </div>
-    <a href="/educa/newsletter.html" class="btn-p" style="white-space:nowrap;"><span>Suscribirse gratis →</span></a>
+    <a href="/educa/newsletter.html" class="btn-p nl-btn"><span>Suscribirse gratis →</span></a>
   </div>
 </div>
 
