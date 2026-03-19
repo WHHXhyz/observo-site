@@ -99,7 +99,24 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   padding:15px 28px;border-radius:3px;text-decoration:none;transition:all .25s;}
 .btn-g:hover{color:var(--ink);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
 
-/* DEMO */
+/* ── CTA 3 CUADROS RESPONSIVE ── */
+.cta3-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
+@media(max-width:720px){.cta3-grid{grid-template-columns:1fr;}}
+.cta3-card{background:var(--bg2);padding:2.5rem 2rem;text-decoration:none;
+  display:flex;flex-direction:column;gap:10px;transition:background .2s;
+  position:relative;overflow:hidden;}
+.cta3-bar{position:absolute;top:0;left:0;right:0;height:2px;}
+.cta3-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;text-transform:uppercase;}
+.cta3-title{font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink);line-height:1.1;}
+.cta3-title em{font-style:italic;}
+.cta3-desc{font-size:.86rem;color:var(--ink2);line-height:1.6;flex:1;}
+.cta3-cta{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;}
+@media(max-width:720px){
+  .cta3-card{padding:2rem 1.5rem;}
+  .cta3-title{font-size:1.4rem;}
+}
+
+
 .demo{position:relative;z-index:2;background:rgba(13,20,34,.92);
   border-top:1px solid var(--border);border-bottom:1px solid var(--border);
   opacity:0;animation:up .8s .9s forwards;}
@@ -524,10 +541,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
       <strong>Gratis para familias, docentes y colegios.</strong>
       Construido para proteger a los que más importan.
     </p>
-    <div class="h-actions">
-      <a href="#perfiles" class="btn-p"><span>¿Para quién es? →</span></a>
-      <a href="/propuesta.html" class="btn-g">El Proyecto</a>
-    </div>
+
   </div>
 
   <!-- AMENAZAS REALES -->
@@ -663,51 +677,30 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
 <!-- CTA FINAL -->
 <div class="page">
 <div class="sw">
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--border);">
-    <a href="/talleres.html" style="background:var(--bg2);padding:2.5rem 2rem;text-decoration:none;
-      display:flex;flex-direction:column;gap:10px;transition:background .2s;position:relative;overflow:hidden;"
+  <div class="cta3-grid">
+    <a href="/talleres.html" class="cta3-card"
       onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background='var(--bg2)'">
-      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);"></div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
-        color:var(--accent);text-transform:uppercase;">Acción directa</div>
-      <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink);line-height:1.1;">
-        Organiza un taller<br><em style="font-style:italic;color:var(--accent);">en tu colegio.</em>
-      </div>
-      <div style="font-size:.86rem;color:var(--ink2);line-height:1.6;flex:1;">
-        Talleres presenciales gratuitos para colegios de la Región Metropolitana. Sin equipos especiales, sin burocracia.
-      </div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
-        color:var(--accent);text-transform:uppercase;">Solicitar →</div>
+      <div class="cta3-bar" style="background:var(--accent);"></div>
+      <div class="cta3-tag" style="color:var(--accent);">Acción directa</div>
+      <div class="cta3-title">Organiza un taller<br><em style="color:var(--accent);">en tu colegio.</em></div>
+      <div class="cta3-desc">Talleres presenciales gratuitos para colegios de la Región Metropolitana. Sin equipos especiales, sin burocracia.</div>
+      <div class="cta3-cta" style="color:var(--accent);">Solicitar →</div>
     </a>
-    <a href="/educa/newsletter.html" style="background:var(--bg2);padding:2.5rem 2rem;text-decoration:none;
-      display:flex;flex-direction:column;gap:10px;transition:background .2s;position:relative;overflow:hidden;"
+    <a href="/educa/newsletter.html" class="cta3-card"
       onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background='var(--bg2)'">
-      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--blue);"></div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
-        color:var(--blue);text-transform:uppercase;">Para docentes</div>
-      <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink);line-height:1.1;">
-        La amenaza<br><em style="font-style:italic;color:var(--blue);">del mes.</em>
-      </div>
-      <div style="font-size:.86rem;color:var(--ink2);line-height:1.6;flex:1;">
-        Newsletter mensual con la amenaza más relevante para tus alumnos y una actividad lista para usar esa semana.
-      </div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
-        color:var(--blue);text-transform:uppercase;">Suscribirse gratis →</div>
+      <div class="cta3-bar" style="background:var(--blue);"></div>
+      <div class="cta3-tag" style="color:var(--blue);">Para docentes</div>
+      <div class="cta3-title">La amenaza<br><em style="color:var(--blue);">del mes.</em></div>
+      <div class="cta3-desc">Newsletter mensual con la amenaza más relevante para tus alumnos y una actividad lista para usar esa semana.</div>
+      <div class="cta3-cta" style="color:var(--blue);">Suscribirse gratis →</div>
     </a>
-    <a href="/violencia-digital.html" style="background:var(--bg2);padding:2.5rem 2rem;text-decoration:none;
-      display:flex;flex-direction:column;gap:10px;transition:background .2s;position:relative;overflow:hidden;"
+    <a href="/violencia-digital.html" class="cta3-card"
       onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background='var(--bg2)'">
-      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#9b6dff;"></div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
-        color:#9b6dff;text-transform:uppercase;">Información y ayuda</div>
-      <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink);line-height:1.1;">
-        Violencia<br><em style="font-style:italic;color:#9b6dff;">digital.</em>
-      </div>
-      <div style="font-size:.86rem;color:var(--ink2);line-height:1.6;flex:1;">
-        Sexting, sextorsión, ciberacoso y control digital. Qué es, qué hacer y dónde pedir ayuda en Chile.
-      </div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
-        color:#9b6dff;text-transform:uppercase;">Ver información →</div>
+      <div class="cta3-bar" style="background:#9b6dff;"></div>
+      <div class="cta3-tag" style="color:#9b6dff;">Información y ayuda</div>
+      <div class="cta3-title">Violencia<br><em style="color:#9b6dff;">digital.</em></div>
+      <div class="cta3-desc">Sexting, sextorsión, ciberacoso y control digital. Qué es, qué hacer y dónde pedir ayuda en Chile.</div>
+      <div class="cta3-cta" style="color:#9b6dff;">Ver información →</div>
     </a>
   </div>
 </div>
