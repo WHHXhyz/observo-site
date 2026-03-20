@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Niños · Aegis8 Educa</title>
 <meta name="description" content="Aprende a estar seguro en internet con juegos y actividades. Para niños de 6 a 12 años."/>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T">
+  <script>
 // Section particle burst
 (function(){
   var hero = document.querySelector('.page-hero-s');
@@ -25,7 +25,6 @@
     hero.appendChild(p);
   }
 })();
-
 </script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
   <script src="/aegis-nav.js"></script>
@@ -241,6 +240,91 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body data-page="ninos">
+
+<!-- ── BANNER CONSENTIMIENTO COOKIES ── -->
+<style>
+#cookie-banner{
+  position:fixed;bottom:0;left:0;right:0;z-index:9000;
+  background:#0d1422;border-top:2px solid rgba(58,127,212,.3);
+  padding:20px 24px;display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;
+  box-shadow:0 -8px 32px rgba(0,0,0,.5);
+  font-family:'Lato',sans-serif;
+}
+#cookie-banner.hidden{display:none;}
+#cookie-banner .cb-ico{font-size:1.6rem;flex-shrink:0;margin-top:2px;}
+#cookie-banner .cb-txt{flex:1;min-width:220px;}
+#cookie-banner .cb-title{font-family:'JetBrains Mono',monospace;font-size:.68rem;
+  letter-spacing:3px;color:#3a7fd4;text-transform:uppercase;margin-bottom:6px;}
+#cookie-banner .cb-body{font-size:.85rem;line-height:1.6;color:#8898b0;}
+#cookie-banner .cb-body strong{color:#eaf0f8;font-weight:400;}
+#cookie-banner .cb-btns{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:4px;}
+#cookie-banner .cb-accept{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;
+  background:#3a7fd4;color:#080c14;border:none;padding:10px 20px;border-radius:3px;
+  cursor:pointer;transition:background .2s;}
+#cookie-banner .cb-accept:hover{background:#2563eb;}
+#cookie-banner .cb-reject{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;
+  background:transparent;color:#5a6a80;border:1px solid rgba(90,106,128,.3);
+  padding:10px 16px;border-radius:3px;cursor:pointer;transition:all .2s;}
+#cookie-banner .cb-reject:hover{color:#8898b0;border-color:rgba(90,106,128,.6);}
+#cookie-banner .cb-legal{font-size:.72rem;color:#3a4f68;margin-top:6px;line-height:1.5;}
+</style>
+
+<div id="cookie-banner">
+  <div class="cb-ico">🛡️</div>
+  <div class="cb-txt">
+    <div class="cb-title">Aviso para padres y tutores</div>
+    <div class="cb-body">
+      Esta página es para niños de 6 a 12 años. Para mejorar el sitio usamos
+      <strong>Google Analytics</strong>, que recopila datos de uso de forma anónima.
+      Como esto puede incluir información de menores, necesitamos que un
+      <strong>adulto responsable</strong> lo autorice.
+    </div>
+    <div class="cb-legal">
+      Conforme a la Ley 21.719 (Chile) · Sin tu autorización no se recopilan datos de análisis.
+    </div>
+    <div class="cb-btns">
+      <button class="cb-accept" onclick="cookieConsent(true)">Autorizo el análisis</button>
+      <button class="cb-reject" onclick="cookieConsent(false)">No autorizo</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const GA_ID = 'G-XNJT1V3G6T';
+  const stored = localStorage.getItem('aegis8_cookie_consent');
+
+  function loadGA(){
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', GA_ID, {anonymize_ip: true});
+  }
+
+  window.cookieConsent = function(accepted){
+    localStorage.setItem('aegis8_cookie_consent', accepted ? 'accepted' : 'rejected');
+    document.getElementById('cookie-banner').classList.add('hidden');
+    if(accepted) loadGA();
+  };
+
+  // Si ya decidió antes, aplicar sin mostrar banner
+  if(stored === 'accepted'){
+    document.getElementById('cookie-banner').classList.add('hidden');
+    loadGA();
+  } else if(stored === 'rejected'){
+    document.getElementById('cookie-banner').classList.add('hidden');
+  }
+  // Si stored es null → mostrar banner (primera visita)
+})();
+</script>
+
 <section class="page-hero-s page-inner">
   <div class="wrap">
     <div class="hero-logo-wrap" style="margin-bottom:24px;opacity:0;animation:fadeInLogo .8s cubic-bezier(.34,1.56,.64,1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="110" height="110" fill="none">
@@ -385,6 +469,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <div class="q-result-st" id="rStars"></div>
       <div class="q-result-ti" id="rTitle"></div>
       <div class="q-result-su" id="rSub"></div>
+      <div id="rBest" style="display:none;margin:.75rem auto 0;font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;color:var(--gold);background:rgba(245,168,35,.08);border:1px solid rgba(245,168,35,.2);padding:.4rem 1rem;border-radius:20px;display:inline-block;"></div>
       <button class="q-restart" onclick="restartQ()">Jugar de nuevo 🔄</button>
     </div>
   </div>
@@ -394,9 +479,16 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div class="sl">// Actividad</div>
   <h2 class="st">¿Qué tan segura es<br><em>tu contraseña? 🔒</em></h2>
   <p class="si">Escribe una contraseña inventada y descubre qué tan fuerte es.</p>
+  <div style="background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.3);border-radius:4px;padding:.85rem 1rem;margin-bottom:1.25rem;display:flex;align-items:flex-start;gap:.7rem;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🚫</span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#ef4444;line-height:1.6;">
+      <strong>¡IMPORTANTE!</strong> Escribe solo una contraseña <strong>inventada</strong> — como <em>MiGato#Amarillo7!</em><br>
+      Nunca escribas tu contraseña real en ningún sitio web. ¡Ni aquí!
+    </span>
+  </div>
   <div class="pw-box">
     <label class="pw-lbl">Escribe una contraseña inventada</label>
-    <input class="pw-in" id="pwIn" type="text" placeholder="Ej: MiGato#Amarillo7!" oninput="checkPw(this.value)" autocomplete="off"/>
+    <input class="pw-in" id="pwIn" type="text" placeholder="Ej: MiGato#Amarillo7!" oninput="checkPw(this.value)" autocomplete="off" autocomplete="new-password"/>
     <div class="pw-bar-bg"><div class="pw-bar" id="pwBar"></div></div>
     <div class="pw-tips" id="pwTips"></div>
   </div>
@@ -453,13 +545,6 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   </div>
 </footer>
 <script>
-const SYS=`Eres CiberBot, un asistente de ciberseguridad para niños de 6 a 12 años.
-Explica todo de forma muy simple, divertida y con emojis.
-Usa frases cortas. Nunca uses términos técnicos complicados.
-Si alguien te pregunta algo que no es apropiado, redirígelo gentilmente.
-Cuando sea relevante, recuérdales que deben contarle a sus papás o un adulto de confianza.
-Máximo 3-4 oraciones. Responde en español.`;
-
 const WORKER='https://aegis8-agent.christianmora705.workers.dev';
 let hist=[];
 async function sendMsg(){
@@ -468,7 +553,8 @@ async function sendMsg(){
   addM('user',t);hist.push({role:'user',content:t});showT();
   try{
     const r=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,system:SYS,messages:hist})});
+      body:JSON.stringify({page:'ninos',messages:hist})});
+    if(r.status===429){removeT();addM('bot','Demasiadas preguntas seguidas 😊 Espera un momento.');return;}
     const d=await r.json();removeT();
     const rep=d.content?.[0]?.text||'Error al conectar.';
     hist.push({role:'assistant',content:rep});addM('bot',rep);
@@ -573,6 +659,17 @@ function showResult(){
   document.getElementById('rTitle').textContent=ti;
   document.getElementById('rStars').textContent=st;
   document.getElementById('rSub').textContent=su+` Puntaje: ${score}/${pool.length*10}`;
+  // Récord histórico con localStorage
+  const prev=parseInt(localStorage.getItem('aegis8_ninos_best')||'0');
+  const bestEl=document.getElementById('rBest');
+  if(score>prev){
+    localStorage.setItem('aegis8_ninos_best',String(score));
+    bestEl.textContent='🎉 ¡Nuevo récord! '+score+' pts';
+    bestEl.style.display='inline-block';
+  } else if(prev>0){
+    bestEl.textContent='🏅 Tu récord: '+prev+' pts';
+    bestEl.style.display='inline-block';
+  }
 }
 function restartQ(){
   pool=shuffle(questions).slice(0,10);cur=0;score=0;answered=false;

@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAPS — Claves Absurdas Pero Seguras</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --accent: #00ff88;
+    --accent2: #ff3366;
+    --accent3: #ffcc00;
+    --text: #e8e8f0;
+    --muted: #6b6b88;
+    --border: #2a2a3a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 80px 24px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 56px;
+    position: relative;
+  }
+
+
+  .title-block {
+    position: relative;
+    display: inline-block;
+  }
+
+  .title-caps {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 18vw, 110px);
+    letter-spacing: 12px;
+    color: var(--accent);
+    line-height: 0.9;
+    display: block;
+    position: relative;
+  }
+
+  .title-caps::before {
+    content: 'CAPS';
+    position: absolute;
+    inset: 0;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(0,255,136,0.15);
+    transform: translate(3px, 3px);
+    z-index: -1;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { text-shadow: 0 0 40px rgba(0,255,136,0.4), 0 0 80px rgba(0,255,136,0.15); }
+    50% { text-shadow: 0 0 70px rgba(0,255,136,0.8), 0 0 120px rgba(0,255,136,0.3); }
+  }
+
+  .title-caps { animation: pulse-glow 3s ease-in-out infinite; }
+
+  .title-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(10px, 2.5vw, 13px);
+    color: var(--muted);
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .title-sub::before, .title-sub::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--muted));
+    opacity: 0.3;
+  }
+
+  .title-sub::after {
+    background: linear-gradient(90deg, var(--muted), transparent);
+  }
+
+  .title-tagline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(13px, 3vw, 17px);
+    letter-spacing: 4px;
+    color: rgba(0,255,136,0.45);
+    margin-top: 6px;
+    display: block;
+  }
+
+
+  /* Topbar nav */
+  .topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    height: 52px;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+  }
+
+  .topbar-logo {
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: opacity 0.2s;
+  }
+
+  .topbar-logo:hover { opacity: 0.7; }
+
+  .topbar-logo span {
+    color: var(--text);
+    opacity: 0.4;
+  }
+
+  .topbar-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .topbar-links a {
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 2px;
+    font-size: 10px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .topbar-links a:hover { color: var(--accent); }
+
+  .topbar-back {
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 2px;
+    font-size: 10px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .topbar-back:hover { color: var(--accent); }
+
+  /* Footer */
+  .site-footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+    margin-top: 48px;
+  }
+
+  .site-footer a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .site-footer a:hover { color: var(--accent); }
+
+  @media (max-width: 520px) {
+    .topbar-links { display: none; }
+    .site-footer { flex-direction: column; gap: 0.75rem; padding: 1.5rem; text-align: center; }
+  }
+
+  /* Privacy banner */
+  .privacy-banner {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: rgba(0,255,136,0.04);
+    border: 1px solid rgba(0,255,136,0.18);
+    border-left: 3px solid var(--accent);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 24px;
+  }
+
+  .privacy-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    filter: grayscale(0.3);
+  }
+
+  .privacy-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 7px;
+  }
+
+  .privacy-text {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .privacy-text strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* Form */
+  .form-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+
+  .form-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .inputs-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 520px) {
+    .inputs-row { grid-template-columns: 1fr; }
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .input-label {
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .input-label .icon {
+    font-size: 14px;
+  }
+
+  .input-field {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+  }
+
+  .input-field::placeholder { color: var(--muted); }
+
+  .input-field:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0,255,136,0.1);
+  }
+
+  /* Options */
+  .options-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .toggle-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,255,136,0.08);
+  }
+
+  .toggle-btn .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background 0.2s;
+  }
+
+  .toggle-btn.active .dot { background: var(--accent); }
+
+  /* Generate button */
+  .btn-generate {
+    width: 100%;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    padding: 16px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-generate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,255,136,0.3);
+  }
+
+  .btn-generate:active { transform: translateY(0); }
+
+  .btn-generate::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.4s;
+  }
+
+  .btn-generate:hover::after { transform: translateX(100%); }
+
+  /* Results */
+  .results-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    display: none;
+    animation: slide-up 0.3s ease;
+  }
+
+  .results-card.visible { display: block; }
+
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .results-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .password-variants {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .password-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    transition: border-color 0.2s;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .password-item:hover { border-color: var(--accent); }
+
+  .password-item.selected {
+    border-color: var(--accent);
+    background: rgba(0,255,136,0.06);
+  }
+
+  .password-text {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: var(--text);
+    word-break: break-all;
+    flex: 1;
+  }
+
+  .password-strength {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .strength-bar {
+    display: flex;
+    gap: 3px;
+  }
+
+  .strength-pip {
+    width: 6px;
+    height: 18px;
+    border-radius: 2px;
+    background: var(--border);
+    transition: background 0.3s;
+  }
+
+  .strength-pip.on-1 { background: var(--accent2); }
+  .strength-pip.on-2 { background: var(--accent3); }
+  .strength-pip.on-3 { background: #44dd88; }
+  .strength-pip.on-4 { background: var(--accent); }
+
+  .copy-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--muted);
+    padding: 6px 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .copy-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .copy-btn.copied {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,255,136,0.1);
+  }
+
+  /* Entropy meter */
+  .entropy-row {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .entropy-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  .entropy-track {
+    flex: 1;
+    height: 4px;
+    background: var(--surface2);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .entropy-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent3), var(--accent));
+    transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1);
+    width: 0%;
+  }
+
+  .entropy-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    white-space: nowrap;
+    min-width: 60px;
+    text-align: right;
+  }
+
+  /* Footer note */
+  .footnote {
+    text-align: center;
+    margin-top: 32px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    line-height: 1.8;
+  }
+
+  .footnote span { color: var(--accent); }
+
+  /* AI card */
+  .ai-card {
+    background: var(--surface);
+    border: 1px solid #2a2a3a;
+    border-radius: 16px;
+    padding: 32px;
+    margin-top: 24px;
+    display: none;
+  }
+
+  .ai-card.visible { display: block; animation: slide-up 0.3s ease; }
+
+  .ai-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .ai-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: #aa88ff;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ai-title .ai-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #aa88ff;
+    box-shadow: 0 0 8px #aa88ff;
+    animation: blink 1.4s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .btn-ai {
+    background: transparent;
+    border: 1px solid #aa88ff;
+    border-radius: 8px;
+    color: #aa88ff;
+    padding: 8px 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-ai:hover {
+    background: rgba(170,136,255,0.1);
+    box-shadow: 0 0 20px rgba(170,136,255,0.2);
+  }
+
+  .btn-ai:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .ai-spinner {
+    width: 12px; height: 12px;
+    border: 2px solid rgba(170,136,255,0.3);
+    border-top-color: #aa88ff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .ai-comment {
+    background: rgba(170,136,255,0.06);
+    border-left: 3px solid #aa88ff;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text);
+    display: none;
+  }
+
+  .ai-variants {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ai-pwd-item {
+    background: rgba(170,136,255,0.05);
+    border: 1px solid rgba(170,136,255,0.2);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .ai-pwd-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #aa88ff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .ai-pwd-text {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: var(--text);
+    word-break: break-all;
+  }
+
+  .ai-empty {
+    text-align: center;
+    padding: 24px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* Scan line animation */
+  .scanline {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0,255,136,0.3), transparent);
+    animation: scan 4s linear infinite;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  @keyframes scan {
+    0% { top: 0; opacity: 1; }
+    90% { opacity: 0.5; }
+    100% { top: 100vh; opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="topbar-logo">AEGIS<span>8</span></a>
+  <ul class="topbar-links">
+    <li><a href="/educa.html">Educa</a></li>
+    <li><a href="/analizador-phishing.html">Herramientas</a></li>
+    <li><a href="/contactos.html">Contacto</a></li>
+  </ul>
+  <a href="/" class="topbar-back">← Inicio</a>
+</div>
+
+<div class="scanline"></div>
+
+<div class="container">
+  <div class="header">
+
+    <div class="title-block">
+      <span class="title-caps">CAPS</span>
+      <div class="title-sub">claves absurdas pero seguras</div>
+      <span class="title-tagline">Tu contraseña es una historia. Una historia rara.</span>
+    </div>
+
+  </div>
+
+  <!-- Banner legal/privacidad -->
+  <div class="privacy-banner">
+    <div class="privacy-icon">🔒</div>
+    <div class="privacy-body">
+      <div class="privacy-title">Sin registro. Sin rastreo. Sin humo.</div>
+      <div class="privacy-text">
+        En cumplimiento de la <strong>Ley 19.628</strong> sobre Protección de la Vida Privada (Chile) y los principios de minimización de datos, <strong>ninguna contraseña generada aquí se almacena, transmite ni asocia a tu identidad.</strong> Todo el procesamiento ocurre localmente en tu navegador. No hay base de datos. No hay servidor que reciba tus claves. No hay cookies de seguimiento. Lo que generas acá, se queda acá.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <div class="form-title">// Ingredientes</div>
+
+    <div class="inputs-row">
+      <div class="input-group">
+        <label class="input-label"><span class="icon">🎭</span> Personaje</label>
+        <input class="input-field" id="personaje" type="text" placeholder="Chaplin" autocomplete="off">
+      </div>
+      <div class="input-group">
+        <label class="input-label"><span class="icon">⚡</span> Acción</label>
+        <input class="input-field" id="accion" type="text" placeholder="correr" autocomplete="off">
+      </div>
+      <div class="input-group">
+        <label class="input-label"><span class="icon">🍔</span> Comida</label>
+        <input class="input-field" id="comida" type="text" placeholder="hamburguesa" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="options-row">
+      <div class="toggle-btn" id="toggle-numbers" onclick="toggleOpt('numbers', this)">
+        <div class="dot"></div>
+        + Números
+      </div>
+      <div class="toggle-btn" id="toggle-symbols" onclick="toggleOpt('symbols', this)">
+        <div class="dot"></div>
+        + Símbolos
+      </div>
+      <div class="toggle-btn" id="toggle-caps" onclick="toggleOpt('caps', this)">
+        <div class="dot"></div>
+        CamelCase
+      </div>
+      <div class="toggle-btn" id="toggle-leet" onclick="toggleOpt('leet', this)">
+        <div class="dot"></div>
+        L33tsp34k
+      </div>
+    </div>
+
+    <button class="btn-generate" onclick="generatePasswords()">GENERAR CLAVES</button>
+  </div>
+
+  <div class="results-card" id="results">
+    <div class="results-title">// Variantes generadas</div>
+    <div class="password-variants" id="variants-list"></div>
+    <div class="entropy-row">
+      <div class="entropy-label">ENTROPÍA</div>
+      <div class="entropy-track"><div class="entropy-fill" id="entropy-fill"></div></div>
+      <div class="entropy-value" id="entropy-value">— bits</div>
+    </div>
+  </div>
+
+  <!-- AI Agent Card -->
+  <div class="ai-card" id="ai-card">
+    <div class="ai-header">
+      <div class="ai-title">
+        <div class="ai-dot"></div>
+        Agente creativo
+      </div>
+      <button class="btn-ai" id="btn-ask-ai" onclick="askAgent()">
+        <div class="ai-spinner" id="ai-spinner"></div>
+        <span id="btn-ai-text">✦ Pedir más variantes</span>
+      </button>
+    </div>
+    <div class="ai-comment" id="ai-comment"></div>
+    <div class="ai-variants" id="ai-variants">
+      <div class="ai-empty">Presiona el botón para que el agente genere variantes creativas y analice tus claves.</div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    las variantes base se generan localmente · <span>100% en tu navegador</span><br>
+    el agente creativo hace una llamada a la API · tus ingredientes se envían solo si lo activas
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="/">aegis8.org</a>
+  <span>caps · generador de claves · gratis · sin registro</span>
+  <a href="/contactos.html">contacto →</a>
+</footer>
+
+<script>
+  const opts = { numbers: false, symbols: false, caps: false, leet: false };
+
+  function toggleOpt(key, btn) {
+    opts[key] = !opts[key];
+    btn.classList.toggle('active', opts[key]);
+  }
+
+  const leetMap = { a:'4', e:'3', i:'1', o:'0', s:'5', t:'7' };
+
+  function applyLeet(str) {
+    return str.split('').map(c => leetMap[c.toLowerCase()] || c).join('');
+  }
+
+  function toCamel(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
+
+  function randomBetween(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  function addExtras(str) {
+    const numbers = ['7', '23', '42', '99', '1984', '007', '13'];
+    const symbols = ['!', '@', '#', '$', '%', '&', '*', '?', '!'];
+    let out = str;
+    if (opts.numbers) out += randomBetween(numbers);
+    if (opts.symbols) out += randomBetween(symbols);
+    return out;
+  }
+
+  function calcEntropy(pwd) {
+    let charset = 26;
+    if (/[A-Z]/.test(pwd)) charset += 26;
+    if (/[0-9]/.test(pwd)) charset += 10;
+    if (/[^a-zA-Z0-9]/.test(pwd)) charset += 32;
+    return Math.round(pwd.length * Math.log2(charset));
+  }
+
+  // --- CONJUGADOR LOCAL ---
+  // Detecta si la entrada es un infinitivo y devuelve formas conjugadas útiles
+  function esInfinitivo(v) {
+    return /^[a-záéíóúüñ]+(ar|er|ir)$/i.test(v.trim());
+  }
+
+  function conjugar(verbo) {
+    verbo = verbo.toLowerCase().trim();
+    const term = verbo.slice(-2); // ar / er / ir
+    const raiz = verbo.slice(0, -2);
+
+    // Irregulares comunes hardcodeados
+    const irreg = {
+      'ser':    { yo:'soy', tu:'eres', el:'es', nos:'somos', ellos:'son', pas:'fue', fut:'sera', ger:'siendo' },
+      'ir':     { yo:'voy', tu:'vas', el:'va', nos:'vamos', ellos:'van', pas:'fue', fut:'ira', ger:'yendo' },
+      'tener':  { yo:'tengo', tu:'tienes', el:'tiene', nos:'tenemos', ellos:'tienen', pas:'tuvo', fut:'tendra', ger:'teniendo' },
+      'hacer':  { yo:'hago', tu:'haces', el:'hace', nos:'hacemos', ellos:'hacen', pas:'hizo', fut:'hara', ger:'haciendo' },
+      'poder':  { yo:'puedo', tu:'puedes', el:'puede', nos:'podemos', ellos:'pueden', pas:'pudo', fut:'podra', ger:'pudiendo' },
+      'querer': { yo:'quiero', tu:'quieres', el:'quiere', nos:'queremos', ellos:'quieren', pas:'quiso', fut:'querra', ger:'queriendo' },
+      'venir':  { yo:'vengo', tu:'vienes', el:'viene', nos:'venimos', ellos:'vienen', pas:'vino', fut:'vendra', ger:'viniendo' },
+      'decir':  { yo:'digo', tu:'dices', el:'dice', nos:'decimos', ellos:'dicen', pas:'dijo', fut:'dira', ger:'diciendo' },
+      'saber':  { yo:'se', tu:'sabes', el:'sabe', nos:'sabemos', ellos:'saben', pas:'supo', fut:'sabra', ger:'sabiendo' },
+      'salir':  { yo:'salgo', tu:'sales', el:'sale', nos:'salimos', ellos:'salen', pas:'salio', fut:'saldra', ger:'saliendo' },
+      'correr': { yo:'corro', tu:'corres', el:'corre', nos:'corremos', ellos:'corren', pas:'corrio', fut:'correra', ger:'corriendo' },
+      'comer':  { yo:'como', tu:'comes', el:'come', nos:'comemos', ellos:'comen', pas:'comio', fut:'comera', ger:'comiendo' },
+      'vivir':  { yo:'vivo', tu:'vives', el:'vive', nos:'vivimos', ellos:'viven', pas:'vivio', fut:'vivira', ger:'viviendo' },
+    };
+
+    if (irreg[verbo]) return irreg[verbo];
+
+    // Conjugación regular
+    const tablas = {
+      ar: { yo:`${raiz}o`, tu:`${raiz}as`, el:`${raiz}a`, nos:`${raiz}amos`, ellos:`${raiz}an`, pas:`${raiz}o`, fut:`${verbo}a`, ger:`${raiz}ando` },
+      er: { yo:`${raiz}o`, tu:`${raiz}es`, el:`${raiz}e`, nos:`${raiz}emos`, ellos:`${raiz}en`, pas:`${raiz}io`, fut:`${verbo}a`, ger:`${raiz}iendo` },
+      ir: { yo:`${raiz}o`, tu:`${raiz}es`, el:`${raiz}e`, nos:`${raiz}imos`, ellos:`${raiz}en`, pas:`${raiz}io`, fut:`${verbo}a`, ger:`${raiz}iendo` },
+    };
+
+    return tablas[term] || { yo:verbo, tu:verbo, el:verbo, nos:verbo, ellos:verbo, pas:verbo, fut:verbo, ger:verbo };
+  }
+
+  function buildVariants(p, a, c) {
+    const variants = [];
+    const esInf = esInfinitivo(a);
+    const conj = esInf ? conjugar(a) : null;
+
+    // Función helper: elige la mejor forma para cada contexto
+    const forma = (tipo) => {
+      if (!conj) return a; // no es infinitivo, úsalo tal cual
+      return conj[tipo] || a;
+    };
+
+    // Variant 1: "Chaplin estornuda con hamburguesa" (él, presente)
+    let v1 = p + forma('el') + 'con' + c;
+    if (opts.caps) v1 = toCamel(p) + toCamel(forma('el')) + 'con' + toCamel(c);
+    if (opts.leet) v1 = applyLeet(v1);
+    variants.push({ label: esInf ? '3ª persona presente' : 'Fusión directa', pwd: addExtras(v1) });
+
+    // Variant 2: "La hamburguesa que ChaplinEstornuda" (relativa)
+    let v2 = 'La' + c + 'que' + p + forma('el');
+    if (opts.caps) v2 = 'La' + toCamel(c) + 'que' + toCamel(p) + toCamel(forma('el'));
+    if (opts.leet) v2 = applyLeet(v2);
+    variants.push({ label: esInf ? 'La comida que une' : 'La comida manda', pwd: addExtras(v2) });
+
+    // Variant 3: "Yo estornudo hamburguesa Chaplin" (1ª persona)
+    let v3 = 'Yo' + forma('yo') + c + p;
+    if (opts.caps) v3 = 'Yo' + toCamel(forma('yo')) + toCamel(c) + toCamel(p);
+    if (opts.leet) v3 = applyLeet(v3);
+    variants.push({ label: esInf ? '1ª persona presente' : 'Orden absurdo', pwd: addExtras(v3) });
+
+    // Variant 4: separadores + pasado
+    let v4base = esInf ? `${p}_${forma('pas')}_${c}` : `${p}_${a}_${c}`;
+    let v4 = v4base;
+    if (opts.caps) v4 = esInf
+      ? `${p.toUpperCase()}_${forma('pas')}_${c.toUpperCase()}`
+      : `${p.toUpperCase()}_${a}_${c.toUpperCase()}`;
+    if (opts.leet) v4 = applyLeet(v4);
+    variants.push({ label: esInf ? 'Pasado + guiones' : 'Con separadores', pwd: addExtras(v4) });
+
+    return variants;
+  }
+
+  function strengthPips(bits) {
+    if (bits < 30) return 1;
+    if (bits < 50) return 2;
+    if (bits < 70) return 3;
+    return 4;
+  }
+
+  function generatePasswords() {
+    const p = document.getElementById('personaje').value.trim();
+    const a = document.getElementById('accion').value.trim();
+    const c = document.getElementById('comida').value.trim();
+
+    if (!p || !a || !c) {
+      [document.getElementById('personaje'), document.getElementById('accion'), document.getElementById('comida')]
+        .forEach(el => { if (!el.value.trim()) el.style.borderColor = '#ff3366'; setTimeout(() => el.style.borderColor = '', 800); });
+      return;
+    }
+
+    const variants = buildVariants(
+      p.replace(/\s+/g, ''),
+      a.replace(/\s+/g, ''),
+      c.replace(/\s+/g, '')
+    );
+
+    const list = document.getElementById('variants-list');
+    list.innerHTML = '';
+
+    let maxEntropy = 0;
+
+    variants.forEach((v, i) => {
+      const bits = calcEntropy(v.pwd);
+      if (bits > maxEntropy) maxEntropy = bits;
+      const pips = strengthPips(bits);
+
+      const item = document.createElement('div');
+      item.className = 'password-item';
+      item.innerHTML = `
+        <div style="flex:1">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px">${v.label}</div>
+          <div class="password-text">${v.pwd}</div>
+        </div>
+        <div class="password-strength">
+          <div class="strength-bar">
+            ${[1,2,3,4].map(n => `<div class="strength-pip${n<=pips?' on-'+pips:''}"></div>`).join('')}
+          </div>
+        </div>
+        <button class="copy-btn" onclick="copyPwd(this, '${v.pwd.replace(/'/g,"\\'")}')">COPIAR</button>
+      `;
+      list.appendChild(item);
+    });
+
+    // Entropy meter
+    const pct = Math.min(100, (maxEntropy / 100) * 100);
+    document.getElementById('entropy-fill').style.width = pct + '%';
+    document.getElementById('entropy-value').textContent = maxEntropy + ' bits';
+
+    const results = document.getElementById('results');
+    results.classList.add('visible');
+    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function copyPwd(btn, pwd) {
+    navigator.clipboard.writeText(pwd).then(() => {
+      const prev = btn.textContent;
+      btn.textContent = '✓ OK';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'COPIAR'; btn.classList.remove('copied'); }, 1500);
+    });
+  }
+
+
+  // Enter key
+  document.addEventListener('keydown', e => { if (e.key === 'Enter') generatePasswords(); });
+  let lastInputs = { p: '', a: '', c: '' };
+  let lastPasswords = [];
+
+  // Show AI card after generating
+  const _origGenerate = generatePasswords;
+  generatePasswords = function() {
+    _origGenerate();
+    const p = document.getElementById('personaje').value.trim();
+    const a = document.getElementById('accion').value.trim();
+    const c = document.getElementById('comida').value.trim();
+    if (p && a && c) {
+      lastInputs = { p, a, c };
+      lastPasswords = Array.from(document.querySelectorAll('.password-text')).map(el => el.textContent);
+      document.getElementById('ai-card').classList.add('visible');
+      // Reset AI state
+      document.getElementById('ai-comment').style.display = 'none';
+      document.getElementById('ai-variants').innerHTML = '<div class="ai-empty">Presiona el botón para que el agente genere variantes creativas y analice tus claves.</div>';
+      document.getElementById('btn-ai-text').textContent = '✦ Pedir más variantes';
+      document.getElementById('btn-ask-ai').disabled = false;
+    }
+  };
+
+  async function askAgent() {
+    const btn = document.getElementById('btn-ask-ai');
+    const spinner = document.getElementById('ai-spinner');
+    const btnText = document.getElementById('btn-ai-text');
+
+    btn.disabled = true;
+    spinner.style.display = 'block';
+    btnText.textContent = 'Consultando...';
+
+    const esInf = esInfinitivo(lastInputs.a);
+    const prompt = `Eres un experto en ciberseguridad con sentido del humor y dominio perfecto de la gramática española. El usuario ingresó estos ingredientes para crear una contraseña memorable:
+- Personaje: "${lastInputs.p}"
+- Acción: "${lastInputs.a}"${esInf ? ' (es un infinitivo — DEBES conjugarlo en la contraseña)' : ''}
+- Comida: "${lastInputs.c}"
+
+Las variantes que ya generó el sistema son: ${lastPasswords.join(', ')}
+
+Tu tarea: responde SOLO en JSON, sin markdown, sin explicaciones extra, con esta estructura exacta:
+{
+  "comentario": "Un comentario breve (2-3 frases) sobre la seguridad de estas claves. Tono directo, algo sarcástico, nada condescendiente.",
+  "variantes": [
+    { "label": "nombre creativo corto", "pwd": "la_contraseña_generada" },
+    { "label": "nombre creativo corto", "pwd": "la_contraseña_generada" },
+    { "label": "nombre creativo corto", "pwd": "la_contraseña_generada" }
+  ]
+}
+
+REGLAS para las contraseñas:
+${esInf ? `- La acción "${lastInputs.a}" es un INFINITIVO. Conjúgala correctamente en cada variante usando personas y tiempos DISTINTOS entre sí. Ejemplos de variaciones: "él estornuda" (presente 3ª), "yo estornudé" (pretérito 1ª), "ellos estornudarán" (futuro 3ª plural), "estornudando" (gerundio). Elige la forma que suene más absurda y memorable junto al personaje y la comida.` : `- La acción ya está conjugada o no es un verbo, úsala tal cual.`}
+- Usa conectores creativos en español: galopa, devora, persigue, codicia, teme, esconde, arroja, contempla.
+- Mezcla mayúsculas estratégicas (no solo primera letra).
+- Agrega un número memorable al final (año, edad famosa, número icónico del personaje).
+- Sin espacios en la contraseña.
+- Que suenen completamente absurdas pero sean fáciles de visualizar.`;
+
+
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+
+      const data = await response.json();
+      const raw = data.content?.[0]?.text || '';
+      const clean = raw.replace(/```json|```/g, '').trim();
+      const parsed = JSON.parse(clean);
+
+      // Show comment
+      const commentEl = document.getElementById('ai-comment');
+      commentEl.textContent = parsed.comentario;
+      commentEl.style.display = 'block';
+
+      // Show AI variants
+      const variantsEl = document.getElementById('ai-variants');
+      variantsEl.innerHTML = '';
+      parsed.variantes.forEach(v => {
+        const bits = calcEntropy(v.pwd);
+        const pips = strengthPips(bits);
+        const item = document.createElement('div');
+        item.className = 'ai-pwd-item';
+        item.innerHTML = `
+          <div style="flex:1">
+            <div class="ai-pwd-label">${v.label}</div>
+            <div class="ai-pwd-text">${v.pwd}</div>
+          </div>
+          <div class="strength-bar">
+            ${[1,2,3,4].map(n => `<div class="strength-pip${n<=pips?' on-'+pips:''}"></div>`).join('')}
+          </div>
+          <button class="copy-btn" onclick="copyPwd(this, '${v.pwd.replace(/'/g,"\\'")}')">COPIAR</button>
+        `;
+        variantsEl.appendChild(item);
+      });
+
+      btnText.textContent = '✦ Regenerar';
+      btn.disabled = false;
+      spinner.style.display = 'none';
+
+    } catch(err) {
+      document.getElementById('ai-variants').innerHTML = '<div class="ai-empty" style="color:var(--accent2)">Error al contactar el agente. Intenta de nuevo.</div>';
+      btnText.textContent = '✦ Reintentar';
+      btn.disabled = false;
+      spinner.style.display = 'none';
+    }
+  }
+
+</script>
+</body>
+</html>
