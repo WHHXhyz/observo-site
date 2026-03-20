@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Aegis8 — Ciberseguridad Educativa para Chile</title>
-<meta name="description" content="El primer proyecto social de ciberseguridad educativa de Chile. Gratis para familias y docentes. Construido para proteger a los que más importan."/>
+<meta name="description" content="Proyecto social de ciberseguridad educativa de Chile. Gratis para familias y docentes. Construido para proteger a los que más importan."/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
 <link rel="manifest" href="/app/manifest.json"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet"/>
@@ -98,6 +98,47 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   color:var(--ink2);background:transparent;border:1px solid var(--border);
   padding:15px 28px;border-radius:3px;text-decoration:none;transition:all .25s;}
 .btn-g:hover{color:var(--ink);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
+
+/* ── VIOLENCIA DIGITAL BANNER ── */
+.vd-banner{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;
+  text-decoration:none;border:1px solid rgba(155,109,255,.2);border-radius:4px;
+  padding:40px;position:relative;overflow:hidden;background:rgba(155,109,255,.04);
+  transition:all .3s;}
+.vd-banner:hover{border-color:rgba(155,109,255,.45);background:rgba(155,109,255,.07);
+  transform:translateY(-3px);box-shadow:0 20px 60px rgba(155,109,255,.12);}
+.vd-bar{position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,#9b6dff,rgba(155,109,255,.4));}
+.vd-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
+  color:#9b6dff;text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;}
+.vd-dot{width:7px;height:7px;border-radius:50%;background:#9b6dff;
+  animation:blink 1.5s infinite;box-shadow:0 0 6px rgba(155,109,255,.5);}
+.vd-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);
+  color:var(--ink);line-height:1.05;letter-spacing:-.5px;margin-bottom:14px;}
+.vd-title em{color:#9b6dff;font-style:italic;}
+.vd-desc{font-size:.9rem;line-height:1.8;color:var(--ink2);max-width:480px;margin-bottom:18px;}
+.vd-pills{display:flex;flex-wrap:wrap;gap:6px;}
+.vd-pill{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:1px;
+  padding:3px 9px;border-radius:20px;border:1px solid rgba(155,109,255,.2);color:rgba(155,109,255,.7);}
+.vd-right{display:flex;flex-direction:column;gap:16px;align-items:flex-end;min-width:190px;}
+.vd-nums{display:flex;flex-direction:column;gap:10px;width:100%;}
+.vd-num-item{background:rgba(155,109,255,.06);border:1px solid rgba(155,109,255,.15);
+  border-radius:4px;padding:12px 16px;}
+.vd-num{font-family:'DM Serif Display',serif;font-size:2rem;color:#9b6dff;
+  font-style:italic;line-height:1;margin-bottom:4px;}
+.vd-num-label{font-family:'JetBrains Mono',monospace;font-size:.55rem;
+  color:var(--ink3);letter-spacing:1px;line-height:1.6;}
+.vd-cta{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
+  color:#9b6dff;text-transform:uppercase;transition:letter-spacing .2s;}
+.vd-banner:hover .vd-cta{letter-spacing:3px;}
+@media(max-width:720px){
+  .vd-banner{grid-template-columns:1fr;gap:24px;padding:28px 20px;}
+  .vd-right{align-items:flex-start;}
+  .vd-nums{flex-direction:row;}
+}
+@media(max-width:480px){
+  .vd-nums{flex-direction:column;}
+}
 
 /* ── CTA 3 CUADROS RESPONSIVE ── */
 .cta3-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
@@ -528,7 +569,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
     </div>
     <div class="h-eyebrow">
       <div class="h-line"></div>
-      PROYECTO SOCIAL · CHILE · GRATUITO · 2024
+      PROYECTO SOCIAL · CHILE · GRATUITO · 2026
       <div class="h-line"></div>
     </div>
     <h1 class="h-title">
@@ -537,12 +578,13 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
       <span class="gh">Sin excusas.</span>
     </h1>
     <p class="h-desc">
-      El primer proyecto social de educación digital de Chile.
+      Proyecto social de educación digital de Chile.
       <strong>Gratis para familias, docentes y colegios.</strong>
       Construido para proteger a los que más importan.
     </p>
 
   </div>
+
 
   <!-- AMENAZAS REALES -->
   <div class="amenazas-real">
@@ -555,10 +597,10 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
     </div>
     <div class="ar-body">
       <div class="ar-item ar-1">
-        <div class="ar-n">22M</div>
+        <div class="ar-n">37 Mill</div>
         <div class="ar-info">
-          <div class="ar-title">Intentos de phishing bloqueados en Chile en 2024</div>
-          <div class="ar-sub">42 ataques por minuto. La mayoría llegan como correos de bancos, JUNAEB o el MINEDUC.</div>
+          <div class="ar-title">Intentos de phishing bloqueados en Chile en 2025</div>
+          <div class="ar-sub">70  ataques por minuto. La mayoría llegan como correos de bancos, JUNAEB o el MINEDUC.</div>
         </div>
       </div>
       <div class="ar-item ar-2">
@@ -569,9 +611,9 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
         </div>
       </div>
       <div class="ar-item ar-3">
-        <div class="ar-n">+89%</div>
+        <div class="ar-n">+69,5%</div>
         <div class="ar-info">
-          <div class="ar-title">Aumento de sextorsión en Chile en 2024</div>
+          <div class="ar-title">Aumento de sextorsión en Chile en 2025</div>
           <div class="ar-sub">Chantaje con imágenes íntimas. Afecta principalmente a adolescentes de 14 a 17 años.</div>
         </div>
       </div>
@@ -617,9 +659,9 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
     </div>
     <div class="stats-g">
       <div class="sb">
-        <div class="sb-n" data-target="68" data-suffix="%">68%</div>
+        <div class="sb-n" data-target="68" data-suffix="%">78%</div>
         <div class="sb-l">Colegios sin programa de educación digital</div>
-        <div class="sb-s">MINEDUC 2023</div>
+        <div class="sb-s">MINEDUC 2025</div>
       </div>
       <div class="sb">
         <div class="sb-n" data-target="14">14</div>
@@ -627,12 +669,49 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
         <div class="sb-s">PDI CIBERCRIMEN</div>
       </div>
       <div class="sb">
-        <div class="sb-n" data-special="true">22M</div>
-        <div class="sb-l">Intentos de phishing bloqueados en Chile en 2024</div>
+        <div class="sb-n" data-special="true">37 Mill </div>
+        <div class="sb-l">Intentos de phishing bloqueados en Chile en 2025</div>
         <div class="sb-s">KASPERSKY 2025</div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- VIOLENCIA DIGITAL — entrada prominente -->
+<div class="page">
+<div class="sw">
+  <a href="/violencia-digital.html" class="vd-banner">
+    <div class="vd-bar"></div>
+    <div class="vd-left">
+      <div class="vd-tag">
+        <div class="vd-dot"></div>
+        INFORMACIÓN Y AYUDA · CHILE
+      </div>
+      <div class="vd-title">Si te pasó algo,<br><em>no estás sola.</em></div>
+      <div class="vd-desc">Sextorsión, difusión de imágenes, acoso digital y control en el pololeo. Qué dice la ley, qué hacer primero y dónde pedir ayuda ahora mismo.</div>
+      <div class="vd-pills">
+        <span class="vd-pill">Sexting no consentido</span>
+        <span class="vd-pill">Sextorsión</span>
+        <span class="vd-pill">Deepfakes</span>
+        <span class="vd-pill">Control digital</span>
+        <span class="vd-pill">Ciberacoso</span>
+      </div>
+    </div>
+    <div class="vd-right">
+      <div class="vd-nums">
+        <div class="vd-num-item">
+          <div class="vd-num">1455</div>
+          <div class="vd-num-label">Fono Víctimas SernamEG<br>Confidencial · Gratuito</div>
+        </div>
+        <div class="vd-num-item">
+          <div class="vd-num">134</div>
+          <div class="vd-num-label">PDI Cibercrimen<br>24 horas</div>
+        </div>
+      </div>
+      <div class="vd-cta">Ver información y recursos →</div>
+    </div>
+  </a>
+</div>
 </div>
 
 <!-- PERFILES -->
@@ -688,12 +767,12 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
       <div class="cta3-cta" style="color:var(--blue);">Suscribirse gratis →</div>
     </a>
     <a href="/violencia-digital.html" class="cta3-card"
-      onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background='var(--bg2)'">
+      onmouseover="this.style.background='rgba(155,109,255,.06)'" onmouseout="this.style.background='var(--bg2)'">
       <div class="cta3-bar" style="background:#9b6dff;"></div>
-      <div class="cta3-tag" style="color:#9b6dff;">Información y ayuda</div>
-      <div class="cta3-title">Violencia<br><em style="color:#9b6dff;">digital.</em></div>
-      <div class="cta3-desc">Sexting, sextorsión, ciberacoso y control digital. Qué es, qué hacer y dónde pedir ayuda en Chile.</div>
-      <div class="cta3-cta" style="color:#9b6dff;">Ver información →</div>
+      <div class="cta3-tag" style="color:#9b6dff;">Si ya te pasó · Información y ayuda</div>
+      <div class="cta3-title">No estás<br><em style="color:#9b6dff;">sola.</em></div>
+      <div class="cta3-desc">Sextorsión, difusión de imágenes, control digital y ciberacoso. Qué dice la ley y qué hacer ahora mismo en Chile.</div>
+      <div class="cta3-cta" style="color:#9b6dff;">Ver recursos → 1455 · 134</div>
     </a>
     <a href="/caps.html" class="cta3-card"
       onmouseover="this.style.background='rgba(0,255,136,.04)'" onmouseout="this.style.background='var(--bg2)'"
@@ -714,7 +793,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
 <div class="sw">
   <div class="mf">
     <div class="mf-text">La educación digital temprana es la única defensa real — y la mayoría de los colegios todavía no la imparte. <em>Aegis8 existe para cambiar eso.</em> Gratis. Para todos. Sin excusas.</div>
-    <div class="mf-sig">// Aegis8 · Proyecto Social · Chile · 2024</div>
+    <div class="mf-sig">// Aegis8 · Proyecto Social · Chile · 2026</div>
   </div>
 </div>
 </div>

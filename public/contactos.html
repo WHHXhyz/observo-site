@@ -335,7 +335,7 @@ function doSubmit(){
       fetch(WORKER_URL,{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({nombre:nombre,email:email,mensaje:msg,token:token,honeypot:honey})
+        body:JSON.stringify({nombre:nombre,email:email,mensaje:msg,token:token,honeypot:honey,_subject:'Nuevo contacto desde Aegis8'})
       }).then(function(r){return r.json();}).then(function(d){
         btn.textContent='Enviar mensaje →';btn.style.opacity='1';btn.disabled=false;
         if(d.ok){
