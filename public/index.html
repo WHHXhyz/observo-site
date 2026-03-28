@@ -878,22 +878,36 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
 </div>
 </div>
 
-<!-- NOTICIAS DINÁMICAS -->
+<!-- INTELIGENCIA — CTA a /noticias con titular dinámico -->
 <div class="page">
-<div class="sw" id="noticias-section" style="display:none;">
-  <div class="sl">// Radar Aegis8 · Lo que está pasando ahora</div>
-  <h2 class="st">Amenazas activas<br><em>en Chile.</em></h2>
-  <p class="si">Alertas reales, legislación y casos relevantes de ciberseguridad. Actualizado cada semana.</p>
-  <div id="noticias-lista" style="display:flex;flex-direction:column;gap:1px;background:var(--border);"></div>
-  <div style="margin-top:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-    <div id="noticias-updated" style="font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--ink3);letter-spacing:1px;"></div>
-    <a href="https://csirt.gob.cl" target="_blank" rel="noopener"
-      style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
-      color:var(--accent);text-decoration:none;text-transform:uppercase;transition:letter-spacing .2s;"
-      onmouseover="this.style.letterSpacing='3px'" onmouseout="this.style.letterSpacing='2px'">
-      Ver alertas CSIRT Chile →
-    </a>
-  </div>
+<div class="sw">
+  <a href="/noticias" id="noticias-cta"
+    style="display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;
+    text-decoration:none;border:1px solid var(--border);border-radius:4px;
+    padding:28px 32px;background:var(--bg2);transition:all .25s;position:relative;overflow:hidden;"
+    onmouseover="this.style.borderColor='rgba(255,255,255,.1)';this.style.background='rgba(255,255,255,.025)'"
+    onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--bg2)'">
+    <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--accent),transparent);"></div>
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;
+        color:var(--accent);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+        <div style="width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;"></div>
+        INTELIGENCIA · CIBERSEGURIDAD · ACTUALIZADO CADA 4 DÍAS
+      </div>
+      <div id="noticias-titular" style="font-family:'DM Serif Display',serif;
+        font-size:clamp(1.1rem,2vw,1.5rem);color:var(--ink);line-height:1.2;margin-bottom:8px;">
+        Cargando última noticia...
+      </div>
+      <div id="noticias-fuente" style="font-family:'JetBrains Mono',monospace;
+        font-size:.56rem;color:var(--ink3);letter-spacing:1px;">
+        6 fuentes · CSIRT Chile · ANCI · The Hacker News · BleepingComputer
+      </div>
+    </div>
+    <div style="flex-shrink:0;text-align:right;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+        color:var(--accent);text-transform:uppercase;white-space:nowrap;">Ver todas →</div>
+    </div>
+  </a>
 </div>
 </div>
 
@@ -1032,31 +1046,23 @@ if('serviceWorker'in navigator){window.addEventListener('load',()=>{navigator.se
     }
   }
 
-  /* Noticias */
-  if(data.noticias&&data.noticias.length){
-    const lista=document.getElementById('noticias-lista'),sec=document.getElementById('noticias-section');
-    if(lista&&sec){
-      const colorMap={accent:'var(--accent)',red:'#ef4444',blue:'var(--blue)',green:'var(--green)',gold:'var(--gold)',purple:'#9b6dff'};
-      lista.innerHTML=data.noticias.map(n=>`
-        <a href="${n.url||'#'}" target="_blank" rel="noopener"
-          style="background:var(--bg2);padding:18px 24px;display:flex;align-items:flex-start;gap:16px;
-          text-decoration:none;transition:background .2s;border-left:3px solid transparent;position:relative;"
-          onmouseover="this.style.background='rgba(255,255,255,.02)';this.style.borderLeftColor='${colorMap[cc(n.color)]||colorMap.accent}'"
-          onmouseout="this.style.background='var(--bg2)';this.style.borderLeftColor='transparent'">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ink3);
-            letter-spacing:1px;white-space:nowrap;margin-top:3px;min-width:68px;">${n.fecha||''}</div>
-          <div style="flex:1;">
-            <div style="font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:2px;
-              text-transform:uppercase;margin-bottom:5px;color:${colorMap[cc(n.color)]||colorMap.accent};">${n.tag||''}</div>
-            <div style="font-size:.9rem;color:var(--ink);line-height:1.45;margin-bottom:4px;font-weight:400;">${n.titulo||''}</div>
-            <div style="font-size:.8rem;color:var(--ink3);line-height:1.5;">${n.desc||''}</div>
-          </div>
-          <div style="font-size:.8rem;color:var(--ink3);margin-top:3px;">→</div>
-        </a>`).join('');
-      if(data.updated){const u=document.getElementById('noticias-updated');if(u)u.textContent='// Última actualización: '+new Date(data.updated).toLocaleDateString('es-CL',{day:'numeric',month:'long',year:'numeric'});}
-      sec.style.display='block';ro.observe(sec);
+  /* Titular más reciente desde /noticias */
+  (async function(){
+    try {
+      const r = await fetch('https://aegis8-agent.christianmora705.workers.dev/noticias');
+      if (!r.ok) return;
+      const d = await r.json();
+      if (!d.items || !d.items.length) return;
+      const top = d.items[0];
+      const t = document.getElementById('noticias-titular');
+      const f = document.getElementById('noticias-fuente');
+      if (t) t.textContent = top.title;
+      if (f) f.textContent = top.source + ' · ' + new Date(top.date).toLocaleDateString('es-CL',{day:'numeric',month:'long'});
+    } catch(e) {
+      const t = document.getElementById('noticias-titular');
+      if (t) t.textContent = 'CVEs, amenazas activas y alertas de Chile — actualizadas cada 4 días.';
     }
-  }
+  })();
 
   /* Misión */
   if(data.mision_semana){
