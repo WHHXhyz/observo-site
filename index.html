@@ -586,39 +586,6 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
   </div>
 
 
-  <!-- AMENAZAS REALES -->
-  <div class="amenazas-real">
-    <div class="ar-hd">
-      <div class="ar-hd-l">
-        <div class="ar-live"></div>
-        AMENAZAS ACTIVAS EN CHILE · 2025
-      </div>
-      <div class="ar-hd-r">Datos: Kaspersky · PDI · SERNAMEG</div>
-    </div>
-    <div class="ar-body">
-      <div class="ar-item ar-1">
-        <div class="ar-n">37 Mill</div>
-        <div class="ar-info">
-          <div class="ar-title">Intentos de phishing bloqueados en Chile en 2025</div>
-          <div class="ar-sub">70  ataques por minuto. La mayoría llegan como correos de bancos, JUNAEB o el MINEDUC.</div>
-        </div>
-      </div>
-      <div class="ar-item ar-2">
-        <div class="ar-n">14</div>
-        <div class="ar-info">
-          <div class="ar-title">Años — edad promedio de la primera víctima de grooming</div>
-          <div class="ar-sub">El contacto ocurre en juegos como Roblox, Discord y plataformas que usan a diario.</div>
-        </div>
-      </div>
-      <div class="ar-item ar-3">
-        <div class="ar-n">+69,5%</div>
-        <div class="ar-info">
-          <div class="ar-title">Aumento de sextorsión en Chile en 2025</div>
-          <div class="ar-sub">Chantaje con imágenes íntimas. Afecta principalmente a adolescentes de 14 a 17 años.</div>
-        </div>
-      </div>
-    </div>
-  </div>
 <!-- TICKER DINÁMICO -->
 <div class="ticker">
   <div class="ticker-t" id="ticker-inner">
@@ -638,41 +605,6 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
     <span class="ta">///</span><span>SMISHING BANCARIO EN AUMENTO · NO RESPONDAS SMS DE "TU BANCO"</span>
     <span class="ta">///</span><span>CHILE CONCENTRA EL 7% DE LOS ATAQUES EN LATINOAMÉRICA · ENTEL DIGITAL</span>
     <span class="ta">///</span><span>RANSOMWARE: 38% DE INCIDENCIA EN SECTORES CRÍTICOS CHILENOS</span>
-  </div>
-</div>
-
-<!-- AMENAZA SEMANAL DINÁMICA -->
-<div id="amenaza-wrap" style="display:none;position:relative;z-index:10;
-  background:rgba(13,20,34,.95);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-  <div style="display:flex;align-items:center;justify-content:space-between;
-    padding:11px 32px;border-bottom:1px solid var(--border);background:rgba(8,12,20,.5);">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;
-      color:var(--ink3);display:flex;align-items:center;gap:10px;">
-      <div style="width:7px;height:7px;border-radius:50%;background:#ef4444;animation:blink 1.5s infinite;"></div>
-      AMENAZA DE LA SEMANA · CHILE
-    </div>
-    <div id="amenaza-fecha" style="font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--ink3);letter-spacing:2px;"></div>
-  </div>
-  <div style="max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;align-items:center;">
-    <div style="padding:24px 32px;border-right:1px solid var(--border);">
-      <div id="amenaza-nivel" style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
-        color:#ef4444;padding:4px 10px;border-radius:3px;display:inline-block;
-        background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);margin-bottom:10px;">● ALTO</div>
-      <div id="amenaza-titulo" style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);line-height:1.2;margin-bottom:6px;"></div>
-      <div id="amenaza-afecta" style="font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--ink3);letter-spacing:2px;"></div>
-    </div>
-    <div style="padding:24px 32px;">
-      <div id="amenaza-desc" style="font-size:.88rem;line-height:1.7;color:var(--ink2);margin-bottom:12px;"></div>
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-        <div id="amenaza-fuente" style="font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--ink3);letter-spacing:1px;"></div>
-        <a id="amenaza-link" href="#" target="_blank" rel="noopener"
-          style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
-          color:var(--accent);text-decoration:none;text-transform:uppercase;transition:letter-spacing .2s;"
-          onmouseover="this.style.letterSpacing='3px'" onmouseout="this.style.letterSpacing='2px'">
-          Ver fuente →
-        </a>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -1025,26 +957,6 @@ const ss=document.querySelector('.stats-s');if(ss)statsObs.observe(ss);
     }
   }
 
-  /* Amenaza semanal */
-  if(data.amenaza_semana){
-    const a=data.amenaza_semana,w=document.getElementById('amenaza-wrap');
-    if(w){
-      document.getElementById('amenaza-titulo').textContent=a.titulo||'';
-      document.getElementById('amenaza-desc').textContent=a.descripcion||'';
-      document.getElementById('amenaza-afecta').textContent='Afecta: '+(a.afecta||'—');
-      document.getElementById('amenaza-fuente').textContent='Fuente: '+(a.fuente||'—');
-      const nv=document.getElementById('amenaza-nivel');
-      nv.textContent='● '+(a.nivel||'MEDIO');
-      const cm={red:'rgba(239,68,68,.1)',accent:'rgba(240,120,48,.1)',gold:'rgba(245,168,35,.1)',green:'rgba(46,204,128,.1)',blue:'rgba(58,127,212,.1)',purple:'rgba(155,109,255,.1)'};
-      const bc={red:'rgba(239,68,68,.2)',accent:'rgba(240,120,48,.2)',gold:'rgba(245,168,35,.2)',green:'rgba(46,204,128,.2)',blue:'rgba(58,127,212,.2)',purple:'rgba(155,109,255,.2)'};
-      const cl={red:'#ef4444',accent:'var(--accent)',gold:'var(--gold)',green:'var(--green)',blue:'var(--blue)',purple:'#9b6dff'};
-      const c=cc(a.color||'red');
-      nv.style.background=cm[c]||cm.red;nv.style.borderColor=bc[c]||bc.red;nv.style.color=cl[c]||cl.red;
-      if(data.updated)document.getElementById('amenaza-fecha').textContent='Actualizado: '+new Date(data.updated).toLocaleDateString('es-CL',{day:'numeric',month:'long',year:'numeric'});
-      if(a.url)document.getElementById('amenaza-link').href=a.url;
-      w.style.display='block';
-    }
-  }
 
   /* Titular más reciente desde /noticias */
   (async function(){
