@@ -2,833 +2,182 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<meta name="theme-color" content="#080c14"/>
-<title>Aegis8 · Quiz</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Quiz Semanal · Aegis8</title>
+<meta name="description" content="Pon a prueba tu defensa digital. Quiz semanal de ciberseguridad para Chile. Gratis, sin registro."/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
+<script src="/aegis-nav.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet"/>
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;background:#080c14;color:#eaf0f8;font-family:'Lato',sans-serif;font-weight:300;}
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
 :root{
   --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
-  --accent:#f07830;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
-  --border:rgba(58,127,212,.12);--border-o:rgba(240,120,48,.15);
+  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;
+  --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
+  --card:rgba(255,255,255,.03);--radius:4px;
 }
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:linear-gradient(rgba(58,127,212,.02) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(58,127,212,.02) 1px,transparent 1px);
-  background-size:60px 60px;}
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(58,127,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.025) 1px,transparent 1px);
+  background-size:80px 80px;}
+.wrap{max-width:720px;margin:0 auto;padding:0 24px;}
+.page-inner{position:relative;z-index:10;}
+/* FOOTER */
+.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);
+  padding:48px 32px 32px;max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.fl span{color:var(--accent);}
+.flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.flinks a:hover{color:var(--accent);}
+.fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
 
-.wrap{max-width:520px;margin:0 auto;padding:0 20px;position:relative;z-index:1;}
-@keyframes up{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+/* ── QUIZ STYLES ── */
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
 
-/* ── SCREENS ── */
-.screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 0;}
-.screen.hidden{display:none;}
-
-/* ── CODE ENTRY ── */
-.code-logo{margin-bottom:28px;animation:up .6s ease both;}
-.code-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,7vw,3.2rem);
-  line-height:.95;letter-spacing:-1px;text-align:center;margin-bottom:10px;
-  animation:up .7s .1s ease both;}
-.code-title em{color:var(--accent);font-style:italic;display:block;}
-.code-sub{font-size:.88rem;color:var(--ink2);text-align:center;line-height:1.6;
-  margin-bottom:36px;animation:up .7s .2s ease both;}
-.code-input-wrap{width:100%;max-width:320px;animation:up .7s .3s ease both;}
-.code-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
-  text-transform:uppercase;color:var(--accent);display:block;margin-bottom:6px;}
-.code-input{width:100%;background:var(--bg2);border:1px solid var(--border-o);
-  border-radius:4px;color:var(--ink);font-family:'JetBrains Mono',monospace;
-  font-size:1.4rem;letter-spacing:6px;text-align:center;text-transform:uppercase;
-  padding:16px;outline:none;transition:border-color .2s;}
-.code-input:focus{border-color:var(--accent);}
-.code-input::placeholder{color:var(--ink3);font-size:1rem;letter-spacing:2px;}
-.code-name-wrap{width:100%;max-width:320px;margin-top:14px;animation:up .7s .35s ease both;}
-.name-input{width:100%;background:var(--bg2);border:1px solid var(--border);
-  border-radius:4px;color:var(--ink);font-family:'Lato',sans-serif;font-size:1rem;
-  padding:12px 14px;outline:none;transition:border-color .2s;}
-.name-input:focus{border-color:var(--accent);}
-.name-input::placeholder{color:var(--ink3);}
-.code-btn{width:100%;max-width:320px;margin-top:14px;padding:14px;
-  font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;
-  text-transform:uppercase;color:#080c14;background:var(--accent);
-  border:none;border-radius:4px;cursor:pointer;transition:background .2s;
-  animation:up .7s .4s ease both;}
-.code-btn:hover{background:#d4611a;}
-.code-error{color:#ef4444;font-family:'JetBrains Mono',monospace;font-size:.65rem;
-  letter-spacing:1px;text-align:center;margin-top:10px;display:none;}
-.code-error.show{display:block;}
-
-/* ── QUIZ SCREEN ── */
-.quiz-header{width:100%;padding:16px 20px;background:rgba(8,12,20,.9);
-  backdrop-filter:blur(10px);border-bottom:1px solid var(--border);
-  position:fixed;top:0;left:0;right:0;z-index:10;
-  display:flex;align-items:center;justify-content:space-between;}
-.qh-left{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--ink3);}
-.qh-left span{color:var(--accent);}
-.qh-prog{display:flex;align-items:center;gap:8px;}
-.qh-dots{display:flex;gap:4px;}
-.qdot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background .3s;}
-.qdot.done{background:var(--green);}
-.qdot.active{background:var(--accent);}
-.quiz-body{padding-top:80px;padding-bottom:40px;width:100%;}
-.q-wrap{max-width:520px;margin:0 auto;padding:24px 20px;}
-
-.q-num{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;
-  color:var(--accent);text-transform:uppercase;margin-bottom:10px;}
-.q-text{font-family:'DM Serif Display',serif;font-size:clamp(1.2rem,4vw,1.7rem);
-  color:var(--ink);line-height:1.3;margin-bottom:8px;}
-.q-context{font-size:.84rem;color:var(--ink2);line-height:1.6;margin-bottom:24px;
-  background:var(--bg2);border-left:3px solid var(--border-o);
-  padding:12px 14px;border-radius:0 4px 4px 0;}
-
-.q-options{display:flex;flex-direction:column;gap:8px;}
-.q-opt{background:var(--bg2);border:1px solid var(--border);border-radius:4px;
-  padding:14px 16px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:12px;
-  font-size:.9rem;color:var(--ink2);line-height:1.4;}
-.q-opt:hover{border-color:rgba(240,120,48,.3);color:var(--ink);background:rgba(255,255,255,.03);}
-.q-opt.selected{border-color:var(--accent);color:var(--ink);background:rgba(240,120,48,.06);}
-.q-opt.correct{border-color:var(--green)!important;color:var(--green)!important;background:rgba(46,204,128,.07)!important;}
-.q-opt.wrong{border-color:#ef4444!important;color:#ef4444!important;background:rgba(239,68,68,.07)!important;}
-.q-opt.disabled{cursor:not-allowed;opacity:.7;}
-.opt-letter{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;
-  width:24px;height:24px;border-radius:50%;border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  color:var(--ink3);transition:all .2s;}
-.q-opt.selected .opt-letter{border-color:var(--accent);color:var(--accent);}
-.q-opt.correct .opt-letter{border-color:var(--green);color:var(--green);}
-.q-opt.wrong .opt-letter{border-color:#ef4444;color:#ef4444;}
-
-.q-feedback{margin-top:14px;padding:12px 14px;border-radius:4px;
-  font-size:.84rem;line-height:1.6;display:none;border-left:3px solid;}
-.q-feedback.show{display:block;}
-.q-feedback.right{background:rgba(46,204,128,.07);border-color:var(--green);color:var(--green);}
-.q-feedback.wrong{background:rgba(239,68,68,.07);border-color:#ef4444;color:#ef4444;}
-
-.q-next{margin-top:16px;width:100%;padding:13px;font-family:'JetBrains Mono',monospace;
-  font-size:.68rem;letter-spacing:2px;text-transform:uppercase;
-  color:#080c14;background:var(--accent);border:none;border-radius:4px;
-  cursor:pointer;transition:background .2s;display:none;}
-.q-next.show{display:block;}
-.q-next:hover{background:#d4611a;}
-
-/* ── RESULTADO FINAL ── */
-.result-screen{text-align:center;padding:40px 20px;}
-.result-score-big{font-family:'DM Serif Display',serif;
-  font-size:clamp(4rem,15vw,7rem);line-height:1;color:var(--accent);
-  font-style:italic;margin-bottom:8px;}
-.result-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;
-  letter-spacing:3px;color:var(--ink3);text-transform:uppercase;margin-bottom:28px;}
-.result-title{font-family:'DM Serif Display',serif;font-size:1.8rem;
-  color:var(--ink);margin-bottom:8px;line-height:1.2;}
-.result-sub{font-size:.88rem;color:var(--ink2);line-height:1.7;max-width:360px;
-  margin:0 auto 28px;}
-.result-answers{background:var(--bg2);border:1px solid var(--border);border-radius:4px;
-  overflow:hidden;margin-bottom:24px;text-align:left;}
-.ra-row{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;
-  align-items:flex-start;gap:10px;}
-.ra-row:last-child{border-bottom:none;}
-.ra-ico{font-size:1rem;flex-shrink:0;margin-top:1px;}
-.ra-q{font-size:.8rem;color:var(--ink2);line-height:1.4;}
-.ra-a{font-size:.78rem;color:var(--ink3);margin-top:2px;}
-.ra-row.ra-ok .ra-q{color:var(--green);}
-.ra-row.ra-ko .ra-q{color:#ef4444;}
-.result-cta{display:flex;flex-direction:column;gap:10px;align-items:center;}
-.btn-result{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;
-  text-transform:uppercase;padding:12px 28px;border-radius:4px;
-  text-decoration:none;transition:all .2s;display:inline-block;}
-.btn-r1{color:#080c14;background:var(--accent);}
-.btn-r1:hover{background:#d4611a;}
-.btn-r2{color:var(--ink2);border:1px solid var(--border);background:transparent;}
-.btn-r2:hover{color:var(--ink);border-color:rgba(255,255,255,.2);}
+.qz-wrap{background:var(--bg2);border:1px solid var(--border2);border-radius:6px;
+  overflow:hidden;animation:fadeUp .4s ease;}
+.qz-hd{background:rgba(240,120,48,.05);border-bottom:1px solid var(--border);
+  padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.qz-hd-l{display:flex;align-items:center;gap:.75rem;}
+.qz-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;}
+.qz-label{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;color:var(--ink3);}
+.qz-prog-txt{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent);}
+.qz-prog-bar{height:3px;background:var(--border);position:relative;}
+.qz-prog-fill{height:100%;background:var(--accent);transition:width .4s ease;border-radius:0 2px 2px 0;}
+.qz-body{padding:2rem 1.75rem;}
+.qz-num{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
+  color:var(--accent);text-transform:uppercase;margin-bottom:.75rem;}
+.qz-pregunta{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--ink);
+  line-height:1.25;margin-bottom:1.5rem;}
+.qz-ops{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1rem;}
+.qz-op{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:.85rem 1.1rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.75rem;
+  text-align:left;width:100%;}
+.qz-op:hover{border-color:var(--border2);background:rgba(240,120,48,.04);}
+.qz-op:disabled{cursor:default;}
+.qz-op-ok{border-color:rgba(46,204,128,.5)!important;background:rgba(46,204,128,.08)!important;}
+.qz-op-mal{border-color:rgba(240,120,48,.5)!important;background:rgba(240,120,48,.08)!important;}
+.qz-op-letra{font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:600;
+  color:var(--ink3);width:20px;flex-shrink:0;letter-spacing:1px;}
+.qz-op-ok .qz-op-letra{color:var(--green);}
+.qz-op-mal .qz-op-letra{color:var(--accent);}
+.qz-op-txt{font-size:.88rem;color:var(--ink2);line-height:1.4;}
+.qz-op-ok .qz-op-txt{color:var(--ink);}
+.qz-exp{display:flex;gap:.75rem;padding:1rem;border-radius:var(--radius);
+  font-size:.84rem;line-height:1.6;margin-bottom:1rem;align-items:flex-start;}
+.qz-exp-ok{background:rgba(46,204,128,.07);border:1px solid rgba(46,204,128,.2);color:var(--ink2);}
+.qz-exp-mal{background:rgba(240,120,48,.07);border:1px solid var(--border2);color:var(--ink2);}
+.qz-exp-ico{flex-shrink:0;font-weight:700;margin-top:1px;}
+.qz-exp-ok .qz-exp-ico{color:var(--green);}
+.qz-exp-mal .qz-exp-ico{color:var(--accent);}
+.qz-next{width:100%;padding:.9rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;
+  letter-spacing:2px;text-transform:uppercase;color:var(--bg);background:var(--accent);
+  border:none;border-radius:var(--radius);cursor:pointer;transition:all .2s;margin-top:.25rem;}
+.qz-next:hover{background:var(--accent2);box-shadow:0 0 20px rgba(240,120,48,.3);}
+.qz-ft{padding:.75rem 1.5rem;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ink3);letter-spacing:1px;}
+.qz-ft strong{color:var(--accent);}
+/* Resultado */
+.qz-score{font-family:'DM Serif Display',serif;font-size:5rem;color:var(--accent);
+  line-height:1;font-style:italic;margin-bottom:.5rem;}
+.qz-score-label{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;
+  color:var(--ink2);margin-bottom:.5rem;}
+.qz-score-sub{font-size:.84rem;color:var(--ink3);margin-bottom:1.5rem;}
+.qz-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--border);border-radius:4px;overflow:hidden;margin:1.5rem 0;}
+.qz-stat{background:var(--bg2);padding:1rem;text-align:center;}
+.qz-stat-n{font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--accent);font-style:italic;}
+.qz-stat-l{font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--ink3);letter-spacing:1px;margin-top:4px;}
+.qz-btn-pri{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--bg);background:var(--accent);
+  padding:.85rem 1.5rem;border-radius:var(--radius);text-decoration:none;transition:all .2s;}
+.qz-btn-pri:hover{background:var(--accent2);}
+.qz-btn-sec{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--ink2);border:1px solid var(--border);
+  padding:.85rem 1.5rem;border-radius:var(--radius);text-decoration:none;transition:all .2s;}
+.qz-btn-sec:hover{color:var(--ink);border-color:rgba(255,255,255,.2);}
 </style>
 </head>
 <body>
+<div class="page-inner">
+<div class="wrap" style="padding-top:80px;padding-bottom:80px;">
 
-<!-- ═══════════════════════ SCREEN: CÓDIGO ═══════════════════════ -->
-<div class="screen" id="screen-code">
-<div class="wrap" style="display:flex;flex-direction:column;align-items:center;">
-  <div class="code-logo">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" width="72" height="72">
-      <defs>
-        <linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#f5c842"/>
-          <stop offset="100%" stop-color="#f07830"/>
-        </linearGradient>
-      </defs>
-      <path d="M60 8 C48 8 32 13 22 20 L14 26 L14 62 C14 82 34 96 60 108 C86 96 106 82 106 62 L106 26 L98 20 C88 13 72 8 60 8 Z"
-        fill="#0d1422" stroke="url(#lg)" stroke-width="2"/>
-      <path d="M60 28 C52 28 46 33 46 40 C46 45 49 49 54 52 C49 55 44 60 44 66 C44 75 51 81 60 81 C69 81 76 75 76 66 C76 60 71 55 66 52 C71 49 74 45 74 40 C74 33 68 28 60 28 Z"
-        fill="none" stroke="url(#lg)" stroke-width="3" stroke-linejoin="round"/>
-    </svg>
+  <!-- Header -->
+  <div style="margin-bottom:40px;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+      color:var(--ink3);margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+      <div style="width:20px;height:1px;background:var(--accent);"></div>
+      QUIZ SEMANAL · AEGIS8 · ACTUALIZADO CADA LUNES
+    </div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.2rem,6vw,4rem);
+      line-height:1;letter-spacing:-1px;margin-bottom:16px;">
+      ¿Qué tan bien<br>
+      <em style="color:var(--accent);">te defiendes?</em>
+    </h1>
+    <p style="font-size:1rem;line-height:1.8;color:var(--ink2);max-width:480px;">
+      5 preguntas sobre la amenaza de esta semana. Sin registro, sin datos.
+      El resultado se guarda en tu dispositivo.
+    </p>
   </div>
-  <h1 class="code-title">Quiz<br><em>Aegis8</em></h1>
-  <p class="code-sub">Ingresa el código que te dio tu profe para empezar el módulo.</p>
-  
-  <div class="code-input-wrap">
-    <label class="code-label" for="ci">Código de clase</label>
-    <input class="code-input" id="ci" maxlength="7" placeholder="A8-0000"
-      oninput="fmtCode(this)" onkeydown="if(event.key==='Enter')checkCode()"/>
-  </div>
-  <div class="code-name-wrap">
-    <input class="name-input" id="ni" maxlength="40" placeholder="Tu nombre (ej: Sofía M.)"
-      onkeydown="if(event.key==='Enter')checkCode()"/>
-  </div>
-  <button class="code-btn" onclick="checkCode()">Empezar →</button>
-  <div class="code-error" id="code-err">Código no reconocido. Pídele a tu profe el código correcto.</div>
-</div>
-</div>
 
-<!-- ═══════════════════════ SCREEN: QUIZ ═══════════════════════ -->
-<div class="screen hidden" id="screen-quiz" style="padding:0;justify-content:flex-start;align-items:stretch;">
-  <div class="quiz-header">
-    <div class="qh-left">AEGIS<span>8</span> · <span id="qh-mod">Módulo</span></div>
-    <div class="qh-prog">
-      <div class="qh-dots" id="qh-dots"></div>
+  <!-- Quiz container -->
+  <div id="quiz-container">
+    <div style="padding:3rem;text-align:center;background:var(--bg2);
+      border:1px solid var(--border);border-radius:6px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;
+        color:var(--ink3);letter-spacing:2px;">Cargando quiz...</div>
     </div>
   </div>
-  <div class="quiz-body">
-    <div class="q-wrap">
-      <div class="q-num" id="q-num">Pregunta 1 / 5</div>
-      <div class="q-text" id="q-text"></div>
-      <div class="q-context" id="q-context" style="display:none;"></div>
-      <div class="q-options" id="q-options"></div>
-      <div class="q-feedback" id="q-feedback"></div>
-      <button class="q-next" id="q-next" onclick="nextQ()">Siguiente →</button>
-    </div>
-  </div>
-</div>
 
-<!-- ═══════════════════════ SCREEN: RESULTADO ═══════════════════════ -->
-<div class="screen hidden" id="screen-result">
-<div class="wrap result-screen">
-  <div class="result-score-big" id="r-score">0/5</div>
-  <div class="result-label" id="r-label">Resultado</div>
-  <div class="result-title" id="r-title">Bien hecho</div>
-  <div class="result-sub" id="r-sub"></div>
-  <div class="result-answers" id="r-answers"></div>
-  <div class="result-cta">
-    <a href="/educa.html" class="btn-result btn-r1">Aprender más →</a>
-    <a href="/app/" class="btn-result btn-r2">Volver al inicio</a>
-  </div>
-</div>
-</div>
-
-<script>
-// ══════════════════════════════════
-// MÓDULOS DE QUIZ — contenido real
-// ══════════════════════════════════
-const MODULOS = {
-  phishing: {
-    nombre: 'Phishing',
-    preguntas: [
-      {
-        texto: '¿Cuál de estos correos es sospechoso?',
-        contexto: 'Banco Estado te envió un mensaje urgente.',
-        opciones: [
-          'soporte@bancoestado.cl — "Tu saldo está disponible"',
-          'soporte@banco-estado-cl.net — "Tu cuenta fue BLOQUEADA, verifica ahora"',
-          'notificaciones@bancoestado.cl — "Tu estado de cuenta de enero"',
-          'no-reply@bancoestado.cl — "Confirma tu email"',
-        ],
-        correcta: 1,
-        feedback_ok: 'Correcto. El dominio "banco-estado-cl.net" es falso. Banco Estado usa @bancoestado.cl. La urgencia artificial y la URL sospechosa son señales clásicas de phishing.',
-        feedback_ko: 'La opción B es phishing. El dominio "banco-estado-cl.net" es falso — imita al real. Además usa urgencia artificial ("BLOQUEADA") para que actúes sin pensar.',
-      },
-      {
-        texto: '¿Qué hace el phishing?',
-        opciones: [
-          'Hackea tu computador directamente',
-          'Te engaña para que entregues tus datos voluntariamente',
-          'Roba fotos de tu celular',
-          'Instala publicidad en tu navegador',
-        ],
-        correcta: 1,
-        feedback_ok: 'Exacto. El phishing no necesita hackear — te convence de dar tus datos tú mismo. Por eso es tan efectivo: aprovecha la confianza, no la tecnología.',
-        feedback_ko: 'El phishing funciona engañándote para que tú entregues los datos. No hackea directamente — usa mensajes falsos que parecen legítimos.',
-      },
-      {
-        texto: 'Recibes: "Tu cuenta WhatsApp será eliminada en 24h. Envía tu código de verificación al +56 9 1234 5678". ¿Qué haces?',
-        opciones: [
-          'Envías el código rápido para no perder la cuenta',
-          'Llamas al número para confirmar',
-          'Ignoras y borras el mensaje — WhatsApp nunca pide tu código',
-          'Reenvías a tus contactos para advertirles',
-        ],
-        correcta: 2,
-        feedback_ok: 'Perfecto. WhatsApp NUNCA pide el código de verificación por mensaje. Si lo envías, el atacante toma control de tu cuenta en segundos.',
-        feedback_ko: 'La respuesta correcta es ignorar y borrar. WhatsApp jamás pide el código por mensaje. Este es el ataque de robo de cuentas más común en Chile.',
-      },
-      {
-        texto: '¿Cuál es la señal de alerta más confiable de un link falso?',
-        opciones: [
-          'El mensaje tiene errores de ortografía',
-          'El remitente usa un dominio que imita al real (ej: "serv1cio.cl" vs "servicio.cl")',
-          'El mensaje llega de noche',
-          'El mensaje está en mayúsculas',
-        ],
-        correcta: 1,
-        feedback_ok: 'Correcto. El dominio falso es la señal más técnica y confiable. Siempre verifica la URL completa — los atacantes cambian una letra o agregan palabras para confundir.',
-        feedback_ko: 'El indicador más confiable es el dominio falso. Los errores de ortografía ayudan, pero los ataques modernos están muy bien escritos. Siempre verifica la URL.',
-      },
-      {
-        texto: 'La mejor defensa contra el phishing es:',
-        opciones: [
-          'Tener un buen antivirus',
-          'Nunca abrir correos de desconocidos',
-          'Verificar siempre en el sitio oficial — nunca ingresar datos desde un link recibido',
-          'Usar contraseñas difíciles',
-        ],
-        correcta: 2,
-        feedback_ok: '¡Perfecto! La regla de oro: si un mensaje pide que ingreses datos, ve directamente al sitio oficial escribiendo la URL tú mismo. Nunca uses el link del mensaje.',
-        feedback_ko: 'La mejor defensa es no usar links de mensajes para ingresar datos. Ve siempre al sitio oficial directamente. El antivirus no detiene el phishing basado en engaño.',
-      },
-    ]
-  },
-  grooming: {
-    nombre: 'Grooming',
-    preguntas: [
-      {
-        texto: '¿Qué es el grooming?',
-        opciones: [
-          'Un tipo de virus que afecta el computador',
-          'Cuando un adulto se gana la confianza de un menor online con intenciones dañinas',
-          'Acoso entre compañeros de colegio por redes sociales',
-          'Robo de contraseñas de juegos online',
-        ],
-        correcta: 1,
-        feedback_ok: 'Correcto. El grooming es cuando un adulto construye una relación de confianza con un menor en internet para obtener fotos, datos o encuentros. Es delito en Chile (Ley 20.526).',
-        feedback_ko: 'El grooming es cuando un adulto se acerca a un menor online, genera confianza y luego solicita fotos o encuentros. Es progresivo y calculado. Es delito en Chile.',
-      },
-      {
-        texto: 'Un desconocido en Roblox te regala skins caros y dice ser tu mejor amigo. Después te pide una foto tuya. ¿Qué haces?',
-        opciones: [
-          'Le mandas la foto porque ya llevan tiempo hablando',
-          'Le preguntas por qué quiere la foto',
-          'Bloqueas, no mandas nada y le cuentas a un adulto',
-          'Le mandas solo una foto de cara porque es "inocente"',
-        ],
-        correcta: 2,
-        feedback_ok: 'Exacto. Bloquear, no mandar nada y contarle a un adulto. Los regalos virtuales son una táctica clásica de grooming para crear sensación de deuda.',
-        feedback_ko: 'La respuesta correcta es bloquear y contarle a un adulto. Los regalos virtuales son una táctica de manipulación. Ninguna foto — ni siquiera de cara — es "inocente" en este contexto.',
-      },
-      {
-        texto: '¿Cuál es la señal de alerta MÁS importante del grooming?',
-        opciones: [
-          'La persona es muy amable y generosa',
-          'La persona pide que no le cuentes a tus papás sobre su relación',
-          'La persona conoce los mismos juegos que tú',
-          'La persona habla contigo todos los días',
-        ],
-        correcta: 1,
-        feedback_ok: 'Correcto. "No le cuentes a tus papás" es la señal roja máxima. Un adulto que pide secretos a un menor está haciendo algo malo.',
-        feedback_ko: 'La señal más importante es pedir secretos. Cualquier adulto que le pide a un menor que oculte su relación a los padres está manipulando.',
-      },
-      {
-        texto: 'El grooming generalmente ocurre en:',
-        opciones: [
-          'Solo en páginas de adultos',
-          'Juegos online, redes sociales y apps de mensajería que los jóvenes usan a diario',
-          'Solo en el correo electrónico',
-          'Solo en computadores, no en celulares',
-        ],
-        correcta: 1,
-        feedback_ok: 'Exacto. Roblox, Minecraft, TikTok, Instagram, Discord — los atacantes van donde están los menores.',
-        feedback_ko: 'El grooming ocurre en las plataformas que los jóvenes usan a diario: juegos online, redes sociales, apps de chat. No en lugares "de adultos".',
-      },
-      {
-        texto: 'Si algo incómodo ya pasó, lo más importante es:',
-        opciones: [
-          'Borrar todos los mensajes para que nadie lo sepa',
-          'No decirle a nadie para no meter en problemas al otro',
-          'Contarle a un adulto de confianza y no borrar nada — los mensajes son evidencia',
-          'Bloquearlo y olvidarlo',
-        ],
-        correcta: 2,
-        feedback_ok: 'Correcto. Contarle a un adulto y no borrar nada. Los mensajes son evidencia legal. PDI Cibercrimen: +56 2 2708 0000.',
-        feedback_ko: 'Lo más importante es contar y no borrar. Los mensajes son evidencia. No pasa nada malo por contarlo — la responsabilidad es del adulto, siempre.',
-      },
-    ]
-  },
-  privacidad: {
-    nombre: 'Privacidad en Redes',
-    preguntas: [
-      {
-        texto: 'Publicas una story en Instagram diciendo "En Costanera Center con mis amigos hasta las 10 PM". ¿Qué información estás entregando?',
-        opciones: [
-          'Solo que te gusta ese mall',
-          'Tu ubicación exacta y el horario en que no estás en casa',
-          'Que tienes amigos',
-          'Nada importante',
-        ],
-        correcta: 1,
-        feedback_ok: 'Correcto. Estás dando tu ubicación en tiempo real y avisando que tu casa está sola. Publica las fotos cuando vuelvas, no en el momento.',
-        feedback_ko: 'Estás dando tu ubicación exacta y avisando que tu casa está desocupada. Es más información de lo que parece.',
-      },
-      {
-        texto: '¿Qué configuración deberías tener en tus redes sociales?',
-        opciones: [
-          'Cuenta pública para conseguir más seguidores',
-          'Cuenta privada — solo las personas que apruebas ven tus contenidos',
-          'No importa si el contenido es "inocente"',
-          'Público es mejor porque puedes contactar a más personas',
-        ],
-        correcta: 1,
-        feedback_ok: 'Exacto. Cuenta privada siempre. No porque tengas algo que ocultar, sino porque controlas quién ve tu vida.',
-        feedback_ko: 'Cuenta privada es lo correcto. Controlas quién te ve — eso es tu derecho digital.',
-      },
-      {
-        texto: 'Tu huella digital es:',
-        opciones: [
-          'Tu contraseña de huella dactilar',
-          'Todo lo que has publicado y hecho online — puede aparecer en búsquedas en 10 años',
-          'Tus datos bancarios en internet',
-          'Tu número de teléfono',
-        ],
-        correcta: 1,
-        feedback_ok: 'Correcto. Todo lo que publicas queda registrado. Una foto "graciosa" de hoy puede aparecer cuando busques trabajo o entres a la universidad.',
-        feedback_ko: 'La huella digital es el rastro permanente de lo que haces online. Lo que publicas hoy puede aparecer en búsquedas dentro de 10 años.',
-      },
-      {
-        texto: 'Alguien publica una foto tuya sin pedirte permiso. En Chile, eso es:',
-        opciones: [
-          'Normal si apareces en un lugar público',
-          'Aceptable si eres menor de edad',
-          'Una violación a tu derecho a la imagen — puedes pedir que la eliminen',
-          'Solo ilegal si la foto es íntima',
-        ],
-        correcta: 2,
-        feedback_ok: 'Correcto. Tienes derecho a tu imagen. Nadie puede publicar fotos tuyas sin tu consentimiento, en público o privado.',
-        feedback_ko: 'Tienes derecho a tu imagen en Chile. Nadie puede publicar fotos tuyas sin permiso. Puedes pedir la eliminación y si no lo hacen, hay recursos legales.',
-      },
-      {
-        texto: '¿Qué deberías revisar en tu cuenta de Instagram ahora mismo?',
-        opciones: [
-          'Cuántos likes tienen tus fotos',
-          'Cuenta en privado, lista de seguidores (que no haya desconocidos), ubicación desactivada, 2FA activo',
-          'El número de seguidores vs seguidos',
-          'Que tu bio tenga toda tu información personal para que te encuentren',
-        ],
-        correcta: 1,
-        feedback_ok: 'Perfecto. Esas 4 configuraciones son el mínimo de seguridad en cualquier red social.',
-        feedback_ko: 'Las configuraciones clave son: privado, seguidores revisados, ubicación off y 2FA activo. La bio NO debe tener datos personales.',
-      },
-    ]
-  },
-  contraseñas: {
-    nombre: 'Contraseñas',
-    preguntas: [
-      {
-        texto: '¿Cuál es la contraseña más segura?',
-        opciones: ['password123','Matias2010!','X#mK9$pL2@wQ','12345678'],
-        correcta: 2,
-        feedback_ok: 'Correcto. Una contraseña segura tiene 12+ caracteres, mezcla letras, números y símbolos, y no tiene palabras reales. "X#mK9$pL2@wQ" cumple todo.',
-        feedback_ko: '"X#mK9$pL2@wQ" es la más segura — 12 caracteres, mezcla de todo, sin palabras reales. Las demás son fáciles de adivinar.',
-      },
-      {
-        texto: 'Usas la misma contraseña en Instagram, Gmail y tu banco. ¿Cuál es el riesgo?',
-        opciones: [
-          'Ninguno, es más fácil de recordar',
-          'Si hackean una cuenta, tienen acceso a todas',
-          'Solo si la contraseña es corta',
-          'El riesgo es mínimo si es una contraseña larga',
-        ],
-        correcta: 1,
-        feedback_ok: 'Exacto. Si hackean un sitio (aunque sea uno pequeño) y usan esa contraseña en tus otras cuentas, pierdes todo. Una contraseña diferente por cuenta.',
-        feedback_ko: 'Si hackean un sitio con esa contraseña, prueban lo mismo en Gmail, Instagram y tu banco. Se llama "credential stuffing" y es muy común.',
-      },
-      {
-        texto: 'Tu amigo te pide tu contraseña de Instagram para ayudarte con algo. ¿Qué haces?',
-        opciones: [
-          'Se la das porque es tu amigo de confianza',
-          'Se la das pero la cambias después',
-          'No la das — nadie debe saber tu contraseña, ni siquiera amigos o familia',
-          'Se la das solo si él te da la suya',
-        ],
-        correcta: 2,
-        feedback_ok: 'Correcto. Tu contraseña es solo tuya. Si alguien necesita ayuda con tu cuenta, hay otras formas que no requieren dar la contraseña.',
-        feedback_ko: 'Nunca. La contraseña es personal e intransferible. Si la das, pierdes control de tu cuenta aunque confíes en la persona.',
-      },
-      {
-        texto: '¿Qué es el 2FA (doble factor de autenticación)?',
-        opciones: [
-          'Tener dos contraseñas distintas',
-          'Un segundo paso de verificación además de la contraseña — como un código al celular',
-          'Una contraseña de 2 partes',
-          'Iniciar sesión desde dos dispositivos',
-        ],
-        correcta: 1,
-        feedback_ok: 'Exacto. El 2FA agrega un segundo paso. Aunque alguien robe tu contraseña, no puede entrar sin el código de tu celular.',
-        feedback_ko: 'El 2FA es un segundo paso de verificación. Aunque alguien tenga tu contraseña, necesita también tu celular para entrar. Actívalo en todas tus cuentas.',
-      },
-      {
-        texto: 'La forma más práctica de tener contraseñas únicas y seguras en todas tus cuentas es:',
-        opciones: [
-          'Anotarlas en un papel',
-          'Usar variaciones de la misma contraseña',
-          'Usar un gestor de contraseñas (Bitwarden, 1Password)',
-          'Guardarlas en notas del celular',
-        ],
-        correcta: 2,
-        feedback_ok: 'Correcto. Un gestor de contraseñas genera y guarda contraseñas únicas para cada cuenta. Solo necesitas recordar una — la del gestor.',
-        feedback_ko: 'Un gestor de contraseñas (Bitwarden es gratuito) genera y recuerda contraseñas únicas para cada cuenta. Es la solución real para este problema.',
-      },
-    ]
-  },
-  ciberbullying: {
-    nombre: 'Ciberbullying',
-    preguntas: [
-      {
-        texto: '¿Qué diferencia al ciberbullying del conflicto normal entre compañeros?',
-        opciones: [
-          'Que ocurre online',
-          'Que es repetido, intencional y hay un desequilibrio de poder — la víctima no puede escapar fácilmente',
-          'Que involucra fotos',
-          'Que lo hacen varias personas a la vez',
-        ],
-        correcta: 1,
-        feedback_ok: 'Correcto. El ciberbullying tiene tres características: es repetido, intencional y hay desequilibrio de poder. No es un conflicto entre pares iguales.',
-        feedback_ko: 'El ciberbullying se define por ser repetido, intencional y con desequilibrio de poder. La víctima no puede escapar porque ocurre en sus dispositivos.',
-      },
-      {
-        texto: 'Un compañero publica memes burlandose de ti en el grupo de WhatsApp de la clase. ¿Qué haces?',
-        opciones: [
-          'Respondes con algo peor para que pare',
-          'Lo ignoras completamente',
-          'Guardas capturas, lo reportas al colegio y hablas con un adulto de confianza',
-          'Abandonas el grupo',
-        ],
-        correcta: 2,
-        feedback_ok: 'Correcto. Las capturas son evidencia. El colegio está obligado a actuar por Ley 20.536. No estás solo/a.',
-        feedback_ko: 'Guardar evidencia y reportar al colegio es lo correcto. La Ley 20.536 obliga al establecimiento a actuar. Ignorarlo suele empeorar la situación.',
-      },
-      {
-        texto: 'Si ves a un compañero siendo víctima de ciberbullying online, lo mejor es:',
-        opciones: [
-          'No meterse para no tener problemas',
-          'Dar like o compartir el contenido si es gracioso',
-          'Apoyar a la víctima en privado y reportar el contenido sin compartirlo',
-          'Comentar en el post diciéndoles que paren',
-        ],
-        correcta: 2,
-        feedback_ok: 'Exacto. Apoyar en privado sin amplificar el contenido. Compartir o dar like — aunque sea como broma — hace parte del problema.',
-        feedback_ko: 'Lo correcto es apoyar a la víctima en privado y reportar el contenido sin compartirlo. Cada like o compartido amplifica el daño.',
-      },
-      {
-        texto: 'En Chile, el colegio tiene obligación legal de actuar ante casos de ciberbullying gracias a:',
-        opciones: ['Ley 21.459','Ley 20.536 de Convivencia Escolar','Ley 19.927','Ley 20.526'],
-        correcta: 1,
-        feedback_ok: 'Correcto. La Ley 20.536 obliga a los colegios a tener protocolos de convivencia y actuar ante situaciones de acoso, incluido el ciberbullying.',
-        feedback_ko: 'La Ley 20.536 obliga al colegio a actuar. Si el colegio no actúa, puedes escalar a la Superintendencia de Educación.',
-      },
-      {
-        texto: 'Alguien amenaza con publicar fotos tuyas si no haces lo que pide. Esto se llama:',
-        opciones: ['Phishing','Grooming','Sextorsión','Spam'],
-        correcta: 2,
-        feedback_ok: 'Correcto. La sextorsión es un chantaje usando material íntimo. Aumentó +89% en Chile en 2024. Nunca pagues — empeora. Denuncia en PDI: +56 2 2708 0000.',
-        feedback_ko: 'Es sextorsión — chantaje con material íntimo. Nunca cedas ni pagues. Guarda evidencia y denuncia en PDI Cibercrimen: +56 2 2708 0000.',
-      },
-    ]
-  },
-  datospersonales: {
-    nombre: 'Datos Personales',
-    preguntas: [
-      {
-        texto: '¿Cuál de estos es un dato personal que NO debes compartir con desconocidos online?',
-        opciones: [
-          'Tu color favorito',
-          'Tu nombre, apellido, RUT, dirección y colegio',
-          'El nombre de tu mascota',
-          'Tu equipo de fútbol favorito',
-        ],
-        correcta: 1,
-        feedback_ok: 'Correcto. Nombre completo, RUT, dirección y colegio son datos que permiten ubicarte físicamente. Nunca los des a desconocidos online.',
-        feedback_ko: 'Nombre completo, RUT, dirección y colegio son datos sensibles. Con esa información, alguien puede ubicarte físicamente.',
-      },
-      {
-        texto: 'Un juego online te pide tu fecha de nacimiento y dirección para "verificar tu edad". ¿Qué haces?',
-        opciones: [
-          'Los das porque el juego los necesita',
-          'Los das solo si el juego es popular y conocido',
-          'No los das — ningún juego necesita tu dirección real',
-          'Le preguntas a un amigo si él lo hizo',
-        ],
-        correcta: 2,
-        feedback_ok: 'Exacto. Ningún juego necesita tu dirección real. Si la pide, es señal de que algo no está bien.',
-        feedback_ko: 'Ningún juego legítimo necesita tu dirección física. Si la pide, es una señal de alerta.',
-      },
-      {
-        texto: 'Publicas en Instagram: "Primer día en Colegio San Pedro, curso 7°A". ¿Qué información diste?',
-        opciones: [
-          'Solo que empezaste el año escolar',
-          'Tu colegio, curso y horario aproximado — alguien sabe dónde estás de lunes a viernes',
-          'Nada importante, es información pública',
-          'Solo el nombre del colegio',
-        ],
-        correcta: 1,
-        feedback_ok: 'Exacto. Con esa información alguien sabe dónde estás, a qué hora, de lunes a viernes. Junto con tu foto, es suficiente para ubicarte.',
-        feedback_ko: 'Estás dando tu ubicación semanal completa. Con esa info y tu foto, alguien puede saber exactamente dónde encontrarte.',
-      },
-      {
-        texto: 'Recibes un mensaje que dice: "Ganaste un iPhone. Ingresa tu RUT y dirección para recibirlo". ¿Es?',
-        opciones: [
-          'Un concurso real — participas',
-          'Podría ser real si el mensaje parece oficial',
-          'Phishing para robar tus datos personales',
-          'Un error enviado a la persona equivocada',
-        ],
-        correcta: 2,
-        feedback_ok: 'Correcto. "Ganaste un premio" sin participar en ningún concurso = trampa para robar datos. Borra el mensaje.',
-        feedback_ko: 'Es phishing. Nadie te manda premios sin que hayas participado. Es una trampa para robar tu RUT y dirección.',
-      },
-      {
-        texto: 'La regla de oro para compartir datos personales online es:',
-        opciones: [
-          'Solo con personas que conoces hace tiempo',
-          'Solo en sitios con "https"',
-          'Si no necesitas darlo para usar el servicio, no lo des',
-          'Solo si el sitio tiene buenas reseñas',
-        ],
-        correcta: 2,
-        feedback_ok: '¡Perfecto! Si el servicio funciona sin tu dato, no lo entregues. Menos datos = menos riesgo.',
-        feedback_ko: 'La regla de oro: si no es necesario para usar el servicio, no lo des. Minimiza la información que compartes.',
-      },
-    ]
-  }
-};
-
-// ══════════════════════════════════
-// STATE
-// ══════════════════════════════════
-let STATE = {
-  code: null,
-  nombre: '',
-  modulo: null,
-  preguntas: [],
-  idx: 0,
-  respuestas: [],
-  score: 0,
-};
-
-// ══════════════════════════════════
-// CODE ENTRY
-// ══════════════════════════════════
-function fmtCode(input) {
-  let v = input.value.toUpperCase().replace(/[^A8\-0-9]/g, '');
-  if (v.length > 2 && !v.includes('-')) v = v.slice(0,2) + '-' + v.slice(2);
-  input.value = v.slice(0, 7);
-}
-
-function checkCode() {
-  const code = document.getElementById('ci').value.trim().toUpperCase();
-  const nombre = document.getElementById('ni').value.trim();
-  
-  if (!nombre) {
-    document.getElementById('ni').focus();
-    document.getElementById('ni').style.borderColor = 'var(--accent)';
-    return;
-  }
-  
-  // Validate format A8-XXXX
-  if (!/^A8-\d{4}$/.test(code)) {
-    showErr('El código debe tener el formato A8-0000. Pídele a tu profe el código correcto.');
-    return;
-  }
-  
-  // Look up module from code
-  // In production this would call an API
-  // For now: last digit maps to module
-  const mods = ['phishing','grooming','privacidad','contraseñas','ciberbullying','datospersonales'];
-  const digit = parseInt(code.slice(-1));
-  const modKey = mods[digit % mods.length];
-  
-  // Check if there's a saved class in localStorage (from docente app)
-  const clases = JSON.parse(localStorage.getItem('aegis8_pwa') || '{}').clases || [];
-  const clase = clases.find(c => c.code === code);
-  const realMod = clase ? clase.modulo : modKey;
-  
-  if (!MODULOS[realMod]) {
-    showErr('Código no reconocido. Pídele a tu profe el código correcto.');
-    return;
-  }
-  
-  STATE.code = code;
-  STATE.nombre = nombre;
-  STATE.modulo = realMod;
-  STATE.preguntas = MODULOS[realMod].preguntas;
-  STATE.idx = 0;
-  STATE.respuestas = [];
-  STATE.score = 0;
-  
-  startQuiz();
-}
-
-function showErr(msg) {
-  const e = document.getElementById('code-err');
-  e.textContent = msg;
-  e.classList.add('show');
-}
-
-// ══════════════════════════════════
-// QUIZ
-// ══════════════════════════════════
-function startQuiz() {
-  document.getElementById('screen-code').classList.add('hidden');
-  document.getElementById('screen-quiz').classList.remove('hidden');
-  document.getElementById('qh-mod').textContent = MODULOS[STATE.modulo].nombre;
-  buildDots();
-  renderQ();
-}
-
-function buildDots() {
-  const c = document.getElementById('qh-dots');
-  c.innerHTML = STATE.preguntas.map((_,i) =>
-    `<div class="qdot ${i===0?'active':''}" id="dot-${i}"></div>`
-  ).join('');
-}
-
-function renderQ() {
-  const q = STATE.preguntas[STATE.idx];
-  const n = STATE.idx + 1;
-  const total = STATE.preguntas.length;
-  
-  document.getElementById('q-num').textContent = `Pregunta ${n} / ${total}`;
-  document.getElementById('q-text').textContent = q.texto;
-  
-  const ctx = document.getElementById('q-context');
-  if (q.contexto) {
-    ctx.textContent = q.contexto;
-    ctx.style.display = 'block';
-  } else {
-    ctx.style.display = 'none';
-  }
-  
-  const letters = ['A','B','C','D'];
-  document.getElementById('q-options').innerHTML = q.opciones.map((opt, i) => `
-    <div class="q-opt" id="opt-${i}" onclick="selectOpt(${i})">
-      <div class="opt-letter">${letters[i]}</div>
-      <span>${opt}</span>
-    </div>
-  `).join('');
-  
-  document.getElementById('q-feedback').className = 'q-feedback';
-  document.getElementById('q-feedback').textContent = '';
-  document.getElementById('q-next').className = 'q-next';
-  document.getElementById('q-next').textContent = 
-    STATE.idx < total - 1 ? 'Siguiente →' : 'Ver resultado →';
-}
-
-function selectOpt(i) {
-  const q = STATE.preguntas[STATE.idx];
-  if (document.querySelector('.q-opt.selected')) return; // ya respondió
-  
-  const opts = document.querySelectorAll('.q-opt');
-  opts.forEach(o => o.classList.add('disabled'));
-  opts[i].classList.add('selected');
-  
-  const correct = i === q.correcta;
-  if (correct) STATE.score++;
-  
-  STATE.respuestas.push({ pregunta: q.texto, elegida: i, correcta: q.correcta, ok: correct });
-  
-  // Show correct/wrong
-  opts[i].classList.add(correct ? 'correct' : 'wrong');
-  if (!correct) opts[q.correcta].classList.add('correct');
-  
-  // Feedback
-  const fb = document.getElementById('q-feedback');
-  fb.textContent = correct ? q.feedback_ok : q.feedback_ko;
-  fb.className = 'q-feedback show ' + (correct ? 'right' : 'wrong');
-  
-  // Update dot
-  document.getElementById(`dot-${STATE.idx}`).className = 'qdot done';
-  
-  document.getElementById('q-next').className = 'q-next show';
-}
-
-function nextQ() {
-  STATE.idx++;
-  if (STATE.idx >= STATE.preguntas.length) {
-    showResult();
-    return;
-  }
-  // Update dot
-  document.getElementById(`dot-${STATE.idx}`).className = 'qdot active';
-  renderQ();
-}
-
-// ══════════════════════════════════
-// RESULTADO
-// ══════════════════════════════════
-function showResult() {
-  document.getElementById('screen-quiz').classList.add('hidden');
-  document.getElementById('screen-result').classList.remove('hidden');
-  
-  const total = STATE.preguntas.length;
-  const s = STATE.score;
-  const pct = Math.round(s/total*100);
-  
-  document.getElementById('r-score').textContent = `${s}/${total}`;
-  document.getElementById('r-label').textContent = `${pct}% correcto · ${MODULOS[STATE.modulo].nombre}`;
-  
-  let title, sub;
-  if (pct === 100) {
-    title = '¡Perfecto, ' + STATE.nombre.split(' ')[0] + '!';
-    sub = 'Respondiste todo correctamente. Ya sabes detectar esta amenaza. Comparte lo que aprendiste con alguien en casa.';
-  } else if (pct >= 60) {
-    title = 'Bien hecho';
-    sub = `Respondiste ${s} de ${total} correctamente. Revisa las que fallaste — el feedback de cada pregunta explica por qué.`;
-  } else {
-    title = 'Sigue practicando';
-    sub = `Respondiste ${s} de ${total}. No pasa nada — lo importante es aprender. Lee el feedback de cada pregunta y vuelve a intentarlo.`;
-  }
-  
-  document.getElementById('r-title').textContent = title;
-  document.getElementById('r-sub').textContent = sub;
-  
-  // Answer review
-  document.getElementById('r-answers').innerHTML = STATE.respuestas.map(r => `
-    <div class="ra-row ${r.ok ? 'ra-ok' : 'ra-ko'}">
-      <div class="ra-ico">${r.ok ? '✓' : '✗'}</div>
-      <div>
-        <div class="ra-q">${r.pregunta}</div>
-        ${!r.ok ? `<div class="ra-a">Correcta: ${STATE.preguntas[STATE.respuestas.indexOf(r)].opciones[r.correcta]}</div>` : ''}
+  <!-- Info cards -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:32px;">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:18px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--accent);
+        letter-spacing:2px;margin-bottom:8px;">NUEVO QUIZ</div>
+      <div style="font-size:.88rem;color:var(--ink2);line-height:1.6;">
+        Cada lunes hay preguntas nuevas sobre la amenaza más relevante de la semana.
       </div>
     </div>
-  `).join('');
-  
-  // Save result to localStorage for docente dashboard
-  saveResult();
-}
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:18px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--accent);
+        letter-spacing:2px;margin-bottom:8px;">SIN REGISTRO</div>
+      <div style="font-size:.88rem;color:var(--ink2);line-height:1.6;">
+        Tu puntaje se guarda localmente en tu dispositivo. Sin crear cuenta, sin correo.
+      </div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:18px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--accent);
+        letter-spacing:2px;margin-bottom:8px;">PARA CLASES</div>
+      <div style="font-size:.88rem;color:var(--ink2);line-height:1.6;">
+        Docentes: proyecta el quiz en clases y discute cada respuesta con tus alumnos.
+      </div>
+    </div>
+  </div>
 
-function saveResult() {
-  try {
-    const pwaData = JSON.parse(localStorage.getItem('aegis8_pwa') || '{}');
-    const clases = pwaData.clases || [];
-    const clase = clases.find(c => c.code === STATE.code);
-    if (clase) {
-      clase.resultados = clase.resultados || [];
-      clase.resultados.push({
-        nombre: STATE.nombre,
-        puntaje: Math.round(STATE.score / STATE.preguntas.length * 100),
-        ts: Date.now()
-      });
-      localStorage.setItem('aegis8_pwa', JSON.stringify(pwaData));
-    }
-  } catch(e) {}
-}
+</div>
+</div>
 
-// ══════════════════════════════════
-// INIT — check URL params
-// ══════════════════════════════════
-(function init() {
-  const params = new URLSearchParams(window.location.search);
-  const code = params.get('code');
-  if (code) {
-    document.getElementById('ci').value = code.toUpperCase();
-  }
-})();
-</script>
+<footer class="page-footer">
+  <a href="/" class="fl">AEGIS<span>8</span></a>
+  <ul class="flinks">
+    <li><a href="/educa.html">Educa</a></li>
+    <li><a href="/herramientas.html">Herramientas</a></li>
+    <li><a href="/agente-seguridad.html">Agente IA</a></li>
+    <li><a href="/contactos.html">Contacto</a></li>
+  </ul>
+  <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
+</footer>
+
+<script src="/quiz.js"></script>
+<script>AegisQuiz.init('quiz-container');</script>
 </body>
 </html>

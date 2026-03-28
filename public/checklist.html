@@ -1,629 +1,323 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Genera tu checklist de ciberseguridad personalizada con IA. Describe tu web o empresa y recibe un plan de acción concreto.">
-<title>Checklist de Seguridad · Aegis8</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Checklist Familiar · Aegis8</title>
+<meta name="description" content="¿Tu familia está protegida digitalmente? Checklist interactivo de ciberseguridad para familias chilenas. Gratis, sin registro."/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
 <script src="/aegis-nav.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet"/>
 <style>
-:root {
-  --bg:     #07080c;
-  --bg2:    #0c0f19;
-  --surface:#111520;
-  --border: #1a2030;
-  --border2:#222840;
-  --green:  #00ff88;
-  --green2: #00cc6a;
-  --blue:   #38bdf8;
-  --amber:  #f59e0b;
-  --red:    #ff2244;
-  --text:   #e2e8f0;
-  --muted:  #4a5568;
-  --muted2: #2d3748;
-  --mono:   'IBM Plex Mono', monospace;
-  --disp:   'Bebas Neue', sans-serif;
-  --body:   'DM Sans', sans-serif;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{
-  background:var(--bg);color:var(--text);
-  font-family:var(--body);
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;padding-top:64px;
+:root{
+  --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
+  --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
+  --card:rgba(255,255,255,.03);--radius:4px;
 }
-body::before{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);
-}
-body::after{
-  content:'';position:fixed;top:-150px;right:-100px;
-  width:600px;height:500px;border-radius:50%;
-  background:radial-gradient(ellipse,rgba(0,255,136,0.05) 0%,transparent 65%);
-  pointer-events:none;z-index:0;
-}
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(58,127,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.025) 1px,transparent 1px);
+  background-size:80px 80px;}
+.wrap{max-width:800px;margin:0 auto;padding:0 24px;}
+.page-inner{position:relative;z-index:10;padding:80px 0;}
+.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);
+  padding:48px 32px 32px;max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.fl span{color:var(--accent);}
+.flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.flinks a:hover{color:var(--accent);}
+.fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
 
-/* ── HERO ── */
-.hero{
-  position:relative;z-index:1;
-  padding:5rem 2rem 3rem;
-  text-align:center;max-width:860px;margin:0 auto;
-}
-.hero-label{
-  font-family:var(--mono);font-size:0.65rem;
-  letter-spacing:0.2em;text-transform:uppercase;
-  color:var(--green);margin-bottom:1.5rem;
-  display:flex;align-items:center;justify-content:center;gap:0.5rem;
-  animation:fadeUp 0.5s ease both;
-}
-.hero-label::before,.hero-label::after{
-  content:'';flex:1;max-width:40px;height:1px;
-  background:var(--green);opacity:0.4;
-}
-.hero-title{
-  font-family:var(--disp);
-  font-size:clamp(3rem,9vw,7.5rem);
-  line-height:0.88;text-transform:uppercase;
-  margin-bottom:1.5rem;
-  animation:fadeUp 0.6s ease 0.1s both;
-}
-.hero-title .accent{color:var(--green);}
-.hero-sub{
-  font-size:1.05rem;color:var(--muted);
-  font-weight:300;line-height:1.7;
-  max-width:520px;margin:0 auto;
-  animation:fadeUp 0.6s ease 0.2s both;
-}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+/* HERO */
+.cl-hero{margin-bottom:40px;}
+.cl-score-wrap{background:var(--bg2);border:1px solid var(--border2);border-radius:6px;
+  padding:24px;margin-bottom:32px;display:grid;grid-template-columns:1fr auto;
+  gap:24px;align-items:center;}
+@media(max-width:520px){.cl-score-wrap{grid-template-columns:1fr;}}
+.cl-score-bar-wrap{flex:1;}
+.cl-score-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;
+  color:var(--ink3);text-transform:uppercase;margin-bottom:10px;}
+.cl-score-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:8px;}
+.cl-score-fill{height:100%;border-radius:4px;transition:width .6s cubic-bezier(.34,1.56,.64,1);
+  background:linear-gradient(90deg,var(--accent),var(--green));}
+.cl-score-pct{font-family:'DM Serif Display',serif;font-size:3.5rem;color:var(--accent);
+  line-height:1;font-style:italic;text-align:right;}
+.cl-score-pct-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;
+  color:var(--ink3);letter-spacing:1px;text-align:right;}
+.cl-score-msg{font-size:.88rem;color:var(--ink2);line-height:1.5;}
 
-/* ── MAIN LAYOUT ── */
-.main{
-  position:relative;z-index:1;
-  max-width:1100px;margin:0 auto;
-  padding:3rem 2rem 6rem;
-  display:grid;
-  grid-template-columns:380px 1fr;
-  gap:2px;background:var(--border);
-}
+/* SECCIONES */
+.cl-section{margin-bottom:24px;background:var(--bg2);border:1px solid var(--border);
+  border-radius:6px;overflow:hidden;}
+.cl-section-hd{padding:16px 20px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;cursor:pointer;
+  background:rgba(255,255,255,.01);transition:background .2s;}
+.cl-section-hd:hover{background:rgba(255,255,255,.03);}
+.cl-section-hd-l{display:flex;align-items:center;gap:12px;}
+.cl-section-ico{font-size:1.2rem;}
+.cl-section-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);}
+.cl-section-prog{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--ink3);letter-spacing:1px;}
+.cl-section-prog.done{color:var(--green);}
+.cl-items{padding:8px 0;display:none;}
+.cl-items.open{display:block;}
 
-/* ── FORM PANEL ── */
-.form-panel{background:var(--bg2);}
-.panel-bar{
-  background:var(--surface);
-  border-bottom:1px solid var(--border);
-  padding:0.9rem 1.25rem;
-  display:flex;align-items:center;gap:0.75rem;
-}
-.panel-dots{display:flex;gap:0.35rem;}
-.dot{width:9px;height:9px;border-radius:50%;}
-.dot-r{background:#ff5f57;}.dot-y{background:#febc2e;}.dot-g{background:#28c840;}
-.panel-name{
-  font-family:var(--mono);font-size:0.65rem;
-  letter-spacing:0.1em;color:var(--muted);
-}
-.form-body{padding:1.75rem;}
+/* ITEMS */
+.cl-item{display:flex;align-items:flex-start;gap:14px;padding:14px 20px;
+  border-bottom:1px solid rgba(58,127,212,.06);cursor:pointer;transition:background .15s;}
+.cl-item:last-child{border-bottom:none;}
+.cl-item:hover{background:rgba(255,255,255,.02);}
+.cl-item.checked{opacity:.6;}
+.cl-check{width:20px;height:20px;border-radius:4px;border:1.5px solid var(--border2);
+  flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;}
+.cl-item.checked .cl-check{background:var(--green);border-color:var(--green);}
+.cl-check-ico{display:none;color:var(--bg);font-size:.7rem;font-weight:700;}
+.cl-item.checked .cl-check-ico{display:block;}
+.cl-item-body{}
+.cl-item-title{font-size:.92rem;color:var(--ink);line-height:1.4;margin-bottom:3px;}
+.cl-item.checked .cl-item-title{text-decoration:line-through;color:var(--ink3);}
+.cl-item-desc{font-size:.8rem;color:var(--ink3);line-height:1.5;}
+.cl-item-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.52rem;
+  letter-spacing:1px;padding:2px 7px;border-radius:20px;margin-bottom:5px;}
+.cl-item-tag.urgente{color:#ef4444;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);}
+.cl-item-tag.importante{color:var(--gold);background:rgba(245,168,35,.1);border:1px solid rgba(245,168,35,.2);}
+.cl-item-tag.basico{color:var(--green);background:rgba(46,204,128,.1);border:1px solid rgba(46,204,128,.2);}
 
-.field{margin-bottom:1.5rem;}
-.field-label{
-  display:block;
-  font-family:var(--mono);font-size:0.63rem;
-  letter-spacing:0.15em;text-transform:uppercase;
-  color:var(--green);margin-bottom:0.6rem;
-}
-.field-select,.field-input,.field-textarea{
-  width:100%;background:var(--surface);
-  border:1.5px solid var(--border2);
-  color:var(--text);font-family:var(--mono);
-  font-size:0.82rem;padding:0.75rem 1rem;
-  outline:none;transition:border-color 0.2s;
-  -webkit-appearance:none;
-}
-.field-select{cursor:pointer;}
-.field-textarea{resize:none;line-height:1.6;min-height:80px;}
-.field-select:focus,.field-input:focus,.field-textarea:focus{border-color:var(--green);}
-.field-select option{background:var(--bg2);}
-
-.generate-btn{
-  width:100%;padding:1.1rem;
-  font-family:var(--mono);font-size:0.78rem;
-  letter-spacing:0.12em;text-transform:uppercase;
-  color:#000;background:var(--green);
-  border:none;cursor:pointer;
-  transition:background 0.2s,transform 0.1s;
-  display:flex;align-items:center;justify-content:center;gap:0.5rem;
-}
-.generate-btn:hover:not(:disabled){background:var(--green2);transform:translateY(-1px);}
-.generate-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
-
-/* ── RESULT PANEL ── */
-.result-panel{background:var(--bg2);}
-.result-body-inner{padding:1.75rem;}
-
-.result-empty{
-  height:100%;min-height:400px;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  text-align:center;gap:1rem;
-  color:var(--muted2);
-}
-.result-empty-icon{font-size:3rem;opacity:0.4;}
-.result-empty-text{
-  font-family:var(--mono);font-size:0.65rem;
-  letter-spacing:0.1em;text-transform:uppercase;
-}
-
-/* Typing */
-.typing{
-  display:none;padding:2rem;
-  align-items:center;gap:1rem;
-}
-.typing.show{display:flex;}
-.tdots{display:flex;gap:5px;}
-.tdot{width:7px;height:7px;border-radius:50%;background:var(--green);opacity:0.3;animation:tdot 1.2s ease-in-out infinite;}
-.tdot:nth-child(2){animation-delay:0.2s;}
-.tdot:nth-child(3){animation-delay:0.4s;}
-@keyframes tdot{0%,80%,100%{opacity:0.2;transform:scale(0.8);}40%{opacity:1;transform:scale(1);}}
-.typing-text{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;}
-
-/* Checklist output */
-.checklist-out{display:none;}
-.checklist-out.show{display:block;}
-
-.cl-meta{
-  margin-bottom:1.5rem;padding-bottom:1.25rem;
-  border-bottom:1px solid var(--border);
-}
-.cl-profile{
-  font-family:var(--mono);font-size:0.62rem;
-  letter-spacing:0.1em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:0.5rem;
-}
-.cl-title{
-  font-family:var(--disp);
-  font-size:2rem;line-height:0.95;
-  text-transform:uppercase;color:var(--green);
-}
-
-.cl-section{margin-bottom:1.75rem;}
-.cl-section-title{
-  font-family:var(--mono);font-size:0.68rem;
-  letter-spacing:0.15em;text-transform:uppercase;
-  color:var(--text);margin-bottom:0.85rem;
-  display:flex;align-items:center;gap:0.5rem;
-}
-.cl-section-title::before{
-  content:'';width:16px;height:1px;background:var(--green);
-}
-.prio-badge{
-  font-family:var(--mono);font-size:0.55rem;
-  letter-spacing:0.1em;text-transform:uppercase;
-  padding:0.15rem 0.5rem;margin-left:auto;
-}
-.prio-CRÍTICO{color:var(--red);border:1px solid rgba(255,34,68,0.3);}
-.prio-ALTO{color:var(--amber);border:1px solid rgba(245,158,11,0.3);}
-.prio-MEDIO{color:var(--blue);border:1px solid rgba(56,189,248,0.3);}
-
-.cl-item{
-  display:flex;align-items:flex-start;gap:0.75rem;
-  padding:0.75rem 0;
-  border-bottom:1px solid rgba(255,255,255,0.04);
-  cursor:pointer;transition:background 0.15s;
-  padding-left:0.25rem;
-}
-.cl-item:hover{background:rgba(255,255,255,0.02);}
-.cl-item.done .cl-text{color:var(--muted);text-decoration:line-through;}
-.cl-check{
-  width:18px;height:18px;border:1.5px solid var(--border2);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;margin-top:2px;
-  font-size:0.7rem;color:var(--green);
-  transition:border-color 0.2s,background 0.2s;
-}
-.cl-item.done .cl-check{background:rgba(0,255,136,0.1);border-color:var(--green);}
-.cl-text{font-size:0.88rem;line-height:1.55;color:var(--text);}
-
-/* progress */
-.cl-progress{
-  margin-top:1.5rem;padding-top:1.25rem;
-  border-top:1px solid var(--border);
-}
-.cl-progress-label{
-  font-family:var(--mono);font-size:0.62rem;
-  letter-spacing:0.1em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:0.5rem;
-  display:flex;justify-content:space-between;
-}
-.cl-bar-bg{height:3px;background:var(--border2);border-radius:2px;overflow:hidden;}
-.cl-bar-fill{height:100%;background:var(--green);border-radius:2px;width:0%;transition:width 0.4s ease;}
-
-/* download btn */
-.dl-btn{
-  margin-top:1.25rem;width:100%;
-  font-family:var(--mono);font-size:0.7rem;
-  letter-spacing:0.1em;text-transform:uppercase;
-  color:var(--green);border:1px solid rgba(0,255,136,0.3);
-  background:transparent;padding:0.75rem;
-  cursor:pointer;transition:background 0.2s;
-}
-.dl-btn:hover{background:rgba(0,255,136,0.05);}
-
-footer{
-  position:relative;z-index:1;
-  border-top:1px solid var(--border);
-  padding:1.5rem 3rem;
-  display:flex;align-items:center;justify-content:space-between;
-  font-family:var(--mono);font-size:0.62rem;color:var(--muted);
-}
-footer a{color:var(--muted);text-decoration:none;transition:color 0.2s;}
-footer a:hover{color:var(--green);}
-
-@media(max-width:800px){
-  .main{grid-template-columns:1fr;gap:1px;}
-  footer{flex-direction:column;gap:0.75rem;padding:1.5rem;text-align:center;}
-}
-@keyframes fadeInLogo{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
+/* RESET */
+.cl-reset{display:block;width:100%;margin-top:16px;padding:.75rem;
+  font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--ink3);background:transparent;
+  border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .2s;}
+.cl-reset:hover{color:var(--ink2);border-color:rgba(255,255,255,.15);}
 </style>
 </head>
-<body data-page="checklist">
+<body>
+<div class="page-inner">
+<div class="wrap">
 
-<section class="hero">
-  <div class="hero-label">Herramienta gratuita · Aegis8</div>
-  
-    <div style="margin-bottom:20px;opacity:0;animation:fadeInLogo .8s cubic-bezier(.34,1.56,.64,1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="100" height="100" fill="none">
-  <defs>
-    <filter id="cl1" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <filter id="cl2" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <linearGradient id="clg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#4ade80"/>
-      <stop offset="50%" stop-color="#22c55e"/>
-      <stop offset="100%" stop-color="#16a34a"/>
-    </linearGradient>
-    <linearGradient id="clg2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f5c842"/>
-      <stop offset="100%" stop-color="#f07830"/>
-    </linearGradient>
-    <radialGradient id="cl-core" cx="50%" cy="45%" r="55%">
-      <stop offset="0%" stop-color="rgba(34,197,94,0.18)"/>
-      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
-    </radialGradient>
-    <clipPath id="clc"><path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z"/></clipPath>
-  </defs>
-  <ellipse cx="120" cy="115" rx="88" ry="95" fill="url(#cl-core)" filter="url(#cl2)">
-    <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite"/>
-  </ellipse>
-  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="#0d1422"/>
-  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="none" stroke="url(#clg)" stroke-width="3">
-    <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="3.5s" repeatCount="indefinite"/>
-  </path>
-  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="none" stroke="#22c55e" stroke-width="3" stroke-dasharray="590" stroke-dashoffset="590" filter="url(#cl1)">
-    <animate attributeName="stroke-dashoffset" from="590" to="0" dur="1.8s" fill="freeze" begin="0.2s" calcMode="spline" keySplines="0.4 0 0.2 1"/>
-  </path>
-  <!-- Checklist rows — 4 items -->
-  <!-- Row 1 box -->
-  <rect x="72" y="66" width="18" height="18" rx="3" fill="rgba(34,197,94,0.1)" stroke="url(#clg)" stroke-width="2" filter="url(#cl1)"><animate attributeName="stroke-dasharray" values="0 72;72 0" dur="0.3s" fill="freeze" begin="1.2s"/></rect>
-  <!-- Row 1 checkmark — drawn on -->
-  <polyline points="76,75 80,80 86,70" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#cl1)">
-    <animate attributeName="stroke-dasharray" values="0 24;24 0" dur="0.3s" fill="freeze" begin="1.6s"/>
-    <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite" begin="3s"/>
-  </polyline>
-  <line x1="97" y1="72" x2="162" y2="72" stroke="rgba(34,197,94,0.5)" stroke-width="2" stroke-linecap="round"><animate attributeName="stroke-dasharray" values="0 65;65 0" dur="0.4s" fill="freeze" begin="1.8s"/></line>
-  <!-- Row 2 box -->
-  <rect x="72" y="94" width="18" height="18" rx="3" fill="rgba(34,197,94,0.1)" stroke="url(#clg)" stroke-width="2" filter="url(#cl1)"><animate attributeName="stroke-dasharray" values="0 72;72 0" dur="0.3s" fill="freeze" begin="1.5s"/></rect>
-  <polyline points="76,103 80,108 86,98" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#cl1)">
-    <animate attributeName="stroke-dasharray" values="0 24;24 0" dur="0.3s" fill="freeze" begin="2s"/>
-    <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite" begin="3.3s"/>
-  </polyline>
-  <line x1="97" y1="100" x2="158" y2="100" stroke="rgba(34,197,94,0.5)" stroke-width="2" stroke-linecap="round"><animate attributeName="stroke-dasharray" values="0 61;61 0" dur="0.4s" fill="freeze" begin="2.2s"/></line>
-  <!-- Row 3 box — partially done -->
-  <rect x="72" y="122" width="18" height="18" rx="3" fill="rgba(245,200,66,0.08)" stroke="url(#clg2)" stroke-width="2" filter="url(#cl1)"><animate attributeName="stroke-dasharray" values="0 72;72 0" dur="0.3s" fill="freeze" begin="1.8s"/></rect>
-  <polyline points="76,131 80,136 86,126" fill="none" stroke="#f5c842" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#cl1)">
-    <animate attributeName="stroke-dasharray" values="0 24;24 0" dur="0.3s" fill="freeze" begin="2.4s"/>
-    <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" begin="3.6s"/>
-  </polyline>
-  <line x1="97" y1="128" x2="148" y2="128" stroke="rgba(245,200,66,0.4)" stroke-width="2" stroke-linecap="round"><animate attributeName="stroke-dasharray" values="0 51;51 0" dur="0.4s" fill="freeze" begin="2.6s"/></line>
-  <!-- Row 4 box — pending -->
-  <rect x="72" y="150" width="18" height="18" rx="3" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.15)" stroke-width="2"><animate attributeName="stroke-dasharray" values="0 72;72 0" dur="0.3s" fill="freeze" begin="2.1s"/></rect>
-  <line x1="97" y1="156" x2="155" y2="156" stroke="rgba(255,255,255,0.15)" stroke-width="2" stroke-linecap="round"><animate attributeName="stroke-dasharray" values="0 58;58 0" dur="0.4s" fill="freeze" begin="2.8s"/></line>
-  <!-- Progress bar under items -->
-  <rect x="72" y="174" width="96" height="6" rx="3" fill="rgba(255,255,255,0.05)" stroke="rgba(34,197,94,0.2)" stroke-width="1"><animate attributeName="opacity" values="0;1" dur="0.2s" fill="freeze" begin="3s"/></rect>
-  <rect x="72" y="174" width="0" height="6" rx="3" fill="url(#clg)" filter="url(#cl1)">
-    <animate attributeName="width" from="0" to="72" dur="1s" fill="freeze" begin="3.2s" calcMode="spline" keySplines="0.4 0 0.2 1"/>
-    <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite" begin="4.5s"/>
-  </rect>
-  <!-- Progress label -->
-  <text x="176" y="181" font-family="monospace" font-size="9" fill="rgba(34,197,94,0.7)" text-anchor="start">75%</text>
-  <!-- Scan, corners, bottom -->
-  <rect x="26" y="0" width="188" height="2" fill="url(#clg)" clip-path="url(#clc)"><animate attributeName="y" from="18" to="212" dur="3.5s" repeatCount="indefinite" begin="3.5s"/><animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.04;0.96;1" dur="3.5s" repeatCount="indefinite" begin="3.5s"/></rect>
-  <polyline points="44,68 44,54 58,54" fill="none" stroke="url(#clg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="stroke-dasharray" values="0 30;30 0" dur="0.3s" fill="freeze" begin="2s"/></polyline>
-  <polyline points="196,68 196,54 182,54" fill="none" stroke="url(#clg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="stroke-dasharray" values="0 30;30 0" dur="0.3s" fill="freeze" begin="2.1s"/></polyline>
-  <circle cx="120" cy="204" r="3.5" fill="#22c55e" filter="url(#cl1)"><animate attributeName="opacity" values="0;1" dur="0.2s" fill="freeze" begin="2s"/><animate attributeName="r" values="3.5;5;3.5" dur="2.5s" repeatCount="indefinite" begin="3.5s"/></circle>
-  <line x1="68" y1="24" x2="172" y2="24" stroke="rgba(74,222,128,0.2)" stroke-width="1" stroke-linecap="round"><animate attributeName="stroke-dasharray" values="0 104;104 0" dur="0.8s" fill="freeze" begin="0.5s"/></line>
-</svg></div>
-    <h1 class="hero-title">CHECKLIST<br><span class="accent">PERSONALIZADA</span></h1>
-  <p class="hero-sub">Describe tu web, empresa o situación y la IA genera un plan de seguridad concreto y priorizado para tu caso específico.</p>
-</section>
-
-<div class="main">
-
-  <!-- FORM -->
-  <div class="form-panel">
-    <div class="panel-bar">
-      <div class="panel-dots">
-        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
-      </div>
-      <div class="panel-name">aegis8 — tu-perfil.config</div>
+  <div class="cl-hero">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+      color:var(--ink3);margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+      <div style="width:20px;height:1px;background:var(--accent);"></div>
+      CHECKLIST FAMILIAR · AEGIS8 · CHILE
     </div>
-    <div class="form-body">
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.5rem);
+      line-height:1.05;letter-spacing:-1px;margin-bottom:16px;">
+      ¿Tu familia está<br><em style="color:var(--accent);">protegida?</em>
+    </h1>
+    <p style="font-size:1rem;line-height:1.8;color:var(--ink2);max-width:520px;">
+      30 acciones concretas para proteger tu hogar digital.
+      Tu progreso se guarda automáticamente en este dispositivo.
+    </p>
+  </div>
 
-      <div class="field">
-        <label class="field-label">¿Qué tipo de organización eres?</label>
-        <select class="field-select" id="orgType">
-          <option value="">Selecciona...</option>
-          <option value="pyme">Pyme / negocio pequeño</option>
-          <option value="startup">Startup / empresa tech</option>
-          <option value="ecommerce">E-commerce / tienda online</option>
-          <option value="freelance">Freelancer / consultor</option>
-          <option value="colegio">Colegio / institución educativa</option>
-          <option value="persona">Persona natural</option>
-          <option value="ong">ONG / fundación</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label class="field-label">¿Qué tecnología usas?</label>
-        <select class="field-select" id="techStack">
-          <option value="">Selecciona...</option>
-          <option value="wordpress">WordPress</option>
-          <option value="shopify">Shopify / Wix / Squarespace</option>
-          <option value="custom">Web custom (React, Next, etc.)</option>
-          <option value="nosite">Sin web propia</option>
-          <option value="otro">Otra / no sé</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label class="field-label">¿Cuántas personas en tu equipo?</label>
-        <select class="field-select" id="teamSize">
-          <option value="">Selecciona...</option>
-          <option value="solo">Solo yo</option>
-          <option value="small">2-10 personas</option>
-          <option value="medium">11-50 personas</option>
-          <option value="large">+50 personas</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label class="field-label">¿Manejas datos sensibles?</label>
-        <select class="field-select" id="dataType">
-          <option value="">Selecciona...</option>
-          <option value="no">No, nada sensible</option>
-          <option value="clientes">Datos de clientes (nombre, email)</option>
-          <option value="pagos">Pagos / datos financieros</option>
-          <option value="salud">Datos de salud o menores</option>
-          <option value="rut">RUT / datos personales legales</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label class="field-label">Cuéntanos algo más (opcional)</label>
-        <textarea class="field-textarea" id="extraContext"
-          placeholder="Ej: Tenemos WordPress con WooCommerce, nunca hemos hecho auditoría, usamos el mismo correo gmail para todo el equipo..."></textarea>
-      </div>
-
-      <button class="generate-btn" id="generateBtn" onclick="generate()">
-        ⚡ Generar mi checklist
-      </button>
-
+  <!-- Score -->
+  <div class="cl-score-wrap">
+    <div>
+      <div class="cl-score-label">Protección familiar · Score</div>
+      <div class="cl-score-bar"><div class="cl-score-fill" id="score-fill" style="width:0%"></div></div>
+      <div class="cl-score-msg" id="score-msg">Comienza tachando los ítems que ya tienes resueltos.</div>
+    </div>
+    <div>
+      <div class="cl-score-pct" id="score-pct">0%</div>
+      <div class="cl-score-pct-label">COMPLETADO</div>
     </div>
   </div>
 
-  <!-- RESULT -->
-  <div class="result-panel">
-    <div class="panel-bar">
-      <div class="panel-dots">
-        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
-      </div>
-      <div class="panel-name">aegis8 — checklist-generada.md</div>
-    </div>
-    <div class="result-body-inner">
+  <!-- Secciones -->
+  <div id="checklist-root"></div>
 
-      <div class="result-empty" id="emptyState">
-        <div class="result-empty-icon">🛡️</div>
-        <div class="result-empty-text">Tu checklist aparecerá aquí</div>
-      </div>
-
-      <div class="typing" id="typing">
-        <div class="tdots">
-          <div class="tdot"></div><div class="tdot"></div><div class="tdot"></div>
-        </div>
-        <span class="typing-text">Generando tu plan personalizado...</span>
-      </div>
-
-      <div class="checklist-out" id="checklistOut">
-        <div class="cl-meta">
-          <div class="cl-profile" id="clProfile"></div>
-          <div class="cl-title">TU PLAN DE<br>SEGURIDAD</div>
-        </div>
-        <div id="clSections"></div>
-        <div class="cl-progress">
-          <div class="cl-progress-label">
-            <span>Progreso</span>
-            <span id="clProgressText">0 / 0 completados</span>
-          </div>
-          <div class="cl-bar-bg"><div class="cl-bar-fill" id="clBarFill"></div></div>
-        </div>
-        <button class="dl-btn" onclick="copyChecklist()">📋 Copiar checklist</button>
-      </div>
-
-    </div>
-  </div>
+  <button class="cl-reset" onclick="resetChecklist()">↺ Reiniciar checklist</button>
 
 </div>
+</div>
 
-<footer>
-  <a href="/">aegis8.org</a>
-  <span>checklist de seguridad · gratis · personalizada con IA</span>
-  <a href="/contactos.html">quiero auditoría profesional →</a>
+<footer class="page-footer">
+  <a href="/" class="fl">AEGIS<span>8</span></a>
+  <ul class="flinks">
+    <li><a href="/educa.html">Educa</a></li>
+    <li><a href="/herramientas.html">Herramientas</a></li>
+    <li><a href="/agente-seguridad.html">Agente IA</a></li>
+    <li><a href="/contactos.html">Contacto</a></li>
+  </ul>
+  <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
 </footer>
 
 <script>
-const WORKER = 'https://aegis8-agent.christianmora705.workers.dev';
-let generatedItems = [];
+const SECCIONES = [
+  {
+    id:'cuentas', ico:'🔑', title:'Contraseñas y cuentas',
+    items:[
+      {id:'c1', tag:'urgente',    title:'Activa verificación en 2 pasos (2FA) en tu correo principal',   desc:'Gmail, Outlook o el que uses. Es lo más importante que puedes hacer hoy.'},
+      {id:'c2', tag:'urgente',    title:'Activa 2FA en tu banco y aplicaciones financieras',             desc:'Bancochile, Santander, BCI, Falabella — todos tienen la opción en configuración.'},
+      {id:'c3', tag:'importante', title:'Usa una contraseña diferente para cada cuenta importante',      desc:'Al menos correo, banco y redes sociales deben tener contraseñas distintas.'},
+      {id:'c4', tag:'importante', title:'Verifica si tus datos aparecen en filtraciones',               desc:'Entra a haveibeenpwned.com — es gratis y te dice si tu correo fue filtrado.'},
+      {id:'c5', tag:'basico',     title:'Revisa las apps conectadas a tu cuenta de Google o Apple',     desc:'Ve a tu cuenta → Seguridad → Apps de terceros. Revoca las que no reconoces.'},
+    ]
+  },
+  {
+    id:'redes', ico:'📱', title:'Redes sociales y privacidad',
+    items:[
+      {id:'r1', tag:'urgente',    title:'Pon en privado los perfiles de redes sociales de tus hijos',   desc:'Instagram, TikTok, Facebook: Configuración → Privacidad → Cuenta privada.'},
+      {id:'r2', tag:'urgente',    title:'Revisa quién puede enviarle mensajes directos a tus hijos',    desc:'En TikTok e Instagram, desactiva mensajes de desconocidos para menores.'},
+      {id:'r3', tag:'importante', title:'Busca el nombre de tus hijos en Google',                       desc:'Ve qué aparece. Si hay fotos o información que no debería estar, es el momento de actuar.'},
+      {id:'r4', tag:'importante', title:'Activa los controles parentales en el teléfono de tus hijos',  desc:'iOS: Tiempo en pantalla. Android: Bienestar digital. Ambos son gratuitos.'},
+      {id:'r5', tag:'basico',     title:'Revisa los permisos de ubicación de las apps en tus teléfonos', desc:'Configuración → Apps → Permisos. Ninguna app de redes necesita ubicación siempre.'},
+    ]
+  },
+  {
+    id:'hogar', ico:'🏠', title:'Seguridad en el hogar',
+    items:[
+      {id:'h1', tag:'urgente',    title:'Cambia la contraseña por defecto de tu router WiFi',           desc:'La contraseña que viene en la etiqueta del router debe cambiarse. Es la más fácil de hackear.'},
+      {id:'h2', tag:'urgente',    title:'Revisa si tienes TV boxes o dispositivos piratas conectados',  desc:'Los decodificadores no oficiales pueden tener acceso a tu cámara, micrófono y red.'},
+      {id:'h3', tag:'importante', title:'Crea una red WiFi separada para dispositivos inteligentes',    desc:'Smart TV, cámaras, aspiradoras robóticas — ponlos en una red de invitados separada.'},
+      {id:'h4', tag:'importante', title:'Mantén actualizado el firmware de tu router',                  desc:'Entra a la configuración del router (192.168.1.1) y revisa si hay actualizaciones.'},
+      {id:'h5', tag:'basico',     title:'Apaga el WiFi y Bluetooth cuando no los usas',                desc:'Especialmente en lugares públicos. Un Bluetooth activo puede ser detectado.'},
+    ]
+  },
+  {
+    id:'phishing', ico:'🎣', title:'Phishing y estafas',
+    items:[
+      {id:'p1', tag:'urgente',    title:'Aprende a verificar el dominio de un correo antes de hacer clic', desc:'El nombre del remitente puede ser cualquier cosa. Lo que importa es el dominio (@bancochill.com ≠ @bancochile.cl).'},
+      {id:'p2', tag:'urgente',    title:'Nunca entregues datos bancarios por teléfono o correo',         desc:'Tu banco nunca te llama para pedirte tu clave. Si pasa, cuelga y llama tú al número oficial.'},
+      {id:'p3', tag:'importante', title:'Enséñales a tus hijos a mostrarles links antes de hacer clic',  desc:'Una regla simple: "Si recibes un link que no esperabas, muéstramelo primero".'},
+      {id:'p4', tag:'importante', title:'Instala el Analizador de Phishing de Aegis8 como favorito',    desc:'Ante cualquier duda, pega el link en aegis8.org/analizador-phishing.html'},
+      {id:'p5', tag:'basico',     title:'Activa los filtros de spam en tu correo',                      desc:'Gmail y Outlook tienen filtros automáticos. Asegúrate de que estén activados.'},
+    ]
+  },
+  {
+    id:'ninos', ico:'👧', title:'Protección de niños y adolescentes',
+    items:[
+      {id:'n1', tag:'urgente',    title:'Habla con tus hijos sobre el grooming',                        desc:'Explícales que un adulto que pide secretos en internet o hace regalos virtuales es una señal de alerta.'},
+      {id:'n2', tag:'urgente',    title:'Conoce las plataformas donde tus hijos pasan tiempo',          desc:'Roblox, Discord, TikTok, Telegram — cada una tiene riesgos distintos. Aegis8 tiene guías por plataforma.'},
+      {id:'n3', tag:'importante', title:'Establece reglas claras de uso de dispositivos en casa',        desc:'Horarios, lugares donde se puede usar el celular, apps permitidas. Con tu hijo/a, no para él/ella.'},
+      {id:'n4', tag:'importante', title:'Habla abiertamente sobre sexting y sus consecuencias legales', desc:'En Chile, compartir imágenes íntimas sin consentimiento es delito (Ley 21.459).'},
+      {id:'n5', tag:'basico',     title:'Suscríbete al newsletter de Aegis8',                          desc:'Cada mes: la amenaza más relevante para tus hijos + una actividad para hacer juntos.'},
+    ]
+  },
+  {
+    id:'emergencia', ico:'🚨', title:'Plan de emergencia',
+    items:[
+      {id:'e1', tag:'urgente',    title:'Guarda el número de PDI Cibercrimen en tu teléfono',           desc:'+56 2 2708 0000 — Para denunciar delitos digitales. Disponible 24 horas.'},
+      {id:'e2', tag:'urgente',    title:'Guarda el Fono Víctimas SernamEG si tienes hijas adolescentes', desc:'1455 — Para situaciones de violencia digital de género. Confidencial y gratuito.'},
+      {id:'e3', tag:'importante', title:'Sabe cómo recuperar el acceso si hackean tu correo principal', desc:'Activa un correo de recuperación y un número de teléfono de respaldo en tu cuenta.'},
+      {id:'e4', tag:'importante', title:'Ten una copia de tus documentos importantes en la nube',       desc:'Cédula, pasaporte, certificados — en Google Drive o iCloud, en una carpeta privada.'},
+      {id:'e5', tag:'basico',     title:'Habla con tu familia sobre qué hacer si algo pasa',            desc:'"Si recibes mensajes raros de alguien que no conoces, cuéntame inmediatamente."'},
+    ]
+  },
+];
 
-async function generate() {
-  const org = document.getElementById('orgType').value;
-  const tech = document.getElementById('techStack').value;
-  const team = document.getElementById('teamSize').value;
-  const data = document.getElementById('dataType').value;
-  const extra = document.getElementById('extraContext').value.trim();
+const KEY = 'aegis8_checklist_v2';
 
-  if (!org) {
-    alert('Selecciona el tipo de organización para continuar.');
-    return;
-  }
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) { return {}; }
+}
 
-  const btn = document.getElementById('generateBtn');
-  btn.disabled = true;
-  btn.textContent = '⏳ Generando...';
+function saveState(state) {
+  localStorage.setItem(KEY, JSON.stringify(state));
+}
 
-  document.getElementById('emptyState').style.display = 'none';
-  document.getElementById('checklistOut').classList.remove('show');
-  document.getElementById('typing').classList.add('show');
+function calcScore(state) {
+  let total = 0, done = 0;
+  SECCIONES.forEach(s => s.items.forEach(it => {
+    total++;
+    if (state[it.id]) done++;
+  }));
+  return { pct: Math.round(done / total * 100), done, total };
+}
 
-  const context = [
-    `Organización: ${org}`,
-    tech ? `Tecnología: ${tech}` : '',
-    team ? `Tamaño equipo: ${team}` : '',
-    data ? `Datos sensibles: ${data}` : '',
-    extra ? `Contexto adicional: ${extra}` : ''
-  ].filter(Boolean).join('\n');
+function updateScore(state) {
+  const { pct, done, total } = calcScore(state);
+  document.getElementById('score-fill').style.width = pct + '%';
+  document.getElementById('score-pct').textContent = pct + '%';
+  const msgs = [
+    [0,   'Comienza tachando los ítems que ya tienes resueltos.'],
+    [20,  'Buen comienzo. Cada ítem resuelto reduce el riesgo real.'],
+    [40,  'Vas bien. La mitad del camino marca una diferencia enorme.'],
+    [60,  'Muy bien protegidos. Quedan los puntos más importantes.'],
+    [80,  'Excelente. Tu familia está significativamente mejor protegida que el promedio.'],
+    [100, '🛡️ Familia protegida. Vuelve en un mes para revisar si algo cambió.'],
+  ];
+  const msg = msgs.reverse().find(([min]) => pct >= min);
+  document.getElementById('score-msg').textContent = msg[1];
 
-  const systemPrompt = `Eres un experto en ciberseguridad de Aegis8. Generas checklists de seguridad personalizadas y priorizadas.
-
-Dado el perfil del usuario, genera una checklist estructurada en 3 secciones con prioridad CRÍTICO, ALTO y MEDIO.
-
-Responde ÚNICAMENTE en este formato JSON (sin markdown, sin texto adicional):
-{
-  "perfil": "descripción breve del perfil en 1 oración",
-  "secciones": [
-    {
-      "titulo": "nombre de la sección",
-      "prioridad": "CRÍTICO",
-      "items": ["item 1", "item 2", "item 3"]
-    },
-    {
-      "titulo": "nombre de la sección",
-      "prioridad": "ALTO",
-      "items": ["item 1", "item 2", "item 3"]
-    },
-    {
-      "titulo": "nombre de la sección",
-      "prioridad": "MEDIO",
-      "items": ["item 1", "item 2"]
+  // Actualizar contadores de secciones
+  SECCIONES.forEach(s => {
+    const done = s.items.filter(it => state[it.id]).length;
+    const el = document.getElementById('prog-' + s.id);
+    if (el) {
+      el.textContent = done + '/' + s.items.length;
+      el.className = 'cl-section-prog' + (done === s.items.length ? ' done' : '');
     }
-  ]
-}
-
-Cada sección debe tener entre 3 y 5 items concretos y accionables. Sin tecnicismos innecesarios. En español.`;
-
-  try {
-    const res = await fetch(WORKER, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: `Mi perfil:\n${context}` }]
-      })
-    });
-
-    const d = await res.json();
-    const raw = d.content?.[0]?.text || '';
-    const parsed = JSON.parse(raw.replace(/```json|```/g, '').trim());
-    renderChecklist(parsed);
-
-  } catch(e) {
-    document.getElementById('typing').classList.remove('show');
-    document.getElementById('emptyState').style.display = 'flex';
-    document.getElementById('emptyState').querySelector('.result-empty-text').textContent = 'Error al generar. Intenta de nuevo.';
-  }
-
-  btn.disabled = false;
-  btn.textContent = '⚡ Regenerar checklist';
-}
-
-function renderChecklist(data) {
-  document.getElementById('typing').classList.remove('show');
-  document.getElementById('clProfile').textContent = data.perfil;
-
-  const sectionsEl = document.getElementById('clSections');
-  sectionsEl.innerHTML = '';
-  generatedItems = [];
-
-  data.secciones.forEach((sec, si) => {
-    const secEl = document.createElement('div');
-    secEl.className = 'cl-section';
-
-    const titleEl = document.createElement('div');
-    titleEl.className = 'cl-section-title';
-    titleEl.innerHTML = `${sec.titulo} <span class="prio-badge prio-${sec.prioridad}">${sec.prioridad}</span>`;
-    secEl.appendChild(titleEl);
-
-    sec.items.forEach((item, ii) => {
-      const id = `item-${si}-${ii}`;
-      generatedItems.push(item);
-      const itemEl = document.createElement('div');
-      itemEl.className = 'cl-item';
-      itemEl.id = id;
-      itemEl.onclick = () => toggleItem(id);
-      itemEl.innerHTML = `
-        <div class="cl-check"></div>
-        <div class="cl-text">${item}</div>`;
-      secEl.appendChild(itemEl);
-    });
-
-    sectionsEl.appendChild(secEl);
   });
-
-  updateProgress();
-  document.getElementById('checklistOut').classList.add('show');
 }
 
-function toggleItem(id) {
-  const item = document.getElementById(id);
-  item.classList.toggle('done');
-  if (item.classList.contains('done')) {
-    item.querySelector('.cl-check').textContent = '✓';
-  } else {
-    item.querySelector('.cl-check').textContent = '';
+function toggle(id) {
+  const state = loadState();
+  state[id] = !state[id];
+  saveState(state);
+  const el = document.getElementById('item-' + id);
+  if (el) el.classList.toggle('checked', state[id]);
+  updateScore(state);
+}
+
+function toggleSection(id) {
+  const el = document.getElementById('items-' + id);
+  if (el) el.classList.toggle('open');
+}
+
+function resetChecklist() {
+  if (confirm('¿Reiniciar el checklist? Se perderá tu progreso.')) {
+    localStorage.removeItem(KEY);
+    renderChecklist();
+    updateScore({});
   }
-  updateProgress();
 }
 
-function updateProgress() {
-  const all = document.querySelectorAll('.cl-item');
-  const done = document.querySelectorAll('.cl-item.done');
-  const pct = all.length ? Math.round(done.length / all.length * 100) : 0;
-  document.getElementById('clProgressText').textContent = `${done.length} / ${all.length} completados`;
-  document.getElementById('clBarFill').style.width = pct + '%';
+function renderChecklist() {
+  const state = loadState();
+  const root = document.getElementById('checklist-root');
+
+  root.innerHTML = SECCIONES.map(s => {
+    const done = s.items.filter(it => state[it.id]).length;
+    return `
+    <div class="cl-section">
+      <div class="cl-section-hd" onclick="toggleSection('${s.id}')">
+        <div class="cl-section-hd-l">
+          <span class="cl-section-ico">${s.ico}</span>
+          <span class="cl-section-title">${s.title}</span>
+        </div>
+        <span class="cl-section-prog${done===s.items.length?' done':''}" id="prog-${s.id}">
+          ${done}/${s.items.length}
+        </span>
+      </div>
+      <div class="cl-items${done < s.items.length ? ' open' : ''}" id="items-${s.id}">
+        ${s.items.map(it => `
+          <div class="cl-item${state[it.id]?' checked':''}" id="item-${it.id}" onclick="toggle('${it.id}')">
+            <div class="cl-check"><span class="cl-check-ico">✓</span></div>
+            <div class="cl-item-body">
+              <div class="cl-item-tag ${it.tag}">${it.tag.toUpperCase()}</div>
+              <div class="cl-item-title">${it.title}</div>
+              <div class="cl-item-desc">${it.desc}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+  }).join('');
+
+  updateScore(state);
 }
 
-function copyChecklist() {
-  const text = generatedItems.map((item, i) => `☐ ${item}`).join('\n');
-  navigator.clipboard.writeText('CHECKLIST DE SEGURIDAD · AEGIS8\n\n' + text)
-    .then(() => {
-      const btn = document.querySelector('.dl-btn');
-      btn.textContent = '✓ Copiado al portapapeles';
-      setTimeout(() => { btn.textContent = '📋 Copiar checklist'; }, 2000);
-    });
-}
+renderChecklist();
 </script>
 </body>
 </html>

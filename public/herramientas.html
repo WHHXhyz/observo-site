@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Herramientas · Aegis8</title>
+<meta name="description" content="Todas las herramientas gratuitas de Aegis8: analizador de phishing, generador de contraseñas, quiz semanal, checklist familiar y agente IA."/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
+<script src="/aegis-nav.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+:root{
+  --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
+  --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
+  --card:rgba(255,255,255,.03);--radius:4px;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(58,127,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.025) 1px,transparent 1px);
+  background-size:80px 80px;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+.page-inner{position:relative;z-index:10;padding:80px 0;}
+.sw{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
+.sw.vis{opacity:1;transform:none;}
+.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);
+  padding:48px 32px 32px;max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.fl span{color:var(--accent);}
+.flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.flinks a:hover{color:var(--accent);}
+.fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
+
+/* HERRAMIENTAS GRID */
+.ht-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:860px){.ht-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:520px){.ht-grid{grid-template-columns:1fr;}}
+.ht-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;
+  text-decoration:none;overflow:hidden;transition:all .3s;display:flex;flex-direction:column;
+  position:relative;}
+.ht-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:6px;}
+.ht-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.1);box-shadow:0 16px 48px rgba(0,0,0,.3);}
+.ht-card:hover::before{opacity:1;}
+.ht-bar{height:3px;}
+.ht-body{padding:24px;flex:1;display:flex;flex-direction:column;gap:12px;}
+.ht-ico{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;
+  justify-content:center;font-size:1.4rem;}
+.ht-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:2px;
+  text-transform:uppercase;}
+.ht-title{font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--ink);line-height:1.15;}
+.ht-desc{font-size:.85rem;color:var(--ink2);line-height:1.65;flex:1;}
+.ht-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.ht-pill{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:1px;
+  padding:3px 8px;border-radius:20px;border:1px solid var(--border);color:var(--ink3);}
+.ht-cta{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
+  display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:14px;
+  border-top:1px solid var(--border);}
+.ht-arr{width:28px;height:28px;border-radius:50%;border:1px solid;
+  display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:all .2s;}
+.ht-card:hover .ht-arr{color:var(--bg)!important;border-color:currentColor;}
+
+/* Colores por herramienta */
+.ht-c-accent .ht-bar{background:var(--accent);}
+.ht-c-accent .ht-ico{background:rgba(240,120,48,.12);}
+.ht-c-accent .ht-tag{color:var(--accent);}
+.ht-c-accent .ht-cta{color:var(--accent);}
+.ht-c-accent .ht-arr{border-color:var(--accent);color:var(--accent);}
+.ht-c-accent:hover .ht-arr{background:var(--accent);}
+.ht-c-accent::before{background:radial-gradient(circle at 70% 30%,rgba(240,120,48,.06),transparent 60%);}
+
+.ht-c-blue .ht-bar{background:var(--blue);}
+.ht-c-blue .ht-ico{background:rgba(58,127,212,.12);}
+.ht-c-blue .ht-tag{color:var(--blue);}
+.ht-c-blue .ht-cta{color:var(--blue);}
+.ht-c-blue .ht-arr{border-color:var(--blue);color:var(--blue);}
+.ht-c-blue:hover .ht-arr{background:var(--blue);}
+.ht-c-blue::before{background:radial-gradient(circle at 70% 30%,rgba(58,127,212,.06),transparent 60%);}
+
+.ht-c-green .ht-bar{background:var(--green);}
+.ht-c-green .ht-ico{background:rgba(46,204,128,.1);}
+.ht-c-green .ht-tag{color:var(--green);}
+.ht-c-green .ht-cta{color:var(--green);}
+.ht-c-green .ht-arr{border-color:var(--green);color:var(--green);}
+.ht-c-green:hover .ht-arr{background:var(--green);}
+.ht-c-green::before{background:radial-gradient(circle at 70% 30%,rgba(46,204,128,.05),transparent 60%);}
+
+.ht-c-gold .ht-bar{background:var(--gold);}
+.ht-c-gold .ht-ico{background:rgba(245,168,35,.1);}
+.ht-c-gold .ht-tag{color:var(--gold);}
+.ht-c-gold .ht-cta{color:var(--gold);}
+.ht-c-gold .ht-arr{border-color:var(--gold);color:var(--gold);}
+.ht-c-gold:hover .ht-arr{background:var(--gold);}
+.ht-c-gold::before{background:radial-gradient(circle at 70% 30%,rgba(245,168,35,.05),transparent 60%);}
+
+.ht-c-purple .ht-bar{background:#9b6dff;}
+.ht-c-purple .ht-ico{background:rgba(155,109,255,.1);}
+.ht-c-purple .ht-tag{color:#9b6dff;}
+.ht-c-purple .ht-cta{color:#9b6dff;}
+.ht-c-purple .ht-arr{border-color:#9b6dff;color:#9b6dff;}
+.ht-c-purple:hover .ht-arr{background:#9b6dff;}
+.ht-c-purple::before{background:radial-gradient(circle at 70% 30%,rgba(155,109,255,.05),transparent 60%);}
+
+.ht-c-red .ht-bar{background:#ef4444;}
+.ht-c-red .ht-ico{background:rgba(239,68,68,.1);}
+.ht-c-red .ht-tag{color:#ef4444;}
+.ht-c-red .ht-cta{color:#ef4444;}
+.ht-c-red .ht-arr{border-color:#ef4444;color:#ef4444;}
+.ht-c-red:hover .ht-arr{background:#ef4444;}
+.ht-c-red::before{background:radial-gradient(circle at 70% 30%,rgba(239,68,68,.05),transparent 60%);}
+
+/* DESTACADA (ocupa 2 columnas) */
+.ht-featured{grid-column:span 2;}
+@media(max-width:860px){.ht-featured{grid-column:span 1;}}
+</style>
+</head>
+<body>
+<div class="page-inner">
+<div class="wrap">
+
+  <div style="margin-bottom:56px;" class="sw">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+      color:var(--ink3);margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+      <div style="width:20px;height:1px;background:var(--accent);"></div>
+      HERRAMIENTAS · AEGIS8 · TODAS GRATIS
+    </div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.2rem,5vw,4rem);
+      line-height:1;letter-spacing:-1px;margin-bottom:16px;">
+      La caja de<br><em style="color:var(--accent);">herramientas.</em>
+    </h1>
+    <p style="font-size:1rem;line-height:1.8;color:var(--ink2);max-width:560px;">
+      Todo gratis. Sin registro. Sin datos que vender. Herramientas concretas para protegerte ahora mismo.
+    </p>
+  </div>
+
+  <div class="ht-grid sw">
+
+    <!-- Agente IA - Destacado -->
+    <a href="/agente-seguridad.html" class="ht-card ht-c-accent ht-featured">
+      <div class="ht-bar"></div>
+      <div class="ht-body">
+        <div class="ht-ico">🛡️</div>
+        <div class="ht-tag">Agente IA · 24/7</div>
+        <div class="ht-title">Agente de Seguridad</div>
+        <div class="ht-desc">
+          Pregunta lo que necesites sobre ciberseguridad — en lenguaje simple, no de ingeniero.
+          Disponible las 24 horas. Especializado en Chile: leyes, plataformas, casos reales.
+          Ideal para situaciones urgentes o cuando no sabes por dónde empezar.
+        </div>
+        <div class="ht-pills">
+          <span class="ht-pill">Sin registro</span>
+          <span class="ht-pill">Responde en segundos</span>
+          <span class="ht-pill">Leyes chilenas</span>
+          <span class="ht-pill">Para todos los perfiles</span>
+        </div>
+        <div class="ht-cta">
+          <span>HABLAR CON EL AGENTE</span>
+          <div class="ht-arr">→</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Quiz Semanal -->
+    <a href="/quiz.html" class="ht-card ht-c-blue">
+      <div class="ht-bar"></div>
+      <div class="ht-body">
+        <div class="ht-ico">🎯</div>
+        <div class="ht-tag">Quiz · Actualizado cada lunes</div>
+        <div class="ht-title">Quiz Semanal</div>
+        <div class="ht-desc">5 preguntas sobre la amenaza más relevante de la semana. Tu score se guarda automáticamente.</div>
+        <div class="ht-pills">
+          <span class="ht-pill">Nuevo cada semana</span>
+          <span class="ht-pill">Score persistente</span>
+        </div>
+        <div class="ht-cta">
+          <span>HACER EL QUIZ</span>
+          <div class="ht-arr">→</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Analizador de phishing -->
+    <a href="/analizador-phishing.html" class="ht-card ht-c-red">
+      <div class="ht-bar"></div>
+      <div class="ht-body">
+        <div class="ht-ico">🔍</div>
+        <div class="ht-tag">IA · Análisis en tiempo real</div>
+        <div class="ht-title">Analizador de Phishing</div>
+        <div class="ht-desc">Pega un correo, mensaje o link sospechoso y la IA te dice si es una trampa y por qué.</div>
+        <div class="ht-pills">
+          <span class="ht-pill">Powered by Claude</span>
+          <span class="ht-pill">Sin límite de usos</span>
+        </div>
+        <div class="ht-cta">
+          <span>ANALIZAR MENSAJE</span>
+          <div class="ht-arr">→</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Checklist -->
+    <a href="/checklist.html" class="ht-card ht-c-green">
+      <div class="ht-bar"></div>
+      <div class="ht-body">
+        <div class="ht-ico">✅</div>
+        <div class="ht-tag">30 acciones · Progreso guardado</div>
+        <div class="ht-title">Checklist Familiar</div>
+        <div class="ht-desc">30 acciones concretas para proteger tu hogar digital. Tu progreso se guarda sin crear cuenta.</div>
+        <div class="ht-pills">
+          <span class="ht-pill">Sin registro</span>
+          <span class="ht-pill">Para toda la familia</span>
+        </div>
+        <div class="ht-cta">
+          <span>VER CHECKLIST</span>
+          <div class="ht-arr">→</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- CAPS -->
+    <a href="/caps.html" class="ht-card ht-c-gold">
+      <div class="ht-bar"></div>
+      <div class="ht-body">
+        <div class="ht-ico">🔑</div>
+        <div class="ht-tag">Generador · 100% local</div>
+        <div class="ht-title">CAPS · Generador de Claves</div>
+        <div class="ht-desc">Genera contraseñas seguras y memorables a partir de tres palabras tuyas. Nunca salen de tu navegador.</div>
+        <div class="ht-pills">
+          <span class="ht-pill">Sin servidor</span>
+          <span class="ht-pill">Contraseñas fuertes</span>
+        </div>
+        <div class="ht-cta">
+          <span>CREAR CONTRASEÑA</span>
+          <div class="ht-arr">→</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Violencia digital -->
+    <a href="/violencia-digital.html" class="ht-card ht-c-purple">
+      <div class="ht-bar"></div>
+      <div class="ht-body">
+        <div class="ht-ico">🛡️</div>
+        <div class="ht-tag">Información y ayuda · Chile</div>
+        <div class="ht-title">Violencia Digital</div>
+        <div class="ht-desc">Sextorsión, difusión de imágenes, control digital. Qué dice la ley y qué hacer ahora mismo. StopNCII incluido.</div>
+        <div class="ht-pills">
+          <span class="ht-pill">1455 SernamEG</span>
+          <span class="ht-pill">PDI 134</span>
+          <span class="ht-pill">StopNCII</span>
+        </div>
+        <div class="ht-cta">
+          <span>VER RECURSOS</span>
+          <div class="ht-arr">→</div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+</div>
+</div>
+
+<footer class="page-footer">
+  <a href="/" class="fl">AEGIS<span>8</span></a>
+  <ul class="flinks">
+    <li><a href="/educa.html">Educa</a></li>
+    <li><a href="/quiz.html">Quiz</a></li>
+    <li><a href="/checklist.html">Checklist</a></li>
+    <li><a href="/agente-seguridad.html">Agente IA</a></li>
+    <li><a href="/contactos.html">Contacto</a></li>
+  </ul>
+  <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
+</footer>
+
+<script>
+const ro = new IntersectionObserver(e => {
+  e.forEach(x => { if (x.isIntersecting) x.target.classList.add('vis'); });
+}, { threshold: .07 });
+document.querySelectorAll('.sw').forEach(el => ro.observe(el));
+</script>
+</body>
+</html>
