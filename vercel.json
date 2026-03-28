@@ -15,6 +15,36 @@
       "source": "/newsletter.html",
       "destination": "/educa/newsletter",
       "permanent": true
+    },
+    {
+      "source": "/herramientas.html",
+      "destination": "/herramientas",
+      "permanent": true
+    },
+    {
+      "source": "/botiquin.html",
+      "destination": "/botiquin",
+      "permanent": true
+    },
+    {
+      "source": "/derechos.html",
+      "destination": "/derechos",
+      "permanent": true
+    },
+    {
+      "source": "/quiz.html",
+      "destination": "/quiz",
+      "permanent": true
+    },
+    {
+      "source": "/checklist.html",
+      "destination": "/checklist",
+      "permanent": true
+    },
+    {
+      "source": "/noticias.html",
+      "destination": "/noticias",
+      "permanent": true
     }
   ],
   "rewrites": [

@@ -180,51 +180,40 @@ const CSS = `
 `;
 
 // ── ESTRUCTURA DEL NAV ──
-// Grupos con dropdown y links directos
 const NAV = [
-  {
-    label: 'El Proyecto',
-    href: '/propuesta.html',
-    page: 'propuesta',
-    drop: [
-      {href:'/propuesta.html', label:'Por qué existe Aegis8'},
-      {href:'/propuesta.html#mvp', label:'Qué construimos'},
-      {href:'/propuesta.html#problema', label:'El problema'},
-      {href:'/propuesta.html#roadmap', label:'Hoja de ruta — pendiente añadir id'},
-      'div',
-      {href:'/guias.html', label:'Guías técnicas'},
-      'div',
-      {href:'/violencia-digital.html', label:'Violencia digital', purple:true},
-    ]
-  },
   {
     label: 'Educa',
     href: '/educa.html',
     page: 'educa',
-    educa: true,
     drop: [
       {href:'/educa.html', label:'Hub educativo'},
       'div',
-      {href:'/educa/ninos.html', label:'Niños 6–12'},
+      {href:'/educa/ninos.html',        label:'Niños 6–12'},
       {href:'/educa/adolescentes.html', label:'Adolescentes'},
-      {href:'/educa/padres.html', label:'Familias'},
-      {href:'/educa/profesores.html', label:'Docentes'},
+      {href:'/educa/padres.html',       label:'Familias'},
+      {href:'/educa/profesores.html',   label:'Docentes'},
       'div',
-      {href:'/educa/newsletter.html', label:'Newsletter mensual'},
-      'div',
-      {href:'/violencia-digital.html', label:'Violencia digital'},
+      {href:'/educa/newsletter.html',   label:'Newsletter mensual'},
     ]
   },
   {
     label: 'Herramientas',
-    href: '/agente-seguridad.html',
-    page: 'agente',
+    href: '/herramientas',
+    page: 'herramientas',
     drop: [
-      {href:'/agente-seguridad.html', label:'Agente de Seguridad', agent:true},
-      {href:'/analizador-phishing.html', label:'Analizador de Phishing'},
-      {href:'/checklist.html', label:'Checklist Familiar'},
+      {href:'/agente-seguridad.html',      label:'Agente de Seguridad', agent:true},
+      {href:'/analizador-phishing.html',   label:'Analizador de Phishing'},
+      'div',
+      {href:'/quiz.html',                  label:'Quiz Semanal'},
+      {href:'/checklist.html',             label:'Checklist Familiar'},
+      {href:'/caps.html',                  label:'CAPS · Contraseñas'},
+      'div',
+      {href:'/botiquin.html',              label:'Botiquín SOS',        red:true},
+      {href:'/derechos.html',              label:'Derechos Digitales',  purple:true},
+      {href:'/violencia-digital.html',     label:'Violencia Digital',   purple:true},
     ]
   },
+  {href:'/noticias', label:'Inteligencia', page:'noticias'},
   {href:'/talleres.html', label:'Talleres', page:'talleres'},
   {href:'/contactos.html', label:'Contacto', cta:true},
 ];
@@ -261,7 +250,8 @@ function buildDesktop(page, ul) {
           da.href = d.href;
           da.textContent = d.label;
           if (d.agent) da.style.color = '#f07830';
-        if (d.purple) da.style.color = '#9b6dff';
+          if (d.purple) da.style.color = '#9b6dff';
+          if (d.red) da.style.color = '#ef4444';
           drop.appendChild(da);
         }
       });
@@ -273,24 +263,28 @@ function buildDesktop(page, ul) {
 }
 
 function buildMobile(page, drawer) {
-  // Flat structure for mobile
   const flat = [
-    {href:'/', label:'Inicio', cls:'m-item'},
-    {href:'/propuesta.html', label:'El Proyecto', cls:'m-item', pg:'propuesta'},
-    {href:'/guias.html', label:'Guías técnicas', cls:'m-sub'},
+    {href:'/',                        label:'Inicio',            cls:'m-item'},
     'div',
-    {href:'/educa.html', label:'Educa', cls:'m-item', pg:'educa'},
-    {href:'/educa/ninos.html', label:'Niños', cls:'m-sub'},
-    {href:'/educa/adolescentes.html', label:'Adolescentes', cls:'m-sub'},
-    {href:'/educa/padres.html', label:'Familias', cls:'m-sub'},
-    {href:'/educa/profesores.html', label:'Docentes', cls:'m-sub'},
+    {href:'/educa.html',              label:'Educa',             cls:'m-item', pg:'educa'},
+    {href:'/educa/ninos.html',        label:'Niños 6–12',        cls:'m-sub'},
+    {href:'/educa/adolescentes.html', label:'Adolescentes',      cls:'m-sub'},
+    {href:'/educa/padres.html',       label:'Familias',          cls:'m-sub'},
+    {href:'/educa/profesores.html',   label:'Docentes',          cls:'m-sub'},
     'div',
-    {href:'/agente-seguridad.html', label:'Agente IA', cls:'m-agent'},
-    {href:'/analizador-phishing.html', label:'Analizador Phishing', cls:'m-sub'},
-    {href:'/checklist.html', label:'Checklist', cls:'m-sub'},
+    {href:'/herramientas',            label:'Herramientas',      cls:'m-item', pg:'herramientas'},
+    {href:'/agente-seguridad.html',   label:'Agente IA',         cls:'m-sub m-agent'},
+    {href:'/quiz.html',               label:'Quiz Semanal',      cls:'m-sub'},
+    {href:'/checklist.html',          label:'Checklist',         cls:'m-sub'},
+    {href:'/analizador-phishing.html',label:'Analizador',        cls:'m-sub'},
+    {href:'/botiquin.html',           label:'Botiquín SOS',      cls:'m-sub', red:true},
+    {href:'/derechos.html',           label:'Derechos Digitales',cls:'m-sub', purple:true},
+    {href:'/violencia-digital.html',  label:'Violencia Digital', cls:'m-sub', purple:true},
     'div',
-    {href:'/talleres.html', label:'Talleres', cls:'m-item', pg:'talleres'},
-    {href:'/contactos.html', label:'Contacto', cls:'m-cta'},
+    {href:'/noticias',                label:'Inteligencia',      cls:'m-item', pg:'noticias'},
+    {href:'/talleres.html',           label:'Talleres',          cls:'m-item', pg:'talleres'},
+    'div',
+    {href:'/contactos.html',          label:'Contacto',          cls:'m-cta'},
   ];
 
   flat.forEach(item => {
@@ -305,6 +299,7 @@ function buildMobile(page, drawer) {
       a.className = item.cls;
       if (item.pg && page === item.pg) a.classList.add('an-m-active');
       if (item.purple) a.style.color = '#9b6dff';
+      if (item.red) a.style.color = '#ef4444';
       a.addEventListener('click', closeMenu);
       drawer.appendChild(a);
     }
