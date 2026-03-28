@@ -130,35 +130,62 @@ const CSS = `
   #an-drawer{
     display:none;position:fixed;top:64px;left:0;right:0;bottom:0;
     background:rgba(8,12,20,.98);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-    z-index:799;flex-direction:column;align-items:center;justify-content:center;
-    gap:0;overflow-y:auto;padding:2rem 0;
+    z-index:799;flex-direction:column;align-items:stretch;
+    overflow-y:auto;padding:0;
   }
   #an-drawer.an-open{display:flex;}
+
+  /* Item principal */
   #an-drawer .m-item{
-    font-family:'JetBrains Mono',monospace;font-size:.9rem;color:#5a6a80;
+    font-family:'JetBrains Mono',monospace;font-size:.78rem;color:#8898b0;
     text-decoration:none;letter-spacing:3px;text-transform:uppercase;
-    transition:color .2s;padding:.7rem 0;width:200px;text-align:center;
+    transition:color .2s;padding:1.1rem 2rem;
+    border-bottom:1px solid rgba(58,127,212,.08);
+    display:flex;align-items:center;justify-content:space-between;
+    width:100%;
   }
   #an-drawer .m-item:hover,#an-drawer .m-item.an-m-active{color:#f07830;}
+
+  /* Grupo expandible */
+  #an-drawer .m-group{border-bottom:1px solid rgba(58,127,212,.08);}
+  #an-drawer .m-group-btn{
+    font-family:'JetBrains Mono',monospace;font-size:.78rem;color:#8898b0;
+    letter-spacing:3px;text-transform:uppercase;
+    transition:color .2s;padding:1.1rem 2rem;
+    display:flex;align-items:center;justify-content:space-between;
+    width:100%;background:none;border:none;cursor:pointer;text-align:left;
+  }
+  #an-drawer .m-group-btn:hover{color:#eaf0f8;}
+  #an-drawer .m-group-btn.open{color:#f07830;}
+  #an-drawer .m-group-btn .m-chevron{
+    font-size:.6rem;opacity:.5;transition:transform .25s;
+  }
+  #an-drawer .m-group-btn.open .m-chevron{transform:rotate(180deg);opacity:1;}
+
+  /* Sub-ítems — ocultos por defecto */
+  #an-drawer .m-subs{
+    display:none;background:rgba(255,255,255,.02);
+    border-top:1px solid rgba(58,127,212,.06);
+  }
+  #an-drawer .m-subs.open{display:block;}
   #an-drawer .m-sub{
-    font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#3a4f68;
+    font-family:'JetBrains Mono',monospace;font-size:.68rem;color:#4a5a70;
     text-decoration:none;letter-spacing:2px;text-transform:uppercase;
-    transition:color .2s;padding:.45rem 0;width:200px;text-align:center;
+    transition:color .2s;padding:.85rem 2rem .85rem 2.5rem;
+    display:block;border-bottom:1px solid rgba(58,127,212,.05);
   }
+  #an-drawer .m-sub:last-child{border-bottom:none;}
   #an-drawer .m-sub:hover{color:#8898b0;}
-  #an-drawer .m-div{width:120px;height:1px;background:rgba(240,120,48,.1);margin:.5rem 0;}
+
+  #an-drawer .m-div{height:1px;background:rgba(240,120,48,.06);}
   #an-drawer .m-agent{
-    color:#f07830!important;border:1px solid rgba(240,120,48,.28);
-    padding:.65rem 2rem;border-radius:2px;
-    display:inline-flex;align-items:center;gap:.5rem;margin:.3rem 0;
-  }
-  #an-drawer .m-agent::before{
-    content:'';width:5px;height:5px;border-radius:50%;background:#f07830;
-    animation:an-blink 1.5s step-end infinite;
+    color:#f07830!important;
   }
   #an-drawer .m-cta{
-    color:#080c14!important;background:#f07830;
-    padding:.85rem 2.5rem;border-radius:2px;font-size:.8rem;margin-top:.5rem;
+    font-family:'JetBrains Mono',monospace;font-size:.78rem;letter-spacing:3px;
+    text-transform:uppercase;color:#080c14!important;background:#f07830;
+    padding:1.1rem 2rem;display:block;text-decoration:none;
+    text-align:center;margin:1.5rem 2rem;border-radius:2px;
   }
 
   /* Custom cursor */
@@ -263,47 +290,105 @@ function buildDesktop(page, ul) {
 }
 
 function buildMobile(page, drawer) {
-  const flat = [
-    {href:'/',                        label:'Inicio',            cls:'m-item'},
-    'div',
-    {href:'/educa.html',              label:'Educa',             cls:'m-item', pg:'educa'},
-    {href:'/educa/ninos.html',        label:'Niños 6–12',        cls:'m-sub'},
-    {href:'/educa/adolescentes.html', label:'Adolescentes',      cls:'m-sub'},
-    {href:'/educa/padres.html',       label:'Familias',          cls:'m-sub'},
-    {href:'/educa/profesores.html',   label:'Docentes',          cls:'m-sub'},
-    'div',
-    {href:'/herramientas',            label:'Herramientas',      cls:'m-item', pg:'herramientas'},
-    {href:'/agente-seguridad.html',   label:'Agente IA',         cls:'m-sub m-agent'},
-    {href:'/quiz.html',               label:'Quiz Semanal',      cls:'m-sub'},
-    {href:'/checklist.html',          label:'Checklist',         cls:'m-sub'},
-    {href:'/analizador-phishing.html',label:'Analizador',        cls:'m-sub'},
-    {href:'/botiquin.html',           label:'Botiquín SOS',      cls:'m-sub', red:true},
-    {href:'/derechos.html',           label:'Derechos Digitales',cls:'m-sub', purple:true},
-    {href:'/violencia-digital.html',  label:'Violencia Digital', cls:'m-sub', purple:true},
-    'div',
-    {href:'/noticias',                label:'Inteligencia',      cls:'m-item', pg:'noticias'},
-    {href:'/talleres.html',           label:'Talleres',          cls:'m-item', pg:'talleres'},
-    'div',
-    {href:'/contactos.html',          label:'Contacto',          cls:'m-cta'},
+
+  const GROUPS = [
+    {
+      label: 'Educa',
+      href:  '/educa.html',
+      pg:    'educa',
+      subs: [
+        {href:'/educa/ninos.html',        label:'Niños 6–12'},
+        {href:'/educa/adolescentes.html', label:'Adolescentes'},
+        {href:'/educa/padres.html',       label:'Familias'},
+        {href:'/educa/profesores.html',   label:'Docentes'},
+        {href:'/educa/newsletter.html',   label:'Newsletter'},
+      ]
+    },
+    {
+      label: 'Herramientas',
+      href:  '/herramientas',
+      pg:    'herramientas',
+      subs: [
+        {href:'/agente-seguridad.html',    label:'Agente IA',          agent:true},
+        {href:'/quiz.html',                label:'Quiz Semanal'},
+        {href:'/checklist.html',           label:'Checklist'},
+        {href:'/analizador-phishing.html', label:'Analizador Phishing'},
+        {href:'/caps.html',                label:'CAPS · Contraseñas'},
+        {href:'/botiquin.html',            label:'Botiquín SOS',       red:true},
+        {href:'/derechos.html',            label:'Derechos Digitales', purple:true},
+        {href:'/violencia-digital.html',   label:'Violencia Digital',  purple:true},
+      ]
+    },
   ];
 
-  flat.forEach(item => {
-    if (item === 'div') {
-      const d = document.createElement('div');
-      d.className = 'm-div';
-      drawer.appendChild(d);
-    } else {
+  const DIRECT = [
+    {href:'/noticias',     label:'Inteligencia', pg:'noticias'},
+    {href:'/talleres.html',label:'Talleres',     pg:'talleres'},
+  ];
+
+  // Inicio
+  const inicio = document.createElement('a');
+  inicio.href = '/'; inicio.textContent = 'Inicio'; inicio.className = 'm-item';
+  inicio.addEventListener('click', closeMenu);
+  drawer.appendChild(inicio);
+
+  // Grupos acordeón
+  GROUPS.forEach(function(group) {
+    const wrap = document.createElement('div');
+    wrap.className = 'm-group';
+
+    const btn = document.createElement('button');
+    btn.className = 'm-group-btn' + (page === group.pg ? ' open' : '');
+    btn.innerHTML = group.label + '<span class="m-chevron">▾</span>';
+
+    const subs = document.createElement('div');
+    subs.className = 'm-subs' + (page === group.pg ? ' open' : '');
+
+    group.subs.forEach(function(sub) {
       const a = document.createElement('a');
-      a.href = item.href;
-      a.textContent = item.label;
-      a.className = item.cls;
-      if (item.pg && page === item.pg) a.classList.add('an-m-active');
-      if (item.purple) a.style.color = '#9b6dff';
-      if (item.red) a.style.color = '#ef4444';
+      a.href = sub.href;
+      a.textContent = sub.label;
+      a.className = 'm-sub' + (sub.agent ? ' m-agent' : '');
+      if (sub.purple) a.style.color = '#9b6dff';
+      if (sub.red)    a.style.color = '#ef4444';
       a.addEventListener('click', closeMenu);
-      drawer.appendChild(a);
-    }
+      subs.appendChild(a);
+    });
+
+    btn.addEventListener('click', function() {
+      const isOpen = btn.classList.contains('open');
+      // Cerrar todos los grupos
+      drawer.querySelectorAll('.m-group-btn').forEach(function(b) { b.classList.remove('open'); });
+      drawer.querySelectorAll('.m-subs').forEach(function(s) { s.classList.remove('open'); });
+      if (!isOpen) {
+        btn.classList.add('open');
+        subs.classList.add('open');
+      }
+    });
+
+    wrap.appendChild(btn);
+    wrap.appendChild(subs);
+    drawer.appendChild(wrap);
   });
+
+  // Links directos
+  DIRECT.forEach(function(item) {
+    const a = document.createElement('a');
+    a.href = item.href;
+    a.textContent = item.label;
+    a.className = 'm-item';
+    if (page === item.pg) a.classList.add('an-m-active');
+    a.addEventListener('click', closeMenu);
+    drawer.appendChild(a);
+  });
+
+  // CTA Contacto
+  const cta = document.createElement('a');
+  cta.href = '/contactos.html';
+  cta.textContent = 'Contacto';
+  cta.className = 'm-cta';
+  cta.addEventListener('click', closeMenu);
+  drawer.appendChild(cta);
 }
 
 function init(){
