@@ -619,26 +619,56 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
       </div>
     </div>
   </div>
-<!-- TICKER -->
-<!-- TICKER -->
+<!-- TICKER DINÁMICO -->
 <div class="ticker">
-  <div class="ticker-t">
+  <div class="ticker-t" id="ticker-inner">
     <span class="ta">●</span><span>MATERIALES GRATUITOS PARA DOCENTES</span>
-    <span class="ta">///</span><span>JUEGOS PARA NIÑOS 6–12 AÑOS</span>
-    <span class="ta">///</span><span>QUIZ PARA ADOLESCENTES</span>
+    <span class="ta">///</span><span>QUIZ SEMANAL · NUEVO CADA LUNES</span>
     <span class="ta">///</span><span>ANALIZADOR DE PHISHING CON IA</span>
+    <span class="ta">///</span><span>AGENTE IA 24/7 · SIN REGISTRO</span>
+    <span class="ta">///</span><span>TALLERES EN COLEGIOS · GRATIS</span>
     <span class="ta">///</span><span>CHECKLIST FAMILIAR DE SEGURIDAD</span>
-    <span class="ta">///</span><span>AGENTE IA PARA DOCENTES Y FAMILIAS</span>
-    <span class="ta">///</span><span>TALLERES PRESENCIALES EN COLEGIOS</span>
-    <span class="ta">///</span><span>NEWSLETTER MENSUAL GRATUITO</span>
     <span class="ta">●</span><span>MATERIALES GRATUITOS PARA DOCENTES</span>
-    <span class="ta">///</span><span>JUEGOS PARA NIÑOS 6–12 AÑOS</span>
-    <span class="ta">///</span><span>QUIZ PARA ADOLESCENTES</span>
+    <span class="ta">///</span><span>QUIZ SEMANAL · NUEVO CADA LUNES</span>
     <span class="ta">///</span><span>ANALIZADOR DE PHISHING CON IA</span>
+    <span class="ta">///</span><span>AGENTE IA 24/7 · SIN REGISTRO</span>
+    <span class="ta">///</span><span>TALLERES EN COLEGIOS · GRATIS</span>
     <span class="ta">///</span><span>CHECKLIST FAMILIAR DE SEGURIDAD</span>
-    <span class="ta">///</span><span>AGENTE IA PARA DOCENTES Y FAMILIAS</span>
-    <span class="ta">///</span><span>TALLERES PRESENCIALES EN COLEGIOS</span>
-    <span class="ta">///</span><span>NEWSLETTER MENSUAL GRATUITO</span>
+  </div>
+</div>
+
+<!-- AMENAZA SEMANAL DINÁMICA -->
+<div id="amenaza-wrap" style="display:none;position:relative;z-index:10;
+  background:rgba(13,20,34,.95);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div style="display:flex;align-items:center;justify-content:space-between;
+    padding:11px 32px;border-bottom:1px solid var(--border);background:rgba(8,12,20,.5);">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;
+      color:var(--ink3);display:flex;align-items:center;gap:10px;">
+      <div style="width:7px;height:7px;border-radius:50%;background:#ef4444;animation:blink 1.5s infinite;"></div>
+      AMENAZA DE LA SEMANA · CHILE
+    </div>
+    <div id="amenaza-fecha" style="font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--ink3);letter-spacing:2px;"></div>
+  </div>
+  <div style="max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;align-items:center;">
+    <div style="padding:24px 32px;border-right:1px solid var(--border);">
+      <div id="amenaza-nivel" style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
+        color:#ef4444;padding:4px 10px;border-radius:3px;display:inline-block;
+        background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);margin-bottom:10px;">● ALTO</div>
+      <div id="amenaza-titulo" style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);line-height:1.2;margin-bottom:6px;"></div>
+      <div id="amenaza-afecta" style="font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--ink3);letter-spacing:2px;"></div>
+    </div>
+    <div style="padding:24px 32px;">
+      <div id="amenaza-desc" style="font-size:.88rem;line-height:1.7;color:var(--ink2);margin-bottom:12px;"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <div id="amenaza-fuente" style="font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--ink3);letter-spacing:1px;"></div>
+        <a id="amenaza-link" href="#" target="_blank" rel="noopener"
+          style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+          color:var(--accent);text-decoration:none;text-transform:uppercase;transition:letter-spacing .2s;"
+          onmouseover="this.style.letterSpacing='3px'" onmouseout="this.style.letterSpacing='2px'">
+          Ver fuente →
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -659,7 +689,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
     </div>
     <div class="stats-g">
       <div class="sb">
-        <div class="sb-n" data-target="68" data-suffix="%">78%</div>
+        <div class="sb-n" data-target="78" data-suffix="%">78%</div>
         <div class="sb-l">Colegios sin programa de educación digital</div>
         <div class="sb-s">MINEDUC 2025</div>
       </div>
@@ -669,7 +699,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
         <div class="sb-s">PDI CIBERCRIMEN</div>
       </div>
       <div class="sb">
-        <div class="sb-n" data-special="true">37 Mill </div>
+        <div class="sb-n" data-special="true">37 Mill</div>
         <div class="sb-l">Intentos de phishing bloqueados en Chile en 2025</div>
         <div class="sb-s">KASPERSKY 2025</div>
       </div>
@@ -677,7 +707,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
   </div>
 </div>
 
-<!-- VIOLENCIA DIGITAL — entrada prominente -->
+<!-- VIOLENCIA DIGITAL — única aparición, ancho completo -->
 <div class="page">
 <div class="sw">
   <a href="/violencia-digital.html" class="vd-banner">
@@ -685,16 +715,17 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
     <div class="vd-left">
       <div class="vd-tag">
         <div class="vd-dot"></div>
-        INFORMACIÓN Y AYUDA · CHILE
+        SI TE PASÓ ALGO · INFORMACIÓN Y AYUDA · CHILE
       </div>
-      <div class="vd-title">Si te pasó algo,<br><em>no estás sola.</em></div>
-      <div class="vd-desc">Sextorsión, difusión de imágenes, acoso digital y control en el pololeo. Qué dice la ley, qué hacer primero y dónde pedir ayuda ahora mismo.</div>
+      <div class="vd-title">No estás<br><em>sola.</em></div>
+      <div class="vd-desc">Sextorsión, difusión de imágenes, acoso digital y control en el pololeo. Qué dice la ley chilena, qué hacer primero y dónde pedir ayuda ahora mismo.</div>
       <div class="vd-pills">
         <span class="vd-pill">Sexting no consentido</span>
         <span class="vd-pill">Sextorsión</span>
         <span class="vd-pill">Deepfakes</span>
         <span class="vd-pill">Control digital</span>
         <span class="vd-pill">Ciberacoso</span>
+        <span class="vd-pill">StopNCII</span>
       </div>
     </div>
     <div class="vd-right">
@@ -714,76 +745,196 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
 </div>
 </div>
 
+<!-- BOTIQUÍN SOS -->
+<div class="page">
+<div class="sw">
+  <div class="sl">// Algo pasó · Actúa ahora</div>
+  <h2 class="st">Botiquín<br><em>SOS.</em></h2>
+  <p class="si" style="margin-bottom:24px;">Elige tu situación. Te guiamos paso a paso en lo que tienes que hacer ahora mismo.</p>
+  <div style="background:var(--bg2);border:1px solid rgba(239,68,68,.2);border-radius:4px;overflow:hidden;">
+    <div style="padding:13px 20px;background:rgba(239,68,68,.05);border-bottom:1px solid rgba(239,68,68,.1);
+      display:flex;align-items:center;justify-content:space-between;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
+        color:#ef4444;text-transform:uppercase;display:flex;align-items:center;gap:8px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:#ef4444;animation:blink 1.2s infinite;"></div>
+        AYUDA INMEDIATA
+      </div>
+      <a href="/botiquin.html" style="font-family:'JetBrains Mono',monospace;font-size:.58rem;
+        letter-spacing:2px;color:#ef4444;text-decoration:none;text-transform:uppercase;">
+        Ver todos los casos →
+      </a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(239,68,68,.08);">
+      <a href="/botiquin.html" style="background:var(--bg2);padding:20px 18px;text-decoration:none;
+        display:flex;flex-direction:column;gap:8px;transition:background .2s;"
+        onmouseover="this.style.background='rgba(239,68,68,.04)'" onmouseout="this.style.background='var(--bg2)'">
+        <div style="font-size:1.4rem;">🚨</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ink);line-height:1.2;">Me están amenazando con fotos</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;color:#ef4444;letter-spacing:1px;">Sextorsión → qué hacer ya</div>
+      </a>
+      <a href="/botiquin.html" style="background:var(--bg2);padding:20px 18px;text-decoration:none;
+        display:flex;flex-direction:column;gap:8px;transition:background .2s;"
+        onmouseover="this.style.background='rgba(239,68,68,.04)'" onmouseout="this.style.background='var(--bg2)'">
+        <div style="font-size:1.4rem;">👶</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ink);line-height:1.2;">Algo le pasó a mi hijo/a</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;color:#ef4444;letter-spacing:1px;">Grooming → pasos urgentes</div>
+      </a>
+      <a href="/botiquin.html" style="background:var(--bg2);padding:20px 18px;text-decoration:none;
+        display:flex;flex-direction:column;gap:8px;transition:background .2s;"
+        onmouseover="this.style.background='rgba(239,68,68,.04)'" onmouseout="this.style.background='var(--bg2)'">
+        <div style="font-size:1.4rem;">🎣</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ink);line-height:1.2;">Recibí algo sospechoso</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;color:#ef4444;letter-spacing:1px;">Phishing → analizar ahora</div>
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+
 <!-- PERFILES -->
 <div class="page">
 <div class="sw" id="perfiles">
   <div class="sl">// ¿Para quién es?</div>
   <h2 class="st">Elige tu <em>camino.</em></h2>
-  <p class="si">El mismo tema se enseña distinto a un niño de 8 años y a un docente que tiene clase mañana. Aegis8 tiene contenido específico para cada perfil.</p>
+  <p class="si">Cada perfil tiene contenido específico — el mismo tema se enseña diferente a un niño de 8 años que a un docente con clase mañana.</p>
   <div class="pg">
     <a href="/educa/ninos.html" class="pc pcn">
       <div class="pc-bgn">01</div>
-      <div class="pc-top"><div class="pc-ico pc-ico-n"><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><circle cx="12" cy="8" r="4" stroke="#3a7fd4" stroke-width="1.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#3a7fd4" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="pc-tag">01 · Niños</div><div class="pc-name">Niños</div></div></div>
-      <div class="pc-desc">Juegos interactivos y actividades para aprender qué es seguro compartir, cómo reconocer a un extraño online y qué hacer cuando algo no se siente bien.</div>
-      <div class="pc-pills"><span class="pp">6–12 años</span><span class="pp">juegos</span><span class="pp">actividades</span></div>
-      <div class="pc-cta"><span class="pc-cta-t">ENTRAR</span><div class="pc-arr">→</div></div>
+      <div class="pc-top"><div class="pc-ico pc-ico-n"><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><circle cx="12" cy="8" r="4" stroke="#3a7fd4" stroke-width="1.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#3a7fd4" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="pc-tag">01 · Niños · 6–12 años</div><div class="pc-name">Niños</div></div></div>
+      <div class="pc-desc">Aprende a protegerte con juegos. Internet tiene cosas buenas y también cosas que hay que conocer — sin miedo, con información real para tu edad.</div>
+      <div class="pc-pills"><span class="pp">juegos interactivos</span><span class="pp">decisiones reales</span><span class="pp">CiberBot IA</span></div>
+      <div class="pc-cta"><span class="pc-cta-t">JUGAR Y APRENDER</span><div class="pc-arr">→</div></div>
     </a>
     <a href="/educa/adolescentes.html" class="pc pca">
       <div class="pc-bgn">02</div>
-      <div class="pc-top"><div class="pc-ico pc-ico-a"><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><rect x="3" y="4" width="18" height="13" rx="2" stroke="#9b6dff" stroke-width="1.5"/><path d="M7 17l-2 3M17 17l2 3M8 20h8" stroke="#9b6dff" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="pc-tag">02 · Adolescentes</div><div class="pc-name">Adolescentes</div></div></div>
-      <div class="pc-desc">Quiz con puntaje real, privacidad en redes, grooming, phishing y reputación digital. Sin condescendencia — con respeto y sin bajarles el perfil.</div>
-      <div class="pc-pills"><span class="pp">13–17 años</span><span class="pp">quiz</span><span class="pp">redes sociales</span></div>
-      <div class="pc-cta"><span class="pc-cta-t">ENTRAR</span><div class="pc-arr">→</div></div>
+      <div class="pc-top"><div class="pc-ico pc-ico-a"><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><rect x="3" y="4" width="18" height="13" rx="2" stroke="#9b6dff" stroke-width="1.5"/><path d="M7 17l-2 3M17 17l2 3M8 20h8" stroke="#9b6dff" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="pc-tag">02 · Adolescentes · 13–17 años</div><div class="pc-name">Adolescentes</div></div></div>
+      <div class="pc-desc">Tu privacidad, tus datos, tus derechos. Sin sermones — con información que te sirve ahora. Compartir fotos de alguien sin permiso es delito en Chile.</div>
+      <div class="pc-pills"><span class="pp">quiz con score</span><span class="pp">redes sociales</span><span class="pp">tus derechos</span></div>
+      <div class="pc-cta"><span class="pc-cta-t">VER LO QUE ME IMPORTA</span><div class="pc-arr">→</div></div>
     </a>
     <a href="/educa/padres.html" class="pc pcp">
       <div class="pc-bgn">03</div>
       <div class="pc-top"><div class="pc-ico pc-ico-p"><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><circle cx="8" cy="8" r="3" stroke="#2ecc80" stroke-width="1.5"/><circle cx="16" cy="8" r="3" stroke="#2ecc80" stroke-width="1.5"/><circle cx="12" cy="16" r="2.5" stroke="#2ecc80" stroke-width="1.5"/><path d="M3 20c0-3 2-5 5-5M16 15c3 0 5 2 5 5" stroke="#2ecc80" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><div class="pc-tag">03 · Familias</div><div class="pc-name">Familias</div></div></div>
-      <div class="pc-desc">Guías prácticas, conversaciones reales para tener con tus hijos y un agente IA para cuando algo pasa y no sabes qué hacer.</div>
-      <div class="pc-pills"><span class="pp">guías</span><span class="pp">PDF descargable</span><span class="pp">agente IA</span></div>
-      <div class="pc-cta"><span class="pc-cta-t">ENTRAR</span><div class="pc-arr">→</div></div>
+      <div class="pc-desc">Las conversaciones que hay que tener con tus hijos e hijas. Cuándo, cómo y qué decirles según la edad — y qué hacer si algo ya pasó.</div>
+      <div class="pc-pills"><span class="pp">guías por edad</span><span class="pp">señales de alerta</span><span class="pp">agente IA</span></div>
+      <div class="pc-cta"><span class="pc-cta-t">CÓMO HABLAR CON MIS HIJOS/AS</span><div class="pc-arr">→</div></div>
     </a>
     <a href="/educa/profesores.html" class="pc pcd">
       <div class="pc-bgn">04</div>
       <div class="pc-top"><div class="pc-ico pc-ico-d"><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><rect x="4" y="3" width="11" height="14" rx="1" stroke="#f07830" stroke-width="1.5"/><path d="M8 7h7M8 10h5M8 13h3" stroke="#f07830" stroke-width="1.5" stroke-linecap="round"/><path d="M18 10l2 2-2 2" stroke="#f07830" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="pc-tag">04 · Docentes</div><div class="pc-name">Docentes</div></div></div>
-      <div class="pc-desc">6 planes de clase listos para usar mañana, generador de actividades con IA y agente docente para situaciones difíciles. Sin necesitar ser experto.</div>
-      <div class="pc-pills"><span class="pp">6 planes de clase</span><span class="pp">generador IA</span><span class="pp">1°básico–4°medio</span></div>
-      <div class="pc-cta"><span class="pc-cta-t">ENTRAR</span><div class="pc-arr">→</div></div>
+      <div class="pc-desc">Tienes clase mañana. Todo listo para hablar de esto hoy sin ser experto/a — 6 planes de clase, protocolo de emergencia y agente IA docente.</div>
+      <div class="pc-pills"><span class="pp">6 planes de clase</span><span class="pp">protocolo urgencias</span><span class="pp">agente docente</span></div>
+      <div class="pc-cta"><span class="pc-cta-t">TENGO CLASE MAÑANA</span><div class="pc-arr">→</div></div>
     </a>
   </div>
 </div>
 </div>
 
-<!-- CTA FINAL -->
+<!-- MISIÓN + DERECHO + QUIZ — retorno semanal -->
 <div class="page">
 <div class="sw">
-  <div class="cta3-grid">
+  <div class="sl">// Esta semana en Aegis8</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--border);">
 
-    <a href="/educa/newsletter.html" class="cta3-card"
-      onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background='var(--bg2)'">
+    <!-- Quiz widget -->
+    <div id="quiz-widget" style="background:var(--bg2);padding:24px 20px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;
+        color:var(--blue);text-transform:uppercase;margin-bottom:10px;">● Quiz semanal</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink);
+        margin-bottom:8px;line-height:1.2;">¿Qué tan bien te defiendes esta semana?</div>
+      <a href="/quiz.html" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+        color:var(--blue);text-decoration:none;text-transform:uppercase;">Hacer el quiz →</a>
+    </div>
+
+    <!-- Misión semanal -->
+    <div style="background:var(--bg2);padding:24px 20px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;
+        color:var(--gold);text-transform:uppercase;margin-bottom:10px;">✦ Misión de la semana</div>
+      <div id="mision-titulo" style="font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);
+        line-height:1.3;margin-bottom:8px;">Revisa los permisos de apps en el teléfono de tus hijos/as</div>
+      <div id="mision-meta" style="font-family:'JetBrains Mono',monospace;font-size:.54rem;
+        color:var(--ink3);letter-spacing:1px;margin-bottom:10px;">Familias · 5 min</div>
+      <a id="mision-link" href="/checklist.html" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;
+        letter-spacing:2px;color:var(--gold);text-decoration:none;text-transform:uppercase;">Completar →</a>
+    </div>
+
+    <!-- Derecho de la semana -->
+    <div style="background:var(--bg2);padding:24px 20px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;
+        color:#9b6dff;text-transform:uppercase;margin-bottom:10px;">⚖️ Derecho de la semana</div>
+      <div id="dr-widget-titulo" style="font-size:.9rem;color:var(--ink);line-height:1.5;
+        margin-bottom:8px;">Tu pareja no puede acceder a tu teléfono sin permiso — aunque vivan juntos.</div>
+      <div id="dr-widget-ley" style="font-family:'JetBrains Mono',monospace;font-size:.54rem;
+        color:var(--ink3);letter-spacing:1px;margin-bottom:10px;">Ley 21.459 · Art. 7 · Chile</div>
+      <a href="/derechos.html" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;
+        letter-spacing:2px;color:#9b6dff;text-decoration:none;text-transform:uppercase;">Ver mis derechos →</a>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- NOTICIAS DINÁMICAS -->
+<div class="page">
+<div class="sw" id="noticias-section" style="display:none;">
+  <div class="sl">// Radar Aegis8 · Lo que está pasando ahora</div>
+  <h2 class="st">Amenazas activas<br><em>en Chile.</em></h2>
+  <p class="si">Alertas reales, legislación y casos relevantes de ciberseguridad. Actualizado cada semana.</p>
+  <div id="noticias-lista" style="display:flex;flex-direction:column;gap:1px;background:var(--border);"></div>
+  <div style="margin-top:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <div id="noticias-updated" style="font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--ink3);letter-spacing:1px;"></div>
+    <a href="https://csirt.gob.cl" target="_blank" rel="noopener"
+      style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+      color:var(--accent);text-decoration:none;text-transform:uppercase;transition:letter-spacing .2s;"
+      onmouseover="this.style.letterSpacing='3px'" onmouseout="this.style.letterSpacing='2px'">
+      Ver alertas CSIRT Chile →
+    </a>
+  </div>
+</div>
+</div>
+
+<!-- CTA FINAL — herramientas de retorno -->
+<div class="page">
+<div class="sw">
+  <div class="sl">// Herramientas · Todas gratis</div>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--border);">
+
+    <a href="/quiz.html" class="cta3-card"
+      onmouseover="this.style.background='rgba(58,127,212,.05)'" onmouseout="this.style.background='var(--bg2)'">
       <div class="cta3-bar" style="background:var(--blue);"></div>
-      <div class="cta3-tag" style="color:var(--blue);">Para docentes</div>
-      <div class="cta3-title">La amenaza<br><em style="color:var(--blue);">del mes.</em></div>
-      <div class="cta3-desc">Newsletter mensual con la amenaza más relevante para tus alumnos y una actividad lista para usar esa semana.</div>
-      <div class="cta3-cta" style="color:var(--blue);">Suscribirse gratis →</div>
+      <div class="cta3-tag" style="color:var(--blue);">Quiz semanal · Nuevo cada lunes</div>
+      <div class="cta3-title">¿Qué tan bien<br><em style="color:var(--blue);">te defiendes?</em></div>
+      <div class="cta3-desc">5 preguntas sobre la amenaza de esta semana. Score persistente. Vuelve cada lunes a mejorar.</div>
+      <div class="cta3-cta" style="color:var(--blue);">Hacer el quiz →</div>
     </a>
-    <a href="/violencia-digital.html" class="cta3-card"
-      onmouseover="this.style.background='rgba(155,109,255,.06)'" onmouseout="this.style.background='var(--bg2)'">
+
+    <a href="/checklist.html" class="cta3-card"
+      onmouseover="this.style.background='rgba(46,204,128,.04)'" onmouseout="this.style.background='var(--bg2)'">
+      <div class="cta3-bar" style="background:var(--green);"></div>
+      <div class="cta3-tag" style="color:var(--green);">30 acciones · Progreso guardado</div>
+      <div class="cta3-title">¿Tu familia está<br><em style="color:var(--green);">protegida?</em></div>
+      <div class="cta3-desc">Checklist interactivo con 30 acciones concretas. Sin registro. Tu progreso se guarda en tu dispositivo.</div>
+      <div class="cta3-cta" style="color:var(--green);">Ver checklist →</div>
+    </a>
+
+    <a href="/derechos.html" class="cta3-card"
+      onmouseover="this.style.background='rgba(155,109,255,.04)'" onmouseout="this.style.background='var(--bg2)'">
       <div class="cta3-bar" style="background:#9b6dff;"></div>
-      <div class="cta3-tag" style="color:#9b6dff;">Si ya te pasó · Información y ayuda</div>
-      <div class="cta3-title">No estás<br><em style="color:#9b6dff;">sola.</em></div>
-      <div class="cta3-desc">Sextorsión, difusión de imágenes, control digital y ciberacoso. Qué dice la ley y qué hacer ahora mismo en Chile.</div>
-      <div class="cta3-cta" style="color:#9b6dff;">Ver recursos → 1455 · 134</div>
+      <div class="cta3-tag" style="color:#9b6dff;">Actualización semanal · Chile</div>
+      <div class="cta3-title">Tus derechos<br><em style="color:#9b6dff;">digitales.</em></div>
+      <div class="cta3-desc">Las leyes que te protegen. Derecho de la semana, herramienta gratuita y cambios legales relevantes. Actualizado cada lunes.</div>
+      <div class="cta3-cta" style="color:#9b6dff;">Ver mis derechos →</div>
     </a>
-    <a href="/caps.html" class="cta3-card"
-      onmouseover="this.style.background='rgba(0,255,136,.04)'" onmouseout="this.style.background='var(--bg2)'"
-      style="position:relative;overflow:hidden;">
+
+    <a href="/herramientas.html" class="cta3-card"
+      onmouseover="this.style.background='rgba(240,120,48,.04)'" onmouseout="this.style.background='var(--bg2)'">
       <div class="cta3-bar" style="background:var(--accent);"></div>
-      <div style="position:absolute;top:16px;right:16px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--accent);background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.25);padding:3px 8px;border-radius:99px;">GRATIS</div>
-      <div class="cta3-tag" style="color:var(--accent);">Herramienta</div>
-      <div class="cta3-title">Crea una clave<br><em style="color:var(--accent);">con CAPS.</em></div>
-      <div class="cta3-desc">CAPS genera contraseñas seguras a partir de tres palabras tuyas: un personaje, una acción y una comida. Absurdas. Imposibles de adivinar.</div>
-      <div class="cta3-cta" style="color:var(--accent);">Probar ahora →</div>
+      <div class="cta3-tag" style="color:var(--accent);">8 herramientas · Todas gratis</div>
+      <div class="cta3-title">La caja de<br><em style="color:var(--accent);">herramientas.</em></div>
+      <div class="cta3-desc">Analizador de phishing, CAPS, quiz, checklist, botiquín SOS, agente IA, derechos digitales y violencia digital. Todo en un lugar.</div>
+      <div class="cta3-cta" style="color:var(--accent);">Ver todas →</div>
     </a>
+
   </div>
 </div>
 </div>
@@ -802,10 +953,10 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
   <a href="/" class="fl">AEGIS<span>8</span></a>
   <ul class="flinks">
     <li><a href="/educa.html">Educa</a></li>
-    <li><a href="/educa/profesores.html">Docentes</a></li>
-    <li><a href="/educa/padres.html">Familias</a></li>
+    <li><a href="/herramientas.html">Herramientas</a></li>
+    <li><a href="/derechos.html">Derechos</a></li>
+    <li><a href="/botiquin.html">Botiquín SOS</a></li>
     <li><a href="/propuesta.html">El Proyecto</a></li>
-    <li><a href="/guias.html">Guías técnicas</a></li>
     <li><a href="/contactos.html">Contacto</a></li>
   </ul>
   <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
@@ -817,10 +968,6 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
 <button class="stb" id="stb" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
-/* cursor handled by aegis-nav.js */
-
-/* nav handled by aegis-nav.js */
-
 /* SCROLL REVEAL */
 const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.sw').forEach(el=>ro.observe(el));
@@ -828,15 +975,123 @@ document.querySelectorAll('.sw').forEach(el=>ro.observe(el));
 /* COUNTERS */
 function animCount(el){
   if(el.dataset.special)return;
-  const tgt=parseInt(el.dataset.target);
-  const suf=el.dataset.suffix||'';
+  const tgt=parseInt(el.dataset.target);const suf=el.dataset.suffix||'';
   let cur=0;const step=tgt/(1800/16);
   const t=setInterval(()=>{cur=Math.min(cur+step,tgt);el.textContent=Math.floor(cur)+suf;if(cur>=tgt)clearInterval(t);},16);
 }
 const statsObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.querySelectorAll('[data-target]').forEach(animCount);statsObs.unobserve(x.target);}});},{threshold:.4});
 const ss=document.querySelector('.stats-s');if(ss)statsObs.observe(ss);
 
+/* SERVICE WORKER */
+if('serviceWorker'in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{});});}
+
+/* CONTENIDO DINÁMICO */
+(async function(){
+  async function fetchData(){
+    try{const r=await fetch('https://aegis8-agent.christianmora705.workers.dev/news',{headers:{'Cache-Control':'max-age=1800'}});if(r.ok)return await r.json();}catch(e){}
+    try{const r=await fetch('/amenaza.json');if(r.ok)return await r.json();}catch(e){}
+    return null;
+  }
+  function cc(c){return{red:'red',accent:'accent',blue:'blue',green:'green',gold:'gold',purple:'purple'}[c]||'accent';}
+
+  const data=await fetchData();
+  if(!data)return;
+
+  /* Ticker */
+  if(data.ticker&&data.ticker.length){
+    const el=document.getElementById('ticker-inner');
+    if(el){
+      const items=[...data.ticker,...data.ticker];
+      el.innerHTML=items.map((t,i)=>`<span class="ta">${i%data.ticker.length===0?'●':'///'}</span><span>${t}</span>`).join('');
+      el.style.animationDuration=Math.max(20,data.ticker.length*3.5)+'s';
+    }
+  }
+
+  /* Amenaza semanal */
+  if(data.amenaza_semana){
+    const a=data.amenaza_semana,w=document.getElementById('amenaza-wrap');
+    if(w){
+      document.getElementById('amenaza-titulo').textContent=a.titulo||'';
+      document.getElementById('amenaza-desc').textContent=a.descripcion||'';
+      document.getElementById('amenaza-afecta').textContent='Afecta: '+(a.afecta||'—');
+      document.getElementById('amenaza-fuente').textContent='Fuente: '+(a.fuente||'—');
+      const nv=document.getElementById('amenaza-nivel');
+      nv.textContent='● '+(a.nivel||'MEDIO');
+      const cm={red:'rgba(239,68,68,.1)',accent:'rgba(240,120,48,.1)',gold:'rgba(245,168,35,.1)',green:'rgba(46,204,128,.1)',blue:'rgba(58,127,212,.1)',purple:'rgba(155,109,255,.1)'};
+      const bc={red:'rgba(239,68,68,.2)',accent:'rgba(240,120,48,.2)',gold:'rgba(245,168,35,.2)',green:'rgba(46,204,128,.2)',blue:'rgba(58,127,212,.2)',purple:'rgba(155,109,255,.2)'};
+      const cl={red:'#ef4444',accent:'var(--accent)',gold:'var(--gold)',green:'var(--green)',blue:'var(--blue)',purple:'#9b6dff'};
+      const c=cc(a.color||'red');
+      nv.style.background=cm[c]||cm.red;nv.style.borderColor=bc[c]||bc.red;nv.style.color=cl[c]||cl.red;
+      if(data.updated)document.getElementById('amenaza-fecha').textContent='Actualizado: '+new Date(data.updated).toLocaleDateString('es-CL',{day:'numeric',month:'long',year:'numeric'});
+      if(a.url)document.getElementById('amenaza-link').href=a.url;
+      w.style.display='block';
+    }
+  }
+
+  /* Noticias */
+  if(data.noticias&&data.noticias.length){
+    const lista=document.getElementById('noticias-lista'),sec=document.getElementById('noticias-section');
+    if(lista&&sec){
+      const colorMap={accent:'var(--accent)',red:'#ef4444',blue:'var(--blue)',green:'var(--green)',gold:'var(--gold)',purple:'#9b6dff'};
+      lista.innerHTML=data.noticias.map(n=>`
+        <a href="${n.url||'#'}" target="_blank" rel="noopener"
+          style="background:var(--bg2);padding:18px 24px;display:flex;align-items:flex-start;gap:16px;
+          text-decoration:none;transition:background .2s;border-left:3px solid transparent;position:relative;"
+          onmouseover="this.style.background='rgba(255,255,255,.02)';this.style.borderLeftColor='${colorMap[cc(n.color)]||colorMap.accent}'"
+          onmouseout="this.style.background='var(--bg2)';this.style.borderLeftColor='transparent'">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ink3);
+            letter-spacing:1px;white-space:nowrap;margin-top:3px;min-width:68px;">${n.fecha||''}</div>
+          <div style="flex:1;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:2px;
+              text-transform:uppercase;margin-bottom:5px;color:${colorMap[cc(n.color)]||colorMap.accent};">${n.tag||''}</div>
+            <div style="font-size:.9rem;color:var(--ink);line-height:1.45;margin-bottom:4px;font-weight:400;">${n.titulo||''}</div>
+            <div style="font-size:.8rem;color:var(--ink3);line-height:1.5;">${n.desc||''}</div>
+          </div>
+          <div style="font-size:.8rem;color:var(--ink3);margin-top:3px;">→</div>
+        </a>`).join('');
+      if(data.updated){const u=document.getElementById('noticias-updated');if(u)u.textContent='// Última actualización: '+new Date(data.updated).toLocaleDateString('es-CL',{day:'numeric',month:'long',year:'numeric'});}
+      sec.style.display='block';ro.observe(sec);
+    }
+  }
+
+  /* Misión */
+  if(data.mision_semana){
+    const m=data.mision_semana;
+    const t=document.getElementById('mision-titulo'),mt=document.getElementById('mision-meta'),ml=document.getElementById('mision-link');
+    if(t&&m.titulo)t.textContent=m.titulo;
+    if(mt)mt.textContent=(m.perfil||'Familias')+' · '+(m.duracion||'5 min');
+    if(ml&&m.url)ml.href=m.url;
+  }
+
+  /* Derecho */
+  if(data.derecho_semana){
+    const d=data.derecho_semana;
+    const t=document.getElementById('dr-widget-titulo'),l=document.getElementById('dr-widget-ley');
+    if(t&&d.titulo)t.textContent=d.titulo;
+    if(l&&d.ley)l.textContent=d.ley;
+  }
+
+  /* Quiz widget */
+  const QW=document.getElementById('quiz-widget');
+  if(QW){
+    const KEY_DONE='aegis8_quiz_done',KEY_BEST='aegis8_quiz_best';
+    function getSemana(){const d=new Date(),ini=new Date(d.getFullYear(),0,1);return`${d.getFullYear()}-W${Math.ceil(((d-ini)/86400000+ini.getDay()+1)/7)}`;}
+    const done=localStorage.getItem(KEY_DONE)===getSemana(),best=localStorage.getItem(KEY_BEST)||'0';
+    QW.innerHTML=`
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;
+        color:${done?'var(--green)':'var(--blue)'};text-transform:uppercase;margin-bottom:10px;">
+        ${done?'✓ Completado esta semana':'● Quiz semanal'}</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink);margin-bottom:8px;line-height:1.2;">
+        ${done?`Tu mejor resultado: <strong style="color:var(--accent)">${best}%</strong><br><span style="font-family:'Lato';font-size:.8rem;color:var(--ink3);font-weight:300;">Vuelve el próximo lunes</span>`
+               :'¿Qué tan bien te defiendes esta semana?'}</div>
+      <a href="/quiz.html" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+        color:${done?'var(--green)':'var(--blue)'};text-decoration:none;text-transform:uppercase;">
+        ${done?'Ver resultado →':'Hacer el quiz →'}</a>`;
+  }
+
+})();
 </script>
 
 </body>
 </html>
+

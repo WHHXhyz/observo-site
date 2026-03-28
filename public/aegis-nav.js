@@ -216,12 +216,18 @@ const NAV = [
   },
   {
     label: 'Herramientas',
-    href: '/agente-seguridad.html',
-    page: 'agente',
+    href: '/herramientas',
+    page: 'herramientas',
     drop: [
       {href:'/agente-seguridad.html', label:'Agente de Seguridad', agent:true},
       {href:'/analizador-phishing.html', label:'Analizador de Phishing'},
+      'div',
+      {href:'/quiz.html', label:'Quiz Semanal'},
       {href:'/checklist.html', label:'Checklist Familiar'},
+      {href:'/caps.html', label:'CAPS · Generador de Claves'},
+      'div',
+      {href:'/botiquin.html', label:'Botiquín SOS', red:true},
+      {href:'/derechos.html', label:'Derechos Digitales', purple:true},
     ]
   },
   {href:'/talleres.html', label:'Talleres', page:'talleres'},
@@ -260,7 +266,8 @@ function buildDesktop(page, ul) {
           da.href = d.href;
           da.textContent = d.label;
           if (d.agent) da.style.color = '#f07830';
-        if (d.purple) da.style.color = '#9b6dff';
+          if (d.purple) da.style.color = '#9b6dff';
+          if (d.red) da.style.color = '#ef4444';
           drop.appendChild(da);
         }
       });
@@ -277,7 +284,17 @@ function buildMobile(page, drawer) {
     {href:'/', label:'Inicio', cls:'m-item'},
     {href:'/propuesta.html', label:'El Proyecto', cls:'m-item', pg:'propuesta'},
     {href:'/educa.html', label:'Educa', cls:'m-item', pg:'educa'},
-    {href:'/agente-seguridad.html', label:'Herramientas', cls:'m-item'},
+    'div',
+    {href:'/herramientas', label:'Herramientas', cls:'m-item'},
+    {href:'/agente-seguridad.html', label:'Agente IA', cls:'m-sub m-agent'},
+    {href:'/quiz.html', label:'Quiz Semanal', cls:'m-sub'},
+    {href:'/checklist.html', label:'Checklist', cls:'m-sub'},
+    {href:'/analizador-phishing.html', label:'Analizador', cls:'m-sub'},
+    'div',
+    {href:'/botiquin.html', label:'Botiquín SOS', cls:'m-item', red:true},
+    {href:'/derechos.html', label:'Derechos Digitales', cls:'m-sub', purple:true},
+    {href:'/violencia-digital.html', label:'Violencia Digital', cls:'m-sub', purple:true},
+    'div',
     {href:'/talleres.html', label:'Talleres', cls:'m-item', pg:'talleres'},
     {href:'/contactos.html', label:'Contacto', cls:'m-cta'},
   ];
@@ -294,6 +311,7 @@ function buildMobile(page, drawer) {
       a.className = item.cls;
       if (item.pg && page === item.pg) a.classList.add('an-m-active');
       if (item.purple) a.style.color = '#9b6dff';
+      if (item.red) a.style.color = '#ef4444';
       a.addEventListener('click', closeMenu);
       drawer.appendChild(a);
     }
