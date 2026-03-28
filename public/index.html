@@ -1001,7 +1001,7 @@ const statsObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x
 const ss=document.querySelector('.stats-s');if(ss)statsObs.observe(ss);
 
 /* SERVICE WORKER */
-if('serviceWorker'in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{});});}
+
 
 /* CONTENIDO DINÁMICO */
 (async function(){
