@@ -202,12 +202,12 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .demo-sc span{color:var(--accent);}
 
 /* TICKER */
-.ticker{position:relative;z-index:10;overflow:hidden;padding:12px 0;
-  background:rgba(240,120,48,.05);
+.ticker{position:relative;z-index:10;overflow:hidden;padding:11px 0;
+  background:rgba(240,120,48,.06);
   border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);}
-.ticker-t{display:flex;gap:40px;width:max-content;animation:tick 28s linear infinite;}
-.ticker-t span{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;color:var(--ink3);white-space:nowrap;flex-shrink:0;}
-.ticker-t .ta{color:var(--accent);}
+.ticker-t{display:flex;gap:48px;width:max-content;animation:tick 40s linear infinite;}
+.ticker-t span{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;color:#6e84a3;white-space:nowrap;flex-shrink:0;}
+.ticker-t .ta{color:var(--accent);opacity:.8;}
 @keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
 /* SECTIONS */
@@ -622,18 +622,22 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
 <!-- TICKER DINÁMICO -->
 <div class="ticker">
   <div class="ticker-t" id="ticker-inner">
-    <span class="ta">●</span><span>MATERIALES GRATUITOS PARA DOCENTES</span>
-    <span class="ta">///</span><span>QUIZ SEMANAL · NUEVO CADA LUNES</span>
-    <span class="ta">///</span><span>ANALIZADOR DE PHISHING CON IA</span>
-    <span class="ta">///</span><span>AGENTE IA 24/7 · SIN REGISTRO</span>
-    <span class="ta">///</span><span>TALLERES EN COLEGIOS · GRATIS</span>
-    <span class="ta">///</span><span>CHECKLIST FAMILIAR DE SEGURIDAD</span>
-    <span class="ta">●</span><span>MATERIALES GRATUITOS PARA DOCENTES</span>
-    <span class="ta">///</span><span>QUIZ SEMANAL · NUEVO CADA LUNES</span>
-    <span class="ta">///</span><span>ANALIZADOR DE PHISHING CON IA</span>
-    <span class="ta">///</span><span>AGENTE IA 24/7 · SIN REGISTRO</span>
-    <span class="ta">///</span><span>TALLERES EN COLEGIOS · GRATIS</span>
-    <span class="ta">///</span><span>CHECKLIST FAMILIAR DE SEGURIDAD</span>
+    <span class="ta">///</span><span>CHILE: 1.780 CIBERATAQUES SEMANALES · FEB 2026 · CHECK POINT</span>
+    <span class="ta">///</span><span>EDUCACIÓN: SECTOR MÁS ATACADO DEL MUNDO CON 4.749 ATAQUES SEMANALES</span>
+    <span class="ta">///</span><span>HACKERS CAPTURARON 6 TB DE DATOS DE COPEC · ENE 2026</span>
+    <span class="ta">///</span><span>DEEPFAKES Y FRAUDE COMO SERVICIO: NUEVAS AMENAZAS EN CHILE 2026</span>
+    <span class="ta">///</span><span>LEY MARCO DE CIBERSEGURIDAD ENTRA EN VIGOR · ANCI OPERATIVA</span>
+    <span class="ta">///</span><span>SMISHING BANCARIO EN AUMENTO · NO RESPONDAS SMS DE "TU BANCO"</span>
+    <span class="ta">///</span><span>CHILE CONCENTRA EL 7% DE LOS ATAQUES EN LATINOAMÉRICA · ENTEL DIGITAL</span>
+    <span class="ta">///</span><span>RANSOMWARE: 38% DE INCIDENCIA EN SECTORES CRÍTICOS CHILENOS</span>
+    <span class="ta">///</span><span>CHILE: 1.780 CIBERATAQUES SEMANALES · FEB 2026 · CHECK POINT</span>
+    <span class="ta">///</span><span>EDUCACIÓN: SECTOR MÁS ATACADO DEL MUNDO CON 4.749 ATAQUES SEMANALES</span>
+    <span class="ta">///</span><span>HACKERS CAPTURARON 6 TB DE DATOS DE COPEC · ENE 2026</span>
+    <span class="ta">///</span><span>DEEPFAKES Y FRAUDE COMO SERVICIO: NUEVAS AMENAZAS EN CHILE 2026</span>
+    <span class="ta">///</span><span>LEY MARCO DE CIBERSEGURIDAD ENTRA EN VIGOR · ANCI OPERATIVA</span>
+    <span class="ta">///</span><span>SMISHING BANCARIO EN AUMENTO · NO RESPONDAS SMS DE "TU BANCO"</span>
+    <span class="ta">///</span><span>CHILE CONCENTRA EL 7% DE LOS ATAQUES EN LATINOAMÉRICA · ENTEL DIGITAL</span>
+    <span class="ta">///</span><span>RANSOMWARE: 38% DE INCIDENCIA EN SECTORES CRÍTICOS CHILENOS</span>
   </div>
 </div>
 
@@ -1002,8 +1006,8 @@ if('serviceWorker'in navigator){window.addEventListener('load',()=>{navigator.se
     const el=document.getElementById('ticker-inner');
     if(el){
       const items=[...data.ticker,...data.ticker];
-      el.innerHTML=items.map((t,i)=>`<span class="ta">${i%data.ticker.length===0?'●':'///'}</span><span>${t}</span>`).join('');
-      el.style.animationDuration=Math.max(20,data.ticker.length*3.5)+'s';
+      el.innerHTML=items.map(t=>`<span class="ta">///</span><span>${t}</span>`).join('');
+      el.style.animationDuration=Math.max(30,data.ticker.length*5)+'s';
     }
   }
 
