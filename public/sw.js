@@ -3,13 +3,13 @@
 // Habilita la app como PWA instalable + notificaciones push
 // ══════════════════════════════════════════════════════════════
 
-const CACHE_NAME = 'aegis8-v1';
+const CACHE_NAME = 'aegis8-v2';
 const CACHE_URLS = [
   '/',
-  '/index.html',
-  '/herramientas.html',
-  '/quiz.html',
-  '/checklist.html',
+  
+  '/herramientas',
+  '/quiz',
+  '/checklist',
   '/agente-seguridad.html',
   '/quiz.js',
   '/amenaza.json',
