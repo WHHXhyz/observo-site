@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Aegis8 para Docentes · Ciberseguridad en el Aula</title>
+<meta name="description" content="Recursos de ciberseguridad educativa para profesores chilenos. Planes de clase, protocolos ante incidentes y herramientas IA. Gratuito, sin tecnicismos."/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
+  <script src="/aegis-nav.js"></script>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+:root{
+  --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
+  --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
+  --card:rgba(255,255,255,.03);--radius:4px;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(58,127,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.025) 1px,transparent 1px);
+  background-size:80px 80px;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+.page-inner{position:relative;z-index:10;}
+.sl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+  color:var(--accent);text-transform:uppercase;margin-bottom:12px;}
+.st{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.6rem);
+  line-height:1.05;color:var(--ink);margin-bottom:20px;letter-spacing:-1px;}
+.st em{font-style:italic;color:var(--accent);}
+.si{font-size:1rem;line-height:1.9;color:var(--ink2);max-width:640px;margin-bottom:40px;}
+.sw{padding:80px 0 48px;border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
+.sw.vis{opacity:1;transform:none;}
+.sw:last-child{border-bottom:none;}
+.btn-p{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--bg);background:var(--accent);border:none;padding:14px 28px;border-radius:var(--radius);
+  text-decoration:none;transition:all .25s;position:relative;overflow:hidden;display:inline-block;cursor:pointer!important;}
+.btn-p::before{content:'';position:absolute;inset:0;background:var(--accent2);transform:translateX(-100%);transition:transform .3s;}
+.btn-p:hover::before{transform:translateX(0);}
+.btn-p span,.btn-p{position:relative;z-index:1;}
+.btn-p:hover{box-shadow:0 0 28px rgba(240,120,48,.4);transform:translateY(-2px);}
+.btn-g{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink2);background:transparent;border:1px solid var(--border);
+  padding:14px 28px;border-radius:var(--radius);text-decoration:none;transition:all .25s;display:inline-block;}
+.btn-g:hover{color:var(--ink);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
+/* CHAT SHARED */
+.chat-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;}
+.chat-hd{background:rgba(240,120,48,.05);border-bottom:1px solid var(--border2);
+  padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.chat-hd-l{display:flex;align-items:center;gap:.75rem;}
+.chat-ava{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  background:rgba(240,120,48,.12);}
+.chat-name{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;color:var(--ink);}
+.chat-status{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--green);letter-spacing:1px;}
+.chat-live{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+.chat-msgs{height:320px;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;}
+.chat-msgs::-webkit-scrollbar{width:3px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.msg{display:flex;gap:.6rem;align-items:flex-start;}
+.msg.user{flex-direction:row-reverse;}
+.msg-ava{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;flex-shrink:0;background:var(--card);}
+.msg-bubble{background:var(--card);border:1px solid var(--border);padding:.65rem .9rem;
+  font-size:.84rem;line-height:1.6;max-width:85%;border-radius:2px;color:var(--ink2);}
+.msg.user .msg-bubble{background:rgba(240,120,48,.06);border-color:var(--border2);color:var(--ink);}
+.chat-quick{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.4rem;}
+.qbtn{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1px;
+  color:var(--accent);border:1px solid var(--border2);background:rgba(240,120,48,.04);
+  padding:.3rem .7rem;border-radius:var(--radius);cursor:pointer!important;transition:all .2s;}
+.qbtn:hover{background:rgba(240,120,48,.1);border-color:var(--accent);}
+.chat-row{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:.5rem;}
+.chat-in{flex:1;background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);
+  padding:.65rem 1rem;font-family:'Lato',sans-serif;font-size:.88rem;color:var(--ink);
+  outline:none;transition:border-color .2s;}
+.chat-in:focus{border-color:var(--accent);}
+.chat-in::placeholder{color:var(--ink3);}
+.send-btn{background:var(--accent);color:var(--bg);border:none;padding:.65rem 1.1rem;
+  border-radius:var(--radius);font-weight:700;cursor:pointer!important;transition:background .2s;}
+.send-btn:hover{background:var(--accent2);}
+.typing-wrap{display:flex;gap:4px;align-items:center;}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.3;
+  animation:tdot 1.2s ease-in-out infinite;}
+.tdot:nth-child(2){animation-delay:.2s;}.tdot:nth-child(3){animation-delay:.4s;}
+@keyframes tdot{0%,80%,100%{opacity:.2;transform:scale(.8);}40%{opacity:1;transform:scale(1);}}
+/* FOOTER */
+.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);
+  padding:48px 32px 32px;max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;
+  letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.fl span{color:var(--accent);}
+.flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.flinks a:hover{color:var(--accent);}
+.fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
+/* SCROLL REVEAL JS inline */
+@media(max-width:640px){.wrap{padding:0 16px;}.page-footer{padding:32px 16px;}}
+
+
+/* ── HERO ── */
+.hero-prof{position:relative;z-index:10;min-height:92vh;display:flex;
+  flex-direction:column;justify-content:center;padding:80px 0 64px;
+  border-bottom:1px solid var(--border);overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
+.b1{width:700px;height:700px;top:-150px;right:-150px;
+  background:radial-gradient(circle,rgba(240,120,48,.1) 0%,transparent 70%);
+  animation:fl1 9s ease-in-out infinite;}
+.b2{width:500px;height:500px;bottom:-100px;left:-100px;
+  background:radial-gradient(circle,rgba(58,127,212,.08) 0%,transparent 70%);
+  animation:fl2 11s ease-in-out infinite;}
+@keyframes fl1{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,20px);}}
+@keyframes fl2{0%,100%{transform:translate(0,0);}50%{transform:translate(20px,-30px);}}
+
+/* ── DOLORES ── */
+.dolor-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
+@media(max-width:720px){.dolor-g{grid-template-columns:1fr;}}
+.dolor{background:var(--bg2);padding:1.75rem 1.5rem;position:relative;overflow:hidden;}
+.dolor::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:#ef4444;}
+.dolor-ico{width:36px;height:36px;border-radius:8px;background:rgba(239,68,68,.08);
+  border:1px solid rgba(239,68,68,.2);display:flex;align-items:center;justify-content:center;
+  margin-bottom:.75rem;}
+.dolor-title{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;
+  color:var(--ink);margin-bottom:.4rem;}
+.dolor-desc{font-size:.84rem;color:var(--ink2);line-height:1.65;}
+.dolor-quote{font-size:.8rem;color:var(--ink3);font-style:italic;margin-top:.6rem;
+  padding-top:.6rem;border-top:1px solid var(--border);}
+
+/* ── PROPUESTA DE VALOR ── */
+.pv-g{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
+@media(max-width:720px){.pv-g{grid-template-columns:1fr;gap:2rem;}}
+.pv-list{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.pv-item{background:var(--bg2);padding:1rem 1.25rem;display:flex;align-items:flex-start;gap:.75rem;}
+.pv-check{width:20px;height:20px;border-radius:4px;background:rgba(46,204,128,.1);
+  border:1px solid rgba(46,204,128,.25);display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:1px;}
+.pv-text{font-size:.86rem;color:var(--ink2);line-height:1.55;}
+.pv-text strong{color:var(--ink);font-weight:700;}
+
+/* ── SOLUCIONES ── */
+.sol-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
+@media(max-width:640px){.sol-g{grid-template-columns:1fr;}}
+.sol{background:var(--bg2);padding:2rem 1.5rem;display:flex;flex-direction:column;gap:10px;
+  transition:background .2s;position:relative;overflow:hidden;}
+.sol::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.sol:hover::before{transform:scaleX(1);}
+.sol:hover{background:rgba(255,255,255,.03);}
+.s1::before{background:var(--accent);}
+.s2::before{background:var(--blue);}
+.s3::before{background:var(--green);}
+.s4::before{background:var(--gold);}
+.s5::before{background:#9b6dff;}
+.s6::before{background:#ef4444;}
+.sol-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;
+  color:var(--ink3);text-transform:uppercase;}
+.sol-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);line-height:1.2;}
+.sol-desc{font-size:.83rem;color:var(--ink2);line-height:1.65;flex:1;}
+.sol-link{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  text-transform:uppercase;text-decoration:none;transition:color .2s;}
+.s1 .sol-link{color:var(--accent);}
+.s2 .sol-link{color:var(--blue);}
+.s3 .sol-link{color:var(--green);}
+.s4 .sol-link{color:var(--gold);}
+.s5 .sol-link{color:#9b6dff;}
+.s6 .sol-link{color:#ef4444;}
+
+/* ── EJEMPLOS EN EL AULA ── */
+.ej-g{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.ej{background:var(--bg2);padding:1.5rem 1.75rem;display:flex;gap:1.5rem;align-items:flex-start;}
+.ej-num{font-family:'DM Serif Display',serif;font-size:2.5rem;color:rgba(240,120,48,.1);
+  line-height:1;flex-shrink:0;width:48px;font-style:italic;}
+.ej-content{flex:1;}
+.ej-title{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;
+  color:var(--ink);margin-bottom:.3rem;}
+.ej-ctx{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:2px;
+  color:var(--accent);text-transform:uppercase;margin-bottom:.5rem;}
+.ej-desc{font-size:.85rem;color:var(--ink2);line-height:1.7;}
+.ej-tip{display:inline-flex;align-items:center;gap:.4rem;margin-top:.5rem;
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--green);
+  background:rgba(46,204,128,.06);border:1px solid rgba(46,204,128,.15);
+  padding:.2rem .6rem;border-radius:20px;}
+
+/* ── RECURSOS PDF ── */
+.pdf-dl-g{display:flex;flex-direction:column;gap:2px;background:var(--border);}
+.pdf-dl-card{background:var(--bg2);padding:1.1rem 1.5rem;text-decoration:none;
+  display:flex;align-items:center;gap:1rem;transition:background .2s;
+  position:relative;overflow:hidden;}
+.pdf-dl-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--c,var(--accent));transform:scaleY(0);transition:transform .3s;}
+.pdf-dl-card:hover::before{transform:scaleY(1);}
+.pdf-dl-card:hover{background:rgba(255,255,255,.04);}
+.pdf-ico{width:36px;height:36px;border-radius:7px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;}
+.pdf-info{flex:1;}
+.pdf-title{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink);
+  font-weight:600;margin-bottom:2px;}
+.pdf-desc{font-size:.78rem;color:var(--ink2);}
+.pdf-btn{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:1px;
+  color:var(--c,var(--accent));border:1px solid;padding:.3rem .7rem;border-radius:3px;
+  flex-shrink:0;white-space:nowrap;border-color:currentColor;opacity:.7;transition:opacity .2s;}
+.pdf-dl-card:hover .pdf-btn{opacity:1;}
+
+/* ── STAT BAND ── */
+.stat-band{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);}
+@media(max-width:640px){.stat-band{grid-template-columns:repeat(2,1fr);}}
+.sb-item{padding:24px 20px;text-align:center;background:var(--bg2);}
+.sb-n{font-family:'DM Serif Display',serif;font-size:2.4rem;color:var(--accent);
+  line-height:1;font-style:italic;margin-bottom:5px;}
+.sb-l{font-size:.78rem;color:var(--ink2);line-height:1.45;}
+.sb-src{font-family:'JetBrains Mono',monospace;font-size:.52rem;color:var(--ink3);
+  letter-spacing:1px;margin-top:4px;}
+
+/* ── AGENTE IA PREVIEW ── */
+.ia-preview{background:var(--bg2);border:1px solid var(--border);border-radius:4px;
+  overflow:hidden;max-width:580px;}
+.ia-hd{background:var(--bg);padding:12px 16px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;}
+.ia-dot{width:7px;height:7px;border-radius:50%;background:var(--green);
+  animation:blink 1.5s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+.ia-hd-title{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--ink3);}
+.ia-hd-title span{color:var(--accent);}
+.ia-msgs{padding:16px;}
+.ia-msg{display:flex;gap:8px;margin-bottom:10px;}
+.ia-msg.user{flex-direction:row-reverse;}
+.ia-bub{padding:9px 12px;font-size:.83rem;line-height:1.55;max-width:85%;border-radius:8px;}
+.ia-msg.bot .ia-bub{background:rgba(255,255,255,.04);border:1px solid var(--border);
+  color:var(--ink2);border-radius:8px 8px 8px 2px;}
+.ia-msg.user .ia-bub{background:rgba(240,120,48,.08);border:1px solid var(--border-o);
+  color:var(--ink);border-radius:8px 8px 2px 8px;}
+.ia-ava{width:26px;height:26px;border-radius:50%;background:var(--bg);
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;flex-shrink:0;}
+
+</style>
+</head>
+<body data-page="educa">
+<!-- ═══════ HERO ═══════ -->
+<section class="hero-prof">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap" style="position:relative;z-index:2;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+      color:var(--ink3);margin-bottom:24px;display:flex;align-items:center;gap:10px;">
+      <div style="width:28px;height:1px;background:var(--accent);"></div>
+      AEGIS8 EDUCA · PARA DOCENTES · CHILE
+    </div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(3rem,9vw,7rem);
+      line-height:.88;letter-spacing:-2px;margin-bottom:24px;max-width:800px;">
+      Tu sala de clases<br>
+      también es<br>
+      <span style="color:var(--accent);font-style:italic;">blanco de ataques.</span>
+    </h1>
+    <p style="font-size:1.1rem;line-height:1.85;color:var(--ink2);max-width:560px;margin-bottom:36px;">
+      El phishing llega a tu correo institucional. Tus estudiantes comparten links peligrosos en el grupo de WhatsApp. Y nadie en el colegio sabe exactamente qué hacer cuando pasa algo.
+      <strong style="color:var(--ink);font-weight:400;">Aegis8 te da las herramientas concretas. Gratis.</strong>
+    </p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="/educa/newsletter.html" class="btn-p"><span>Suscribirme al newsletter →</span></a>
+      <a href="#recursos" class="btn-g">Ver recursos gratuitos</a>
+    </div>
+
+    <!-- Stat band dentro del hero -->
+    <div class="stat-band" style="margin-top:48px;">
+      <div class="sb-item">
+        <div class="sb-n">3/4</div>
+        <div class="sb-l">Docentes no se sienten preparados para enseñar seguridad digital</div>
+        <div class="sb-src">CPEIP 2024</div>
+      </div>
+      <div class="sb-item">
+        <div class="sb-n">68%</div>
+        <div class="sb-l">Colegios sin programa de educación digital</div>
+        <div class="sb-src">MINEDUC 2023</div>
+      </div>
+      <div class="sb-item">
+        <div class="sb-n">14</div>
+        <div class="sb-l">Años — edad promedio primera víctima de grooming en Chile</div>
+        <div class="sb-src">PDI CIBERCRIMEN</div>
+      </div>
+      <div class="sb-item">
+        <div class="sb-n">$0</div>
+        <div class="sb-l">Cuesta usar Aegis8 en tu sala — todo es gratuito, siempre</div>
+        <div class="sb-src">AEGIS8</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap page-inner">
+
+<!-- ═══════ DOLORES ═══════ -->
+<div class="sw">
+  <div class="sl">// Lo que pasa en tu colegio ahora mismo</div>
+  <h2 class="st">Amenazas reales.<br><em>En tu sala.</em></h2>
+  <p class="si">No son amenazas abstractas. Están pasando en colegios chilenos exactamente como el tuyo, esta semana.</p>
+  <div class="dolor-g">
+    <div class="dolor">
+      <div class="dolor-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="18" height="18">
+          <rect x="2" y="3" width="12" height="10" rx="1.5" stroke="#ef4444" stroke-width="1.2"/>
+          <path d="M2 6l6 4 6-4" stroke="#ef4444" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="dolor-title">Phishing en el correo institucional</div>
+      <div class="dolor-desc">Correos falsos que imitan al MINEDUC, JUNAEB o la dirección del colegio piden credenciales o datos bancarios. Cada semana hay nuevas campañas.</div>
+      <div class="dolor-quote">"Me llegó un correo del MINEDUC pidiendo actualizar mis datos. Era falso. Ya había ingresado mi contraseña." — Docente, 5° básico, RM</div>
+    </div>
+    <div class="dolor">
+      <div class="dolor-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="18" height="18">
+          <rect x="1" y="4" width="14" height="9" rx="1.5" stroke="#ef4444" stroke-width="1.2"/>
+          <path d="M5 4V3a3 3 0 016 0v1" stroke="#ef4444" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <div class="dolor-title">Contraseñas compartidas en plataformas educativas</div>
+      <div class="dolor-desc">Google Classroom, SEP, SIGE — muchos docentes usan la misma contraseña en todo o la anotan en papel. Una brecha compromete todo.</div>
+      <div class="dolor-quote">"En nuestro colegio compartimos la contraseña del SIGE por WhatsApp. Sé que está mal pero nunca tuvimos otra opción." — Inspector, colegio subvencionado</div>
+    </div>
+    <div class="dolor">
+      <div class="dolor-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="18" height="18">
+          <path d="M8 2l1.8 3.6L14 6.5l-3 2.9.7 4.1L8 11.5l-3.7 2 .7-4.1L2 6.5l4.2-.9L8 2z" stroke="#ef4444" stroke-width="1.2" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="dolor-title">Estudiantes que comparten links peligrosos</div>
+      <div class="dolor-desc">Un alumno envía un "quiz de personalidad" al grupo de WhatsApp del curso. Es phishing. Varios compañeros ingresan sus datos antes de que alguien lo note.</div>
+      <div class="dolor-quote">"Un alumno de 8° compartió un link que robaba contraseñas de Instagram. Tres estudiantes cayeron antes de que nos avisaran." — Orientadora, Santiago</div>
+    </div>
+    <div class="dolor">
+      <div class="dolor-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="18" height="18">
+          <circle cx="8" cy="6" r="3" stroke="#ef4444" stroke-width="1.2"/>
+          <path d="M2 14c0-3 2.7-5 6-5s6 2 6 5" stroke="#ef4444" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M11 2l3 3M14 2l-3 3" stroke="#ef4444" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="dolor-title">Grooming en plataformas de juego</div>
+      <div class="dolor-desc">Un adulto contacta a estudiantes a través de Roblox o Discord haciéndose pasar por otro joven. El proceso es lento y calculado. La mayoría de los casos no se reporta al colegio.</div>
+      <div class="dolor-quote">"Supimos por los apoderados. El alumno llevaba meses hablando con un desconocido en Roblox. No teníamos protocolo." — Directora, colegio básico, Valparaíso</div>
+    </div>
+    <div class="dolor">
+      <div class="dolor-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="18" height="18">
+          <path d="M13 3L3 13M3 3l10 10" stroke="#ef4444" stroke-width="1.2" stroke-linecap="round"/>
+          <circle cx="8" cy="8" r="6" stroke="#ef4444" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <div class="dolor-title">Ciberbullying sin protocolo claro</div>
+      <div class="dolor-desc">Memes de un estudiante circulan en el grupo de curso. El colegio está obligado a actuar (Ley 20.536) pero pocos docentes saben exactamente cómo y en qué plazo.</div>
+      <div class="dolor-quote">"Sabíamos que existía el protocolo de convivencia pero nadie lo había leído completo. Actuamos tarde." — Inspector, colegio media, Biobío</div>
+    </div>
+    <div class="dolor">
+      <div class="dolor-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="18" height="18">
+          <rect x="2" y="2" width="12" height="12" rx="1.5" stroke="#ef4444" stroke-width="1.2"/>
+          <path d="M5 8h6M8 5v6" stroke="#ef4444" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="dolor-title">No saber qué enseñar ni cómo empezar</div>
+      <div class="dolor-desc">El tema es urgente pero no está en el plan de estudios. ¿Por dónde empiezas? ¿Qué le dices a un 5° básico? ¿Y a un 4° medio? No hay materiales listos para Chile.</div>
+      <div class="dolor-quote">"Quiero hablar de esto con mis alumnos pero no sé cómo abordarlo sin asustarlos ni aburrirlos." — Docente, UTP, colegio RM</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ PROPUESTA DE VALOR ═══════ -->
+<div class="sw">
+  <div class="sl">// Qué es Aegis8 para ti</div>
+  <div class="pv-g">
+    <div>
+      <h2 class="st">No es un curso.<br>Es una<br><em>caja de herramientas.</em></h2>
+      <p style="font-size:.9rem;line-height:1.8;color:var(--ink2);margin-bottom:1.5rem;">
+        Aegis8 no te pide que te conviertas en experta en ciberseguridad. Te da materiales concretos para usar esta semana, con tus propios alumnos, sin formación técnica previa.
+      </p>
+      <p style="font-size:.9rem;line-height:1.8;color:var(--ink2);">
+        Todo está contextualizado en Chile — con estadísticas chilenas, leyes chilenas y ejemplos de nuestras escuelas.
+      </p>
+    </div>
+    <div class="pv-list">
+      <div class="pv-item">
+        <div class="pv-check">
+          <svg viewBox="0 0 12 12" fill="none" width="12" height="12"><path d="M2 6l3 3 5-5" stroke="#2ecc80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="pv-text"><strong>Planes de clase completos</strong> — 60 minutos, instrucciones paso a paso, sin preparación adicional</div>
+      </div>
+      <div class="pv-item">
+        <div class="pv-check">
+          <svg viewBox="0 0 12 12" fill="none" width="12" height="12"><path d="M2 6l3 3 5-5" stroke="#2ecc80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="pv-text"><strong>Protocolos listos ante incidentes</strong> — grooming, ciberbullying, phishing: qué hacer y en qué orden</div>
+      </div>
+      <div class="pv-item">
+        <div class="pv-check">
+          <svg viewBox="0 0 12 12" fill="none" width="12" height="12"><path d="M2 6l3 3 5-5" stroke="#2ecc80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="pv-text"><strong>Quiz para tus alumnos</strong> — crea una clase en 2 minutos y ve los resultados en tiempo real</div>
+      </div>
+      <div class="pv-item">
+        <div class="pv-check">
+          <svg viewBox="0 0 12 12" fill="none" width="12" height="12"><path d="M2 6l3 3 5-5" stroke="#2ecc80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="pv-text"><strong>Agente IA disponible 24/7</strong> — pregunta lo que necesites, en lenguaje de docente, no de ingeniero</div>
+      </div>
+      <div class="pv-item">
+        <div class="pv-check">
+          <svg viewBox="0 0 12 12" fill="none" width="12" height="12"><path d="M2 6l3 3 5-5" stroke="#2ecc80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="pv-text"><strong>Newsletter mensual</strong> — la amenaza del mes + actividad lista para tu sala. Un correo. Sin spam.</div>
+      </div>
+      <div class="pv-item">
+        <div class="pv-check">
+          <svg viewBox="0 0 12 12" fill="none" width="12" height="12"><path d="M2 6l3 3 5-5" stroke="#2ecc80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="pv-text"><strong>100% gratuito — siempre</strong> — sin versión de pago, sin datos que vender, sin sorpresas</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ SOLUCIONES ═══════ -->
+<div class="sw">
+  <div class="sl">// Qué puedes hacer hoy</div>
+  <h2 class="st">Elige por<br><em>dónde empezar.</em></h2>
+  <p class="si">No tienes que hacer todo. Elige lo que más necesitas ahora mismo.</p>
+  <div class="sol-g">
+    <div class="sol s1">
+      <div class="sol-tag">Para mañana</div>
+      <div class="sol-title">Plan de clase: Phishing</div>
+      <div class="sol-desc">60 minutos, 7° básico a 2° medio. Tus alumnos analizan casos reales de mensajes falsos y construyen su propio checklist de verificación.</div>
+      <a href="/descargas/pdf-plan-clase-phishing.pdf" download class="sol-link">↓ Descargar PDF →</a>
+    </div>
+    <div class="sol s2">
+      <div class="sol-tag">Para mañana</div>
+      <div class="sol-title">Plan de clase: Grooming</div>
+      <div class="sol-desc">60 minutos, 7° básico a 2° medio. Roleplay con casos reales, marco legal chileno y protocolo de actuación si algo ya pasó.</div>
+      <a href="/descargas/pdf-plan-clase-grooming.pdf" download class="sol-link">↓ Descargar PDF →</a>
+    </div>
+    <div class="sol s3">
+      <div class="sol-tag">Si pasa algo</div>
+      <div class="sol-title">Protocolo ante incidente</div>
+      <div class="sol-desc">Qué hacer paso a paso ante grooming, ciberbullying y phishing. Con los contactos, plazos legales y quién debe saber qué.</div>
+      <a href="/descargas/pdf-protocolo-docentes.pdf" download class="sol-link">↓ Descargar PDF →</a>
+    </div>
+    <div class="sol s4">
+      <div class="sol-tag">Para tu sala</div>
+      <div class="sol-title">Póster: 5 Reglas del Internauta</div>
+      <div class="sol-desc">Para imprimir en A4 y pegar en sala. Diseñado para niños de 6 a 12 años. En lenguaje simple, sin condescendencia.</div>
+      <a href="/descargas/pdf-reglas-internauta.pdf" download class="sol-link">↓ Descargar PDF →</a>
+    </div>
+    <div class="sol s5">
+      <div class="sol-tag">Módulo interactivo</div>
+      <div class="sol-title">Quiz para tus alumnos</div>
+      <div class="sol-desc">Crea una clase en 2 minutos, comparte el código con tus alumnos y ve los resultados en tiempo real desde tu teléfono.</div>
+      <a href="/app/" class="sol-link">Abrir app docente →</a>
+    </div>
+    <div class="sol s6">
+      <div class="sol-tag">Datos para tu UTP</div>
+      <div class="sol-title">Infografía: Amenazas Chile 2025</div>
+      <div class="sol-desc">Estadísticas actualizadas para justificar la necesidad de trabajar estos temas en tu colegio. Útil para presentaciones a directivos.</div>
+      <a href="/descargas/pdf-amenazas-chile-2025.pdf" download class="sol-link">↓ Descargar PDF →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ EJEMPLOS EN EL AULA ═══════ -->
+<div class="sw">
+  <div class="sl">// Cómo se ve en la práctica</div>
+  <h2 class="st">En tu sala,<br><em>esta semana.</em></h2>
+  <div class="ej-g">
+    <div class="ej">
+      <div class="ej-num">1</div>
+      <div class="ej-content">
+        <div class="ej-ctx">Lunes · 7° básico · 15 minutos</div>
+        <div class="ej-title">El link sospechoso del grupo de WhatsApp</div>
+        <div class="ej-desc">Proyecta en la pantalla el link que alguien compartió en el grupo de curso. Pregunta: "¿Qué señales ven antes de hacer clic?" La clase construye la lista de alertas. Al final cada alumno la guarda en el teléfono.</div>
+        <span class="ej-tip">Sin materiales · Sin preparación previa</span>
+      </div>
+    </div>
+    <div class="ej">
+      <div class="ej-num">2</div>
+      <div class="ej-content">
+        <div class="ej-ctx">Consejo de curso · 4° medio · 20 minutos</div>
+        <div class="ej-title">Tu huella digital antes de postular a la universidad</div>
+        <div class="ej-desc">Pide a dos voluntarios que busquen su propio nombre en Google. Lo que aparece es su huella digital actual. La conversación sola toma 20 minutos — tú solo moderas.</div>
+        <span class="ej-tip">Sin materiales · Alto impacto</span>
+      </div>
+    </div>
+    <div class="ej">
+      <div class="ej-num">3</div>
+      <div class="ej-content">
+        <div class="ej-ctx">Reunión de apoderados · Cualquier nivel</div>
+        <div class="ej-title">La charla de ciberseguridad que los apoderados nunca tuvieron</div>
+        <div class="ej-desc">Descarga el PDF "Guía para Apoderados" y repártelo al final de la reunión. Dedica 10 minutos a los 3 puntos más urgentes: grooming, contraseñas y controles parentales. Sin ser experto.</div>
+        <span class="ej-tip">PDF incluido · 10 min de charla</span>
+      </div>
+    </div>
+    <div class="ej">
+      <div class="ej-num">4</div>
+      <div class="ej-content">
+        <div class="ej-ctx">Taller · Básica completa · 60 minutos</div>
+        <div class="ej-title">El quiz de Aegis8 como evaluación formativa</div>
+        <div class="ej-desc">Crea una clase en la app Aegis8, proyecta el código QR, los alumnos responden desde sus celulares. Al terminar ves en tiempo real quién entendió qué. Los resultados te dicen exactamente dónde volver a trabajar.</div>
+        <span class="ej-tip">Requiere celulares · Resultados en tiempo real</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ RECURSOS PDF ═══════ -->
+<div class="sw" id="recursos">
+  <div class="sl">// Recursos descargables · PDF</div>
+  <h2 class="st">Todo listo<br><em>para imprimir.</em></h2>
+  <p class="si">Descarga directa. Sin registro. Uso libre para fines educativos.</p>
+  <div class="pdf-dl-g">
+    <a href="/descargas/pdf-protocolo-docentes.pdf" download class="pdf-dl-card" style="--c:#ef4444;">
+      <div class="pdf-ico" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M8 2l5 3v6l-5 3-5-3V5L8 2z" stroke="#ef4444" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="pdf-info">
+        <div class="pdf-title">Protocolo ante Incidente Digital</div>
+        <div class="pdf-desc">Grooming, ciberbullying y phishing — pasos claros para actuar con contactos y plazos legales</div>
+      </div>
+      <div class="pdf-btn">↓ PDF</div>
+    </a>
+    <a href="/descargas/pdf-plan-clase-phishing.pdf" download class="pdf-dl-card" style="--c:var(--accent);">
+      <div class="pdf-ico" style="background:rgba(240,120,48,.08);border:1px solid var(--border-o);">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><rect x="2" y="2" width="12" height="12" rx="1.5" stroke="#f07830" stroke-width="1.2"/><path d="M5 8h6M8 5v6" stroke="#f07830" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="pdf-info">
+        <div class="pdf-title">Plan de Clase: Phishing</div>
+        <div class="pdf-desc">60 min · 7° básico – 2° medio · Análisis de casos reales chilenos</div>
+      </div>
+      <div class="pdf-btn">↓ PDF</div>
+    </a>
+    <a href="/descargas/pdf-plan-clase-grooming.pdf" download class="pdf-dl-card" style="--c:var(--accent);">
+      <div class="pdf-ico" style="background:rgba(240,120,48,.08);border:1px solid var(--border-o);">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><rect x="2" y="2" width="12" height="12" rx="1.5" stroke="#f07830" stroke-width="1.2"/><path d="M5 8h6M8 5v6" stroke="#f07830" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="pdf-info">
+        <div class="pdf-title">Plan de Clase: Grooming</div>
+        <div class="pdf-desc">60 min · 7° básico – 2° medio · Roleplay y protocolo de actuación</div>
+      </div>
+      <div class="pdf-btn">↓ PDF</div>
+    </a>
+    <a href="/descargas/pdf-reglas-internauta.pdf" download class="pdf-dl-card" style="--c:var(--blue);">
+      <div class="pdf-ico" style="background:rgba(58,127,212,.08);border:1px solid var(--border);">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><rect x="2" y="2" width="12" height="12" rx="1.5" stroke="#3a7fd4" stroke-width="1.2"/><path d="M5 6h6M5 9h4" stroke="#3a7fd4" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="pdf-info">
+        <div class="pdf-title">Póster: 5 Reglas del Internauta</div>
+        <div class="pdf-desc">Para imprimir y pegar en sala · Niños 6–12 años</div>
+      </div>
+      <div class="pdf-btn">↓ PDF</div>
+    </a>
+    <a href="/descargas/pdf-amenazas-chile-2025.pdf" download class="pdf-dl-card" style="--c:var(--gold);">
+      <div class="pdf-ico" style="background:rgba(245,168,35,.08);border:1px solid rgba(245,168,35,.2);">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M3 12l3-4 3 2 2-5 2 3" stroke="#f5a823" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="pdf-info">
+        <div class="pdf-title">Amenazas Digitales en Chile 2025</div>
+        <div class="pdf-desc">Infografía con datos actualizados · Para presentar a tu UTP o directivos</div>
+      </div>
+      <div class="pdf-btn">↓ PDF</div>
+    </a>
+    <a href="/descargas/pdf-privacidad-adolescentes.pdf" download class="pdf-dl-card" style="--c:#9b6dff;">
+      <div class="pdf-ico" style="background:rgba(155,109,255,.08);border:1px solid rgba(155,109,255,.2);">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><rect x="3" y="2" width="10" height="12" rx="1.5" stroke="#9b6dff" stroke-width="1.2"/><path d="M5 6h6M5 9h4" stroke="#9b6dff" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="pdf-info">
+        <div class="pdf-title">Privacidad en Redes Sociales</div>
+        <div class="pdf-desc">Para distribuir a tus alumnos adolescentes · Derechos y configuraciones</div>
+      </div>
+      <div class="pdf-btn">↓ PDF</div>
+    </a>
+  </div>
+</div>
+
+<!-- ═══════ AGENTE IA ═══════ -->
+<div class="sw">
+  <div class="sl">// Agente IA para docentes</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;">
+    <div>
+      <h2 class="st">Pregunta lo<br>que nadie<br><em>te enseñó.</em></h2>
+      <p style="font-size:.9rem;line-height:1.8;color:var(--ink2);margin-bottom:1rem;">
+        ¿Qué haces si un apoderado te dice que su hijo recibió mensajes raros de un adulto en Roblox? ¿Cómo le explicas el phishing a un 5° básico sin que se aburran? ¿Qué dice la Ley 20.536 exactamente?
+      </p>
+      <p style="font-size:.9rem;line-height:1.8;color:var(--ink2);margin-bottom:1.5rem;">
+        El Agente Docente de Aegis8 responde en lenguaje de profe, no de ingeniero. Disponible 24/7, sin costo.
+      </p>
+      <a href="/agente-seguridad.html" class="btn-p"><span>Hablar con el agente →</span></a>
+    </div>
+    <div class="ia-preview">
+      <div class="ia-hd">
+        <div class="ia-dot"></div>
+        <div class="ia-hd-title">Agente <span>Docente</span> · Aegis8</div>
+      </div>
+      <div class="ia-msgs">
+        <div class="ia-msg user">
+          <div class="ia-ava">👩‍🏫</div>
+          <div class="ia-bub">Un alumno me contó que un desconocido le pide fotos en Discord. ¿Qué hago primero?</div>
+        </div>
+        <div class="ia-msg bot">
+          <div class="ia-ava">🛡️</div>
+          <div class="ia-bub">Primero, escucha al alumno sin interrumpirlo y hazle saber que hizo bien en contártelo. No borres evidencia — los mensajes son clave. Luego notifica al inspector y encargado de convivencia de inmediato. Orienta a los apoderados a denunciar en PDI Cibercrimen: +56 2 2708 0000. Todo esto está en el Protocolo de Aegis8 — ¿quieres que te lo envíe?</div>
+        </div>
+        <div class="ia-msg user">
+          <div class="ia-ava">👩‍🏫</div>
+          <div class="ia-bub">Sí, y también cómo explicarle esto al resto del curso sin asustarlos</div>
+        </div>
+        <div class="ia-msg bot">
+          <div class="ia-ava">🛡️</div>
+          <div class="ia-bub">Para el curso, sin nombrar al alumno: "Quiero hablar de algo que puede pasarle a cualquiera de ustedes en internet..." Tengo un plan de clase de 20 minutos sobre grooming listo para usar. Te lo comparto ahora.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ CTA NEWSLETTER ═══════ -->
+<div class="sw">
+  <div style="border:1px solid var(--border-o);border-radius:4px;padding:56px;
+    background:rgba(240,120,48,.03);position:relative;overflow:hidden;text-align:center;">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,var(--accent),var(--gold));"></div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;
+      color:var(--accent);margin-bottom:12px;text-transform:uppercase;">Newsletter mensual · Solo docentes</div>
+    <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,3rem);
+      color:var(--ink);margin-bottom:12px;letter-spacing:-1px;line-height:1.05;">
+      La amenaza del mes.<br>
+      <em style="color:var(--accent);">Lista para enseñar.</em>
+    </h2>
+    <p style="font-size:.92rem;line-height:1.8;color:var(--ink2);max-width:480px;
+      margin:0 auto 28px;">
+      Cada primer lunes del mes: la amenaza digital más relevante para tus alumnos + una actividad de 15 minutos lista para usar esa semana. Un correo. Sin spam.
+    </p>
+    <a href="/educa/newsletter.html" class="btn-p"><span>Suscribirme gratis →</span></a>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ink3);
+      letter-spacing:1px;margin-top:14px;">Sin spam · Puedes darte de baja cuando quieras · Ya se suscribieron docentes de 8 regiones</div>
+  </div>
+</div>
+
+</div>
+
+<footer class="page-footer">
+  <a href="/" class="fl">AEGIS<span>8</span></a>
+  <ul class="flinks">
+    <li><a href="/educa.html">Educa</a></li>
+    <li><a href="/educa/profesores.html">Docentes</a></li>
+    <li><a href="/educa/padres.html">Familias</a></li>
+    <li><a href="/analizador-phishing.html">Herramientas</a></li>
+    <li><a href="/contactos.html">Contacto</a></li>
+  </ul>
+  <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+    <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
+    
+  </div>
+</footer>
+<script>
+
+const ro=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});
+},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.sw').forEach(el=>ro.observe(el));
+
+
+</script>
+</body>
+</html>

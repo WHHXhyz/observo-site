@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISO/IEC 27035 — Gestión de Incidentes de Seguridad</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   TOKENS — mismo sistema que ISO 27001
+══════════════════════════════════════════ */
+:root{
+  --bg:       #f5f2ed;
+  --bg2:      #ede9e2;
+  --ink:      #1a1410;
+  --ink2:     #4a3f35;
+  --ink3:     #8a7a6e;
+  --accent:   #c8410a;
+  --accent2:  #e8622a;
+  --blue:     #1a4f8c;
+  --green:    #1a6b3c;
+  --gold:     #a07a10;
+  --purple:   #6b2d8b;
+  --teal:     #0e7c7b;
+  --border:   rgba(26,20,16,.1);
+  --card:     rgba(255,255,255,.6);
+  --shadow:   0 2px 20px rgba(26,20,16,.08);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Lato',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.4;
+}
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.hero{
+  position:relative;z-index:10;
+  background:var(--ink);color:#f5f2ed;
+  padding:80px 40px 64px;overflow:hidden;
+}
+
+.hero::after{
+  content:'';position:absolute;right:-60px;top:-60px;
+  width:420px;height:420px;border-radius:50%;
+  border:80px solid rgba(200,65,10,.12);pointer-events:none;
+}
+
+.hero::before{
+  content:'';position:absolute;left:-40px;bottom:-80px;
+  width:280px;height:280px;border-radius:50%;
+  border:50px solid rgba(26,79,140,.08);pointer-events:none;
+}
+
+.hero-inner{max-width:1080px;margin:0 auto;position:relative;z-index:2;}
+
+.hero-eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;letter-spacing:4px;color:var(--accent2);
+  margin-bottom:20px;opacity:0;animation:fadeUp .6s .1s forwards;
+}
+
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(3rem,8vw,6.5rem);line-height:.95;
+  color:#f5f2ed;margin-bottom:8px;
+  opacity:0;animation:fadeUp .7s .2s forwards;
+}
+
+.hero-title em{font-style:italic;color:var(--accent2);}
+
+.hero-year{
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(1rem,3vw,1.8rem);
+  color:rgba(245,242,237,.35);letter-spacing:6px;
+  margin-bottom:28px;opacity:0;animation:fadeUp .7s .3s forwards;
+}
+
+.hero-desc{
+  max-width:580px;font-size:1rem;line-height:1.85;
+  color:rgba(245,242,237,.7);margin-bottom:36px;
+  opacity:0;animation:fadeUp .7s .4s forwards;
+}
+
+.hero-stats{
+  display:flex;flex-wrap:wrap;gap:28px;
+  opacity:0;animation:fadeUp .7s .5s forwards;
+}
+
+.stat{border-left:2px solid var(--accent);padding-left:14px;}
+
+.stat-num{
+  font-family:'DM Serif Display',serif;
+  font-size:2rem;color:#f5f2ed;line-height:1;
+}
+
+.stat-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;color:rgba(245,242,237,.4);
+  letter-spacing:2px;margin-top:3px;
+}
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+.main-nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(245,242,237,.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:0 24px;overflow-x:auto;
+}
+
+.nav-inner{
+  display:flex;gap:0;max-width:1080px;
+  margin:0 auto;white-space:nowrap;
+}
+
+.nav-link{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:2px;
+  color:var(--ink3);text-decoration:none;
+  padding:16px 14px;border-bottom:2px solid transparent;
+  transition:all .2s;text-transform:uppercase;
+}
+
+.nav-link:hover,.nav-link.active{
+  color:var(--accent);border-bottom-color:var(--accent);
+}
+
+/* ══════════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════════ */
+.page{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+section.block{
+  padding:72px 0 40px;border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(24px);
+  transition:opacity .6s,transform .6s;
+}
+section.block.visible{opacity:1;transform:none;}
+
+.block-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;letter-spacing:4px;
+  color:var(--accent);text-transform:uppercase;margin-bottom:8px;
+}
+
+.block-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(1.8rem,4vw,2.8rem);
+  color:var(--ink);margin-bottom:20px;line-height:1.2;
+}
+
+.block-intro{
+  font-size:.97rem;line-height:1.9;color:var(--ink2);
+  max-width:720px;margin-bottom:36px;
+}
+
+/* ══════════════════════════════════════════
+   CALLOUTS
+══════════════════════════════════════════ */
+.note{
+  border-left:3px solid var(--gold);
+  background:rgba(160,122,16,.05);
+  padding:14px 18px;border-radius:0 3px 3px 0;
+  font-size:.88rem;line-height:1.75;color:var(--ink2);margin:20px 0;
+}
+.note-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;letter-spacing:3px;color:var(--gold);margin-bottom:6px;
+}
+.tip{border-left-color:var(--blue);background:rgba(26,79,140,.04);}
+.tip .note-label{color:var(--blue);}
+.warn{border-left-color:var(--accent);background:rgba(200,65,10,.04);}
+.warn .note-label{color:var(--accent);}
+.success{border-left-color:var(--green);background:rgba(26,107,60,.04);}
+.success .note-label{color:var(--green);}
+
+/* ══════════════════════════════════════════
+   LAYOUT HELPERS
+══════════════════════════════════════════ */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+@media(max-width:680px){.two-col{grid-template-columns:1fr;}}
+
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:720px){.three-col{grid-template-columns:1fr;}}
+
+ol.num-list{counter-reset:li;list-style:none;display:flex;flex-direction:column;gap:10px;}
+.num-list li{display:flex;gap:12px;font-size:.9rem;line-height:1.7;color:var(--ink2);}
+.num-list li::before{
+  content:counter(li);counter-increment:li;
+  display:flex;align-items:center;justify-content:center;
+  min-width:26px;height:26px;background:var(--accent);color:#fff;
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  border-radius:50%;flex-shrink:0;margin-top:2px;
+}
+
+/* ══════════════════════════════════════════
+   CARDS GENÉRICAS
+══════════════════════════════════════════ */
+.card{
+  border:1px solid var(--border);border-radius:4px;
+  padding:22px;background:var(--card);
+  backdrop-filter:blur(8px);transition:all .22s;
+  position:relative;overflow:hidden;
+}
+.card:hover{box-shadow:var(--shadow);transform:translateY(-3px);}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+}
+
+.card-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;letter-spacing:3px;color:var(--ink3);margin-bottom:8px;
+}
+.card-title{
+  font-family:'DM Serif Display',serif;
+  font-size:1.15rem;color:var(--ink);margin-bottom:8px;line-height:1.3;
+}
+.card-body{font-size:.85rem;line-height:1.7;color:var(--ink2);}
+
+/* ══════════════════════════════════════════
+   BADGE
+══════════════════════════════════════════ */
+.badge{
+  display:inline-block;font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:1px;
+  padding:3px 9px;border-radius:20px;border:1px solid;
+}
+.b-red   {color:var(--accent);border-color:rgba(200,65,10,.3);background:rgba(200,65,10,.06);}
+.b-blue  {color:var(--blue);  border-color:rgba(26,79,140,.3); background:rgba(26,79,140,.06);}
+.b-green {color:var(--green); border-color:rgba(26,107,60,.3); background:rgba(26,107,60,.06);}
+.b-gold  {color:var(--gold);  border-color:rgba(160,122,16,.3);background:rgba(160,122,16,.06);}
+.b-purple{color:var(--purple);border-color:rgba(107,45,139,.3);background:rgba(107,45,139,.06);}
+.b-teal  {color:var(--teal);  border-color:rgba(14,124,123,.3);background:rgba(14,124,123,.06);}
+
+/* ══════════════════════════════════════════
+   CICLO DE 5 FASES — línea de tiempo horizontal
+══════════════════════════════════════════ */
+.phases-wrap{overflow-x:auto;padding-bottom:8px;}
+
+.phases-flow{
+  display:flex;align-items:stretch;gap:0;
+  min-width:700px;
+}
+
+.phase-item{
+  flex:1;display:flex;flex-direction:column;
+  position:relative;
+}
+
+.phase-header{
+  display:flex;align-items:center;gap:0;
+  margin-bottom:0;
+}
+
+.phase-box{
+  flex:1;padding:18px 16px 16px;
+  border:1px solid var(--border);
+  border-right:none;background:var(--card);
+  cursor:pointer;transition:all .2s;
+  border-top:3px solid;
+}
+
+.phase-item:last-child .phase-box{border-right:1px solid var(--border);}
+
+.ph1 .phase-box{border-top-color:var(--blue);}
+.ph2 .phase-box{border-top-color:var(--gold);}
+.ph3 .phase-box{border-top-color:var(--accent);}
+.ph4 .phase-box{border-top-color:var(--green);}
+.ph5 .phase-box{border-top-color:var(--purple);}
+
+.phase-box:hover,.phase-item.active .phase-box{
+  background:rgba(255,255,255,.9);box-shadow:var(--shadow);
+  transform:translateY(-2px);
+}
+
+.phase-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;letter-spacing:2px;margin-bottom:6px;
+}
+.ph1 .phase-num{color:var(--blue);}
+.ph2 .phase-num{color:var(--gold);}
+.ph3 .phase-num{color:var(--accent);}
+.ph4 .phase-num{color:var(--green);}
+.ph5 .phase-num{color:var(--purple);}
+
+.phase-name{
+  font-family:'DM Serif Display',serif;
+  font-size:.95rem;line-height:1.25;color:var(--ink);
+  margin-bottom:4px;
+}
+
+.phase-iso{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.58rem;color:var(--ink3);letter-spacing:1px;
+}
+
+.phase-arrow{
+  display:flex;align-items:center;justify-content:center;
+  width:24px;flex-shrink:0;
+  color:var(--ink3);font-size:.9rem;
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  z-index:2;
+}
+
+.phase-detail{
+  display:none;
+  border:1px solid var(--border);border-top:none;
+  padding:20px;background:rgba(255,255,255,.7);
+}
+
+.phase-item.active .phase-detail{display:block;}
+
+.phase-detail-title{
+  font-family:'DM Serif Display',serif;
+  font-size:1.1rem;color:var(--ink);margin-bottom:10px;
+}
+
+.phase-steps{list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:12px;}
+.phase-steps li{
+  font-size:.85rem;line-height:1.65;color:var(--ink2);
+  padding-left:16px;position:relative;
+}
+.phase-steps li::before{content:'→';position:absolute;left:0;color:var(--accent);}
+
+.phase-tools{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+
+/* ══════════════════════════════════════════
+   CLASIFICACIÓN DE EVENTOS
+══════════════════════════════════════════ */
+.event-pyramid{
+  display:flex;flex-direction:column;gap:2px;
+  max-width:600px;
+}
+
+.pyramid-row{
+  display:flex;align-items:center;gap:0;
+  border-radius:3px;overflow:hidden;
+}
+
+.pyr-bar{
+  padding:14px 20px;flex:1;
+  transition:filter .2s;cursor:default;
+}
+.pyr-bar:hover{filter:brightness(.96);}
+
+.pyr-label{
+  font-family:'DM Serif Display',serif;
+  font-size:1rem;color:#fff;margin-bottom:3px;
+}
+.pyr-sub{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:rgba(255,255,255,.7);letter-spacing:1px;}
+.pyr-count{
+  width:90px;flex-shrink:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:14px 12px;background:var(--bg2);
+  border-left:1px solid var(--border);
+  font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--ink);
+}
+.pyr-count small{font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--ink3);letter-spacing:2px;margin-top:2px;}
+
+.ev-event  {background:#2a4a7a;}
+.ev-alert  {background:#5a7a1a;}
+.ev-incident{background:#a06010;}
+.ev-major  {background:#b02010;}
+.ev-crisis {background:#6a0a0a;}
+
+/* ══════════════════════════════════════════
+   EQUIPO CSIRT
+══════════════════════════════════════════ */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+
+.team-card{
+  border:1px solid var(--border);border-radius:4px;
+  padding:20px;background:var(--card);transition:all .2s;
+}
+.team-card:hover{box-shadow:var(--shadow);transform:translateY(-2px);}
+
+.team-icon{font-size:1.8rem;margin-bottom:10px;}
+.team-role{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;letter-spacing:3px;color:var(--ink3);margin-bottom:6px;
+}
+.team-name{
+  font-family:'DM Serif Display',serif;
+  font-size:1.05rem;color:var(--ink);margin-bottom:6px;
+}
+.team-desc{font-size:.83rem;line-height:1.65;color:var(--ink2);}
+.team-skills{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;}
+
+/* ══════════════════════════════════════════
+   TRIAGE / SEVERIDAD
+══════════════════════════════════════════ */
+.severity-table{width:100%;border-collapse:collapse;}
+.severity-table th{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;letter-spacing:2px;color:var(--ink3);
+  padding:10px 14px;border-bottom:2px solid var(--border);
+  text-align:left;font-weight:400;
+}
+.severity-table td{
+  padding:13px 14px;border-bottom:1px solid var(--border);
+  font-size:.85rem;line-height:1.6;color:var(--ink2);vertical-align:top;
+}
+.severity-table tr:hover td{background:rgba(200,65,10,.02);}
+
+.sev-badge{
+  display:inline-block;padding:4px 10px;border-radius:20px;
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  letter-spacing:1px;font-weight:600;border:1px solid;
+}
+.sev-p1{background:rgba(176,32,16,.12);color:#b02010;border-color:rgba(176,32,16,.3);}
+.sev-p2{background:rgba(200,65,10,.1);color:var(--accent);border-color:rgba(200,65,10,.3);}
+.sev-p3{background:rgba(160,122,16,.1);color:var(--gold);border-color:rgba(160,122,16,.3);}
+.sev-p4{background:rgba(26,79,140,.08);color:var(--blue);border-color:rgba(26,79,140,.25);}
+
+/* ══════════════════════════════════════════
+   PLAYBOOKS — accordion
+══════════════════════════════════════════ */
+.playbooks{display:flex;flex-direction:column;gap:4px;}
+
+.pb-row{border:1px solid var(--border);border-radius:3px;background:var(--card);overflow:hidden;}
+
+.pb-header{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 20px;cursor:pointer;transition:background .2s;user-select:none;
+}
+.pb-header:hover{background:rgba(26,20,16,.03);}
+.pb-row.open .pb-header{background:rgba(200,65,10,.04);}
+
+.pb-icon{font-size:1.2rem;flex-shrink:0;}
+.pb-name{
+  font-family:'DM Serif Display',serif;
+  font-size:1.05rem;color:var(--ink);flex:1;
+}
+.pb-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.58rem;color:var(--ink3);
+  border:1px solid var(--border);padding:3px 8px;border-radius:20px;flex-shrink:0;
+}
+.pb-chevron{font-size:.75rem;color:var(--ink3);transition:transform .2s;flex-shrink:0;}
+.pb-row.open .pb-chevron{transform:rotate(180deg);}
+
+.pb-body{display:none;padding:0 20px 20px;border-top:1px solid var(--border);}
+.pb-row.open .pb-body{display:block;}
+
+.pb-intro{
+  font-size:.88rem;line-height:1.75;color:var(--ink2);
+  margin:14px 0 16px;padding:12px 16px;
+  background:rgba(200,65,10,.04);
+  border-left:2px solid var(--accent);border-radius:0 3px 3px 0;
+}
+
+.pb-steps{display:flex;flex-direction:column;gap:10px;}
+
+.pb-step{
+  display:flex;gap:14px;
+  padding:12px 16px;border:1px solid var(--border);
+  border-radius:3px;background:rgba(255,255,255,.5);
+  transition:border-color .2s;
+}
+.pb-step:hover{border-color:rgba(200,65,10,.25);}
+
+.pb-step-num{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  color:var(--accent);min-width:24px;flex-shrink:0;padding-top:2px;
+  background:rgba(200,65,10,.08);height:fit-content;
+  padding:2px 6px;border-radius:2px;
+}
+.pb-step-content{flex:1;}
+.pb-step-title{font-size:.88rem;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.pb-step-desc{font-size:.83rem;line-height:1.65;color:var(--ink2);}
+.pb-step-time{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  color:var(--ink3);flex-shrink:0;padding-top:3px;
+}
+
+/* ══════════════════════════════════════════
+   MÉTRICAS
+══════════════════════════════════════════ */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;}
+
+.kpi-card{
+  border:1px solid var(--border);border-radius:4px;
+  padding:20px;background:var(--card);transition:all .2s;
+}
+.kpi-card:hover{box-shadow:var(--shadow);transform:translateY(-2px);}
+
+.kpi-area{
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;
+  letter-spacing:3px;color:var(--ink3);margin-bottom:10px;
+}
+.kpi-name{
+  font-family:'DM Serif Display',serif;font-size:1.05rem;
+  color:var(--ink);margin-bottom:6px;
+}
+.kpi-desc{font-size:.82rem;line-height:1.65;color:var(--ink2);}
+.kpi-formula{
+  margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:.72rem;
+  background:rgba(26,20,16,.05);padding:6px 10px;border-radius:2px;
+  color:var(--accent);line-height:1.5;
+}
+
+/* ══════════════════════════════════════════
+   DOCUMENTACIÓN REQUERIDA
+══════════════════════════════════════════ */
+.docs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px;}
+
+.doc-item{
+  display:flex;gap:14px;padding:16px;
+  border:1px solid var(--border);border-radius:3px;
+  background:rgba(255,255,255,.5);transition:border-color .2s,transform .2s;
+}
+.doc-item:hover{border-color:rgba(200,65,10,.3);transform:translateY(-1px);}
+
+.doc-icon{
+  font-size:1.3rem;flex-shrink:0;
+  width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+  background:rgba(200,65,10,.06);border-radius:3px;
+}
+.doc-title{font-size:.88rem;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.doc-desc{font-size:.82rem;line-height:1.6;color:var(--ink2);}
+.doc-req{
+  margin-top:6px;font-family:'JetBrains Mono',monospace;
+  font-size:.58rem;color:var(--ink3);letter-spacing:1px;
+}
+
+/* ══════════════════════════════════════════
+   HERRAMIENTAS
+══════════════════════════════════════════ */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+
+.tool-card{
+  border:1px solid var(--border);border-radius:4px;
+  padding:18px;background:var(--card);transition:all .2s;
+}
+.tool-card:hover{box-shadow:var(--shadow);transform:translateY(-2px);}
+
+.tool-cat{
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;
+  letter-spacing:2px;color:var(--ink3);margin-bottom:7px;
+}
+.tool-name{
+  font-family:'DM Serif Display',serif;font-size:1rem;
+  color:var(--ink);margin-bottom:5px;
+}
+.tool-desc{font-size:.82rem;line-height:1.6;color:var(--ink2);}
+.tool-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;}
+
+/* ══════════════════════════════════════════
+   RELACIÓN CON OTRAS NORMAS
+══════════════════════════════════════════ */
+.relations-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+@media(max-width:720px){.relations-grid{grid-template-columns:1fr;}}
+
+.rel-item{
+  border:1px solid var(--border);border-radius:4px;
+  padding:20px;background:var(--card);transition:all .2s;
+}
+.rel-item:hover{box-shadow:var(--shadow);}
+
+.rel-std{
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  letter-spacing:2px;margin-bottom:8px;font-weight:600;
+}
+.rel-name{
+  font-family:'DM Serif Display',serif;font-size:1.05rem;
+  color:var(--ink);margin-bottom:8px;
+}
+.rel-how{font-size:.83rem;line-height:1.65;color:var(--ink2);}
+
+/* ══════════════════════════════════════════
+   CRONÓMETRO VISUAL (línea de tiempo de respuesta)
+══════════════════════════════════════════ */
+.timeline-h{
+  position:relative;
+  padding-left:20px;
+  border-left:2px solid var(--border);
+  display:flex;flex-direction:column;gap:0;
+}
+
+.tl-item{position:relative;padding:0 0 28px 28px;}
+.tl-item:last-child{padding-bottom:0;}
+
+.tl-dot{
+  position:absolute;left:-29px;top:4px;
+  width:14px;height:14px;border-radius:50%;
+  border:2px solid;background:var(--bg);flex-shrink:0;
+}
+
+.tl-time{
+  font-family:'DM Serif Display',serif;font-size:1.6rem;
+  line-height:1;margin-bottom:3px;
+}
+.tl-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:2px;color:var(--ink3);margin-bottom:5px;
+}
+.tl-desc{font-size:.87rem;line-height:1.7;color:var(--ink2);}
+
+/* ══════════════════════════════════════════
+   IMPL STEPS (reutilizado de 27001)
+══════════════════════════════════════════ */
+.impl-steps{display:flex;flex-direction:column;gap:0;position:relative;}
+.impl-steps::before{
+  content:'';position:absolute;left:28px;top:16px;bottom:16px;
+  width:1px;background:var(--border);
+}
+.impl-step{display:flex;gap:28px;padding:0 0 36px;position:relative;}
+.impl-step:last-child{padding-bottom:0;}
+.step-circle{
+  width:56px;height:56px;border-radius:50%;border:2px solid var(--border);
+  background:var(--bg);display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-family:'DM Serif Display',serif;font-size:1.4rem;
+  color:var(--accent);position:relative;z-index:2;
+}
+.step-content{flex:1;padding-top:10px;}
+.step-title{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);margin-bottom:6px;}
+.step-desc{font-size:.88rem;line-height:1.75;color:var(--ink2);}
+.step-tips{margin-top:10px;list-style:none;display:flex;flex-direction:column;gap:4px;}
+.step-tips li{font-size:.83rem;color:var(--ink2);padding-left:14px;position:relative;line-height:1.6;}
+.step-tips li::before{content:'•';position:absolute;left:0;color:var(--accent);}
+
+/* ══════════════════════════════════════════
+   SCROLL TOP + FOOTER + ANIMATIONS
+══════════════════════════════════════════ */
+.scroll-top{
+  position:fixed;bottom:28px;right:28px;z-index:200;
+  background:var(--ink);color:var(--bg);
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  padding:10px 16px;border:none;border-radius:2px;
+  cursor:pointer;transition:all .2s;letter-spacing:2px;
+  opacity:0;pointer-events:none;
+  box-shadow:0 4px 20px rgba(26,20,16,.2);
+}
+.scroll-top.show{opacity:1;pointer-events:auto;}
+.scroll-top:hover{background:var(--accent);}
+
+footer{
+  background:var(--ink);color:rgba(245,242,237,.5);
+  padding:48px 40px;font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;letter-spacing:1px;line-height:2;text-align:center;
+}
+footer strong{color:rgba(245,242,237,.8);}
+footer a{color:var(--accent2);text-decoration:none;}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(16px);}
+  to  {opacity:1;transform:translateY(0);}
+}
+
+/* highlight búsqueda */
+.hl{background:rgba(200,65,10,.18);border-radius:2px;}
+
+/* tabla de comparación ley 21663 */
+.compare-table{width:100%;border-collapse:collapse;}
+.compare-table th{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:2px;color:var(--ink3);padding:10px 14px;
+  border-bottom:2px solid var(--border);text-align:left;font-weight:400;
+}
+.compare-table td{
+  padding:12px 14px;border-bottom:1px solid var(--border);
+  font-size:.85rem;line-height:1.65;color:var(--ink2);vertical-align:top;
+}
+.compare-table tr:hover td{background:rgba(200,65,10,.02);}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">// Estándar Internacional — Gestión de Incidentes de Seguridad de la Información</div>
+    <h1 class="hero-title">ISO/IEC<br><em>27035</em></h1>
+    <div class="hero-year">PARTES 1 · 2 · 3</div>
+    <p class="hero-desc">
+      El marco de referencia para planificar, detectar, evaluar, responder y aprender de los incidentes de seguridad de la información. Complemento operativo esencial de ISO 27001.
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">5</div><div class="stat-label">Fases del Proceso</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Partes del Estándar</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Niveles de Severidad</div></div>
+      <div class="stat"><div class="stat-num">72h</div><div class="stat-label">Ventana crítica de respuesta</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ NAV ══ -->
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a class="nav-link" href="#que-es">¿Qué es?</a>
+    <a class="nav-link" href="#partes">Partes</a>
+    <a class="nav-link" href="#fases">Fases</a>
+    <a class="nav-link" href="#clasificacion">Clasificación</a>
+    <a class="nav-link" href="#equipo">Equipo ISIRT</a>
+    <a class="nav-link" href="#triage">Triage</a>
+    <a class="nav-link" href="#playbooks">Playbooks</a>
+    <a class="nav-link" href="#tiempos">Tiempos</a>
+    <a class="nav-link" href="#documentacion">Docs</a>
+    <a class="nav-link" href="#metricas">Métricas</a>
+    <a class="nav-link" href="#herramientas">Herramientas</a>
+    <a class="nav-link" href="#relaciones">Relaciones</a>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- ══ QUÉ ES ══ -->
+<section class="block" id="que-es">
+  <div class="block-label">// Fundamentos</div>
+  <h2 class="block-title">¿Qué es ISO/IEC 27035?</h2>
+  <p class="block-intro">
+    ISO/IEC 27035 define los principios y procesos para la gestión de incidentes de seguridad de la información. Proporciona un marco estructurado para que las organizaciones <strong>detecten, reporten, evalúen, respondan y aprendan</strong> de los incidentes.
+  </p>
+
+  <div class="two-col">
+    <div>
+      <div class="note warn">
+        <div class="note-label">// DEFINICIONES CLAVE</div>
+        <strong>Evento de SI:</strong> Ocurrencia identificada en un sistema, servicio o red que indica una posible violación de la política de SI o un fallo de controles.<br><br>
+        <strong>Incidente de SI:</strong> Evento o serie de eventos de SI no deseados o inesperados que tienen una probabilidad significativa de comprometer las operaciones del negocio y amenazar la seguridad de la información.<br><br>
+        <strong>Crisis de SI:</strong> Situación de incidente de alto impacto que requiere gestión a nivel de la alta dirección y puede tener consecuencias para toda la organización o incluso para terceros.
+      </div>
+
+      <div class="note tip" style="margin-top:14px;">
+        <div class="note-label">// RELACIÓN CON ISO 27001</div>
+        ISO 27035 implementa los controles <strong>5.24–5.28</strong> del Anexo A de ISO 27001 (gestión de incidentes) y el control <strong>6.8</strong> (reporte de eventos). Es el "cómo operativo" que ISO 27001 no detalla.
+      </div>
+    </div>
+
+    <div>
+      <div class="block-label" style="margin-bottom:14px;">// ¿Por qué es necesario este estándar?</div>
+      <ol class="num-list">
+        <li>Sin un proceso predefinido, los equipos improvisan bajo presión y cometen errores costosos</li>
+        <li>Permite cumplir los plazos de notificación obligatorios (Ley 21.663: 3h / 72h / 15 días)</li>
+        <li>Reduce el tiempo de detección (MTTD) y el tiempo de respuesta (MTTR) de forma medible</li>
+        <li>Crea evidencias legales válidas al seguir procedimientos documentados de preservación</li>
+        <li>Genera conocimiento institucional: cada incidente mejora la postura de seguridad</li>
+        <li>Demuestra a reguladores y clientes que existe una capacidad formal de respuesta</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LAS 3 PARTES ══ -->
+<section class="block" id="partes">
+  <div class="block-label">// Estructura del Estándar</div>
+  <h2 class="block-title">Las Tres Partes de ISO 27035</h2>
+  <p class="block-intro">
+    El estándar está dividido en tres documentos complementarios. La Parte 1 es el núcleo conceptual; las Partes 2 y 3 son guías de implementación más detalladas.
+  </p>
+
+  <div class="three-col">
+    <div class="card">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);"></div>
+      <div class="card-label">ISO/IEC 27035-1</div>
+      <div class="card-title">Principios de la Gestión de Incidentes</div>
+      <div class="card-body">
+        Define los conceptos, principios y el modelo de proceso de alto nivel para la gestión de incidentes. Establece las 5 fases del ciclo de vida y los roles principales. Es la parte más importante para entender el marco general.
+        <br><br>
+        <span class="badge b-red">Lectura obligatoria</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--blue);"></div>
+      <div class="card-label">ISO/IEC 27035-2</div>
+      <div class="card-title">Guías para Planificar y Prepararse</div>
+      <div class="card-body">
+        Guía detallada para establecer y mejorar la capacidad de gestión de incidentes: crear el ISIRT (equipo de respuesta), definir políticas, procedimientos, formularios y esquemas de clasificación. El trabajo preventivo.
+        <br><br>
+        <span class="badge b-blue">Implementación preventiva</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--green);"></div>
+      <div class="card-label">ISO/IEC 27035-3</div>
+      <div class="card-title">Guías para Operaciones de Respuesta</div>
+      <div class="card-body">
+        Orientaciones operativas para responder a incidentes específicos como intrusiones, malware, DDoS, filtraciones de datos. Incluye técnicas forenses digitales y coordinación con CSIRT nacionales.
+        <br><br>
+        <span class="badge b-green">Operaciones en vivo</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:8px;">
+    <div class="note-label">// NOTA SOBRE VERSIONES</div>
+    ISO/IEC 27035-1 y 27035-2 fueron revisadas en <strong>2023</strong>. La Parte 3 (operaciones de respuesta) es la más técnica y operativa, con guías específicas por tipo de incidente que complementan los playbooks de los equipos SOC/CSIRT.
+  </div>
+</section>
+
+<!-- ══ FASES ══ -->
+<section class="block" id="fases">
+  <div class="block-label">// Ciclo de Vida del Incidente</div>
+  <h2 class="block-title">Las 5 Fases del Proceso</h2>
+  <p class="block-intro">
+    ISO 27035 define un ciclo de vida de 5 fases secuenciales. La fase final (aprendizaje) cierra el bucle de mejora continua y retroalimenta la Fase 1 para el próximo incidente. Haz clic en cada fase para ampliar.
+  </p>
+
+  <div class="phases-wrap">
+    <div class="phases-flow" id="phasesFlow">
+
+      <div class="phase-item ph1" onclick="togglePhase(this)">
+        <div class="phase-box">
+          <div class="phase-num">FASE 01</div>
+          <div class="phase-name">Planificar &amp; Preparar</div>
+          <div class="phase-iso">27035-2 §6</div>
+        </div>
+        <div class="phase-detail">
+          <div class="phase-detail-title">Construir la capacidad de respuesta antes del incidente</div>
+          <ul class="phase-steps">
+            <li>Definir la política de gestión de incidentes y obtener aprobación de la dirección</li>
+            <li>Crear y documentar el esquema de clasificación de eventos e incidentes</li>
+            <li>Establecer el equipo ISIRT con roles, responsabilidades y datos de contacto 24/7</li>
+            <li>Diseñar y documentar los procedimientos de respuesta por tipo de incidente</li>
+            <li>Preparar formularios, plantillas y listas de verificación</li>
+            <li>Implementar herramientas de detección, ticketing y comunicación segura</li>
+            <li>Realizar simulacros y tabletop exercises periódicamente</li>
+          </ul>
+          <div class="phase-tools">
+            <span class="badge b-blue">Política de incidentes</span>
+            <span class="badge b-blue">ISIRT charter</span>
+            <span class="badge b-blue">Runbooks/Playbooks</span>
+            <span class="badge b-blue">SIEM/IDS</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-arrow">›</div>
+
+      <div class="phase-item ph2" onclick="togglePhase(this)">
+        <div class="phase-box">
+          <div class="phase-num">FASE 02</div>
+          <div class="phase-name">Detectar &amp; Reportar</div>
+          <div class="phase-iso">27035-1 §7.2</div>
+        </div>
+        <div class="phase-detail">
+          <div class="phase-detail-title">Identificar y notificar eventos de seguridad</div>
+          <ul class="phase-steps">
+            <li>Monitorizar fuentes de detección: SIEM, IDS/IPS, EDR, logs, alertas de usuario</li>
+            <li>Personal y sistemas reportan eventos sospechosos al ISIRT o punto de contacto definido</li>
+            <li>Registrar todos los eventos en el sistema de ticketing con timestamp y evidencia inicial</li>
+            <li>Aplicar el formulario de reporte inicial (quién detectó, qué observó, cuándo, dónde)</li>
+            <li>No modificar sistemas sospechosos antes de que el ISIRT evalúe</li>
+          </ul>
+          <div class="phase-tools">
+            <span class="badge b-gold">SIEM (Splunk/Elastic)</span>
+            <span class="badge b-gold">EDR</span>
+            <span class="badge b-gold">Formulario de reporte</span>
+            <span class="badge b-gold">Canal 24/7</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-arrow">›</div>
+
+      <div class="phase-item ph3" onclick="togglePhase(this)">
+        <div class="phase-box">
+          <div class="phase-num">FASE 03</div>
+          <div class="phase-name">Evaluar &amp; Decidir</div>
+          <div class="phase-iso">27035-1 §7.3</div>
+        </div>
+        <div class="phase-detail">
+          <div class="phase-detail-title">Triage: clasificar la severidad y decidir la respuesta</div>
+          <ul class="phase-steps">
+            <li>El ISIRT recibe el reporte y realiza la evaluación inicial del evento</li>
+            <li>Determinar si el evento califica como incidente de SI formal</li>
+            <li>Clasificar la severidad: P1 Crítico / P2 Alto / P3 Medio / P4 Bajo</li>
+            <li>Asignar el incidente al equipo correspondiente según tipo y severidad</li>
+            <li>Decidir la respuesta: ¿respuesta normal, escalar a crisis, notificar a autoridades?</li>
+            <li>Activar el plan de respuesta correspondiente (playbook)</li>
+            <li>Comunicar la clasificación a las partes interesadas internas</li>
+          </ul>
+          <div class="phase-tools">
+            <span class="badge b-red">Matriz de severidad</span>
+            <span class="badge b-red">Árbol de decisión</span>
+            <span class="badge b-red">Criterios de escalado</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-arrow">›</div>
+
+      <div class="phase-item ph4" onclick="togglePhase(this)">
+        <div class="phase-box">
+          <div class="phase-num">FASE 04</div>
+          <div class="phase-name">Responder</div>
+          <div class="phase-iso">27035-1 §7.4</div>
+        </div>
+        <div class="phase-detail">
+          <div class="phase-detail-title">Contener, erradicar y recuperar</div>
+          <ul class="phase-steps">
+            <li><strong>Contención:</strong> aislar sistemas afectados para evitar propagación (cuarentena de red, bloqueo de cuentas)</li>
+            <li><strong>Investigación forense:</strong> preservar evidencias antes de cualquier acción (imagen de disco, capturas de memoria)</li>
+            <li><strong>Erradicación:</strong> eliminar la causa raíz (malware, cuenta comprometida, vulnerabilidad explotada)</li>
+            <li><strong>Recuperación:</strong> restaurar sistemas desde backups limpios y verificar integridad</li>
+            <li><strong>Comunicación:</strong> notificar a la dirección, usuarios afectados y reguladores según la ley</li>
+            <li>Documentar cada acción tomada con timestamp en el registro del incidente</li>
+          </ul>
+          <div class="phase-tools">
+            <span class="badge b-green">Playbooks técnicos</span>
+            <span class="badge b-green">Herramientas forenses</span>
+            <span class="badge b-green">Backups verificados</span>
+            <span class="badge b-green">Plan de comunicación</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-arrow">›</div>
+
+      <div class="phase-item ph5" onclick="togglePhase(this)">
+        <div class="phase-box">
+          <div class="phase-num">FASE 05</div>
+          <div class="phase-name">Aprender &amp; Mejorar</div>
+          <div class="phase-iso">27035-1 §7.5</div>
+        </div>
+        <div class="phase-detail">
+          <div class="phase-detail-title">Cerrar el bucle: convertir el incidente en mejora</div>
+          <ul class="phase-steps">
+            <li>Realizar el Post-Incident Review (PIR) dentro de los 5–10 días posteriores al cierre</li>
+            <li>Análisis de causa raíz (RCA): ¿qué falló, por qué ocurrió, qué lo permitió?</li>
+            <li>Identificar controles faltantes o ineficaces del Anexo A de ISO 27001</li>
+            <li>Generar acciones correctivas documentadas con responsable y fecha límite</li>
+            <li>Actualizar playbooks, políticas y procedimientos con las lecciones aprendidas</li>
+            <li>Compartir aprendizajes (anonimizados) con el sector o comunidad CSIRT</li>
+            <li>Actualizar la evaluación de riesgos del SGSI si el incidente revela riesgos no considerados</li>
+          </ul>
+          <div class="phase-tools">
+            <span class="badge b-purple">Informe PIR</span>
+            <span class="badge b-purple">RCA (5 Whys / Ishikawa)</span>
+            <span class="badge b-purple">Actualización de riesgos</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="note success" style="margin-top:20px;">
+    <div class="note-label">// CICLO CONTINUO</div>
+    La Fase 5 no es el final: los aprendizajes y acciones correctivas retroalimentan directamente la Fase 1 (preparación). Cada incidente gestionado correctamente hace al equipo más efectivo en el próximo.
+  </div>
+</section>
+
+<!-- ══ CLASIFICACIÓN ══ -->
+<section class="block" id="clasificacion">
+  <div class="block-label">// Taxonomía de Incidentes</div>
+  <h2 class="block-title">Clasificación de Eventos e Incidentes</h2>
+  <p class="block-intro">
+    ISO 27035 establece una jerarquía clara entre eventos, alertas, incidentes y crisis. Comprender estas diferencias es crítico para priorizar la respuesta y no desperdiciar recursos.
+  </p>
+
+  <div class="two-col" style="margin-bottom:32px;">
+    <div>
+      <div class="block-label" style="margin-bottom:16px;">// Jerarquía de eventos (volumen vs. impacto)</div>
+      <div class="event-pyramid">
+        <div class="pyramid-row">
+          <div class="pyr-bar ev-event">
+            <div class="pyr-label">Eventos de SI</div>
+            <div class="pyr-sub">Todo lo registrado en logs y sistemas de monitoreo</div>
+          </div>
+          <div class="pyr-count">∞<small>DIARIOS</small></div>
+        </div>
+        <div class="pyramid-row">
+          <div class="pyr-bar ev-alert">
+            <div class="pyr-label">Alertas</div>
+            <div class="pyr-sub">Eventos que superan umbrales o correlaciones definidas</div>
+          </div>
+          <div class="pyr-count">100s<small>DIARIOS</small></div>
+        </div>
+        <div class="pyramid-row">
+          <div class="pyr-bar ev-incident">
+            <div class="pyr-label">Incidentes confirmados</div>
+            <div class="pyr-sub">Alertas validadas como violaciones o amenazas reales</div>
+          </div>
+          <div class="pyr-count">10s<small>MENSUAL</small></div>
+        </div>
+        <div class="pyramid-row">
+          <div class="pyr-bar ev-major">
+            <div class="pyr-label">Incidentes mayores</div>
+            <div class="pyr-sub">Alto impacto, requieren escalado a dirección</div>
+          </div>
+          <div class="pyr-count">1–5<small>ANUAL</small></div>
+        </div>
+        <div class="pyramid-row">
+          <div class="pyr-bar ev-crisis">
+            <div class="pyr-label">Crisis de SI</div>
+            <div class="pyr-sub">Impacto catastrófico, gestión ejecutiva, notificación pública</div>
+          </div>
+          <div class="pyr-count">Raro<small>EXCEPCIONAL</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="block-label" style="margin-bottom:14px;">// Categorías de incidentes más comunes</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="card" style="padding:14px 18px;">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);"></div>
+          <div class="card-label">MALWARE & RANSOMWARE</div>
+          <div class="card-body">Código malicioso que infecta, cifra o destruye sistemas. Incluye ransomware, troyanos, spyware y wipers.</div>
+        </div>
+        <div class="card" style="padding:14px 18px;">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--blue);"></div>
+          <div class="card-label">ACCESO NO AUTORIZADO</div>
+          <div class="card-body">Intrusión en sistemas, escalada de privilegios, uso de credenciales comprometidas (credential stuffing).</div>
+        </div>
+        <div class="card" style="padding:14px 18px;">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);"></div>
+          <div class="card-label">FUGA DE DATOS (DATA BREACH)</div>
+          <div class="card-body">Exfiltración o exposición no autorizada de información confidencial, personal o sensible.</div>
+        </div>
+        <div class="card" style="padding:14px 18px;">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--teal);"></div>
+          <div class="card-label">DENEGACIÓN DE SERVICIO (DoS/DDoS)</div>
+          <div class="card-body">Ataques que interrumpen la disponibilidad de sistemas o servicios críticos.</div>
+        </div>
+        <div class="card" style="padding:14px 18px;">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--purple);"></div>
+          <div class="card-label">INGENIERÍA SOCIAL / PHISHING</div>
+          <div class="card-body">Manipulación psicológica para obtener información o acceso. BEC (Business Email Compromise), spear-phishing.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EQUIPO ISIRT ══ -->
+<section class="block" id="equipo">
+  <div class="block-label">// ISO 27035-2 §7 — Estructura Organizativa</div>
+  <h2 class="block-title">El Equipo ISIRT</h2>
+  <p class="block-intro">
+    El <strong>Information Security Incident Response Team (ISIRT)</strong> es el equipo designado para gestionar los incidentes. Su estructura puede ser un equipo dedicado (SOC interno), virtual (roles asignados a personas con otras funciones) o híbrido con apoyo externo.
+  </p>
+
+  <div class="note" style="margin-bottom:24px;">
+    <div class="note-label">// ISIRT vs CSIRT vs SOC</div>
+    <strong>ISIRT:</strong> término ISO 27035 para el equipo de respuesta de una organización específica.<br>
+    <strong>CSIRT:</strong> (Computer Security Incident Response Team) — término más general, frecuentemente usado para equipos sectoriales o nacionales (ej: CSIRT Nacional de la ANCI en Chile).<br>
+    <strong>SOC:</strong> (Security Operations Center) — equipo de monitoreo 24/7 que típicamente incluye la función de detección y parte de la respuesta. Puede coexistir con un ISIRT.
+  </div>
+
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-icon">🎯</div>
+      <div class="team-role">LIDERAZGO</div>
+      <div class="team-name">Líder del ISIRT / CISO</div>
+      <div class="team-desc">Responsable general de la capacidad de respuesta. Toma decisiones de escalado, autoriza recursos y comunica con la dirección y reguladores. Punto de contacto para incidentes mayores y crisis.</div>
+      <div class="team-skills">
+        <span class="badge b-red">Toma de decisiones</span>
+        <span class="badge b-red">Comunicación ejecutiva</span>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-icon">🔍</div>
+      <div class="team-role">ANÁLISIS</div>
+      <div class="team-name">Analista de SI / Triage</div>
+      <div class="team-desc">Recibe los reportes de eventos, realiza la evaluación inicial y el triage. Determina si un evento es un incidente y su severidad. Opera el SIEM, analiza logs y coordina la respuesta técnica inicial.</div>
+      <div class="team-skills">
+        <span class="badge b-blue">SIEM</span>
+        <span class="badge b-blue">Análisis de logs</span>
+        <span class="badge b-blue">Threat Intel</span>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-icon">🛠️</div>
+      <div class="team-role">RESPUESTA TÉCNICA</div>
+      <div class="team-name">Especialista en Respuesta</div>
+      <div class="team-desc">Ejecuta las acciones técnicas de contención, erradicación y recuperación. Maneja herramientas EDR, firewalls y sistemas de backup. Puede especializarse por dominio: redes, endpoints, cloud.</div>
+      <div class="team-skills">
+        <span class="badge b-green">EDR/XDR</span>
+        <span class="badge b-green">Firewall</span>
+        <span class="badge b-green">Recuperación</span>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-icon">🔬</div>
+      <div class="team-role">FORENSE</div>
+      <div class="team-name">Analista Forense Digital</div>
+      <div class="team-desc">Preserva y analiza evidencias digitales siguiendo cadena de custodia. Realiza análisis de malware, extracción de artefactos, reconstrucción de la línea de tiempo del ataque. Clave para procesos legales.</div>
+      <div class="team-skills">
+        <span class="badge b-gold">Autopsy/FTK</span>
+        <span class="badge b-gold">Volatility</span>
+        <span class="badge b-gold">Cadena de custodia</span>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-icon">📢</div>
+      <div class="team-role">COMUNICACIÓN</div>
+      <div class="team-name">Responsable de Comunicación</div>
+      <div class="team-desc">Gestiona la comunicación interna y externa durante el incidente. Redacta los reportes obligatorios para reguladores (CSIRT Nacional, ANCI), coordina con legal, RRHH y comunicaciones corporativas.</div>
+      <div class="team-skills">
+        <span class="badge b-purple">Reportes regulatorios</span>
+        <span class="badge b-purple">Comunicación de crisis</span>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-icon">⚖️</div>
+      <div class="team-role">SOPORTE</div>
+      <div class="team-name">Asesor Legal / DPO</div>
+      <div class="team-desc">Orienta sobre obligaciones legales de notificación, gestión de evidencias para procesos judiciales, implicancias contractuales del incidente y coordinación con fuerzas del orden si aplica.</div>
+      <div class="team-skills">
+        <span class="badge b-teal">Cumplimiento legal</span>
+        <span class="badge b-teal">Privacidad / GDPR</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note tip" style="margin-top:20px;">
+    <div class="note-label">// MODELOS DE ISIRT SEGÚN TAMAÑO</div>
+    <strong>Organización pequeña:</strong> ISIRT virtual donde el gerente de TI lidera y externaliza el análisis forense y la respuesta técnica avanzada a un proveedor de IR (Incident Response).<br><br>
+    <strong>Mediana empresa:</strong> ISIRT híbrido con 2–3 personas dedicadas + roles compartidos de legal y comunicación + contrato de retainer con empresa de IR para escenarios críticos.<br><br>
+    <strong>Gran organización / OIV:</strong> SOC 24/7 dedicado + ISIRT formal con todos los roles cubiertos + integración con CSIRT sectorial.
+  </div>
+</section>
+
+<!-- ══ TRIAGE ══ -->
+<section class="block" id="triage">
+  <div class="block-label">// Evaluación &amp; Decisión — Fase 3</div>
+  <h2 class="block-title">Matriz de Triage y Severidad</h2>
+  <p class="block-intro">
+    El triage es la decisión más importante del proceso: clasificar mal la severidad puede llevar a una respuesta insuficiente (subclasificar) o desperdiciar recursos (sobreclasificar). ISO 27035 recomienda criterios explícitos y documentados.
+  </p>
+
+  <table class="severity-table">
+    <thead>
+      <tr>
+        <th>NIVEL</th>
+        <th>NOMBRE</th>
+        <th>CRITERIOS DE CLASIFICACIÓN</th>
+        <th>TIEMPO DE RESPUESTA</th>
+        <th>ESCALADO</th>
+        <th>EJEMPLOS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="sev-badge sev-p1">P1</span></td>
+        <td><strong>CRÍTICO</strong></td>
+        <td>Servicios esenciales interrumpidos; datos masivos exfiltrados; sistema de producción comprometido; impacto en seguridad física</td>
+        <td style="color:var(--accent);font-weight:700;">Inmediato<br><span style="font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--ink3);">&lt; 15 min</span></td>
+        <td>CEO, Directorio, Abogados, CSIRT Nacional, ANCI</td>
+        <td>Ransomware en producción, breach masivo de datos de clientes, APT activo</td>
+      </tr>
+      <tr>
+        <td><span class="sev-badge sev-p2">P2</span></td>
+        <td><strong>ALTO</strong></td>
+        <td>Servicio degradado significativamente; acceso no autorizado confirmado; malware detectado en sistemas internos; credenciales privilegiadas comprometidas</td>
+        <td style="color:var(--accent2);font-weight:700;">Urgente<br><span style="font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--ink3);">&lt; 1 hora</span></td>
+        <td>CISO, Gerencia de TI, Área Jurídica</td>
+        <td>Cuenta de admin comprometida, exfiltración de datos sensibles limitada, DDoS activo</td>
+      </tr>
+      <tr>
+        <td><span class="sev-badge sev-p3">P3</span></td>
+        <td><strong>MEDIO</strong></td>
+        <td>Impacto limitado a sistemas no críticos; sospecha de compromiso sin confirmación; violación de política sin daño inmediato; malware aislado en endpoint</td>
+        <td style="color:var(--gold);font-weight:700;">Normal<br><span style="font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--ink3);">&lt; 4 horas</span></td>
+        <td>Líder ISIRT, Gerente de TI</td>
+        <td>Malware en PC de usuario aislado, intento de phishing exitoso sin propagación, acceso no autorizado a datos no sensibles</td>
+      </tr>
+      <tr>
+        <td><span class="sev-badge sev-p4">P4</span></td>
+        <td><strong>BAJO</strong></td>
+        <td>Sin impacto operacional; evento sospechoso que requiere investigación; violación de política menor; phishing detectado y bloqueado</td>
+        <td style="color:var(--blue);">Planificado<br><span style="font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--ink3);">&lt; 24 horas</span></td>
+        <td>Analista ISIRT</td>
+        <td>Phishing bloqueado, escaneo de puertos externo, contraseña débil detectada, acceso fuera de horario</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note" style="margin-top:20px;">
+    <div class="note-label">// CRITERIOS DE EVALUACIÓN ISO 27035</div>
+    Para determinar la severidad considerar: <strong>(1)</strong> número de personas/sistemas afectados · <strong>(2)</strong> sensibilidad de la información comprometida · <strong>(3)</strong> impacto en la continuidad operacional · <strong>(4)</strong> impacto legal y regulatorio · <strong>(5)</strong> impacto reputacional · <strong>(6)</strong> si el incidente está activo o ya fue contenido.
+  </div>
+</section>
+
+<!-- ══ PLAYBOOKS ══ -->
+<section class="block" id="playbooks">
+  <div class="block-label">// ISO 27035-3 — Operaciones de Respuesta</div>
+  <h2 class="block-title">Playbooks por Tipo de Incidente</h2>
+  <p class="block-intro">
+    Un playbook (o runbook) es el procedimiento paso a paso para responder a un tipo específico de incidente. ISO 27035-3 guía la creación de estos documentos. Aquí los playbooks para los incidentes más frecuentes.
+  </p>
+
+  <div class="playbooks" id="playbooksContainer">
+
+    <!-- RANSOMWARE -->
+    <div class="pb-row open">
+      <div class="pb-header" onclick="togglePb(this)">
+        <span class="pb-icon">🦠</span>
+        <span class="pb-name">Ransomware / Cifrado Malicioso</span>
+        <span class="pb-tag">P1 CRÍTICO</span>
+        <span class="pb-chevron">▼</span>
+      </div>
+      <div class="pb-body">
+        <div class="pb-intro">El ransomware es el incidente con mayor impacto económico. La clave es la velocidad de contención en los primeros minutos: cada segundo que pasa puede significar más archivos cifrados y mayor propagación lateral.</div>
+        <div class="pb-steps">
+          <div class="pb-step">
+            <span class="pb-step-num">01</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Detección y alerta inicial</div>
+              <div class="pb-step-desc">SIEM/EDR detecta actividad de cifrado masivo, usuarios reportan archivos inaccesibles o nota de rescate. Activar P1 inmediatamente. No apagar el equipo todavía — preservar memoria RAM.</div>
+            </div>
+            <span class="pb-step-time">T+0 min</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">02</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Aislamiento inmediato</div>
+              <div class="pb-step-desc">Desconectar de la red los sistemas afectados (desenchufar cable de red, bloquear en switch). NO apagar. Bloquear cuentas de usuario comprometidas. Aislar segmentos de red sospechosos en el firewall. Comunicar al CISO.</div>
+            </div>
+            <span class="pb-step-time">T+5–15 min</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">03</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Preservación de evidencias</div>
+              <div class="pb-step-desc">Capturar imagen de memoria RAM (Winpmem, FTK Imager). Capturar imagen forense de disco antes de cualquier remediación. Guardar logs del SIEM, EDR y firewall del período previo. Documentar todo con timestamps.</div>
+            </div>
+            <span class="pb-step-time">T+15–60 min</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">04</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Identificar variante y vector de entrada</div>
+              <div class="pb-step-desc">Analizar nota de rescate y extensión de archivos para identificar familia de ransomware (nomoreransom.org puede tener decryptors). Investigar logs para determinar el vector inicial: phishing, RDP expuesto, VPN sin MFA, vulnerabilidad.</div>
+            </div>
+            <span class="pb-step-time">T+1–4 horas</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">05</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Notificación regulatoria</div>
+              <div class="pb-step-desc">Si eres PSE u OIV bajo la Ley 21.663: notificar al CSIRT Nacional en máximo 3 horas desde el conocimiento del incidente via portal.anci.gob.cl. Preparar informe inicial para las 72h.</div>
+            </div>
+            <span class="pb-step-time">T+3 horas (límite)</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">06</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Erradicación y recuperación</div>
+              <div class="pb-step-desc">Cerrar el vector de entrada (parchear, cambiar credenciales, bloquear IP). Reconstruir sistemas desde backups LIMPIOS verificados con hash. Verificar que los backups no fueron comprometidos antes de restaurar. Monitorizar intensivamente post-restauración.</div>
+            </div>
+            <span class="pb-step-time">T+4–72 horas</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">07</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Post-Incident Review</div>
+              <div class="pb-step-desc">En los 5–10 días siguientes: análisis forense completo, RCA con 5 Whys, identificar todos los controles ISO 27001 que fallaron, plan de acción correctiva con plazos, informe final al regulador (15 días por Ley 21.663).</div>
+            </div>
+            <span class="pb-step-time">T+5–15 días</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHISHING / CUENTA COMPROMETIDA -->
+    <div class="pb-row">
+      <div class="pb-header" onclick="togglePb(this)">
+        <span class="pb-icon">🎣</span>
+        <span class="pb-name">Phishing / Cuenta Comprometida</span>
+        <span class="pb-tag">P2–P3</span>
+        <span class="pb-chevron">▼</span>
+      </div>
+      <div class="pb-body">
+        <div class="pb-intro">El phishing es el vector de entrada más frecuente en incidentes graves. Una cuenta comprometida puede escalar rápidamente a movimiento lateral y robo de datos si no se contiene a tiempo.</div>
+        <div class="pb-steps">
+          <div class="pb-step">
+            <span class="pb-step-num">01</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Identificar el alcance</div>
+              <div class="pb-step-desc">¿Quién hizo clic? ¿Ingresó credenciales? ¿Se descargó adjunto malicioso? Revisar logs de email, proxy y EDR del usuario. ¿Cuántos usuarios recibieron el mismo email?</div>
+            </div>
+            <span class="pb-step-time">T+0–30 min</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">02</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Contención de cuenta</div>
+              <div class="pb-step-desc">Resetear contraseña inmediatamente y forzar cierre de todas las sesiones activas (revocar tokens OAuth). Habilitar MFA si no estaba activo. Bloquear temporalmente la cuenta si hay evidencia de compromiso activo.</div>
+            </div>
+            <span class="pb-step-time">T+30 min</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">03</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Investigar actividad post-compromiso</div>
+              <div class="pb-step-desc">Revisar logs de la cuenta: emails enviados, archivos accedidos/descargados, reglas de reenvío configuradas, aplicaciones OAuth autorizadas, inicios de sesión desde IPs inusuales o países no esperados.</div>
+            </div>
+            <span class="pb-step-time">T+1–4 horas</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">04</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Bloquear URL/dominio malicioso y purgar emails</div>
+              <div class="pb-step-desc">Bloquear el dominio del phishing en proxy y DNS. Usar las herramientas de email (M365 Purge, Google Vault) para eliminar el email malicioso de todos los buzones. Reportar a plataformas anti-phishing.</div>
+            </div>
+            <span class="pb-step-time">T+1 hora</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">05</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Evaluar si hubo exfiltración de datos</div>
+              <div class="pb-step-desc">Si se accedió a datos personales o sensibles: activar protocolo de data breach. Si hay posibles datos personales: evaluar notificación conforme a legislación aplicable (GDPR, nueva ley chilena de datos 2026).</div>
+            </div>
+            <span class="pb-step-time">T+4 horas</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">06</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Comunicación y capacitación reactiva</div>
+              <div class="pb-step-desc">Notificar al usuario afectado y a su equipo. Emitir alerta interna describiendo el ataque (anonimizado). Aprovechar como oportunidad de capacitación: cómo identificar este tipo de phishing.</div>
+            </div>
+            <span class="pb-step-time">T+24 horas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FUGA DE DATOS -->
+    <div class="pb-row">
+      <div class="pb-header" onclick="togglePb(this)">
+        <span class="pb-icon">💧</span>
+        <span class="pb-name">Fuga / Exposición de Datos (Data Breach)</span>
+        <span class="pb-tag">P1–P2</span>
+        <span class="pb-chevron">▼</span>
+      </div>
+      <div class="pb-body">
+        <div class="pb-intro">Una fuga de datos puede desencadenar obligaciones legales de notificación, sanciones regulatorias y daño reputacional severo. La velocidad de detección del alcance es crítica para cumplir los plazos legales.</div>
+        <div class="pb-steps">
+          <div class="pb-step">
+            <span class="pb-step-num">01</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Confirmar y acotar la fuga</div>
+              <div class="pb-step-desc">¿Qué datos? ¿Cuántos registros? ¿De quiénes? ¿Desde cuándo? ¿Por qué canal salieron? Revisar DLP, logs de acceso a bases de datos, logs de transferencias de archivos y tráfico de red saliente.</div>
+            </div>
+            <span class="pb-step-time">T+0–2 horas</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">02</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Detener la fuga activa</div>
+              <div class="pb-step-desc">Cerrar el canal de exfiltración: bloquear IP/dominio destino, revocar accesos comprometidos, parchear la vulnerabilidad explotada, desactivar la regla de reenvío maliciosa, cerrar el bucket S3 mal configurado.</div>
+            </div>
+            <span class="pb-step-time">T+2 horas</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">03</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Clasificar los datos expuestos</div>
+              <div class="pb-step-desc">Determinar la sensibilidad: ¿datos personales (activa ley de privacidad)? ¿datos de salud? ¿credenciales? ¿secretos comerciales? ¿datos de tarjetas (activa PCI DSS)? La clasificación define las obligaciones legales.</div>
+            </div>
+            <span class="pb-step-time">T+2–6 horas</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">04</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Notificación regulatoria obligatoria</div>
+              <div class="pb-step-desc">Ley 21.663 (PSE/OIV): 3h alerta + 72h informe al CSIRT Nacional. GDPR si hay ciudadanos UE: 72h a autoridad supervisora. Dependiendo del impacto: notificación a los afectados. Involucrar legal obligatoriamente.</div>
+            </div>
+            <span class="pb-step-time">T+3h (límite legal)</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">05</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Comunicación con afectados</div>
+              <div class="pb-step-desc">Si se determinó que se deben notificar los afectados: redactar comunicación clara (qué ocurrió, qué datos, qué riesgos tienen, qué medidas se tomaron, qué deben hacer ellos). Coordinar con comunicaciones y legal.</div>
+            </div>
+            <span class="pb-step-time">T+48–72 horas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACCESO NO AUTORIZADO / INTRUSIÓN -->
+    <div class="pb-row">
+      <div class="pb-header" onclick="togglePb(this)">
+        <span class="pb-icon">🚨</span>
+        <span class="pb-name">Acceso No Autorizado / Intrusión</span>
+        <span class="pb-tag">P1–P2</span>
+        <span class="pb-chevron">▼</span>
+      </div>
+      <div class="pb-body">
+        <div class="pb-intro">La detección tardía de una intrusión permite al atacante moverse lateralmente, escalar privilegios y preparar el ataque final (ransomware, exfiltración). El objetivo inicial es entender el alcance real del compromiso.</div>
+        <div class="pb-steps">
+          <div class="pb-step">
+            <span class="pb-step-num">01</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Contener sin alertar al atacante</div>
+              <div class="pb-step-desc">En algunos casos (APT activo), puede ser preferible monitorear al atacante antes de contener, para entender su alcance completo. Decisión estratégica del CISO. Si el riesgo es alto: aislar inmediatamente.</div>
+            </div>
+            <span class="pb-step-time">T+0–30 min</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">02</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Mapear el movimiento lateral</div>
+              <div class="pb-step-desc">Identificar todos los sistemas que el atacante tocó: logs de autenticación, conexiones laterales (SMB, WinRM, RDP), herramientas LOTL (Living-off-the-land), cuentas utilizadas. Reconstruir la línea de tiempo del ataque.</div>
+            </div>
+            <span class="pb-step-time">T+2–8 horas</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">03</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Identificar persistencia</div>
+              <div class="pb-step-desc">Buscar mecanismos de persistencia: tareas programadas, servicios nuevos, claves de registro Run, webshells, usuarios backdoor, modificaciones en GPO. El atacante puede haber dejado múltiples puertas traseras.</div>
+            </div>
+            <span class="pb-step-time">T+4–24 horas</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">04</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Erradicación completa y coordinada</div>
+              <div class="pb-step-desc">Remover todos los indicadores de compromiso (IOC) de forma simultánea para evitar que el atacante se reposicione. Cambiar TODAS las credenciales del dominio (incluido KRBTGT si se sospecha Golden Ticket).</div>
+            </div>
+            <span class="pb-step-time">T+24–72 horas</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">05</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Hardening post-incidente</div>
+              <div class="pb-step-desc">Corregir el vector de entrada inicial y todas las debilidades identificadas durante la investigación. Implementar monitoreo reforzado. Considerar un pentest post-incidente para validar que no quedan puertas traseras.</div>
+            </div>
+            <span class="pb-step-time">T+1–2 semanas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DDOS -->
+    <div class="pb-row">
+      <div class="pb-header" onclick="togglePb(this)">
+        <span class="pb-icon">🌊</span>
+        <span class="pb-name">DDoS / Denegación de Servicio</span>
+        <span class="pb-tag">P2–P3</span>
+        <span class="pb-chevron">▼</span>
+      </div>
+      <div class="pb-body">
+        <div class="pb-intro">Los ataques DDoS buscan interrumpir la disponibilidad de servicios. La respuesta depende del volumen del ataque y si hay capacidad de mitigación propia o se requiere servicio especializado.</div>
+        <div class="pb-steps">
+          <div class="pb-step">
+            <span class="pb-step-num">01</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Confirmar que es un DDoS</div>
+              <div class="pb-step-desc">Diferenciar entre DDoS real y fallo de infraestructura. Revisar gráficas de tráfico, logs del firewall y feedback del ISP. Identificar el tipo: volumétrico (UDP flood), protocolo (SYN flood) o capa 7 (HTTP flood).</div>
+            </div>
+            <span class="pb-step-time">T+0–15 min</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">02</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Activar protección anti-DDoS</div>
+              <div class="pb-step-desc">Activar scrubbing center del ISP o servicio cloud (Cloudflare, Akamai, AWS Shield). Si se usa CDN: asegurarse de que el origen está oculto. Implementar rate limiting y CAPTCHA si es DDoS de capa 7.</div>
+            </div>
+            <span class="pb-step-time">T+15–30 min</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">03</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Comunicar el impacto en disponibilidad</div>
+              <div class="pb-step-desc">Actualizar página de estado (statuspage.io). Notificar a usuarios y clientes con el impacto esperado. Si eres OIV/PSE y el servicio está interrumpido: reportar al CSIRT Nacional dentro de las 3 horas.</div>
+            </div>
+            <span class="pb-step-time">T+1 hora</span>
+          </div>
+          <div class="pb-step">
+            <span class="pb-step-num">04</span>
+            <div class="pb-step-content">
+              <div class="pb-step-title">Verificar si el DDoS es una distracción</div>
+              <div class="pb-step-desc">Los DDoS frecuentemente se usan para distraer mientras se ejecuta un ataque más silencioso (intrusión, exfiltración). Mantener monitoreo activo de otros vectores durante el DDoS. No descuidar los logs de autenticación.</div>
+            </div>
+            <span class="pb-step-time">T+30 min (paralelo)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ TIEMPOS DE RESPUESTA ══ -->
+<section class="block" id="tiempos">
+  <div class="block-label">// Ventanas Temporales Críticas</div>
+  <h2 class="block-title">Tiempos de Respuesta y Plazos Legales</h2>
+  <p class="block-intro">
+    ISO 27035 no prescribe tiempos específicos, pero establece que deben estar predefinidos en la política. En Chile, la Ley 21.663 sí fija plazos obligatorios para PSE y OIV.
+  </p>
+
+  <div class="two-col">
+    <div>
+      <div class="block-label" style="margin-bottom:16px;">// Plazos Ley 21.663 Chile (PSE y OIV)</div>
+      <div class="timeline-h">
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:var(--accent);"></div>
+          <div class="tl-time" style="color:var(--accent);">3 Horas</div>
+          <div class="tl-label">// ALERTA TEMPRANA</div>
+          <div class="tl-desc">Notificación inicial al CSIRT Nacional (portal.anci.gob.cl). Solo indica que se tiene conocimiento del incidente. No requiere análisis completo. <strong>Obligatorio para todos los PSE.</strong></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:var(--gold);"></div>
+          <div class="tl-time" style="color:var(--gold);">72 Horas</div>
+          <div class="tl-label">// INFORME INICIAL</div>
+          <div class="tl-desc">Descripción detallada: sistemas afectados, tipo de incidente según taxonomía de la Resolución 7/2025 de la ANCI, impacto preliminar y medidas tomadas.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:var(--green);"></div>
+          <div class="tl-time" style="color:var(--green);">15 Días</div>
+          <div class="tl-label">// INFORME FINAL</div>
+          <div class="tl-desc">Reporte completo: análisis forense, causa raíz, impacto real en usuarios y servicios, acciones correctivas implementadas y plan de mejora.</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="block-label" style="margin-bottom:16px;">// Métricas de tiempo ISO 27035</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="card" style="padding:16px 18px;">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);"></div>
+          <div class="card-label">MTTD — Mean Time to Detect</div>
+          <div class="card-body">Tiempo promedio desde que ocurre el incidente hasta que es detectado. Benchmark global: 197 días (IBM Cost of Data Breach 2023). Objetivo con buen SIEM/EDR: &lt; 24 horas.</div>
+        </div>
+        <div class="card" style="padding:16px 18px;">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--blue);"></div>
+          <div class="card-label">MTTR — Mean Time to Respond</div>
+          <div class="card-body">Tiempo promedio desde la detección hasta la contención del incidente. Objetivo para P1: &lt; 4 horas desde detección. Reducir requiere playbooks bien practicados y automatización.</div>
+        </div>
+        <div class="card" style="padding:16px 18px;">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--green);"></div>
+          <div class="card-label">MTTC — Mean Time to Contain</div>
+          <div class="card-body">Tiempo hasta contención total: aislamiento de sistemas afectados, bloqueo del vector activo y eliminación del acceso del atacante. No confundir con recuperación completa.</div>
+        </div>
+        <div class="card" style="padding:16px 18px;">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);"></div>
+          <div class="card-label">MTTR — Mean Time to Recover</div>
+          <div class="card-body">Tiempo hasta restauración completa del servicio afectado. Depende de la calidad de los backups, la complejidad del entorno y el tipo de incidente. P1 objetivo: &lt; 48 horas.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DOCUMENTACIÓN ══ -->
+<section class="block" id="documentacion">
+  <div class="block-label">// Gestión Documental del Proceso</div>
+  <h2 class="block-title">Documentación Requerida</h2>
+  <p class="block-intro">
+    ISO 27035 exige que el proceso de gestión de incidentes esté adecuadamente documentado. Cada documento tiene un propósito específico y su conjunto forma el sistema de registro del ISIRT.
+  </p>
+
+  <div class="docs-grid">
+    <div class="doc-item">
+      <div class="doc-icon">📋</div>
+      <div>
+        <div class="doc-title">Política de Gestión de Incidentes</div>
+        <div class="doc-desc">Define el alcance, objetivos, roles, responsabilidades y principios del programa de gestión de incidentes. Aprobada por la dirección.</div>
+        <div class="doc-req">Obligatorio · Revisión anual</div>
+      </div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icon">📞</div>
+      <div>
+        <div class="doc-title">Lista de Contactos del ISIRT</div>
+        <div class="doc-desc">Directorio 24/7 de todos los miembros del ISIRT, suplentes, proveedores de IR, contactos legales, CSIRT Nacional, ANCI y autoridades competentes.</div>
+        <div class="doc-req">Obligatorio · Actualización trimestral</div>
+      </div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icon">📊</div>
+      <div>
+        <div class="doc-title">Esquema de Clasificación</div>
+        <div class="doc-desc">Definición de niveles de severidad (P1–P4), criterios de clasificación, árbol de decisión de triage y criterios de escalado. Referencia principal durante el triage.</div>
+        <div class="doc-req">Obligatorio · Revisión semestral</div>
+      </div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icon">📝</div>
+      <div>
+        <div class="doc-title">Formulario de Reporte de Incidente</div>
+        <div class="doc-desc">Plantilla estándar para reportar eventos: fecha/hora, reporter, descripción, sistemas afectados, clasificación inicial. Disponible para todo el personal.</div>
+        <div class="doc-req">Obligatorio · Un formulario por incidente</div>
+      </div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icon">📖</div>
+      <div>
+        <div class="doc-title">Playbooks / Runbooks</div>
+        <div class="doc-desc">Procedimientos paso a paso para responder a cada tipo de incidente. Incluye acciones, responsables, herramientas y tiempos objetivo por fase.</div>
+        <div class="doc-req">Obligatorio · Actualización post-incidente</div>
+      </div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icon">🗂️</div>
+      <div>
+        <div class="doc-title">Registro de Incidentes (Log)</div>
+        <div class="doc-desc">Base de datos de todos los incidentes gestionados: ID único, timestamps de cada fase, acciones tomadas, responsables, resolución y lecciones aprendidas.</div>
+        <div class="doc-req">Obligatorio · Registro permanente</div>
+      </div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icon">🔬</div>
+      <div>
+        <div class="doc-title">Cadena de Custodia de Evidencias</div>
+        <div class="doc-desc">Registro de todas las evidencias recolectadas: qué se capturó, cuándo, por quién, dónde se almacena, hashes de integridad. Esencial para procesos legales.</div>
+        <div class="doc-req">Obligatorio para P1–P2 · Retención &gt; 5 años</div>
+      </div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icon">📉</div>
+      <div>
+        <div class="doc-title">Informe Post-Incidente (PIR)</div>
+        <div class="doc-desc">Análisis completo post-incidente: línea de tiempo, causa raíz, impacto real, acciones tomadas durante la respuesta, lecciones aprendidas y plan de mejora.</div>
+        <div class="doc-req">Obligatorio · Emitir dentro de 15 días</div>
+      </div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icon">📈</div>
+      <div>
+        <div class="doc-title">Informe de Tendencias Trimestral</div>
+        <div class="doc-desc">Resumen de incidentes del período: cantidad por categoría y severidad, KPIs de respuesta, tendencias, mejoras implementadas y estado de acciones correctivas pendientes.</div>
+        <div class="doc-req">Recomendado · Para la dirección</div>
+      </div>
+    </div>
+    <div class="doc-item">
+      <div class="doc-icon">🎯</div>
+      <div>
+        <div class="doc-title">Plan de Ejercicios y Simulacros</div>
+        <div class="doc-desc">Calendario anual de tabletop exercises, simulacros técnicos y drills de comunicación. Los resultados se documentan y se usan para mejorar playbooks y capacitar al equipo.</div>
+        <div class="doc-req">Recomendado · Al menos 1 simulacro anual</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MÉTRICAS ══ -->
+<section class="block" id="metricas">
+  <div class="block-label">// Cláusula 9 — Evaluación del Desempeño</div>
+  <h2 class="block-title">KPIs de Gestión de Incidentes</h2>
+  <p class="block-intro">
+    Medir el proceso de gestión de incidentes es fundamental para demostrar su efectividad y justificar inversiones. Estos indicadores se reportan trimestralmente a la dirección y al ISIRT.
+  </p>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-area">Tiempo de Respuesta</div>
+      <div class="kpi-name">MTTD (Detección)</div>
+      <div class="kpi-desc">Tiempo promedio desde que el incidente ocurre hasta que es detectado. Benchmark de industria: 197 días.</div>
+      <div class="kpi-formula">MTTD = Σ(hora_detección − hora_ocurrencia) / n<br>Objetivo: &lt; 24 horas</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">Tiempo de Respuesta</div>
+      <div class="kpi-name">MTTR (Contención)</div>
+      <div class="kpi-desc">Tiempo promedio desde detección hasta contención del incidente activo. Clave para limitar el daño.</div>
+      <div class="kpi-formula">MTTR = Σ(hora_contención − hora_detección) / n<br>P1 objetivo: &lt; 4 horas</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">Volumen</div>
+      <div class="kpi-name">Incidentes por categoría/mes</div>
+      <div class="kpi-desc">Número de incidentes confirmados por tipo y severidad. Permite identificar tendencias y áreas de mejora en controles.</div>
+      <div class="kpi-formula">Segmentar: P1/P2/P3/P4<br>+ por tipo (malware, phishing, etc.)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">Cumplimiento</div>
+      <div class="kpi-name">Tasa de reportes a tiempo</div>
+      <div class="kpi-desc">Porcentaje de incidentes P1/P2 cuya alerta al CSIRT Nacional se realizó dentro del plazo de 3 horas exigido por la Ley 21.663.</div>
+      <div class="kpi-formula">% = reportes_en_plazo / incidentes_P1P2 × 100<br>Objetivo: 100%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">Calidad</div>
+      <div class="kpi-name">Tasa de falsos positivos</div>
+      <div class="kpi-desc">Porcentaje de alertas del SIEM/EDR que al investigarse resultan no ser incidentes reales. Muy alta indica necesidad de afinar las reglas de detección.</div>
+      <div class="kpi-formula">% FP = alertas_FP / total_alertas × 100<br>Objetivo: &lt; 20%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">Mejora Continua</div>
+      <div class="kpi-name">PIR completados a tiempo</div>
+      <div class="kpi-desc">Porcentaje de incidentes P1/P2 que tienen un Post-Incident Review completado dentro de los 15 días posteriores al cierre.</div>
+      <div class="kpi-formula">% = PIR_completados / incidentes_P1P2 × 100<br>Objetivo: 100%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">Mejora Continua</div>
+      <div class="kpi-name">Acciones correctivas cerradas</div>
+      <div class="kpi-desc">Porcentaje de acciones correctivas derivadas de PIRs que se cierran dentro del plazo acordado. Mide la efectividad de la mejora.</div>
+      <div class="kpi-formula">% = AC_cerradas / AC_totales × 100<br>Objetivo: &gt; 90%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">Preparación</div>
+      <div class="kpi-name">Ejercicios realizados al año</div>
+      <div class="kpi-desc">Número de tabletop exercises y simulacros realizados vs. planificados. Indica el nivel de preparación y práctica del equipo ISIRT.</div>
+      <div class="kpi-formula">Ejercicios_realizados / ejercicios_planificados<br>Mínimo: 1 por semestre</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HERRAMIENTAS ══ -->
+<section class="block" id="herramientas">
+  <div class="block-label">// Stack Tecnológico</div>
+  <h2 class="block-title">Herramientas del ISIRT</h2>
+  <p class="block-intro">
+    ISO 27035 no prescribe herramientas específicas, pero el proceso requiere capacidades tecnológicas en detección, respuesta, forense y comunicación. Este es el stack típico de un equipo maduro.
+  </p>
+
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-cat">DETECCIÓN · SIEM</div>
+      <div class="tool-name">Splunk / Elastic SIEM</div>
+      <div class="tool-desc">Correlación de eventos y alertas desde múltiples fuentes. Elastic es la opción open-source más popular para equipos con presupuesto limitado.</div>
+      <div class="tool-tags"><span class="badge b-blue">Detección</span><span class="badge b-gold">Open-source disponible</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">ENDPOINT · EDR/XDR</div>
+      <div class="tool-name">CrowdStrike / SentinelOne</div>
+      <div class="tool-desc">Detección y respuesta en endpoints con capacidades de contención remota. Alternativas: Microsoft Defender for Endpoint, Wazuh (open-source).</div>
+      <div class="tool-tags"><span class="badge b-red">Contención</span><span class="badge b-blue">Detección</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">TICKETING · SOAR</div>
+      <div class="tool-name">TheHive / Cortex</div>
+      <div class="tool-desc">Plataforma open-source de gestión de incidentes y automatización de respuesta (SOAR). Perfecta para equipos que quieren una solución completa sin costo de licencia.</div>
+      <div class="tool-tags"><span class="badge b-green">Open-source</span><span class="badge b-purple">SOAR</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">FORENSE · MEMORIA</div>
+      <div class="tool-name">Volatility Framework</div>
+      <div class="tool-desc">Análisis de volcados de memoria RAM para identificar malware, procesos ocultos, artefactos de red y credenciales en memoria. Herramienta de referencia en forense.</div>
+      <div class="tool-tags"><span class="badge b-green">Open-source</span><span class="badge b-gold">Forense</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">FORENSE · DISCO</div>
+      <div class="tool-name">Autopsy / FTK Imager</div>
+      <div class="tool-desc">Autopsy (open-source) para análisis forense de discos. FTK Imager para captura de imágenes forenses con verificación de hash. Estándar en investigaciones.</div>
+      <div class="tool-tags"><span class="badge b-green">Open-source</span><span class="badge b-gold">Evidencias</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">THREAT INTEL</div>
+      <div class="tool-name">MISP / OpenCTI</div>
+      <div class="tool-desc">Plataformas para gestionar y compartir inteligencia de amenazas (IOCs: IPs maliciosas, dominios, hashes). Integran con SIEM para enriquecer alertas automáticamente.</div>
+      <div class="tool-tags"><span class="badge b-green">Open-source</span><span class="badge b-blue">Threat Intel</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">COMUNICACIÓN SEGURA</div>
+      <div class="tool-name">Signal / Canal cifrado</div>
+      <div class="tool-desc">Durante un incidente activo, los canales normales (email, Slack) pueden estar comprometidos. Usar canal de comunicación fuera de banda, cifrado y predefinido.</div>
+      <div class="tool-tags"><span class="badge b-red">Critico</span><span class="badge b-teal">Fuera de banda</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">ANÁLISIS DE MALWARE</div>
+      <div class="tool-name">Any.run / Cuckoo Sandbox</div>
+      <div class="tool-desc">Sandboxes para ejecutar y analizar malware de forma segura. Any.run es interactivo en la nube; Cuckoo es open-source para entornos privados.</div>
+      <div class="tool-tags"><span class="badge b-green">Open-source</span><span class="badge b-gold">Análisis</span></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">REPORTE · CSIRT CHILE</div>
+      <div class="tool-name">portal.anci.gob.cl</div>
+      <div class="tool-desc">Plataforma oficial de la ANCI para reportar incidentes según la Ley 21.663. Disponible 24/7. Usar para las notificaciones obligatorias de 3h, 72h y 15 días.</div>
+      <div class="tool-tags"><span class="badge b-red">Obligatorio Chile</span><span class="badge b-purple">Regulatorio</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ RELACIONES ══ -->
+<section class="block" id="relaciones">
+  <div class="block-label">// Ecosistema Normativo</div>
+  <h2 class="block-title">Relación con Otros Estándares y Normas</h2>
+  <p class="block-intro">
+    ISO 27035 no opera de forma aislada. Se integra con un ecosistema de estándares, marcos y regulaciones que juntos forman un programa de seguridad completo.
+  </p>
+
+  <div class="relations-grid">
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--accent);">ISO/IEC 27001:2022</div>
+      <div class="rel-name">SGSI — Sistema de Gestión</div>
+      <div class="rel-how">ISO 27035 implementa los controles 5.24–5.28 del Anexo A. La gestión de incidentes es un proceso operativo del SGSI. Los incidentes alimentan la revisión de riesgos y la mejora continua (cláusula 10).</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--blue);">NIST SP 800-61</div>
+      <div class="rel-name">Computer Security Incident Handling Guide</div>
+      <div class="rel-how">Marco alternativo de NIST (EE.UU.) con un enfoque similar de 4 fases (Preparación, Detección, Contención/Erradicación/Recuperación, Post-incidente). Muy compatible con ISO 27035 y frecuentemente usado en paralelo.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--green);">ISO/IEC 27002:2022</div>
+      <div class="rel-name">Controles de SI — Guía de implementación</div>
+      <div class="rel-how">Proporciona orientación detallada para implementar los controles 5.24–5.28 que ISO 27035 operacionaliza. Ambos se consultan en paralelo al diseñar el programa de gestión de incidentes.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--gold);">Ley 21.663 Chile</div>
+      <div class="rel-name">Marco de Ciberseguridad Nacional</div>
+      <div class="rel-how">Define plazos obligatorios (3h/72h/15d) que ISO 27035 ayuda a cumplir. Exige a OIV un programa formal de gestión de incidentes compatible con ISO 27035 como parte del SGSI (ISO 27001).</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--purple);">MITRE ATT&CK</div>
+      <div class="rel-name">Marco de Tácticas y Técnicas</div>
+      <div class="rel-how">Complementa ISO 27035 en la fase de investigación: ayuda a identificar las tácticas del atacante, mapear el movimiento lateral y encontrar persistencia. Los playbooks de ISO 27035-3 pueden referenciar técnicas ATT&CK.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--teal);">ISO/IEC 27043</div>
+      <div class="rel-name">Principios y Procesos de Investigación</div>
+      <div class="rel-how">Estándar específico de forense digital e investigación de incidentes. Complementa la fase forense de ISO 27035: cadena de custodia, preservación de evidencias, principios de investigación admisibles judicialmente.</div>
+    </div>
+  </div>
+
+  <div class="block-label" style="margin-top:40px;margin-bottom:16px;">// Comparación resumida: ISO 27035 vs NIST SP 800-61</div>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>ASPECTO</th>
+        <th>ISO/IEC 27035</th>
+        <th>NIST SP 800-61</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Origen</strong></td>
+        <td>ISO/IEC — internacional</td>
+        <td>NIST — EE.UU., ampliamente adoptado globalmente</td>
+      </tr>
+      <tr>
+        <td><strong>Fases</strong></td>
+        <td>5 fases (Planificar, Detectar, Evaluar, Responder, Aprender)</td>
+        <td>4 fases (Preparación, Detección/Análisis, Contención/Erradicación/Recuperación, Post-incidente)</td>
+      </tr>
+      <tr>
+        <td><strong>Enfoque</strong></td>
+        <td>Marco de gestión + principios organizativos</td>
+        <td>Guía técnica + procedimientos operacionales</td>
+      </tr>
+      <tr>
+        <td><strong>Integración</strong></td>
+        <td>Diseñado para integrarse con ISO 27001</td>
+        <td>Diseñado para complementar el NIST CSF</td>
+      </tr>
+      <tr>
+        <td><strong>Detalle técnico</strong></td>
+        <td>Alto en Parte 3 (operaciones de respuesta)</td>
+        <td>Muy alto, especialmente en forense de red</td>
+      </tr>
+      <tr>
+        <td><strong>Uso en Chile</strong></td>
+        <td>Referenciado por la Ley 21.663 y la ANCI</td>
+        <td>Usado por equipos técnicos SOC como guía operativa</td>
+      </tr>
+      <tr>
+        <td><strong>Recomendación</strong></td>
+        <td colspan="2" style="color:var(--ink);font-style:italic;">Usar ambos: ISO 27035 como marco organizativo y NIST 800-61 como guía técnica operacional. Son complementarios, no excluyentes.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+</div><!-- /page -->
+
+<footer>
+  <div style="margin-bottom:12px;">
+    <strong>ISO/IEC 27035</strong> — Tecnología de la Información — Gestión de Incidentes de Seguridad de la Información
+  </div>
+  Partes 1 y 2 revisadas en 2023 · Parte 3 (operaciones de respuesta) complemento técnico<br>
+  Recursos: <a href="https://www.iso.org/standard/78973.html" target="_blank">iso.org/standard/78973.html</a> · <a href="https://portal.anci.gob.cl" target="_blank">portal.anci.gob.cl</a> · <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf" target="_blank">NIST SP 800-61</a><br><br>
+  <span style="font-size:.62rem;opacity:.5">Documento educativo. No reemplaza la lectura del estándar oficial ni la consultoría de un especialista certificado en gestión de incidentes (GCIH, GCFE, CISM).</span>
+</footer>
+
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
+
+<script>
+/* ── Scroll reveal ── */
+const revObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold:0.06, rootMargin:'0px 0px -40px 0px' });
+document.querySelectorAll('section.block').forEach(el => revObs.observe(el));
+
+/* ── Scroll top ── */
+const sBtn = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', () => sBtn.classList.toggle('show', window.scrollY > 500));
+
+/* ── Active nav ── */
+const sections = document.querySelectorAll('section.block[id]');
+const navLinks  = document.querySelectorAll('.nav-link');
+const navObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      navLinks.forEach(l => l.classList.remove('active'));
+      const a = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if(a) a.classList.add('active');
+    }
+  });
+}, { threshold:0.3 });
+sections.forEach(s => navObs.observe(s));
+
+/* ── Phase toggle ── */
+function togglePhase(item){
+  const all = document.querySelectorAll('.phase-item');
+  all.forEach(i => { if(i !== item) i.classList.remove('active'); });
+  item.classList.toggle('active');
+}
+
+/* ── Playbook accordion ── */
+function togglePb(header){
+  const row = header.parentElement;
+  const wasOpen = row.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.pb-row').forEach(r => r.classList.remove('open'));
+  if(!wasOpen) row.classList.add('open');
+}
+</script>
+</body>
+</html>

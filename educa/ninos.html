@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Niños · Aegis8 Educa</title>
+<meta name="description" content="Aprende a estar seguro en internet con juegos y actividades. Para niños de 6 a 12 años."/>
+  <script>
+// Section particle burst
+(function(){
+  var hero = document.querySelector('.page-hero-s');
+  if(!hero) return;
+  var colors = ['#3a7fd4', '#60c8f5', '#3a7fd488'];
+  for(var i=0; i<12; i++){
+    var p = document.createElement('div');
+    var size = Math.random()*4+2;
+    p.style.cssText = 'position:absolute;border-radius:50%;pointer-events:none;z-index:1;' +
+      'width:'+size+'px;height:'+size+'px;' +
+      'background:'+colors[Math.floor(Math.random()*colors.length)]+';' +
+      'left:'+Math.random()*100+'%;' +
+      'top:'+Math.random()*100+'%;' +
+      'opacity:'+( Math.random()*.5+.1)+';' +
+      'animation:fadeInLogo '+(Math.random()*2+2)+'s ease '+(Math.random()*2)+'s both,' +
+      'breathe-hero '+(Math.random()*3+3)+'s ease-in-out infinite;';
+    hero.appendChild(p);
+  }
+})();
+</script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
+  <script src="/aegis-nav.js"></script>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+:root{
+  --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
+  --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
+  --card:rgba(255,255,255,.03);--radius:4px;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(58,127,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.025) 1px,transparent 1px);
+  background-size:80px 80px;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+.page-inner{position:relative;z-index:10;}
+.sl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+  color:var(--accent);text-transform:uppercase;margin-bottom:12px;}
+.st{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.6rem);
+  line-height:1.05;color:var(--ink);margin-bottom:20px;letter-spacing:-1px;}
+.st em{font-style:italic;color:var(--accent);}
+.si{font-size:1rem;line-height:1.9;color:var(--ink2);max-width:640px;margin-bottom:40px;}
+.sw{padding:80px 0 48px;border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
+.sw.vis{opacity:1;transform:none;}
+.sw:last-child{border-bottom:none;}
+.btn-p{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--bg);background:var(--accent);border:none;padding:14px 28px;border-radius:var(--radius);
+  text-decoration:none;transition:all .25s;position:relative;overflow:hidden;display:inline-block;cursor:pointer!important;}
+.btn-p::before{content:'';position:absolute;inset:0;background:var(--accent2);transform:translateX(-100%);transition:transform .3s;}
+.btn-p:hover::before{transform:translateX(0);}
+.btn-p span,.btn-p{position:relative;z-index:1;}
+.btn-p:hover{box-shadow:0 0 28px rgba(240,120,48,.4);transform:translateY(-2px);}
+.btn-g{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink2);background:transparent;border:1px solid var(--border);
+  padding:14px 28px;border-radius:var(--radius);text-decoration:none;transition:all .25s;display:inline-block;}
+.btn-g:hover{color:var(--ink);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
+/* CHAT SHARED */
+.chat-box{background:var(--bg2);border:1px solid #3a7fd430;border-radius:var(--radius);overflow:hidden;}
+.chat-hd{background:rgba(240,120,48,.05);border-bottom:1px solid var(--border2);
+  padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.chat-hd-l{display:flex;align-items:center;gap:.75rem;}
+.chat-ava{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  background:rgba(240,120,48,.12);}
+.chat-name{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;color:var(--ink);}
+.chat-status{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--green);letter-spacing:1px;}
+.chat-live{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+.chat-msgs{height:320px;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;}
+.chat-msgs::-webkit-scrollbar{width:3px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.msg{display:flex;gap:.6rem;align-items:flex-start;}
+.msg.user{flex-direction:row-reverse;}
+.msg-ava{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;flex-shrink:0;background:var(--card);}
+.msg-bubble{background:var(--card);border:1px solid var(--border);padding:.65rem .9rem;
+  font-size:.84rem;line-height:1.6;max-width:85%;border-radius:2px;color:var(--ink2);}
+.msg.user .msg-bubble{background:rgba(240,120,48,.06);border-color:var(--border2);color:var(--ink);}
+.chat-quick{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.4rem;}
+.qbtn{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1px;
+  color:var(--accent);border:1px solid var(--border2);background:rgba(240,120,48,.04);
+  padding:.3rem .7rem;border-radius:var(--radius);cursor:pointer!important;transition:all .2s;}
+.qbtn:hover{background:rgba(240,120,48,.1);border-color:var(--accent);}
+.chat-row{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:.5rem;}
+.chat-in{flex:1;background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);
+  padding:.65rem 1rem;font-family:'Lato',sans-serif;font-size:.88rem;color:var(--ink);
+  outline:none;transition:border-color .2s;}
+.chat-in:focus{border-color:var(--accent);}
+.chat-in::placeholder{color:var(--ink3);}
+.send-btn{background:var(--accent);color:var(--bg);border:none;padding:.65rem 1.1rem;
+  border-radius:var(--radius);font-weight:700;cursor:pointer!important;transition:background .2s;}
+.send-btn:hover{background:var(--accent2);}
+.typing-wrap{display:flex;gap:4px;align-items:center;}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.3;
+  animation:tdot 1.2s ease-in-out infinite;}
+.tdot:nth-child(2){animation-delay:.2s;}.tdot:nth-child(3){animation-delay:.4s;}
+@keyframes tdot{0%,80%,100%{opacity:.2;transform:scale(.8);}40%{opacity:1;transform:scale(1);}}
+/* FOOTER */
+.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);
+  padding:48px 32px 32px;max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;
+  letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.fl span{color:var(--accent);}
+.flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.flinks a:hover{color:var(--accent);}
+.fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
+/* SCROLL REVEAL JS inline */
+@media(max-width:640px){.wrap{padding:0 16px;}.page-footer{padding:32px 16px;}}
+
+
+.page-hero-s{position:relative;z-index:10;padding:64px 0 40px;border-bottom:1px solid var(--border);}
+.hero-ey{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ink3);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.hero-ey-line{width:24px;height:1px;background:var(--blue);}
+.rules-g{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);margin-top:40px;}
+@media(max-width:720px){.rules-g{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.rules-g{grid-template-columns:1fr;}}
+.rule{background:var(--bg2);padding:1.5rem 1.25rem;text-align:center;}
+.rule-ico{font-size:1.8rem;margin-bottom:.6rem;}
+.rule-nm{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--blue);margin-bottom:.35rem;font-weight:600;}
+.rule-d{font-size:.78rem;color:var(--ink2);line-height:1.5;}
+.quiz-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;}
+.quiz-top{background:rgba(240,120,48,.04);border-bottom:1px solid var(--border);
+  padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.quiz-prog{flex:1;}
+.quiz-prog-lbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ink3);
+  margin-bottom:.35rem;display:flex;justify-content:space-between;}
+.quiz-bar-bg{height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
+.quiz-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:2px;
+  transition:width .4s ease;width:0%;}
+.score-b{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--gold);
+  white-space:nowrap;background:rgba(245,168,35,.08);border:1px solid rgba(245,168,35,.2);padding:.25rem .7rem;}
+.quiz-body{padding:2rem 1.75rem;}
+.q-emoji{font-size:2.5rem;margin-bottom:.75rem;display:block;}
+.q-text{font-size:1rem;font-weight:700;line-height:1.5;margin-bottom:1.25rem;color:var(--ink);}
+.q-opts{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.25rem;}
+.q-opt{background:var(--card);border:1.5px solid var(--border2);border-radius:var(--radius);
+  padding:.9rem 1.1rem;font-family:'Lato',sans-serif;font-size:.9rem;color:var(--ink);
+  text-align:left;cursor:pointer!important;transition:all .2s;display:flex;align-items:center;gap:.65rem;font-weight:600;}
+.q-opt:hover:not(:disabled){border-color:var(--accent);background:rgba(240,120,48,.05);}
+.q-opt.correct{border-color:var(--green);background:rgba(46,204,128,.07);color:var(--green);}
+.q-opt.wrong{border-color:var(--accent);background:rgba(240,120,48,.07);color:var(--accent);}
+.q-opt:disabled{cursor:default!important;}
+.q-oe{font-size:1rem;flex-shrink:0;}
+.q-fb{display:none;padding:.9rem 1.1rem;border-radius:var(--radius);font-size:.86rem;font-weight:600;line-height:1.6;border-left:3px solid;}
+.q-fb.show{display:block;}
+.q-fb.good{background:rgba(46,204,128,.06);border-left-color:var(--green);color:var(--green);}
+.q-fb.bad{background:rgba(240,120,48,.06);border-left-color:var(--accent);color:var(--accent);}
+.q-next{display:none;width:100%;margin-top:1.1rem;padding:.9rem;
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--bg);background:var(--blue);border:none;border-radius:var(--radius);
+  cursor:pointer!important;transition:background .2s;}
+.q-next:hover{background:#2563eb;}
+.q-result{display:none;padding:2.5rem 2rem;text-align:center;}
+.q-result-e{font-size:3.5rem;margin-bottom:.75rem;display:block;}
+.q-result-st{font-size:1.5rem;margin-bottom:.5rem;}
+.q-result-ti{font-family:'DM Serif Display',serif;font-size:1.7rem;margin-bottom:.4rem;}
+.q-result-su{font-size:.86rem;color:var(--ink2);margin-bottom:1.75rem;line-height:1.6;}
+.q-restart{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--bg);background:var(--green);border:none;border-radius:var(--radius);
+  padding:.9rem 2rem;cursor:pointer!important;transition:background .2s;}
+.q-restart:hover{background:#22c55e;}
+.pw-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;}
+.pw-lbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;display:block;}
+.pw-in{width:100%;background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);
+  color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:1rem;
+  padding:.75rem 1rem;outline:none;transition:border-color .2s;margin-bottom:.75rem;}
+.pw-in:focus{border-color:var(--accent);}
+.pw-bar-bg{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:.65rem;}
+.pw-bar{height:100%;border-radius:3px;transition:width .4s,background .4s;width:0%;}
+.pw-tips{display:flex;flex-direction:column;gap:.3rem;}
+.pw-tip{font-size:.78rem;display:flex;align-items:center;gap:.4rem;}
+.pw-tip.ok{color:var(--green);}.pw-tip.fail{color:var(--ink3);}
+
+
+/* Hero colored accent */
+.page-hero-s::before{content:'';position:absolute;top:-100px;right:-80px;width:400px;height:400px;
+  border-radius:50%;background:radial-gradient(circle,#3a7fd418 0%,transparent 70%);
+  pointer-events:none;z-index:0;animation:breathe-hero 5s ease-in-out infinite;}
+.page-hero-s{overflow:hidden;position:relative;}
+@keyframes breathe-hero{0%,100%{transform:scale(1);opacity:.6;}50%{transform:scale(1.15);opacity:1;}}
+/* hero-ey line color override */
+.hero-ey-line{background:#3a7fd4;}
+
+/* ── NINOS EXTRA ANIMATIONS ── */
+@keyframes float-star{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-8px) rotate(10deg);}}
+@keyframes sparkle{0%,100%{opacity:0;transform:scale(0);}50%{opacity:1;transform:scale(1);}}
+@keyframes slide-in-left{from{opacity:0;transform:translateX(-30px);}to{opacity:1;transform:none;}}
+@keyframes slide-in-right{from{opacity:0;transform:translateX(30px);}to{opacity:1;transform:none;}}
+@keyframes bounce-in{0%{opacity:0;transform:scale(0.3);}50%{transform:scale(1.05);}70%{transform:scale(0.9);}100%{opacity:1;transform:scale(1);}}
+@keyframes wiggle{0%,100%{transform:rotate(0deg);}25%{transform:rotate(-5deg);}75%{transform:rotate(5deg);}}
+@keyframes pulse-glow-blue{0%,100%{box-shadow:0 0 0 0 rgba(58,127,212,0);}50%{box-shadow:0 0 20px 4px rgba(58,127,212,0.3);}}
+@keyframes fadeInLogo{from{opacity:0;transform:scale(0.6) rotate(-10deg);}to{opacity:1;transform:scale(1) rotate(0deg);}}
+
+/* Hero background particles */
+.ninos-particle{position:absolute;border-radius:50%;pointer-events:none;animation:float-star 3s ease-in-out infinite;}
+
+/* Animated rule cards */
+.rule:hover{transform:translateY(-4px) scale(1.02);transition:all .2s;}
+.rule:hover .rule-ico{animation:wiggle .5s ease-in-out;}
+
+/* Quiz box entrance */
+.quiz-box{animation:slide-in-right .6s ease .3s both;}
+
+/* Score badge pulse */
+.score-b{animation:pulse-glow-blue 2s ease-in-out infinite;}
+
+/* Chat box entrance */
+.chat-box{animation:slide-in-left .6s ease .5s both;}
+
+/* Quick buttons hover bounce */
+.qbtn{transition:all .2s cubic-bezier(.34,1.56,.64,1);}
+.qbtn:hover{transform:scale(1.08) translateY(-2px);}
+
+/* Password bar animated fill */
+.pw-bar{transition:width .6s cubic-bezier(.34,1.56,.64,1),background .4s;}
+
+/* Feedback bounce-in */
+.q-fb.show{animation:bounce-in .4s cubic-bezier(.34,1.56,.64,1);}
+
+/* Next button pulse when shown */
+.q-next.show,.q-next[style*="block"]{animation:pulse-glow-blue 1.5s ease-in-out infinite;}
+
+</style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+</head>
+<body data-page="ninos">
+
+<!-- ── BANNER CONSENTIMIENTO COOKIES ── -->
+<style>
+#cookie-banner{
+  position:fixed;bottom:0;left:0;right:0;z-index:9000;
+  background:#0d1422;border-top:2px solid rgba(58,127,212,.3);
+  padding:20px 24px;display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;
+  box-shadow:0 -8px 32px rgba(0,0,0,.5);
+  font-family:'Lato',sans-serif;
+}
+#cookie-banner.hidden{display:none;}
+#cookie-banner .cb-ico{font-size:1.6rem;flex-shrink:0;margin-top:2px;}
+#cookie-banner .cb-txt{flex:1;min-width:220px;}
+#cookie-banner .cb-title{font-family:'JetBrains Mono',monospace;font-size:.68rem;
+  letter-spacing:3px;color:#3a7fd4;text-transform:uppercase;margin-bottom:6px;}
+#cookie-banner .cb-body{font-size:.85rem;line-height:1.6;color:#8898b0;}
+#cookie-banner .cb-body strong{color:#eaf0f8;font-weight:400;}
+#cookie-banner .cb-btns{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:4px;}
+#cookie-banner .cb-accept{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;
+  background:#3a7fd4;color:#080c14;border:none;padding:10px 20px;border-radius:3px;
+  cursor:pointer;transition:background .2s;}
+#cookie-banner .cb-accept:hover{background:#2563eb;}
+#cookie-banner .cb-reject{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;
+  background:transparent;color:#5a6a80;border:1px solid rgba(90,106,128,.3);
+  padding:10px 16px;border-radius:3px;cursor:pointer;transition:all .2s;}
+#cookie-banner .cb-reject:hover{color:#8898b0;border-color:rgba(90,106,128,.6);}
+#cookie-banner .cb-legal{font-size:.72rem;color:#3a4f68;margin-top:6px;line-height:1.5;}
+</style>
+
+<div id="cookie-banner">
+  <div class="cb-ico">🛡️</div>
+  <div class="cb-txt">
+    <div class="cb-title">Aviso para padres y tutores</div>
+    <div class="cb-body">
+      Esta página es para niños de 6 a 12 años. Para mejorar el sitio usamos
+      <strong>Google Analytics</strong>, que recopila datos de uso de forma anónima.
+      Como esto puede incluir información de menores, necesitamos que un
+      <strong>adulto responsable</strong> lo autorice.
+    </div>
+    <div class="cb-legal">
+      Conforme a la Ley 21.719 (Chile) · Sin tu autorización no se recopilan datos de análisis.
+    </div>
+    <div class="cb-btns">
+      <button class="cb-accept" onclick="cookieConsent(true)">Autorizo el análisis</button>
+      <button class="cb-reject" onclick="cookieConsent(false)">No autorizo</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const GA_ID = 'G-XNJT1V3G6T';
+  const stored = localStorage.getItem('aegis8_cookie_consent');
+
+  function loadGA(){
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', GA_ID, {anonymize_ip: true});
+  }
+
+  window.cookieConsent = function(accepted){
+    localStorage.setItem('aegis8_cookie_consent', accepted ? 'accepted' : 'rejected');
+    document.getElementById('cookie-banner').classList.add('hidden');
+    if(accepted) loadGA();
+  };
+
+  // Si ya decidió antes, aplicar sin mostrar banner
+  if(stored === 'accepted'){
+    document.getElementById('cookie-banner').classList.add('hidden');
+    loadGA();
+  } else if(stored === 'rejected'){
+    document.getElementById('cookie-banner').classList.add('hidden');
+  }
+  // Si stored es null → mostrar banner (primera visita)
+})();
+</script>
+
+<section class="page-hero-s page-inner">
+  <div class="wrap">
+    <div class="hero-logo-wrap" style="margin-bottom:24px;opacity:0;animation:fadeInLogo .8s cubic-bezier(.34,1.56,.64,1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="110" height="110" fill="none">
+  <defs>
+    <filter id="glow-n"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glow-n2"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="blue-g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60c8f5"/>
+      <stop offset="100%" stop-color="#3a7fd4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer glow -->
+  <path d="M100 12 Q118 12 130 20 L170 38 L170 108 C170 142 136 162 100 180 C64 162 30 142 30 108 L30 38 L70 20 Q82 12 100 12 Z"
+    fill="rgba(58,127,212,0.06)" filter="url(#glow-n2)">
+    <animate attributeName="opacity" values="0.06;0.14;0.06" dur="3s" repeatCount="indefinite"/>
+  </path>
+
+  <!-- Shield body — rounded, friendly -->
+  <path d="M100 12 Q118 12 130 20 L170 38 L170 108 C170 142 136 162 100 180 C64 162 30 142 30 108 L30 38 L70 20 Q82 12 100 12 Z"
+    fill="#0d1422" stroke="url(#blue-g)" stroke-width="2.5">
+    <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="3.5s" repeatCount="indefinite"/>
+  </path>
+
+  <!-- Draw-on animation -->
+  <path d="M100 12 Q118 12 130 20 L170 38 L170 108 C170 142 136 162 100 180 C64 162 30 142 30 108 L30 38 L70 20 Q82 12 100 12 Z"
+    fill="none" stroke="#3a7fd4" stroke-width="2.5" stroke-dasharray="460" stroke-dashoffset="460" filter="url(#glow-n)">
+    <animate attributeName="stroke-dashoffset" from="460" to="0" dur="1.4s" fill="freeze" begin="0.3s"/>
+  </path>
+
+  <!-- Star shape in center -->
+  <!-- 5-point star centered at 100,95 -->
+  <polygon points="100,58 110,84 138,84 116,101 124,128 100,112 76,128 84,101 62,84 90,84"
+    fill="none" stroke="url(#blue-g)" stroke-width="2.5" stroke-linejoin="round" filter="url(#glow-n)">
+    <animate attributeName="stroke-dasharray" values="0 280;280 0" dur="1s" fill="freeze" begin="1s"/>
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite" begin="2.5s"/>
+  </polygon>
+
+  <!-- Star fill glow -->
+  <polygon points="100,58 110,84 138,84 116,101 124,128 100,112 76,128 84,101 62,84 90,84"
+    fill="rgba(58,127,212,0.08)" filter="url(#glow-n2)">
+    <animate attributeName="opacity" values="0;0.08;0.16;0.08" dur="2s" repeatCount="indefinite" begin="2s"/>
+  </polygon>
+
+  <!-- Star center dot -->
+  <circle cx="100" cy="95" r="5" fill="#3a7fd4" filter="url(#glow-n)">
+    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2s"/>
+    <animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite" begin="2.5s"/>
+  </circle>
+
+  <!-- Sparkles around the star -->
+  <circle cx="68" cy="58" r="3" fill="#60c8f5">
+    <animate attributeName="opacity" values="0;0;1;0;1;0" dur="3s" repeatCount="indefinite" begin="2s"/>
+    <animate attributeName="r" values="2;4;2" dur="1.5s" repeatCount="indefinite" begin="2s"/>
+  </circle>
+  <circle cx="132" cy="62" r="2.5" fill="#60c8f5">
+    <animate attributeName="opacity" values="0;0;1;0;1;0" dur="2.5s" repeatCount="indefinite" begin="2.8s"/>
+    <animate attributeName="r" values="1.5;3.5;1.5" dur="1.5s" repeatCount="indefinite" begin="2.8s"/>
+  </circle>
+  <circle cx="58" cy="120" r="2" fill="#60c8f5">
+    <animate attributeName="opacity" values="0;0;1;0;1;0" dur="3.5s" repeatCount="indefinite" begin="3.5s"/>
+  </circle>
+  <circle cx="145" cy="110" r="2" fill="#60c8f5">
+    <animate attributeName="opacity" values="0;0;1;0;1;0" dur="2.8s" repeatCount="indefinite" begin="4s"/>
+  </circle>
+
+  <!-- Scan line -->
+  <clipPath id="sc-n">
+    <path d="M100 12 Q118 12 130 20 L170 38 L170 108 C170 142 136 162 100 180 C64 162 30 142 30 108 L30 38 L70 20 Q82 12 100 12 Z"/>
+  </clipPath>
+  <rect x="30" y="0" width="140" height="1.5" fill="#3a7fd4" opacity="0" clip-path="url(#sc-n)">
+    <animate attributeName="y" from="12" to="180" dur="3s" repeatCount="indefinite" begin="2.5s"/>
+    <animate attributeName="opacity" values="0;0.5;0.5;0" keyTimes="0;0.05;0.95;1" dur="3s" repeatCount="indefinite" begin="2.5s"/>
+  </rect>
+
+  <!-- Corner ticks -->
+  <polyline points="44,52 44,44 52,44" fill="none" stroke="#3a7fd4" stroke-width="2" stroke-linecap="round">
+    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="1.8s"/>
+  </polyline>
+  <polyline points="156,52 156,44 148,44" fill="none" stroke="#3a7fd4" stroke-width="2" stroke-linecap="round">
+    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="1.9s"/>
+  </polyline>
+
+  <!-- Pulsing outer glow ring -->
+  <circle cx="100" cy="95" r="44" fill="none" stroke="rgba(58,127,212,0.15)">
+    <animate attributeName="r" values="44;52;44" dur="3s" repeatCount="indefinite" begin="3s"/>
+    <animate attributeName="stroke-opacity" values="0.15;0.03;0.15" dur="3s" repeatCount="indefinite" begin="3s"/>
+  </circle>
+</svg></div>
+    <div class="hero-ey"><div class="hero-ey-line"></div>Aegis Educa · 6–12 años</div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,7vw,5.5rem);line-height:.92;letter-spacing:-1px;margin-bottom:18px;">
+      Internet seguro<br><span style="color:var(--accent);font-style:italic;">es un juego. 🎮</span>
+    </h1>
+    <p style="font-size:1rem;line-height:1.8;color:var(--ink2);max-width:480px;margin-bottom:28px;">
+      Aprende a protegerte en internet con juegos, actividades y un robot amigo que responde tus preguntas.
+    </p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a href="#quiz" class="btn-p"><span>Jugar ahora →</span></a>
+      <a href="#chat" class="btn-g">Preguntar a CiberBot</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap page-inner">
+
+<div class="sw">
+  <div class="sl">// Las reglas de oro</div>
+  <h2 class="st">5 reglas del<br><em>Internauta. 🛡️</em></h2>
+  <div class="rules-g">
+    <div class="rule"><div class="rule-ico">🤐</div><div class="rule-nm">No compartas datos</div><div class="rule-d">Nunca digas dónde vives, tu colegio ni tu teléfono a extraños.</div></div>
+    <div class="rule"><div class="rule-ico">🔑</div><div class="rule-nm">Tu contraseña es secreta</div><div class="rule-d">Ni a tus mejores amigos. La contraseña es solo tuya.</div></div>
+    <div class="rule"><div class="rule-ico">📸</div><div class="rule-nm">No mandes fotos</div><div class="rule-d">Nunca envíes fotos tuyas a personas que solo conoces en internet.</div></div>
+    <div class="rule"><div class="rule-ico">🆘</div><div class="rule-nm">Cuéntale a un adulto</div><div class="rule-d">Si algo te hace sentir mal o raro, avísale a tus papás o un profesor.</div></div>
+    <div class="rule"><div class="rule-ico">🚫</div><div class="rule-nm">No a los secretos</div><div class="rule-d">Un adulto que pide guardar secretos a niños hace algo muy malo.</div></div>
+  </div>
+</div>
+
+<div class="sw" id="quiz">
+  <div class="sl">// Juego de decisiones</div>
+  <h2 class="st">¿Qué harías <em>tú? 🎯</em></h2>
+  <p class="si">10 situaciones del mundo real. Elige la respuesta correcta y aprende de cada una.</p>
+  <div class="quiz-box">
+    <div class="quiz-top">
+      <div class="quiz-prog">
+        <div class="quiz-prog-lbl">
+          <span>Pregunta <span id="qNum">1</span> de 10</span>
+          <span id="qPct">0%</span>
+        </div>
+        <div class="quiz-bar-bg"><div class="quiz-bar" id="qBar"></div></div>
+      </div>
+      <div class="score-b">⭐ <span id="scoreVal">0</span> pts</div>
+    </div>
+    <div class="quiz-body" id="qMain">
+      <span class="q-emoji" id="qEmoji">🎮</span>
+      <div class="q-text" id="qText">Cargando...</div>
+      <div class="q-opts" id="qOpts"></div>
+      <div class="q-fb" id="qFb"></div>
+      <button class="q-next" id="qNext" onclick="nextQ()">Siguiente →</button>
+    </div>
+    <div class="q-result" id="qResult">
+      <span class="q-result-e" id="rEmoji">🏆</span>
+      <div class="q-result-st" id="rStars"></div>
+      <div class="q-result-ti" id="rTitle"></div>
+      <div class="q-result-su" id="rSub"></div>
+      <div id="rBest" style="display:none;margin:.75rem auto 0;font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;color:var(--gold);background:rgba(245,168,35,.08);border:1px solid rgba(245,168,35,.2);padding:.4rem 1rem;border-radius:20px;display:inline-block;"></div>
+      <button class="q-restart" onclick="restartQ()">Jugar de nuevo 🔄</button>
+    </div>
+  </div>
+</div>
+
+<div class="sw">
+  <div class="sl">// Actividad</div>
+  <h2 class="st">¿Qué tan segura es<br><em>tu contraseña? 🔒</em></h2>
+  <p class="si">Escribe una contraseña inventada y descubre qué tan fuerte es.</p>
+  <div style="background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.3);border-radius:4px;padding:.85rem 1rem;margin-bottom:1.25rem;display:flex;align-items:flex-start;gap:.7rem;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🚫</span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#ef4444;line-height:1.6;">
+      <strong>¡IMPORTANTE!</strong> Escribe solo una contraseña <strong>inventada</strong> — como <em>MiGato#Amarillo7!</em><br>
+      Nunca escribas tu contraseña real en ningún sitio web. ¡Ni aquí!
+    </span>
+  </div>
+  <div class="pw-box">
+    <label class="pw-lbl">Escribe una contraseña inventada</label>
+    <input class="pw-in" id="pwIn" type="text" placeholder="Ej: MiGato#Amarillo7!" oninput="checkPw(this.value)" autocomplete="new-password"/>
+    <div class="pw-bar-bg"><div class="pw-bar" id="pwBar"></div></div>
+    <div class="pw-tips" id="pwTips"></div>
+  </div>
+</div>
+
+<div class="sw" id="chat">
+  <div class="sl">// Asesor IA</div>
+  <h2 class="st">CiberBot 🤖<br><em>Pregúntame.</em></h2>
+  <p class="si">Pregunta lo que quieras sobre estar seguro en internet. Respondo en lenguaje simple y con emojis 😊</p>
+  <div class="chat-box">
+    <div class="chat-hd">
+      <div class="chat-hd-l">
+        <div class="chat-ava">🤖</div>
+        <div>
+          <div class="chat-name">CiberBot · Aegis8</div>
+          <div class="chat-status">● activo</div>
+        </div>
+      </div>
+      <div class="chat-live"></div>
+    </div>
+    <div class="chat-msgs" id="chatMsgs">
+      <div class="msg bot">
+        <div class="msg-ava">🤖</div>
+        <div class="msg-bubble">¡Hola! Soy CiberBot 👋 Estoy aquí para ayudarte a aprender sobre internet seguro. Puedes preguntarme lo que quieras 😊</div>
+      </div>
+    </div>
+    <div class="chat-quick">
+      <button class="qbtn" onclick="qa('¿Qué hago si alguien me molesta en internet?')">¿Me molestan online?</button>
+      <button class="qbtn" onclick="qa('¿Qué es el grooming?')">¿Qué es el grooming?</button>
+      <button class="qbtn" onclick="qa('¿Cómo hago una contraseña segura?')">Contraseñas</button>
+      <button class="qbtn" onclick="qa('¿Puedo hacer amigos en internet?')">Amigos en internet</button>
+    </div>
+    <div class="chat-row">
+      <input class="chat-in" id="chatIn" placeholder="Escribe tu pregunta aquí..." onkeydown="if(event.key==='Enter')sendMsg()" maxlength="500"/>
+      <button class="send-btn" onclick="sendMsg()">➤</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<footer class="page-footer">
+  <a href="/" class="fl">AEGIS<span>8</span></a>
+  <ul class="flinks">
+    <li><a href="/educa.html">Educa</a></li>
+    <li><a href="/educa/profesores.html">Docentes</a></li>
+    <li><a href="/educa/padres.html">Familias</a></li>
+    <li><a href="/analizador-phishing.html">Herramientas</a></li>
+    <li><a href="/contactos.html">Contacto</a></li>
+  </ul>
+  <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+    <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
+    <a href="/educa.html" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;" onmouseover="this.style.color='#f07830'" onmouseout="this.style.color=''">← Volver a Educa</a>
+  </div>
+</footer>
+<script>
+const WORKER='https://aegis8-agent.christianmora705.workers.dev';
+let hist=[];
+async function sendMsg(){
+  const el=document.getElementById('chatIn');
+  const t=el.value.trim();if(!t)return;el.value='';
+  addM('user',t);hist.push({role:'user',content:t});showT();
+  try{
+    const r=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({page:'ninos',messages:hist})});
+    if(r.status===429){removeT();addM('bot','Demasiadas preguntas seguidas 😊 Espera un momento.');return;}
+    const d=await r.json();removeT();
+    const rep=d.content?.[0]?.text||'Error al conectar.';
+    hist.push({role:'assistant',content:rep});addM('bot',rep);
+    if(hist.length>18)hist=hist.slice(-18);
+  }catch{removeT();addM('bot','Error de conexión. Intenta de nuevo.');}
+}
+function qa(q){document.getElementById('chatIn').value=q;sendMsg();}
+function addM(r,t){
+  const c=document.getElementById('chatMsgs');
+  const d=document.createElement('div');d.className='msg '+r;
+  const a=document.createElement('div');a.className='msg-ava';a.textContent=r==='bot'?'🤖':'👤';
+  const b=document.createElement('div');b.className='msg-bubble';b.textContent=t;
+  d.appendChild(a);d.appendChild(b);c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+function showT(){
+  const c=document.getElementById('chatMsgs');
+  const d=document.createElement('div');d.className='msg bot';d.id='tMsg';
+  d.innerHTML='<div class="msg-ava">🤖</div><div class="msg-bubble"><div class="typing-wrap"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div></div>';
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+function removeT(){document.getElementById('tMsg')?.remove();}
+
+const questions=[
+  {e:'💬',s:'Un desconocido en internet te pide que le cuentes dónde vives.',o:[{e:'✅',t:'No le cuento nada y le digo a mis papás',c:true},{e:'❌',t:'Le cuento porque parece simpático',c:false}],ok:'¡Muy bien! 🌟 Nunca cuentes dónde vives a un extraño en internet.',fail:'😬 Aunque parezca simpático, nunca cuentes dónde vives a un extraño.'},
+  {e:'🔐',s:'Tu amigo del colegio te pide tu contraseña para ayudarte con un juego.',o:[{e:'✅',t:'No la comparto, ni con mis amigos',c:true},{e:'❌',t:'Se la doy porque es mi amigo',c:false}],ok:'¡Correcto! 🌟 Tu contraseña es solo tuya. Nunca la compartas.',fail:'😬 Las contraseñas son secretas. ¡Ni tus amigos deben saberla!'},
+  {e:'📸',s:'Un desconocido en Roblox te pide que le mandes una foto tuya.',o:[{e:'✅',t:'No mando fotos a extraños',c:true},{e:'❌',t:'Le mando porque jugamos juntos',c:false}],ok:'¡Excelente! 🌟 Nunca envíes fotos a personas que no conoces en persona.',fail:'😬 No importa cuánto jueguen juntos, no mandes fotos a extraños.'},
+  {e:'😟',s:'Alguien en internet te dice cosas feas que te hacen sentir mal.',o:[{e:'✅',t:'No respondo y le cuento a un adulto',c:true},{e:'❌',t:'Le respondo con cosas feas también',c:false}],ok:'¡Perfecto! 🌟 Contarle a un adulto es lo más inteligente.',fail:'😬 Responder empeora la situación. Cuéntale a tus papás.'},
+  {e:'🎁',s:'Una web dice que ganaste un premio y pide tu nombre y teléfono.',o:[{e:'✅',t:'No doy mis datos, puede ser trampa',c:true},{e:'❌',t:'Los doy para recibir mi premio',c:false}],ok:'¡Genial! 🌟 Los premios falsos en internet son trampas muy comunes.',fail:'😬 Eso es una trampa. Nunca des tus datos aunque te prometan premios.'},
+  {e:'🕹️',s:'En Roblox alguien te ofrece Robux gratis si le das tu usuario y contraseña.',o:[{e:'✅',t:'No le doy nada, es una trampa',c:true},{e:'❌',t:'Le doy mis datos para tener Robux',c:false}],ok:'¡Súper! 🌟 Nadie regala Robux gratis. Quieren robarte la cuenta.',fail:'😬 Nadie da Robux gratis. Es una trampa para robar tu cuenta.'},
+  {e:'📱',s:'Alguien te pide que descargues una app que no está en la tienda oficial.',o:[{e:'✅',t:'No la descargo, puede ser peligrosa',c:true},{e:'❌',t:'La descargo porque me dijeron que es buena',c:false}],ok:'¡Muy bien! 🌟 Solo descarga apps de tiendas oficiales como App Store o Play Store.',fail:'😬 Las apps fuera de tiendas oficiales pueden tener virus.'},
+  {e:'🤫',s:'Un desconocido online te dice que no le cuentes a tus papás que hablamos.',o:[{e:'✅',t:'Le cuento a mis papás de inmediato',c:true},{e:'❌',t:'Guardo el secreto porque me lo pidió',c:false}],ok:'¡Muy valiente! 🌟 Un adulto que pide secretos a niños hace algo muy malo.',fail:'😬 Los adultos buenos nunca piden guardar secretos a los niños.'},
+  {e:'🔗',s:'Recibes un link que dice "¡Mira este video de ti bailando!" de un número desconocido.',o:[{e:'✅',t:'No hago clic, puede ser virus',c:true},{e:'❌',t:'Hago clic para ver el video',c:false}],ok:'¡Inteligente! 🌟 Los links raros pueden tener virus. Nunca hagas clic en links de desconocidos.',fail:'😬 Ese tipo de mensajes son trampas para instalar virus.'},
+  {e:'🎮',s:'Un jugador de Minecraft quiere saber en qué colegio estudias.',o:[{e:'✅',t:'No le digo, no lo conozco en persona',c:true},{e:'❌',t:'Le cuento porque somos amigos del juego',c:false}],ok:'¡Correcto! 🌟 Un amigo de juego no es lo mismo que un amigo real.',fail:'😬 Los amigos de internet no son como los de la vida real.'},
+  {e:'📧',s:'Recibes un correo que dice que ganaste un iPhone. Te piden tu RUT.',o:[{e:'✅',t:'Lo borro, es una trampa',c:true},{e:'❌',t:'Doy mi RUT para recibir el iPhone',c:false}],ok:'¡Muy bien! 🌟 Nadie regala iPhones por correo. Es phishing.',fail:'😬 Nunca des tu RUT por correo. Es una trampa.'},
+  {e:'⚠️',s:'Al abrir un juego aparece: "¡Tu computador tiene virus! Llama al 1800-XXX"',o:[{e:'✅',t:'Cierro el aviso y se lo muestro a un adulto',c:true},{e:'❌',t:'Llamo al número porque me da miedo',c:false}],ok:'¡Inteligente! 🌟 Esos avisos son falsos. Nunca llames a esos números.',fail:'😬 Ese aviso es falso. Nunca llames. Cuéntale a un adulto.'},
+  {e:'😈',s:'Alguien dice ser tu cantante favorito en Instagram y te pide tu foto.',o:[{e:'✅',t:'No le mando nada, puede ser falso',c:true},{e:'❌',t:'Le mando la foto porque es mi ídolo',c:false}],ok:'¡Genial! 🌟 Los famosos no contactan fans así. Alguien está mintiendo.',fail:'😬 Los famosos no contactan fans así. Esa persona está mintiendo.'},
+  {e:'🌐',s:'Quieres crear una cuenta en una red social pero pide tener 13 años y tú tienes 9.',o:[{e:'✅',t:'No me registro, le pregunto a mis papás',c:true},{e:'❌',t:'Pongo una edad falsa para entrar',c:false}],ok:'¡Correcto! 🌟 Los límites de edad existen para protegerte.',fail:'😬 Esos límites existen para protegerte. Habla con tus papás.'},
+  {e:'🔒',s:'¿Cuál de estas contraseñas es más segura?',o:[{e:'✅',t:'"Sol#47K!mX" — larga con símbolos',c:true},{e:'❌',t:'"mascota123" — fácil de recordar',c:false}],ok:'¡Perfecto! 🌟 Las contraseñas largas con símbolos son mucho más difíciles de adivinar.',fail:'😬 "mascota123" es fácil de adivinar. Usa contraseñas largas con símbolos.'},
+  {e:'🤫',s:'Un adulto online te dice que te dará regalos si le mandas fotos.',o:[{e:'✅',t:'No mando nada y le cuento a mis papás',c:true},{e:'❌',t:'Le mando fotos para recibir los regalos',c:false}],ok:'¡Muy bien! 🌟 Eso se llama grooming. Cuéntale a tus papás de inmediato.',fail:'😬 Eso se llama grooming. Nunca mandes fotos y cuéntale a tus papás YA.'},
+  {e:'🖥️',s:'Usas el computador del colegio. ¿Qué debes hacer al terminar?',o:[{e:'✅',t:'Cerrar sesión de todas mis cuentas',c:true},{e:'❌',t:'Solo cerrar el navegador',c:false}],ok:'¡Perfecto! 🌟 Siempre cierra sesión en computadores compartidos.',fail:'😬 Cerrar el navegador no es suficiente. Siempre cierra sesión.'},
+  {e:'🌈',s:'¿Con quién puedes hablar si alguien en internet te hace sentir incómodo?',o:[{e:'✅',t:'Con mis papás, un profesor o adulto de confianza',c:true},{e:'❌',t:'Con nadie, me da vergüenza contarlo',c:false}],ok:'¡Muy bien! 🌟 Siempre puedes y debes contarle a un adulto de confianza.',fail:'😬 Nunca tengas vergüenza. Tus papás siempre pueden ayudarte.'},
+  {e:'🧩',s:'Jugando Fortnite, un desconocido te regala una skin muy cara.',o:[{e:'✅',t:'Desconfío, podría querer algo a cambio',c:true},{e:'❌',t:'¡Qué suerte! La acepto de inmediato',c:false}],ok:'¡Listo! 🌟 Los regalos inesperados en juegos suelen ser trampas.',fail:'😬 Los regalos inesperados casi siempre buscan algo a cambio.'},
+  {e:'📞',s:'Recibes una llamada de un desconocido que dice ser tu profesor y pide tu dirección.',o:[{e:'✅',t:'Cuelgo y se lo cuento a mis papás',c:true},{e:'❌',t:'Le doy la dirección porque dice ser mi profe',c:false}],ok:'¡Muy bien! 🌟 Los profesores tienen tus datos en el colegio. Nunca des dirección por teléfono.',fail:'😬 Un profesor real no necesita pedirte la dirección por teléfono.'},
+  {e:'🎯',s:'Un concurso online pide tu foto de carnet y nombre completo.',o:[{e:'✅',t:'No participo sin preguntarle a mis papás',c:true},{e:'❌',t:'Participo para ganar el premio',c:false}],ok:'¡Bien pensado! 🌟 Nunca entregues documentos sin que un adulto lo revise.',fail:'😬 Nunca compartas tu foto de carnet online sin que tus papás lo aprueben.'},
+  {e:'💌',s:'Alguien te manda mensajes muy bonitos todos los días y empieza a pedirte fotos.',o:[{e:'✅',t:'Dejo de responder y le cuento a mis papás',c:true},{e:'❌',t:'Le mando fotos porque me cae muy bien',c:false}],ok:'¡Muy valiente! 🌟 Eso se llama grooming. Siempre cuéntale a tus papás.',fail:'😬 Eso se llama grooming. Alguien que pide fotos a niños hace algo muy malo.'},
+  {e:'🌙',s:'Es de noche y tus papás están durmiendo. ¿Puedes usar internet sin supervisión?',o:[{e:'✅',t:'Lo mejor es respetar los horarios acordados',c:true},{e:'❌',t:'Sí, nadie me ve y puedo hacer lo que quiera',c:false}],ok:'¡Responsable! 🌟 Los horarios de internet existen para protegerte.',fail:'😬 Los horarios de internet no son un castigo, son para protegerte.'},
+  {e:'🎬',s:'Ves un video de YouTube que dice "¡GRATIS! Descarga películas aquí".',o:[{e:'✅',t:'No descargo nada de sitios sospechosos',c:true},{e:'❌',t:'Descargo porque quiero ver la película gratis',c:false}],ok:'¡Correcto! 🌟 Los sitios de descargas ilegales suelen tener virus.',fail:'😬 Los sitios de descargas ilegales casi siempre tienen virus.'},
+  {e:'🤝',s:'Un desconocido en internet quiere ser tu amigo y te pide que lo agregues en todas tus redes.',o:[{e:'✅',t:'No lo agrego sin contarle a mis papás',c:true},{e:'❌',t:'Lo agrego porque quiero más amigos',c:false}],ok:'¡Bien! 🌟 Siempre consulta a tus papás antes de agregar desconocidos.',fail:'😬 No agregues desconocidos a tus redes sin consultar a tus papás.'},
+  {e:'🌟',s:'Completaste el nivel difícil de un juego. ¿Puedes publicar tu celebración con el nombre del colegio?',o:[{e:'✅',t:'La celebración está bien pero sin datos del colegio',c:true},{e:'❌',t:'Publico todo porque quiero que todos lo sepan',c:false}],ok:'¡Correcto! 🌟 Puedes celebrar tus logros pero sin revelar datos personales.',fail:'😬 Celebrar está bien, pero sin revelar el nombre del colegio.'},
+  {e:'🔔',s:'Una app pide acceso a tu cámara, micrófono y ubicación para funcionar. ¿Qué haces?',o:[{e:'✅',t:'Pregunto a un adulto si es necesario',c:true},{e:'❌',t:'Acepto todo para poder usarla rápido',c:false}],ok:'¡Muy bien! 🌟 Siempre pregunta a un adulto antes de dar permisos a una app.',fail:'😬 No debes aceptar permisos sin saber para qué los usa la app.'},
+  {e:'🎲',s:'Un jugador de Brawl Stars dice que si le das tu cuenta te prestará la suya con más trofeos.',o:[{e:'✅',t:'No acepto, es una trampa',c:true},{e:'❌',t:'Acepto porque quiero más trofeos',c:false}],ok:'¡Muy listo! 🌟 Esos intercambios casi siempre terminan en robo de cuenta.',fail:'😬 Esos intercambios son trampas. Nunca compartas el acceso a tu cuenta.'},
+  {e:'💡',s:'¿Qué haces si encuentras información incorrecta sobre ti en internet?',o:[{e:'✅',t:'Le cuento a mis papás para que ayuden a reportarlo',c:true},{e:'❌',t:'No puedo hacer nada, está en internet ya',c:false}],ok:'¡Correcto! 🌟 Siempre puedes pedir que información incorrecta sea eliminada.',fail:'😬 Sí puedes hacer algo. Cuéntale a tus papás para reportar.'},
+  {e:'🏠',s:'¿Cuáles son los datos personales más importantes que debes proteger?',o:[{e:'✅',t:'Tu nombre completo, dirección, teléfono y colegio',c:true},{e:'❌',t:'Tu color favorito y tu comida preferida',c:false}],ok:'¡Correcto! 🌟 Tu nombre, dirección, teléfono y colegio son datos que debes proteger.',fail:'😬 Los datos importantes son tu nombre, dirección, teléfono y colegio.'},
+];
+function shuffle(a){return [...a].sort(()=>Math.random()-.5);}
+let pool=shuffle(questions).slice(0,10),cur=0,score=0,answered=false;
+
+function renderQ(){
+  const q=pool[cur];
+  document.getElementById('qEmoji').textContent=q.e;
+  document.getElementById('qText').textContent=q.s;
+  document.getElementById('qNum').textContent=cur+1;
+  document.getElementById('qPct').textContent=Math.round(cur/pool.length*100)+'%';
+  document.getElementById('qBar').style.width=(cur/pool.length*100)+'%';
+  const opts=document.getElementById('qOpts');opts.innerHTML='';
+  q.o.forEach((o,i)=>{
+    const b=document.createElement('button');b.className='q-opt';
+    b.innerHTML=`<span class="q-oe">${o.e}</span>${o.t}`;
+    b.onclick=()=>answerQ(i,o.c,q);opts.appendChild(b);
+  });
+  document.getElementById('qFb').className='q-fb';document.getElementById('qFb').textContent='';
+  document.getElementById('qNext').style.display='none';answered=false;
+}
+function answerQ(idx,correct,q){
+  if(answered)return;answered=true;
+  document.querySelectorAll('.q-opt').forEach((b,i)=>{
+    b.disabled=true;
+    if(q.o[i].c)b.classList.add('correct');
+    else if(i===idx&&!correct)b.classList.add('wrong');
+  });
+  const fb=document.getElementById('qFb');
+  if(correct){score+=10;document.getElementById('scoreVal').textContent=score;fb.textContent=q.ok;fb.className='q-fb show good';}
+  else{fb.textContent=q.fail;fb.className='q-fb show bad';}
+  document.getElementById('qNext').style.display='block';
+}
+function nextQ(){
+  cur++;
+  if(cur>=pool.length)showResult();
+  else renderQ();
+}
+function showResult(){
+  document.getElementById('qMain').style.display='none';
+  document.getElementById('qResult').style.display='block';
+  document.getElementById('qBar').style.width='100%';
+  const pct=score/(pool.length*10);
+  let em,ti,su,st;
+  if(pct>=.9){em='🏆';ti='¡Eres un experto!';su='Perfecto. Sabes muy bien cómo mantenerte seguro en internet.';st='⭐⭐⭐⭐⭐';}
+  else if(pct>=.6){em='🌟';ti='¡Muy bien hecho!';su='Casi perfecto. Sigue practicando.';st='⭐⭐⭐⭐';}
+  else if(pct>=.3){em='📚';ti='¡Buen intento!';su='Vas por buen camino. Repasa las reglas.';st='⭐⭐⭐';}
+  else{em='💪';ti='¡Sigue practicando!';su='Lee las reglas de oro y vuelve a jugar.';st='⭐⭐';}
+  document.getElementById('rEmoji').textContent=em;
+  document.getElementById('rTitle').textContent=ti;
+  document.getElementById('rStars').textContent=st;
+  document.getElementById('rSub').textContent=su+` Puntaje: ${score}/${pool.length*10}`;
+  // Récord histórico con localStorage
+  const prev=parseInt(localStorage.getItem('aegis8_ninos_best')||'0');
+  const bestEl=document.getElementById('rBest');
+  if(score>prev){
+    localStorage.setItem('aegis8_ninos_best',String(score));
+    bestEl.textContent='🎉 ¡Nuevo récord! '+score+' pts';
+    bestEl.style.display='inline-block';
+  } else if(prev>0){
+    bestEl.textContent='🏅 Tu récord: '+prev+' pts';
+    bestEl.style.display='inline-block';
+  }
+}
+function restartQ(){
+  pool=shuffle(questions).slice(0,10);cur=0;score=0;answered=false;
+  document.getElementById('scoreVal').textContent='0';
+  document.getElementById('qMain').style.display='';
+  document.getElementById('qResult').style.display='none';
+  renderQ();
+}
+renderQ();
+function checkPw(v){
+  let s=0;const t=[];
+  if(v.length>=8)s+=20;else t.push({txt:'Mínimo 8 caracteres',ok:false});
+  if(v.length>=12)s+=10;else if(v.length>=8)t.push({txt:'12+ caracteres = más seguro',ok:false});
+  if(/[A-Z]/.test(v))s+=20;else t.push({txt:'Agrega una MAYÚSCULA',ok:false});
+  if(/[0-9]/.test(v))s+=20;else t.push({txt:'Agrega un número',ok:false});
+  if(/[^A-Za-z0-9]/.test(v))s+=25;else t.push({txt:'Agrega un símbolo (!@#$)',ok:false});
+  s=Math.min(s,100);
+  if(v.length>=8)t.unshift({txt:'✓ 8+ caracteres',ok:true});
+  if(/[A-Z]/.test(v))t.unshift({txt:'✓ Tiene mayúscula',ok:true});
+  if(/[0-9]/.test(v))t.unshift({txt:'✓ Tiene número',ok:true});
+  if(/[^A-Za-z0-9]/.test(v))t.unshift({txt:'✓ Tiene símbolo',ok:true});
+  const cols=['#ef4444','#f97316','#eab308','#22c55e','#16a34a'];
+  const bar=document.getElementById('pwBar');
+  bar.style.width=s+'%';bar.style.background=cols[Math.min(Math.floor(s/25),4)];
+  document.getElementById('pwTips').innerHTML=t.slice(0,5).map(i=>`<div class="pw-tip ${i.ok?'ok':'fail'}">${i.ok?'✅':'❌'} ${i.txt}</div>`).join('');
+}
+
+const ro=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});
+},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.sw').forEach(el=>ro.observe(el));
+
+</script>
+</body>
+</html>

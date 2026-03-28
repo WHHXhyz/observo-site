@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIST SP 800-86 — Guía de Forense Digital</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   TOKENS — sistema idéntico a la colección
+══════════════════════════════════════════ */
+:root{
+  --bg:      #f5f2ed;
+  --bg2:     #ede9e2;
+  --ink:     #1a1410;
+  --ink2:    #4a3f35;
+  --ink3:    #8a7a6e;
+  --accent:  #c8410a;
+  --accent2: #e8622a;
+  --blue:    #1a4f8c;
+  --green:   #1a6b3c;
+  --gold:    #a07a10;
+  --purple:  #6b2d8b;
+  --teal:    #0e7c7b;
+  --border:  rgba(26,20,16,.1);
+  --card:    rgba(255,255,255,.6);
+  --shadow:  0 2px 20px rgba(26,20,16,.08);
+
+  /* Colores por fase forense */
+  --f1: #1a4f8c;   /* Colección */
+  --f2: #a07a10;   /* Examinación */
+  --f3: #6b2d8b;   /* Análisis */
+  --f4: #1a6b3c;   /* Reporte */
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;
+}
+
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.4;
+}
+
+/* ══ HERO ══ */
+.hero{
+  position:relative;z-index:10;
+  background:var(--ink);color:#f5f2ed;
+  padding:80px 40px 64px;overflow:hidden;
+}
+.hero::after{
+  content:'';position:absolute;right:-60px;top:-60px;
+  width:420px;height:420px;border-radius:50%;
+  border:80px solid rgba(200,65,10,.12);pointer-events:none;
+}
+.hero::before{
+  content:'';position:absolute;left:-40px;bottom:-80px;
+  width:280px;height:280px;border-radius:50%;
+  border:50px solid rgba(26,79,140,.08);pointer-events:none;
+}
+.hero-inner{max-width:1080px;margin:0 auto;position:relative;z-index:2;}
+
+.hero-eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  letter-spacing:4px;color:var(--accent2);margin-bottom:20px;
+  opacity:0;animation:fadeUp .6s .1s forwards;
+}
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(3rem,8vw,6.5rem);line-height:.95;
+  color:#f5f2ed;margin-bottom:8px;
+  opacity:0;animation:fadeUp .7s .2s forwards;
+}
+.hero-title em{font-style:italic;color:var(--accent2);}
+.hero-year{
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(1rem,3vw,1.8rem);
+  color:rgba(245,242,237,.35);letter-spacing:6px;
+  margin-bottom:28px;opacity:0;animation:fadeUp .7s .3s forwards;
+}
+.hero-desc{
+  max-width:600px;font-size:1rem;line-height:1.85;
+  color:rgba(245,242,237,.7);margin-bottom:36px;
+  opacity:0;animation:fadeUp .7s .4s forwards;
+}
+.hero-stats{
+  display:flex;flex-wrap:wrap;gap:28px;
+  opacity:0;animation:fadeUp .7s .5s forwards;
+}
+.stat{border-left:2px solid var(--accent);padding-left:14px;}
+.stat-num{font-family:'DM Serif Display',serif;font-size:2rem;color:#f5f2ed;line-height:1;}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(245,242,237,.4);letter-spacing:2px;margin-top:3px;}
+
+/* ══ NAV ══ */
+.main-nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(245,242,237,.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);padding:0 24px;overflow-x:auto;
+}
+.nav-inner{display:flex;gap:0;max-width:1080px;margin:0 auto;white-space:nowrap;}
+.nav-link{
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:2px;
+  color:var(--ink3);text-decoration:none;padding:16px 12px;
+  border-bottom:2px solid transparent;transition:all .2s;text-transform:uppercase;
+}
+.nav-link:hover,.nav-link.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* ══ LAYOUT ══ */
+.page{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+section.block{
+  padding:72px 0 40px;border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s;
+}
+section.block.visible{opacity:1;transform:none;}
+
+.block-label{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:8px;
+}
+.block-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(1.8rem,4vw,2.8rem);color:var(--ink);
+  margin-bottom:20px;line-height:1.2;
+}
+.block-intro{font-size:.97rem;line-height:1.9;color:var(--ink2);max-width:720px;margin-bottom:36px;}
+
+/* ══ HELPERS ══ */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+@media(max-width:680px){.two-col{grid-template-columns:1fr;}}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:720px){.three-col{grid-template-columns:1fr;}}
+
+ol.num-list{counter-reset:li;list-style:none;display:flex;flex-direction:column;gap:10px;}
+.num-list li{display:flex;gap:12px;font-size:.9rem;line-height:1.7;color:var(--ink2);}
+.num-list li::before{
+  content:counter(li);counter-increment:li;
+  display:flex;align-items:center;justify-content:center;
+  min-width:26px;height:26px;background:var(--accent);color:#fff;
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  border-radius:50%;flex-shrink:0;margin-top:2px;
+}
+
+/* ══ CALLOUTS ══ */
+.note{
+  border-left:3px solid var(--gold);background:rgba(160,122,16,.05);
+  padding:14px 18px;border-radius:0 3px 3px 0;
+  font-size:.88rem;line-height:1.75;color:var(--ink2);margin:20px 0;
+}
+.note-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
+.tip{border-left-color:var(--blue);background:rgba(26,79,140,.04);}
+.tip .note-label{color:var(--blue);}
+.warn{border-left-color:var(--accent);background:rgba(200,65,10,.04);}
+.warn .note-label{color:var(--accent);}
+.success{border-left-color:var(--green);background:rgba(26,107,60,.04);}
+.success .note-label{color:var(--green);}
+.crit{border-left-color:var(--purple);background:rgba(107,45,139,.04);}
+.crit .note-label{color:var(--purple);}
+
+/* ══ BADGE ══ */
+.badge{
+  display:inline-block;font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:1px;padding:3px 9px;border-radius:20px;border:1px solid;
+}
+.b-red   {color:var(--accent);border-color:rgba(200,65,10,.3);background:rgba(200,65,10,.06);}
+.b-blue  {color:var(--blue);  border-color:rgba(26,79,140,.3); background:rgba(26,79,140,.06);}
+.b-green {color:var(--green); border-color:rgba(26,107,60,.3); background:rgba(26,107,60,.06);}
+.b-gold  {color:var(--gold);  border-color:rgba(160,122,16,.3);background:rgba(160,122,16,.06);}
+.b-purple{color:var(--purple);border-color:rgba(107,45,139,.3);background:rgba(107,45,139,.06);}
+.b-teal  {color:var(--teal);  border-color:rgba(14,124,123,.3);background:rgba(14,124,123,.06);}
+
+/* ══ CARDS ══ */
+.card{
+  border:1px solid var(--border);border-radius:4px;
+  padding:22px;background:var(--card);transition:all .22s;
+  position:relative;overflow:hidden;
+}
+.card:hover{box-shadow:var(--shadow);transform:translateY(-3px);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.card-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;color:var(--ink3);margin-bottom:8px;}
+.card-title{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink);margin-bottom:8px;line-height:1.3;}
+.card-body{font-size:.85rem;line-height:1.7;color:var(--ink2);}
+
+/* ══════════════════════════════════════════
+   PIPELINE DE 4 FASES — flujo horizontal
+══════════════════════════════════════════ */
+.pipeline-wrap{overflow-x:auto;padding-bottom:8px;margin-bottom:24px;}
+.pipeline{display:flex;align-items:stretch;gap:0;min-width:680px;}
+
+.phase-col{flex:1;display:flex;flex-direction:column;}
+
+.phase-box{
+  padding:18px 16px 16px;border:1px solid var(--border);border-right:none;
+  background:var(--card);cursor:pointer;transition:all .2s;
+  border-top:3px solid;
+}
+.phase-col:last-child .phase-box{border-right:1px solid var(--border);}
+.phase-box:hover,.phase-col.active .phase-box{
+  background:rgba(255,255,255,.92);box-shadow:var(--shadow);transform:translateY(-2px);
+}
+
+.ph1 .phase-box{border-top-color:var(--f1);}
+.ph2 .phase-box{border-top-color:var(--f2);}
+.ph3 .phase-box{border-top-color:var(--f3);}
+.ph4 .phase-box{border-top-color:var(--f4);}
+
+.phase-num{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;margin-bottom:6px;}
+.ph1 .phase-num{color:var(--f1);}
+.ph2 .phase-num{color:var(--f2);}
+.ph3 .phase-num{color:var(--f3);}
+.ph4 .phase-num{color:var(--f4);}
+
+.phase-name{font-family:'DM Serif Display',serif;font-size:1rem;line-height:1.25;color:var(--ink);margin-bottom:4px;}
+.phase-en{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ink3);letter-spacing:1px;}
+
+.phase-arrow{
+  display:flex;align-items:center;justify-content:center;
+  width:22px;flex-shrink:0;color:var(--ink3);font-size:.9rem;
+  background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+
+.phase-detail{
+  display:none;border:1px solid var(--border);border-top:none;
+  padding:20px;background:rgba(255,255,255,.7);
+}
+.phase-col.active .phase-detail{display:block;}
+
+.phase-detail h4{
+  font-family:'DM Serif Display',serif;font-size:1.1rem;
+  color:var(--ink);margin-bottom:10px;
+}
+.phase-steps{list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:14px;}
+.phase-steps li{
+  font-size:.85rem;line-height:1.65;color:var(--ink2);
+  padding-left:16px;position:relative;
+}
+.phase-steps li::before{content:'→';position:absolute;left:0;color:var(--accent);}
+.phase-tools-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+
+/* ══════════════════════════════════════════
+   CADENA DE CUSTODIA
+══════════════════════════════════════════ */
+.custody-chain{
+  display:flex;flex-direction:column;gap:0;
+  position:relative;padding-left:20px;
+  border-left:2px solid var(--border);
+}
+.custody-step{position:relative;padding:0 0 28px 28px;}
+.custody-step:last-child{padding-bottom:0;}
+
+.custody-dot{
+  position:absolute;left:-29px;top:2px;
+  width:16px;height:16px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:600;color:#fff;
+  flex-shrink:0;
+}
+
+.custody-num{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  letter-spacing:2px;margin-bottom:4px;
+}
+.custody-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);margin-bottom:5px;}
+.custody-desc{font-size:.87rem;line-height:1.7;color:var(--ink2);}
+.custody-detail{
+  margin-top:10px;padding:10px 14px;
+  border:1px solid var(--border);border-radius:3px;
+  background:rgba(255,255,255,.5);
+  font-family:'JetBrains Mono',monospace;font-size:.75rem;
+  color:var(--ink2);line-height:1.65;
+}
+
+/* ══════════════════════════════════════════
+   TIPOS DE EVIDENCIA — grid
+══════════════════════════════════════════ */
+.evidence-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}
+
+.ev-card{
+  border:1px solid var(--border);border-radius:4px;
+  padding:20px;background:var(--card);transition:all .22s;
+  border-left:3px solid;
+}
+.ev-card:hover{box-shadow:var(--shadow);transform:translateY(-2px);}
+
+.ev-icon{font-size:1.6rem;margin-bottom:10px;}
+.ev-type{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;margin-bottom:6px;}
+.ev-name{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);margin-bottom:6px;}
+.ev-desc{font-size:.83rem;line-height:1.65;color:var(--ink2);}
+.ev-examples{
+  margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:.68rem;
+  color:var(--accent);background:rgba(200,65,10,.05);
+  padding:6px 10px;border-radius:2px;line-height:1.6;
+}
+
+/* ══════════════════════════════════════════
+   HERRAMIENTAS — accordion por categoría
+══════════════════════════════════════════ */
+.tools-accordion{display:flex;flex-direction:column;gap:4px;}
+
+.tool-block{
+  border:1px solid var(--border);border-radius:3px;
+  background:var(--card);overflow:hidden;
+}
+.tool-block-header{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 20px;cursor:pointer;transition:background .2s;user-select:none;
+}
+.tool-block-header:hover{background:rgba(26,20,16,.03);}
+.tool-block.open .tool-block-header{background:rgba(200,65,10,.04);}
+
+.tool-block-icon{font-size:1.1rem;flex-shrink:0;}
+.tool-block-name{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);flex:1;}
+.tool-block-count{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);border:1px solid var(--border);padding:3px 8px;border-radius:20px;flex-shrink:0;}
+.tool-block-chevron{font-size:.75rem;color:var(--ink3);transition:transform .2s;flex-shrink:0;}
+.tool-block.open .tool-block-chevron{transform:rotate(180deg);}
+
+.tool-block-body{display:none;padding:0 20px 20px;border-top:1px solid var(--border);}
+.tool-block.open .tool-block-body{display:block;}
+
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-top:16px;}
+
+.tool-item{
+  border:1px solid var(--border);border-radius:3px;
+  padding:14px 16px;background:rgba(255,255,255,.5);
+  transition:border-color .2s,transform .2s;
+}
+.tool-item:hover{border-color:rgba(200,65,10,.3);transform:translateY(-1px);}
+
+.tool-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:6px;}
+.tool-name-tag{
+  font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;
+  color:var(--accent);background:rgba(200,65,10,.08);
+  padding:2px 7px;border-radius:2px;flex-shrink:0;white-space:nowrap;margin-top:1px;
+}
+.tool-name{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.3;}
+.tool-desc{font-size:.82rem;line-height:1.65;color:var(--ink2);}
+.tool-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px;}
+.tool-tag{
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;
+  padding:2px 7px;border-radius:20px;border:1px solid var(--border);color:var(--ink3);
+}
+
+/* ══════════════════════════════════════════
+   ANÁLISIS DE ARTEFACTOS — tabs
+══════════════════════════════════════════ */
+.tabs-nav{display:flex;flex-wrap:wrap;gap:2px;margin-bottom:20px;}
+.tab-btn{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;
+  padding:8px 16px;border:1px solid var(--border);border-radius:2px;
+  background:transparent;color:var(--ink3);cursor:pointer;transition:all .2s;
+}
+.tab-btn.active{background:rgba(200,65,10,.08);border-color:rgba(200,65,10,.3);color:var(--accent);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+.artifact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px;}
+
+.artifact-item{
+  border:1px solid var(--border);border-radius:3px;
+  padding:14px 16px;background:rgba(255,255,255,.5);
+}
+.artifact-item:hover{border-color:rgba(200,65,10,.25);}
+.artifact-path{
+  font-family:'JetBrains Mono',monospace;font-size:.68rem;
+  color:var(--blue);background:rgba(26,79,140,.06);
+  padding:3px 8px;border-radius:2px;display:block;margin-bottom:6px;
+  word-break:break-all;
+}
+.artifact-name{font-size:.88rem;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.artifact-desc{font-size:.82rem;line-height:1.6;color:var(--ink2);}
+.artifact-value{
+  margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  color:var(--green);
+}
+
+/* ══════════════════════════════════════════
+   PRINCIPIOS FORENSES
+══════════════════════════════════════════ */
+.principles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.principle-card{
+  border:1px solid var(--border);border-radius:3px;padding:20px;background:var(--card);
+  transition:all .22s;
+}
+.principle-card:hover{box-shadow:var(--shadow);transform:translateY(-3px);}
+.principle-icon{font-size:1.5rem;margin-bottom:10px;}
+.principle-name{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:2px;margin-bottom:6px;}
+.principle-desc{font-size:.85rem;line-height:1.7;color:var(--ink2);}
+
+/* ══════════════════════════════════════════
+   ORDEN DE VOLATILIDAD
+══════════════════════════════════════════ */
+.volatility-stack{display:flex;flex-direction:column;gap:2px;max-width:620px;}
+.vol-row{
+  display:flex;align-items:center;gap:0;border-radius:3px;overflow:hidden;
+}
+.vol-bar{
+  padding:12px 18px;flex:1;transition:filter .2s;
+}
+.vol-bar:hover{filter:brightness(.96);}
+.vol-label{font-family:'DM Serif Display',serif;font-size:.95rem;color:#fff;margin-bottom:2px;}
+.vol-example{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:rgba(255,255,255,.65);letter-spacing:1px;}
+.vol-side{
+  width:100px;flex-shrink:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:12px 8px;
+  background:var(--bg2);border-left:1px solid var(--border);
+}
+.vol-time{font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ink);}
+.vol-unit{font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--ink3);letter-spacing:1px;margin-top:2px;}
+
+/* ══════════════════════════════════════════
+   REPORT STRUCTURE
+══════════════════════════════════════════ */
+.report-sections{display:flex;flex-direction:column;gap:3px;}
+
+.rs-item{
+  display:flex;gap:16px;
+  padding:16px 20px;border:1px solid var(--border);
+  border-radius:3px;background:var(--card);
+  transition:all .2s;border-left:3px solid transparent;
+}
+.rs-item:hover{border-left-color:var(--accent);box-shadow:var(--shadow);}
+.rs-num{
+  font-family:'DM Serif Display',serif;font-size:1.8rem;
+  color:rgba(26,20,16,.12);flex-shrink:0;min-width:32px;line-height:1;
+}
+.rs-title{font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ink);margin-bottom:4px;}
+.rs-desc{font-size:.85rem;line-height:1.65;color:var(--ink2);}
+.rs-must{
+  font-family:'JetBrains Mono',monospace;font-size:.62rem;
+  color:var(--accent);margin-top:5px;
+}
+
+/* ══════════════════════════════════════════
+   IMPL STEPS (igual que colección)
+══════════════════════════════════════════ */
+.impl-steps{display:flex;flex-direction:column;gap:0;position:relative;}
+.impl-steps::before{
+  content:'';position:absolute;left:28px;top:16px;bottom:16px;
+  width:1px;background:var(--border);
+}
+.impl-step{display:flex;gap:28px;padding:0 0 36px;position:relative;}
+.impl-step:last-child{padding-bottom:0;}
+.step-circle{
+  width:56px;height:56px;border-radius:50%;border:2px solid var(--border);
+  background:var(--bg);display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-family:'DM Serif Display',serif;font-size:1.4rem;
+  color:var(--accent);position:relative;z-index:2;
+}
+.step-content{flex:1;padding-top:10px;}
+.step-title{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);margin-bottom:6px;}
+.step-desc{font-size:.88rem;line-height:1.75;color:var(--ink2);}
+.step-tips{margin-top:10px;list-style:none;display:flex;flex-direction:column;gap:4px;}
+.step-tips li{font-size:.83rem;color:var(--ink2);padding-left:14px;position:relative;line-height:1.6;}
+.step-tips li::before{content:'•';position:absolute;left:0;color:var(--accent);}
+
+/* ══════════════════════════════════════════
+   KPIs
+══════════════════════════════════════════ */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;}
+.kpi-card{
+  border:1px solid var(--border);border-radius:4px;
+  padding:20px;background:var(--card);transition:all .2s;
+}
+.kpi-card:hover{box-shadow:var(--shadow);transform:translateY(-2px);}
+.kpi-area{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;color:var(--ink3);margin-bottom:10px;}
+.kpi-name{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);margin-bottom:6px;}
+.kpi-desc{font-size:.82rem;line-height:1.65;color:var(--ink2);}
+.kpi-formula{
+  margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:.72rem;
+  background:rgba(26,20,16,.05);padding:6px 10px;border-radius:2px;
+  color:var(--accent);line-height:1.5;
+}
+
+/* ══════════════════════════════════════════
+   RELACIONES
+══════════════════════════════════════════ */
+.rel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+.rel-item{
+  border:1px solid var(--border);border-radius:4px;
+  padding:20px;background:var(--card);transition:all .2s;
+}
+.rel-item:hover{box-shadow:var(--shadow);}
+.rel-std{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;margin-bottom:8px;font-weight:600;}
+.rel-name{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);margin-bottom:8px;}
+.rel-how{font-size:.83rem;line-height:1.65;color:var(--ink2);}
+
+/* ══ COMPARE TABLE ══ */
+.cmp-table{width:100%;border-collapse:collapse;}
+.cmp-table th{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--ink3);padding:10px 14px;border-bottom:2px solid var(--border);
+  text-align:left;font-weight:400;
+}
+.cmp-table td{
+  padding:12px 14px;border-bottom:1px solid var(--border);
+  font-size:.85rem;line-height:1.65;color:var(--ink2);vertical-align:top;
+}
+.cmp-table tr:hover td{background:rgba(200,65,10,.02);}
+
+/* ══ FOOTER / SCROLL ══ */
+footer{
+  background:var(--ink);color:rgba(245,242,237,.5);
+  padding:48px 40px;font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;letter-spacing:1px;line-height:2;text-align:center;
+}
+footer strong{color:rgba(245,242,237,.8);}
+footer a{color:var(--accent2);text-decoration:none;}
+
+.scroll-top{
+  position:fixed;bottom:28px;right:28px;z-index:200;
+  background:var(--ink);color:var(--bg);
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  padding:10px 16px;border:none;border-radius:2px;cursor:pointer;
+  transition:all .2s;letter-spacing:2px;opacity:0;pointer-events:none;
+  box-shadow:0 4px 20px rgba(26,20,16,.2);
+}
+.scroll-top.show{opacity:1;pointer-events:auto;}
+.scroll-top:hover{background:var(--accent);}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(16px);}
+  to  {opacity:1;transform:translateY(0);}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">// NIST — National Institute of Standards and Technology · Forense Digital</div>
+    <h1 class="hero-title">NIST SP<br><em>800-86</em></h1>
+    <div class="hero-year">GUÍA DE TÉCNICAS FORENSES · INCIDENT RESPONSE</div>
+    <p class="hero-desc">
+      La guía de referencia del NIST para integrar técnicas forenses digitales en la respuesta a incidentes. Cubre el proceso completo de recolección, preservación, examinación, análisis y reporte de evidencias digitales.
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Fases del proceso</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Tipos de evidencia</div></div>
+      <div class="stat"><div class="stat-num">8</div><div class="stat-label">Principios forenses</div></div>
+      <div class="stat"><div class="stat-num">0</div><div class="stat-label">Alteración permitida</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ NAV ══ -->
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a class="nav-link" href="#que-es">¿Qué es?</a>
+    <a class="nav-link" href="#principios">Principios</a>
+    <a class="nav-link" href="#fases">4 Fases</a>
+    <a class="nav-link" href="#volatilidad">Volatilidad</a>
+    <a class="nav-link" href="#custodia">Custodia</a>
+    <a class="nav-link" href="#evidencias">Evidencias</a>
+    <a class="nav-link" href="#artefactos">Artefactos</a>
+    <a class="nav-link" href="#herramientas">Herramientas</a>
+    <a class="nav-link" href="#reporte">Reporte</a>
+    <a class="nav-link" href="#legal">Marco Legal</a>
+    <a class="nav-link" href="#relaciones">Relaciones</a>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- ══ QUÉ ES ══ -->
+<section class="block" id="que-es">
+  <div class="block-label">// Fundamentos</div>
+  <h2 class="block-title">¿Qué es el NIST SP 800-86?</h2>
+  <p class="block-intro">
+    El NIST Special Publication 800-86, <em>Guide to Integrating Forensic Techniques into Incident Response</em>, es la guía de referencia para aplicar metodología forense digital durante y después de un incidente de ciberseguridad. Su objetivo es ayudar a las organizaciones a recolectar, preservar y analizar evidencias de forma que sean técnicamente sólidas y legalmente admisibles.
+  </p>
+
+  <div class="two-col">
+    <div>
+      <div class="note warn">
+        <div class="note-label">// DEFINICIÓN CLAVE</div>
+        <strong>Forense digital</strong> es la aplicación de la ciencia a la identificación, recolección, examinación y análisis de datos, preservando la integridad de la información y manteniendo una estricta cadena de custodia de las evidencias, para su uso en procesos legales o investigaciones formales.<br><br>
+        La palabra clave es <strong>integridad</strong>: cualquier modificación de la evidencia, intencionada o no, puede hacerla inadmisible en un tribunal o en un proceso disciplinario.
+      </div>
+      <div class="note" style="margin-top:14px;">
+        <div class="note-label">// PUBLICACIONES RELACIONADAS DEL NIST</div>
+        <strong>SP 800-86</strong> — proceso forense general (esta guía)<br>
+        <strong>SP 800-101 Rev.1</strong> — forense de dispositivos móviles<br>
+        <strong>SP 800-61 Rev.2</strong> — gestión de incidentes (contexto operativo)<br>
+        <strong>SP 800-72</strong> — directrices para PDAs y portátiles<br>
+        <strong>NISTIR 8006</strong> — forense en entornos cloud
+      </div>
+    </div>
+    <div>
+      <div class="block-label" style="margin-bottom:14px;">// ¿Por qué hacer forense correctamente?</div>
+      <ol class="num-list">
+        <li>Determinar con precisión qué ocurrió, cuándo, cómo y quién fue el responsable</li>
+        <li>Producir evidencias admisibles ante tribunales, reguladores y procesos disciplinarios</li>
+        <li>Cumplir con los plazos de reporte legal (Ley 21.663: informe final en 15 días)</li>
+        <li>Identificar el vector de ataque real para cerrar la brecha y evitar recurrencia</li>
+        <li>Cuantificar el alcance real del incidente: qué datos fueron accedidos o exfiltrados</li>
+        <li>Proteger a la organización de responsabilidades legales demostrando diligencia debida</li>
+        <li>Apoyar reclamaciones de seguro de ciberseguridad con evidencia técnica sólida</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRINCIPIOS ══ -->
+<section class="block" id="principios">
+  <div class="block-label">// Bases de la Ciencia Forense Digital</div>
+  <h2 class="block-title">Los 8 Principios Forenses</h2>
+  <p class="block-intro">
+    Toda investigación forense digital debe observar estos principios para garantizar que las evidencias sean válidas, reproducibles y admisibles. Violar cualquiera de ellos puede invalidar toda la investigación.
+  </p>
+
+  <div class="principles-grid">
+    <div class="principle-card">
+      <div class="principle-icon">🔒</div>
+      <div class="principle-name">Integridad de la Evidencia</div>
+      <div class="principle-desc">Las evidencias originales nunca deben modificarse. Se trabaja siempre sobre copias forenses verificadas con hash criptográfico. La imagen forense es exacta bit a bit del original.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">🔗</div>
+      <div class="principle-name">Cadena de Custodia</div>
+      <div class="principle-desc">Documentación ininterrumpida de quién tuvo acceso a la evidencia, cuándo, por qué y qué hizo con ella. Cualquier brecha en la cadena puede invalidar la evidencia en un proceso legal.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">🔄</div>
+      <div class="principle-name">Reproducibilidad</div>
+      <div class="principle-desc">Los análisis deben ser reproducibles: otro forensista con los mismos datos y las mismas herramientas debe llegar a los mismos resultados. Documenta cada paso con precisión.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">⚡</div>
+      <div class="principle-name">Orden de Volatilidad</div>
+      <div class="principle-desc">Recolectar primero las evidencias más volátiles (RAM, conexiones de red activas) antes de las más persistentes (disco, logs). La evidencia volátil desaparece al apagar el sistema.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">📐</div>
+      <div class="principle-name">Mínima Huella</div>
+      <div class="principle-desc">Las acciones del investigador deben dejar el menor rastro posible sobre la evidencia. Usar herramientas de solo lectura y bloqueadores de escritura (write blockers) en discos.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">📋</div>
+      <div class="principle-name">Documentación Completa</div>
+      <div class="principle-desc">Cada acción tomada durante la investigación debe documentarse con timestamp, herramienta usada, resultado obtenido y nombre del investigador. Si no está documentado, no ocurrió.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">🎯</div>
+      <div class="principle-name">Objetividad</div>
+      <div class="principle-desc">El forensista busca la verdad, no confirmar una hipótesis previa. Debe considerar y documentar también las evidencias que contradicen la teoría inicial del incidente.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">🏛️</div>
+      <div class="principle-name">Admisibilidad Legal</div>
+      <div class="principle-desc">Las evidencias deben obtenerse de forma legalmente autorizada (con orden judicial si aplica) y manejarse según estándares que las hagan admisibles ante los tribunales del país.</div>
+    </div>
+  </div>
+
+  <div class="note crit" style="margin-top:20px;">
+    <div class="note-label">// REGLA DE ORO — NUNCA TRABAJES EN EL ORIGINAL</div>
+    Antes de cualquier análisis, se genera una <strong>imagen forense</strong> (copia bit-a-bit) del disco o dispositivo y se verifica su integridad con hash SHA-256. Todos los análisis se realizan sobre esta copia. El original se sella, se etiqueta y se almacena sin tocarlo. Este paso es <strong>no negociable</strong>.
+  </div>
+</section>
+
+<!-- ══ FASES ══ -->
+<section class="block" id="fases">
+  <div class="block-label">// El Proceso Forense SP 800-86</div>
+  <h2 class="block-title">Las 4 Fases del Proceso Forense</h2>
+  <p class="block-intro">
+    El SP 800-86 define un proceso forense de 4 fases secuenciales. Cada fase tiene prerrequisitos claros: no se puede analizar sin haber examinado; no se puede examinar sin haber recolectado correctamente. Haz clic en cada fase para ampliar.
+  </p>
+
+  <div class="pipeline-wrap">
+    <div class="pipeline" id="phasePipeline">
+
+      <div class="phase-col ph1" onclick="togglePhase(this)">
+        <div class="phase-box">
+          <div class="phase-num">FASE 01</div>
+          <div class="phase-name">Recolección</div>
+          <div class="phase-en">Collection</div>
+        </div>
+        <div class="phase-detail">
+          <h4>Identificar y adquirir las evidencias</h4>
+          <ul class="phase-steps">
+            <li>Identificar todas las fuentes de evidencia potencial según la hipótesis del incidente</li>
+            <li>Documentar el estado de la escena: encendido/apagado, conexiones activas, usuarios logueados</li>
+            <li>Aplicar el orden de volatilidad: RAM → swap → conexiones → procesos → disco → logs</li>
+            <li>Capturar memoria RAM con herramienta forense antes de apagar (Winpmem, LiME, FTK Imager)</li>
+            <li>Generar imagen forense bit-a-bit del disco con write blocker (FTK Imager, dd, Guymager)</li>
+            <li>Calcular y registrar hash SHA-256 de cada imagen forense adquirida</li>
+            <li>Etiquetar cada evidencia con número único, fecha/hora, recolector y fuente</li>
+            <li>Sellar la evidencia física en bolsas antiestáticas con precinto numerado</li>
+          </ul>
+          <div class="phase-tools-row">
+            <span class="badge b-blue">FTK Imager</span>
+            <span class="badge b-blue">Winpmem / LiME</span>
+            <span class="badge b-blue">Guymager</span>
+            <span class="badge b-blue">Write Blocker HW</span>
+            <span class="badge b-blue">dd / dcfldd</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-arrow">›</div>
+
+      <div class="phase-col ph2 active" onclick="togglePhase(this)">
+        <div class="phase-box">
+          <div class="phase-num">FASE 02</div>
+          <div class="phase-name">Examinación</div>
+          <div class="phase-en">Examination</div>
+        </div>
+        <div class="phase-detail">
+          <h4>Procesar y filtrar los datos relevantes</h4>
+          <ul class="phase-steps">
+            <li>Montar las imágenes forenses en modo solo lectura en el entorno de análisis</li>
+            <li>Recuperar archivos eliminados y datos en espacio no asignado (data carving)</li>
+            <li>Descomprimir archivos comprimidos y descifrar contenidos cifrados si se tienen las claves</li>
+            <li>Filtrar el volumen de datos para identificar los artefactos relevantes para la investigación</li>
+            <li>Extraer metadatos (timestamps MACB: Modified, Accessed, Changed, Born) de archivos y directorios</li>
+            <li>Construir la línea de tiempo de actividad del sistema a partir de múltiples fuentes de logs</li>
+            <li>Identificar archivos ejecutables, scripts y herramientas del atacante</li>
+          </ul>
+          <div class="phase-tools-row">
+            <span class="badge b-gold">Autopsy / Sleuth Kit</span>
+            <span class="badge b-gold">Volatility</span>
+            <span class="badge b-gold">Plaso / log2timeline</span>
+            <span class="badge b-gold">PhotoRec / Scalpel</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-arrow">›</div>
+
+      <div class="phase-col ph3" onclick="togglePhase(this)">
+        <div class="phase-box">
+          <div class="phase-num">FASE 03</div>
+          <div class="phase-name">Análisis</div>
+          <div class="phase-en">Analysis</div>
+        </div>
+        <div class="phase-detail">
+          <h4>Interpretar los datos y responder preguntas clave</h4>
+          <ul class="phase-steps">
+            <li>Reconstruir la línea de tiempo del incidente a partir de los artefactos examinados</li>
+            <li>Identificar el vector de entrada inicial (CVE explotado, credencial comprometida, phishing)</li>
+            <li>Mapear el movimiento lateral del atacante entre sistemas (logons, conexiones SMB, RDP)</li>
+            <li>Determinar qué datos fueron accedidos, copiados o exfiltrados y en qué volumen</li>
+            <li>Identificar herramientas y técnicas del atacante usando MITRE ATT&CK como referencia</li>
+            <li>Correlacionar artefactos de múltiples sistemas para obtener una visión completa</li>
+            <li>Extraer y analizar IOCs (Indicators of Compromise): hashes, IPs, dominios, rutas</li>
+            <li>Documentar cada hallazgo con la evidencia que lo soporta y la metodología usada</li>
+          </ul>
+          <div class="phase-tools-row">
+            <span class="badge b-purple">Volatility</span>
+            <span class="badge b-purple">MITRE ATT&CK Nav.</span>
+            <span class="badge b-purple">YARA</span>
+            <span class="badge b-purple">Sigma rules</span>
+            <span class="badge b-purple">Maltego</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-arrow">›</div>
+
+      <div class="phase-col ph4" onclick="togglePhase(this)">
+        <div class="phase-box">
+          <div class="phase-num">FASE 04</div>
+          <div class="phase-name">Reporte</div>
+          <div class="phase-en">Reporting</div>
+        </div>
+        <div class="phase-detail">
+          <h4>Comunicar hallazgos de forma clara y defendible</h4>
+          <ul class="phase-steps">
+            <li>Redactar el informe ejecutivo (resumen de 1–2 páginas para dirección y legal)</li>
+            <li>Redactar el informe técnico detallado con todos los pasos, hallazgos y evidencias</li>
+            <li>Incluir la línea de tiempo del incidente con timestamps precisos de cada evento</li>
+            <li>Documentar la metodología usada: herramientas, versiones, pasos reproducibles</li>
+            <li>Listar todos los IOCs identificados para uso en detección y hunting futuro</li>
+            <li>Incluir conclusiones sobre causa raíz, alcance real y atribución si hay evidencia suficiente</li>
+            <li>Proporcionar recomendaciones concretas y priorizadas para prevenir recurrencia</li>
+            <li>Adjuntar todos los apéndices con evidencias crudas, hashes y cadena de custodia</li>
+          </ul>
+          <div class="phase-tools-row">
+            <span class="badge b-green">Plantilla forense</span>
+            <span class="badge b-green">CaseNotes / TheHive</span>
+            <span class="badge b-green">Maltego timeline</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="note success">
+    <div class="note-label">// ITERACIÓN ENTRE FASES</div>
+    El proceso no es siempre lineal. Un hallazgo en la fase de análisis puede requerir volver a la examinación para buscar artefactos adicionales, o incluso volver a la recolección si se identifican nuevas fuentes de evidencia. Lo importante es documentar cada iteración.
+  </div>
+</section>
+
+<!-- ══ ORDEN DE VOLATILIDAD ══ -->
+<section class="block" id="volatilidad">
+  <div class="block-label">// Prioridad de Recolección</div>
+  <h2 class="block-title">Orden de Volatilidad</h2>
+  <p class="block-intro">
+    Las evidencias digitales tienen distinta durabilidad. El <strong>orden de volatilidad</strong> (RFC 3227) establece que se debe recolectar primero lo más efímero, ya que se perderá al apagar el sistema o con el paso del tiempo. Es uno de los conceptos más críticos del forense en sistemas vivos (live forensics).
+  </p>
+
+  <div class="two-col">
+    <div>
+      <div class="volatility-stack">
+        <div class="vol-row">
+          <div class="vol-bar" style="background:#8b1a1a;">
+            <div class="vol-label">Registros de CPU y caché</div>
+            <div class="vol-example">Registros, TLB, caché L1/L2/L3</div>
+          </div>
+          <div class="vol-side">
+            <div class="vol-time">Nanoseg.</div>
+            <div class="vol-unit">MUY VOLÁTIL</div>
+          </div>
+        </div>
+        <div class="vol-row">
+          <div class="vol-bar" style="background:#c8410a;">
+            <div class="vol-label">Memoria RAM</div>
+            <div class="vol-example">Procesos, conexiones, claves en memoria, credenciales</div>
+          </div>
+          <div class="vol-side">
+            <div class="vol-time">Segundos</div>
+            <div class="vol-unit">CRÍTICO</div>
+          </div>
+        </div>
+        <div class="vol-row">
+          <div class="vol-bar" style="background:#a07a10;">
+            <div class="vol-label">Tabla de routing / ARP / caché DNS</div>
+            <div class="vol-example">IP-MAC activos, rutas, resoluciones DNS en caché</div>
+          </div>
+          <div class="vol-side">
+            <div class="vol-time">Minutos</div>
+            <div class="vol-unit">VOLÁTIL</div>
+          </div>
+        </div>
+        <div class="vol-row">
+          <div class="vol-bar" style="background:#1a6b3c;">
+            <div class="vol-label">Conexiones de red activas</div>
+            <div class="vol-example">TCP establecidas, sockets abiertos, tráfico en curso</div>
+          </div>
+          <div class="vol-side">
+            <div class="vol-time">Minutos</div>
+            <div class="vol-unit">VOLÁTIL</div>
+          </div>
+        </div>
+        <div class="vol-row">
+          <div class="vol-bar" style="background:#1a4f8c;">
+            <div class="vol-label">Procesos en ejecución</div>
+            <div class="vol-example">Lista de procesos, handles, módulos cargados, DLLs</div>
+          </div>
+          <div class="vol-side">
+            <div class="vol-time">Horas</div>
+            <div class="vol-unit">SEMI-VOLÁTIL</div>
+          </div>
+        </div>
+        <div class="vol-row">
+          <div class="vol-bar" style="background:#4a3f35;">
+            <div class="vol-label">Memoria swap / Archivo de paginación</div>
+            <div class="vol-example">pagefile.sys (Win), swap partition (Linux)</div>
+          </div>
+          <div class="vol-side">
+            <div class="vol-time">Días</div>
+            <div class="vol-unit">SEMI-PERSISTENTE</div>
+          </div>
+        </div>
+        <div class="vol-row">
+          <div class="vol-bar" style="background:#2a3a4a;">
+            <div class="vol-label">Sistema de archivos / Disco</div>
+            <div class="vol-example">Archivos, $MFT, registro Windows, logs del SO</div>
+          </div>
+          <div class="vol-side">
+            <div class="vol-time">Meses</div>
+            <div class="vol-unit">PERSISTENTE</div>
+          </div>
+        </div>
+        <div class="vol-row">
+          <div class="vol-bar" style="background:#1a2a3a;">
+            <div class="vol-label">Medios de almacenamiento remotos</div>
+            <div class="vol-example">Backups, logs SIEM, almacenamiento cloud, NAS</div>
+          </div>
+          <div class="vol-side">
+            <div class="vol-time">Años</div>
+            <div class="vol-unit">PERMANENTE</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="note warn" style="margin-top:0;">
+        <div class="note-label">// ¿APAGAR O NO APAGAR EL SISTEMA?</div>
+        Es una de las decisiones más críticas en forense en vivo.<br><br>
+        <strong>No apagar si:</strong> el sistema tiene malware activo en RAM sin persistencia en disco · hay credenciales o claves de cifrado en memoria · el atacante tiene acceso activo y hay conexiones a monitorear.<br><br>
+        <strong>Apagar si:</strong> el sistema está destruyendo evidencias activamente · el sistema es necesario para recuperación operacional inmediata · el riesgo de propagación supera el valor de la evidencia en RAM.
+      </div>
+      <div class="note tip" style="margin-top:16px;">
+        <div class="note-label">// TIMESTAMPS MACB — CUATRO TIEMPOS DE UN ARCHIVO</div>
+        Cada archivo en NTFS (Windows) tiene cuatro timestamps que son evidencia forense clave:<br><br>
+        <strong>M</strong> — Modified: última modificación del contenido<br>
+        <strong>A</strong> — Accessed: último acceso de lectura<br>
+        <strong>C</strong> — Changed (MFT): última modificación de metadatos<br>
+        <strong>B</strong> — Born: fecha de creación del archivo<br><br>
+        Los atacantes a veces modifican los timestamps (timestomping) para ocultar la actividad — este mismo patrón anómalo puede ser evidencia del ataque.
+      </div>
+      <div class="note" style="margin-top:16px;">
+        <div class="note-label">// HASHING CRIPTOGRÁFICO — LA BASE DE LA INTEGRIDAD</div>
+        Antes y después de cada adquisición se calcula el hash de la imagen:
+        <div style="margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:.75rem;background:rgba(26,20,16,.05);padding:10px 12px;border-radius:3px;color:var(--ink2);line-height:1.8;">
+          sha256sum evidence_disk.E01<br>
+          <span style="color:var(--accent);">a3f8d2... (hash del original)</span><br><br>
+          sha256sum evidence_disk_copy.E01<br>
+          <span style="color:var(--green);">a3f8d2... (idéntico = integridad OK)</span>
+        </div>
+        Si los hashes no coinciden, la copia está comprometida y es inválida como evidencia.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CADENA DE CUSTODIA ══ -->
+<section class="block" id="custodia">
+  <div class="block-label">// Cadena de Custodia</div>
+  <h2 class="block-title">Chain of Custody</h2>
+  <p class="block-intro">
+    La cadena de custodia es el registro cronológico e ininterrumpido de quién tuvo acceso a una evidencia, cuándo y para qué propósito. Es el documento que permite demostrar que la evidencia no fue alterada desde su recolección hasta su presentación en un tribunal.
+  </p>
+
+  <div class="two-col">
+    <div>
+      <div class="custody-chain">
+        <div class="custody-step">
+          <div class="custody-dot" style="background:var(--f1);">1</div>
+          <div class="custody-num" style="color:var(--f1);">// IDENTIFICACIÓN Y ETIQUETADO</div>
+          <div class="custody-title">Asignación de ID único</div>
+          <div class="custody-desc">Cada evidencia recibe un identificador único (EV-001, EV-002…) que la acompañará durante toda la investigación. Se etiqueta físicamente con ese ID, fecha/hora, descripción y nombre del recolector.</div>
+          <div class="custody-detail">
+            EVIDENCIA: EV-2025-001<br>
+            Tipo: Disco duro interno<br>
+            Dispositivo: Servidor SRV-PROD-01<br>
+            Recolector: Juan Pérez · Analista Forense<br>
+            Fecha/hora: 2025-03-14 09:42 UTC<br>
+            Hash SHA-256: a3f8d2c1...
+          </div>
+        </div>
+        <div class="custody-step">
+          <div class="custody-dot" style="background:var(--f2);">2</div>
+          <div class="custody-num" style="color:var(--f2);">// SELLADO Y EMBALAJE</div>
+          <div class="custody-title">Protección física de la evidencia</div>
+          <div class="custody-desc">La evidencia se sella en bolsa antiestática (para discos/dispositivos), se aplica precinto numerado, se fotografía el precinto intacto. El número del precinto se registra en el formulario de cadena de custodia.</div>
+          <div class="custody-detail">
+            Precinto N°: PC-20250314-001<br>
+            Bolsa: Antiestática ESD<br>
+            Sellada por: Juan Pérez<br>
+            Fotografiada: Sí (img_EV001_sellado.jpg)
+          </div>
+        </div>
+        <div class="custody-step">
+          <div class="custody-dot" style="background:var(--f3);">3</div>
+          <div class="custody-num" style="color:var(--f3);">// ALMACENAMIENTO SEGURO</div>
+          <div class="custody-title">Custodia bajo llave</div>
+          <div class="custody-desc">La evidencia se almacena en un lugar seguro con acceso restringido (armario bajo llave o sala de evidencias con registro de acceso). La ubicación y responsable de custodia se registra.</div>
+          <div class="custody-detail">
+            Ubicación: Sala Evidencias · Armario A · Cajón 3<br>
+            Custodio: María García · CISO<br>
+            Acceso autorizado: Lista adjunta<br>
+            Temperatura/humedad controlada: Sí
+          </div>
+        </div>
+        <div class="custody-step">
+          <div class="custody-dot" style="background:var(--f4);">4</div>
+          <div class="custody-num" style="color:var(--f4);">// TRANSFERENCIAS DOCUMENTADAS</div>
+          <div class="custody-title">Cada movimiento registrado</div>
+          <div class="custody-desc">Cada vez que la evidencia cambia de manos (analista, abogado, perito externo, tribunal) se documenta: quién entrega, quién recibe, fecha/hora, propósito, firma de ambas partes. El precinto se verifica antes de cada transferencia.</div>
+          <div class="custody-detail">
+            Transferencia N°: TR-001<br>
+            De: Juan Pérez → A: Ana López (Peritos Externos SL)<br>
+            Fecha: 2025-03-15 14:00 UTC<br>
+            Propósito: Análisis forense externo<br>
+            Precinto verificado: Sí (intacto)<br>
+            Firma entrega + recepción: ✓
+          </div>
+        </div>
+        <div class="custody-step">
+          <div class="custody-dot" style="background:var(--ink);">5</div>
+          <div class="custody-num">// DISPOSICIÓN FINAL</div>
+          <div class="custody-title">Cierre del caso</div>
+          <div class="custody-desc">Al cierre de la investigación se documenta qué se hace con cada evidencia: retorno al propietario, destrucción segura (con certificado) o retención por mandato legal. La política de retención debe definirse antes de la investigación.</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="block-label" style="margin-bottom:14px;">// Errores comunes que invalidan la cadena</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;gap:12px;padding:13px 16px;border:1px solid rgba(200,65,10,.2);border-radius:3px;background:rgba(200,65,10,.04);">
+          <span style="font-size:1.1rem;flex-shrink:0;">⚠️</span>
+          <div>
+            <div style="font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px;">Trabajar en el original sin imagen forense</div>
+            <div style="font-size:.82rem;color:var(--ink2);">Cualquier acceso modifica timestamps y otros metadatos del sistema de archivos.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;padding:13px 16px;border:1px solid rgba(200,65,10,.2);border-radius:3px;background:rgba(200,65,10,.04);">
+          <span style="font-size:1.1rem;flex-shrink:0;">⚠️</span>
+          <div>
+            <div style="font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px;">No calcular hashes o no verificarlos</div>
+            <div style="font-size:.82rem;color:var(--ink2);">Sin hash no hay forma de demostrar que la imagen es idéntica al original.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;padding:13px 16px;border:1px solid rgba(200,65,10,.2);border-radius:3px;background:rgba(200,65,10,.04);">
+          <span style="font-size:1.1rem;flex-shrink:0;">⚠️</span>
+          <div>
+            <div style="font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px;">Brecha en la cadena de custodia</div>
+            <div style="font-size:.82rem;color:var(--ink2);">Período no documentado donde la evidencia pudo haber sido modificada por un tercero.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;padding:13px 16px;border:1px solid rgba(200,65,10,.2);border-radius:3px;background:rgba(200,65,10,.04);">
+          <span style="font-size:1.1rem;flex-shrink:0;">⚠️</span>
+          <div>
+            <div style="font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px;">Adquisición sin autorización legal</div>
+            <div style="font-size:.82rem;color:var(--ink2);">Acceder a dispositivos de terceros sin orden judicial puede hacer la evidencia inadmisible y generar responsabilidad penal para el investigador.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;padding:13px 16px;border:1px solid rgba(200,65,10,.2);border-radius:3px;background:rgba(200,65,10,.04);">
+          <span style="font-size:1.1rem;flex-shrink:0;">⚠️</span>
+          <div>
+            <div style="font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px;">Mezclar evidencias de distintos casos</div>
+            <div style="font-size:.82rem;color:var(--ink2);">Etiquetar incorrectamente o almacenar juntas evidencias de distintos incidentes contamina ambas investigaciones.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TIPOS DE EVIDENCIA ══ -->
+<section class="block" id="evidencias">
+  <div class="block-label">// Fuentes de Evidencia Digital</div>
+  <h2 class="block-title">Tipos de Evidencia Digital</h2>
+  <p class="block-intro">
+    El SP 800-86 identifica seis categorías principales de evidencia digital, cada una con sus propias técnicas de adquisición, análisis y consideraciones de volatilidad. Una investigación completa suele combinar múltiples tipos.
+  </p>
+
+  <div class="evidence-grid">
+    <div class="ev-card" style="border-left-color:var(--accent);">
+      <div class="ev-icon">🖥️</div>
+      <div class="ev-type" style="color:var(--accent);">TIPO 01</div>
+      <div class="ev-name">Sistemas de Archivos y Discos</div>
+      <div class="ev-desc">La fuente de evidencia más rica y persistente. Incluye archivos activos, eliminados, metadatos del sistema de archivos y espacio no asignado donde pueden residir datos recuperables.</div>
+      <div class="ev-examples">$MFT · $LogFile · Papelera de reciclaje · Archivos eliminados · Prefetch · Thumbnails · LNK files · Jump Lists</div>
+    </div>
+
+    <div class="ev-card" style="border-left-color:var(--blue);">
+      <div class="ev-icon">💾</div>
+      <div class="ev-type" style="color:var(--blue);">TIPO 02</div>
+      <div class="ev-name">Memoria RAM</div>
+      <div class="ev-desc">Extremadamente volátil pero con alto valor forense: puede contener procesos maliciosos sin persistencia en disco, claves de cifrado activas, credenciales en texto plano y conexiones de red establecidas.</div>
+      <div class="ev-examples">Procesos activos · Conexiones de red · Claves de cifrado · Credenciales en memoria · Código inyectado · Malware fileless</div>
+    </div>
+
+    <div class="ev-card" style="border-left-color:var(--green);">
+      <div class="ev-icon">🌐</div>
+      <div class="ev-type" style="color:var(--green);">TIPO 03</div>
+      <div class="ev-name">Tráfico y Logs de Red</div>
+      <div class="ev-desc">Captura de paquetes y logs de dispositivos de red permiten reconstruir comunicaciones, identificar exfiltración de datos, conexiones C2 y movimiento lateral entre sistemas.</div>
+      <div class="ev-examples">PCAP de red · NetFlow · Logs de firewall · Logs de proxy · DNS queries · IDS/IPS alerts · VPN logs</div>
+    </div>
+
+    <div class="ev-card" style="border-left-color:var(--gold);">
+      <div class="ev-icon">📋</div>
+      <div class="ev-type" style="color:var(--gold);">TIPO 04</div>
+      <div class="ev-name">Logs del Sistema Operativo</div>
+      <div class="ev-desc">Registro cronológico de actividades del sistema: inicios de sesión, ejecución de programas, cambios de configuración, errores del sistema y accesos a recursos.</div>
+      <div class="ev-examples">Windows Event Log · Syslog · auth.log · /var/log/ · Security.evtx · PowerShell logs · WMI logs · Scheduled Tasks</div>
+    </div>
+
+    <div class="ev-card" style="border-left-color:var(--purple);">
+      <div class="ev-icon">📱</div>
+      <div class="ev-type" style="color:var(--purple);">TIPO 05</div>
+      <div class="ev-name">Dispositivos Móviles</div>
+      <div class="ev-desc">Smartphones y tablets contienen evidencias valiosas sobre comunicaciones, geolocalización y actividad del usuario. La adquisición requiere herramientas especializadas y consideraciones legales adicionales.</div>
+      <div class="ev-examples">SMS/iMessage · Historial de llamadas · WhatsApp/Telegram · GPS/historial de ubicación · Fotos con EXIF · Correo · Apps instaladas</div>
+    </div>
+
+    <div class="ev-card" style="border-left-color:var(--teal);">
+      <div class="ev-icon">☁️</div>
+      <div class="ev-type" style="color:var(--teal);">TIPO 06</div>
+      <div class="ev-name">Evidencia en la Nube</div>
+      <div class="ev-desc">La evidencia cloud presenta desafíos únicos: acceso requiere credenciales o proceso legal, puede estar en múltiples jurisdicciones y el proveedor controla la retención de logs.</div>
+      <div class="ev-examples">Azure AD Sign-ins · AWS CloudTrail · Office 365 Audit Logs · Google Workspace logs · S3 access logs · CloudWatch</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ARTEFACTOS ══ -->
+<section class="block" id="artefactos">
+  <div class="block-label">// Lo que Busca el Forensista</div>
+  <h2 class="block-title">Artefactos Forenses Clave</h2>
+  <p class="block-intro">
+    Los artefactos son las huellas digitales que los atacantes (y los sistemas) dejan inevitablemente. Conocer dónde encontrarlos es fundamental para reconstruir lo que ocurrió. Selecciona el sistema operativo:
+  </p>
+
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('windows',this)">Windows</button>
+    <button class="tab-btn" onclick="switchTab('linux',this)">Linux / macOS</button>
+    <button class="tab-btn" onclick="switchTab('red',this)">Red &amp; Cloud</button>
+    <button class="tab-btn" onclick="switchTab('memoria',this)">Memoria RAM</button>
+  </div>
+
+  <!-- WINDOWS -->
+  <div class="tab-panel active" id="tab-windows">
+    <div class="artifact-grid">
+      <div class="artifact-item">
+        <span class="artifact-path">C:\Windows\System32\winevt\Logs\Security.evtx</span>
+        <div class="artifact-name">Security Event Log</div>
+        <div class="artifact-desc">Log principal de seguridad de Windows. Registra inicios de sesión, fallos de autenticación, creación de cuentas, cambios de privilegios y acceso a objetos.</div>
+        <div class="artifact-value">→ Event IDs clave: 4624 (login OK) · 4625 (login fallido) · 4720 (cuenta creada) · 4672 (privilegios especiales)</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">C:\$MFT (Master File Table)</span>
+        <div class="artifact-name">MFT — Master File Table</div>
+        <div class="artifact-desc">Base de datos de todos los archivos del volumen NTFS. Contiene timestamps MACB, tamaños, ubicaciones en disco y metadatos de cada archivo, incluyendo los eliminados.</div>
+        <div class="artifact-value">→ Reconstruye qué archivos existieron y cuándo fueron creados/modificados/eliminados</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run</span>
+        <div class="artifact-name">Claves de Persistencia del Registro</div>
+        <div class="artifact-desc">Las claves Run/RunOnce del registro y otras ubicaciones de persistencia son donde el malware se configura para ejecutarse al iniciar Windows.</div>
+        <div class="artifact-value">→ Detectar persistencia: Run, RunOnce, Services, Scheduled Tasks, WMI subscriptions</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">C:\Windows\Prefetch\*.pf</span>
+        <div class="artifact-name">Prefetch Files</div>
+        <div class="artifact-desc">Windows registra información de los últimos programas ejecutados para acelerar su carga. Es evidencia de qué ejecutables corrieron en el sistema, incluso si ya fueron eliminados.</div>
+        <div class="artifact-value">→ Demuestra ejecución de herramientas del atacante aunque el EXE haya sido borrado</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">C:\Users\*\AppData\Roaming\Microsoft\Windows\Recent\</span>
+        <div class="artifact-name">Archivos LNK y Jump Lists</div>
+        <div class="artifact-desc">Accesos directos creados automáticamente por Windows cuando se abren archivos. Contienen la ruta original del archivo, timestamps y metadatos del volumen de origen.</div>
+        <div class="artifact-value">→ Reconstruir qué archivos abrió el atacante, incluso en unidades USB extraídas</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">C:\Windows\System32\winevt\Logs\Microsoft-Windows-PowerShell%4Operational.evtx</span>
+        <div class="artifact-name">PowerShell Logs</div>
+        <div class="artifact-desc">Registro de comandos PowerShell ejecutados. Si el logging de script blocks está habilitado, captura el contenido completo de scripts, incluyendo los obfuscados tras decodificación.</div>
+        <div class="artifact-value">→ Event IDs: 4103 (módulo), 4104 (script block) · Detectar ataques fileless y living-off-the-land</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">%AppData%\Local\Microsoft\Windows\WebCache\WebCacheV01.dat</span>
+        <div class="artifact-name">Historial del Navegador</div>
+        <div class="artifact-desc">Historial de navegación, descargas, cookies y caché del navegador. Puede revelar sitios de phishing visitados, herramientas descargadas o comunicaciones del atacante.</div>
+        <div class="artifact-value">→ Recuperar historial incluso tras borrado del historial por el usuario</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">C:\Windows\System32\srum\SRUDB.dat</span>
+        <div class="artifact-name">SRUM — System Resource Usage Monitor</div>
+        <div class="artifact-desc">Base de datos que registra el uso de recursos por aplicación durante los últimos 30 días: CPU, red, disco. Evidencia de actividad de procesos aunque los logs de eventos hayan sido borrados.</div>
+        <div class="artifact-value">→ Detectar exfiltración: qué proceso envió datos por red y cuánto</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LINUX -->
+  <div class="tab-panel" id="tab-linux">
+    <div class="artifact-grid">
+      <div class="artifact-item">
+        <span class="artifact-path">/var/log/auth.log · /var/log/secure</span>
+        <div class="artifact-name">Logs de Autenticación</div>
+        <div class="artifact-desc">Registro de todos los intentos de autenticación: SSH, sudo, PAM, su. Muestra inicios de sesión exitosos, fallos, usuarios que usaron sudo y comandos ejecutados con privilegios elevados.</div>
+        <div class="artifact-value">→ Reconstruir qué usuarios accedieron y desde qué IPs</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">/var/log/syslog · /var/log/messages</span>
+        <div class="artifact-name">Syslog del Sistema</div>
+        <div class="artifact-desc">Log central del sistema operativo. Registra eventos del kernel, demonios de sistema, errores y mensajes de aplicaciones. Fundamental para reconstruir la línea de tiempo.</div>
+        <div class="artifact-value">→ Correlacionar con timestamps de otros artefactos</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">/home/*/.bash_history · /root/.bash_history</span>
+        <div class="artifact-name">Historial de Comandos Bash</div>
+        <div class="artifact-desc">Historial de comandos ejecutados por cada usuario. Puede revelar comandos de reconocimiento, escalada de privilegios y herramientas usadas por el atacante.</div>
+        <div class="artifact-value">→ Buscar: wget/curl, nc, chmod +x, crontab, passwd · Nota: puede ser borrado o manipulado</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">/etc/crontab · /var/spool/cron/ · /etc/cron.d/</span>
+        <div class="artifact-name">Tareas Programadas (Cron)</div>
+        <div class="artifact-desc">Mecanismo de persistencia frecuentemente usado por atacantes para mantener acceso o ejecutar código periódicamente. Verificar entradas anómalas en todos los directorios de cron.</div>
+        <div class="artifact-value">→ Detectar persistencia: scripts inusuales, reverse shells, descargas periódicas</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">/proc/ (sistema de archivos virtual)</span>
+        <div class="artifact-name">Sistema /proc (Solo en vivo)</div>
+        <div class="artifact-desc">Sistema de archivos virtual con información en tiempo real: lista de procesos, conexiones de red, mapas de memoria y ficheros abiertos por cada proceso activo.</div>
+        <div class="artifact-value">→ /proc/[pid]/maps · /proc/[pid]/exe · /proc/net/tcp · Solo disponible en sistema vivo</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">/etc/passwd · /etc/shadow · /etc/sudoers</span>
+        <div class="artifact-name">Gestión de Usuarios</div>
+        <div class="artifact-desc">Archivos de configuración de usuarios del sistema. Verificar creación de cuentas backdoor, modificación de privilegios sudo y cambios en cuentas de sistema.</div>
+        <div class="artifact-value">→ Buscar usuarios con UID 0 no esperados · Cuentas creadas durante el incidente</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RED & CLOUD -->
+  <div class="tab-panel" id="tab-red">
+    <div class="artifact-grid">
+      <div class="artifact-item">
+        <span class="artifact-path">SIEM / PCAP capturado</span>
+        <div class="artifact-name">Captura de Paquetes (PCAP)</div>
+        <div class="artifact-desc">Captura completa del tráfico de red. Permite reconstruir sesiones, extraer archivos transferidos y identificar comunicaciones con servidores C2 del atacante.</div>
+        <div class="artifact-value">→ Herramientas: Wireshark, tcpdump, Zeek · Buscar: beaconing C2, DNS tunneling, exfiltración</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">Logs de Firewall / Perimeter</span>
+        <div class="artifact-name">Logs de Firewall y Proxy</div>
+        <div class="artifact-desc">Registro de conexiones permitidas y denegadas en el perímetro. Permite identificar el origen del ataque, conexiones salientes inusuales y exfiltración de datos.</div>
+        <div class="artifact-value">→ Correlacionar IPs internas con externas · Buscar grandes transferencias POST · Dominios DGA</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">Azure AD / Entra ID Audit Logs</span>
+        <div class="artifact-name">Logs de Identidad en la Nube</div>
+        <div class="artifact-desc">Registro de autenticaciones, cambios de permisos, creación de aplicaciones y acceso a recursos en entornos Microsoft 365 / Azure. Clave en ataques BEC y compromiso de identidad cloud.</div>
+        <div class="artifact-value">→ Sign-in logs · Conditional Access failures · Risky users · OAuth app grants</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">AWS CloudTrail · CloudWatch Logs</span>
+        <div class="artifact-name">Logs AWS</div>
+        <div class="artifact-desc">CloudTrail registra todas las llamadas a la API de AWS: quién hizo qué, cuándo y desde dónde. Clave para investigar compromisos de cuentas cloud, acceso a S3 y movimiento lateral en AWS.</div>
+        <div class="artifact-value">→ CreateUser, AttachPolicy, GetObject, RunInstances · Buscar access keys no esperadas</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">Microsoft 365 Unified Audit Log</span>
+        <div class="artifact-name">Audit Log de Office 365</div>
+        <div class="artifact-desc">Registro unificado de actividad en Exchange, SharePoint, Teams, OneDrive y otras apps de M365. Clave en investigaciones de BEC (Business Email Compromise) y exfiltración de datos corporativos.</div>
+        <div class="artifact-value">→ InboxRule (reglas de reenvío) · FileSyncUpload · MailItemsAccessed · OAuth2PermissionsGrant</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">DNS Query Logs (resolvers internos)</span>
+        <div class="artifact-name">Logs DNS</div>
+        <div class="artifact-desc">Resoluciones DNS son a menudo el único rastro visible de comunicaciones con infraestructura maliciosa. Identificar dominios DGA, dominios recién creados y patrones de DNS tunneling.</div>
+        <div class="artifact-value">→ Dominios NXD altos · Subdominios aleatorios largos · PTR queries · Frecuencia inusual</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEMORIA RAM -->
+  <div class="tab-panel" id="tab-memoria">
+    <div class="artifact-grid">
+      <div class="artifact-item">
+        <span class="artifact-path">volatility -f mem.raw windows.pslist</span>
+        <div class="artifact-name">Lista de Procesos</div>
+        <div class="artifact-desc">Todos los procesos activos en el momento de la captura. Buscar procesos con nombres similares a los del sistema (svchost.exe vs. svch0st.exe), procesos sin padre, y procesos en rutas inusuales.</div>
+        <div class="artifact-value">→ Comparar con lista base · Buscar process injection: proceso legítimo con threads maliciosos</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">volatility -f mem.raw windows.netscan</span>
+        <div class="artifact-name">Conexiones de Red en Memoria</div>
+        <div class="artifact-desc">Conexiones TCP/UDP activas y cerradas recientemente. Revela conexiones a servidores C2 que pueden no aparecer en logs de red si el atacante usó cifrado o protocolos no monitoreados.</div>
+        <div class="artifact-value">→ IPs externas no conocidas · Procesos legítimos con conexiones inusuales · Puertos no estándar</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">volatility -f mem.raw windows.malfind</span>
+        <div class="artifact-name">Detección de Código Inyectado</div>
+        <div class="artifact-desc">Identifica regiones de memoria con permisos de escritura Y ejecución que contienen código, lo que es una señal fuerte de process injection (técnica T1055 de MITRE ATT&CK).</div>
+        <div class="artifact-value">→ Shellcode · DLL injection · Process hollowing · Reflective loading</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">volatility -f mem.raw windows.dlllist</span>
+        <div class="artifact-name">DLLs Cargadas por Proceso</div>
+        <div class="artifact-desc">Lista de todas las DLLs cargadas por cada proceso. Permite detectar DLL hijacking, DLLs maliciosas inyectadas en procesos legítimos y técnicas de side-loading.</div>
+        <div class="artifact-value">→ DLLs con rutas inusuales · DLL sin firma digital en proceso firmado · DLLs duplicadas</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">volatility -f mem.raw windows.hashdump</span>
+        <div class="artifact-name">Hashes de Contraseñas NTLM</div>
+        <div class="artifact-desc">Extrae los hashes NTLM de las cuentas locales desde la memoria. Permite identificar si el atacante tenía acceso a credenciales privilegiadas en memoria.</div>
+        <div class="artifact-value">→ Si el atacante usó Mimikatz, puede haber volcado estas mismas credenciales antes</div>
+      </div>
+      <div class="artifact-item">
+        <span class="artifact-path">strings mem.raw | grep -E 'http|ftp|pass|key'</span>
+        <div class="artifact-name">Cadenas de Texto en Memoria</div>
+        <div class="artifact-desc">Extracción de cadenas ASCII/Unicode de la imagen de memoria. Puede revelar URLs de C2, contraseñas en texto plano, configuraciones de malware y fragmentos de comunicaciones cifradas descifradas en memoria.</div>
+        <div class="artifact-value">→ Buscar: URLs · Contraseñas · Claves API · Comandos del atacante · Rutas de archivos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HERRAMIENTAS ══ -->
+<section class="block" id="herramientas">
+  <div class="block-label">// Arsenal del Forensista Digital</div>
+  <h2 class="block-title">Herramientas Forenses</h2>
+  <p class="block-intro">
+    El ecosistema de herramientas forenses es vasto. Esta es la selección de herramientas más utilizadas por los profesionales, organizadas por función. La mayoría tienen versiones open-source.
+  </p>
+
+  <div class="tools-accordion">
+
+    <div class="tool-block open">
+      <div class="tool-block-header" onclick="toggleToolBlock(this)">
+        <span class="tool-block-icon">💽</span>
+        <span class="tool-block-name">Adquisición y Imagen Forense</span>
+        <span class="tool-block-count">6 herramientas</span>
+        <span class="tool-block-chevron">▼</span>
+      </div>
+      <div class="tool-block-body">
+        <div class="tools-grid">
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">FTK Imager</span><span class="tool-name">FTK Imager</span></div>
+            <div class="tool-desc">Herramienta de adquisición de AccessData. Crea imágenes forenses en múltiples formatos (E01, DD, AFF). Soporta adquisición en vivo de RAM. Interfaz gráfica intuitiva. Gratuita para adquisición.</div>
+            <div class="tool-tags"><span class="tool-tag">Windows</span><span class="tool-tag">GUI</span><span class="tool-tag">Gratuito</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">Guymager</span><span class="tool-name">Guymager</span></div>
+            <div class="tool-desc">Adquisición forense de discos en Linux. Open-source, muy rápido gracias a compresión paralela. Genera hashes MD5/SHA-1/SHA-256 automáticamente. Estándar en distribuciones forenses como DEFT y CAINE.</div>
+            <div class="tool-tags"><span class="tool-tag">Linux</span><span class="tool-tag">Open-source</span><span class="tool-tag">GUI</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">dd / dcfldd</span><span class="tool-name">dd / dcfldd / dc3dd</span></div>
+            <div class="tool-desc">Utilidades de línea de comandos Unix para copia bit-a-bit. dcfldd y dc3dd añaden hashing en tiempo real, wiping y logging. Disponibles en cualquier sistema Linux/macOS.</div>
+            <div class="tool-tags"><span class="tool-tag">Linux/macOS</span><span class="tool-tag">CLI</span><span class="tool-tag">Open-source</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">Winpmem</span><span class="tool-name">Winpmem / LiME</span></div>
+            <div class="tool-desc">Winpmem para captura de RAM en Windows; LiME (Linux Memory Extractor) para Linux como módulo del kernel. Ambos son open-source y producen volcados de memoria que Volatility puede analizar.</div>
+            <div class="tool-tags"><span class="tool-tag">Win/Linux</span><span class="tool-tag">RAM dump</span><span class="tool-tag">Open-source</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">CAINE</span><span class="tool-name">CAINE Linux</span></div>
+            <div class="tool-desc">Computer Aided INvestigative Environment. Distribución Linux live CD especializada en forense. Monta automáticamente los discos en modo solo lectura. Incluye decenas de herramientas forenses preinstaladas.</div>
+            <div class="tool-tags"><span class="tool-tag">Linux distro</span><span class="tool-tag">Live CD</span><span class="tool-tag">Open-source</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">Write Blocker</span><span class="tool-name">Write Blockers (HW/SW)</span></div>
+            <div class="tool-desc">Dispositivos hardware (Tableau, WiebeTech) o software que impiden cualquier escritura en el disco original durante la adquisición. Imprescindibles para garantizar la integridad de la evidencia.</div>
+            <div class="tool-tags"><span class="tool-tag">Hardware</span><span class="tool-tag">Imprescindible</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tool-block">
+      <div class="tool-block-header" onclick="toggleToolBlock(this)">
+        <span class="tool-block-icon">🔬</span>
+        <span class="tool-block-name">Análisis de Disco y Artefactos</span>
+        <span class="tool-block-count">5 herramientas</span>
+        <span class="tool-block-chevron">▼</span>
+      </div>
+      <div class="tool-block-body">
+        <div class="tools-grid">
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">Autopsy</span><span class="tool-name">Autopsy / Sleuth Kit</span></div>
+            <div class="tool-desc">Suite forense open-source más completa disponible. Permite análisis de sistemas de archivos, recuperación de archivos eliminados, análisis de timeline, análisis de logs y muchos módulos adicionales. Interfaz web o de escritorio.</div>
+            <div class="tool-tags"><span class="tool-tag">Win/Linux/Mac</span><span class="tool-tag">Open-source</span><span class="tool-tag">GUI</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">X-Ways</span><span class="tool-name">X-Ways Forensics</span></div>
+            <div class="tool-desc">Suite forense comercial considerada la más potente del mercado. Muy eficiente en memoria, soporta RAIDs, formatos de imagen raros y análisis de hash a escala. Preferida por peritos judiciales.</div>
+            <div class="tool-tags"><span class="tool-tag">Windows</span><span class="tool-tag">Comercial</span><span class="tool-tag">Referencia judicial</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">Plaso</span><span class="tool-name">Plaso / log2timeline</span></div>
+            <div class="tool-desc">Extrae eventos temporales de decenas de fuentes (logs Windows, artefactos del navegador, registros, etc.) y los combina en una super-timeline ordenada cronológicamente. Fundamental para análisis de incidentes complejos.</div>
+            <div class="tool-tags"><span class="tool-tag">Python</span><span class="tool-tag">Open-source</span><span class="tool-tag">Timeline</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">RegRipper</span><span class="tool-name">RegRipper</span></div>
+            <div class="tool-desc">Extracción y análisis del Registro de Windows. Plugins específicos para artefactos de persistencia, historial USB, aplicaciones ejecutadas, usuarios y más. Rápido e imprescindible en forense Windows.</div>
+            <div class="tool-tags"><span class="tool-tag">Windows</span><span class="tool-tag">Open-source</span><span class="tool-tag">Registro</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">PhotoRec</span><span class="tool-name">PhotoRec / Scalpel</span></div>
+            <div class="tool-desc">Data carving: recuperación de archivos basada en cabeceras de archivo (file signatures) sin depender del sistema de archivos. Puede recuperar archivos de espacio no asignado y sectores dañados.</div>
+            <div class="tool-tags"><span class="tool-tag">Multi-plataforma</span><span class="tool-tag">Open-source</span><span class="tool-tag">Carving</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tool-block">
+      <div class="tool-block-header" onclick="toggleToolBlock(this)">
+        <span class="tool-block-icon">🧠</span>
+        <span class="tool-block-name">Análisis de Memoria RAM</span>
+        <span class="tool-block-count">3 herramientas</span>
+        <span class="tool-block-chevron">▼</span>
+      </div>
+      <div class="tool-block-body">
+        <div class="tools-grid">
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">Volatility 3</span><span class="tool-name">Volatility Framework</span></div>
+            <div class="tool-desc">El estándar de facto en análisis forense de memoria RAM. Framework open-source con cientos de plugins para Windows, Linux y macOS. Analiza procesos, conexiones de red, código inyectado, claves de registro, contraseñas y mucho más.</div>
+            <div class="tool-tags"><span class="tool-tag">Python</span><span class="tool-tag">Open-source</span><span class="tool-tag">Referencia mundial</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">Rekall</span><span class="tool-name">Rekall (legacy)</span></div>
+            <div class="tool-desc">Fork de Volatility con algunas capacidades de análisis en vivo. Aunque el proyecto está menos activo, algunos plugins de Rekall siguen siendo referencia. Gran parte de su código fue integrado en Volatility 3.</div>
+            <div class="tool-tags"><span class="tool-tag">Python</span><span class="tool-tag">Open-source</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">MemProcFS</span><span class="tool-name">MemProcFS</span></div>
+            <div class="tool-desc">Monta una imagen de memoria RAM como un sistema de archivos virtual, permitiendo navegar por los procesos, archivos abiertos y artefactos de memoria con cualquier herramienta de análisis de archivos convencional.</div>
+            <div class="tool-tags"><span class="tool-tag">Windows/Linux</span><span class="tool-tag">Open-source</span><span class="tool-tag">Innovador</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tool-block">
+      <div class="tool-block-header" onclick="toggleToolBlock(this)">
+        <span class="tool-block-icon">🌐</span>
+        <span class="tool-block-name">Análisis de Red y Malware</span>
+        <span class="tool-block-count">6 herramientas</span>
+        <span class="tool-block-chevron">▼</span>
+      </div>
+      <div class="tool-block-body">
+        <div class="tools-grid">
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">Wireshark</span><span class="tool-name">Wireshark</span></div>
+            <div class="tool-desc">Analizador de protocolos de red más usado del mundo. Permite capturar, filtrar y diseccionar tráfico de red en tiempo real o desde archivos PCAP. Soporta cientos de protocolos y descifrado TLS con las claves.</div>
+            <div class="tool-tags"><span class="tool-tag">Multi-plataforma</span><span class="tool-tag">Open-source</span><span class="tool-tag">Referencia</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">Zeek</span><span class="tool-name">Zeek (antes Bro)</span></div>
+            <div class="tool-desc">Motor de análisis de red que genera logs estructurados de alto nivel (conexiones, DNS, HTTP, SSL, archivos) a partir de tráfico capturado. Mucho más eficiente que Wireshark para análisis de grandes volúmenes.</div>
+            <div class="tool-tags"><span class="tool-tag">Linux</span><span class="tool-tag">Open-source</span><span class="tool-tag">NSM</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">YARA</span><span class="tool-name">YARA</span></div>
+            <div class="tool-desc">El estándar para crear reglas de detección de malware basadas en patrones de bytes, strings y condiciones lógicas. Imprescindible para identificar familias de malware conocidas en imágenes de disco o memoria.</div>
+            <div class="tool-tags"><span class="tool-tag">Multi-plataforma</span><span class="tool-tag">Open-source</span><span class="tool-tag">Detección malware</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">Any.run</span><span class="tool-name">Any.run / Cuckoo Sandbox</span></div>
+            <div class="tool-desc">Sandboxes para ejecutar y analizar malware de forma segura. Any.run es interactivo en la nube; Cuckoo Sandbox es open-source para entornos privados. Generan informes de comportamiento, IOCs y capturas de red del malware.</div>
+            <div class="tool-tags"><span class="tool-tag">Cloud/Local</span><span class="tool-tag">Sandbox</span><span class="tool-tag">Cuckoo open-source</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">VirusTotal</span><span class="tool-name">VirusTotal</span></div>
+            <div class="tool-desc">Servicio de análisis de archivos y URLs contra más de 70 motores antivirus. Permite buscar hashes de archivos sospechosos y ver si ya son conocidos. Precaución: no subir archivos con datos sensibles.</div>
+            <div class="tool-tags"><span class="tool-tag">Cloud</span><span class="tool-tag">Gratuito</span><span class="tool-tag">Precaución privacidad</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">Ghidra</span><span class="tool-name">Ghidra / IDA Pro</span></div>
+            <div class="tool-desc">Herramientas de ingeniería inversa para analizar malware compilado. Ghidra es open-source (desarrollado por la NSA); IDA Pro es el estándar comercial. Permiten desensamblar, decompilar y entender el código del malware.</div>
+            <div class="tool-tags"><span class="tool-tag">Multi-plataforma</span><span class="tool-tag">Ghidra: Open-source</span><span class="tool-tag">RE</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tool-block">
+      <div class="tool-block-header" onclick="toggleToolBlock(this)">
+        <span class="tool-block-icon">📂</span>
+        <span class="tool-block-name">Plataformas de Gestión del Caso</span>
+        <span class="tool-block-count">4 herramientas</span>
+        <span class="tool-block-chevron">▼</span>
+      </div>
+      <div class="tool-block-body">
+        <div class="tools-grid">
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">TheHive</span><span class="tool-name">TheHive + Cortex</span></div>
+            <div class="tool-desc">Plataforma open-source de gestión de incidentes y casos forenses. Integra con Cortex para automatizar análisis (VirusTotal, Shodan, etc.) y con MISP para inteligencia de amenazas. El estándar en equipos DFIR.</div>
+            <div class="tool-tags"><span class="tool-tag">Open-source</span><span class="tool-tag">Case management</span><span class="tool-tag">DFIR</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">Magnet AXIOM</span><span class="tool-name">Magnet AXIOM</span></div>
+            <div class="tool-desc">Suite forense comercial completa que integra adquisición, análisis y reporte en una sola plataforma. Soporta evidencias de múltiples fuentes: disco, RAM, cloud, móviles y artefactos de aplicaciones.</div>
+            <div class="tool-tags"><span class="tool-tag">Windows</span><span class="tool-tag">Comercial</span><span class="tool-tag">All-in-one</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">Maltego</span><span class="tool-name">Maltego</span></div>
+            <div class="tool-desc">Plataforma de análisis de vínculos y visualización de relaciones entre entidades (IPs, dominios, personas, organizaciones). Fundamental para atribución y para mapear la infraestructura del atacante.</div>
+            <div class="tool-tags"><span class="tool-tag">Multi-plataforma</span><span class="tool-tag">Freemium</span><span class="tool-tag">Análisis de vínculos</span></div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-head"><span class="tool-name-tag">MISP</span><span class="tool-name">MISP</span></div>
+            <div class="tool-desc">Plataforma open-source de intercambio de inteligencia de amenazas (IOCs, TTPs, informes). Permite compartir y recibir indicadores de compromisos entre organizaciones, CSIRT y sectores regulados.</div>
+            <div class="tool-tags"><span class="tool-tag">Open-source</span><span class="tool-tag">Threat Intel</span><span class="tool-tag">Compartir IOCs</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ ESTRUCTURA DEL REPORTE ══ -->
+<section class="block" id="reporte">
+  <div class="block-label">// Fase 4 — Comunicación de Hallazgos</div>
+  <h2 class="block-title">Estructura del Informe Forense</h2>
+  <p class="block-intro">
+    Un informe forense bien estructurado tiene dos audiencias simultáneas: la dirección y el equipo legal (que necesitan claridad y conclusiones), y el equipo técnico o el tribunal (que necesitan reproducibilidad y evidencia detallada). El informe debe satisfacer a ambos.
+  </p>
+
+  <div class="two-col">
+    <div>
+      <div class="block-label" style="margin-bottom:14px;">// Informe Ejecutivo (1–3 páginas)</div>
+      <div class="report-sections">
+        <div class="rs-item">
+          <div class="rs-num">1</div>
+          <div>
+            <div class="rs-title">Resumen del Incidente</div>
+            <div class="rs-desc">Qué ocurrió, cuándo se detectó, cuándo comenzó el incidente real (si se puede determinar) y qué sistemas estuvieron afectados. Sin tecnicismos.</div>
+            <div class="rs-must">→ Orientado a dirección y legal · Máximo 1 página</div>
+          </div>
+        </div>
+        <div class="rs-item">
+          <div class="rs-num">2</div>
+          <div>
+            <div class="rs-title">Impacto del Negocio</div>
+            <div class="rs-desc">Qué datos fueron comprometidos, cuántos usuarios/sistemas afectados, si hubo exfiltración confirmada y el impacto operacional. Informa decisiones de notificación legal.</div>
+          </div>
+        </div>
+        <div class="rs-item">
+          <div class="rs-num">3</div>
+          <div>
+            <div class="rs-title">Causa Raíz y Vector</div>
+            <div class="rs-desc">Cómo entró el atacante y qué control falló. En términos de negocio, no solo técnicos. Ejemplo: "El atacante obtuvo acceso mediante una cuenta de proveedor sin MFA."</div>
+          </div>
+        </div>
+        <div class="rs-item">
+          <div class="rs-num">4</div>
+          <div>
+            <div class="rs-title">Recomendaciones Prioritarias</div>
+            <div class="rs-desc">Las 3–5 acciones más críticas a implementar para prevenir la recurrencia, con estimación de impacto, esfuerzo y responsable propuesto. Priorizadas, no una lista exhaustiva.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="block-label" style="margin-bottom:14px;">// Informe Técnico Completo</div>
+      <div class="report-sections">
+        <div class="rs-item">
+          <div class="rs-num">5</div>
+          <div>
+            <div class="rs-title">Metodología y Alcance</div>
+            <div class="rs-desc">Qué sistemas se analizaron, qué se quedó fuera del alcance, qué herramientas y versiones se usaron, y por qué se tomaron ciertas decisiones metodológicas.</div>
+            <div class="rs-must">→ Permite reproducir el análisis · Defiende la metodología ante cuestionamientos</div>
+          </div>
+        </div>
+        <div class="rs-item">
+          <div class="rs-num">6</div>
+          <div>
+            <div class="rs-title">Línea de Tiempo del Incidente</div>
+            <div class="rs-desc">Cronología detallada con timestamps UTC de cada evento identificado, la evidencia que lo soporta y la fuente (log, artefacto, archivo) con su ruta exacta.</div>
+            <div class="rs-must">→ El corazón del informe técnico · Cada evento referenciado a su evidencia</div>
+          </div>
+        </div>
+        <div class="rs-item">
+          <div class="rs-num">7</div>
+          <div>
+            <div class="rs-title">Hallazgos Técnicos Detallados</div>
+            <div class="rs-desc">Análisis de cada artefacto relevante: qué se encontró, dónde, cuándo, qué significa y qué evidencia lo soporta. Con capturas de pantalla y extractos de logs relevantes.</div>
+          </div>
+        </div>
+        <div class="rs-item">
+          <div class="rs-num">8</div>
+          <div>
+            <div class="rs-title">IOCs y Apéndices</div>
+            <div class="rs-desc">Lista completa de indicadores de compromiso: hashes de archivos maliciosos, IPs/dominios del atacante, reglas YARA/Sigma, y formularios de cadena de custodia de todas las evidencias.</div>
+            <div class="rs-must">→ IOCs listos para usar en detección · Hashes de todas las imágenes forenses</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note warn" style="margin-top:20px;">
+    <div class="note-label">// TIMESTAMPS — SIEMPRE EN UTC</div>
+    Todos los timestamps en un informe forense deben expresarse en <strong>UTC</strong> y documentar la zona horaria del sistema fuente. Las discrepancias de zona horaria entre sistemas son una fuente frecuente de confusión en la línea de tiempo. Verificar siempre si el reloj del sistema estaba correctamente sincronizado con NTP.
+  </div>
+</section>
+
+<!-- ══ MARCO LEGAL ══ -->
+<section class="block" id="legal">
+  <div class="block-label">// Consideraciones Jurídicas</div>
+  <h2 class="block-title">Marco Legal del Forense Digital</h2>
+  <p class="block-intro">
+    El forense digital opera en la intersección entre la tecnología y el derecho. Ignorar el marco legal puede hacer que evidencias perfectamente recolectadas sean inadmisibles o generar responsabilidades para el investigador.
+  </p>
+
+  <div class="three-col">
+    <div class="card">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);"></div>
+      <div class="card-label">AUTORIZACIÓN</div>
+      <div class="card-title">¿Con qué autorización investigo?</div>
+      <div class="card-body">
+        La investigación en sistemas propios de la organización requiere autorización de la máxima autoridad y debe estar respaldada por las políticas internas de la empresa.<br><br>
+        La investigación de dispositivos de <strong>empleados o terceros</strong> puede requerir orden judicial o consentimiento explícito. Consultar al departamento legal <strong>antes</strong> de comenzar, no después.
+      </div>
+    </div>
+    <div class="card">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--blue);"></div>
+      <div class="card-label">PRIVACIDAD</div>
+      <div class="card-title">Protección de datos en la investigación</div>
+      <div class="card-body">
+        La investigación puede exponer datos personales de empleados, clientes o terceros. En Chile, la Ley 19.628 y la futura Ley de Protección de Datos (2026) limitan el uso de datos personales.<br><br>
+        Principio de <strong>proporcionalidad</strong>: recolectar solo los datos necesarios para la investigación. Proteger y restringir el acceso a los datos personales encontrados.
+      </div>
+    </div>
+    <div class="card">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--green);"></div>
+      <div class="card-label">COORDINACIÓN</div>
+      <div class="card-title">Cuándo involucrar a las autoridades</div>
+      <div class="card-body">
+        Si el incidente constituye un delito informático según la <strong>Ley 21.459</strong>, debe evaluarse la denuncia a la PDI (Brigada del Cibercrimen) o al Ministerio Público.<br><br>
+        La ANCI y el CSIRT Nacional deben ser notificados según la <strong>Ley 21.663</strong>. Preservar las evidencias en el formato que requieran las autoridades para procesos penales.
+      </div>
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:20px;">
+    <div class="note-label">// COORDINACIÓN CON AUTORIDADES EN CHILE</div>
+    <strong>PDI — Brigada del Cibercrimen (BRICIB):</strong> Investiga delitos informáticos. Contactar ante ataques que constituyan delito (acceso no autorizado, sabotaje, robo de datos).<br><br>
+    <strong>CSIRT Nacional / ANCI:</strong> Obligación legal de notificación para PSE y OIV según plazos de la Ley 21.663. El CSIRT puede proveer asistencia técnica durante la investigación.<br><br>
+    <strong>Recomendación:</strong> Involucrar al departamento legal y al DPO desde el inicio de cualquier investigación que pueda derivar en proceso penal o notificación de datos personales.
+  </div>
+</section>
+
+<!-- ══ RELACIONES ══ -->
+<section class="block" id="relaciones">
+  <div class="block-label">// Ecosistema Normativo</div>
+  <h2 class="block-title">Relación con Otros Estándares</h2>
+  <p class="block-intro">
+    El SP 800-86 no opera de forma aislada. Se integra con los marcos de gestión de incidentes, el SGSI y los marcos de ciberseguridad para formar un programa de respuesta y forense completo.
+  </p>
+
+  <div class="rel-grid">
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--accent);">NIST SP 800-61 Rev.2</div>
+      <div class="rel-name">Incident Handling Guide</div>
+      <div class="rel-how">El SP 800-61 define el proceso de gestión de incidentes (las 4 fases: Preparación, Detección, Contención/Erradicación/Recuperación, Post-incidente). El SP 800-86 profundiza en la dimensión forense que se aplica principalmente durante las fases de Detección y Análisis del 800-61.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--blue);">ISO/IEC 27035</div>
+      <div class="rel-name">Gestión de Incidentes SI</div>
+      <div class="rel-how">ISO 27035 define el proceso organizativo de gestión de incidentes (5 fases). El SP 800-86 complementa la fase 3 (Evaluar) y 4 (Responder) de ISO 27035 con la metodología forense técnica detallada para recolectar y analizar evidencias.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--green);">ISO/IEC 27001:2022</div>
+      <div class="rel-name">SGSI — Controles Relevantes</div>
+      <div class="rel-how">Los controles 5.28 (recopilación de evidencias) y 5.27 (aprendizaje de incidentes) del Anexo A de ISO 27001 se implementan directamente con el proceso del SP 800-86. El SGSI establece la política; el SP 800-86 define el procedimiento técnico.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--gold);">ISO/IEC 27043</div>
+      <div class="rel-name">Principios de Investigación Digital</div>
+      <div class="rel-how">ISO 27043 es el estándar internacional de principios y procesos de investigación de incidentes digitales, con mayor énfasis en la admisibilidad legal. Complementa el SP 800-86 para organizaciones que necesitan alinear sus procedimientos con estándares ISO además de los del NIST.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--purple);">MITRE ATT&CK</div>
+      <div class="rel-name">Framework de Tácticas y Técnicas</div>
+      <div class="rel-how">MITRE ATT&CK es el mapa de referencia para la fase de análisis del SP 800-86. Al identificar artefactos forenses, el investigador puede mapear cada hallazgo a una técnica ATT&CK (Ej: T1003 OS Credential Dumping, T1055 Process Injection) para reconstruir la cadena de ataque completa.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--teal);">Ley 21.663 Chile</div>
+      <div class="rel-name">Marco de Ciberseguridad Nacional</div>
+      <div class="rel-how">La Ley 21.663 exige informes de incidente a 3h, 72h y 15 días. El proceso forense del SP 800-86 produce los hallazgos que alimentan estos informes. El informe final de 15 días requiere análisis de causa raíz que solo es posible con una investigación forense adecuada.</div>
+    </div>
+  </div>
+
+  <div class="note tip" style="margin-top:20px;">
+    <div class="note-label">// NIST SP 800-101 Rev.1 — FORENSE MÓVIL</div>
+    Para investigaciones que involucren smartphones y tabletas, el SP 800-86 se complementa con el <strong>NIST SP 800-101 Rev.1</strong> (Guidelines on Mobile Device Forensics). Cubre técnicas de adquisición específicas para iOS y Android (lógica, avanzada lógica, sistema de archivos, física), consideraciones de cifrado de dispositivo, y las implicaciones legales de acceder a dispositivos personales.
+  </div>
+</section>
+
+</div><!-- /page -->
+
+<footer>
+  <strong>NIST SP 800-86 — Guide to Integrating Forensic Techniques into Incident Response</strong><br>
+  National Institute of Standards and Technology · Karen Kent, Suzanne Chevalier, Tim Grance, Hung Dang<br>
+  Publicado: Agosto 2006 · Complementos: SP 800-101 Rev.1 (móviles) · SP 800-61 Rev.2 (incidentes) · NISTIR 8006 (cloud)<br>
+  <a href="https://csrc.nist.gov/publications/detail/sp/800-86/final" target="_blank">csrc.nist.gov/publications/detail/sp/800-86/final</a><br><br>
+  <span style="font-size:.62rem;opacity:.5">Documento educativo. Para investigaciones con potencial uso judicial, consultar a un perito forense certificado (GCFE, GCFA, EnCE, CHFI) y al departamento legal de la organización.</span>
+</footer>
+
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
+
+<script>
+/* ── Scroll reveal ── */
+const revObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold:0.05, rootMargin:'0px 0px -40px 0px' });
+document.querySelectorAll('section.block').forEach(el => revObs.observe(el));
+
+/* ── Scroll top ── */
+const sBtn = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', () => sBtn.classList.toggle('show', window.scrollY > 500));
+
+/* ── Active nav ── */
+const sections = document.querySelectorAll('section.block[id]');
+const navLinks  = document.querySelectorAll('.nav-link');
+const navObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      navLinks.forEach(l => l.classList.remove('active'));
+      const a = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if(a) a.classList.add('active');
+    }
+  });
+}, { threshold:0.25 });
+sections.forEach(s => navObs.observe(s));
+
+/* ── Pipeline fases ── */
+function togglePhase(col){
+  const all = document.querySelectorAll('.phase-col');
+  all.forEach(c => { if(c !== col) c.classList.remove('active'); });
+  col.classList.toggle('active');
+}
+
+/* ── Tools accordion ── */
+function toggleToolBlock(header){
+  header.parentElement.classList.toggle('open');
+}
+
+/* ── Artefactos tabs ── */
+function switchTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

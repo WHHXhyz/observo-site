@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OWASP Top 10 — Guía Completa 2021</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ed;--bg2:#ede9e2;--ink:#1a1410;--ink2:#4a3f35;--ink3:#8a7a6e;--accent:#c8410a;--accent2:#e8622a;--blue:#1a4f8c;--green:#1a6b3c;--gold:#a07a10;--purple:#6b2d8b;--teal:#0e7c7b;--border:rgba(26,20,16,.1);--card:rgba(255,255,255,.6);--shadow:0 2px 20px rgba(26,20,16,.08);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:.4;}
+.hero{position:relative;z-index:10;background:var(--ink);color:#f5f2ed;padding:80px 40px 64px;overflow:hidden;}
+.hero::after{content:'';position:absolute;right:-60px;top:-60px;width:420px;height:420px;border-radius:50%;border:80px solid rgba(200,65,10,.12);pointer-events:none;}
+.hero::before{content:'';position:absolute;left:-40px;bottom:-80px;width:280px;height:280px;border-radius:50%;border:50px solid rgba(26,79,140,.08);pointer-events:none;}
+.hero-inner{max-width:1080px;margin:0 auto;position:relative;z-index:2;}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:4px;color:var(--accent2);margin-bottom:20px;opacity:0;animation:fadeUp .6s .1s forwards;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:clamp(3rem,8vw,6.5rem);line-height:.95;color:#f5f2ed;margin-bottom:8px;opacity:0;animation:fadeUp .7s .2s forwards;}
+.hero-title em{font-style:italic;color:var(--accent2);}
+.hero-year{font-family:'JetBrains Mono',monospace;font-size:clamp(1rem,3vw,1.8rem);color:rgba(245,242,237,.35);letter-spacing:6px;margin-bottom:28px;opacity:0;animation:fadeUp .7s .3s forwards;}
+.hero-desc{max-width:580px;font-size:1rem;line-height:1.85;color:rgba(245,242,237,.7);margin-bottom:36px;opacity:0;animation:fadeUp .7s .4s forwards;}
+.hero-stats{display:flex;flex-wrap:wrap;gap:28px;opacity:0;animation:fadeUp .7s .5s forwards;}
+.stat{border-left:2px solid var(--accent);padding-left:14px;}
+.stat-num{font-family:'DM Serif Display',serif;font-size:2rem;color:#f5f2ed;line-height:1;}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(245,242,237,.4);letter-spacing:2px;margin-top:3px;}
+.main-nav{position:sticky;top:0;z-index:100;background:rgba(245,242,237,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;overflow-x:auto;}
+.nav-inner{display:flex;gap:0;max-width:1080px;margin:0 auto;white-space:nowrap;}
+.nav-link{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:2px;color:var(--ink3);text-decoration:none;padding:16px 12px;border-bottom:2px solid transparent;transition:all .2s;text-transform:uppercase;}
+.nav-link:hover,.nav-link.active{color:var(--accent);border-bottom-color:var(--accent);}
+.page{max-width:1080px;margin:0 auto;padding:0 24px;}
+section.block{padding:72px 0 40px;border-bottom:1px solid var(--border);opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s;}
+section.block.visible{opacity:1;transform:none;}
+.block-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:8px;}
+.block-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--ink);margin-bottom:20px;line-height:1.2;}
+.block-intro{font-size:.97rem;line-height:1.9;color:var(--ink2);max-width:720px;margin-bottom:36px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+@media(max-width:680px){.two-col{grid-template-columns:1fr;}}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+@media(max-width:700px){.three-col{grid-template-columns:1fr;}}
+.note{border-left:3px solid var(--gold);background:rgba(160,122,16,.05);padding:14px 18px;border-radius:0 3px 3px 0;font-size:.88rem;line-height:1.75;color:var(--ink2);margin:20px 0;}
+.note-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
+.tip{border-left-color:var(--blue);background:rgba(26,79,140,.04);}.tip .note-label{color:var(--blue);}
+.warn{border-left-color:var(--accent);background:rgba(200,65,10,.04);}.warn .note-label{color:var(--accent);}
+.success{border-left-color:var(--green);background:rgba(26,107,60,.04);}.success .note-label{color:var(--green);}
+.badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:1px;padding:3px 9px;border-radius:20px;border:1px solid;}
+.b-red{color:var(--accent);border-color:rgba(200,65,10,.3);background:rgba(200,65,10,.06);}
+.b-blue{color:var(--blue);border-color:rgba(26,79,140,.3);background:rgba(26,79,140,.06);}
+.b-green{color:var(--green);border-color:rgba(26,107,60,.3);background:rgba(26,107,60,.06);}
+.b-gold{color:var(--gold);border-color:rgba(160,122,16,.3);background:rgba(160,122,16,.06);}
+.b-purple{color:var(--purple);border-color:rgba(107,45,139,.3);background:rgba(107,45,139,.06);}
+ol.num-list{counter-reset:li;list-style:none;display:flex;flex-direction:column;gap:10px;}
+.num-list li{display:flex;gap:12px;font-size:.9rem;line-height:1.7;color:var(--ink2);}
+.num-list li::before{content:counter(li);counter-increment:li;display:flex;align-items:center;justify-content:center;min-width:26px;height:26px;background:var(--accent);color:#fff;font-family:'JetBrains Mono',monospace;font-size:.65rem;border-radius:50%;flex-shrink:0;margin-top:2px;}
+.cmp-table{width:100%;border-collapse:collapse;}
+.cmp-table th{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);padding:10px 14px;border-bottom:2px solid var(--border);text-align:left;font-weight:400;}
+.cmp-table td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:.85rem;line-height:1.65;color:var(--ink2);vertical-align:top;}
+.cmp-table tr:hover td{background:rgba(200,65,10,.02);}
+
+/* OWASP specific */
+.owasp-list{display:flex;flex-direction:column;gap:4px;}
+.owasp-entry{border:1px solid var(--border);border-radius:3px;background:var(--card);overflow:hidden;}
+.owasp-header{display:flex;align-items:center;gap:16px;padding:18px 20px;cursor:pointer;transition:background .2s;user-select:none;}
+.owasp-header:hover{background:rgba(26,20,16,.03);}
+.owasp-entry.open .owasp-header{background:rgba(200,65,10,.04);}
+.owasp-rank{font-family:'DM Serif Display',serif;font-size:2.4rem;line-height:1;min-width:52px;flex-shrink:0;opacity:.15;color:var(--ink);}
+.owasp-meta{flex:1;}
+.owasp-id{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;color:var(--accent);margin-bottom:3px;}
+.owasp-name{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);}
+.owasp-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px;align-items:center;}
+.owasp-chevron{font-size:.75rem;color:var(--ink3);transition:transform .2s;flex-shrink:0;}
+.owasp-entry.open .owasp-chevron{transform:rotate(180deg);}
+.owasp-body{display:none;padding:0 20px 24px;border-top:1px solid var(--border);}
+.owasp-entry.open .owasp-body{display:block;}
+.owasp-desc{font-size:.9rem;line-height:1.85;color:var(--ink2);margin:16px 0;}
+.vuln-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;}
+@media(max-width:680px){.vuln-grid{grid-template-columns:1fr;}}
+.vuln-box{border:1px solid var(--border);border-radius:3px;padding:14px;}
+.vuln-box-title{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;margin-bottom:8px;}
+.vuln-attack{border-color:rgba(200,65,10,.2);background:rgba(200,65,10,.03);}
+.vuln-attack .vuln-box-title{color:var(--accent);}
+.vuln-example{border-color:rgba(26,79,140,.2);background:rgba(26,79,140,.03);}
+.vuln-example .vuln-box-title{color:var(--blue);}
+.vuln-defense{border-color:rgba(26,107,60,.2);background:rgba(26,107,60,.03);}
+.vuln-defense .vuln-box-title{color:var(--green);}
+.vuln-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.vuln-list li{font-size:.83rem;line-height:1.6;padding-left:14px;position:relative;color:var(--ink2);}
+.vuln-attack .vuln-list li::before{content:'›';position:absolute;left:0;color:var(--accent);}
+.vuln-example .vuln-list li::before{content:'›';position:absolute;left:0;color:var(--blue);}
+.vuln-defense .vuln-list li::before{content:'›';position:absolute;left:0;color:var(--green);}
+.code-block{font-family:'JetBrains Mono',monospace;font-size:.72rem;background:rgba(26,20,16,.06);padding:12px 14px;border-radius:3px;line-height:1.7;color:var(--ink2);margin-top:8px;overflow-x:auto;white-space:pre;}
+.risk-meter{display:inline-flex;gap:3px;align-items:center;}
+.risk-dot{width:9px;height:9px;border-radius:50%;background:var(--bg2);border:1px solid var(--border);}
+.risk-dot.rc{background:#b02010;}.risk-dot.rh{background:var(--accent);}.risk-dot.rm{background:var(--gold);}
+.sdlc-row{display:flex;flex-direction:column;gap:8px;}
+.sdlc-item{padding:14px 18px;border:1px solid var(--border);border-radius:3px;background:var(--card);border-left:3px solid;}
+footer{background:var(--ink);color:rgba(245,242,237,.5);padding:48px 40px;font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:1px;line-height:2;text-align:center;}
+footer strong{color:rgba(245,242,237,.8);}footer a{color:var(--accent2);text-decoration:none;}
+.scroll-top{position:fixed;bottom:28px;right:28px;z-index:200;background:var(--ink);color:var(--bg);font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:10px 16px;border:none;border-radius:2px;cursor:pointer;transition:all .2s;letter-spacing:2px;opacity:0;pointer-events:none;box-shadow:0 4px 20px rgba(26,20,16,.2);}
+.scroll-top.show{opacity:1;pointer-events:auto;}.scroll-top:hover{background:var(--accent);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">// OWASP — Open Web Application Security Project</div>
+    <h1 class="hero-title">OWASP<br><em>Top 10</em></h1>
+    <div class="hero-year">EDICIÓN 2021 · APLICACIONES WEB</div>
+    <p class="hero-desc">Las 10 categorías de vulnerabilidades web más críticas. Referencia universal para desarrolladores, pentesters y equipos de seguridad. Cada entrada incluye vectores de ataque, ejemplos de código y contramedidas concretas.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">10</div><div class="stat-label">Categorías críticas</div></div>
+      <div class="stat"><div class="stat-num">500k+</div><div class="stat-label">Apps analizadas</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Categorías nuevas en 2021</div></div>
+      <div class="stat"><div class="stat-num">94%</div><div class="stat-label">Apps con control de acceso roto</div></div>
+    </div>
+  </div>
+</header>
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a class="nav-link" href="#intro">Introducción</a>
+    <a class="nav-link" href="#top10">Top 10</a>
+    <a class="nav-link" href="#sdlc">SDLC Seguro</a>
+    <a class="nav-link" href="#herramientas">Herramientas</a>
+    <a class="nav-link" href="#relaciones">Relaciones</a>
+  </div>
+</nav>
+<div class="page">
+
+<section class="block" id="intro">
+  <div class="block-label">// Fundamentos</div>
+  <h2 class="block-title">¿Qué es el OWASP Top 10?</h2>
+  <p class="block-intro">El OWASP Top 10 es el documento de concienciación estándar sobre seguridad en aplicaciones web. Representa el consenso sobre los riesgos más críticos y es el punto de partida obligatorio para cualquier programa de seguridad de aplicaciones.</p>
+  <div class="two-col">
+    <div>
+      <div class="note warn">
+        <div class="note-label">// NO ES UNA CHECKLIST COMPLETA</div>
+        El Top 10 es un punto de partida, no un estándar exhaustivo. Para cobertura completa, combínalo con <strong>OWASP ASVS</strong> (Application Security Verification Standard) que define más de 286 controles en 3 niveles. El Top 10 cubre lo que el ASVS Nivel 1 detecta automáticamente.
+      </div>
+      <div class="note" style="margin-top:14px;">
+        <div class="note-label">// 3 CAMBIOS CLAVE EN 2021</div>
+        <strong>A04 Diseño Inseguro</strong> — nuevo: proactivo, no solo reactivo (Threat Modeling desde el inicio).<br>
+        <strong>A08 Integridad de Software y Datos</strong> — nuevo: supply chain, CI/CD, deserialización.<br>
+        <strong>A10 SSRF</strong> — nuevo: ascendió por votación directa de la comunidad.<br>
+        XSS fue fusionado dentro de A03 Inyección.
+      </div>
+    </div>
+    <div>
+      <div class="block-label" style="margin-bottom:14px;">// Por qué importa el Top 10</div>
+      <ol class="num-list">
+        <li>El 90% de los incidentes web explotó al menos una de las 10 categorías</li>
+        <li>Referencia obligatoria en PCI DSS, ISO 27001 y auditorías de seguridad</li>
+        <li>Base de herramientas SAST/DAST: SonarQube, Burp Suite, OWASP ZAP</li>
+        <li>Lenguaje común entre devs, QA y equipos de seguridad</li>
+        <li>Requisito en la mayoría de RFPs de desarrollo de software seguro</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="top10">
+  <div class="block-label">// Las 10 Vulnerabilidades — Expande cada una</div>
+  <h2 class="block-title">OWASP Top 10:2021</h2>
+  <p class="block-intro">Cada entrada incluye el vector de ataque, ejemplos reales de código vulnerable vs. seguro, y las defensas recomendadas. Haz clic para expandir.</p>
+
+  <div class="owasp-list">
+
+    <div class="owasp-entry open">
+      <div class="owasp-header" onclick="tog(this)">
+        <div class="owasp-rank">01</div>
+        <div class="owasp-meta">
+          <div class="owasp-id">A01:2021</div>
+          <div class="owasp-name">Pérdida de Control de Acceso</div>
+          <div class="owasp-tags"><span class="badge b-red">CWE-200</span><span class="badge b-red">CWE-352</span><div class="risk-meter"><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot rc"></div></div></div>
+        </div>
+        <span class="owasp-chevron">▼</span>
+      </div>
+      <div class="owasp-body">
+        <div class="owasp-desc">Las restricciones sobre qué pueden hacer los usuarios autenticados no se aplican correctamente. Subió al #1 en 2021 con el 94% de aplicaciones teniendo alguna forma de control de acceso roto. Los atacantes explotan estos fallos para acceder a cuentas ajenas, archivos sensibles o funciones administrativas.</div>
+        <div class="vuln-grid">
+          <div class="vuln-box vuln-attack">
+            <div class="vuln-box-title">// VECTORES</div>
+            <ul class="vuln-list">
+              <li>IDOR: cambiar IDs en URL para ver datos de otros usuarios</li>
+              <li>Forzar navegación a URLs de administración sin rol admin</li>
+              <li>CSRF: ejecutar acciones autenticadas desde otro sitio</li>
+              <li>Elevar privilegios actuando como otro usuario sin login</li>
+            </ul>
+          </div>
+          <div class="vuln-box vuln-example">
+            <div class="vuln-box-title">// VULNERABLE</div>
+            <pre class="code-block">// URL del usuario legítimo
+GET /api/facturas/1001
+
+// Atacante cambia el ID
+GET /api/facturas/1002
+// → accede a datos ajenos
+// sin verificar propiedad</pre>
+          </div>
+          <div class="vuln-box vuln-defense">
+            <div class="vuln-box-title">// DEFENSAS</div>
+            <ul class="vuln-list">
+              <li>Denegar por defecto todo acceso no permitido explícitamente</li>
+              <li>Verificar propiedad del recurso en cada request</li>
+              <li>RBAC o ABAC con modelo de permisos centralizado</li>
+              <li>Tokens CSRF en operaciones de cambio de estado</li>
+              <li>Auditar y testear controles de acceso regularmente</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="owasp-entry">
+      <div class="owasp-header" onclick="tog(this)">
+        <div class="owasp-rank">02</div>
+        <div class="owasp-meta">
+          <div class="owasp-id">A02:2021</div>
+          <div class="owasp-name">Fallos Criptográficos</div>
+          <div class="owasp-tags"><span class="badge b-red">CWE-259</span><span class="badge b-red">CWE-327</span><div class="risk-meter"><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot"></div></div></div>
+        </div>
+        <span class="owasp-chevron">▼</span>
+      </div>
+      <div class="owasp-body">
+        <div class="owasp-desc">Fallos criptográficos que llevan a exposición de datos sensibles. Antes llamada "Exposición de Datos Sensibles". Incluye transmisión sin cifrar, algoritmos débiles, contraseñas mal almacenadas y secretos hardcodeados en el código fuente.</div>
+        <div class="vuln-grid">
+          <div class="vuln-box vuln-attack">
+            <div class="vuln-box-title">// VECTORES</div>
+            <ul class="vuln-list">
+              <li>Contraseñas con MD5/SHA1 sin salt → rainbow tables</li>
+              <li>Claves API en repositorios públicos de GitHub</li>
+              <li>Datos sensibles en HTTP sin TLS</li>
+              <li>SSL/TLS obsoleto (SSLv3, TLS 1.0) o cipher débiles</li>
+            </ul>
+          </div>
+          <div class="vuln-box vuln-example">
+            <div class="vuln-box-title">// VULNERABLE</div>
+            <pre class="code-block">// ❌ Hash sin salt
+$h = md5($password);
+
+// ❌ Secreto hardcodeado
+$key = "sk-prod-abc123xyz";
+
+// ✅ Correcto
+$h = password_hash($pwd,
+  PASSWORD_ARGON2ID);
+$key = $_ENV['API_KEY'];</pre>
+          </div>
+          <div class="vuln-box vuln-defense">
+            <div class="vuln-box-title">// DEFENSAS</div>
+            <ul class="vuln-list">
+              <li>bcrypt, Argon2id o scrypt para contraseñas — nunca MD5</li>
+              <li>TLS 1.3 + HSTS; deshabilitar versiones antiguas</li>
+              <li>Secretos en variables de entorno o vault (HashiCorp, AWS SSM)</li>
+              <li>AES-256-GCM para datos sensibles en reposo</li>
+              <li>Secret scanning en CI/CD (GitLeaks, TruffleHog)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="owasp-entry">
+      <div class="owasp-header" onclick="tog(this)">
+        <div class="owasp-rank">03</div>
+        <div class="owasp-meta">
+          <div class="owasp-id">A03:2021</div>
+          <div class="owasp-name">Inyección (incl. XSS)</div>
+          <div class="owasp-tags"><span class="badge b-red">CWE-79</span><span class="badge b-red">CWE-89</span><span class="badge b-red">CWE-73</span><div class="risk-meter"><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot rc"></div></div></div>
+        </div>
+        <span class="owasp-chevron">▼</span>
+      </div>
+      <div class="owasp-body">
+        <div class="owasp-desc">Datos del usuario se envían a un intérprete como parte de un comando o consulta. Incluye SQL, XSS, Command, LDAP e XPATH Injection. El 94% de aplicaciones fue testado. XSS fue unificado en esta categoría en 2021.</div>
+        <div class="vuln-grid">
+          <div class="vuln-box vuln-attack">
+            <div class="vuln-box-title">// VECTORES</div>
+            <ul class="vuln-list">
+              <li>SQL Injection: extraer, modificar o eliminar datos de BD</li>
+              <li>XSS Stored/Reflected: robo de sesiones, defacement</li>
+              <li>Command Injection: ejecutar comandos del SO</li>
+              <li>LDAP Injection: bypass de autenticación en directorios</li>
+            </ul>
+          </div>
+          <div class="vuln-box vuln-example">
+            <div class="vuln-box-title">// SQL INJECTION</div>
+            <pre class="code-block">// ❌ Concatenación directa
+$q = "SELECT * FROM users
+WHERE user='".$_GET['u']
+."' AND pass='".$_GET['p']."'";
+// Payload: ' OR '1'='1
+// → bypass de autenticación
+
+// ✅ Parametrizado
+$stmt=$pdo->prepare(
+"SELECT * FROM users
+WHERE user=? AND pass=?");
+$stmt->execute([$u,$p]);</pre>
+          </div>
+          <div class="vuln-box vuln-defense">
+            <div class="vuln-box-title">// DEFENSAS</div>
+            <ul class="vuln-list">
+              <li>Prepared statements para toda interacción con BD</li>
+              <li>ORM con escapado automático (Eloquent, Hibernate)</li>
+              <li>Validar y sanitizar TODOS los inputs en servidor</li>
+              <li>Para XSS: escapar output según contexto (HTML, JS, URL)</li>
+              <li>Content Security Policy (CSP) en cabeceras HTTP</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="owasp-entry">
+      <div class="owasp-header" onclick="tog(this)">
+        <div class="owasp-rank">04</div>
+        <div class="owasp-meta">
+          <div class="owasp-id">A04:2021 <span class="badge b-gold" style="font-size:.55rem;padding:1px 5px;">🆕</span></div>
+          <div class="owasp-name">Diseño Inseguro</div>
+          <div class="owasp-tags"><span class="badge b-gold">CWE-209</span><span class="badge b-gold">CWE-501</span><div class="risk-meter"><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot"></div><div class="risk-dot"></div></div></div>
+        </div>
+        <span class="owasp-chevron">▼</span>
+      </div>
+      <div class="owasp-body">
+        <div class="owasp-desc">Riesgos de diseño y arquitectura. Un diseño inseguro no se puede arreglar con una implementación perfecta. Se enfoca en la falta de threat modeling, ausencia de patrones de diseño seguro y casos de abuso no considerados desde el principio.</div>
+        <div class="vuln-grid">
+          <div class="vuln-box vuln-attack">
+            <div class="vuln-box-title">// FALLOS DE DISEÑO</div>
+            <ul class="vuln-list">
+              <li>Recuperación de contraseña que revela si el email existe</li>
+              <li>Sin límite de intentos en funciones críticas (fuerza bruta)</li>
+              <li>Lógica de negocio con estados inválidos explotables</li>
+              <li>Mensajes de error con información interna del sistema</li>
+            </ul>
+          </div>
+          <div class="vuln-box vuln-example">
+            <div class="vuln-box-title">// ENUMERACIÓN DE USUARIOS</div>
+            <pre class="code-block">// ❌ Revela si existe el email
+POST /forgot-password
+→ "Email no registrado"
+→ "Revisa tu correo"
+// permite enumerar usuarios
+
+// ✅ Respuesta genérica siempre
+→ "Si el email existe,
+recibirás un enlace"
+// misma respuesta siempre</pre>
+          </div>
+          <div class="vuln-box vuln-defense">
+            <div class="vuln-box-title">// DEFENSAS DE DISEÑO</div>
+            <ul class="vuln-list">
+              <li>Threat Modeling (STRIDE) en fase de diseño, antes de codificar</li>
+              <li>Mensajes de error genéricos que no revelan el sistema</li>
+              <li>Rate limiting en el diseño de todas las funciones sensibles</li>
+              <li>Casos de abuso en los requisitos de negocio</li>
+              <li>Principio de mínimo privilegio en la arquitectura</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="owasp-entry">
+      <div class="owasp-header" onclick="tog(this)">
+        <div class="owasp-rank">05</div>
+        <div class="owasp-meta">
+          <div class="owasp-id">A05:2021</div>
+          <div class="owasp-name">Configuración de Seguridad Incorrecta</div>
+          <div class="owasp-tags"><span class="badge b-blue">CWE-16</span><span class="badge b-blue">CWE-611</span><div class="risk-meter"><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot"></div><div class="risk-dot"></div></div></div>
+        </div>
+        <span class="owasp-chevron">▼</span>
+      </div>
+      <div class="owasp-body">
+        <div class="owasp-desc">La categoría más prevalente: el 90% de las aplicaciones fue testeada. Incluye configuraciones por defecto inseguras, características innecesarias habilitadas, stack traces expuestos, headers de seguridad faltantes y permisos incorrectos en la nube.</div>
+        <div class="vuln-grid">
+          <div class="vuln-box vuln-attack">
+            <div class="vuln-box-title">// CONFIGURACIONES PELIGROSAS</div>
+            <ul class="vuln-list">
+              <li>Panel admin con credenciales por defecto (admin/admin)</li>
+              <li>Bucket S3 con lectura pública a datos de clientes</li>
+              <li>Stack traces de PHP/Java en producción</li>
+              <li>Headers de seguridad ausentes (HSTS, CSP, X-Frame)</li>
+              <li>Directory listing habilitado en el servidor web</li>
+            </ul>
+          </div>
+          <div class="vuln-box vuln-example">
+            <div class="vuln-box-title">// HEADERS SEGUROS</div>
+            <pre class="code-block">// ✅ Headers obligatorios
+Strict-Transport-Security:
+  max-age=31536000;
+  includeSubDomains
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Content-Security-Policy:
+  default-src 'self'
+Permissions-Policy:
+  geolocation=()
+Referrer-Policy:
+  strict-origin</pre>
+          </div>
+          <div class="vuln-box vuln-defense">
+            <div class="vuln-box-title">// DEFENSAS</div>
+            <ul class="vuln-list">
+              <li>Hardening automatizado con IaC (Ansible, Terraform)</li>
+              <li>Verificar securityheaders.com periódicamente</li>
+              <li>Deshabilitar features y módulos no usados</li>
+              <li>Revisar permisos cloud: ScoutSuite, Prowler</li>
+              <li>Errores genéricos en producción; detalles solo en logs internos</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="owasp-entry">
+      <div class="owasp-header" onclick="tog(this)">
+        <div class="owasp-rank">06</div>
+        <div class="owasp-meta">
+          <div class="owasp-id">A06:2021</div>
+          <div class="owasp-name">Componentes Vulnerables y Desactualizados</div>
+          <div class="owasp-tags"><span class="badge b-purple">CWE-1104</span><div class="risk-meter"><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot rh"></div><div class="risk-dot"></div><div class="risk-dot"></div></div></div>
+        </div>
+        <span class="owasp-chevron">▼</span>
+      </div>
+      <div class="owasp-body">
+        <div class="owasp-desc">Librerías, frameworks y componentes con los mismos privilegios que la aplicación. Si un componente tiene una CVE, toda la aplicación está en riesgo. Log4Shell (CVE-2021-44228) afectó a millones de sistemas con una RCE trivial en una librería de logging.</div>
+        <div class="vuln-grid">
+          <div class="vuln-box vuln-attack">
+            <div class="vuln-box-title">// CASOS REALES</div>
+            <ul class="vuln-list">
+              <li>Log4Shell: RCE en Log4j usado por miles de apps Java</li>
+              <li>Heartbleed: lectura de memoria del servidor via OpenSSL</li>
+              <li>Struts2 RCE: breach de Equifax, 147M personas afectadas</li>
+              <li>NPM packages maliciosos: event-stream, ua-parser-js</li>
+            </ul>
+          </div>
+          <div class="vuln-box vuln-example">
+            <div class="vuln-box-title">// AUDITORÍA DE DEPS</div>
+            <pre class="code-block"># Auditar vulnerabilidades
+npm audit
+pip-audit
+mvn dependency-check:check
+
+# SBOM (inventario)
+syft . -o spdx-json > sbom.json
+grype sbom:sbom.json
+
+# GitHub Dependabot
+# (configurar en .github/
+#  dependabot.yml)</pre>
+          </div>
+          <div class="vuln-box vuln-defense">
+            <div class="vuln-box-title">// DEFENSAS</div>
+            <ul class="vuln-list">
+              <li>SBOM: inventario de todos los componentes con versiones</li>
+              <li>Monitoring automático de CVEs (Dependabot, Snyk)</li>
+              <li>Política de parches: crítico &lt;7 días, alto &lt;30 días</li>
+              <li>Verificar integridad de paquetes (checksums, firma GPG)</li>
+              <li>Preferir componentes con historial activo de seguridad</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="owasp-entry">
+      <div class="owasp-header" onclick="tog(this)">
+        <div class="owasp-rank">07</div>
+        <div class="owasp-meta">
+          <div class="owasp-id">A07:2021</div>
+          <div class="owasp-name">Fallos de Identificación y Autenticación</div>
+          <div class="owasp-tags"><span class="badge b-red">CWE-287</span><span class="badge b-red">CWE-384</span><div class="risk-meter"><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot"></div><div class="risk-dot"></div></div></div>
+        </div>
+        <span class="owasp-chevron">▼</span>
+      </div>
+      <div class="owasp-body">
+        <div class="owasp-desc">Fallos en la confirmación de identidad, autenticación y gestión de sesiones. Permite a los atacantes comprometer contraseñas, tokens o asumir la identidad de otros usuarios temporal o permanentemente.</div>
+        <div class="vuln-grid">
+          <div class="vuln-box vuln-attack">
+            <div class="vuln-box-title">// VECTORES</div>
+            <ul class="vuln-list">
+              <li>Credential stuffing con listas de brechas anteriores</li>
+              <li>Fuerza bruta sin rate limiting ni bloqueo progresivo</li>
+              <li>Contraseñas por defecto no cambiadas (admin/admin)</li>
+              <li>Session tokens en URL o con entropía insuficiente</li>
+              <li>Session fixation: servidor acepta IDs externos</li>
+            </ul>
+          </div>
+          <div class="vuln-box vuln-example">
+            <div class="vuln-box-title">// SESIÓN INSEGURA</div>
+            <pre class="code-block">// ❌ Session ID en URL
+GET /dashboard?sid=abc123
+
+// ❌ Sin regenerar tras login
+session_start();
+$_SESSION['user']=$user;
+// falta: session_regenerate_id()
+
+// ✅ Correcto
+session_start();
+session_regenerate_id(true);
+$_SESSION['user']=$user;</pre>
+          </div>
+          <div class="vuln-box vuln-defense">
+            <div class="vuln-box-title">// DEFENSAS</div>
+            <ul class="vuln-list">
+              <li>MFA obligatorio para cuentas privilegiadas y datos sensibles</li>
+              <li>Tokens de sesión: 128+ bits, HttpOnly, Secure, SameSite=Strict</li>
+              <li>Invalidar sesión en logout del lado servidor</li>
+              <li>Rate limiting y CAPTCHA en intentos de login fallidos</li>
+              <li>Verificar credenciales en HaveIBeenPwned al registrar</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="owasp-entry">
+      <div class="owasp-header" onclick="tog(this)">
+        <div class="owasp-rank">08</div>
+        <div class="owasp-meta">
+          <div class="owasp-id">A08:2021 <span class="badge b-gold" style="font-size:.55rem;padding:1px 5px;">🆕</span></div>
+          <div class="owasp-name">Fallos en Software e Integridad de Datos</div>
+          <div class="owasp-tags"><span class="badge b-gold">CWE-829</span><span class="badge b-gold">CWE-494</span><div class="risk-meter"><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot"></div><div class="risk-dot"></div></div></div>
+        </div>
+        <span class="owasp-chevron">▼</span>
+      </div>
+      <div class="owasp-body">
+        <div class="owasp-desc">Suposiciones sobre integridad de actualizaciones, datos críticos y pipelines CI/CD sin verificación. Incluye deserialización insegura y ataques a la cadena de suministro de software. SolarWinds es el caso más famoso: el build pipeline fue comprometido.</div>
+        <div class="vuln-grid">
+          <div class="vuln-box vuln-attack">
+            <div class="vuln-box-title">// VECTORES</div>
+            <ul class="vuln-list">
+              <li>Actualización de software sin verificar firma digital</li>
+              <li>Deserialización de objetos no confiables → RCE</li>
+              <li>CI/CD comprometido: código malicioso inyectado en builds</li>
+              <li>Typosquatting en paquetes NPM/PyPI/RubyGems</li>
+            </ul>
+          </div>
+          <div class="vuln-box vuln-example">
+            <div class="vuln-box-title">// DESERIALIZACIÓN</div>
+            <pre class="code-block">// ❌ Java: RCE posible
+ObjectInputStream ois =
+  new ObjectInputStream(
+    request.getInputStream());
+Object obj = ois.readObject();
+
+// ❌ PHP
+$data=unserialize($_COOKIE['u']);
+
+// ✅ Usar JSON + schema
+$d = json_decode($input);
+$v->validate($d, $schema);</pre>
+          </div>
+          <div class="vuln-box vuln-defense">
+            <div class="vuln-box-title">// DEFENSAS</div>
+            <ul class="vuln-list">
+              <li>Firmar y verificar paquetes de software antes de instalar</li>
+              <li>Evitar deserializar datos no confiables; preferir JSON</li>
+              <li>Asegurar el pipeline CI/CD: acceso mínimo, firmar commits</li>
+              <li>Subresource Integrity (SRI) para scripts de CDNs externos</li>
+              <li>SBOM para rastrear toda la cadena de suministro</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="owasp-entry">
+      <div class="owasp-header" onclick="tog(this)">
+        <div class="owasp-rank">09</div>
+        <div class="owasp-meta">
+          <div class="owasp-id">A09:2021</div>
+          <div class="owasp-name">Fallos en el Registro y Monitoreo de Seguridad</div>
+          <div class="owasp-tags"><span class="badge b-blue">CWE-778</span><span class="badge b-blue">CWE-117</span><div class="risk-meter"><div class="risk-dot rh"></div><div class="risk-dot rh"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div></div></div>
+        </div>
+        <span class="owasp-chevron">▼</span>
+      </div>
+      <div class="owasp-body">
+        <div class="owasp-desc">Sin registro y monitoreo adecuados, los ataques no se detectan. El tiempo promedio de detección de una brecha es 197 días. El 47% de las brechas se detectan por terceros, no por las organizaciones afectadas. Esta categoría apoya la detección, escalado y análisis forense.</div>
+        <div class="vuln-grid">
+          <div class="vuln-box vuln-attack">
+            <div class="vuln-box-title">// FALLOS COMUNES</div>
+            <ul class="vuln-list">
+              <li>Eventos auditables no registrados (logins, fallos, transacciones)</li>
+              <li>Logs sin contexto suficiente para análisis forense</li>
+              <li>Logs solo locales — se pierden si el atacante los borra</li>
+              <li>Sin alertas para actividad sospechosa (muchos 401s seguidos)</li>
+              <li>Logs con datos sensibles (contraseñas, tokens) — compliance fail</li>
+            </ul>
+          </div>
+          <div class="vuln-box vuln-example">
+            <div class="vuln-box-title">// LOG CORRECTO</div>
+            <pre class="code-block">// ✅ Estructura correcta
+{
+"ts":"2025-03-15T10:42Z",
+"level":"WARN",
+"event":"login_failed",
+"user_id":"usr_456",
+"ip":"203.0.113.10",
+"attempts":5,
+"req_id":"req_abc123"
+// sin contraseña nunca
+}</pre>
+          </div>
+          <div class="vuln-box vuln-defense">
+            <div class="vuln-box-title">// DEFENSAS</div>
+            <ul class="vuln-list">
+              <li>Registrar: logins, fallos auth, errores validación, cambios de privilegios</li>
+              <li>Centralizar logs en SIEM (Elastic, Splunk) — no solo archivos locales</li>
+              <li>Alertas automáticas: N fallos login, IPs nuevas, acceso fuera de horario</li>
+              <li>Retención: 90 días activo, 1 año en archivo</li>
+              <li>Nunca loguear contraseñas, tokens ni datos de tarjetas</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="owasp-entry">
+      <div class="owasp-header" onclick="tog(this)">
+        <div class="owasp-rank">10</div>
+        <div class="owasp-meta">
+          <div class="owasp-id">A10:2021 <span class="badge b-gold" style="font-size:.55rem;padding:1px 5px;">🆕</span></div>
+          <div class="owasp-name">SSRF — Server-Side Request Forgery</div>
+          <div class="owasp-tags"><span class="badge b-gold">CWE-918</span><div class="risk-meter"><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot rc"></div><div class="risk-dot"></div><div class="risk-dot"></div></div></div>
+        </div>
+        <span class="owasp-chevron">▼</span>
+      </div>
+      <div class="owasp-body">
+        <div class="owasp-desc">Ocurre cuando una aplicación obtiene un recurso remoto sin validar la URL del usuario. Permite hacer que el servidor realice requests hacia destinos arbitrarios — incluyendo servicios internos, metadata de cloud (AWS 169.254.169.254) y localhost. Entró al Top 10 directamente por votación de la comunidad.</div>
+        <div class="vuln-grid">
+          <div class="vuln-box vuln-attack">
+            <div class="vuln-box-title">// VECTORES</div>
+            <ul class="vuln-list">
+              <li>Acceder al metadata AWS para obtener credenciales IAM</li>
+              <li>Escanear la red interna desde el servidor (port scan)</li>
+              <li>Acceder a servicios internos no expuestos (Redis, Elastic)</li>
+              <li>Bypass de firewalls usando el servidor como proxy</li>
+            </ul>
+          </div>
+          <div class="vuln-box vuln-example">
+            <div class="vuln-box-title">// SSRF EN AWS</div>
+            <pre class="code-block">// Función legítima: preview URL
+POST /api/preview
+{"url":"https://example.com"}
+
+// Ataque SSRF
+POST /api/preview
+{"url":"http://169.254.169.254/
+latest/meta-data/iam/
+security-credentials/role"}
+
+// → Obtiene credenciales IAM
+// → Acceso total a AWS</pre>
+          </div>
+          <div class="vuln-box vuln-defense">
+            <div class="vuln-box-title">// DEFENSAS</div>
+            <ul class="vuln-list">
+              <li>Whitelist de dominios/IPs permitidos para requests externos</li>
+              <li>Bloquear IPs privadas RFC1918 y 169.254.169.254</li>
+              <li>No seguir redirecciones HTTP automáticamente</li>
+              <li>Segmentación de red: servidor web sin acceso a servicios internos</li>
+              <li>En AWS: usar IMDSv2 que requiere token de sesión</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="block" id="sdlc">
+  <div class="block-label">// Shift Left — Integrar Seguridad en el Ciclo de Desarrollo</div>
+  <h2 class="block-title">OWASP en el SDLC</h2>
+  <p class="block-intro">Corregir una vulnerabilidad cuesta 100x más en producción que en diseño. El OWASP Top 10 debe estar integrado en cada fase, no solo en pruebas finales.</p>
+  <div class="two-col">
+    <div class="sdlc-row">
+      <div class="sdlc-item" style="border-left-color:var(--blue);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--blue);letter-spacing:2px;margin-bottom:5px;">// DISEÑO &amp; REQUISITOS</div>
+        <div style="font-size:.87rem;color:var(--ink2);">Threat Modeling con STRIDE para identificar A04 (Diseño Inseguro). Definir casos de abuso junto a los de uso. Requisitos de seguridad explícitos en el backlog.</div>
+      </div>
+      <div class="sdlc-item" style="border-left-color:var(--green);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--green);letter-spacing:2px;margin-bottom:5px;">// DESARROLLO</div>
+        <div style="font-size:.87rem;color:var(--ink2);">SAST en el IDE (SonarLint, ESLint security plugins). Code review con Top 10 como checklist. Formación en secure coding específica del lenguaje.</div>
+      </div>
+      <div class="sdlc-item" style="border-left-color:var(--gold);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--gold);letter-spacing:2px;margin-bottom:5px;">// CI/CD PIPELINE</div>
+        <div style="font-size:.87rem;color:var(--ink2);">SAST automático en cada commit (Semgrep, SonarQube). SCA para dependencias (Snyk, Dependabot). Secret scanning (GitLeaks). DAST en staging (OWASP ZAP).</div>
+      </div>
+      <div class="sdlc-item" style="border-left-color:var(--accent);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent);letter-spacing:2px;margin-bottom:5px;">// PRODUCCIÓN</div>
+        <div style="font-size:.87rem;color:var(--ink2);">WAF activo (A03, A04). SIEM con alertas (A09). Pentesting periódico. Bug Bounty. Gestión de vulnerabilidades con SLAs de remediación.</div>
+      </div>
+    </div>
+    <div>
+      <div class="note tip">
+        <div class="note-label">// TIPOS DE ANÁLISIS</div>
+        <strong>SAST</strong> — análisis de código fuente estático. Detecta en desarrollo. Herramientas: Semgrep, SonarQube, Bandit (Python), Brakeman (Rails).<br><br>
+        <strong>DAST</strong> — testeo de la app en ejecución, desde fuera. Herramientas: OWASP ZAP, Burp Suite, Nikto.<br><br>
+        <strong>IAST</strong> — agentes dentro de la app, combina ambos. Herramientas: Contrast Security.<br><br>
+        <strong>SCA</strong> — análisis de composición de software (dependencias). Herramientas: Snyk, OWASP Dependency-Check, Trivy.
+      </div>
+      <div class="note" style="margin-top:14px;">
+        <div class="note-label">// OWASP ASVS — EL SIGUIENTE NIVEL</div>
+        El <strong>ASVS</strong> (Application Security Verification Standard) tiene 286 controles en 3 niveles:<br>
+        <strong>L1:</strong> Pentesting básico → cubre Top 10 detectable automáticamente<br>
+        <strong>L2:</strong> La mayoría de apps → para datos sensibles y transacciones<br>
+        <strong>L3:</strong> Apps críticas → banca, salud, infraestructura
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="herramientas">
+  <div class="block-label">// Stack de Seguridad para Aplicaciones Web</div>
+  <h2 class="block-title">Herramientas por Categoría</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">
+    <div style="border:1px solid var(--border);border-radius:3px;padding:16px;background:var(--card);border-left:3px solid var(--accent);">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent);margin-bottom:8px;">TESTING DINÁMICO (DAST)</div>
+      <div style="font-size:.84rem;color:var(--ink2);line-height:1.7;">OWASP ZAP (open-source, automatizable) · Burp Suite Community · Nikto · nuclei</div>
+    </div>
+    <div style="border:1px solid var(--border);border-radius:3px;padding:16px;background:var(--card);border-left:3px solid var(--blue);">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--blue);margin-bottom:8px;">ANÁLISIS ESTÁTICO (SAST)</div>
+      <div style="font-size:.84rem;color:var(--ink2);line-height:1.7;">Semgrep (multi-lang, reglas OWASP) · SonarQube · Bandit (Python) · Brakeman (Rails)</div>
+    </div>
+    <div style="border:1px solid var(--border);border-radius:3px;padding:16px;background:var(--card);border-left:3px solid var(--green);">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--green);margin-bottom:8px;">DEPENDENCIAS (SCA)</div>
+      <div style="font-size:.84rem;color:var(--ink2);line-height:1.7;">OWASP Dependency-Check · Snyk · Dependabot · npm audit · Grype · Trivy</div>
+    </div>
+    <div style="border:1px solid var(--border);border-radius:3px;padding:16px;background:var(--card);border-left:3px solid var(--gold);">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--gold);margin-bottom:8px;">SECRETOS EN CÓDIGO</div>
+      <div style="font-size:.84rem;color:var(--ink2);line-height:1.7;">GitLeaks · TruffleHog · detect-secrets · GitHub Secret Scanning · pre-commit hooks</div>
+    </div>
+    <div style="border:1px solid var(--border);border-radius:3px;padding:16px;background:var(--card);border-left:3px solid var(--purple);">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--purple);margin-bottom:8px;">SQL INJECTION</div>
+      <div style="font-size:.84rem;color:var(--ink2);line-height:1.7;">SQLMap (autorizado) · Burp SQLi scanner · Havij · manual con Burp Repeater</div>
+    </div>
+    <div style="border:1px solid var(--border);border-radius:3px;padding:16px;background:var(--card);border-left:3px solid var(--teal);">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--teal);margin-bottom:8px;">CRIPTOGRAFÍA / TLS</div>
+      <div style="font-size:.84rem;color:var(--ink2);line-height:1.7;">SSL Labs (ssllabs.com) · testssl.sh · SSLyze · securityheaders.com</div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="relaciones">
+  <div class="block-label">// Ecosistema de Seguridad Web</div>
+  <h2 class="block-title">Relación con Otros Estándares</h2>
+  <table class="cmp-table">
+    <thead><tr><th>ESTÁNDAR</th><th>RELACIÓN CON OWASP TOP 10</th></tr></thead>
+    <tbody>
+      <tr><td><strong>ISO 27001:2022</strong></td><td>Los controles 8.25–8.29 del Anexo A (desarrollo seguro, testing, programación segura, SSDLC) se implementan aplicando el OWASP Top 10 como referencia técnica principal.</td></tr>
+      <tr><td><strong>NIST CSF 2.0</strong></td><td>PR.PS-06 (código seguro) e ID.RA-01 (vulnerabilidades) del CSF se implementan con el Top 10 y ASVS. La función PROTECT del CSF mapea directamente a defensas contra el Top 10.</td></tr>
+      <tr><td><strong>PCI DSS v4.0</strong></td><td>PCI DSS exige explícitamente testing contra OWASP Top 10 para apps que procesan datos de tarjetas (requerimientos 6.2 y 6.3). Es un requisito de cumplimiento directo.</td></tr>
+      <tr><td><strong>OWASP ASVS</strong></td><td>El ASVS es el nivel siguiente: 286 controles en 3 niveles. El Top 10 es el subconjunto mínimo que cualquier app debe cumplir; el ASVS es el estándar completo de verificación de seguridad de aplicaciones.</td></tr>
+      <tr><td><strong>MITRE ATT&amp;CK</strong></td><td>T1190 (Exploit Public-Facing App), T1059 (Command Injection) y T1539 (Steal Web Session Cookie) de ATT&amp;CK mapean directamente a A03, A01 y A07 del OWASP Top 10.</td></tr>
+      <tr><td><strong>Ley 21.663 Chile</strong></td><td>Los OIV que operan aplicaciones web deben implementar controles del OWASP Top 10 como evidencia de medidas preventivas según el Art. 7° y para cumplir los requisitos del SGSI (ISO 27001).</td></tr>
+    </tbody>
+  </table>
+</section>
+
+</div>
+<footer>
+  <strong>OWASP Top 10:2021</strong> — Open Web Application Security Project<br>
+  <a href="https://owasp.org/Top10" target="_blank">owasp.org/Top10</a> · <a href="https://owasp.org/www-project-application-security-verification-standard/" target="_blank">OWASP ASVS</a> · <a href="https://owasp.org/www-project-testing-guide/" target="_blank">OWASP Testing Guide</a><br><br>
+  <span style="font-size:.62rem;opacity:.5">OWASP es una fundación sin fines de lucro. Todo su contenido es libre y abierto bajo licencia CC BY-SA 4.0.</span>
+</footer>
+<button class="scroll-top" id="sBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
+<script>
+const ro=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}),{threshold:.06,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('section.block').forEach(el=>ro.observe(el));
+window.addEventListener('scroll',()=>document.getElementById('sBtn').classList.toggle('show',scrollY>500));
+const navObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));const a=document.querySelector('.nav-link[href="#'+e.target.id+'"]');if(a)a.classList.add('active');}});},{threshold:.25});
+document.querySelectorAll('section.block[id]').forEach(s=>navObs.observe(s));
+function tog(h){const e=h.parentElement,w=e.classList.contains('open');document.querySelectorAll('.owasp-entry').forEach(x=>x.classList.remove('open'));if(!w)e.classList.add('open');}
+</script>
+</body>
+</html>

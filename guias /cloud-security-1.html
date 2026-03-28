@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Security — CIS Benchmarks + CSA CCM</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ed;--bg2:#ede9e2;--ink:#1a1410;--ink2:#4a3f35;--ink3:#8a7a6e;
+  --accent:#c8410a;--accent2:#e8622a;--blue:#1a4f8c;--green:#1a6b3c;
+  --gold:#a07a10;--purple:#6b2d8b;--teal:#0e7c7b;
+  --border:rgba(26,20,16,.1);--card:rgba(255,255,255,.6);--shadow:0 2px 20px rgba(26,20,16,.08);
+  --aws:#d4810a;--azure:#0a6bb5;--gcp:#1a6b3c;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:.4;}
+
+/* ── HERO ── */
+.hero{position:relative;z-index:10;background:var(--ink);color:#f5f2ed;padding:80px 40px 64px;overflow:hidden;}
+.hero::after{content:'';position:absolute;right:-60px;top:-60px;width:420px;height:420px;border-radius:50%;border:80px solid rgba(200,65,10,.12);pointer-events:none;}
+.hero::before{content:'';position:absolute;left:-40px;bottom:-80px;width:280px;height:280px;border-radius:50%;border:50px solid rgba(26,79,140,.08);pointer-events:none;}
+.hero-inner{max-width:1080px;margin:0 auto;position:relative;z-index:2;}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:4px;color:var(--accent2);margin-bottom:20px;opacity:0;animation:fadeUp .6s .1s forwards;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:clamp(3rem,8vw,6.5rem);line-height:.95;color:#f5f2ed;margin-bottom:8px;opacity:0;animation:fadeUp .7s .2s forwards;}
+.hero-title em{font-style:italic;color:var(--accent2);}
+.hero-year{font-family:'JetBrains Mono',monospace;font-size:clamp(1rem,3vw,1.8rem);color:rgba(245,242,237,.35);letter-spacing:6px;margin-bottom:28px;opacity:0;animation:fadeUp .7s .3s forwards;}
+.hero-desc{max-width:580px;font-size:1rem;line-height:1.85;color:rgba(245,242,237,.7);margin-bottom:36px;opacity:0;animation:fadeUp .7s .4s forwards;}
+.hero-stats{display:flex;flex-wrap:wrap;gap:28px;opacity:0;animation:fadeUp .7s .5s forwards;}
+.stat{border-left:2px solid var(--accent);padding-left:14px;}
+.stat-num{font-family:'DM Serif Display',serif;font-size:2rem;color:#f5f2ed;line-height:1;}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(245,242,237,.4);letter-spacing:2px;margin-top:3px;}
+
+/* ── NAV ── */
+.main-nav{position:sticky;top:0;z-index:100;background:rgba(245,242,237,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;overflow-x:auto;}
+.nav-inner{display:flex;gap:0;max-width:1080px;margin:0 auto;white-space:nowrap;}
+.nav-link{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:2px;color:var(--ink3);text-decoration:none;padding:16px 11px;border-bottom:2px solid transparent;transition:all .2s;text-transform:uppercase;}
+.nav-link:hover,.nav-link.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* ── LAYOUT ── */
+.page{max-width:1080px;margin:0 auto;padding:0 24px;}
+section.block{padding:72px 0 40px;border-bottom:1px solid var(--border);opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s;}
+section.block.visible{opacity:1;transform:none;}
+.block-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:8px;}
+.block-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--ink);margin-bottom:20px;line-height:1.2;}
+.block-intro{font-size:.97rem;line-height:1.9;color:var(--ink2);max-width:720px;margin-bottom:36px;}
+
+/* ── HELPERS ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+@media(max-width:680px){.two-col{grid-template-columns:1fr;}}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:720px){.three-col{grid-template-columns:1fr;}}
+
+ol.num-list{counter-reset:li;list-style:none;display:flex;flex-direction:column;gap:10px;}
+.num-list li{display:flex;gap:12px;font-size:.9rem;line-height:1.7;color:var(--ink2);}
+.num-list li::before{content:counter(li);counter-increment:li;display:flex;align-items:center;justify-content:center;min-width:26px;height:26px;background:var(--accent);color:#fff;font-family:'JetBrains Mono',monospace;font-size:.65rem;border-radius:50%;flex-shrink:0;margin-top:2px;}
+
+.note{border-left:3px solid var(--gold);background:rgba(160,122,16,.05);padding:14px 18px;border-radius:0 3px 3px 0;font-size:.88rem;line-height:1.75;color:var(--ink2);margin:20px 0;}
+.note-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
+.tip{border-left-color:var(--blue);background:rgba(26,79,140,.04);}.tip .note-label{color:var(--blue);}
+.warn{border-left-color:var(--accent);background:rgba(200,65,10,.04);}.warn .note-label{color:var(--accent);}
+.success{border-left-color:var(--green);background:rgba(26,107,60,.04);}.success .note-label{color:var(--green);}
+
+.badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:1px;padding:3px 9px;border-radius:20px;border:1px solid;}
+.b-red{color:var(--accent);border-color:rgba(200,65,10,.3);background:rgba(200,65,10,.06);}
+.b-blue{color:var(--blue);border-color:rgba(26,79,140,.3);background:rgba(26,79,140,.06);}
+.b-green{color:var(--green);border-color:rgba(26,107,60,.3);background:rgba(26,107,60,.06);}
+.b-gold{color:var(--gold);border-color:rgba(160,122,16,.3);background:rgba(160,122,16,.06);}
+
+/* ── RESPONSABILIDAD COMPARTIDA ── */
+.sr-wrap{overflow-x:auto;}
+.sr-table{width:100%;border-collapse:collapse;font-size:.83rem;min-width:560px;}
+.sr-table th{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);padding:10px 14px;border-bottom:2px solid var(--border);text-align:center;font-weight:400;}
+.sr-table th:first-child{text-align:left;}
+.sr-table td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:middle;text-align:center;}
+.sr-table .row-label{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink);}
+.own{display:inline-block;background:rgba(200,65,10,.12);color:var(--accent);font-weight:700;border-radius:2px;padding:3px 10px;font-family:'JetBrains Mono',monospace;font-size:.65rem;}
+.shared{display:inline-block;background:rgba(160,122,16,.12);color:var(--gold);font-weight:700;border-radius:2px;padding:3px 10px;font-family:'JetBrains Mono',monospace;font-size:.65rem;}
+.prov{display:inline-block;background:rgba(26,107,60,.12);color:var(--green);font-weight:700;border-radius:2px;padding:3px 10px;font-family:'JetBrains Mono',monospace;font-size:.65rem;}
+
+/* ── AMENAZAS ── */
+.threats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
+.threat-card{border:1px solid var(--border);border-radius:4px;padding:18px;background:var(--card);transition:all .22s;border-left:3px solid var(--accent);}
+.threat-card:hover{box-shadow:var(--shadow);transform:translateY(-2px);}
+.threat-rank{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);margin-bottom:6px;}
+.threat-name{font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ink);margin-bottom:6px;}
+.threat-desc{font-size:.82rem;line-height:1.65;color:var(--ink2);}
+.threat-mit{margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--green);background:rgba(26,107,60,.06);padding:5px 9px;border-radius:2px;line-height:1.5;}
+
+/* ── TABS ── */
+.tabs-nav{display:flex;flex-wrap:wrap;gap:2px;margin-bottom:20px;}
+.tab-btn{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;padding:9px 18px;border:1px solid var(--border);border-radius:2px;background:transparent;color:var(--ink3);cursor:pointer;transition:all .2s;}
+.tab-btn.active{background:rgba(200,65,10,.08);border-color:rgba(200,65,10,.3);color:var(--accent);}
+.tab-btn.aws-btn.active{background:rgba(212,129,10,.1);border-color:rgba(212,129,10,.4);color:var(--aws);}
+.tab-btn.azure-btn.active{background:rgba(10,107,181,.1);border-color:rgba(10,107,181,.4);color:var(--azure);}
+.tab-btn.gcp-btn.active{background:rgba(26,107,60,.1);border-color:rgba(26,107,60,.4);color:var(--gcp);}
+.tab-panel{display:none;}.tab-panel.active{display:block;}
+
+/* ── CONTROLES ── */
+.ctrl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:10px;}
+.ctrl-item{border:1px solid var(--border);border-radius:3px;padding:14px 16px;background:rgba(255,255,255,.5);transition:border-color .2s,transform .2s;}
+.ctrl-item:hover{border-color:rgba(200,65,10,.25);transform:translateY(-1px);}
+.ctrl-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:6px;}
+.ctrl-id{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent);background:rgba(200,65,10,.08);padding:2px 6px;border-radius:2px;flex-shrink:0;white-space:nowrap;margin-top:1px;}
+.ctrl-name{font-size:.88rem;font-weight:700;color:var(--ink);line-height:1.35;}
+.ctrl-desc{font-size:.82rem;line-height:1.65;color:var(--ink2);}
+.ctrl-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px;}
+.ctrl-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;padding:2px 7px;border-radius:20px;border:1px solid var(--border);color:var(--ink3);}
+
+/* ── CSA CCM DOMAINS ── */
+.ccm-domains{display:flex;flex-direction:column;gap:4px;}
+.ccm-row{border:1px solid var(--border);border-radius:3px;background:var(--card);overflow:hidden;}
+.ccm-header{display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;transition:background .2s;user-select:none;}
+.ccm-header:hover{background:rgba(26,20,16,.03);}
+.ccm-row.open .ccm-header{background:rgba(200,65,10,.04);}
+.ccm-code{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--accent);letter-spacing:1px;min-width:44px;flex-shrink:0;}
+.ccm-name{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);flex:1;}
+.ccm-count{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);border:1px solid var(--border);padding:3px 8px;border-radius:20px;flex-shrink:0;}
+.ccm-chevron{font-size:.75rem;color:var(--ink3);transition:transform .2s;flex-shrink:0;}
+.ccm-row.open .ccm-chevron{transform:rotate(180deg);}
+.ccm-body{display:none;padding:0 20px 18px;border-top:1px solid var(--border);}
+.ccm-row.open .ccm-body{display:block;}
+.ccm-intro{font-size:.87rem;line-height:1.75;color:var(--ink2);margin:12px 0 14px;padding:10px 14px;background:rgba(200,65,10,.04);border-left:2px solid var(--accent);border-radius:0 3px 3px 0;}
+.ccm-ctrl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:8px;}
+.ccm-ctrl{border:1px solid var(--border);border-radius:3px;padding:12px 14px;background:rgba(255,255,255,.5);transition:border-color .2s;}
+.ccm-ctrl:hover{border-color:rgba(200,65,10,.22);}
+.ccm-ctrl-id{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent);margin-bottom:4px;}
+.ccm-ctrl-name{font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.ccm-ctrl-desc{font-size:.8rem;line-height:1.6;color:var(--ink2);}
+
+/* ── HERRAMIENTAS ── */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
+.tool-item{border:1px solid var(--border);border-radius:3px;padding:14px 16px;background:rgba(255,255,255,.5);transition:border-color .2s,transform .2s;}
+.tool-item:hover{border-color:rgba(200,65,10,.3);transform:translateY(-1px);}
+.tool-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:6px;}
+.tool-tag{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent);background:rgba(200,65,10,.08);padding:2px 7px;border-radius:2px;flex-shrink:0;white-space:nowrap;margin-top:1px;}
+.tool-name{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.3;}
+.tool-desc{font-size:.82rem;line-height:1.65;color:var(--ink2);}
+.tool-badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px;}
+.tool-badge{font-family:'JetBrains Mono',monospace;font-size:.58rem;padding:2px 7px;border-radius:20px;border:1px solid var(--border);color:var(--ink3);}
+
+/* ── CHECKLIST ── */
+.checklist{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;}
+.check-item{display:flex;gap:12px;padding:14px 16px;border:1px solid var(--border);border-radius:3px;background:rgba(255,255,255,.5);transition:border-color .2s,transform .2s;align-items:flex-start;}
+.check-item:hover{border-color:rgba(200,65,10,.3);transform:translateY(-1px);}
+.check-box{width:20px;height:20px;flex-shrink:0;border:1px solid var(--accent);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:.75rem;color:var(--accent);margin-top:1px;}
+.check-text{font-size:.87rem;line-height:1.65;color:var(--ink2);}
+.check-text strong{color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:.78rem;display:block;margin-bottom:3px;letter-spacing:1px;}
+
+/* ── RELACIONES ── */
+.rel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+.rel-item{border:1px solid var(--border);border-radius:4px;padding:20px;background:var(--card);transition:all .2s;}
+.rel-item:hover{box-shadow:var(--shadow);}
+.rel-std{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;margin-bottom:8px;font-weight:600;}
+.rel-name{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);margin-bottom:8px;}
+.rel-how{font-size:.83rem;line-height:1.65;color:var(--ink2);}
+
+/* ── FOOTER / SCROLL ── */
+footer{background:var(--ink);color:rgba(245,242,237,.5);padding:48px 40px;font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:1px;line-height:2;text-align:center;}
+footer strong{color:rgba(245,242,237,.8);}
+footer a{color:var(--accent2);text-decoration:none;}
+.scroll-top{position:fixed;bottom:28px;right:28px;z-index:200;background:var(--ink);color:var(--bg);font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:10px 16px;border:none;border-radius:2px;cursor:pointer;transition:all .2s;letter-spacing:2px;opacity:0;pointer-events:none;box-shadow:0 4px 20px rgba(26,20,16,.2);}
+.scroll-top.show{opacity:1;pointer-events:auto;}
+.scroll-top:hover{background:var(--accent);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">// CIS Benchmarks · CSA CCM v4 · AWS · Azure · GCP · NIST SP 800-144</div>
+    <h1 class="hero-title">Cloud<br><em>Security</em></h1>
+    <div class="hero-year">SEGURIDAD EN LA NUBE · GUÍA COMPLETA</div>
+    <p class="hero-desc">
+      Seguridad en entornos cloud: modelo de responsabilidad compartida, amenazas principales según la CSA, controles CIS Benchmarks por proveedor, dominios del CSA CCM v4, herramientas de evaluación y alineación con ISO 27001 y la Ley 21.663.
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">197</div><div class="stat-label">Controles CSA CCM v4</div></div>
+      <div class="stat"><div class="stat-num">17</div><div class="stat-label">Dominios CSA CCM</div></div>
+      <div class="stat"><div class="stat-num">12</div><div class="stat-label">Amenazas Top CSA 2022</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Modelos de servicio</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ NAV ══ -->
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a class="nav-link" href="#fundamentos">Fundamentos</a>
+    <a class="nav-link" href="#responsabilidad">Responsabilidad</a>
+    <a class="nav-link" href="#amenazas">Amenazas</a>
+    <a class="nav-link" href="#cis">CIS Benchmarks</a>
+    <a class="nav-link" href="#proveedor">Por Proveedor</a>
+    <a class="nav-link" href="#ccm">CSA CCM</a>
+    <a class="nav-link" href="#checklist">Checklist</a>
+    <a class="nav-link" href="#herramientas">Herramientas</a>
+    <a class="nav-link" href="#relaciones">Relaciones</a>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- ══ FUNDAMENTOS ══ -->
+<section class="block" id="fundamentos">
+  <div class="block-label">// Conceptos Base</div>
+  <h2 class="block-title">Fundamentos de Seguridad Cloud</h2>
+  <p class="block-intro">
+    La nube no es inherentemente menos segura que un datacenter propio — pero los riesgos son distintos y los controles deben adaptarse. El mayor problema no es que el proveedor cloud sea inseguro: es que los clientes configuran mal sus propios recursos.
+  </p>
+
+  <div class="two-col">
+    <div>
+      <div class="note warn">
+        <div class="note-label">// GARTNER: EL 99% DE LAS BRECHAS CLOUD</div>
+        Hasta 2025, el 99% de los fallos de seguridad en la nube serán culpa del <strong>cliente</strong>, no del proveedor (Gartner). Las causas más frecuentes: buckets S3 públicos por error de configuración, permisos IAM excesivos, credenciales hardcodeadas en código, ausencia de MFA, y grupos de seguridad demasiado permisivos. La infraestructura del proveedor es segura — la configuración que hace el cliente no siempre lo es.
+      </div>
+      <div class="note tip" style="margin-top:14px;">
+        <div class="note-label">// LOS 3 MODELOS DE SERVICIO</div>
+        <strong>IaaS</strong> — Infrastructure as a Service: EC2, Azure VMs, GCE. Más control, más responsabilidad del cliente.<br><br>
+        <strong>PaaS</strong> — Platform as a Service: RDS, App Service, Cloud Run. Responsabilidad compartida en middleware y runtime.<br><br>
+        <strong>SaaS</strong> — Software as a Service: M365, Salesforce, Slack. El proveedor gestiona todo excepto los datos y el acceso de usuarios.
+      </div>
+    </div>
+    <div>
+      <div class="block-label" style="margin-bottom:14px;">// Por qué la seguridad cloud es diferente</div>
+      <ol class="num-list">
+        <li>Los recursos se crean y destruyen en segundos — el inventario es dinámico, no estático</li>
+        <li>Todo está potencialmente expuesto a Internet por defecto — superficie de ataque global</li>
+        <li>Las APIs son la interfaz principal — cada endpoint mal protegido es una puerta de entrada</li>
+        <li>Las identidades (IAM) son el nuevo perímetro — una clave comprometida da acceso amplio</li>
+        <li>Los errores de configuración escalan masivamente — un terraform mal configurado despliega cientos de recursos vulnerables</li>
+        <li>La visibilidad requiere configuración activa — los logs no están habilitados por defecto en todos los servicios</li>
+        <li>Multi-cloud y entornos híbridos multiplican la complejidad de gestión</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ══ RESPONSABILIDAD COMPARTIDA ══ -->
+<section class="block" id="responsabilidad">
+  <div class="block-label">// El Concepto Más Importante</div>
+  <h2 class="block-title">Modelo de Responsabilidad Compartida</h2>
+  <p class="block-intro">
+    El modelo de responsabilidad compartida define qué aspectos de seguridad gestiona el proveedor cloud y cuáles son responsabilidad del cliente. Muchas brechas ocurren porque el cliente asume que el proveedor lo protege de algo que en realidad es responsabilidad propia.
+  </p>
+
+  <div class="sr-wrap">
+    <table class="sr-table">
+      <thead>
+        <tr>
+          <th style="min-width:180px;">CAPA / COMPONENTE</th>
+          <th>ON-PREMISES</th>
+          <th>IaaS<br><span style="font-size:.55rem;opacity:.6">(EC2, Azure VM, GCE)</span></th>
+          <th>PaaS<br><span style="font-size:.55rem;opacity:.6">(App Service, Cloud Run)</span></th>
+          <th>SaaS<br><span style="font-size:.55rem;opacity:.6">(M365, Salesforce)</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label">Datos del cliente</td>
+          <td><span class="own">CLIENTE</span></td>
+          <td><span class="own">CLIENTE</span></td>
+          <td><span class="own">CLIENTE</span></td>
+          <td><span class="own">CLIENTE</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">Gestión de identidades y acceso</td>
+          <td><span class="own">CLIENTE</span></td>
+          <td><span class="own">CLIENTE</span></td>
+          <td><span class="own">CLIENTE</span></td>
+          <td><span class="own">CLIENTE</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">Aplicaciones y código</td>
+          <td><span class="own">CLIENTE</span></td>
+          <td><span class="own">CLIENTE</span></td>
+          <td><span class="own">CLIENTE</span></td>
+          <td><span class="prov">PROVEEDOR</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">Configuración de red (firewall, SGs)</td>
+          <td><span class="own">CLIENTE</span></td>
+          <td><span class="own">CLIENTE</span></td>
+          <td><span class="shared">COMPARTIDA</span></td>
+          <td><span class="prov">PROVEEDOR</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">Sistema operativo y runtime</td>
+          <td><span class="own">CLIENTE</span></td>
+          <td><span class="own">CLIENTE</span></td>
+          <td><span class="prov">PROVEEDOR</span></td>
+          <td><span class="prov">PROVEEDOR</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">Virtualización e hipervisor</td>
+          <td><span class="own">CLIENTE</span></td>
+          <td><span class="prov">PROVEEDOR</span></td>
+          <td><span class="prov">PROVEEDOR</span></td>
+          <td><span class="prov">PROVEEDOR</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">Hardware físico (servidores)</td>
+          <td><span class="own">CLIENTE</span></td>
+          <td><span class="prov">PROVEEDOR</span></td>
+          <td><span class="prov">PROVEEDOR</span></td>
+          <td><span class="prov">PROVEEDOR</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">Infraestructura física (CPD, energía)</td>
+          <td><span class="own">CLIENTE</span></td>
+          <td><span class="prov">PROVEEDOR</span></td>
+          <td><span class="prov">PROVEEDOR</span></td>
+          <td><span class="prov">PROVEEDOR</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note warn" style="margin-top:16px;">
+    <div class="note-label">// LO QUE SIEMPRE ES RESPONSABILIDAD DEL CLIENTE</div>
+    Sin importar el modelo (IaaS, PaaS o SaaS), el cliente <strong>siempre</strong> es responsable de: sus datos, la gestión de identidades y accesos (IAM), la configuración de seguridad de sus recursos, el cifrado de sus datos con sus propias claves, y el cumplimiento regulatorio aplicable a su sector.
+  </div>
+</section>
+
+<!-- ══ AMENAZAS ══ -->
+<section class="block" id="amenazas">
+  <div class="block-label">// CSA Top Threats to Cloud Computing 2022</div>
+  <h2 class="block-title">Las 12 Principales Amenazas Cloud</h2>
+  <p class="block-intro">
+    La Cloud Security Alliance (CSA) publica periódicamente el informe "Egregious Eleven / Pandemic Eleven" con las amenazas más críticas en entornos cloud. La versión 2022 identifica 12 amenazas principales.
+  </p>
+
+  <div class="threats-grid">
+    <div class="threat-card">
+      <div class="threat-rank">AMENAZA #1</div>
+      <div class="threat-name">Infraestructura y APIs inseguras</div>
+      <div class="threat-desc">APIs de gestión cloud mal aseguradas expuestas a Internet. Falta de autenticación fuerte, claves de API sin rotación, endpoints sin rate limiting.</div>
+      <div class="threat-mit">→ Autenticación en todas las APIs · Rate limiting · Rotación automática de claves · WAF en APIs públicas</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-rank">AMENAZA #2</div>
+      <div class="threat-name">Mala configuración y control inadecuado del cambio</div>
+      <div class="threat-desc">El error humano en la configuración es la causa más frecuente de brechas cloud. Buckets S3 públicos, grupos de seguridad 0.0.0.0/0, bases de datos sin autenticación.</div>
+      <div class="threat-mit">→ CSPM (Cloud Security Posture Management) · IaC seguro · Revisión de configuración automatizada</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-rank">AMENAZA #3</div>
+      <div class="threat-name">Arquitectura cloud y estrategia de seguridad deficientes</div>
+      <div class="threat-desc">Migrar "lift and shift" sin adaptar la arquitectura al modelo cloud. No aprovechar los controles nativos del proveedor. Sin estrategia de seguridad cloud explícita.</div>
+      <div class="threat-mit">→ Well-Architected Framework · Diseño cloud-native · Security by design desde el principio</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-rank">AMENAZA #4</div>
+      <div class="threat-name">Gestión insuficiente de identidades, credenciales y accesos</div>
+      <div class="threat-desc">Claves de acceso de largo plazo, roles IAM con permisos excesivos (AdministratorAccess), sin MFA en cuentas root, credenciales hardcodeadas en código.</div>
+      <div class="threat-mit">→ Principio de mínimo privilegio · MFA obligatorio · Roles en lugar de claves · Secretos en vault</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-rank">AMENAZA #5</div>
+      <div class="threat-name">Secuestro de cuentas</div>
+      <div class="threat-desc">Compromiso de credenciales cloud mediante phishing, credential stuffing o claves expuestas en repositorios GitHub. El atacante asume control total de la cuenta cloud.</div>
+      <div class="threat-mit">→ MFA en todas las cuentas · Alertas de comportamiento anómalo · UEBA · Rotación de credenciales</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-rank">AMENAZA #6</div>
+      <div class="threat-name">Amenazas internas</div>
+      <div class="threat-desc">Empleados, contratistas o socios con acceso a recursos cloud que actúan maliciosamente o por descuido. El acceso desde cualquier lugar amplifica el riesgo.</div>
+      <div class="threat-mit">→ Mínimo privilegio · Monitoreo de comportamiento · Just-in-time access · PAM · Revisión de accesos</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-rank">AMENAZA #7</div>
+      <div class="threat-name">Interfaces inseguras de terceros</div>
+      <div class="threat-desc">Integraciones con servicios de terceros, herramientas de automatización y APIs de partners que tienen acceso a recursos cloud con permisos excesivos o sin monitoreo.</div>
+      <div class="threat-mit">→ Inventario de integraciones · Permisos mínimos para terceros · Revisión periódica de OAuth grants</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-rank">AMENAZA #8</div>
+      <div class="threat-name">Plano de control débil</div>
+      <div class="threat-desc">Acceso no protegido a la consola de gestión del proveedor cloud. Sin separación entre cuentas de producción y desarrollo. Acceso root sin restricciones.</div>
+      <div class="threat-mit">→ Cuenta root solo para emergencias · Cuentas separadas por entorno · SCPs en AWS Organizations</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-rank">AMENAZA #9</div>
+      <div class="threat-name">Fallos en metastructura y applistructura</div>
+      <div class="threat-desc">Vulnerabilidades en los servicios propios del proveedor (metastructura) o en las capas de abstracción de las aplicaciones cloud-native que el cliente no puede parchear directamente.</div>
+      <div class="threat-mit">→ Monitoreo de notificaciones del proveedor · Defense in depth · Arquitectura resiliente ante fallos de un servicio</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-rank">AMENAZA #10</div>
+      <div class="threat-name">Visibilidad limitada del uso de la nube</div>
+      <div class="threat-desc">Shadow IT cloud: empleados crean recursos cloud sin aprobación, fuera del inventario oficial y sin controles de seguridad. Datos sensibles en cuentas cloud no gestionadas.</div>
+      <div class="threat-mit">→ CASB para descubrir shadow IT · Cloud governance · Inventario centralizado · Políticas de uso aceptable</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-rank">AMENAZA #11</div>
+      <div class="threat-name">Abuso y uso malicioso de servicios cloud</div>
+      <div class="threat-desc">Atacantes que usan la infraestructura cloud legítima para alojar malware, C2 (command and control), minería de criptomonedas o lanzar ataques DDoS.</div>
+      <div class="threat-mit">→ Monitoreo de costos anómalos · Alertas de CloudTrail/Activity Log · Threat Intelligence feeds</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-rank">AMENAZA #12</div>
+      <div class="threat-name">Riesgos de la cadena de suministro cloud</div>
+      <div class="threat-desc">Dependencias de servicios cloud de terceros, imágenes de contenedores de orígenes no confiables, módulos Terraform públicos con código malicioso o vulnerable.</div>
+      <div class="threat-mit">→ Verificar fuentes de imágenes · Escanear imágenes de contenedores · SBOM · Usar solo registros de confianza</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CIS BENCHMARKS ══ -->
+<section class="block" id="cis">
+  <div class="block-label">// CIS Benchmarks — Controles por Proveedor</div>
+  <h2 class="block-title">Controles Fundamentales CIS Cloud</h2>
+  <p class="block-intro">
+    El Center for Internet Security (CIS) publica Benchmarks específicos para cada proveedor cloud con configuraciones recomendadas. Son el estándar de hardening más adoptado para entornos cloud. Selecciona el proveedor para ver los controles prioritarios.
+  </p>
+
+  <div class="tabs-nav">
+    <button class="tab-btn aws-btn active" onclick="switchTab('aws',this)">☁️ AWS</button>
+    <button class="tab-btn azure-btn" onclick="switchTab('azure',this)">🔷 Azure</button>
+    <button class="tab-btn gcp-btn" onclick="switchTab('gcp',this)">🔵 Google Cloud</button>
+    <button class="tab-btn" onclick="switchTab('multi',this)">🌐 Multi-Cloud</button>
+  </div>
+
+  <!-- AWS -->
+  <div class="tab-panel active" id="tab-aws">
+    <div class="note" style="border-left-color:var(--aws);background:rgba(212,129,10,.05);margin-top:0;">
+      <div class="note-label" style="color:var(--aws);">// CIS AWS FOUNDATIONS BENCHMARK v2.0</div>
+      Organizado en 5 secciones: IAM, Almacenamiento, Logging, Monitoreo, Redes. Nivel 1 (controles esenciales sin impacto en funcionalidad) y Nivel 2 (controles adicionales para entornos más restrictivos).
+    </div>
+    <div class="ctrl-grid">
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">1.1</span><span class="ctrl-name">No usar la cuenta root para actividades cotidianas</span></div>
+        <div class="ctrl-desc">La cuenta root tiene acceso irrevocable a todos los recursos. Crear usuarios IAM individuales. Guardar las credenciales root en un lugar seguro offline.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">IAM</span><span class="ctrl-tag">Nivel 1</span><span class="ctrl-tag">Crítico</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">1.5</span><span class="ctrl-name">MFA habilitado en la cuenta root</span></div>
+        <div class="ctrl-desc">La cuenta root debe tener MFA de hardware (YubiKey o similar). Sin MFA, el compromiso de las credenciales root da acceso total sin forma de recuperarlo.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">IAM</span><span class="ctrl-tag">Nivel 1</span><span class="ctrl-tag">Crítico</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">1.10</span><span class="ctrl-name">MFA habilitado para todos los usuarios IAM con consola</span></div>
+        <div class="ctrl-desc">Todo usuario IAM que acceda a la consola web debe tener MFA activo. Aplicar mediante política de IAM que deniegue el acceso si MFA no está configurado.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">IAM</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">1.14</span><span class="ctrl-name">Eliminar claves de acceso de larga duración no usadas</span></div>
+        <div class="ctrl-desc">Las claves de acceso de usuarios IAM que no se usen en 90 días deben desactivarse y eliminarse. Preferir roles IAM sobre claves de larga duración.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">IAM</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">1.17</span><span class="ctrl-name">Asegurar que solo admins gestionan políticas de IAM</span></div>
+        <div class="ctrl-desc">Evitar que usuarios no administradores puedan crear o modificar políticas IAM que les concedan más permisos (privilege escalation vía IAM).</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">IAM</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">2.1.1</span><span class="ctrl-name">Asegurar que los buckets S3 no sean públicos</span></div>
+        <div class="ctrl-desc">Habilitar "Block Public Access" en la configuración de la cuenta y de cada bucket S3. Es uno de los errores más frecuentes de misconfiguration cloud.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Almacenamiento</span><span class="ctrl-tag">Nivel 1</span><span class="ctrl-tag">Crítico</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">2.1.2</span><span class="ctrl-name">Cifrado de buckets S3 en reposo</span></div>
+        <div class="ctrl-desc">Habilitar cifrado de servidor (SSE-S3 o SSE-KMS) en todos los buckets S3. Si se requiere gestión propia de claves, usar SSE-KMS con CMK.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Almacenamiento</span><span class="ctrl-tag">Nivel 2</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">3.1</span><span class="ctrl-name">CloudTrail habilitado en todas las regiones</span></div>
+        <div class="ctrl-desc">CloudTrail registra todas las llamadas a la API de AWS. Habilitar en todas las regiones, incluida la región global. Sin CloudTrail, no hay auditoría de lo que ocurre en la cuenta.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Logging</span><span class="ctrl-tag">Nivel 1</span><span class="ctrl-tag">Crítico</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">3.3</span><span class="ctrl-name">CloudTrail integrado con CloudWatch Logs</span></div>
+        <div class="ctrl-desc">Enviar los logs de CloudTrail a CloudWatch Logs para poder crear alertas en tiempo real sobre actividad sospechosa (creación de usuarios, cambios de IAM, etc.).</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Logging</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">3.4</span><span class="ctrl-name">Logs de CloudTrail cifrados con KMS</span></div>
+        <div class="ctrl-desc">Cifrar los archivos de log de CloudTrail con una clave KMS de gestión propia para garantizar que solo el personal autorizado puede leerlos.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Logging</span><span class="ctrl-tag">Nivel 2</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">4.1</span><span class="ctrl-name">Alertas sobre uso de la cuenta root</span></div>
+        <div class="ctrl-desc">Crear una alarma CloudWatch que se active cuando se use la cuenta root. Cualquier uso de root es inusual y debe investigarse inmediatamente.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Monitoreo</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">5.4</span><span class="ctrl-name">Grupos de seguridad: no permitir 0.0.0.0/0 en SSH/RDP</span></div>
+        <div class="ctrl-desc">No abrir los puertos 22 (SSH) o 3389 (RDP) a toda Internet. Usar bastión host, Systems Manager Session Manager o VPN para acceso administrativo.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Redes</span><span class="ctrl-tag">Nivel 1</span><span class="ctrl-tag">Crítico</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AZURE -->
+  <div class="tab-panel" id="tab-azure">
+    <div class="note" style="border-left-color:var(--azure);background:rgba(10,107,181,.05);margin-top:0;">
+      <div class="note-label" style="color:var(--azure);">// CIS MICROSOFT AZURE FOUNDATIONS BENCHMARK v2.0</div>
+      Organizado en secciones: Identity and Access Management, Microsoft Defender, Storage, Database, Logging, Networking, Virtual Machines, Key Vault, AppService.
+    </div>
+    <div class="ctrl-grid">
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">1.1.1</span><span class="ctrl-name">MFA requerido para todos los usuarios</span></div>
+        <div class="ctrl-desc">Habilitar MFA mediante Conditional Access para todos los usuarios de Azure AD / Entra ID. Especialmente crítico para cuentas con roles de administrador global.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">IAM</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">1.1.4</span><span class="ctrl-name">Sin Global Admins permanentes</span></div>
+        <div class="ctrl-desc">Usar Privileged Identity Management (PIM) para activar roles de administrador bajo demanda (just-in-time), en lugar de asignaciones permanentes.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">IAM</span><span class="ctrl-tag">Nivel 2</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">2.1</span><span class="ctrl-name">Microsoft Defender for Cloud habilitado</span></div>
+        <div class="ctrl-desc">Habilitar Microsoft Defender for Cloud (antes Security Center) en todas las suscripciones para obtener el Secure Score y recomendaciones de seguridad.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Defender</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">3.1</span><span class="ctrl-name">Cifrado en reposo para Storage Accounts</span></div>
+        <div class="ctrl-desc">Azure cifra el almacenamiento en reposo por defecto (SSE). Usar Customer Managed Keys (CMK) en Azure Key Vault para mayor control criptográfico.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Storage</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">3.7</span><span class="ctrl-name">Acceso público a Storage Accounts deshabilitado</span></div>
+        <div class="ctrl-desc">Deshabilitar el acceso de blob anónimo en todas las Storage Accounts. Controlar el acceso mediante Azure AD o SAS tokens con tiempo de expiración.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Storage</span><span class="ctrl-tag">Nivel 1</span><span class="ctrl-tag">Crítico</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">5.1.1</span><span class="ctrl-name">Diagnostic Settings habilitados</span></div>
+        <div class="ctrl-desc">Habilitar Diagnostic Settings en todos los recursos Azure para enviar logs a Log Analytics Workspace, Event Hub o Storage Account para auditoría y SIEM.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Logging</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">5.2.1</span><span class="ctrl-name">Alertas sobre operaciones administrativas</span></div>
+        <div class="ctrl-desc">Crear Azure Monitor Alerts para actividades críticas: creación/eliminación de Key Vault, asignación de roles privilegiados, cambios en políticas de seguridad.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Monitoreo</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">6.1</span><span class="ctrl-name">RDP (3389) no expuesto desde Internet en NSG</span></div>
+        <div class="ctrl-desc">Los Network Security Groups no deben permitir tráfico entrante en el puerto 3389 desde cualquier origen. Usar Azure Bastion o just-in-time VM access.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Redes</span><span class="ctrl-tag">Nivel 1</span><span class="ctrl-tag">Crítico</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">8.1</span><span class="ctrl-name">Rotación automática de claves en Key Vault</span></div>
+        <div class="ctrl-desc">Habilitar la rotación automática de claves y secretos en Azure Key Vault. Definir política de expiración y alertas de vencimiento para todos los secretos.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Key Vault</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">9.1</span><span class="ctrl-name">HTTPS obligatorio en App Service</span></div>
+        <div class="ctrl-desc">Forzar HTTPS en todas las aplicaciones de Azure App Service. Deshabilitar el tráfico HTTP y configurar TLS mínimo en 1.2 para todas las aplicaciones.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">AppService</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GCP -->
+  <div class="tab-panel" id="tab-gcp">
+    <div class="note" style="border-left-color:var(--gcp);background:rgba(26,107,60,.05);margin-top:0;">
+      <div class="note-label" style="color:var(--gcp);">// CIS GOOGLE CLOUD PLATFORM FOUNDATION BENCHMARK v2.0</div>
+      Organizado en secciones: IAM, Logging, Networking, Virtual Machines, Storage, Cloud SQL, BigQuery, Kubernetes Engine.
+    </div>
+    <div class="ctrl-grid">
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">1.1</span><span class="ctrl-name">No usar Service Account Keys de largo plazo</span></div>
+        <div class="ctrl-desc">Evitar las claves de Service Account de larga duración. Usar Workload Identity para Kubernetes, metadatos de instancia para Compute Engine. Eliminar claves no utilizadas.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">IAM</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">1.4</span><span class="ctrl-name">MFA para todas las cuentas de Google Cloud</span></div>
+        <div class="ctrl-desc">Requerir MFA para todas las cuentas de usuario que acceden a Google Cloud. Preferir MFA basado en hardware (FIDO2) para administradores.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">IAM</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">2.1</span><span class="ctrl-name">Cloud Audit Logs habilitados</span></div>
+        <div class="ctrl-desc">Habilitar Cloud Audit Logs (Admin Activity, Data Access, System Event) en todos los servicios del proyecto. Los logs de Admin Activity están activos por defecto; Data Access debe activarse explícitamente.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Logging</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">3.1</span><span class="ctrl-name">Firewall: no permitir SSH/RDP desde 0.0.0.0/0</span></div>
+        <div class="ctrl-desc">Las reglas de firewall no deben permitir tráfico entrante en los puertos 22 y 3389 desde cualquier origen. Usar Cloud IAP (Identity-Aware Proxy) para acceso administrativo seguro.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Redes</span><span class="ctrl-tag">Nivel 1</span><span class="ctrl-tag">Crítico</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">5.1</span><span class="ctrl-name">GCS Buckets no accesibles públicamente</span></div>
+        <div class="ctrl-desc">Los buckets de Google Cloud Storage no deben ser accesibles públicamente sin necesidad explícita. Usar IAM conditions para control granular en lugar de allUsers/allAuthenticatedUsers.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Storage</span><span class="ctrl-tag">Nivel 1</span><span class="ctrl-tag">Crítico</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">6.3.1</span><span class="ctrl-name">Cloud SQL: no IPs públicas en bases de datos</span></div>
+        <div class="ctrl-desc">Las instancias de Cloud SQL no deben tener IPs públicas asignadas. Acceder mediante Cloud SQL Auth Proxy o Private Service Connect desde la VPC interna.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Cloud SQL</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">7.1</span><span class="ctrl-name">GKE: no exponer el API server a Internet</span></div>
+        <div class="ctrl-desc">Los clústeres de Google Kubernetes Engine deben tener el acceso al API server restringido a CIDRs específicos, o usar clústeres privados sin endpoint público.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">GKE</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">7.3</span><span class="ctrl-name">GKE: Workload Identity habilitado</span></div>
+        <div class="ctrl-desc">Usar Workload Identity para que los pods de Kubernetes puedan acceder a APIs de Google Cloud sin usar Service Account Keys de larga duración en archivos.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">GKE</span><span class="ctrl-tag">Nivel 1</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MULTI-CLOUD -->
+  <div class="tab-panel" id="tab-multi">
+    <div class="note tip" style="margin-top:0;">
+      <div class="note-label">// CONTROLES UNIVERSALES MULTI-CLOUD</div>
+      Estos controles aplican independientemente del proveedor cloud. Son los primeros a implementar en cualquier entorno cloud antes de los controles específicos del proveedor.
+    </div>
+    <div class="ctrl-grid">
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">MC-01</span><span class="ctrl-name">Inventario completo de recursos cloud</span></div>
+        <div class="ctrl-desc">Mantener un inventario actualizado de todos los recursos cloud (cuentas, suscripciones, proyectos, regiones). No puedes proteger lo que no sabes que existe. Usar CSPM para automatizar el descubrimiento.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Visibility</span><span class="ctrl-tag">Fundacional</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">MC-02</span><span class="ctrl-name">Separación de cuentas por entorno</span></div>
+        <div class="ctrl-desc">Entornos de desarrollo, staging y producción deben estar en cuentas/suscripciones/proyectos separados, no en el mismo con diferentes tags. El blast radius de un compromiso queda contenido.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Governance</span><span class="ctrl-tag">Crítico</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">MC-03</span><span class="ctrl-name">Infrastructure as Code (IaC) con revisión de seguridad</span></div>
+        <div class="ctrl-desc">Toda la infraestructura cloud debe definirse como código (Terraform, CloudFormation, Bicep). El código IaC debe escanearse con herramientas de seguridad (Checkov, tfsec) antes de aplicarse.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">IaC</span><span class="ctrl-tag">DevSecOps</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">MC-04</span><span class="ctrl-name">Secretos en un vault — nunca en variables de entorno</span></div>
+        <div class="ctrl-desc">Claves API, contraseñas y certificados deben almacenarse en AWS Secrets Manager, Azure Key Vault o GCP Secret Manager. Nunca en variables de entorno, archivos de configuración o código fuente.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Secrets</span><span class="ctrl-tag">Crítico</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">MC-05</span><span class="ctrl-name">Cifrado en reposo y en tránsito para todos los datos</span></div>
+        <div class="ctrl-desc">Habilitar cifrado en reposo en todos los servicios de almacenamiento. Forzar TLS 1.2+ para todas las comunicaciones. Gestionar las claves de cifrado con KMS con rotación automática.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Encryption</span><span class="ctrl-tag">Fundacional</span></div>
+      </div>
+      <div class="ctrl-item">
+        <div class="ctrl-head"><span class="ctrl-id">MC-06</span><span class="ctrl-name">Logs centralizados y retenidos</span></div>
+        <div class="ctrl-desc">Centralizar todos los logs cloud en un SIEM (o al menos en un bucket de log archiving separado y protegido contra eliminación). Retener mínimo 90 días online y 1 año en archivo.</div>
+        <div class="ctrl-tags"><span class="ctrl-tag">Logging</span><span class="ctrl-tag">Fundacional</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ POR PROVEEDOR — servicios nativos de seguridad ══ -->
+<section class="block" id="proveedor">
+  <div class="block-label">// Servicios Nativos de Seguridad</div>
+  <h2 class="block-title">Servicios de Seguridad por Proveedor</h2>
+  <p class="block-intro">
+    Cada proveedor cloud ofrece servicios nativos de seguridad que deben activarse y configurarse. Son la primera línea de defensa antes de herramientas de terceros.
+  </p>
+
+  <div class="three-col">
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--aws);letter-spacing:3px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid rgba(212,129,10,.3);">☁️ AWS</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="padding:11px 14px;border:1px solid var(--border);border-radius:3px;background:var(--card);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--aws);margin-bottom:4px;">POSTURE</div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--ink);">AWS Security Hub</div>
+          <div style="font-size:.82rem;color:var(--ink2);margin-top:3px;">Aggregador de hallazgos de seguridad. Verifica cumplimiento de CIS Benchmarks y AWS Foundational Security Best Practices automáticamente.</div>
+        </div>
+        <div style="padding:11px 14px;border:1px solid var(--border);border-radius:3px;background:var(--card);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--aws);margin-bottom:4px;">THREAT DETECTION</div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--ink);">Amazon GuardDuty</div>
+          <div style="font-size:.82rem;color:var(--ink2);margin-top:3px;">Detección de amenazas basada en ML que analiza CloudTrail, VPC Flow Logs y DNS para detectar comportamientos maliciosos.</div>
+        </div>
+        <div style="padding:11px 14px;border:1px solid var(--border);border-radius:3px;background:var(--card);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--aws);margin-bottom:4px;">IAM ANALYSIS</div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--ink);">AWS IAM Access Analyzer</div>
+          <div style="font-size:.82rem;color:var(--ink2);margin-top:3px;">Identifica recursos cloud compartidos con entidades externas no esperadas y políticas IAM demasiado permisivas.</div>
+        </div>
+        <div style="padding:11px 14px;border:1px solid var(--border);border-radius:3px;background:var(--card);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--aws);margin-bottom:4px;">CONFIG COMPLIANCE</div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--ink);">AWS Config</div>
+          <div style="font-size:.82rem;color:var(--ink2);margin-top:3px;">Monitoreo continuo de la configuración de recursos. Reglas automáticas que alertan cuando un recurso no cumple las políticas de seguridad.</div>
+        </div>
+        <div style="padding:11px 14px;border:1px solid var(--border);border-radius:3px;background:var(--card);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--aws);margin-bottom:4px;">WAF & DDOS</div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--ink);">AWS WAF + Shield</div>
+          <div style="font-size:.82rem;color:var(--ink2);margin-top:3px;">WAF para proteger aplicaciones web contra OWASP Top 10. Shield Standard (gratis) y Advanced (pago) para protección DDoS.</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--azure);letter-spacing:3px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid rgba(10,107,181,.3);">🔷 AZURE</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="padding:11px 14px;border:1px solid var(--border);border-radius:3px;background:var(--card);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--azure);margin-bottom:4px;">POSTURE</div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--ink);">Microsoft Defender for Cloud</div>
+          <div style="font-size:.82rem;color:var(--ink2);margin-top:3px;">CSPM y CWPP integrado. Secure Score, recomendaciones priorizadas y detección de amenazas en workloads Azure, on-prem y multi-cloud.</div>
+        </div>
+        <div style="padding:11px 14px;border:1px solid var(--border);border-radius:3px;background:var(--card);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--azure);margin-bottom:4px;">SIEM</div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--ink);">Microsoft Sentinel</div>
+          <div style="font-size:.82rem;color:var(--ink2);margin-top:3px;">SIEM nativo cloud con SOAR integrado. Conectores para cientos de fuentes de datos. ML para detección de anomalías y UEBA.</div>
+        </div>
+        <div style="padding:11px 14px;border:1px solid var(--border);border-radius:3px;background:var(--card);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--azure);margin-bottom:4px;">IDENTITY</div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--ink);">Microsoft Entra ID Protection</div>
+          <div style="font-size:.82rem;color:var(--ink2);margin-top:3px;">Detección de riesgo de identidad: logins sospechosos, credential leak, impossible travel. Políticas de Conditional Access basadas en riesgo.</div>
+        </div>
+        <div style="padding:11px 14px;border:1px solid var(--border);border-radius:3px;background:var(--card);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--azure);margin-bottom:4px;">KEY MANAGEMENT</div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--ink);">Azure Key Vault</div>
+          <div style="font-size:.82rem;color:var(--ink2);margin-top:3px;">Gestión centralizada de claves, secretos y certificados. HSM dedicado disponible para mayor seguridad criptográfica.</div>
+        </div>
+        <div style="padding:11px 14px;border:1px solid var(--border);border-radius:3px;background:var(--card);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--azure);margin-bottom:4px;">GOVERNANCE</div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--ink);">Azure Policy</div>
+          <div style="font-size:.82rem;color:var(--ink2);margin-top:3px;">Políticas que previenen la creación de recursos no conformes y auditan el estado de cumplimiento en toda la organización Azure.</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--gcp);letter-spacing:3px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid rgba(26,107,60,.3);">🔵 GOOGLE CLOUD</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="padding:11px 14px;border:1px solid var(--border);border-radius:3px;background:var(--card);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--gcp);margin-bottom:4px;">POSTURE</div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--ink);">Security Command Center</div>
+          <div style="font-size:.82rem;color:var(--ink2);margin-top:3px;">CSPM nativo de GCP. Descubrimiento de activos, detección de misconfiguraciones, vulnerabilidades en VMs y amenazas activas.</div>
+        </div>
+        <div style="padding:11px 14px;border:1px solid var(--border);border-radius:3px;background:var(--card);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--gcp);margin-bottom:4px;">LOGGING</div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--ink);">Cloud Logging + Chronicle</div>
+          <div style="font-size:.82rem;color:var(--ink2);margin-top:3px;">Cloud Logging centraliza logs de todos los servicios GCP. Chronicle (SIEM de Google) para análisis a escala de petabytes con UDM.</div>
+        </div>
+        <div style="padding:11px 14px;border:1px solid var(--border);border-radius:3px;background:var(--card);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--gcp);margin-bottom:4px;">ACCESS</div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--ink);">Cloud IAP (Identity-Aware Proxy)</div>
+          <div style="font-size:.82rem;color:var(--ink2);margin-top:3px;">Acceso Zero Trust a aplicaciones y VMs sin necesidad de VPN. Verifica identidad y contexto del dispositivo antes de cada acceso.</div>
+        </div>
+        <div style="padding:11px 14px;border:1px solid var(--border);border-radius:3px;background:var(--card);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--gcp);margin-bottom:4px;">VULN MGMT</div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--ink);">Google Artifact Analysis</div>
+          <div style="font-size:.82rem;color:var(--ink2);margin-top:3px;">Escaneo automático de vulnerabilidades en imágenes de contenedores y paquetes en Artifact Registry. Integrado en Cloud Build.</div>
+        </div>
+        <div style="padding:11px 14px;border:1px solid var(--border);border-radius:3px;background:var(--card);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--gcp);margin-bottom:4px;">KEYS</div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--ink);">Cloud KMS + Secret Manager</div>
+          <div style="font-size:.82rem;color:var(--ink2);margin-top:3px;">KMS para gestión de claves de cifrado con rotación automática. Secret Manager para secretos de aplicaciones con control de acceso granular.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CSA CCM ══ -->
+<section class="block" id="ccm">
+  <div class="block-label">// Cloud Security Alliance — Cloud Controls Matrix v4</div>
+  <h2 class="block-title">CSA Cloud Controls Matrix (CCM)</h2>
+  <p class="block-intro">
+    El CCM v4 de la CSA es el marco de controles de seguridad específicamente diseñado para entornos cloud. Define 197 controles organizados en 17 dominios. Es compatible con ISO 27001, SOC 2, PCI DSS y NIST CSF.
+  </p>
+
+  <div class="ccm-domains" id="ccmDomains">
+
+    <div class="ccm-row">
+      <div class="ccm-header" onclick="toggleCcm(this)">
+        <span class="ccm-code">AIS</span>
+        <span class="ccm-name">Application &amp; Interface Security</span>
+        <span class="ccm-count">9 controles</span>
+        <span class="ccm-chevron">▼</span>
+      </div>
+      <div class="ccm-body">
+        <div class="ccm-intro">Seguridad en el diseño, desarrollo y despliegue de aplicaciones y APIs en la nube. Cubre desde los requisitos de seguridad hasta las pruebas de penetración de aplicaciones.</div>
+        <div class="ccm-ctrl-grid">
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">AIS-01</div><div class="ccm-ctrl-name">Políticas y procedimientos de seguridad de aplicaciones</div><div class="ccm-ctrl-desc">Establecer políticas de desarrollo seguro de aplicaciones alineadas con estándares como OWASP, NIST y el ciclo de vida seguro de desarrollo (SSDLC).</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">AIS-03</div><div class="ccm-ctrl-name">Pruebas de seguridad de aplicaciones</div><div class="ccm-ctrl-desc">Realizar evaluaciones de seguridad periódicas de las aplicaciones cloud, incluyendo análisis estático (SAST), dinámico (DAST) y pruebas de penetración.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">AIS-05</div><div class="ccm-ctrl-name">Separación de entornos</div><div class="ccm-ctrl-desc">Separar los entornos de desarrollo, prueba y producción. No usar datos reales de producción en entornos de desarrollo o prueba sin anonimizar.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">AIS-07</div><div class="ccm-ctrl-name">Gestión de vulnerabilidades de aplicaciones</div><div class="ccm-ctrl-desc">Mantener un proceso formal para identificar, evaluar, priorizar y remediar vulnerabilidades en aplicaciones cloud con SLAs definidos según severidad.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ccm-row open">
+      <div class="ccm-header" onclick="toggleCcm(this)">
+        <span class="ccm-code">IAM</span>
+        <span class="ccm-name">Identity &amp; Access Management</span>
+        <span class="ccm-count">12 controles</span>
+        <span class="ccm-chevron">▼</span>
+      </div>
+      <div class="ccm-body">
+        <div class="ccm-intro">El dominio más crítico del CCM. La gestión de identidades y accesos es el primer control de seguridad en entornos cloud donde la identidad reemplaza al perímetro de red.</div>
+        <div class="ccm-ctrl-grid">
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">IAM-01</div><div class="ccm-ctrl-name">Políticas y procedimientos de IAM</div><div class="ccm-ctrl-desc">Establecer políticas de gestión de identidades y accesos, incluyendo provisioning, modificación y baja de usuarios, con revisiones periódicas de accesos.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">IAM-02</div><div class="ccm-ctrl-name">Autenticación fuerte</div><div class="ccm-ctrl-desc">Implementar MFA para todos los usuarios, especialmente para el acceso a consolas de gestión cloud y funciones privilegiadas. Preferir FIDO2 sobre OTP por SMS.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">IAM-05</div><div class="ccm-ctrl-name">Mínimo privilegio</div><div class="ccm-ctrl-desc">Aplicar el principio de mínimo privilegio en todas las asignaciones de roles IAM. Usar permisos granulares en lugar de roles de administrador global. Revisar y revocar accesos no usados.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">IAM-08</div><div class="ccm-ctrl-name">Gestión de credenciales de cuentas de servicio</div><div class="ccm-ctrl-desc">Las cuentas de servicio no deben usar claves de largo plazo. Usar identidades gestionadas o roles temporales. Rotar las claves periódicamente y auditar su uso.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">IAM-09</div><div class="ccm-ctrl-name">Segregación de funciones</div><div class="ccm-ctrl-desc">Separar las funciones de gestión de la infraestructura cloud de las operaciones de negocio. Evitar que una sola persona pueda crear recursos y también aprobar los cambios.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">IAM-12</div><div class="ccm-ctrl-name">Revisión periódica de accesos</div><div class="ccm-ctrl-desc">Revisar y certificar los accesos IAM al menos trimestralmente. Revocar automáticamente accesos de usuarios que hayan dejado la organización o cambiado de rol.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ccm-row">
+      <div class="ccm-header" onclick="toggleCcm(this)">
+        <span class="ccm-code">DSP</span>
+        <span class="ccm-name">Data Security &amp; Privacy</span>
+        <span class="ccm-count">20 controles</span>
+        <span class="ccm-chevron">▼</span>
+      </div>
+      <div class="ccm-body">
+        <div class="ccm-intro">Protección de los datos en entornos cloud durante todo su ciclo de vida: creación, almacenamiento, transmisión, uso y eliminación. Incluye privacidad y cumplimiento regulatorio.</div>
+        <div class="ccm-ctrl-grid">
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">DSP-01</div><div class="ccm-ctrl-name">Clasificación de datos</div><div class="ccm-ctrl-desc">Clasificar todos los datos según su sensibilidad (público, interno, confidencial, restringido) y aplicar controles de seguridad apropiados a cada nivel de clasificación.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">DSP-04</div><div class="ccm-ctrl-name">Residencia y soberanía de datos</div><div class="ccm-ctrl-desc">Conocer y controlar en qué regiones geográficas se almacenan los datos. Algunos datos regulados tienen restricciones de transferencia internacional que deben cumplirse.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">DSP-07</div><div class="ccm-ctrl-name">Cifrado de datos en reposo</div><div class="ccm-ctrl-desc">Cifrar todos los datos sensibles en reposo usando claves gestionadas por el cliente (CMK) en el KMS del proveedor cloud, con rotación automática de claves habilitada.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">DSP-10</div><div class="ccm-ctrl-name">Cifrado de datos en tránsito</div><div class="ccm-ctrl-desc">Todo el tráfico de datos debe cifrarse con TLS 1.2 o superior, incluyendo comunicaciones internas entre servicios cloud (cifrado este-oeste dentro de la VPC).</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">DSP-16</div><div class="ccm-ctrl-name">Eliminación segura de datos</div><div class="ccm-ctrl-desc">Implementar procedimientos para eliminar datos de forma segura al finalizar su ciclo de vida, incluyendo la eliminación de copias en backups y logs que puedan contener datos sensibles.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ccm-row">
+      <div class="ccm-header" onclick="toggleCcm(this)">
+        <span class="ccm-code">IVS</span>
+        <span class="ccm-name">Infrastructure &amp; Virtualization Security</span>
+        <span class="ccm-count">11 controles</span>
+        <span class="ccm-chevron">▼</span>
+      </div>
+      <div class="ccm-body">
+        <div class="ccm-intro">Seguridad de la infraestructura cloud: redes virtuales, sistemas operativos, contenedores y hipervisores. Cubre segmentación de red y hardening de la capa de infraestructura.</div>
+        <div class="ccm-ctrl-grid">
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">IVS-01</div><div class="ccm-ctrl-name">Segmentación de red</div><div class="ccm-ctrl-desc">Implementar segmentación de red virtual (VPCs, subnets, security groups) para separar entornos y tipos de carga de trabajo. Controlar el tráfico entre segmentos con reglas de firewall.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">IVS-04</div><div class="ccm-ctrl-name">Hardening de instancias</div><div class="ccm-ctrl-desc">Aplicar configuraciones de hardening (CIS Benchmarks) a todas las instancias cloud. Eliminar servicios, puertos y usuarios innecesarios de las imágenes base.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">IVS-07</div><div class="ccm-ctrl-name">Seguridad de contenedores</div><div class="ccm-ctrl-desc">Escanear imágenes de contenedores en busca de vulnerabilidades y configuraciones inseguras. No ejecutar contenedores como root. Usar políticas de red en Kubernetes.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">IVS-09</div><div class="ccm-ctrl-name">Gestión de capacidad y disponibilidad</div><div class="ccm-ctrl-desc">Monitorizar el uso de recursos y planificar la capacidad para garantizar disponibilidad. Implementar auto-scaling y arquitecturas multi-region para alta disponibilidad.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ccm-row">
+      <div class="ccm-header" onclick="toggleCcm(this)">
+        <span class="ccm-code">LOG</span>
+        <span class="ccm-name">Logging &amp; Monitoring</span>
+        <span class="ccm-count">13 controles</span>
+        <span class="ccm-chevron">▼</span>
+      </div>
+      <div class="ccm-body">
+        <div class="ccm-intro">Registro de actividad, monitoreo de seguridad y gestión de eventos en entornos cloud. Sin visibilidad completa, la detección y respuesta a incidentes es imposible.</div>
+        <div class="ccm-ctrl-grid">
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">LOG-01</div><div class="ccm-ctrl-name">Registro de actividad de APIs cloud</div><div class="ccm-ctrl-desc">Habilitar y retener los logs de actividad de API en todos los servicios cloud (CloudTrail, Activity Log, Cloud Audit Log). Incluir logs de acceso a datos sensibles.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">LOG-05</div><div class="ccm-ctrl-name">Monitoreo de seguridad</div><div class="ccm-ctrl-desc">Implementar monitoreo continuo de seguridad con alertas automáticas para eventos críticos. Definir y documentar las reglas de detección y los umbrales de alerta.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">LOG-09</div><div class="ccm-ctrl-name">Protección de integridad de logs</div><div class="ccm-ctrl-desc">Proteger los logs contra modificación o eliminación. Los logs deben enviarse a un destino inmutable (bucket con Object Lock) separado de los sistemas que generan los logs.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">LOG-11</div><div class="ccm-ctrl-name">Retención de logs</div><div class="ccm-ctrl-desc">Definir y aplicar políticas de retención de logs que cumplan los requisitos regulatorios y de respuesta a incidentes. Mínimo 90 días online; 1 año en archivo para cumplimiento.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ccm-row">
+      <div class="ccm-header" onclick="toggleCcm(this)">
+        <span class="ccm-code">SEF</span>
+        <span class="ccm-name">Security Incident Management, E-Discovery &amp; Cloud Forensics</span>
+        <span class="ccm-count">6 controles</span>
+        <span class="ccm-chevron">▼</span>
+      </div>
+      <div class="ccm-body">
+        <div class="ccm-intro">Gestión de incidentes de seguridad en entornos cloud, incluyendo la recolección de evidencias forenses, el descubrimiento electrónico y la comunicación de incidentes.</div>
+        <div class="ccm-ctrl-grid">
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">SEF-01</div><div class="ccm-ctrl-name">Plan de respuesta a incidentes cloud</div><div class="ccm-ctrl-desc">Desarrollar y mantener un plan de respuesta a incidentes específico para entornos cloud, con playbooks para los escenarios más comunes (cuenta comprometida, bucket público, malware en instancia).</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">SEF-03</div><div class="ccm-ctrl-name">Reporte de incidentes</div><div class="ccm-ctrl-desc">Establecer y seguir el proceso de reporte de incidentes a reguladores, afectados y autoridades según los plazos legales aplicables (Ley 21.663: 3h alerta, 72h informe inicial).</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">SEF-05</div><div class="ccm-ctrl-name">Forense digital cloud</div><div class="ccm-ctrl-desc">Establecer procedimientos de preservación de evidencias en la nube. Conocer las herramientas forenses disponibles en cada proveedor y los procedimientos de adquisición de evidencias cloud.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ccm-row">
+      <div class="ccm-header" onclick="toggleCcm(this)">
+        <span class="ccm-code">STA</span>
+        <span class="ccm-name">Supply Chain Management, Transparency &amp; Accountability</span>
+        <span class="ccm-count">9 controles</span>
+        <span class="ccm-chevron">▼</span>
+      </div>
+      <div class="ccm-body">
+        <div class="ccm-intro">Gestión del riesgo en la cadena de suministro cloud: evaluación de proveedores, acuerdos de servicio, transparencia en las prácticas de seguridad y responsabilidad compartida.</div>
+        <div class="ccm-ctrl-grid">
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">STA-01</div><div class="ccm-ctrl-name">Inventario de proveedores cloud</div><div class="ccm-ctrl-desc">Mantener un inventario actualizado de todos los servicios cloud contratados, incluyendo proveedores de terceros que acceden a los entornos cloud de la organización.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">STA-04</div><div class="ccm-ctrl-name">Revisión de acuerdos de nivel de servicio</div><div class="ccm-ctrl-desc">Revisar y validar que los SLAs del proveedor cloud cumplen los requisitos de disponibilidad, rendimiento y seguridad del negocio. Incluir cláusulas de incidentes y notificación.</div></div>
+          <div class="ccm-ctrl"><div class="ccm-ctrl-id">STA-07</div><div class="ccm-ctrl-name">Evaluación de certificaciones del proveedor</div><div class="ccm-ctrl-desc">Verificar que el proveedor cloud mantiene las certificaciones relevantes (ISO 27001, SOC 2 Type II, PCI DSS, ENS) y que su alcance cubre los servicios contratados.</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ CHECKLIST ══ -->
+<section class="block" id="checklist">
+  <div class="block-label">// Hoja de Ruta Práctica</div>
+  <h2 class="block-title">Checklist de Seguridad Cloud</h2>
+  <p class="block-intro">
+    Controles fundamentales a implementar inmediatamente en cualquier entorno cloud, ordenados por prioridad. Los primeros 6 reducen el 80% del riesgo con el menor esfuerzo.
+  </p>
+
+  <div class="checklist">
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>MFA EN TODAS LAS CUENTAS</strong>Habilitar MFA para todos los usuarios, empezando por las cuentas root/globales y continuando con todos los usuarios con acceso a consola.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>ACTIVAR LOGS Y AUDIT TRAILS</strong>Habilitar CloudTrail / Activity Log / Cloud Audit Log en todos los servicios y regiones. Enviar a destino inmutable separado.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>ELIMINAR ACCESO PÚBLICO ACCIDENTAL</strong>Revisar y corregir buckets de almacenamiento públicos, instancias con IPs públicas innecesarias y puertos SSH/RDP abiertos a 0.0.0.0/0.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>PRINCIPIO DE MÍNIMO PRIVILEGIO IAM</strong>Revisar todos los roles y políticas IAM. Eliminar permisos wildcard (*) y roles de administrador global no justificados.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>CIFRADO EN REPOSO Y TRÁNSITO</strong>Habilitar cifrado en todos los servicios de almacenamiento. Usar TLS 1.2+ en todas las comunicaciones. Rotar claves periódicamente.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>SECRETOS EN VAULT — NO EN CÓDIGO</strong>Mover todas las credenciales hardcodeadas a AWS Secrets Manager / Azure Key Vault / GCP Secret Manager. Escanear repos con TruffleHog.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>CSPM — POSTURE MANAGEMENT ACTIVO</strong>Activar Security Hub / Defender for Cloud / Security Command Center para visibilidad continua del estado de seguridad y detección de misconfiguraciones.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>ALERTAS SOBRE ACTIVIDAD CRÍTICA</strong>Crear alertas para: uso de cuenta root, cambios de IAM, creación de recursos en regiones no usadas, cambios de configuración de seguridad.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>SEPARAR CUENTAS POR ENTORNO</strong>Producción, staging y desarrollo en cuentas/suscripciones separadas. Aplicar Service Control Policies u equivalente para governance centralizado.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>IaC CON ESCANEO DE SEGURIDAD</strong>Todo el código de infraestructura escaneado con Checkov o tfsec antes de aplicarse. Sin recursos cloud creados manualmente en producción.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>INVENTARIO DE ACTIVOS CLOUD ACTUALIZADO</strong>CMDB o CSPM con inventario en tiempo real de todos los recursos cloud en todas las cuentas y regiones. Base del modelo de responsabilidad compartida.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>PLAN DE RESPUESTA A INCIDENTES CLOUD</strong>Playbooks específicos para: cuenta comprometida, bucket público, instancia con malware, exfiltración de datos. Integrar con Ley 21.663 (3h/72h/15d).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HERRAMIENTAS ══ -->
+<section class="block" id="herramientas">
+  <div class="block-label">// Stack de Herramientas Cloud Security</div>
+  <h2 class="block-title">Herramientas Esenciales</h2>
+  <p class="block-intro">
+    Herramientas para evaluar, monitorear y mejorar la seguridad en entornos cloud. Muchas son open-source o tienen tier gratuito suficiente para comenzar.
+  </p>
+
+  <div class="tools-grid">
+    <div class="tool-item">
+      <div class="tool-head"><span class="tool-tag">CSPM</span><span class="tool-name">Prowler</span></div>
+      <div class="tool-desc">Herramienta open-source de evaluación de seguridad para AWS, Azure y GCP. Realiza más de 300 checks contra CIS Benchmarks, NIST, PCI DSS y otros estándares. La más usada para auditorías de seguridad cloud.</div>
+      <div class="tool-badges"><span class="tool-badge">Open-source</span><span class="tool-badge">AWS/Azure/GCP</span><span class="tool-badge">CIS Benchmarks</span></div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-head"><span class="tool-tag">IaC SCAN</span><span class="tool-name">Checkov</span></div>
+      <div class="tool-desc">Escáner de seguridad para código de infraestructura: Terraform, CloudFormation, Kubernetes, Dockerfile. Detecta misconfiguraciones antes del despliegue. Open-source, integrable en CI/CD con una línea.</div>
+      <div class="tool-badges"><span class="tool-badge">Open-source</span><span class="tool-badge">Terraform</span><span class="tool-badge">CI/CD</span></div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-head"><span class="tool-tag">IaC SCAN</span><span class="tool-name">tfsec / Trivy</span></div>
+      <div class="tool-desc">tfsec: análisis estático de seguridad específico para Terraform. Trivy: escáner multi-propósito para imágenes de contenedores, código IaC, sistemas de archivos y repositorios. Ambos open-source.</div>
+      <div class="tool-badges"><span class="tool-badge">Open-source</span><span class="tool-badge">Containers</span><span class="tool-badge">IaC</span></div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-head"><span class="tool-tag">SECRETS</span><span class="tool-name">TruffleHog / GitLeaks</span></div>
+      <div class="tool-desc">Detectan secretos (API keys, contraseñas, tokens cloud) hardcodeados en repositorios git, historial de commits y archivos de configuración. Imprescindibles antes de hacer público cualquier repositorio.</div>
+      <div class="tool-badges"><span class="tool-badge">Open-source</span><span class="tool-badge">Git</span><span class="tool-badge">Pre-commit</span></div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-head"><span class="tool-tag">AUDIT AWS</span><span class="tool-name">ScoutSuite</span></div>
+      <div class="tool-desc">Herramienta de auditoría de seguridad multi-cloud open-source. Genera un informe HTML visual con el estado de seguridad de la cuenta cloud, organizado por servicio y severidad. Ideal para evaluaciones rápidas.</div>
+      <div class="tool-badges"><span class="tool-badge">Open-source</span><span class="tool-badge">Multi-cloud</span><span class="tool-badge">HTML report</span></div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-head"><span class="tool-tag">IAM ANALYSIS</span><span class="tool-name">CloudMapper / Cartography</span></div>
+      <div class="tool-desc">CloudMapper: visualiza la infraestructura AWS en un grafo para identificar recursos expuestos. Cartography: mapea relaciones entre activos cloud para análisis de riesgo y movimiento lateral potencial.</div>
+      <div class="tool-badges"><span class="tool-badge">Open-source</span><span class="tool-badge">Visualización</span><span class="tool-badge">AWS</span></div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-head"><span class="tool-tag">CONTAINER</span><span class="tool-name">Falco</span></div>
+      <div class="tool-desc">Runtime security para contenedores y Kubernetes. Detecta comportamientos anómalos en tiempo real: shell en contenedor, acceso a archivos sensibles, escalada de privilegios. Open-source por Sysdig.</div>
+      <div class="tool-badges"><span class="tool-badge">Open-source</span><span class="tool-badge">Runtime</span><span class="tool-badge">Kubernetes</span></div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-head"><span class="tool-tag">BENCHMARK</span><span class="tool-name">kube-bench</span></div>
+      <div class="tool-desc">Verifica el cumplimiento de los CIS Kubernetes Benchmarks en un clúster en ejecución. Evalúa configuraciones del API server, etcd, kubelet y políticas de red. Imprescindible para hardening de GKE/EKS/AKS.</div>
+      <div class="tool-badges"><span class="tool-badge">Open-source</span><span class="tool-badge">Kubernetes</span><span class="tool-badge">CIS</span></div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-head"><span class="tool-tag">COST+SECURITY</span><span class="tool-name">Steampipe</span></div>
+      <div class="tool-desc">Consulta recursos cloud con SQL. Permite hacer auditorías complejas de seguridad y cumplimiento combinando datos de múltiples servicios y proveedores cloud en una sola consulta SQL.</div>
+      <div class="tool-badges"><span class="tool-badge">Open-source</span><span class="tool-badge">SQL queries</span><span class="tool-badge">Multi-cloud</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ RELACIONES ══ -->
+<section class="block" id="relaciones">
+  <div class="block-label">// Ecosistema Normativo</div>
+  <h2 class="block-title">Relación con Otros Marcos</h2>
+  <p class="block-intro">
+    La seguridad cloud no opera de forma aislada. El CSA CCM mapea directamente con los estándares más importantes, facilitando el cumplimiento simultáneo de múltiples requisitos.
+  </p>
+
+  <div class="rel-grid">
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--accent);">ISO/IEC 27001:2022</div>
+      <div class="rel-name">SGSI en la Nube</div>
+      <div class="rel-how">Los controles del Anexo A de ISO 27001 mapean directamente al CCM de la CSA. El control 5.23 (SI para uso de servicios cloud) de ISO 27001:2022 es el nexo central. El CCM proporciona el detalle técnico operativo que ISO 27001 no especifica para entornos cloud.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--blue);">NIST CSF 2.0</div>
+      <div class="rel-name">Función GOVERN y PROTECT</div>
+      <div class="rel-how">Las subcategorías GV.SC (riesgo de cadena de suministro cloud), PR.IR-01 (redes protegidas) y PR.DS (seguridad de datos) del CSF se implementan con los controles del CCM y los CIS Benchmarks de cada proveedor.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--green);">Zero Trust (NIST SP 800-207)</div>
+      <div class="rel-name">Identidad como Perímetro</div>
+      <div class="rel-how">Los pilares de Identity y Applications de Zero Trust se implementan directamente en la nube con los controles IAM del CCM y los CIS Benchmarks. Cloud es el entorno natural para Zero Trust — todo acceso ya es "remoto".</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--gold);">Ley 21.663 Chile</div>
+      <div class="rel-name">OIV con Infraestructura Cloud</div>
+      <div class="rel-how">Los OIV que operan infraestructura crítica en la nube deben aplicar los controles del CCM y los CIS Benchmarks como parte de su SGSI. El control SEF del CCM se alinea directamente con los plazos de reporte de la Ley 21.663.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--purple);">NIST SP 800-86 (Forense)</div>
+      <div class="rel-name">Forense Digital Cloud</div>
+      <div class="rel-how">El control SEF-05 del CCM y el NISTIR 8006 (Cloud Forensics) extienden el SP 800-86 a entornos cloud. La evidencia cloud (logs de CloudTrail, snapshots) tiene características únicas de recolección y preservación.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--teal);">SOC 2 Type II</div>
+      <div class="rel-name">Trust Service Criteria</div>
+      <div class="rel-how">Los clientes de servicios cloud SaaS frecuentemente requieren a sus proveedores certificación SOC 2 Type II. El CCM de la CSA mapea directamente a los Trust Service Criteria (Security, Availability, Confidentiality) facilitando la preparación para la auditoría.</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /page -->
+
+<footer>
+  <strong>Cloud Security — CIS Benchmarks + CSA Cloud Controls Matrix v4</strong><br>
+  Center for Internet Security · Cloud Security Alliance · NIST SP 800-144<br>
+  <a href="https://www.cisecurity.org/cis-benchmarks" target="_blank">cisecurity.org/cis-benchmarks</a> · <a href="https://cloudsecurityalliance.org/research/cloud-controls-matrix" target="_blank">cloudsecurityalliance.org/ccm</a><br><br>
+  <span style="font-size:.62rem;opacity:.5">Documento educativo. La configuración de seguridad cloud debe adaptarse al contexto específico de cada organización y validarse con expertos certificados (CCSK, CCSP, AWS Security Specialty).</span>
+</footer>
+
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
+
+<script>
+/* ── Scroll reveal ── */
+const ro = new IntersectionObserver(e => {
+  e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); });
+}, { threshold:.06, rootMargin:'0px 0px -40px 0px' });
+document.querySelectorAll('section.block').forEach(el => ro.observe(el));
+
+/* ── Scroll top ── */
+const sb = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', () => sb.classList.toggle('show', window.scrollY > 500));
+
+/* ── Active nav ── */
+const navObs = new IntersectionObserver(e => {
+  e.forEach(x => {
+    if(x.isIntersecting) {
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      const a = document.querySelector(`.nav-link[href="#${x.target.id}"]`);
+      if(a) a.classList.add('active');
+    }
+  });
+}, { threshold:.3 });
+document.querySelectorAll('section.block[id]').forEach(s => navObs.observe(s));
+
+/* ── Tabs ── */
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ── CCM accordion ── */
+function toggleCcm(header) {
+  header.parentElement.classList.toggle('open');
+}
+</script>
+</body>
+</html>

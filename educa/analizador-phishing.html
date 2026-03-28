@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Analiza URLs y mensajes sospechosos con IA. Detecta phishing, estafas y engaños digitales — gratis, sin registro.">
+<title>Analizador de Phishing · Aegis8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="/aegis-nav.js"></script>
+<style>
+:root {
+  --bg:      #07080c;
+  --bg2:     #0d0f17;
+  --surface: #111420;
+  --border:  #1a1f2e;
+  --border2: #222840;
+  --red:     #ff2244;
+  --red-dim: rgba(255,34,68,0.08);
+  --amber:   #f59e0b;
+  --green:   #00ff88;
+  --text:    #e2e8f0;
+  --muted:   #4a5568;
+  --muted2:  #2d3748;
+  --mono:    'IBM Plex Mono', monospace;
+  --disp:    'Bebas Neue', sans-serif;
+  --body:    'DM Sans', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--body);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;padding-top:64px;
+  min-height:100vh;
+}
+
+/* scanlines */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);
+}
+
+/* red glow top */
+body::after{
+  content:'';position:fixed;top:-200px;left:50%;transform:translateX(-50%);
+  width:800px;height:500px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(255,34,68,0.06) 0%,transparent 65%);
+  pointer-events:none;z-index:0;
+}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  padding:5rem 2rem 4rem;
+  text-align:center;
+  max-width:800px;margin:0 auto;
+}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--red);
+  border:1px solid rgba(255,34,68,0.3);
+  padding:0.35rem 1rem;margin-bottom:2rem;
+  background:rgba(255,34,68,0.05);
+  animation:fadeUp 0.5s ease forwards;
+}
+.hero-badge-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--red);
+  box-shadow:0 0 8px rgba(255,34,68,0.8);
+  animation:blink 1.5s step-end infinite;
+}
+@keyframes blink{50%{opacity:0;}}
+
+.hero-title{
+  font-family:var(--disp);
+  font-size:clamp(3.5rem,10vw,8rem);
+  line-height:0.88;letter-spacing:0.02em;
+  text-transform:uppercase;
+  margin-bottom:1.5rem;
+  animation:fadeUp 0.6s ease 0.1s both;
+}
+.hero-title .line-red{color:var(--red);}
+
+.hero-sub{
+  font-size:1.05rem;color:var(--muted);
+  font-weight:300;line-height:1.7;
+  max-width:520px;margin:0 auto 3rem;
+  animation:fadeUp 0.6s ease 0.2s both;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* ── ANALYZER BOX ── */
+.analyzer{
+  position:relative;z-index:1;
+  max-width:800px;margin:0 auto;
+  padding:0 2rem 6rem;
+}
+
+.analyzer-panel{
+  border:1px solid var(--border2);
+  background:var(--bg2);
+  overflow:hidden;
+}
+
+.panel-header{
+  background:var(--surface);
+  border-bottom:1px solid var(--border2);
+  padding:1rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.panel-title{
+  font-family:var(--mono);font-size:0.72rem;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);
+  display:flex;align-items:center;gap:0.75rem;
+}
+.panel-dots{display:flex;gap:0.4rem;}
+.dot{width:10px;height:10px;border-radius:50%;}
+.dot-r{background:#ff5f57;}
+.dot-y{background:#febc2e;}
+.dot-g{background:#28c840;}
+
+.panel-body{padding:2rem;}
+
+/* Input tabs */
+.input-tabs{
+  display:flex;gap:1px;background:var(--border);
+  margin-bottom:1.5rem;
+}
+.tab-btn{
+  flex:1;padding:0.75rem 1rem;
+  font-family:var(--mono);font-size:0.68rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+  border:none;cursor:pointer;
+  background:var(--bg2);color:var(--muted);
+  transition:background 0.2s,color 0.2s;
+}
+.tab-btn.active{background:var(--surface);color:var(--red);}
+.tab-btn:hover:not(.active){color:var(--text);}
+
+.input-label{
+  font-family:var(--mono);font-size:0.65rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:0.75rem;
+  display:block;
+}
+
+.analyzer-input{
+  width:100%;background:var(--surface);
+  border:1.5px solid var(--border2);
+  color:var(--text);font-family:var(--mono);
+  font-size:0.85rem;line-height:1.6;
+  padding:1.25rem;resize:none;
+  outline:none;transition:border-color 0.2s;
+  min-height:120px;
+}
+.analyzer-input:focus{border-color:var(--red);}
+.analyzer-input::placeholder{color:var(--muted);}
+
+.analyze-btn{
+  width:100%;margin-top:1rem;
+  font-family:var(--mono);font-size:0.8rem;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:#fff;background:var(--red);
+  border:none;padding:1.1rem 2rem;
+  cursor:pointer;transition:background 0.2s,transform 0.1s;
+  display:flex;align-items:center;justify-content:center;gap:0.75rem;
+}
+.analyze-btn:hover:not(:disabled){background:#cc1a35;transform:translateY(-1px);}
+.analyze-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+.analyze-btn .btn-icon{font-size:1rem;}
+
+/* Quick examples */
+.examples{
+  margin-top:1.25rem;
+  display:flex;flex-wrap:wrap;gap:0.4rem;
+}
+.example-label{
+  font-family:var(--mono);font-size:0.6rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted2);width:100%;margin-bottom:0.25rem;
+}
+.ex-btn{
+  font-family:var(--mono);font-size:0.62rem;
+  letter-spacing:0.06em;
+  color:var(--muted);border:1px solid var(--border2);
+  background:transparent;padding:0.35rem 0.75rem;
+  cursor:pointer;transition:all 0.2s;text-align:left;
+}
+.ex-btn:hover{color:var(--red);border-color:rgba(255,34,68,0.4);}
+
+/* ── RESULT ── */
+.result{
+  margin-top:1.5rem;
+  border:1px solid var(--border2);
+  display:none;
+}
+.result.show{display:block;}
+
+.result-header{
+  padding:1rem 1.5rem;
+  border-bottom:1px solid var(--border2);
+  display:flex;align-items:center;gap:1rem;
+}
+.verdict-badge{
+  font-family:var(--mono);font-size:0.65rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  padding:0.3rem 0.8rem;font-weight:600;
+}
+.verdict-PELIGROSO{background:rgba(255,34,68,0.15);color:var(--red);border:1px solid rgba(255,34,68,0.4);}
+.verdict-SOSPECHOSO{background:rgba(245,158,11,0.12);color:var(--amber);border:1px solid rgba(245,158,11,0.4);}
+.verdict-SEGURO{background:rgba(0,255,136,0.08);color:var(--green);border:1px solid rgba(0,255,136,0.3);}
+.verdict-INCIERTO{background:rgba(100,116,139,0.15);color:#94a3b8;border:1px solid rgba(100,116,139,0.3);}
+
+.result-body{
+  padding:1.5rem;
+  font-size:0.9rem;line-height:1.8;
+  color:var(--text);
+  white-space:pre-wrap;
+  font-family:var(--body);
+}
+
+/* VirusTotal stats bar */
+.vt-bar{
+  display:none;padding:0.75rem 1.5rem;
+  border-top:1px solid var(--border2);
+  background:rgba(0,0,0,0.2);
+  align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+}
+.vt-bar.show{display:flex;}
+.vt-engines{display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;}
+.vt-pill{
+  font-family:var(--mono);font-size:0.6rem;letter-spacing:0.08em;
+  padding:0.2rem 0.6rem;border-radius:2px;
+}
+.vt-pill.bad {background:rgba(255,34,68,0.15);color:var(--red);border:1px solid rgba(255,34,68,0.3);}
+.vt-pill.warn{background:rgba(245,158,11,0.12);color:var(--amber);border:1px solid rgba(245,158,11,0.3);}
+.vt-pill.ok  {background:rgba(0,255,136,0.08);color:var(--green);border:1px solid rgba(0,255,136,0.2);}
+.vt-pill.dim {background:rgba(100,116,139,0.1);color:#64748b;border:1px solid rgba(100,116,139,0.2);}
+.vt-logo{
+  font-family:var(--mono);font-size:0.55rem;color:#64748b;letter-spacing:0.05em;
+  white-space:nowrap;
+}
+
+/* Typing indicator */
+.typing{
+  display:none;padding:1.5rem;
+  align-items:center;gap:0.75rem;
+}
+.typing.show{display:flex;}
+.typing-label{
+  font-family:var(--mono);font-size:0.65rem;
+  letter-spacing:0.1em;color:var(--muted);
+  text-transform:uppercase;
+}
+.tdots{display:flex;gap:4px;}
+.tdot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--red);opacity:0.4;
+  animation:tdot 1.2s ease-in-out infinite;
+}
+.tdot:nth-child(2){animation-delay:0.2s;}
+.tdot:nth-child(3){animation-delay:0.4s;}
+@keyframes tdot{0%,80%,100%{opacity:0.2;transform:scale(0.8);}40%{opacity:1;transform:scale(1);}}
+
+/* ── INFO STRIP ── */
+.info-strip{
+  position:relative;z-index:1;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  background:var(--bg2);
+  display:grid;grid-template-columns:repeat(3,1fr);
+  max-width:800px;margin:0 auto 5rem;
+}
+.info-item{
+  padding:1.5rem;
+  border-right:1px solid var(--border);
+  text-align:center;
+}
+.info-item:last-child{border-right:none;}
+.info-icon{font-size:1.5rem;margin-bottom:0.5rem;}
+.info-title{
+  font-family:var(--mono);font-size:0.65rem;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--text);margin-bottom:0.3rem;
+}
+.info-desc{font-size:0.78rem;color:var(--muted);line-height:1.5;}
+
+/* footer */
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid var(--border);
+  padding:1.5rem 3rem;
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--mono);font-size:0.62rem;color:var(--muted);
+}
+footer a{color:var(--muted);text-decoration:none;transition:color 0.2s;}
+footer a:hover{color:var(--green);}
+@media(max-width:600px){
+  footer{flex-direction:column;gap:0.75rem;padding:1.5rem;text-align:center;}
+  .info-strip{grid-template-columns:1fr;}
+  .info-item{border-right:none;border-bottom:1px solid var(--border);}
+  .info-item:last-child{border-bottom:none;}
+}
+@keyframes fadeInLogo{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
+</style>
+</head>
+<body data-page="phishing">
+
+<!-- ── BANNER CONSENTIMIENTO COOKIES ── -->
+<style>
+#cookie-banner{
+  position:fixed;bottom:0;left:0;right:0;z-index:9000;
+  background:#0d0f17;border-top:2px solid rgba(255,34,68,.2);
+  padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  box-shadow:0 -8px 32px rgba(0,0,0,.5);font-family:'DM Sans',sans-serif;
+}
+#cookie-banner.hidden{display:none;}
+#cookie-banner .cb-txt{flex:1;min-width:220px;font-size:.84rem;line-height:1.6;color:#4a5568;}
+#cookie-banner .cb-txt strong{color:#e2e8f0;font-weight:400;}
+#cookie-banner .cb-btns{display:flex;gap:10px;flex-shrink:0;}
+#cookie-banner .cb-accept{
+  font-family:'IBM Plex Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;
+  background:#ff2244;color:#fff;border:none;padding:9px 18px;cursor:pointer;}
+#cookie-banner .cb-reject{
+  font-family:'IBM Plex Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;
+  background:transparent;color:#4a5568;border:1px solid rgba(74,85,104,.3);
+  padding:9px 14px;cursor:pointer;}
+</style>
+<div id="cookie-banner">
+  <div class="cb-txt">
+    Usamos <strong>Google Analytics</strong> para mejorar el sitio. No almacena datos personales identificables.
+    Conforme a la Ley 21.719 (Chile).
+  </div>
+  <div class="cb-btns">
+    <button class="cb-accept" onclick="cookieConsent(true)">Aceptar</button>
+    <button class="cb-reject" onclick="cookieConsent(false)">Rechazar</button>
+  </div>
+</div>
+<script>
+(function(){
+  const GA_ID='G-XNJT1V3G6T';
+  const stored=localStorage.getItem('aegis8_cookie_consent');
+  function loadGA(){
+    const s=document.createElement('script');s.async=true;
+    s.src='https://www.googletagmanager.com/gtag/js?id='+GA_ID;
+    document.head.appendChild(s);
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}window.gtag=gtag;
+    gtag('js',new Date());gtag('config',GA_ID,{anonymize_ip:true});
+  }
+  window.cookieConsent=function(accepted){
+    localStorage.setItem('aegis8_cookie_consent',accepted?'accepted':'rejected');
+    document.getElementById('cookie-banner').classList.add('hidden');
+    if(accepted)loadGA();
+  };
+  if(stored==='accepted'){document.getElementById('cookie-banner').classList.add('hidden');loadGA();}
+  else if(stored==='rejected'){document.getElementById('cookie-banner').classList.add('hidden');}
+})();
+</script>
+
+<section class="hero">
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    Detector de Phishing · IA en tiempo real
+  </div>
+  
+    <div style="margin-bottom:20px;opacity:0;animation:fadeInLogo .8s cubic-bezier(.34,1.56,.64,1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="100" height="100" fill="none">
+  <defs>
+    <filter id="ph1" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="ph2" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="ph3" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="phg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f87171"/>
+      <stop offset="50%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+    <linearGradient id="phg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5c842"/>
+      <stop offset="100%" stop-color="#f07830"/>
+    </linearGradient>
+    <radialGradient id="ph-core" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="rgba(239,68,68,0.18)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+    <clipPath id="phc"><path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z"/></clipPath>
+  </defs>
+  <ellipse cx="120" cy="115" rx="88" ry="95" fill="url(#ph-core)" filter="url(#ph2)">
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/>
+  </ellipse>
+  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="#0d1422"/>
+  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="none" stroke="url(#phg)" stroke-width="3">
+    <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite"/>
+  </path>
+  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="none" stroke="#ef4444" stroke-width="3" stroke-dasharray="590" stroke-dashoffset="590" filter="url(#ph1)">
+    <animate attributeName="stroke-dashoffset" from="590" to="0" dur="1.8s" fill="freeze" begin="0.2s" calcMode="spline" keySplines="0.4 0 0.2 1"/>
+  </path>
+  <!-- Fishing rod -->
+  <path d="M80,56 Q96,58 108,72" stroke="url(#phg2)" stroke-width="3" stroke-linecap="round" filter="url(#ph1)">
+    <animate attributeName="stroke-dasharray" values="0 40;40 0" dur="0.4s" fill="freeze" begin="1.2s"/>
+  </path>
+  <!-- Rod handle -->
+  <line x1="68" y1="60" x2="80" y2="56" stroke="url(#phg2)" stroke-width="4" stroke-linecap="round" filter="url(#ph1)">
+    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="1.1s"/>
+  </line>
+  <!-- Fishing line dropping down -->
+  <path d="M108,72 Q114,100 112,130" stroke="rgba(245,200,66,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 6">
+    <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="1.5s" repeatCount="indefinite" begin="2s"/>
+    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="1.8s"/>
+  </path>
+  <!-- Hook at bottom of line -->
+  <path d="M112,130 Q116,140 110,148 Q104,152 108,158" stroke="url(#phg2)" stroke-width="2.5" stroke-linecap="round" fill="none" filter="url(#ph1)">
+    <animate attributeName="stroke-dasharray" values="0 50;50 0" dur="0.4s" fill="freeze" begin="2s"/>
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite" begin="3s"/>
+  </path>
+  <!-- Warning triangle / alert -->
+  <path d="M148,90 L174,135 L122,135 Z" fill="rgba(239,68,68,0.1)" stroke="url(#phg)" stroke-width="2.5" stroke-linejoin="round" filter="url(#ph1)">
+    <animate attributeName="stroke-dasharray" values="0 130;130 0" dur="0.6s" fill="freeze" begin="1.5s"/>
+    <animate attributeName="fill" values="rgba(239,68,68,0.05);rgba(239,68,68,0.18);rgba(239,68,68,0.05)" dur="1.5s" repeatCount="indefinite" begin="3s"/>
+  </path>
+  <!-- Exclamation mark inside triangle -->
+  <line x1="148" y1="103" x2="148" y2="122" stroke="#ef4444" stroke-width="3.5" stroke-linecap="round" filter="url(#ph1)">
+    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.2s"/>
+    <animate attributeName="stroke-opacity" values="0.6;1;0.6" dur="1.5s" repeatCount="indefinite" begin="3.2s"/>
+  </line>
+  <circle cx="148" cy="129" r="2.5" fill="#ef4444" filter="url(#ph1)">
+    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.3s"/>
+    <animate attributeName="r" values="2.5;3.5;2.5" dur="1.5s" repeatCount="indefinite" begin="3.2s"/>
+  </circle>
+  <!-- X mark over hook — "detected/blocked" -->
+  <line x1="68" y1="148" x2="88" y2="168" stroke="#ef4444" stroke-width="3" stroke-linecap="round" filter="url(#ph1)">
+    <animate attributeName="stroke-dasharray" values="0 28;28 0" dur="0.3s" fill="freeze" begin="2.5s"/>
+  </line>
+  <line x1="88" y1="148" x2="68" y2="168" stroke="#ef4444" stroke-width="3" stroke-linecap="round" filter="url(#ph1)">
+    <animate attributeName="stroke-dasharray" values="0 28;28 0" dur="0.3s" fill="freeze" begin="2.6s"/>
+  </line>
+  <!-- Shield glow pulse — alert -->
+  <circle cx="120" cy="115" r="50" fill="none" stroke="rgba(239,68,68,0.1)" stroke-width="2">
+    <animate attributeName="r" values="50;65;50" dur="2s" repeatCount="indefinite" begin="3s"/>
+    <animate attributeName="stroke-opacity" values="0.1;0.02;0.1" dur="2s" repeatCount="indefinite" begin="3s"/>
+  </circle>
+  <!-- Scan, corners, bottom -->
+  <rect x="26" y="0" width="188" height="2" fill="url(#phg)" clip-path="url(#phc)"><animate attributeName="y" from="18" to="212" dur="2.5s" repeatCount="indefinite" begin="3.5s"/><animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.04;0.96;1" dur="2.5s" repeatCount="indefinite" begin="3.5s"/></rect>
+  <polyline points="44,68 44,54 58,54" fill="none" stroke="url(#phg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="stroke-dasharray" values="0 30;30 0" dur="0.3s" fill="freeze" begin="2s"/></polyline>
+  <polyline points="196,68 196,54 182,54" fill="none" stroke="url(#phg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="stroke-dasharray" values="0 30;30 0" dur="0.3s" fill="freeze" begin="2.1s"/></polyline>
+  <circle cx="120" cy="204" r="3.5" fill="#ef4444" filter="url(#ph1)"><animate attributeName="opacity" values="0;1" dur="0.2s" fill="freeze" begin="2s"/><animate attributeName="r" values="3.5;5;3.5" dur="1.5s" repeatCount="indefinite" begin="3.5s"/></circle>
+  <line x1="68" y1="24" x2="172" y2="24" stroke="rgba(248,113,113,0.2)" stroke-width="1" stroke-linecap="round"><animate attributeName="stroke-dasharray" values="0 104;104 0" dur="0.8s" fill="freeze" begin="0.5s"/></line>
+</svg></div>
+    <h1 class="hero-title">
+    ¿ES UN<br><span class="line-red">ENGAÑO?</span>
+  </h1>
+  <p class="hero-sub">
+    Pega una URL sospechosa, un correo o un mensaje de WhatsApp. La IA analiza las señales de phishing y te explica qué hacer — en segundos.
+  </p>
+</section>
+
+<div class="analyzer">
+  <div class="analyzer-panel">
+    <div class="panel-header">
+      <div class="panel-dots">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+      </div>
+      <div class="panel-title">aegis8 — analizador-phishing.tool</div>
+    </div>
+    <div class="panel-body">
+
+      <div class="input-tabs">
+        <button class="tab-btn active" onclick="setTab('url',this)">🔗 URL / Enlace</button>
+        <button class="tab-btn" onclick="setTab('msg',this)">💬 Mensaje / Email</button>
+      </div>
+
+      <label class="input-label" id="inputLabel">Pega el enlace sospechoso</label>
+      <textarea class="analyzer-input" id="analyzerInput"
+        placeholder="https://bancochille-secure.com/verificar-cuenta..."
+        rows="4" maxlength="2000"></textarea>
+
+      <button class="analyze-btn" id="analyzeBtn" onclick="analyze()">
+        <span class="btn-icon">🔍</span>
+        Analizar ahora
+      </button>
+
+      <div class="examples">
+        <span class="example-label">// ejemplos rápidos</span>
+        <button class="ex-btn" onclick="loadEx('url','https://www.banco-santander-chile.verify-account.xyz/login')">URL banco falso</button>
+        <button class="ex-btn" onclick="loadEx('msg','URGENTE: Tu cuenta RUT fue bloqueada. Verifica en: http://bancoestadoo.cl/desbloquear para evitar suspensión.')">SMS banco falso</button>
+        <button class="ex-btn" onclick="loadEx('msg','Hola! Ganaste un iPhone 15. Reclama tu premio en 24h: bit.ly/gana-iphone-cl')">Premio falso</button>
+        <button class="ex-btn" onclick="loadEx('msg','Correo de RRHH: Necesitamos tu RUT y clave SII para actualizar datos. Responde hoy.')">Phishing RRHH</button>
+      </div>
+
+      <div class="typing" id="typing">
+        <div class="tdots">
+          <div class="tdot"></div><div class="tdot"></div><div class="tdot"></div>
+        </div>
+        <span class="typing-label">Analizando señales de phishing...</span>
+      </div>
+
+      <div class="result" id="result">
+        <div class="result-header">
+          <span class="verdict-badge" id="verdictBadge">—</span>
+          <span style="font-family:var(--mono);font-size:0.68rem;color:var(--muted);" id="verdictSummary"></span>
+        </div>
+        <div class="result-body" id="resultBody"></div>
+        <div class="vt-bar" id="vtBar">
+          <div class="vt-engines" id="vtEngines"></div>
+          <span class="vt-logo">verificado con VirusTotal</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="info-strip">
+  <div class="info-item">
+    <div class="info-icon">🔒</div>
+    <div class="info-title">Sin almacenamiento</div>
+    <div class="info-desc">No guardamos lo que pegas. El análisis ocurre en tiempo real y no se registra.</div>
+  </div>
+  <div class="info-item">
+    <div class="info-icon">⚡</div>
+    <div class="info-title">Análisis lingüístico</div>
+    <div class="info-desc">Detecta urgencia artificial, typosquatting, dominios raros y patrones de engaño.</div>
+  </div>
+  <div class="info-item">
+    <div class="info-icon">🇨🇱</div>
+    <div class="info-title">Contexto chileno</div>
+    <div class="info-desc">Entrenado para reconocer patrones de phishing que afectan a bancos y servicios chilenos.</div>
+  </div>
+</div>
+
+<footer>
+  <a href="/">aegis8.org</a>
+  <span>analizador de phishing · gratis · sin registro</span>
+  <a href="/contactos.html">contacto →</a>
+</footer>
+
+<script>
+const WORKER = 'https://aegis8-agent.christianmora705.workers.dev';
+let currentTab = 'url';
+
+function setTab(tab, btn) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const input = document.getElementById('analyzerInput');
+  const label = document.getElementById('inputLabel');
+  if (tab === 'url') {
+    input.placeholder = 'https://bancochille-secure.com/verificar-cuenta...';
+    label.textContent = 'Pega el enlace sospechoso';
+  } else {
+    input.placeholder = 'URGENTE: Tu cuenta fue bloqueada. Haz clic aquí para recuperarla...';
+    label.textContent = 'Pega el mensaje o correo sospechoso';
+  }
+  hideResult();
+}
+
+function loadEx(tab, text) {
+  const tabBtn = document.querySelectorAll('.tab-btn')[tab === 'url' ? 0 : 1];
+  setTab(tab, tabBtn);
+  document.getElementById('analyzerInput').value = text;
+  hideResult();
+}
+
+function hideResult() {
+  document.getElementById('result').classList.remove('show');
+  document.getElementById('vtBar').classList.remove('show');
+  document.getElementById('vtEngines').innerHTML = '';
+}
+
+function escapeHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+async function analyze() {
+  const input = document.getElementById('analyzerInput').value.trim();
+  if (!input) {
+    document.getElementById('analyzerInput').focus();
+    return;
+  }
+
+  const btn = document.getElementById('analyzeBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="btn-icon">⏳</span> Analizando...';
+  document.getElementById('typing').classList.add('show');
+  hideResult();
+
+  const tipo = currentTab === 'url' ? 'URL/enlace' : 'mensaje/correo';
+
+  try {
+    const res = await fetch(WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        page: 'phishing',
+        type: currentTab,
+        messages: [{ role: 'user', content: `Analiza este ${tipo}: ${input}` }]
+      })
+    });
+
+    if (res.status === 429) {
+      document.getElementById('verdictBadge').textContent = 'ESPERA';
+      document.getElementById('verdictBadge').className = 'verdict-badge verdict-INCIERTO';
+      document.getElementById('verdictSummary').textContent = 'Demasiadas solicitudes';
+      document.getElementById('resultBody').textContent = 'Has enviado demasiados análisis seguidos. Espera un momento e intenta de nuevo.';
+      document.getElementById('result').classList.add('show');
+      document.getElementById('typing').classList.remove('show');
+      btn.disabled = false;
+      btn.innerHTML = '<span class="btn-icon">🔍</span> Analizar de nuevo';
+      return;
+    }
+
+    const data = await res.json();
+    const text = data.content?.[0]?.text || 'No se pudo analizar. Intenta de nuevo.';
+
+    // Extract verdict
+    const verdictMatch = text.match(/VEREDICTO:\s*(\w+)/i);
+    const summaryMatch = text.match(/RESUMEN:\s*(.+)/i);
+    const verdict = verdictMatch ? verdictMatch[1].toUpperCase() : 'INCIERTO';
+    const summary = summaryMatch ? summaryMatch[1] : '';
+
+    // Clean text for display - remove the first two lines
+    const cleanText = text.replace(/VEREDICTO:.*\n?/i, '').replace(/RESUMEN:.*\n?/i, '').trim();
+
+    document.getElementById('verdictBadge').textContent = verdict;
+    document.getElementById('verdictBadge').className = 'verdict-badge verdict-' + verdict;
+    document.getElementById('verdictSummary').textContent = summary;
+    document.getElementById('resultBody').textContent = cleanText;
+    document.getElementById('result').classList.add('show');
+
+    // Panel VirusTotal
+    if (data.vt) {
+      const vt = data.vt;
+      const pct = vt.total > 0 ? Math.round((vt.malicious / vt.total) * 100) : 0;
+      document.getElementById('vtEngines').innerHTML =
+        `<span class="vt-pill bad">${vt.malicious} maliciosos</span>` +
+        `<span class="vt-pill warn">${vt.suspicious} sospechosos</span>` +
+        `<span class="vt-pill ok">${vt.harmless} limpios</span>` +
+        `<span class="vt-pill dim">${vt.total} motores · ${pct}% detección</span>`;
+      document.getElementById('vtBar').classList.add('show');
+    }
+
+  } catch(e) {
+    document.getElementById('verdictBadge').textContent = 'ERROR';
+    document.getElementById('verdictBadge').className = 'verdict-badge verdict-INCIERTO';
+    document.getElementById('verdictSummary').textContent = 'No se pudo conectar';
+    document.getElementById('resultBody').textContent = 'Error de conexión. Verifica tu internet e intenta de nuevo.';
+    document.getElementById('result').classList.add('show');
+  }
+
+  document.getElementById('typing').classList.remove('show');
+  btn.disabled = false;
+  btn.innerHTML = '<span class="btn-icon">🔍</span> Analizar de nuevo';
+}
+
+// Enter key on textarea (Ctrl+Enter)
+document.getElementById('analyzerInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) analyze();
+});
+</script>
+</body>
+</html>

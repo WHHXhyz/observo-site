@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIST CSF 2.0 — Guía Completa</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   TOKENS — mismo sistema que ISO 27001/27035
+══════════════════════════════════════════ */
+:root{
+  --bg:      #f5f2ed;
+  --bg2:     #ede9e2;
+  --ink:     #1a1410;
+  --ink2:    #4a3f35;
+  --ink3:    #8a7a6e;
+  --accent:  #c8410a;
+  --accent2: #e8622a;
+  --blue:    #1a4f8c;
+  --green:   #1a6b3c;
+  --gold:    #a07a10;
+  --purple:  #6b2d8b;
+  --teal:    #0e7c7b;
+  --border:  rgba(26,20,16,.1);
+  --card:    rgba(255,255,255,.6);
+  --shadow:  0 2px 20px rgba(26,20,16,.08);
+
+  /* Las 6 funciones del CSF */
+  --gov:  #5a2d82;   /* GOVERN   - púrpura */
+  --id:   #1a4f8c;   /* IDENTIFY - azul */
+  --pr:   #1a6b3c;   /* PROTECT  - verde */
+  --de:   #a07a10;   /* DETECT   - dorado */
+  --rs:   #c8410a;   /* RESPOND  - rojo */
+  --rc:   #0e7c7b;   /* RECOVER  - teal */
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;
+}
+
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.4;
+}
+
+/* ══ HERO ══ */
+.hero{
+  position:relative;z-index:10;
+  background:var(--ink);color:#f5f2ed;
+  padding:80px 40px 64px;overflow:hidden;
+}
+.hero::after{
+  content:'';position:absolute;right:-60px;top:-60px;
+  width:420px;height:420px;border-radius:50%;
+  border:80px solid rgba(200,65,10,.12);pointer-events:none;
+}
+.hero::before{
+  content:'';position:absolute;left:-40px;bottom:-80px;
+  width:280px;height:280px;border-radius:50%;
+  border:50px solid rgba(26,79,140,.08);pointer-events:none;
+}
+.hero-inner{max-width:1080px;margin:0 auto;position:relative;z-index:2;}
+
+.hero-eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  letter-spacing:4px;color:var(--accent2);margin-bottom:20px;
+  opacity:0;animation:fadeUp .6s .1s forwards;
+}
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(3rem,8vw,6.5rem);line-height:.95;
+  color:#f5f2ed;margin-bottom:8px;
+  opacity:0;animation:fadeUp .7s .2s forwards;
+}
+.hero-title em{font-style:italic;color:var(--accent2);}
+.hero-year{
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(1rem,3vw,1.8rem);
+  color:rgba(245,242,237,.35);letter-spacing:6px;
+  margin-bottom:28px;opacity:0;animation:fadeUp .7s .3s forwards;
+}
+.hero-desc{
+  max-width:580px;font-size:1rem;line-height:1.85;
+  color:rgba(245,242,237,.7);margin-bottom:36px;
+  opacity:0;animation:fadeUp .7s .4s forwards;
+}
+.hero-stats{
+  display:flex;flex-wrap:wrap;gap:28px;
+  opacity:0;animation:fadeUp .7s .5s forwards;
+}
+.stat{border-left:2px solid var(--accent);padding-left:14px;}
+.stat-num{font-family:'DM Serif Display',serif;font-size:2rem;color:#f5f2ed;line-height:1;}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(245,242,237,.4);letter-spacing:2px;margin-top:3px;}
+
+/* ══ NAV ══ */
+.main-nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(245,242,237,.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);padding:0 24px;overflow-x:auto;
+}
+.nav-inner{display:flex;gap:0;max-width:1080px;margin:0 auto;white-space:nowrap;}
+.nav-link{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--ink3);text-decoration:none;padding:16px 13px;
+  border-bottom:2px solid transparent;transition:all .2s;text-transform:uppercase;
+}
+.nav-link:hover,.nav-link.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* ══ LAYOUT ══ */
+.page{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+section.block{
+  padding:72px 0 40px;border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s;
+}
+section.block.visible{opacity:1;transform:none;}
+
+.block-label{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:8px;
+}
+.block-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(1.8rem,4vw,2.8rem);color:var(--ink);
+  margin-bottom:20px;line-height:1.2;
+}
+.block-intro{font-size:.97rem;line-height:1.9;color:var(--ink2);max-width:720px;margin-bottom:36px;}
+
+/* ══ HELPERS ══ */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+@media(max-width:680px){.two-col{grid-template-columns:1fr;}}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:720px){.three-col{grid-template-columns:1fr;}}
+
+ol.num-list{counter-reset:li;list-style:none;display:flex;flex-direction:column;gap:10px;}
+.num-list li{display:flex;gap:12px;font-size:.9rem;line-height:1.7;color:var(--ink2);}
+.num-list li::before{
+  content:counter(li);counter-increment:li;
+  display:flex;align-items:center;justify-content:center;
+  min-width:26px;height:26px;background:var(--accent);color:#fff;
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  border-radius:50%;flex-shrink:0;margin-top:2px;
+}
+
+/* ══ CALLOUTS ══ */
+.note{
+  border-left:3px solid var(--gold);background:rgba(160,122,16,.05);
+  padding:14px 18px;border-radius:0 3px 3px 0;
+  font-size:.88rem;line-height:1.75;color:var(--ink2);margin:20px 0;
+}
+.note-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
+.tip{border-left-color:var(--blue);background:rgba(26,79,140,.04);}
+.tip .note-label{color:var(--blue);}
+.warn{border-left-color:var(--accent);background:rgba(200,65,10,.04);}
+.warn .note-label{color:var(--accent);}
+.success{border-left-color:var(--green);background:rgba(26,107,60,.04);}
+.success .note-label{color:var(--green);}
+
+/* ══ BADGE ══ */
+.badge{
+  display:inline-block;font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:1px;padding:3px 9px;border-radius:20px;border:1px solid;
+}
+.b-red   {color:var(--accent);border-color:rgba(200,65,10,.3);background:rgba(200,65,10,.06);}
+.b-blue  {color:var(--blue);  border-color:rgba(26,79,140,.3); background:rgba(26,79,140,.06);}
+.b-green {color:var(--green); border-color:rgba(26,107,60,.3); background:rgba(26,107,60,.06);}
+.b-gold  {color:var(--gold);  border-color:rgba(160,122,16,.3);background:rgba(160,122,16,.06);}
+.b-purple{color:var(--purple);border-color:rgba(107,45,139,.3);background:rgba(107,45,139,.06);}
+.b-teal  {color:var(--teal);  border-color:rgba(14,124,123,.3);background:rgba(14,124,123,.06);}
+.b-new   {color:var(--green); border-color:rgba(26,107,60,.3); background:rgba(26,107,60,.06);}
+
+/* ══════════════════════════════════════════
+   RUEDA DE FUNCIONES (SVG interactivo)
+══════════════════════════════════════════ */
+.wheel-layout{
+  display:grid;grid-template-columns:340px 1fr;gap:40px;align-items:start;
+}
+@media(max-width:780px){.wheel-layout{grid-template-columns:1fr;}}
+
+.wheel-wrap{display:flex;justify-content:center;}
+.wheel-wrap svg{width:100%;max-width:320px;filter:drop-shadow(0 8px 30px rgba(26,20,16,.1));}
+
+.fn-cards{display:flex;flex-direction:column;gap:10px;}
+
+.fn-card{
+  border:1px solid var(--border);border-radius:3px;
+  padding:16px 18px;background:var(--card);
+  cursor:pointer;transition:all .2s;
+  border-left:3px solid transparent;
+}
+.fn-card:hover{box-shadow:var(--shadow);transform:translateX(4px);}
+.fn-card.active{box-shadow:var(--shadow);}
+
+.fn-govern.active {border-left-color:var(--gov);}
+.fn-identify.active{border-left-color:var(--id);}
+.fn-protect.active {border-left-color:var(--pr);}
+.fn-detect.active  {border-left-color:var(--de);}
+.fn-respond.active {border-left-color:var(--rs);}
+.fn-recover.active {border-left-color:var(--rc);}
+
+.fn-card-head{display:flex;align-items:center;gap:12px;}
+.fn-abbr{
+  font-family:'DM Serif Display',serif;font-size:2rem;line-height:1;
+  width:48px;flex-shrink:0;text-align:center;
+}
+.fn-govern  .fn-abbr{color:var(--gov);}
+.fn-identify .fn-abbr{color:var(--id);}
+.fn-protect .fn-abbr{color:var(--pr);}
+.fn-detect  .fn-abbr{color:var(--de);}
+.fn-respond .fn-abbr{color:var(--rs);}
+.fn-recover .fn-abbr{color:var(--rc);}
+
+.fn-name{
+  font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);
+}
+.fn-cats{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;margin-top:2px;}
+
+.fn-body{
+  display:none;margin-top:12px;padding-top:12px;
+  border-top:1px solid var(--border);
+  font-size:.87rem;line-height:1.75;color:var(--ink2);
+}
+.fn-card.active .fn-body{display:block;}
+
+.fn-list{list-style:none;margin-top:8px;display:flex;flex-direction:column;gap:5px;}
+.fn-list li{padding-left:14px;position:relative;font-size:.85rem;color:var(--ink2);}
+.fn-list li::before{content:'→';position:absolute;left:0;color:var(--accent);}
+
+/* ══════════════════════════════════════════
+   TIERS (niveles de madurez)
+══════════════════════════════════════════ */
+.tiers-grid{display:flex;flex-direction:column;gap:3px;}
+
+.tier-row{
+  border:1px solid var(--border);border-radius:3px;
+  background:var(--card);overflow:hidden;
+}
+
+.tier-header{
+  display:flex;align-items:center;gap:16px;
+  padding:16px 20px;cursor:pointer;transition:background .2s;user-select:none;
+}
+.tier-header:hover{background:rgba(26,20,16,.03);}
+.tier-row.open .tier-header{background:rgba(200,65,10,.04);}
+
+.tier-level{
+  font-family:'DM Serif Display',serif;font-size:2.2rem;
+  line-height:1;flex-shrink:0;min-width:36px;
+}
+.tier-1 .tier-level{color:#c0a090;}
+.tier-2 .tier-level{color:var(--gold);}
+.tier-3 .tier-level{color:var(--blue);}
+.tier-4 .tier-level{color:var(--green);}
+
+.tier-info{flex:1;}
+.tier-name{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);}
+.tier-sub{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:2px;margin-top:2px;}
+
+.tier-bar-wrap{display:flex;gap:3px;flex-shrink:0;}
+.tier-bar{width:16px;height:28px;border-radius:2px;border:1px solid var(--border);background:var(--bg2);}
+.tier-1 .tier-bar.filled{background:#c0a090;}
+.tier-2 .tier-bar.filled{background:var(--gold);}
+.tier-3 .tier-bar.filled{background:var(--blue);}
+.tier-4 .tier-bar.filled{background:var(--green);}
+
+.tier-chevron{font-size:.75rem;color:var(--ink3);transition:transform .2s;flex-shrink:0;}
+.tier-row.open .tier-chevron{transform:rotate(180deg);}
+
+.tier-body{
+  display:none;padding:0 20px 20px;
+  border-top:1px solid var(--border);
+}
+.tier-row.open .tier-body{display:block;}
+
+.tier-body-intro{
+  font-size:.88rem;line-height:1.75;color:var(--ink2);
+  margin:14px 0 16px;
+  padding:12px 16px;background:rgba(200,65,10,.04);
+  border-left:2px solid var(--accent);border-radius:0 3px 3px 0;
+}
+
+.tier-dims{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+@media(max-width:680px){.tier-dims{grid-template-columns:1fr;}}
+
+.tier-dim{
+  border:1px solid var(--border);border-radius:3px;
+  padding:14px;background:rgba(255,255,255,.5);
+}
+.tier-dim-name{
+  font-family:'JetBrains Mono',monospace;font-size:.62rem;
+  color:var(--accent);letter-spacing:2px;margin-bottom:6px;
+}
+.tier-dim-desc{font-size:.83rem;line-height:1.65;color:var(--ink2);}
+
+/* ══════════════════════════════════════════
+   FUNCIÓN ACCORDEON (categorías y subcategorías)
+══════════════════════════════════════════ */
+.fn-accordion{display:flex;flex-direction:column;gap:4px;}
+
+.fn-block{
+  border:1px solid var(--border);border-radius:3px;
+  background:var(--card);overflow:hidden;
+}
+
+.fn-block-header{
+  display:flex;align-items:center;gap:14px;
+  padding:18px 20px;cursor:pointer;transition:background .2s;user-select:none;
+}
+.fn-block-header:hover{background:rgba(26,20,16,.03);}
+.fn-block.open .fn-block-header{background:rgba(26,20,16,.04);}
+
+.fn-block-dot{
+  width:14px;height:14px;border-radius:50%;flex-shrink:0;
+}
+.fn-block.gov  .fn-block-dot{background:var(--gov);}
+.fn-block.id   .fn-block-dot{background:var(--id);}
+.fn-block.pr   .fn-block-dot{background:var(--pr);}
+.fn-block.de   .fn-block-dot{background:var(--de);}
+.fn-block.rs   .fn-block-dot{background:var(--rs);}
+.fn-block.rc   .fn-block-dot{background:var(--rc);}
+
+.fn-block-tag{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  letter-spacing:2px;padding:3px 9px;border-radius:20px;border:1px solid;
+  flex-shrink:0;
+}
+.fn-block.gov  .fn-block-tag{color:var(--gov); border-color:rgba(90,45,130,.3); background:rgba(90,45,130,.06);}
+.fn-block.id   .fn-block-tag{color:var(--id);  border-color:rgba(26,79,140,.3); background:rgba(26,79,140,.06);}
+.fn-block.pr   .fn-block-tag{color:var(--pr);  border-color:rgba(26,107,60,.3); background:rgba(26,107,60,.06);}
+.fn-block.de   .fn-block-tag{color:var(--de);  border-color:rgba(160,122,16,.3);background:rgba(160,122,16,.06);}
+.fn-block.rs   .fn-block-tag{color:var(--rs);  border-color:rgba(200,65,10,.3); background:rgba(200,65,10,.06);}
+.fn-block.rc   .fn-block-tag{color:var(--rc);  border-color:rgba(14,124,123,.3);background:rgba(14,124,123,.06);}
+
+.fn-block-name{
+  font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);flex:1;
+}
+.fn-block-count{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  color:var(--ink3);border:1px solid var(--border);padding:3px 8px;border-radius:20px;flex-shrink:0;
+}
+.fn-block-chevron{font-size:.75rem;color:var(--ink3);transition:transform .2s;flex-shrink:0;}
+.fn-block.open .fn-block-chevron{transform:rotate(180deg);}
+
+.fn-block-body{display:none;padding:0 20px 20px;border-top:1px solid var(--border);}
+.fn-block.open .fn-block-body{display:block;}
+
+.fn-block-intro{
+  font-size:.88rem;line-height:1.75;color:var(--ink2);
+  margin:14px 0 16px;padding:12px 16px;
+  background:rgba(26,20,16,.03);
+  border-left:2px solid var(--border);border-radius:0 3px 3px 0;
+}
+
+/* ── Categorías ── */
+.cat-section{margin-bottom:20px;}
+
+.cat-label{
+  font-family:'JetBrains Mono',monospace;font-size:.62rem;
+  letter-spacing:3px;color:var(--ink3);
+  text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;
+  border-bottom:1px solid var(--border);
+}
+
+.cat-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;
+}
+
+.ctrl-item{
+  border:1px solid var(--border);border-radius:3px;
+  padding:14px 16px;background:rgba(255,255,255,.5);
+  transition:border-color .2s,transform .2s;
+}
+.ctrl-item:hover{transform:translateY(-1px);}
+
+.fn-block.gov  .ctrl-item:hover{border-color:rgba(90,45,130,.35);}
+.fn-block.id   .ctrl-item:hover{border-color:rgba(26,79,140,.35);}
+.fn-block.pr   .ctrl-item:hover{border-color:rgba(26,107,60,.35);}
+.fn-block.de   .ctrl-item:hover{border-color:rgba(160,122,16,.35);}
+.fn-block.rs   .ctrl-item:hover{border-color:rgba(200,65,10,.35);}
+.fn-block.rc   .ctrl-item:hover{border-color:rgba(14,124,123,.35);}
+
+.ctrl-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:6px;}
+
+.ctrl-id{
+  font-family:'JetBrains Mono',monospace;font-size:.62rem;
+  padding:2px 6px;border-radius:2px;flex-shrink:0;white-space:nowrap;margin-top:1px;
+}
+.fn-block.gov  .ctrl-id{color:var(--gov); background:rgba(90,45,130,.08);}
+.fn-block.id   .ctrl-id{color:var(--id);  background:rgba(26,79,140,.08);}
+.fn-block.pr   .ctrl-id{color:var(--pr);  background:rgba(26,107,60,.08);}
+.fn-block.de   .ctrl-id{color:var(--de);  background:rgba(160,122,16,.08);}
+.fn-block.rs   .ctrl-id{color:var(--rs);  background:rgba(200,65,10,.08);}
+.fn-block.rc   .ctrl-id{color:var(--rc);  background:rgba(14,124,123,.08);}
+
+.ctrl-name{font-size:.88rem;font-weight:700;color:var(--ink);line-height:1.35;}
+.ctrl-desc{font-size:.82rem;line-height:1.65;color:var(--ink2);}
+
+.ctrl-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px;}
+.ctrl-tag{
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;
+  padding:2px 7px;border-radius:20px;border:1px solid;
+}
+
+/* ══════════════════════════════════════════
+   SEARCH
+══════════════════════════════════════════ */
+.search-wrap{position:relative;margin-bottom:20px;max-width:440px;}
+.search-input{
+  width:100%;font-family:'JetBrains Mono',monospace;font-size:.8rem;
+  padding:10px 16px 10px 40px;border:1px solid var(--border);border-radius:3px;
+  background:var(--card);color:var(--ink);outline:none;transition:border-color .2s;
+}
+.search-input:focus{border-color:var(--accent);}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ink3);font-size:.9rem;pointer-events:none;}
+.hl{background:rgba(200,65,10,.18);border-radius:2px;}
+
+/* ══════════════════════════════════════════
+   PROFILES
+══════════════════════════════════════════ */
+.profiles-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:640px){.profiles-grid{grid-template-columns:1fr;}}
+
+.profile-box{border:1px solid;border-radius:4px;padding:22px;}
+.profile-current{border-color:rgba(160,122,16,.3);background:rgba(160,122,16,.04);}
+.profile-target {border-color:rgba(26,107,60,.3); background:rgba(26,107,60,.04);}
+
+.profile-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.profile-icon{font-size:1.6rem;}
+.profile-title{font-family:'DM Serif Display',serif;font-size:1.2rem;}
+.profile-current .profile-title{color:var(--gold);}
+.profile-target  .profile-title{color:var(--green);}
+.profile-sub{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);}
+
+.profile-desc{font-size:.87rem;line-height:1.75;color:var(--ink2);}
+
+/* ══════════════════════════════════════════
+   COMPARATIVA CSF 1.1 vs 2.0
+══════════════════════════════════════════ */
+.changes-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.changes-table th{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--ink3);font-weight:400;padding:10px 14px;
+  border-bottom:2px solid var(--border);text-align:left;
+}
+.changes-table td{
+  padding:12px 14px;border-bottom:1px solid var(--border);
+  vertical-align:top;line-height:1.65;color:var(--ink2);
+}
+.changes-table tr:hover td{background:rgba(200,65,10,.02);}
+.added  {color:var(--green);font-weight:700;}
+.changed{color:var(--gold);}
+
+/* ══════════════════════════════════════════
+   KPIs
+══════════════════════════════════════════ */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;}
+.kpi-card{
+  border:1px solid var(--border);border-radius:4px;
+  padding:20px;background:var(--card);transition:all .2s;
+}
+.kpi-card:hover{box-shadow:var(--shadow);transform:translateY(-2px);}
+.kpi-area{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;color:var(--ink3);margin-bottom:10px;}
+.kpi-name{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);margin-bottom:6px;}
+.kpi-desc{font-size:.82rem;line-height:1.65;color:var(--ink2);}
+.kpi-formula{
+  margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:.72rem;
+  background:rgba(26,20,16,.05);padding:6px 10px;border-radius:2px;
+  color:var(--accent);line-height:1.5;
+}
+
+/* ══════════════════════════════════════════
+   IMPLEMENTACIÓN STEPS
+══════════════════════════════════════════ */
+.impl-steps{display:flex;flex-direction:column;gap:0;position:relative;}
+.impl-steps::before{
+  content:'';position:absolute;left:28px;top:16px;bottom:16px;
+  width:1px;background:var(--border);
+}
+.impl-step{display:flex;gap:28px;padding:0 0 36px;position:relative;}
+.impl-step:last-child{padding-bottom:0;}
+.step-circle{
+  width:56px;height:56px;border-radius:50%;border:2px solid var(--border);
+  background:var(--bg);display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-family:'DM Serif Display',serif;font-size:1.4rem;
+  color:var(--accent);position:relative;z-index:2;
+}
+.step-content{flex:1;padding-top:10px;}
+.step-title{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);margin-bottom:6px;}
+.step-desc{font-size:.88rem;line-height:1.75;color:var(--ink2);}
+.step-tips{margin-top:10px;list-style:none;display:flex;flex-direction:column;gap:4px;}
+.step-tips li{font-size:.83rem;color:var(--ink2);padding-left:14px;position:relative;line-height:1.6;}
+.step-tips li::before{content:'•';position:absolute;left:0;color:var(--accent);}
+
+/* ══════════════════════════════════════════
+   RELACIONES CON OTROS MARCOS
+══════════════════════════════════════════ */
+.rel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+.rel-item{
+  border:1px solid var(--border);border-radius:4px;
+  padding:20px;background:var(--card);transition:all .2s;
+}
+.rel-item:hover{box-shadow:var(--shadow);}
+.rel-std{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;margin-bottom:8px;font-weight:600;}
+.rel-name{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);margin-bottom:8px;}
+.rel-how{font-size:.83rem;line-height:1.65;color:var(--ink2);}
+
+/* ══════════════════════════════════════════
+   FOOTER / SCROLL
+══════════════════════════════════════════ */
+footer{
+  background:var(--ink);color:rgba(245,242,237,.5);
+  padding:48px 40px;font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;letter-spacing:1px;line-height:2;text-align:center;
+}
+footer strong{color:rgba(245,242,237,.8);}
+footer a{color:var(--accent2);text-decoration:none;}
+
+.scroll-top{
+  position:fixed;bottom:28px;right:28px;z-index:200;
+  background:var(--ink);color:var(--bg);
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  padding:10px 16px;border:none;border-radius:2px;cursor:pointer;
+  transition:all .2s;letter-spacing:2px;opacity:0;pointer-events:none;
+  box-shadow:0 4px 20px rgba(26,20,16,.2);
+}
+.scroll-top.show{opacity:1;pointer-events:auto;}
+.scroll-top:hover{background:var(--accent);}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(16px);}
+  to  {opacity:1;transform:translateY(0);}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">// NIST — National Institute of Standards and Technology · Marco de Ciberseguridad</div>
+    <h1 class="hero-title">NIST<br><em>CSF 2.0</em></h1>
+    <div class="hero-year">CYBERSECURITY FRAMEWORK · VERSIÓN 2.0 · 2024</div>
+    <p class="hero-desc">
+      El marco de ciberseguridad más adoptado del mundo, ahora en su versión 2.0. Guía práctica y completa para entender las 6 funciones, las categorías, subcategorías y cómo implementarlo en cualquier organización.
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Funciones</div></div>
+      <div class="stat"><div class="stat-num">22</div><div class="stat-label">Categorías</div></div>
+      <div class="stat"><div class="stat-num">106</div><div class="stat-label">Subcategorías</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Tiers de Madurez</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ NAV ══ -->
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a class="nav-link" href="#que-es">¿Qué es?</a>
+    <a class="nav-link" href="#funciones">Funciones</a>
+    <a class="nav-link" href="#controles">Controles</a>
+    <a class="nav-link" href="#tiers">Tiers</a>
+    <a class="nav-link" href="#perfiles">Perfiles</a>
+    <a class="nav-link" href="#implementacion">Implementación</a>
+    <a class="nav-link" href="#metricas">Métricas</a>
+    <a class="nav-link" href="#cambios">1.1 vs 2.0</a>
+    <a class="nav-link" href="#relaciones">Relaciones</a>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- ══ QUÉ ES ══ -->
+<section class="block" id="que-es">
+  <div class="block-label">// Fundamentos</div>
+  <h2 class="block-title">¿Qué es el NIST CSF?</h2>
+  <p class="block-intro">
+    El NIST Cybersecurity Framework (CSF) es un conjunto voluntario de estándares, directrices y mejores prácticas desarrollado por el Instituto Nacional de Estándares y Tecnología de EE.UU. para ayudar a las organizaciones a gestionar y reducir el riesgo de ciberseguridad. La versión 2.0, publicada en febrero de 2024, es la actualización más significativa desde su creación en 2014.
+  </p>
+
+  <div class="two-col">
+    <div>
+      <div class="note warn">
+        <div class="note-label">// ¿QUÉ LO DIFERENCIA DE ISO 27001?</div>
+        <strong>ISO 27001</strong> es un estándar certificable que define <em>requisitos</em> para un SGSI formal. <strong>NIST CSF</strong> es un marco voluntario y flexible basado en <em>outcomes</em> deseados, sin certificación oficial. El CSF es más accesible para comenzar; ISO 27001 es más riguroso y externamente verificable.<br><br>
+        <strong>En la práctica:</strong> ambos se usan juntos — el CSF como hoja de ruta estratégica y ISO 27001 como sistema de gestión operativo.
+      </div>
+      <div class="note" style="margin-top:14px;">
+        <div class="note-label">// AUDIENCIA DEL CSF 2.0</div>
+        A diferencia del CSF 1.1, que originalmente apuntaba a infraestructuras críticas, la versión <strong>2.0 es explícitamente para todas las organizaciones</strong>: pequeñas empresas, startups, gobierno, ONGs y grandes corporaciones. El lenguaje se simplificó para ser accesible a líderes de negocio, no solo a técnicos.
+      </div>
+    </div>
+    <div>
+      <div class="block-label" style="margin-bottom:14px;">// ¿Para qué sirve?</div>
+      <ol class="num-list">
+        <li>Establecer un lenguaje común de ciberseguridad entre técnicos, negocio y directivos</li>
+        <li>Evaluar la postura de ciberseguridad actual y definir un objetivo de madurez</li>
+        <li>Identificar y priorizar mejoras con impacto en los riesgos más relevantes</li>
+        <li>Cumplir requisitos legales y contractuales alineando controles con outcomes</li>
+        <li>Comunicar el estado de la ciberseguridad a la dirección y a terceros</li>
+        <li>Integrarse con otros marcos (ISO 27001, COBIT, MITRE ATT&amp;CK, CIS Controls)</li>
+      </ol>
+      <div class="note tip" style="margin-top:16px;">
+        <div class="note-label">// COMPONENTES DEL CSF 2.0</div>
+        El marco tiene tres elementos: <strong>Core</strong> (las 6 funciones con categorías y subcategorías), <strong>Tiers</strong> (4 niveles de madurez) y <strong>Profiles</strong> (estado actual vs. objetivo). Los tres trabajan juntos para estructurar la gestión del riesgo de ciberseguridad.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FUNCIONES ══ -->
+<section class="block" id="funciones">
+  <div class="block-label">// El Core del Framework</div>
+  <h2 class="block-title">Las 6 Funciones del CSF</h2>
+  <p class="block-intro">
+    Las funciones organizan las actividades de ciberseguridad en resultados clave. La novedad de CSF 2.0 es la adición de <strong>GOVERN</strong> como primera función, reconociendo que la ciberseguridad es un riesgo empresarial que debe gestionarse desde la dirección. Haz clic en cada función para ampliar.
+  </p>
+
+  <div class="wheel-layout">
+    <!-- SVG rueda de las 6 funciones -->
+    <div class="wheel-wrap">
+      <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+        <!-- Fondo -->
+        <circle cx="160" cy="160" r="150" fill="#1a1410" opacity=".04"/>
+        <!-- Segmentos - hexágono de 6 -->
+        <!-- GOVERN (top) -->
+        <path d="M160,160 L160,18 A142,142 0 0,1 283,89 Z" fill="#5a2d82" opacity=".85"/>
+        <!-- IDENTIFY -->
+        <path d="M160,160 L283,89 A142,142 0 0,1 283,231 Z" fill="#1a4f8c" opacity=".85"/>
+        <!-- PROTECT -->
+        <path d="M160,160 L283,231 A142,142 0 0,1 160,302 Z" fill="#1a6b3c" opacity=".85"/>
+        <!-- DETECT -->
+        <path d="M160,160 L160,302 A142,142 0 0,1 37,231 Z" fill="#a07a10" opacity=".85"/>
+        <!-- RESPOND -->
+        <path d="M160,160 L37,231 A142,142 0 0,1 37,89 Z" fill="#c8410a" opacity=".85"/>
+        <!-- RECOVER -->
+        <path d="M160,160 L37,89 A142,142 0 0,1 160,18 Z" fill="#0e7c7b" opacity=".85"/>
+        <!-- Centro -->
+        <circle cx="160" cy="160" r="56" fill="#f5f2ed"/>
+        <text x="160" y="154" text-anchor="middle" font-family="DM Serif Display,serif" font-size="11" fill="#1a1410">NIST</text>
+        <text x="160" y="170" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="#8a7a6e" letter-spacing="2">CSF 2.0</text>
+        <!-- Labels -->
+        <text x="190" y="60"  text-anchor="middle" font-family="DM Serif Display,serif" font-size="13" fill="white" opacity=".95">GV</text>
+        <text x="190" y="74"  text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="white" opacity=".7" letter-spacing="1">GOVERN</text>
+        <text x="262" y="162" text-anchor="middle" font-family="DM Serif Display,serif" font-size="13" fill="white" opacity=".95">ID</text>
+        <text x="262" y="176" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="white" opacity=".7" letter-spacing="1">IDENTIFY</text>
+        <text x="234" y="264" text-anchor="middle" font-family="DM Serif Display,serif" font-size="13" fill="white" opacity=".95">PR</text>
+        <text x="234" y="278" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="white" opacity=".7" letter-spacing="1">PROTECT</text>
+        <text x="88" y="278"  text-anchor="middle" font-family="DM Serif Display,serif" font-size="13" fill="white" opacity=".95">DE</text>
+        <text x="88" y="292"  text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="white" opacity=".7" letter-spacing="1">DETECT</text>
+        <text x="56" y="162"  text-anchor="middle" font-family="DM Serif Display,serif" font-size="13" fill="white" opacity=".95">RS</text>
+        <text x="56" y="176"  text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="white" opacity=".7" letter-spacing="1">RESPOND</text>
+        <text x="86" y="62"   text-anchor="middle" font-family="DM Serif Display,serif" font-size="13" fill="white" opacity=".95">RC</text>
+        <text x="86" y="76"   text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="white" opacity=".7" letter-spacing="1">RECOVER</text>
+      </svg>
+    </div>
+
+    <div class="fn-cards">
+
+      <div class="fn-card fn-govern" onclick="toggleFn(this)">
+        <div class="fn-card-head">
+          <div class="fn-abbr">GV</div>
+          <div>
+            <div class="fn-name">Govern — Gobernar <span class="badge b-new">🆕 2.0</span></div>
+            <div class="fn-cats">6 categorías · 39 subcategorías</div>
+          </div>
+        </div>
+        <div class="fn-body">
+          La nueva función del CSF 2.0. Establece el contexto organizativo para las decisiones de ciberseguridad: política, roles, responsabilidades, estrategia de riesgo y supervisión de la cadena de suministro. Responde a la pregunta: <em>¿cómo gestiona la organización su programa de ciberseguridad?</em>
+          <ul class="fn-list">
+            <li>Define las políticas, procesos y procedimientos de ciberseguridad</li>
+            <li>Establece roles y responsabilidades claras (CISO, dirección, empleados)</li>
+            <li>Integra la ciberseguridad en la estrategia de gestión de riesgos empresariales</li>
+            <li>Supervisa el riesgo de la cadena de suministro digital</li>
+            <li>Garantiza la supervisión ejecutiva y del consejo de administración</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="fn-card fn-identify active" onclick="toggleFn(this)">
+        <div class="fn-card-head">
+          <div class="fn-abbr">ID</div>
+          <div>
+            <div class="fn-name">Identify — Identificar</div>
+            <div class="fn-cats">3 categorías · 21 subcategorías</div>
+          </div>
+        </div>
+        <div class="fn-body">
+          Desarrollar comprensión organizacional para gestionar el riesgo de ciberseguridad en sistemas, personas, activos, datos y capacidades. Responde: <em>¿qué tenemos y cuáles son los riesgos?</em>
+          <ul class="fn-list">
+            <li>Inventariar todos los activos físicos y digitales</li>
+            <li>Identificar los riesgos de ciberseguridad para las operaciones del negocio</li>
+            <li>Establecer estrategia de gestión de riesgos y tolerancia al riesgo</li>
+            <li>Evaluar la cadena de suministro y dependencias externas</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="fn-card fn-protect" onclick="toggleFn(this)">
+        <div class="fn-card-head">
+          <div class="fn-abbr">PR</div>
+          <div>
+            <div class="fn-name">Protect — Proteger</div>
+            <div class="fn-cats">5 categorías · 29 subcategorías</div>
+          </div>
+        </div>
+        <div class="fn-body">
+          Desarrollar e implementar salvaguardas para asegurar la entrega de servicios críticos. Limita o contiene el impacto de un evento de ciberseguridad potencial. Responde: <em>¿qué controles implementamos?</em>
+          <ul class="fn-list">
+            <li>Gestión de identidades y control de acceso (IAM, MFA)</li>
+            <li>Concienciación y formación del personal</li>
+            <li>Seguridad de datos (cifrado, DLP, clasificación)</li>
+            <li>Protección de la infraestructura tecnológica (hardening, parches)</li>
+            <li>Resiliencia tecnológica (backups, redundancia)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="fn-card fn-detect" onclick="toggleFn(this)">
+        <div class="fn-card-head">
+          <div class="fn-abbr">DE</div>
+          <div>
+            <div class="fn-name">Detect — Detectar</div>
+            <div class="fn-cats">2 categorías · 8 subcategorías</div>
+          </div>
+        </div>
+        <div class="fn-body">
+          Desarrollar e implementar actividades para identificar la ocurrencia de eventos de ciberseguridad de forma oportuna. Responde: <em>¿cómo sabemos si algo malo está pasando?</em>
+          <ul class="fn-list">
+            <li>Monitoreo continuo de sistemas, redes y activos (SIEM, EDR)</li>
+            <li>Análisis de eventos para detectar anomalías e indicadores de ataque</li>
+            <li>Establecer procesos de detección que mejoran con el tiempo</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="fn-card fn-respond" onclick="toggleFn(this)">
+        <div class="fn-card-head">
+          <div class="fn-abbr">RS</div>
+          <div>
+            <div class="fn-name">Respond — Responder</div>
+            <div class="fn-cats">4 categorías · 17 subcategorías</div>
+          </div>
+        </div>
+        <div class="fn-body">
+          Desarrollar e implementar actividades apropiadas para actuar frente a un incidente de ciberseguridad detectado. Responde: <em>¿qué hacemos cuando ocurre un incidente?</em>
+          <ul class="fn-list">
+            <li>Ejecutar el plan de gestión de incidentes</li>
+            <li>Analizar el incidente para entender su alcance e impacto</li>
+            <li>Contener el incidente y mitigar su propagación</li>
+            <li>Comunicar a las partes interesadas (dirección, reguladores, clientes)</li>
+            <li>Mejorar procesos basándose en las lecciones aprendidas</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="fn-card fn-recover" onclick="toggleFn(this)">
+        <div class="fn-card-head">
+          <div class="fn-abbr">RC</div>
+          <div>
+            <div class="fn-name">Recover — Recuperar</div>
+            <div class="fn-cats">2 categorías · 6 subcategorías</div>
+          </div>
+        </div>
+        <div class="fn-body">
+          Desarrollar e implementar actividades para mantener planes de resiliencia y restaurar capacidades o servicios que se vieron afectados por un incidente. Responde: <em>¿cómo volvemos a la normalidad?</em>
+          <ul class="fn-list">
+            <li>Ejecutar el plan de recuperación para restaurar sistemas y servicios</li>
+            <li>Comunicar los progresos de recuperación a partes interesadas</li>
+            <li>Incorporar lecciones aprendidas para mejorar la resiliencia futura</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTROLES (CATEGORÍAS Y SUBCATEGORÍAS) ══ -->
+<section class="block" id="controles">
+  <div class="block-label">// Core del Framework — Categorías y Subcategorías</div>
+  <h2 class="block-title">Controles por Función</h2>
+  <p class="block-intro">
+    Cada función se divide en <strong>categorías</strong> (resultados específicos de ciberseguridad) y cada categoría en <strong>subcategorías</strong> (actividades o controles concretos). Las subcategorías son los controles técnicos y de gestión a implementar.
+  </p>
+
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="ctrlSearch" placeholder="Buscar control... (ej: identidad, parche, backup, cifrado)" oninput="searchControls(this.value)"/>
+  </div>
+
+  <div class="fn-accordion" id="fnAccordion">
+
+    <!-- ══ GOVERN ══ -->
+    <div class="fn-block gov open" id="fn-gov">
+      <div class="fn-block-header" onclick="toggleBlock(this)">
+        <div class="fn-block-dot"></div>
+        <span class="fn-block-tag">GV · GOVERN</span>
+        <span class="fn-block-name">Gobernar</span>
+        <span class="fn-block-count">6 categorías · 39 subcategorías</span>
+        <span class="fn-block-chevron">▼</span>
+      </div>
+      <div class="fn-block-body">
+        <div class="fn-block-intro">Contexto organizacional para las decisiones de ciberseguridad. La dirección y el consejo deben supervisar activamente la estrategia de ciberseguridad como parte de la gestión del riesgo empresarial.</div>
+
+        <div class="cat-section">
+          <div class="cat-label">GV.OC — Contexto Organizacional</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.OC-01</span><span class="ctrl-name">Misión y mandato</span></div><div class="ctrl-desc">La misión organizacional y las expectativas de los stakeholders se documentan y se usan para tomar decisiones de ciberseguridad.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.OC-02</span><span class="ctrl-name">Contexto interno y externo</span></div><div class="ctrl-desc">Contexto interno (cultura, capacidades) y externo (entorno legal, sector) se comprenden y se usan para priorizar riesgos.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.OC-03</span><span class="ctrl-name">Requisitos legales y regulatorios</span></div><div class="ctrl-desc">Requisitos legales y regulatorios de ciberseguridad (Ley 21.663, GDPR, PCI DSS) se identifican, comprenden y gestionan.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.OC-04</span><span class="ctrl-name">Objetivos del negocio</span></div><div class="ctrl-desc">Los objetivos estratégicos del negocio y el apetito de riesgo de la organización informan las prioridades de ciberseguridad.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.OC-05</span><span class="ctrl-name">Resultados y necesidades de los stakeholders</span></div><div class="ctrl-desc">Las necesidades de ciberseguridad de los stakeholders internos y externos se comprenden e informan las decisiones del programa.</div></div>
+          </div>
+        </div>
+
+        <div class="cat-section">
+          <div class="cat-label">GV.RM — Estrategia de Gestión de Riesgos</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.RM-01</span><span class="ctrl-name">Apetito y tolerancia al riesgo</span></div><div class="ctrl-desc">El apetito al riesgo de ciberseguridad y los umbrales de tolerancia se establecen, comunican y mantienen actualizados por la dirección.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.RM-02</span><span class="ctrl-name">Política de gestión de riesgos</span></div><div class="ctrl-desc">La política de gestión de riesgos de ciberseguridad se establece, aprueba por dirección, comunica y se aplica de forma consistente.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.RM-03</span><span class="ctrl-name">Roles en gestión de riesgos</span></div><div class="ctrl-desc">Los roles y responsabilidades en la gestión de riesgos de ciberseguridad se definen, asignan y comunican a toda la organización.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.RM-04</span><span class="ctrl-name">Riesgos en prioridades estratégicas</span></div><div class="ctrl-desc">Los riesgos de ciberseguridad se integran en las prioridades estratégicas y en la planificación financiera de la organización.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.RM-06</span><span class="ctrl-name">Riesgos cibernéticos en perfil de riesgo</span></div><div class="ctrl-desc">El riesgo de ciberseguridad se incorpora y gestiona dentro del perfil de riesgo empresarial general de la organización.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.RM-07</span><span class="ctrl-name">Oportunidades de negocio y riesgo</span></div><div class="ctrl-desc">La asunción de riesgos de ciberseguridad se evalúa como parte de las decisiones de negocio, incluyendo nuevos productos o mercados.</div></div>
+          </div>
+        </div>
+
+        <div class="cat-section">
+          <div class="cat-label">GV.RR — Roles, Responsabilidades y Autoridades</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.RR-01</span><span class="ctrl-name">Supervisión ejecutiva</span></div><div class="ctrl-desc">El liderazgo de la organización es responsable de las decisiones de ciberseguridad y el consejo supervisa activamente el programa.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.RR-02</span><span class="ctrl-name">Roles y responsabilidades definidos</span></div><div class="ctrl-desc">Roles y responsabilidades de ciberseguridad para la fuerza laboral y líderes se establecen, comunican, entienden y aplican.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.RR-03</span><span class="ctrl-name">Acceso a recursos adecuados</span></div><div class="ctrl-desc">La función de ciberseguridad tiene el acceso a recursos (presupuesto, personal, herramientas) necesarios para cumplir sus objetivos.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.RR-04</span><span class="ctrl-name">Integración con otras áreas</span></div><div class="ctrl-desc">La ciberseguridad se integra en RRHH, legal, finanzas, operaciones y otras funciones empresariales a través de roles y procesos.</div></div>
+          </div>
+        </div>
+
+        <div class="cat-section">
+          <div class="cat-label">GV.PO — Políticas, Procesos y Procedimientos</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.PO-01</span><span class="ctrl-name">Política de ciberseguridad</span></div><div class="ctrl-desc">La política de ciberseguridad se establece, aprueba por dirección, se comunica y se mantiene actualizada con revisión periódica.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.PO-02</span><span class="ctrl-name">Procesos de ciberseguridad</span></div><div class="ctrl-desc">Procesos de ciberseguridad se establecen, se consideran mejores prácticas y se mejoran continuamente para cumplir los objetivos.</div></div>
+          </div>
+        </div>
+
+        <div class="cat-section">
+          <div class="cat-label">GV.OV — Supervisión</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.OV-01</span><span class="ctrl-name">Revisión del desempeño del programa</span></div><div class="ctrl-desc">Los resultados de ciberseguridad se revisan por líderes para identificar oportunidades de mejora y comunicar el estado a dirección.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.OV-02</span><span class="ctrl-name">Efectividad del programa</span></div><div class="ctrl-desc">Las actividades y resultados del programa de ciberseguridad se evalúan para informar y ajustar la estrategia de ciberseguridad.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.OV-03</span><span class="ctrl-name">Alineación organizacional</span></div><div class="ctrl-desc">Los resultados de ciberseguridad se comunican y se alinean con la estrategia organizacional y los objetivos de negocio.</div></div>
+          </div>
+        </div>
+
+        <div class="cat-section">
+          <div class="cat-label">GV.SC — Riesgo de la Cadena de Suministro</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.SC-01</span><span class="ctrl-name">Programa de gestión de riesgos en cadena de suministro</span></div><div class="ctrl-desc">Un programa para gestionar riesgos de ciberseguridad en la cadena de suministro se establece, aprueba y comunica.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.SC-02</span><span class="ctrl-name">Requisitos a proveedores</span></div><div class="ctrl-desc">Los requisitos de ciberseguridad para proveedores, clientes y socios se establecen, comunican y verifican periódicamente.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.SC-03</span><span class="ctrl-name">Integración en prácticas organizacionales</span></div><div class="ctrl-desc">La gestión de riesgos de la cadena de suministro se integra en los procesos de adquisición, contratos y gestión de proveedores.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.SC-04</span><span class="ctrl-name">Proveedores críticos identificados</span></div><div class="ctrl-desc">Los proveedores, clientes y socios que son críticos se identifican, priorizan y se les aplican controles adicionales.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.SC-05</span><span class="ctrl-name">Requisitos incorporados en contratos</span></div><div class="ctrl-desc">Requisitos de ciberseguridad se incluyen en contratos y acuerdos con proveedores para establecer responsabilidades claras.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.SC-07</span><span class="ctrl-name">Evaluación avanzada de proveedores</span></div><div class="ctrl-desc">Actividades de garantía (auditorías, certificaciones, evaluaciones) se realizan con proveedores críticos de forma regular.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">GV.SC-09</span><span class="ctrl-name">Seguimiento del desempeño de proveedores</span></div><div class="ctrl-desc">El desempeño de ciberseguridad de los proveedores se monitoriza y se revisa periódicamente para detectar riesgos emergentes.</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ IDENTIFY ══ -->
+    <div class="fn-block id" id="fn-id">
+      <div class="fn-block-header" onclick="toggleBlock(this)">
+        <div class="fn-block-dot"></div>
+        <span class="fn-block-tag">ID · IDENTIFY</span>
+        <span class="fn-block-name">Identificar</span>
+        <span class="fn-block-count">3 categorías · 21 subcategorías</span>
+        <span class="fn-block-chevron">▼</span>
+      </div>
+      <div class="fn-block-body">
+        <div class="fn-block-intro">Desarrollar comprensión del contexto para gestionar el riesgo en sistemas, personas, activos, datos y capacidades. No puedes proteger lo que no conoces.</div>
+
+        <div class="cat-section">
+          <div class="cat-label">ID.AM — Gestión de Activos</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.AM-01</span><span class="ctrl-name">Inventario de activos físicos</span></div><div class="ctrl-desc">Los activos de hardware (servidores, endpoints, dispositivos de red, IoT) se inventarían con datos de ubicación, dueño y criticidad.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.AM-02</span><span class="ctrl-name">Inventario de activos software</span></div><div class="ctrl-desc">Las plataformas de software, aplicaciones y servicios se inventarían (CMDB) y se mantiene actualizado el ciclo de vida de cada uno.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.AM-03</span><span class="ctrl-name">Flujos de datos y comunicaciones</span></div><div class="ctrl-desc">Las comunicaciones y flujos de datos organizacionales se mapean para entender dónde reside y cómo se mueve la información.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.AM-04</span><span class="ctrl-name">Activos en entornos externos</span></div><div class="ctrl-desc">Los activos en entornos externos (nube, proveedores, socios) se identifican y se incluyen en el inventario y gestión de riesgos.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.AM-05</span><span class="ctrl-name">Recursos priorizados por criticidad</span></div><div class="ctrl-desc">Los recursos (hardware, software, datos, servicios) se priorizan según su criticidad para los objetivos del negocio y la misión.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.AM-07</span><span class="ctrl-name">Inventario de datos</span></div><div class="ctrl-desc">Los datos se inventarían con metadatos de clasificación (confidencial, público, sensible), propietario y requisitos de protección.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.AM-08</span><span class="ctrl-name">Inventario de sistemas y servicios</span></div><div class="ctrl-desc">Los sistemas, servicios y capacidades digitales se identifican, documentan y se mantiene su relación con los procesos de negocio.</div></div>
+          </div>
+        </div>
+
+        <div class="cat-section">
+          <div class="cat-label">ID.RA — Evaluación de Riesgos</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.RA-01</span><span class="ctrl-name">Vulnerabilidades identificadas</span></div><div class="ctrl-desc">Las vulnerabilidades en activos se identifican, validan y registran (escaneo de vulnerabilidades, análisis de código, pentest).</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.RA-02</span><span class="ctrl-name">Inteligencia de amenazas</span></div><div class="ctrl-desc">Información de amenazas cibernéticas se obtiene de fuentes internas y externas (ISACs, CSIRT, threat intel feeds) y se analiza.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.RA-03</span><span class="ctrl-name">Amenazas identificadas</span></div><div class="ctrl-desc">Las amenazas internas y externas relevantes para la organización se identifican, documentan y comunican a las partes afectadas.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.RA-04</span><span class="ctrl-name">Impactos potenciales evaluados</span></div><div class="ctrl-desc">Los posibles impactos en el negocio y la probabilidad de las amenazas identificadas se evalúan y priorizan en el registro de riesgos.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.RA-05</span><span class="ctrl-name">Amenazas, vulnerabilidades y probabilidades correlacionadas</span></div><div class="ctrl-desc">Las amenazas, vulnerabilidades, probabilidades e impactos se correlacionan para determinar y documentar los riesgos de ciberseguridad.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.RA-06</span><span class="ctrl-name">Riesgos priorizados</span></div><div class="ctrl-desc">Los riesgos de ciberseguridad se priorizan de forma consistente con el apetito al riesgo de la organización para informar las decisiones.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.RA-07</span><span class="ctrl-name">Cambios y excepciones gestionados</span></div><div class="ctrl-desc">Los cambios y las excepciones a los procesos se gestionan, incluyendo el análisis de riesgos de ciberseguridad de los cambios.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.RA-08</span><span class="ctrl-name">Proceso de recepción de reportes de vulnerabilidades</span></div><div class="ctrl-desc">Se establece un proceso para recibir, analizar y responder a reportes de vulnerabilidades de investigadores y stakeholders externos.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.RA-09</span><span class="ctrl-name">Autenticidad e integridad del hardware/software</span></div><div class="ctrl-desc">La autenticidad e integridad del hardware y software se verifican antes de su adquisición, uso y despliegue en los sistemas.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.RA-10</span><span class="ctrl-name">Riesgos evaluados periódicamente</span></div><div class="ctrl-desc">Los riesgos de ciberseguridad se evalúan y actualizan de forma periódica y cuando ocurren cambios significativos en el entorno.</div></div>
+          </div>
+        </div>
+
+        <div class="cat-section">
+          <div class="cat-label">ID.IM — Mejoras</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.IM-01</span><span class="ctrl-name">Mejoras basadas en evaluaciones</span></div><div class="ctrl-desc">Las mejoras al programa de ciberseguridad se identifican a partir de evaluaciones (auditorías, ejercicios, revisiones post-incidente).</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.IM-02</span><span class="ctrl-name">Mejoras de pruebas y ejercicios</span></div><div class="ctrl-desc">Las mejoras se identifican mediante pruebas y ejercicios (simulacros, tabletop exercises, pruebas de penetración periódicas).</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.IM-03</span><span class="ctrl-name">Mejoras de ejecución de procesos</span></div><div class="ctrl-desc">Las mejoras a los procesos de ciberseguridad se identifican y comparten con las partes relevantes para su implementación.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">ID.IM-04</span><span class="ctrl-name">Plan de mejora del programa</span></div><div class="ctrl-desc">Un plan de mejora del programa de ciberseguridad se establece, priorizando las acciones de mayor impacto en la reducción de riesgos.</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ PROTECT ══ -->
+    <div class="fn-block pr" id="fn-pr">
+      <div class="fn-block-header" onclick="toggleBlock(this)">
+        <div class="fn-block-dot"></div>
+        <span class="fn-block-tag">PR · PROTECT</span>
+        <span class="fn-block-name">Proteger</span>
+        <span class="fn-block-count">5 categorías · 29 subcategorías</span>
+        <span class="fn-block-chevron">▼</span>
+      </div>
+      <div class="fn-block-body">
+        <div class="fn-block-intro">Implementar salvaguardas para asegurar la entrega de servicios críticos. Es la función con más controles técnicos: gestión de acceso, seguridad de datos, hardening y resiliencia.</div>
+
+        <div class="cat-section">
+          <div class="cat-label">PR.AA — Gestión de Identidad, Autenticación y Control de Acceso</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.AA-01</span><span class="ctrl-name">Identidades y credenciales gestionadas</span></div><div class="ctrl-desc">Las identidades y credenciales de usuarios, dispositivos y servicios se crean, gestionan y eliminan de forma controlada (IAM/IdP).</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.AA-02</span><span class="ctrl-name">Identidades verificadas</span></div><div class="ctrl-desc">Las identidades se verifican antes de conceder acceso a recursos físicos y lógicos. Se implementa MFA para accesos críticos.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.AA-03</span><span class="ctrl-name">Usuarios, dispositivos y servicios autenticados</span></div><div class="ctrl-desc">Los usuarios, dispositivos y otros activos se autentican según políticas definidas (contraseñas fuertes, certificados, biometría, MFA).</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.AA-04</span><span class="ctrl-name">Credenciales protegidas</span></div><div class="ctrl-desc">Las credenciales de autenticación se protegen durante su creación, almacenamiento, uso y eliminación (vault, hashing seguro).</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.AA-05</span><span class="ctrl-name">Acceso concedido según mínimo privilegio</span></div><div class="ctrl-desc">El acceso a activos se autoriza aplicando principio de mínimo privilegio y necesidad de conocer. Se revisan los permisos periódicamente.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.AA-06</span><span class="ctrl-name">Acceso físico gestionado</span></div><div class="ctrl-desc">El acceso físico a activos se gestiona, monitoreando y verificando que solo personas autorizadas acceden a instalaciones y equipos.</div></div>
+          </div>
+        </div>
+
+        <div class="cat-section">
+          <div class="cat-label">PR.AT — Concienciación y Formación</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.AT-01</span><span class="ctrl-name">Todo el personal formado</span></div><div class="ctrl-desc">La fuerza laboral recibe formación en concienciación de ciberseguridad incluyendo temas de phishing, ingeniería social e higiene digital.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.AT-02</span><span class="ctrl-name">Personal con roles privilegiados formado</span></div><div class="ctrl-desc">El personal con acceso privilegiado (admins, CISO, equipo de seguridad) recibe formación adicional y especializada en sus responsabilidades.</div></div>
+          </div>
+        </div>
+
+        <div class="cat-section">
+          <div class="cat-label">PR.DS — Seguridad de Datos</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.DS-01</span><span class="ctrl-name">Datos en reposo protegidos</span></div><div class="ctrl-desc">Los datos almacenados se protegen mediante cifrado, control de acceso y otras medidas según su clasificación y sensibilidad.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.DS-02</span><span class="ctrl-name">Datos en tránsito protegidos</span></div><div class="ctrl-desc">Los datos en tránsito se protegen mediante cifrado (TLS 1.3, VPN, HTTPS) y controles de integridad para prevenir intercepción.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.DS-10</span><span class="ctrl-name">Datos en uso protegidos</span></div><div class="ctrl-desc">Los datos en uso (en memoria, en procesamiento) se protegen contra acceso no autorizado mediante controles de aislamiento y segmentación.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.DS-11</span><span class="ctrl-name">Copias de seguridad realizadas</span></div><div class="ctrl-desc">Se realizan, protegen y prueban periódicamente copias de seguridad de datos y configuraciones conforme a la política de backup (3-2-1).</div></div>
+          </div>
+        </div>
+
+        <div class="cat-section">
+          <div class="cat-label">PR.PS — Seguridad de Plataformas</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.PS-01</span><span class="ctrl-name">Configuraciones basadas en políticas</span></div><div class="ctrl-desc">Las configuraciones de TI/OT se establecen, aplican y mantienen acordes a políticas de seguridad (baselines de hardening, CIS Benchmarks).</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.PS-02</span><span class="ctrl-name">Software mantenido actualizado</span></div><div class="ctrl-desc">El software (SO, aplicaciones, firmware) se gestiona y mantiene para prevenir la explotación de vulnerabilidades conocidas (patch management).</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.PS-03</span><span class="ctrl-name">Hardware gestionado</span></div><div class="ctrl-desc">El hardware se gestiona a lo largo de su ciclo de vida (adquisición, operación, eliminación segura) según políticas documentadas.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.PS-04</span><span class="ctrl-name">Registros de auditoría generados</span></div><div class="ctrl-desc">Se generan, protegen y retienen logs de auditoría de actividades en sistemas para soportar la detección de incidentes y el análisis forense.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.PS-05</span><span class="ctrl-name">Instalación de software controlada</span></div><div class="ctrl-desc">La instalación de software se controla mediante listas blancas, políticas de aprobación y herramientas de gestión de software.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.PS-06</span><span class="ctrl-name">Código seguro desarrollado y revisado</span></div><div class="ctrl-desc">El código seguro se desarrolla e integra en prácticas de software (SSDLC, OWASP, revisión de código, SAST/DAST en pipelines CI/CD).</div></div>
+          </div>
+        </div>
+
+        <div class="cat-section">
+          <div class="cat-label">PR.IR — Gestión de Tecnología de Resiliencia de Infraestructura</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.IR-01</span><span class="ctrl-name">Redes y entornos protegidos</span></div><div class="ctrl-desc">Las redes y entornos se protegen mediante segmentación, firewalls, DMZ y controles de acceso a red para limitar el impacto de incidentes.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.IR-02</span><span class="ctrl-name">Tecnología diseñada para seguridad</span></div><div class="ctrl-desc">La infraestructura tecnológica se gestiona de modo que incorpora principios de resiliencia (redundancia, failover, alta disponibilidad).</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.IR-03</span><span class="ctrl-name">Capacidades de contención disponibles</span></div><div class="ctrl-desc">Los mecanismos de contención (aislamiento de red, cuarentena de endpoint) se implementan y se prueban para responder a incidentes.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">PR.IR-04</span><span class="ctrl-name">Capacidad de respuesta adecuada</span></div><div class="ctrl-desc">La capacidad de respuesta se mantiene y verifica para asegurar que los recursos necesarios estén disponibles durante un incidente activo.</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ DETECT ══ -->
+    <div class="fn-block de" id="fn-de">
+      <div class="fn-block-header" onclick="toggleBlock(this)">
+        <div class="fn-block-dot"></div>
+        <span class="fn-block-tag">DE · DETECT</span>
+        <span class="fn-block-name">Detectar</span>
+        <span class="fn-block-count">2 categorías · 8 subcategorías</span>
+        <span class="fn-block-chevron">▼</span>
+      </div>
+      <div class="fn-block-body">
+        <div class="fn-block-intro">Identificar la ocurrencia de eventos de ciberseguridad de forma oportuna. Cuanto antes se detecta un incidente, menor es el daño. El MTTD (tiempo de detección) es la métrica clave de esta función.</div>
+
+        <div class="cat-section">
+          <div class="cat-label">DE.CM — Monitoreo Continuo</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">DE.CM-01</span><span class="ctrl-name">Redes monitoreadas para detectar eventos adversos</span></div><div class="ctrl-desc">Las redes y los sistemas de comunicación se monitorizan para detectar eventos adversos (IDS/IPS, NetFlow, análisis de tráfico).</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">DE.CM-02</span><span class="ctrl-name">Entorno físico monitoreado</span></div><div class="ctrl-desc">El entorno físico (accesos, instalaciones, hardware) se monitorea para detectar accesos no autorizados o alteraciones (CCTV, alarmas).</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">DE.CM-03</span><span class="ctrl-name">Actividad del personal monitoreada</span></div><div class="ctrl-desc">La actividad del personal y la tecnología se monitorean para detectar eventos de ciberseguridad potenciales respetando el marco legal.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">DE.CM-06</span><span class="ctrl-name">Actividad de proveedores externos monitoreada</span></div><div class="ctrl-desc">La actividad de proveedores externos con acceso a los sistemas se monitorea para detectar comportamientos potencialmente adversos.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">DE.CM-09</span><span class="ctrl-name">Tecnología de cómputo monitoreada</span></div><div class="ctrl-desc">El hardware, software y los sistemas de cómputo se monitorean con herramientas EDR, SIEM y monitoreo de integridad de archivos (FIM).</div></div>
+          </div>
+        </div>
+
+        <div class="cat-section">
+          <div class="cat-label">DE.AE — Análisis de Eventos Adversos</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">DE.AE-02</span><span class="ctrl-name">Anomalías analizadas para determinar si son adversas</span></div><div class="ctrl-desc">Los eventos observados se analizan para entender técnicas de ataque, alcance y severidad usando threat intelligence y correlación.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">DE.AE-03</span><span class="ctrl-name">Información de múltiples fuentes correlacionada</span></div><div class="ctrl-desc">La información de múltiples fuentes (logs, alertas, inteligencia externa, reportes de usuarios) se correlaciona para detectar incidentes.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">DE.AE-06</span><span class="ctrl-name">Información sobre incidentes disponible para autoridades</span></div><div class="ctrl-desc">La información sobre incidentes se pone a disposición de las partes autorizadas para soportar la respuesta y el análisis forense.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">DE.AE-07</span><span class="ctrl-name">Datos de inteligencia de amenazas correlacionados</span></div><div class="ctrl-desc">La inteligencia de amenazas (IOCs, TTPs de atacantes) se correlaciona con los eventos observados para mejorar la detección.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">DE.AE-08</span><span class="ctrl-name">Incidentes declarados</span></div><div class="ctrl-desc">Los incidentes se declaran cuando se determina que un evento adverso cumple los criterios del esquema de clasificación definido.</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ RESPOND ══ -->
+    <div class="fn-block rs" id="fn-rs">
+      <div class="fn-block-header" onclick="toggleBlock(this)">
+        <div class="fn-block-dot"></div>
+        <span class="fn-block-tag">RS · RESPOND</span>
+        <span class="fn-block-name">Responder</span>
+        <span class="fn-block-count">4 categorías · 17 subcategorías</span>
+        <span class="fn-block-chevron">▼</span>
+      </div>
+      <div class="fn-block-body">
+        <div class="fn-block-intro">Actuar de forma apropiada frente a incidentes detectados. Una respuesta bien planificada y ejecutada limita el daño y reduce el tiempo de recuperación. Aquí vive la integración con ISO 27035.</div>
+
+        <div class="cat-section">
+          <div class="cat-label">RS.MA — Gestión de Incidentes</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RS.MA-01</span><span class="ctrl-name">Plan de respuesta ejecutado</span></div><div class="ctrl-desc">El plan de respuesta a incidentes se ejecuta durante o después de un incidente con los procesos y procedimientos documentados.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RS.MA-02</span><span class="ctrl-name">Incidentes clasificados</span></div><div class="ctrl-desc">Los incidentes se clasifican según su tipo e impacto para priorizar la respuesta y escalar adecuadamente (P1-P4 según severidad).</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RS.MA-03</span><span class="ctrl-name">Incidentes clasificados de forma consistente</span></div><div class="ctrl-desc">Los incidentes se categorizan de forma consistente usando esquemas de clasificación acordados con las partes interesadas.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RS.MA-04</span><span class="ctrl-name">Incidentes escalados</span></div><div class="ctrl-desc">Los incidentes se escalan o comparten siguiendo criterios predefinidos cuando el impacto supera la capacidad interna o implica a terceros.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RS.MA-05</span><span class="ctrl-name">Criterios de cierre documentados</span></div><div class="ctrl-desc">Los criterios para declarar el cierre de un incidente se establecen y aplican de forma consistente, incluyendo verificación de remediación.</div></div>
+          </div>
+        </div>
+
+        <div class="cat-section">
+          <div class="cat-label">RS.AN — Análisis de Incidentes</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RS.AN-03</span><span class="ctrl-name">Análisis realizado para establecer qué ocurrió</span></div><div class="ctrl-desc">El análisis forense establece causa raíz, línea de tiempo, alcance y datos afectados para entender completamente el incidente.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RS.AN-06</span><span class="ctrl-name">Acciones realizadas documentadas</span></div><div class="ctrl-desc">Las acciones realizadas durante el incidente se documentan con timestamps para soportar análisis post-incidente y requisitos legales.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RS.AN-07</span><span class="ctrl-name">Causa raíz identificada</span></div><div class="ctrl-desc">La causa raíz del incidente se identifica usando metodologías como 5 Whys o Ishikawa para prevenir la recurrencia.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RS.AN-08</span><span class="ctrl-name">Contexto del incidente documentado</span></div><div class="ctrl-desc">El contexto del incidente (sistemas afectados, impacto en negocio, datos comprometidos) se documenta de forma completa y precisa.</div></div>
+          </div>
+        </div>
+
+        <div class="cat-section">
+          <div class="cat-label">RS.CO — Comunicación de Incidentes</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RS.CO-02</span><span class="ctrl-name">Partes internas notificadas</span></div><div class="ctrl-desc">Las partes internas (dirección, equipos afectados, legal, RRHH) son notificadas del incidente usando canales de comunicación predefinidos.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RS.CO-03</span><span class="ctrl-name">Información compartida con partes autorizadas</span></div><div class="ctrl-desc">La información del incidente se comparte de forma coherente con las partes autorizadas externas (CSIRT, reguladores, socios).</div></div>
+          </div>
+        </div>
+
+        <div class="cat-section">
+          <div class="cat-label">RS.MI — Mitigación de Incidentes</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RS.MI-01</span><span class="ctrl-name">Incidentes contenidos</span></div><div class="ctrl-desc">Los incidentes se contienen para evitar su propagación: aislamiento de sistemas afectados, bloqueo de cuentas, segmentación de red.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RS.MI-02</span><span class="ctrl-name">Incidentes erradicados</span></div><div class="ctrl-desc">Los componentes maliciosos se eliminan de los sistemas afectados: malware, backdoors, cuentas comprometidas, configuraciones alteradas.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RS.MI-03</span><span class="ctrl-name">Vulnerabilidades mitigadas</span></div><div class="ctrl-desc">Las vulnerabilidades explotadas se mitigan o aceptan formalmente con justificación documentada como riesgo residual controlado.</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ RECOVER ══ -->
+    <div class="fn-block rc" id="fn-rc">
+      <div class="fn-block-header" onclick="toggleBlock(this)">
+        <div class="fn-block-dot"></div>
+        <span class="fn-block-tag">RC · RECOVER</span>
+        <span class="fn-block-name">Recuperar</span>
+        <span class="fn-block-count">2 categorías · 6 subcategorías</span>
+        <span class="fn-block-chevron">▼</span>
+      </div>
+      <div class="fn-block-body">
+        <div class="fn-block-intro">Restaurar las capacidades o servicios afectados por un incidente. El objetivo es volver a la normalidad operacional y mejorar la resiliencia para el futuro.</div>
+
+        <div class="cat-section">
+          <div class="cat-label">RC.RP — Ejecución del Plan de Recuperación</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RC.RP-01</span><span class="ctrl-name">Plan de recuperación ejecutado</span></div><div class="ctrl-desc">El plan de recuperación se ejecuta durante o después de un incidente para restaurar los sistemas y servicios afectados.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RC.RP-02</span><span class="ctrl-name">Estrategia de recuperación ejecutada</span></div><div class="ctrl-desc">La estrategia de recuperación (restauración de backups, failover, reconfiguración) se ejecuta siguiendo los procedimientos documentados.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RC.RP-03</span><span class="ctrl-name">Integridad de sistemas verificada</span></div><div class="ctrl-desc">La integridad y la seguridad de los sistemas recuperados se verifica antes de restaurar las operaciones normales.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RC.RP-04</span><span class="ctrl-name">Capacidades críticas restauradas</span></div><div class="ctrl-desc">Las capacidades y los servicios críticos del negocio se restauran en el orden establecido en el plan de recuperación (RTO/RPO).</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RC.RP-05</span><span class="ctrl-name">Estado de recuperación comunicado</span></div><div class="ctrl-desc">El estado del progreso de recuperación se comunica periódicamente a las partes interesadas internas y externas.</div></div>
+          </div>
+        </div>
+
+        <div class="cat-section">
+          <div class="cat-label">RC.CO — Comunicación de Recuperación</div>
+          <div class="cat-grid">
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RC.CO-03</span><span class="ctrl-name">Comunicación de recuperación coordinada</span></div><div class="ctrl-desc">Las actividades de recuperación se coordinan con las partes internas y externas relevantes, incluyendo los equipos de comunicación de crisis.</div></div>
+            <div class="ctrl-item"><div class="ctrl-head"><span class="ctrl-id">RC.CO-04</span><span class="ctrl-name">Actualizaciones de recuperación públicas</span></div><div class="ctrl-desc">Las actualizaciones públicas (si aplica) sobre el estado de recuperación se emiten de forma transparente y coherente con la comunicación interna.</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /fn-accordion -->
+</section>
+
+<!-- ══ TIERS ══ -->
+<section class="block" id="tiers">
+  <div class="block-label">// Niveles de Madurez</div>
+  <h2 class="block-title">Los 4 Tiers del CSF</h2>
+  <p class="block-intro">
+    Los Tiers describen el grado en que las prácticas de gestión de riesgo de ciberseguridad de una organización exhiben las características del framework. <strong>No son niveles de madurez a alcanzar secuencialmente</strong> — cada organización debe elegir el Tier apropiado según su perfil de riesgo y recursos.
+  </p>
+
+  <div class="tiers-grid">
+
+    <div class="tier-row tier-1" onclick="toggleTier(this)">
+      <div class="tier-header">
+        <div class="tier-level">1</div>
+        <div class="tier-info">
+          <div class="tier-name">Parcial</div>
+          <div class="tier-sub">// PARTIAL</div>
+        </div>
+        <div class="tier-bar-wrap">
+          <div class="tier-bar filled"></div>
+          <div class="tier-bar"></div>
+          <div class="tier-bar"></div>
+          <div class="tier-bar"></div>
+        </div>
+        <span class="tier-chevron">▼</span>
+      </div>
+      <div class="tier-body">
+        <div class="tier-body-intro">Las prácticas de gestión de riesgos de ciberseguridad no son formalizadas y el riesgo se gestiona de forma ad-hoc y reactiva. La conciencia del riesgo puede ser limitada a nivel organizacional.</div>
+        <div class="tier-dims">
+          <div class="tier-dim">
+            <div class="tier-dim-name">GESTIÓN DE RIESGOS</div>
+            <div class="tier-dim-desc">Las prácticas de riesgo de ciberseguridad no están formalizadas. El riesgo se gestiona de forma irregular, sin procesos documentados ni criterios consistentes.</div>
+          </div>
+          <div class="tier-dim">
+            <div class="tier-dim-name">PROGRAMA INTEGRADO</div>
+            <div class="tier-dim-desc">Conciencia limitada del riesgo de ciberseguridad a nivel organizacional. La ciberseguridad se gestiona de forma aislada, sin integrarse con los objetivos del negocio.</div>
+          </div>
+          <div class="tier-dim">
+            <div class="tier-dim-name">PARTICIPACIÓN EXTERNA</div>
+            <div class="tier-dim-desc">La organización no comprende su papel en el ecosistema más amplio. El intercambio de información con terceros es inconsistente o inexistente.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tier-row tier-2" onclick="toggleTier(this)">
+      <div class="tier-header">
+        <div class="tier-level">2</div>
+        <div class="tier-info">
+          <div class="tier-name">Informado por Riesgo</div>
+          <div class="tier-sub">// RISK INFORMED</div>
+        </div>
+        <div class="tier-bar-wrap">
+          <div class="tier-bar filled"></div>
+          <div class="tier-bar filled"></div>
+          <div class="tier-bar"></div>
+          <div class="tier-bar"></div>
+        </div>
+        <span class="tier-chevron">▼</span>
+      </div>
+      <div class="tier-body">
+        <div class="tier-body-intro">Las prácticas de gestión de riesgos son aprobadas por la dirección pero no están establecidas como política en toda la organización. La priorización se hace con conciencia del riesgo pero no siempre de forma consistente.</div>
+        <div class="tier-dims">
+          <div class="tier-dim">
+            <div class="tier-dim-name">GESTIÓN DE RIESGOS</div>
+            <div class="tier-dim-desc">Las prioridades de ciberseguridad se basan en el riesgo pero no se establecen como política formal. La gestión del riesgo se aplica en algunas áreas pero no universalmente.</div>
+          </div>
+          <div class="tier-dim">
+            <div class="tier-dim-name">PROGRAMA INTEGRADO</div>
+            <div class="tier-dim-desc">Hay cierta conciencia del riesgo en toda la organización, pero los procesos y programas aún no integran completamente la ciberseguridad como riesgo empresarial.</div>
+          </div>
+          <div class="tier-dim">
+            <div class="tier-dim-name">PARTICIPACIÓN EXTERNA</div>
+            <div class="tier-dim-desc">La organización comprende su rol en el ecosistema. Colabora informalmente con terceros cuando se identifican riesgos pero sin procesos formales.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tier-row tier-3 open" onclick="toggleTier(this)">
+      <div class="tier-header">
+        <div class="tier-level">3</div>
+        <div class="tier-info">
+          <div class="tier-name">Repetible</div>
+          <div class="tier-sub">// REPEATABLE</div>
+        </div>
+        <div class="tier-bar-wrap">
+          <div class="tier-bar filled"></div>
+          <div class="tier-bar filled"></div>
+          <div class="tier-bar filled"></div>
+          <div class="tier-bar"></div>
+        </div>
+        <span class="tier-chevron">▼</span>
+      </div>
+      <div class="tier-body">
+        <div class="tier-body-intro">Las prácticas de gestión del riesgo de ciberseguridad se formalizan y se expresan como políticas. La organización actualiza regularmente sus prácticas en respuesta a cambios en los requisitos de negocio, amenazas y tecnología. Este es el nivel objetivo recomendado para la mayoría de organizaciones.</div>
+        <div class="tier-dims">
+          <div class="tier-dim">
+            <div class="tier-dim-name">GESTIÓN DE RIESGOS</div>
+            <div class="tier-dim-desc">Las políticas de riesgo de ciberseguridad se definen, implementan y revisan. La organización responde de forma consistente y actualiza sus prácticas ante cambios en el entorno.</div>
+          </div>
+          <div class="tier-dim">
+            <div class="tier-dim-name">PROGRAMA INTEGRADO</div>
+            <div class="tier-dim-desc">La política de ciberseguridad, los procesos y los procedimientos se establecen para toda la organización y se integran con la gestión de riesgos empresariales.</div>
+          </div>
+          <div class="tier-dim">
+            <div class="tier-dim-name">PARTICIPACIÓN EXTERNA</div>
+            <div class="tier-dim-desc">La organización comprende formalmente su papel en el ecosistema y comparte y recibe información de forma sistemática con socios, CSIRT y pares del sector.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tier-row tier-4" onclick="toggleTier(this)">
+      <div class="tier-header">
+        <div class="tier-level">4</div>
+        <div class="tier-info">
+          <div class="tier-name">Adaptativo</div>
+          <div class="tier-sub">// ADAPTIVE</div>
+        </div>
+        <div class="tier-bar-wrap">
+          <div class="tier-bar filled"></div>
+          <div class="tier-bar filled"></div>
+          <div class="tier-bar filled"></div>
+          <div class="tier-bar filled"></div>
+        </div>
+        <span class="tier-chevron">▼</span>
+      </div>
+      <div class="tier-body">
+        <div class="tier-body-intro">La organización adapta activamente sus prácticas de ciberseguridad basándose en lecciones aprendidas e indicadores predictivos derivados de las actividades de ciberseguridad anteriores y actuales. Típico de organizaciones maduras con equipos de seguridad dedicados y SOC.</div>
+        <div class="tier-dims">
+          <div class="tier-dim">
+            <div class="tier-dim-name">GESTIÓN DE RIESGOS</div>
+            <div class="tier-dim-desc">La organización adapta activamente su programa en base a inteligencia de amenazas, métricas propias y análisis predictivo. Las mejoras son continuas y medibles.</div>
+          </div>
+          <div class="tier-dim">
+            <div class="tier-dim-name">PROGRAMA INTEGRADO</div>
+            <div class="tier-dim-desc">La ciberseguridad se integra completamente como parte de la cultura y estrategia empresarial. La dirección y el consejo participan activamente en las decisiones de riesgo.</div>
+          </div>
+          <div class="tier-dim">
+            <div class="tier-dim-name">PARTICIPACIÓN EXTERNA</div>
+            <div class="tier-dim-desc">La organización contribuye activamente al ecosistema de seguridad: comparte inteligencia de amenazas, participa en ISACs y colabora con autoridades y sector.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="note" style="margin-top:20px;">
+    <div class="note-label">// TIER ADECUADO PARA TU ORGANIZACIÓN</div>
+    El Tier ideal <strong>no es necesariamente el más alto</strong>. Una PyME que provee servicios no críticos puede operar perfectamente en Tier 2. Una OIV bajo la Ley 21.663 debe aspirar al menos a Tier 3. Alcanzar Tier 4 requiere inversión sostenida y es apropiado solo si el perfil de riesgo y los recursos lo justifican.
+  </div>
+</section>
+
+<!-- ══ PERFILES ══ -->
+<section class="block" id="perfiles">
+  <div class="block-label">// Herramienta de Gestión</div>
+  <h2 class="block-title">Perfiles del CSF</h2>
+  <p class="block-intro">
+    Un Perfil representa el alineamiento de las funciones, categorías y subcategorías del CSF con los requisitos de negocio, la tolerancia al riesgo y los recursos de la organización. El análisis de la brecha entre el <strong>Perfil Actual</strong> y el <strong>Perfil Objetivo</strong> guía el plan de mejora.
+  </p>
+
+  <div class="profiles-grid">
+    <div class="profile-box profile-current">
+      <div class="profile-head">
+        <div class="profile-icon">📍</div>
+        <div>
+          <div class="profile-title">Perfil Actual</div>
+          <div class="profile-sub">// CURRENT PROFILE</div>
+        </div>
+      </div>
+      <div class="profile-desc">
+        Describe los outcomes de ciberseguridad que la organización <strong>actualmente logra</strong>. Se construye evaluando qué subcategorías del CSF se implementan y en qué medida. Es un retrato honesto del estado presente, sin aspiraciones.
+        <br><br>
+        <strong>Cómo construirlo:</strong> Para cada subcategoría del Core, evaluar si está implementada (sí/no/parcial), documentar la evidencia existente y asignar una valoración del nivel de implementación actual.
+      </div>
+    </div>
+    <div class="profile-box profile-target">
+      <div class="profile-head">
+        <div class="profile-icon">🎯</div>
+        <div>
+          <div class="profile-title">Perfil Objetivo</div>
+          <div class="profile-sub">// TARGET PROFILE</div>
+        </div>
+      </div>
+      <div class="profile-desc">
+        Describe los outcomes que la organización <strong>desea lograr</strong> basándose en sus objetivos de negocio, apetito al riesgo, recursos disponibles y requisitos regulatorios. Define el estado futuro deseado.
+        <br><br>
+        <strong>Cómo construirlo:</strong> Identificar qué subcategorías son prioritarias según los riesgos más altos, los requisitos regulatorios (ISO 27001, Ley 21.663) y la estrategia del negocio. No todas deben alcanzar el mismo nivel.
+      </div>
+    </div>
+  </div>
+
+  <div class="note tip" style="margin-top:16px;">
+    <div class="note-label">// ANÁLISIS DE BRECHA (GAP ANALYSIS)</div>
+    La diferencia entre el Perfil Actual y el Perfil Objetivo es el <strong>Gap de ciberseguridad</strong>. Este gap se prioriza según el riesgo e impacto de cada subcategoría y se convierte en el <strong>Plan de Acción</strong> con actividades, responsables, plazos y recursos. El análisis de brecha es el punto de partida de cualquier proyecto de mejora de ciberseguridad basado en el CSF.
+  </div>
+</section>
+
+<!-- ══ IMPLEMENTACIÓN ══ -->
+<section class="block" id="implementacion">
+  <div class="block-label">// Hoja de Ruta</div>
+  <h2 class="block-title">Cómo Implementar el NIST CSF 2.0</h2>
+  <p class="block-intro">
+    El NIST define un proceso de implementación de 7 pasos para adoptar el CSF. No es un proyecto lineal de una sola vez, sino un ciclo de mejora continua que se repite anualmente o ante cambios significativos.
+  </p>
+
+  <div class="impl-steps">
+    <div class="impl-step">
+      <div class="step-circle">1</div>
+      <div class="step-content">
+        <div class="step-title">Alcance y Priorización</div>
+        <div class="step-desc">Determinar qué parte de la organización, procesos y sistemas entrará en el alcance del programa basado en el CSF. Identificar los activos y servicios más críticos para el negocio.</div>
+        <ul class="step-tips">
+          <li>Definir el alcance: toda la organización, una unidad de negocio o un sistema específico</li>
+          <li>Identificar las funciones del negocio más críticas y los activos que las soportan</li>
+          <li>Involucrar a la alta dirección desde el principio — GV.RR-01 exige su participación</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="impl-step">
+      <div class="step-circle">2</div>
+      <div class="step-content">
+        <div class="step-title">Contexto Organizacional (GV.OC)</div>
+        <div class="step-desc">Comprender el entorno de la organización: su misión, objetivos estratégicos, requisitos legales aplicables, stakeholders clave y apetito al riesgo. Corresponde directamente a la función GOVERN.</div>
+        <ul class="step-tips">
+          <li>Documentar la misión y los objetivos del negocio</li>
+          <li>Mapear los requisitos legales y regulatorios aplicables (Ley 21.663, ISO 27001, PCI DSS…)</li>
+          <li>Establecer el apetito al riesgo con aprobación formal de la dirección</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="impl-step">
+      <div class="step-circle">3</div>
+      <div class="step-content">
+        <div class="step-title">Crear el Perfil Actual</div>
+        <div class="step-desc">Evaluar el estado actual de los controles de ciberseguridad mapeando las prácticas existentes contra las subcategorías del CSF. Usar el resultado de auditorías, evaluaciones de riesgo y revisiones de controles como insumo.</div>
+        <ul class="step-tips">
+          <li>Realizar una evaluación de controles existentes por subcategoría (implementado/parcial/no implementado)</li>
+          <li>Documentar las evidencias que soportan cada evaluación</li>
+          <li>Ser honesto — un Perfil Actual inflado lleva a un plan de mejora inadecuado</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="impl-step">
+      <div class="step-circle">4</div>
+      <div class="step-content">
+        <div class="step-title">Evaluación de Riesgos (ID.RA)</div>
+        <div class="step-desc">Identificar las amenazas relevantes, evaluar su probabilidad e impacto sobre los activos críticos, y priorizar los riesgos según el apetito definido. Esta evaluación informa el Perfil Objetivo.</div>
+        <ul class="step-tips">
+          <li>Usar metodología consistente: MAGERIT, OCTAVE, NIST SP 800-30 o propia</li>
+          <li>Considerar fuentes de inteligencia externas: CSIRT Nacional, ISACs, advisories de proveedores</li>
+          <li>Documentar todos los riesgos en un registro formal con propietario asignado</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="impl-step">
+      <div class="step-circle">5</div>
+      <div class="step-content">
+        <div class="step-title">Crear el Perfil Objetivo</div>
+        <div class="step-desc">Definir el estado deseado seleccionando las subcategorías del CSF a implementar o mejorar, priorizadas según los riesgos identificados, los requisitos regulatorios y los recursos disponibles.</div>
+        <ul class="step-tips">
+          <li>Priorizar las subcategorías que reducen los riesgos más altos identificados en el paso anterior</li>
+          <li>Asegurarse de incluir todas las subcategorías requeridas por regulaciones aplicables</li>
+          <li>El Perfil Objetivo debe ser ambicioso pero alcanzable con los recursos disponibles</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="impl-step">
+      <div class="step-circle">6</div>
+      <div class="step-content">
+        <div class="step-title">Análisis de Brecha y Plan de Acción</div>
+        <div class="step-desc">Comparar el Perfil Actual contra el Perfil Objetivo para identificar las brechas. Priorizar las brechas según su impacto en el riesgo y crear un plan de acción con actividades, responsables, fechas y costos.</div>
+        <ul class="step-tips">
+          <li>Calcular el gap para cada subcategoría: Objetivo − Actual = Acción requerida</li>
+          <li>Ordenar las acciones por impacto en reducción de riesgo vs. costo y esfuerzo</li>
+          <li>El plan de acción debe tener KPIs de avance medibles para reportar a dirección</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="impl-step">
+      <div class="step-circle">7</div>
+      <div class="step-content">
+        <div class="step-title">Implementar, Medir y Mejorar</div>
+        <div class="step-desc">Ejecutar el plan de acción, medir el progreso con métricas definidas y revisar periódicamente los perfiles para actualizar el ciclo. El CSF es un proceso continuo, no un proyecto con fecha de fin.</div>
+        <ul class="step-tips">
+          <li>Revisar los Perfiles al menos anualmente o ante cambios significativos en negocio o amenazas</li>
+          <li>Reportar el progreso a la alta dirección con indicadores visuales claros (dashboard de madurez)</li>
+          <li>Documentar las lecciones aprendidas y usarlas para mejorar el programa (ID.IM-01)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MÉTRICAS ══ -->
+<section class="block" id="metricas">
+  <div class="block-label">// Evaluación del Programa</div>
+  <h2 class="block-title">Métricas para Medir el Programa CSF</h2>
+  <p class="block-intro">
+    El CSF enfatiza la medición del desempeño como parte de GOVERN y de la mejora continua. Estos KPIs permiten demostrar el valor del programa y comunicarlo a la dirección.
+  </p>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-area">GOVERN — Programa</div>
+      <div class="kpi-name">Cobertura del Perfil CSF</div>
+      <div class="kpi-desc">Porcentaje de subcategorías del Perfil Objetivo que están actualmente implementadas. Indica el progreso hacia el estado deseado.</div>
+      <div class="kpi-formula">% cobertura = subcategorías_implementadas / subcategorías_objetivo × 100</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">IDENTIFY — Activos</div>
+      <div class="kpi-name">Completitud del inventario</div>
+      <div class="kpi-desc">Porcentaje de activos críticos que están correctamente inventariados y tienen propietario asignado en el CMDB.</div>
+      <div class="kpi-formula">% inv. = activos_inventariados / activos_detectados × 100<br>Objetivo: &gt; 95%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">IDENTIFY — Riesgos</div>
+      <div class="kpi-name">Riesgos mitigados en plazo</div>
+      <div class="kpi-desc">Porcentaje de riesgos clasificados como altos o críticos que tienen un plan de tratamiento activo con avance dentro del plazo comprometido.</div>
+      <div class="kpi-formula">% = riesgos_tratados_en_plazo / riesgos_altos × 100</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">PROTECT — Acceso</div>
+      <div class="kpi-name">Cobertura de MFA</div>
+      <div class="kpi-desc">Porcentaje de cuentas con acceso a sistemas críticos que tienen autenticación multifactor activa. Uno de los controles de mayor impacto.</div>
+      <div class="kpi-formula">% MFA = cuentas_con_MFA / cuentas_criticas × 100<br>Objetivo: 100%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">PROTECT — Plataformas</div>
+      <div class="kpi-name">Tiempo promedio de parcheo</div>
+      <div class="kpi-desc">Tiempo promedio desde la publicación de un CVE crítico hasta su aplicación en producción. Indica la agilidad del programa de gestión de vulnerabilidades.</div>
+      <div class="kpi-formula">MTTP_crítico = Σ(fecha_parche − fecha_CVE) / n<br>Objetivo: &lt; 15 días</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">DETECT — Monitoreo</div>
+      <div class="kpi-name">MTTD (Tiempo de detección)</div>
+      <div class="kpi-desc">Tiempo promedio desde que ocurre un incidente hasta que es detectado. Benchmark global: 197 días. Con buen SIEM/EDR: meta &lt; 24h para incidentes P1.</div>
+      <div class="kpi-formula">MTTD = Σ(hora_detección − hora_inicio) / n<br>Objetivo: &lt; 24 horas</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">RESPOND — Incidentes</div>
+      <div class="kpi-name">MTTR (Tiempo de respuesta)</div>
+      <div class="kpi-desc">Tiempo promedio desde la detección de un incidente hasta su contención. Indica la capacidad operativa de respuesta del equipo de seguridad.</div>
+      <div class="kpi-formula">MTTR = Σ(hora_contención − hora_detección) / n<br>P1 objetivo: &lt; 4 horas</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">RECOVER — Continuidad</div>
+      <div class="kpi-name">Éxito de pruebas de backup</div>
+      <div class="kpi-desc">Porcentaje de pruebas de restauración de backup que se completan exitosamente dentro del RTO definido. Un backup no probado no existe.</div>
+      <div class="kpi-formula">% éxito = restauraciones_ok / pruebas_totales × 100<br>Objetivo: 100%</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CAMBIOS 1.1 vs 2.0 ══ -->
+<section class="block" id="cambios">
+  <div class="block-label">// Evolución del Estándar</div>
+  <h2 class="block-title">CSF 1.1 vs CSF 2.0 — ¿Qué cambió?</h2>
+  <p class="block-intro">
+    La versión 2.0, publicada en febrero de 2024, es la actualización más significativa del framework desde su creación en 2014. Los cambios reflejan 10 años de aprendizaje y la evolución del panorama de amenazas.
+  </p>
+
+  <table class="changes-table">
+    <thead>
+      <tr>
+        <th>ASPECTO</th>
+        <th>CSF 1.1 (2018)</th>
+        <th>CSF 2.0 (2024)</th>
+        <th>IMPACTO</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Funciones</strong></td>
+        <td>5 funciones (ID, PR, DE, RS, RC)</td>
+        <td class="added">6 funciones (+ GV: Govern)</td>
+        <td>GOVERN reconoce que la ciberseguridad es riesgo empresarial que requiere gobernanza ejecutiva activa</td>
+      </tr>
+      <tr>
+        <td><strong>Audiencia</strong></td>
+        <td>Principalmente infraestructuras críticas</td>
+        <td class="added">Todas las organizaciones, todos los tamaños y sectores</td>
+        <td>El lenguaje se simplificó para ser accesible a líderes de negocio, no solo a técnicos</td>
+      </tr>
+      <tr>
+        <td><strong>Subcategorías</strong></td>
+        <td>108 subcategorías</td>
+        <td class="changed">106 subcategorías (consolidadas y reorganizadas)</td>
+        <td>Se eliminaron duplicidades y se mejoraron las redacciones para mayor claridad en los outcomes</td>
+      </tr>
+      <tr>
+        <td><strong>Cadena de suministro</strong></td>
+        <td>Cubierta de forma limitada</td>
+        <td class="added">GV.SC — categoría dedicada con 9 subcategorías</td>
+        <td>Responde al crecimiento de los ataques a la cadena de suministro (SolarWinds, Log4Shell, XZ Utils)</td>
+      </tr>
+      <tr>
+        <td><strong>Perfiles comunitarios</strong></td>
+        <td>No existían formalmente</td>
+        <td class="added">Perfiles comunitarios predefinidos por sector</td>
+        <td>Facilita la adopción: sectores como salud, finanzas o gobierno tienen perfiles de partida listos para usar</td>
+      </tr>
+      <tr>
+        <td><strong>Guías de implementación</strong></td>
+        <td>Documentación de referencia básica</td>
+        <td class="added">Quick Start Guides por tipo de organización</td>
+        <td>Guías específicas para PyMEs, empresas sin equipo de seguridad dedicado y para actualizar desde v1.1</td>
+      </tr>
+      <tr>
+        <td><strong>Herramienta de referencia</strong></td>
+        <td>Documentos PDF estáticos</td>
+        <td class="added">CSF 2.0 Reference Tool interactiva (online)</td>
+        <td>Permite filtrar subcategorías, mapear a otros frameworks (ISO 27001, NIST 800-53, CIS) y exportar</td>
+      </tr>
+      <tr>
+        <td><strong>Énfasis en medición</strong></td>
+        <td>Menciones generales a métricas</td>
+        <td class="added">Mayor énfasis en outcomes medibles y KPIs</td>
+        <td>Alinea el CSF con las expectativas de la dirección de demostrar el ROI de la inversión en seguridad</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══ RELACIONES ══ -->
+<section class="block" id="relaciones">
+  <div class="block-label">// Ecosistema de Marcos</div>
+  <h2 class="block-title">Relación con Otros Estándares</h2>
+  <p class="block-intro">
+    El CSF 2.0 está diseñado para integrarse con otros marcos. No compite con ISO 27001 o CIS Controls — los complementa. La herramienta de referencia online del NIST incluye mappings directos entre el CSF y estos frameworks.
+  </p>
+
+  <div class="rel-grid">
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--accent);">ISO/IEC 27001:2022</div>
+      <div class="rel-name">SGSI — Requisitos</div>
+      <div class="rel-how">ISO 27001 es el complemento natural del CSF: el CSF define <em>qué</em> outcomes alcanzar, ISO 27001 establece el <em>sistema de gestión</em> formal para lograrlo. Los controles del Anexo A de ISO 27001 mapean directamente a las subcategorías del CSF. Muchas organizaciones usan el CSF para su hoja de ruta y se certifican con ISO 27001.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--blue);">NIST SP 800-53 Rev. 5</div>
+      <div class="rel-name">Controles para Sistemas Federales</div>
+      <div class="rel-how">Catálogo de controles de seguridad y privacidad más detallado que el CSF, orientado a sistemas de información federales de EE.UU. Cada subcategoría del CSF mapea a uno o más controles del 800-53. Muy usado en sectores regulados que requieren controles exhaustivos.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--green);">CIS Controls v8</div>
+      <div class="rel-name">18 Controles Críticos</div>
+      <div class="rel-how">Los CIS Controls son una lista priorizada de 18 controles técnicos de alta efectividad. Son muy concretos y fáciles de implementar para comenzar. Existe un mapping oficial entre CIS Controls y el CSF — se usan juntos frecuentemente para definir la implementación técnica de las subcategorías del CSF.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--gold);">ISO/IEC 27035</div>
+      <div class="rel-name">Gestión de Incidentes</div>
+      <div class="rel-how">ISO 27035 operacionaliza las funciones DETECT, RESPOND y RECOVER del CSF. Los procesos, playbooks y documentación de ISO 27035 implementan directamente las subcategorías DE.CM, RS.MA, RS.AN, RS.MI y RC.RP del CSF.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--purple);">MITRE ATT&amp;CK</div>
+      <div class="rel-name">Tácticas y Técnicas</div>
+      <div class="rel-how">MITRE ATT&amp;CK mapea las tácticas y técnicas de atacantes reales. Complementa el CSF en las funciones DETECT y RESPOND: ayuda a identificar qué comportamientos adversos deben detectarse (DE.CM) y cómo responder a técnicas específicas (RS.AN, RS.MI).</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--teal);">Ley 21.663 Chile</div>
+      <div class="rel-name">Marco de Ciberseguridad Nacional</div>
+      <div class="rel-how">Los requisitos de la Ley 21.663 (políticas, gestión de riesgos, reporte de incidentes, planes de continuidad) se alinean directamente con las funciones del CSF. La ANCI recomienda el CSF junto con ISO 27001 como marcos de referencia para el cumplimiento de la ley.</div>
+    </div>
+  </div>
+
+  <div class="note tip" style="margin-top:20px;">
+    <div class="note-label">// CSF REFERENCE TOOL</div>
+    El NIST publica una herramienta online gratuita en <strong>csf.tools</strong> (también en el sitio oficial del NIST) que permite explorar todas las subcategorías, filtrar por función y categoría, y ver los mappings automáticos con ISO 27001, NIST 800-53, CIS Controls y otros frameworks. Imprescindible al implementar el CSF.
+  </div>
+</section>
+
+</div><!-- /page -->
+
+<footer>
+  <div style="margin-bottom:12px;">
+    <strong>NIST Cybersecurity Framework 2.0</strong> — National Institute of Standards and Technology
+  </div>
+  Publicado en Febrero 2024 · Documento oficial: NIST CSWP 29<br>
+  Recursos: <a href="https://www.nist.gov/cyberframework" target="_blank">nist.gov/cyberframework</a> · <a href="https://csf.tools" target="_blank">csf.tools</a> · <a href="https://doi.org/10.6028/NIST.CSWP.29" target="_blank">DOI 10.6028/NIST.CSWP.29</a><br><br>
+  <span style="font-size:.62rem;opacity:.5">Documento educativo. Para implementación formal, consultar el texto oficial del NIST CSF 2.0 y a un especialista certificado (CISSP, CISM, CRISC).</span>
+</footer>
+
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
+
+<script>
+/* ── Scroll reveal ── */
+const revObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold:0.06, rootMargin:'0px 0px -40px 0px' });
+document.querySelectorAll('section.block').forEach(el => revObs.observe(el));
+
+/* ── Scroll top ── */
+const sBtn = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', () => sBtn.classList.toggle('show', window.scrollY > 500));
+
+/* ── Active nav ── */
+const sections = document.querySelectorAll('section.block[id]');
+const navLinks  = document.querySelectorAll('.nav-link');
+const navObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      navLinks.forEach(l => l.classList.remove('active'));
+      const a = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if(a) a.classList.add('active');
+    }
+  });
+}, { threshold:0.3 });
+sections.forEach(s => navObs.observe(s));
+
+/* ── Función cards toggle ── */
+function toggleFn(card){
+  const all = document.querySelectorAll('.fn-card');
+  all.forEach(c => { if(c !== card) c.classList.remove('active'); });
+  card.classList.toggle('active');
+}
+
+/* ── Accordion bloques funciones ── */
+function toggleBlock(header){
+  const block = header.parentElement;
+  block.classList.toggle('open');
+}
+
+/* ── Tiers accordion ── */
+function toggleTier(row){
+  row.classList.toggle('open');
+}
+
+/* ── Búsqueda de controles ── */
+function searchControls(query){
+  const q = query.toLowerCase().trim();
+  const items = document.querySelectorAll('.ctrl-item');
+
+  items.forEach(item => {
+    const text = item.textContent.toLowerCase();
+    const match = !q || text.includes(q);
+    item.style.display = match ? '' : 'none';
+
+    item.querySelectorAll('.hl').forEach(h => { h.replaceWith(document.createTextNode(h.textContent)); });
+
+    if(q && match){
+      ['.ctrl-name','.ctrl-desc'].forEach(sel => {
+        const el = item.querySelector(sel);
+        if(!el) return;
+        const txt = el.textContent;
+        const idx = txt.toLowerCase().indexOf(q);
+        if(idx >= 0){
+          el.innerHTML = txt.slice(0,idx) +
+            '<span class="hl">' + txt.slice(idx,idx+q.length) + '</span>' +
+            txt.slice(idx+q.length);
+        }
+      });
+    }
+  });
+
+  // Abrir bloques con resultados
+  document.querySelectorAll('.fn-block').forEach(block => {
+    if(!q){ return; }
+    const visible = block.querySelectorAll('.ctrl-item:not([style*="none"])').length;
+    if(visible > 0) block.classList.add('open');
+  });
+}
+</script>
+</body>
+</html>

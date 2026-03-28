@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Docentes · Aegis8 Educa</title>
+<meta name="description" content="Planes de clase, recursos y agente IA para enseñar ciberseguridad sin ser experto. Para docentes de Chile."/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
+  <script src="/aegis-nav.js"></script>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+:root{
+  --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
+  --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
+  --card:rgba(255,255,255,.03);--radius:4px;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(58,127,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.025) 1px,transparent 1px);
+  background-size:80px 80px;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+.page-inner{position:relative;z-index:10;}
+.sl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+  color:var(--accent);text-transform:uppercase;margin-bottom:12px;}
+.st{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.6rem);
+  line-height:1.05;color:var(--ink);margin-bottom:20px;letter-spacing:-1px;}
+.st em{font-style:italic;color:var(--accent);}
+.si{font-size:1rem;line-height:1.9;color:var(--ink2);max-width:640px;margin-bottom:40px;}
+.sw{padding:80px 0 48px;border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
+.sw.vis{opacity:1;transform:none;}
+.sw:last-child{border-bottom:none;}
+.btn-p{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--bg);background:var(--accent);border:none;padding:14px 28px;border-radius:var(--radius);
+  text-decoration:none;transition:all .25s;position:relative;overflow:hidden;display:inline-block;cursor:pointer!important;}
+.btn-p::before{content:'';position:absolute;inset:0;background:var(--accent2);transform:translateX(-100%);transition:transform .3s;}
+.btn-p:hover::before{transform:translateX(0);}
+.btn-p span,.btn-p{position:relative;z-index:1;}
+.btn-p:hover{box-shadow:0 0 28px rgba(240,120,48,.4);transform:translateY(-2px);}
+.btn-g{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink2);background:transparent;border:1px solid var(--border);
+  padding:14px 28px;border-radius:var(--radius);text-decoration:none;transition:all .25s;display:inline-block;}
+.btn-g:hover{color:var(--ink);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
+/* CHAT SHARED */
+.chat-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;}
+.chat-hd{background:rgba(240,120,48,.05);border-bottom:1px solid var(--border2);
+  padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.chat-hd-l{display:flex;align-items:center;gap:.75rem;}
+.chat-ava{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  background:rgba(240,120,48,.12);}
+.chat-name{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;color:var(--ink);}
+.chat-status{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--green);letter-spacing:1px;}
+.chat-live{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+.chat-msgs{height:320px;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;}
+.chat-msgs::-webkit-scrollbar{width:3px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.msg{display:flex;gap:.6rem;align-items:flex-start;}
+.msg.user{flex-direction:row-reverse;}
+.msg-ava{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;flex-shrink:0;background:var(--card);}
+.msg-bubble{background:var(--card);border:1px solid var(--border);padding:.65rem .9rem;
+  font-size:.84rem;line-height:1.6;max-width:85%;border-radius:2px;color:var(--ink2);}
+.msg.user .msg-bubble{background:rgba(240,120,48,.06);border-color:var(--border2);color:var(--ink);}
+.chat-quick{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.4rem;}
+.qbtn{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1px;
+  color:var(--accent);border:1px solid var(--border2);background:rgba(240,120,48,.04);
+  padding:.3rem .7rem;border-radius:var(--radius);cursor:pointer!important;transition:all .2s;}
+.qbtn:hover{background:rgba(240,120,48,.1);border-color:var(--accent);}
+.chat-row{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:.5rem;}
+.chat-in{flex:1;background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);
+  padding:.65rem 1rem;font-family:'Lato',sans-serif;font-size:.88rem;color:var(--ink);
+  outline:none;transition:border-color .2s;}
+.chat-in:focus{border-color:var(--accent);}
+.chat-in::placeholder{color:var(--ink3);}
+.send-btn{background:var(--accent);color:var(--bg);border:none;padding:.65rem 1.1rem;
+  border-radius:var(--radius);font-weight:700;cursor:pointer!important;transition:background .2s;}
+.send-btn:hover{background:var(--accent2);}
+.typing-wrap{display:flex;gap:4px;align-items:center;}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.3;
+  animation:tdot 1.2s ease-in-out infinite;}
+.tdot:nth-child(2){animation-delay:.2s;}.tdot:nth-child(3){animation-delay:.4s;}
+@keyframes tdot{0%,80%,100%{opacity:.2;transform:scale(.8);}40%{opacity:1;transform:scale(1);}}
+/* FOOTER */
+.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);
+  padding:48px 32px 32px;max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;
+  letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.fl span{color:var(--accent);}
+.flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.flinks a:hover{color:var(--accent);}
+.fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
+/* SCROLL REVEAL JS inline */
+@media(max-width:640px){.wrap{padding:0 16px;}.page-footer{padding:32px 16px;}}
+
+
+.page-hero-s{position:relative;z-index:10;padding:72px 0 48px;border-bottom:1px solid var(--border);}
+.hero-ey{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ink3);margin-bottom:24px;display:flex;align-items:center;gap:10px;}
+.hero-ey-line{width:28px;height:1px;background:var(--accent);}
+.planes-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:40px;}
+@media(max-width:720px){.planes-g{grid-template-columns:1fr;}}
+.plan-c{background:var(--bg2);padding:2rem 1.75rem;transition:background .2s;position:relative;overflow:hidden;}
+.plan-c::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.plan-c:hover::before{transform:scaleX(1);}
+.plan-c:hover{background:rgba(255,255,255,.03);}
+.plan-n{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;color:var(--accent);margin-bottom:.5rem;}
+.plan-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);margin-bottom:.5rem;line-height:1.2;}
+.plan-meta{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ink3);letter-spacing:1px;margin-bottom:.75rem;}
+.plan-desc{font-size:.82rem;color:var(--ink2);line-height:1.6;margin-bottom:1rem;}
+.plan-pills{display:flex;flex-wrap:wrap;gap:.4rem;}
+.pp{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:1px;
+  padding:2px 7px;border-radius:20px;border:1px solid var(--border);color:var(--ink3);}
+.recursos-g{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);margin-top:40px;}
+@media(max-width:640px){.recursos-g{grid-template-columns:1fr;}}
+.rec{background:var(--bg2);padding:1.75rem;display:flex;gap:1rem;transition:background .2s;}
+.rec:hover{background:rgba(255,255,255,.03);}
+.rec-ico{font-size:1.5rem;flex-shrink:0;margin-top:2px;}
+.rec-title{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink);font-weight:600;margin-bottom:.3rem;}
+.rec-desc{font-size:.8rem;color:var(--ink2);line-height:1.6;}
+.tip-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px;}
+@media(max-width:640px){.tip-g{grid-template-columns:1fr;}}
+.tip{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.25rem;}
+.tip-n{font-family:'DM Serif Display',serif;font-size:2.5rem;color:rgba(240,120,48,.12);line-height:1;margin-bottom:.5rem;}
+.tip-text{font-size:.84rem;color:var(--ink2);line-height:1.6;}
+.tip-text strong{color:var(--ink);}
+
+</style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+</head>
+<body data-page="profesores">
+<section class="page-hero-s page-inner">
+  <div class="wrap">
+    <div style="margin-bottom:16px;opacity:0;animation:fadeInLogo .6s ease forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="40" height="40" style="flex-shrink:0;" fill="none">
+  <defs>
+    <filter id="g"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="og" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5a823"/><stop offset="100%" stop-color="#f07830"/>
+    </linearGradient>
+  </defs>
+  <path d="M40 5 L67 16 L67 41 C67 55 53 64 40 72 C27 64 13 55 13 41 L13 16 Z"
+    fill="#0d1422" stroke="url(#og)" stroke-width="2">
+    <animate attributeName="stroke-opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/>
+  </path>
+  <circle cx="40" cy="31" r="9" fill="none" stroke="url(#og)" stroke-width="2" filter="url(#g)">
+    <animate attributeName="r" values="9;9.5;9" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="40" cy="48" r="9" fill="none" stroke="url(#og)" stroke-width="2" filter="url(#g)">
+    <animate attributeName="r" values="9;9.5;9" dur="3s" repeatCount="indefinite" begin="0.5s"/>
+  </circle>
+  <line x1="31" y1="39.5" x2="49" y2="39.5" stroke="url(#og)" stroke-width="2" filter="url(#g)"/>
+  <circle cx="31" cy="39.5" r="2" fill="#f07830"/>
+  <circle cx="49" cy="39.5" r="2" fill="#f07830"/>
+  <circle cx="40" cy="39.5" r="14" fill="rgba(240,120,48,0.04)">
+    <animate attributeName="r" values="14;18;14" dur="3s" repeatCount="indefinite" begin="1s"/>
+    <animate attributeName="opacity" values="0.04;0.08;0.04" dur="3s" repeatCount="indefinite" begin="1s"/>
+  </circle>
+</svg></div>
+    <div class="hero-ey"><div class="hero-ey-line"></div>Aegis Educa · Para Docentes</div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,6vw,5rem);line-height:.95;letter-spacing:-1.5px;margin-bottom:20px;">
+      Enseña ciberseguridad<br><span style="color:var(--accent);font-style:italic;">sin ser experto.</span>
+    </h1>
+    <p style="font-size:1rem;line-height:1.8;color:var(--ink2);max-width:520px;margin-bottom:32px;">
+      Planes de clase listos, recursos descargables y un agente IA que responde tus dudas antes de entrar al aula. Para docentes de todos los niveles, sin presupuesto extra.
+    </p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="#planes" class="btn-p"><span>Ver planes de clase →</span></a>
+      <a href="#agente" class="btn-g">Consultar al agente IA</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap page-inner">
+
+<div class="sw" id="planes">
+  <div class="sl">// Planes de clase</div>
+  <h2 class="st">Listos para<br><em>usar mañana.</em></h2>
+  <p class="si">6 planes de clase completos con objetivos, actividades y materiales. Adaptados al currículo chileno, desde 1° básico hasta 4° medio.</p>
+  <div class="planes-g">
+    <div class="plan-c">
+      <div class="plan-n">PLAN 01</div>
+      <div class="plan-title">¿Qué es seguro compartir?</div>
+      <div class="plan-meta">1° – 4° básico · 45 min · Grupal</div>
+      <div class="plan-desc">Actividad de clasificación: datos públicos vs privados. Incluye tarjetas imprimibles y dinámica de roles.</div>
+      <div class="plan-pills"><span class="pp">datos personales</span><span class="pp">privacidad</span></div>
+    </div>
+    <div class="plan-c">
+      <div class="plan-n">PLAN 02</div>
+      <div class="plan-title">Contraseñas que protegen</div>
+      <div class="plan-meta">5° – 8° básico · 45 min · Individual</div>
+      <div class="plan-desc">Taller práctico de creación de contraseñas seguras con el medidor interactivo de Aegis8.</div>
+      <div class="plan-pills"><span class="pp">contraseñas</span><span class="pp">autenticación</span></div>
+    </div>
+    <div class="plan-c">
+      <div class="plan-n">PLAN 03</div>
+      <div class="plan-title">Reconocer el phishing</div>
+      <div class="plan-meta">7° básico – 2° medio · 60 min · Grupal</div>
+      <div class="plan-desc">Análisis de casos reales chilenos. Debate grupal y checklist de verificación. Usa el analizador de Aegis8.</div>
+      <div class="plan-pills"><span class="pp">phishing</span><span class="pp">análisis crítico</span></div>
+    </div>
+    <div class="plan-c">
+      <div class="plan-n">PLAN 04</div>
+      <div class="plan-title">Grooming: señales y respuestas</div>
+      <div class="plan-meta">7° básico – 2° medio · 60 min · Grupal</div>
+      <div class="plan-desc">Simulación de conversaciones. Identificación de señales de alerta. Protocolo de denuncia en Chile.</div>
+      <div class="plan-pills"><span class="pp">grooming</span><span class="pp">Ley 20.526</span></div>
+    </div>
+    <div class="plan-c">
+      <div class="plan-n">PLAN 05</div>
+      <div class="plan-title">Huella digital y reputación</div>
+      <div class="plan-meta">1° – 3° medio · 45 min · Individual</div>
+      <div class="plan-desc">Actividad de googleo propio y reflexión sobre permanencia de la información online.</div>
+      <div class="plan-pills"><span class="pp">redes sociales</span><span class="pp">privacidad</span></div>
+    </div>
+    <div class="plan-c">
+      <div class="plan-n">PLAN 06</div>
+      <div class="plan-title">Ciberbullying: roles y derechos</div>
+      <div class="plan-meta">5° básico – 4° medio · 60 min · Grupal</div>
+      <div class="plan-desc">Teatro fórum con situaciones reales. Revisión de la Ley 20.536 y derechos del alumno.</div>
+      <div class="plan-pills"><span class="pp">ciberbullying</span><span class="pp">convivencia escolar</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="sw" id="recursos">
+  <div class="sl">// Recursos descargables</div>
+  <h2 class="st">Todo listo<br><em>para imprimir.</em></h2>
+  <p class="si">Materiales de apoyo gratuitos para complementar tus clases.</p>
+  <div class="recursos-g">
+    <div class="rec"><div class="rec-ico">📋</div><div><div class="rec-title">Guía de conversación para apoderados</div><div class="rec-desc">Cómo hablar con tus hijos sobre internet. En lenguaje simple, con ejemplos reales.</div></div></div>
+    <div class="rec"><div class="rec-ico">🗓️</div><div><div class="rec-title">Calendario anual de seguridad digital</div><div class="rec-desc">Un tema por mes con actividades sugeridas para cada nivel.</div></div></div>
+    <div class="rec"><div class="rec-ico">🎯</div><div><div class="rec-title">Póster "Reglas del Internauta"</div><div class="rec-desc">Para imprimir y pegar en la sala. 5 reglas en lenguaje de niños.</div></div></div>
+    <div class="rec"><div class="rec-ico">⚠️</div><div><div class="rec-title">Protocolo ante incidente digital</div><div class="rec-desc">Qué hacer paso a paso si un alumno sufre grooming, ciberbullying o sextorsión.</div></div></div>
+  </div>
+</div>
+
+<div class="sw">
+  <div class="sl">// Consejos para el aula</div>
+  <h2 class="st">Sin ser experto<br><em>igual puedes.</em></h2>
+  <div class="tip-g">
+    <div class="tip"><div class="tip-n">01</div><div class="tip-text"><strong>No necesitas saber todo.</strong> Tu rol es facilitar la reflexión, no ser el experto técnico. Los alumnos traen la experiencia.</div></div>
+    <div class="tip"><div class="tip-n">02</div><div class="tip-text"><strong>Usa casos reales chilenos.</strong> El phishing de Banco Estado o el ciberbullying en WhatsApp conectan más que ejemplos abstractos.</div></div>
+    <div class="tip"><div class="tip-n">03</div><div class="tip-text"><strong>La IA es tu aliada.</strong> El agente docente de Aegis8 responde preguntas difíciles en tiempo real, incluso durante la clase.</div></div>
+  </div>
+</div>
+
+<div class="sw" id="agente">
+  <div class="sl">// Agente IA para docentes</div>
+  <h2 class="st">Pregunta lo que<br><em>necesites saber.</em></h2>
+  <p class="si">El Agente Docente de Aegis8 responde dudas sobre cómo enseñar ciberseguridad, qué hacer ante incidentes y cómo hablar con alumnos y apoderados.</p>
+  <div class="chat-box">
+    <div class="chat-hd">
+      <div class="chat-hd-l">
+        <div class="chat-ava">🧑‍🏫</div>
+        <div>
+          <div class="chat-name">Agente Docente · Aegis8</div>
+          <div class="chat-status">● activo</div>
+        </div>
+      </div>
+      <div class="chat-live"></div>
+    </div>
+    <div class="chat-msgs" id="chatMsgs">
+      <div class="msg bot">
+        <div class="msg-ava">🧑‍🏫</div>
+        <div class="msg-bubble">¡Hola! Soy el Agente Docente de Aegis8 👋 Puedo ayudarte con planes de clase, qué hacer ante incidentes con alumnos, cómo hablar con apoderados, y cualquier duda sobre enseñar ciberseguridad. ¿En qué necesitas ayuda hoy?</div>
+      </div>
+    </div>
+    <div class="chat-quick">
+      <button class="qbtn" onclick="qa('¿Cómo explico el grooming a alumnos de 7° básico?')">Explicar grooming</button>
+      <button class="qbtn" onclick="qa('¿Qué hago si un alumno me cuenta que sufre ciberbullying?')">Protocolo ciberbullying</button>
+      <button class="qbtn" onclick="qa('¿Cómo involucro a los apoderados en la educación digital?')">Involucrar apoderados</button>
+      <button class="qbtn" onclick="qa('¿Qué dice la ley chilena sobre acoso digital entre menores?')">Marco legal Chile</button>
+    </div>
+    <div class="chat-row">
+      <input class="chat-in" id="chatIn" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendMsg()" maxlength="1000"/>
+      <button class="send-btn" onclick="sendMsg()">➤</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<footer class="page-footer">
+  <a href="/" class="fl">AEGIS<span>8</span></a>
+  <ul class="flinks">
+    <li><a href="/educa.html">Educa</a></li>
+    <li><a href="/educa/profesores.html">Docentes</a></li>
+    <li><a href="/educa/padres.html">Familias</a></li>
+    <li><a href="/analizador-phishing.html">Herramientas</a></li>
+    <li><a href="/contactos.html">Contacto</a></li>
+  </ul>
+  <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+    <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
+    <a href="/educa.html" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;" onmouseover="this.style.color='#f07830'" onmouseout="this.style.color=''">← Volver a Educa</a>
+  </div>
+</footer>
+<script>
+const SYS=`Eres el Agente Docente de Aegis8, especializado en ayudar a profesores y educadores chilenos a enseñar ciberseguridad en el aula.
+Tu tono es profesional pero cercano. Conoces el currículo chileno, las realidades de los colegios SLEP y municipales, y las dificultades de implementar tecnología en el aula.
+Cuando el docente pregunta sobre situaciones con alumnos, da respuestas prácticas y accionables.
+Menciona leyes chilenas cuando sea relevante (Ley 20.536 de Convivencia Escolar, Ley 21.459 de delitos informáticos, Ley Karin).
+Máximo 4-5 oraciones. Responde en español.`;
+
+const WORKER='https://aegis8-agent.christianmora705.workers.dev';
+let hist=[];
+async function sendMsg(){
+  const el=document.getElementById('chatIn');
+  const t=el.value.trim();if(!t)return;el.value='';
+  addM('user',t);hist.push({role:'user',content:t});showT();
+  try{
+    const r=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,system:SYS,messages:hist})});
+    const d=await r.json();removeT();
+    const rep=d.content?.[0]?.text||'Error al conectar.';
+    hist.push({role:'assistant',content:rep});addM('bot',rep);
+    if(hist.length>18)hist=hist.slice(-18);
+  }catch{removeT();addM('bot','Error de conexión. Intenta de nuevo.');}
+}
+function qa(q){document.getElementById('chatIn').value=q;sendMsg();}
+function addM(r,t){
+  const c=document.getElementById('chatMsgs');
+  const d=document.createElement('div');d.className='msg '+r;
+  const a=document.createElement('div');a.className='msg-ava';a.textContent=r==='bot'?'🤖':'👤';
+  const b=document.createElement('div');b.className='msg-bubble';b.textContent=t;
+  d.appendChild(a);d.appendChild(b);c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+function showT(){
+  const c=document.getElementById('chatMsgs');
+  const d=document.createElement('div');d.className='msg bot';d.id='tMsg';
+  d.innerHTML='<div class="msg-ava">🤖</div><div class="msg-bubble"><div class="typing-wrap"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div></div>';
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+function removeT(){document.getElementById('tMsg')?.remove();}
+
+
+const ro=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});
+},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.sw').forEach(el=>ro.observe(el));
+
+</script>
+</body>
+</html>

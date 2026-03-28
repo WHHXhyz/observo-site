@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Genera tu checklist de ciberseguridad personalizada con IA. Describe tu web o empresa y recibe un plan de acción concreto.">
+<title>Checklist de Seguridad · Aegis8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
+<script src="/aegis-nav.js"></script>
+<style>
+:root {
+  --bg:     #07080c;
+  --bg2:    #0c0f19;
+  --surface:#111520;
+  --border: #1a2030;
+  --border2:#222840;
+  --green:  #00ff88;
+  --green2: #00cc6a;
+  --blue:   #38bdf8;
+  --amber:  #f59e0b;
+  --red:    #ff2244;
+  --text:   #e2e8f0;
+  --muted:  #4a5568;
+  --muted2: #2d3748;
+  --mono:   'IBM Plex Mono', monospace;
+  --disp:   'Bebas Neue', sans-serif;
+  --body:   'DM Sans', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--body);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;padding-top:64px;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);
+}
+body::after{
+  content:'';position:fixed;top:-150px;right:-100px;
+  width:600px;height:500px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(0,255,136,0.05) 0%,transparent 65%);
+  pointer-events:none;z-index:0;
+}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  padding:5rem 2rem 3rem;
+  text-align:center;max-width:860px;margin:0 auto;
+}
+.hero-label{
+  font-family:var(--mono);font-size:0.65rem;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--green);margin-bottom:1.5rem;
+  display:flex;align-items:center;justify-content:center;gap:0.5rem;
+  animation:fadeUp 0.5s ease both;
+}
+.hero-label::before,.hero-label::after{
+  content:'';flex:1;max-width:40px;height:1px;
+  background:var(--green);opacity:0.4;
+}
+.hero-title{
+  font-family:var(--disp);
+  font-size:clamp(3rem,9vw,7.5rem);
+  line-height:0.88;text-transform:uppercase;
+  margin-bottom:1.5rem;
+  animation:fadeUp 0.6s ease 0.1s both;
+}
+.hero-title .accent{color:var(--green);}
+.hero-sub{
+  font-size:1.05rem;color:var(--muted);
+  font-weight:300;line-height:1.7;
+  max-width:520px;margin:0 auto;
+  animation:fadeUp 0.6s ease 0.2s both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── MAIN LAYOUT ── */
+.main{
+  position:relative;z-index:1;
+  max-width:1100px;margin:0 auto;
+  padding:3rem 2rem 6rem;
+  display:grid;
+  grid-template-columns:380px 1fr;
+  gap:2px;background:var(--border);
+}
+
+/* ── FORM PANEL ── */
+.form-panel{background:var(--bg2);}
+.panel-bar{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:0.9rem 1.25rem;
+  display:flex;align-items:center;gap:0.75rem;
+}
+.panel-dots{display:flex;gap:0.35rem;}
+.dot{width:9px;height:9px;border-radius:50%;}
+.dot-r{background:#ff5f57;}.dot-y{background:#febc2e;}.dot-g{background:#28c840;}
+.panel-name{
+  font-family:var(--mono);font-size:0.65rem;
+  letter-spacing:0.1em;color:var(--muted);
+}
+.form-body{padding:1.75rem;}
+
+.field{margin-bottom:1.5rem;}
+.field-label{
+  display:block;
+  font-family:var(--mono);font-size:0.63rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--green);margin-bottom:0.6rem;
+}
+.field-select,.field-input,.field-textarea{
+  width:100%;background:var(--surface);
+  border:1.5px solid var(--border2);
+  color:var(--text);font-family:var(--mono);
+  font-size:0.82rem;padding:0.75rem 1rem;
+  outline:none;transition:border-color 0.2s;
+  -webkit-appearance:none;
+}
+.field-select{cursor:pointer;}
+.field-textarea{resize:none;line-height:1.6;min-height:80px;}
+.field-select:focus,.field-input:focus,.field-textarea:focus{border-color:var(--green);}
+.field-select option{background:var(--bg2);}
+
+.generate-btn{
+  width:100%;padding:1.1rem;
+  font-family:var(--mono);font-size:0.78rem;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:#000;background:var(--green);
+  border:none;cursor:pointer;
+  transition:background 0.2s,transform 0.1s;
+  display:flex;align-items:center;justify-content:center;gap:0.5rem;
+}
+.generate-btn:hover:not(:disabled){background:var(--green2);transform:translateY(-1px);}
+.generate-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+
+/* ── RESULT PANEL ── */
+.result-panel{background:var(--bg2);}
+.result-body-inner{padding:1.75rem;}
+
+.result-empty{
+  height:100%;min-height:400px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;gap:1rem;
+  color:var(--muted2);
+}
+.result-empty-icon{font-size:3rem;opacity:0.4;}
+.result-empty-text{
+  font-family:var(--mono);font-size:0.65rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+}
+
+/* Typing */
+.typing{
+  display:none;padding:2rem;
+  align-items:center;gap:1rem;
+}
+.typing.show{display:flex;}
+.tdots{display:flex;gap:5px;}
+.tdot{width:7px;height:7px;border-radius:50%;background:var(--green);opacity:0.3;animation:tdot 1.2s ease-in-out infinite;}
+.tdot:nth-child(2){animation-delay:0.2s;}
+.tdot:nth-child(3){animation-delay:0.4s;}
+@keyframes tdot{0%,80%,100%{opacity:0.2;transform:scale(0.8);}40%{opacity:1;transform:scale(1);}}
+.typing-text{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;}
+
+/* Checklist output */
+.checklist-out{display:none;}
+.checklist-out.show{display:block;}
+
+.cl-meta{
+  margin-bottom:1.5rem;padding-bottom:1.25rem;
+  border-bottom:1px solid var(--border);
+}
+.cl-profile{
+  font-family:var(--mono);font-size:0.62rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:0.5rem;
+}
+.cl-title{
+  font-family:var(--disp);
+  font-size:2rem;line-height:0.95;
+  text-transform:uppercase;color:var(--green);
+}
+
+.cl-section{margin-bottom:1.75rem;}
+.cl-section-title{
+  font-family:var(--mono);font-size:0.68rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--text);margin-bottom:0.85rem;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.cl-section-title::before{
+  content:'';width:16px;height:1px;background:var(--green);
+}
+.prio-badge{
+  font-family:var(--mono);font-size:0.55rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.15rem 0.5rem;margin-left:auto;
+}
+.prio-CRÍTICO{color:var(--red);border:1px solid rgba(255,34,68,0.3);}
+.prio-ALTO{color:var(--amber);border:1px solid rgba(245,158,11,0.3);}
+.prio-MEDIO{color:var(--blue);border:1px solid rgba(56,189,248,0.3);}
+
+.cl-item{
+  display:flex;align-items:flex-start;gap:0.75rem;
+  padding:0.75rem 0;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  cursor:pointer;transition:background 0.15s;
+  padding-left:0.25rem;
+}
+.cl-item:hover{background:rgba(255,255,255,0.02);}
+.cl-item.done .cl-text{color:var(--muted);text-decoration:line-through;}
+.cl-check{
+  width:18px;height:18px;border:1.5px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:2px;
+  font-size:0.7rem;color:var(--green);
+  transition:border-color 0.2s,background 0.2s;
+}
+.cl-item.done .cl-check{background:rgba(0,255,136,0.1);border-color:var(--green);}
+.cl-text{font-size:0.88rem;line-height:1.55;color:var(--text);}
+
+/* progress */
+.cl-progress{
+  margin-top:1.5rem;padding-top:1.25rem;
+  border-top:1px solid var(--border);
+}
+.cl-progress-label{
+  font-family:var(--mono);font-size:0.62rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:0.5rem;
+  display:flex;justify-content:space-between;
+}
+.cl-bar-bg{height:3px;background:var(--border2);border-radius:2px;overflow:hidden;}
+.cl-bar-fill{height:100%;background:var(--green);border-radius:2px;width:0%;transition:width 0.4s ease;}
+
+/* download btn */
+.dl-btn{
+  margin-top:1.25rem;width:100%;
+  font-family:var(--mono);font-size:0.7rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--green);border:1px solid rgba(0,255,136,0.3);
+  background:transparent;padding:0.75rem;
+  cursor:pointer;transition:background 0.2s;
+}
+.dl-btn:hover{background:rgba(0,255,136,0.05);}
+
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid var(--border);
+  padding:1.5rem 3rem;
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--mono);font-size:0.62rem;color:var(--muted);
+}
+footer a{color:var(--muted);text-decoration:none;transition:color 0.2s;}
+footer a:hover{color:var(--green);}
+
+@media(max-width:800px){
+  .main{grid-template-columns:1fr;gap:1px;}
+  footer{flex-direction:column;gap:0.75rem;padding:1.5rem;text-align:center;}
+}
+</style>
+</head>
+<body data-page="checklist">
+
+<section class="hero">
+  <div class="hero-label">Herramienta gratuita · Aegis8</div>
+  <h1 class="hero-title">CHECKLIST<br><span class="accent">PERSONALIZADA</span></h1>
+  <p class="hero-sub">Describe tu web, empresa o situación y la IA genera un plan de seguridad concreto y priorizado para tu caso específico.</p>
+</section>
+
+<div class="main">
+
+  <!-- FORM -->
+  <div class="form-panel">
+    <div class="panel-bar">
+      <div class="panel-dots">
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+      </div>
+      <div class="panel-name">aegis8 — tu-perfil.config</div>
+    </div>
+    <div class="form-body">
+
+      <div class="field">
+        <label class="field-label">¿Qué tipo de organización eres?</label>
+        <select class="field-select" id="orgType">
+          <option value="">Selecciona...</option>
+          <option value="pyme">Pyme / negocio pequeño</option>
+          <option value="startup">Startup / empresa tech</option>
+          <option value="ecommerce">E-commerce / tienda online</option>
+          <option value="freelance">Freelancer / consultor</option>
+          <option value="colegio">Colegio / institución educativa</option>
+          <option value="persona">Persona natural</option>
+          <option value="ong">ONG / fundación</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="field-label">¿Qué tecnología usas?</label>
+        <select class="field-select" id="techStack">
+          <option value="">Selecciona...</option>
+          <option value="wordpress">WordPress</option>
+          <option value="shopify">Shopify / Wix / Squarespace</option>
+          <option value="custom">Web custom (React, Next, etc.)</option>
+          <option value="nosite">Sin web propia</option>
+          <option value="otro">Otra / no sé</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="field-label">¿Cuántas personas en tu equipo?</label>
+        <select class="field-select" id="teamSize">
+          <option value="">Selecciona...</option>
+          <option value="solo">Solo yo</option>
+          <option value="small">2-10 personas</option>
+          <option value="medium">11-50 personas</option>
+          <option value="large">+50 personas</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="field-label">¿Manejas datos sensibles?</label>
+        <select class="field-select" id="dataType">
+          <option value="">Selecciona...</option>
+          <option value="no">No, nada sensible</option>
+          <option value="clientes">Datos de clientes (nombre, email)</option>
+          <option value="pagos">Pagos / datos financieros</option>
+          <option value="salud">Datos de salud o menores</option>
+          <option value="rut">RUT / datos personales legales</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Cuéntanos algo más (opcional)</label>
+        <textarea class="field-textarea" id="extraContext"
+          placeholder="Ej: Tenemos WordPress con WooCommerce, nunca hemos hecho auditoría, usamos el mismo correo gmail para todo el equipo..."></textarea>
+      </div>
+
+      <button class="generate-btn" id="generateBtn" onclick="generate()">
+        ⚡ Generar mi checklist
+      </button>
+
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-panel">
+    <div class="panel-bar">
+      <div class="panel-dots">
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+      </div>
+      <div class="panel-name">aegis8 — checklist-generada.md</div>
+    </div>
+    <div class="result-body-inner">
+
+      <div class="result-empty" id="emptyState">
+        <div class="result-empty-icon">🛡️</div>
+        <div class="result-empty-text">Tu checklist aparecerá aquí</div>
+      </div>
+
+      <div class="typing" id="typing">
+        <div class="tdots">
+          <div class="tdot"></div><div class="tdot"></div><div class="tdot"></div>
+        </div>
+        <span class="typing-text">Generando tu plan personalizado...</span>
+      </div>
+
+      <div class="checklist-out" id="checklistOut">
+        <div class="cl-meta">
+          <div class="cl-profile" id="clProfile"></div>
+          <div class="cl-title">TU PLAN DE<br>SEGURIDAD</div>
+        </div>
+        <div id="clSections"></div>
+        <div class="cl-progress">
+          <div class="cl-progress-label">
+            <span>Progreso</span>
+            <span id="clProgressText">0 / 0 completados</span>
+          </div>
+          <div class="cl-bar-bg"><div class="cl-bar-fill" id="clBarFill"></div></div>
+        </div>
+        <button class="dl-btn" onclick="copyChecklist()">📋 Copiar checklist</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <a href="/">aegis8.org</a>
+  <span>checklist de seguridad · gratis · personalizada con IA</span>
+  <a href="/contactos.html">quiero auditoría profesional →</a>
+</footer>
+
+<script>
+const WORKER = 'https://aegis8-agent.christianmora705.workers.dev';
+let generatedItems = [];
+
+async function generate() {
+  const org = document.getElementById('orgType').value;
+  const tech = document.getElementById('techStack').value;
+  const team = document.getElementById('teamSize').value;
+  const data = document.getElementById('dataType').value;
+  const extra = document.getElementById('extraContext').value.trim();
+
+  if (!org) {
+    alert('Selecciona el tipo de organización para continuar.');
+    return;
+  }
+
+  const btn = document.getElementById('generateBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Generando...';
+
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('checklistOut').classList.remove('show');
+  document.getElementById('typing').classList.add('show');
+
+  const context = [
+    `Organización: ${org}`,
+    tech ? `Tecnología: ${tech}` : '',
+    team ? `Tamaño equipo: ${team}` : '',
+    data ? `Datos sensibles: ${data}` : '',
+    extra ? `Contexto adicional: ${extra}` : ''
+  ].filter(Boolean).join('\n');
+
+  const systemPrompt = `Eres un experto en ciberseguridad de Aegis8. Generas checklists de seguridad personalizadas y priorizadas.
+
+Dado el perfil del usuario, genera una checklist estructurada en 3 secciones con prioridad CRÍTICO, ALTO y MEDIO.
+
+Responde ÚNICAMENTE en este formato JSON (sin markdown, sin texto adicional):
+{
+  "perfil": "descripción breve del perfil en 1 oración",
+  "secciones": [
+    {
+      "titulo": "nombre de la sección",
+      "prioridad": "CRÍTICO",
+      "items": ["item 1", "item 2", "item 3"]
+    },
+    {
+      "titulo": "nombre de la sección",
+      "prioridad": "ALTO",
+      "items": ["item 1", "item 2", "item 3"]
+    },
+    {
+      "titulo": "nombre de la sección",
+      "prioridad": "MEDIO",
+      "items": ["item 1", "item 2"]
+    }
+  ]
+}
+
+Cada sección debe tener entre 3 y 5 items concretos y accionables. Sin tecnicismos innecesarios. En español.`;
+
+  try {
+    const res = await fetch(WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: `Mi perfil:\n${context}` }]
+      })
+    });
+
+    const d = await res.json();
+    const raw = d.content?.[0]?.text || '';
+    const parsed = JSON.parse(raw.replace(/```json|```/g, '').trim());
+    renderChecklist(parsed);
+
+  } catch(e) {
+    document.getElementById('typing').classList.remove('show');
+    document.getElementById('emptyState').style.display = 'flex';
+    document.getElementById('emptyState').querySelector('.result-empty-text').textContent = 'Error al generar. Intenta de nuevo.';
+  }
+
+  btn.disabled = false;
+  btn.textContent = '⚡ Regenerar checklist';
+}
+
+function renderChecklist(data) {
+  document.getElementById('typing').classList.remove('show');
+  document.getElementById('clProfile').textContent = data.perfil;
+
+  const sectionsEl = document.getElementById('clSections');
+  sectionsEl.innerHTML = '';
+  generatedItems = [];
+
+  data.secciones.forEach((sec, si) => {
+    const secEl = document.createElement('div');
+    secEl.className = 'cl-section';
+
+    const titleEl = document.createElement('div');
+    titleEl.className = 'cl-section-title';
+    titleEl.innerHTML = `${sec.titulo} <span class="prio-badge prio-${sec.prioridad}">${sec.prioridad}</span>`;
+    secEl.appendChild(titleEl);
+
+    sec.items.forEach((item, ii) => {
+      const id = `item-${si}-${ii}`;
+      generatedItems.push(item);
+      const itemEl = document.createElement('div');
+      itemEl.className = 'cl-item';
+      itemEl.id = id;
+      itemEl.onclick = () => toggleItem(id);
+      itemEl.innerHTML = `
+        <div class="cl-check"></div>
+        <div class="cl-text">${item}</div>`;
+      secEl.appendChild(itemEl);
+    });
+
+    sectionsEl.appendChild(secEl);
+  });
+
+  updateProgress();
+  document.getElementById('checklistOut').classList.add('show');
+}
+
+function toggleItem(id) {
+  const item = document.getElementById(id);
+  item.classList.toggle('done');
+  if (item.classList.contains('done')) {
+    item.querySelector('.cl-check').textContent = '✓';
+  } else {
+    item.querySelector('.cl-check').textContent = '';
+  }
+  updateProgress();
+}
+
+function updateProgress() {
+  const all = document.querySelectorAll('.cl-item');
+  const done = document.querySelectorAll('.cl-item.done');
+  const pct = all.length ? Math.round(done.length / all.length * 100) : 0;
+  document.getElementById('clProgressText').textContent = `${done.length} / ${all.length} completados`;
+  document.getElementById('clBarFill').style.width = pct + '%';
+}
+
+function copyChecklist() {
+  const text = generatedItems.map((item, i) => `☐ ${item}`).join('\n');
+  navigator.clipboard.writeText('CHECKLIST DE SEGURIDAD · AEGIS8\n\n' + text)
+    .then(() => {
+      const btn = document.querySelector('.dl-btn');
+      btn.textContent = '✓ Copiado al portapapeles';
+      setTimeout(() => { btn.textContent = '📋 Copiar checklist'; }, 2000);
+    });
+}
+</script>
+</body>
+</html>

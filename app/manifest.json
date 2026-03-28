@@ -1,0 +1,37 @@
+{
+  "name": "Aegis8 — Ciberseguridad Educativa",
+  "short_name": "Aegis8",
+  "description": "Ciberseguridad educativa para docentes y familias de Chile",
+  "start_url": "/app/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#080c14",
+  "theme_color": "#080c14",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [],
+  "categories": [
+    "education",
+    "utilities"
+  ],
+  "prefer_related_applications": false
+}

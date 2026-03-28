@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Agente de Seguridad · Aegis8</title>
+<meta name="description" content="Consulta gratis al Agente de Seguridad de Aegis8. Responde preguntas sobre ciberseguridad, privacidad y protección digital para familias y docentes de Chile."/>
+  <script src="/aegis-nav.js"></script>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+:root{
+  --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
+  --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
+  --card:rgba(255,255,255,.03);--radius:4px;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(58,127,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.025) 1px,transparent 1px);
+  background-size:80px 80px;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+.page-inner{position:relative;z-index:10;}
+.sl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+  color:var(--accent);text-transform:uppercase;margin-bottom:12px;}
+.st{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.6rem);
+  line-height:1.05;color:var(--ink);margin-bottom:20px;letter-spacing:-1px;}
+.st em{font-style:italic;color:var(--accent);}
+.si{font-size:1rem;line-height:1.9;color:var(--ink2);max-width:640px;margin-bottom:40px;}
+.sw{padding:80px 0 48px;border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
+.sw.vis{opacity:1;transform:none;}
+.sw:last-child{border-bottom:none;}
+.btn-p{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--bg);background:var(--accent);border:none;padding:14px 28px;border-radius:var(--radius);
+  text-decoration:none;transition:all .25s;position:relative;overflow:hidden;display:inline-block;cursor:pointer!important;}
+.btn-p::before{content:'';position:absolute;inset:0;background:var(--accent2);transform:translateX(-100%);transition:transform .3s;}
+.btn-p:hover::before{transform:translateX(0);}
+.btn-p span,.btn-p{position:relative;z-index:1;}
+.btn-p:hover{box-shadow:0 0 28px rgba(240,120,48,.4);transform:translateY(-2px);}
+.btn-g{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink2);background:transparent;border:1px solid var(--border);
+  padding:14px 28px;border-radius:var(--radius);text-decoration:none;transition:all .25s;display:inline-block;}
+.btn-g:hover{color:var(--ink);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
+/* CHAT SHARED */
+.chat-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;}
+.chat-hd{background:rgba(240,120,48,.05);border-bottom:1px solid var(--border2);
+  padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.chat-hd-l{display:flex;align-items:center;gap:.75rem;}
+.chat-ava{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  background:rgba(240,120,48,.12);}
+.chat-name{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;color:var(--ink);}
+.chat-status{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--green);letter-spacing:1px;}
+.chat-live{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+.chat-msgs{height:320px;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;}
+.chat-msgs::-webkit-scrollbar{width:3px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.msg{display:flex;gap:.6rem;align-items:flex-start;}
+.msg.user{flex-direction:row-reverse;}
+.msg-ava{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;flex-shrink:0;background:var(--card);}
+.msg-bubble{background:var(--card);border:1px solid var(--border);padding:.65rem .9rem;
+  font-size:.84rem;line-height:1.6;max-width:85%;border-radius:2px;color:var(--ink2);}
+.msg.user .msg-bubble{background:rgba(240,120,48,.06);border-color:var(--border2);color:var(--ink);}
+.chat-quick{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.4rem;}
+.qbtn{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1px;
+  color:var(--accent);border:1px solid var(--border2);background:rgba(240,120,48,.04);
+  padding:.3rem .7rem;border-radius:var(--radius);cursor:pointer!important;transition:all .2s;}
+.qbtn:hover{background:rgba(240,120,48,.1);border-color:var(--accent);}
+.chat-row{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:.5rem;}
+.chat-in{flex:1;background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);
+  padding:.65rem 1rem;font-family:'Lato',sans-serif;font-size:.88rem;color:var(--ink);
+  outline:none;transition:border-color .2s;}
+.chat-in:focus{border-color:var(--accent);}
+.chat-in::placeholder{color:var(--ink3);}
+.send-btn{background:var(--accent);color:var(--bg);border:none;padding:.65rem 1.1rem;
+  border-radius:var(--radius);font-weight:700;cursor:pointer!important;transition:background .2s;}
+.send-btn:hover{background:var(--accent2);}
+.typing-wrap{display:flex;gap:4px;align-items:center;}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.3;
+  animation:tdot 1.2s ease-in-out infinite;}
+.tdot:nth-child(2){animation-delay:.2s;}.tdot:nth-child(3){animation-delay:.4s;}
+@keyframes tdot{0%,80%,100%{opacity:.2;transform:scale(.8);}40%{opacity:1;transform:scale(1);}}
+/* FOOTER */
+.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);
+  padding:48px 32px 32px;max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;
+  letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.fl span{color:var(--accent);}
+.flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.flinks a:hover{color:var(--accent);}
+.fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
+/* SCROLL REVEAL JS inline */
+@media(max-width:640px){.wrap{padding:0 16px;}.page-footer{padding:32px 16px;}}
+
+
+.agent-hero{position:relative;z-index:10;padding:64px 0 48px;border-bottom:1px solid var(--border);overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
+.b1{width:500px;height:500px;top:-80px;right:-100px;background:radial-gradient(circle,rgba(240,120,48,.08) 0%,transparent 70%);animation:fl1 8s ease-in-out infinite;}
+.b2{width:400px;height:400px;bottom:-60px;left:-80px;background:radial-gradient(circle,rgba(58,127,212,.07) 0%,transparent 70%);animation:fl2 10s ease-in-out infinite;}
+@keyframes fl1{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,20px);}}
+@keyframes fl2{0%,100%{transform:translate(0,0);}50%{transform:translate(20px,-30px);}}
+
+/* CHAT PRINCIPAL - más grande */
+.agent-chat{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;max-width:780px;margin:0 auto;}
+.agent-chat-hd{background:rgba(240,120,48,.05);border-bottom:1px solid var(--border2);padding:1.1rem 1.75rem;display:flex;align-items:center;justify-content:space-between;}
+.agent-chat-l{display:flex;align-items:center;gap:1rem;}
+.agent-ava{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--gold));display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+.agent-name{font-family:'JetBrains Mono',monospace;font-size:.78rem;font-weight:600;color:var(--ink);}
+.agent-status{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--green);letter-spacing:1px;margin-top:2px;}
+.agent-live{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+.agent-msgs{height:420px;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:.85rem;}
+.agent-msgs::-webkit-scrollbar{width:3px;}
+.agent-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.msg{display:flex;gap:.75rem;align-items:flex-start;}
+.msg.user{flex-direction:row-reverse;}
+.msg-ava{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;background:var(--card);border:1px solid var(--border);}
+.msg-bubble{background:var(--card);border:1px solid var(--border);padding:.75rem 1rem;font-size:.88rem;line-height:1.65;max-width:88%;border-radius:2px;color:var(--ink2);}
+.msg.user .msg-bubble{background:rgba(240,120,48,.06);border-color:var(--border2);color:var(--ink);}
+.agent-quick{padding:.75rem 1.5rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.4rem;}
+.qbtn{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1px;color:var(--accent);border:1px solid var(--border2);background:rgba(240,120,48,.04);padding:.3rem .75rem;border-radius:var(--radius);cursor:pointer!important;transition:all .2s;}
+.qbtn:hover{background:rgba(240,120,48,.1);border-color:var(--accent);}
+.agent-row{padding:.85rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:.6rem;}
+.agent-in{flex:1;background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);padding:.75rem 1.1rem;font-family:'Lato',sans-serif;font-size:.92rem;color:var(--ink);outline:none;transition:border-color .2s;}
+.agent-in:focus{border-color:var(--accent);}
+.agent-in::placeholder{color:var(--ink3);}
+.send-btn{background:var(--accent);color:var(--bg);border:none;padding:.75rem 1.25rem;border-radius:var(--radius);font-size:1rem;cursor:pointer!important;transition:background .2s;font-weight:700;}
+.send-btn:hover{background:var(--accent2);}
+.typing-wrap{display:flex;gap:4px;align-items:center;}
+.tdot{width:7px;height:7px;border-radius:50%;background:var(--accent);opacity:.3;animation:tdot 1.2s ease-in-out infinite;}
+.tdot:nth-child(2){animation-delay:.2s;}.tdot:nth-child(3){animation-delay:.4s;}
+@keyframes tdot{0%,80%,100%{opacity:.2;transform:scale(.8);}40%{opacity:1;transform:scale(1);}}
+
+/* USOS */
+.usos-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+@media(max-width:640px){.usos-g{grid-template-columns:1fr;}}
+.uso{background:var(--bg2);padding:1.75rem 1.5rem;}
+.uso-ico{font-size:1.5rem;margin-bottom:.6rem;}
+.uso-title{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink);font-weight:600;margin-bottom:.4rem;}
+.uso-body{font-size:.82rem;color:var(--ink2);line-height:1.6;}
+
+/* PRIVACIDAD */
+.privacy-note{background:rgba(46,204,128,.04);border:1px solid rgba(46,204,128,.15);border-radius:var(--radius);padding:1rem 1.25rem;display:flex;align-items:flex-start;gap:.75rem;margin-top:1.5rem;max-width:780px;margin-left:auto;margin-right:auto;}
+.privacy-ico{font-size:1rem;flex-shrink:0;margin-top:2px;}
+.privacy-text{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--ink3);line-height:1.6;letter-spacing:.02em;}
+
+@keyframes fadeInLogo{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
+</style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+</head>
+<body data-page="agente">
+
+<!-- ── BANNER CONSENTIMIENTO COOKIES ── -->
+<style>
+#cookie-banner{
+  position:fixed;bottom:0;left:0;right:0;z-index:9000;
+  background:#0d1422;border-top:2px solid rgba(58,127,212,.3);
+  padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  box-shadow:0 -8px 32px rgba(0,0,0,.5);font-family:'Lato',sans-serif;
+}
+#cookie-banner.hidden{display:none;}
+#cookie-banner .cb-txt{flex:1;min-width:220px;font-size:.84rem;line-height:1.6;color:#8898b0;}
+#cookie-banner .cb-txt strong{color:#eaf0f8;font-weight:400;}
+#cookie-banner .cb-btns{display:flex;gap:10px;flex-shrink:0;}
+#cookie-banner .cb-accept{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;
+  background:#3a7fd4;color:#080c14;border:none;padding:9px 18px;border-radius:3px;cursor:pointer;}
+#cookie-banner .cb-reject{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;
+  background:transparent;color:#5a6a80;border:1px solid rgba(90,106,128,.3);
+  padding:9px 14px;border-radius:3px;cursor:pointer;}
+</style>
+<div id="cookie-banner">
+  <div class="cb-txt">
+    Usamos <strong>Google Analytics</strong> para mejorar el sitio. No almacena datos personales identificables.
+    Conforme a la Ley 21.719 (Chile).
+  </div>
+  <div class="cb-btns">
+    <button class="cb-accept" onclick="cookieConsent(true)">Aceptar</button>
+    <button class="cb-reject" onclick="cookieConsent(false)">Rechazar</button>
+  </div>
+</div>
+<script>
+(function(){
+  const GA_ID='G-XNJT1V3G6T';
+  const stored=localStorage.getItem('aegis8_cookie_consent');
+  function loadGA(){
+    const s=document.createElement('script');s.async=true;
+    s.src='https://www.googletagmanager.com/gtag/js?id='+GA_ID;
+    document.head.appendChild(s);
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}window.gtag=gtag;
+    gtag('js',new Date());gtag('config',GA_ID,{anonymize_ip:true});
+  }
+  window.cookieConsent=function(accepted){
+    localStorage.setItem('aegis8_cookie_consent',accepted?'accepted':'rejected');
+    document.getElementById('cookie-banner').classList.add('hidden');
+    if(accepted)loadGA();
+  };
+  if(stored==='accepted'){document.getElementById('cookie-banner').classList.add('hidden');loadGA();}
+  else if(stored==='rejected'){document.getElementById('cookie-banner').classList.add('hidden');}
+})();
+</script>
+
+<section class="agent-hero">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap" style="position:relative;z-index:2;text-align:center;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ink3);margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:10px;">
+      <div style="width:24px;height:1px;background:var(--accent);"></div>
+      AGENTE IA · DISPONIBLE 24/7 · GRATIS
+      <div style="width:24px;height:1px;background:var(--accent);"></div>
+    </div>
+    
+    <div style="margin-bottom:20px;opacity:0;animation:fadeInLogo .8s cubic-bezier(.34,1.56,.64,1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="100" height="100" fill="none">
+  <defs>
+    <filter id="ag1" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="ag2" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="ag3" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <linearGradient id="ag-main" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5c842"/>
+      <stop offset="50%" stop-color="#f07830"/>
+      <stop offset="100%" stop-color="#e0531a"/>
+    </linearGradient>
+    <linearGradient id="ag-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60c8f5"/>
+      <stop offset="100%" stop-color="#3a7fd4"/>
+    </linearGradient>
+    <linearGradient id="ag-inner" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f1e"/>
+      <stop offset="100%" stop-color="#0d1828"/>
+    </linearGradient>
+    <radialGradient id="ag-core" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="rgba(58,127,212,0.2)"/>
+      <stop offset="60%" stop-color="rgba(240,120,48,0.08)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+
+    <!-- Shield clip -->
+    <clipPath id="ag-clip">
+      <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- ═══ DEEP GLOW ═══ -->
+  <ellipse cx="120" cy="115" rx="88" ry="95" fill="url(#ag-core)" filter="url(#ag2)">
+    <animate attributeName="rx" values="88;100;88" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="5s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- ═══ SHIELD ═══ -->
+  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z"
+    fill="url(#ag-inner)"/>
+
+  <!-- Outer stroke breathing -->
+  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z"
+    fill="none" stroke="url(#ag-main)" stroke-width="3">
+    <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="3.5s" repeatCount="indefinite"/>
+  </path>
+
+  <!-- Draw-on -->
+  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z"
+    fill="none" stroke="#f07830" stroke-width="3"
+    stroke-dasharray="590" stroke-dashoffset="590" filter="url(#ag1)">
+    <animate attributeName="stroke-dashoffset" from="590" to="0" dur="1.8s" fill="freeze" begin="0.2s" calcMode="spline" keySplines="0.4 0 0.2 1"/>
+  </path>
+
+  <!-- Inner border -->
+  <path d="M120 32 C102 32 74 39 52 50 L38 58 L38 120 C38 156 78 180 120 200 C162 180 202 156 202 120 L202 58 L188 50 C166 39 138 32 120 32 Z"
+    fill="none" stroke="rgba(240,120,48,0.1)" stroke-width="1.5">
+    <animate attributeName="stroke-opacity" values="0;0.15;0" dur="5s" repeatCount="indefinite" begin="2s"/>
+  </path>
+
+  <!-- ═══ AI BRAIN / NEURAL NETWORK ICON ═══ -->
+  <!-- Central processor node -->
+  <rect x="102" y="86" width="36" height="36" rx="6"
+    fill="rgba(58,127,212,0.1)" stroke="url(#ag-blue)" stroke-width="2.5" filter="url(#ag1)">
+    <animate attributeName="stroke-dasharray" values="0 144;144 0" dur="0.7s" fill="freeze" begin="1.2s"/>
+    <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="2.5s" repeatCount="indefinite" begin="2.5s"/>
+  </rect>
+
+  <!-- CPU internal grid lines -->
+  <line x1="102" y1="99" x2="138" y2="99" stroke="rgba(58,127,212,0.3)" stroke-width="1">
+    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="1.9s"/>
+  </line>
+  <line x1="102" y1="109" x2="138" y2="109" stroke="rgba(58,127,212,0.3)" stroke-width="1">
+    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2s"/>
+  </line>
+  <line x1="115" y1="86" x2="115" y2="122" stroke="rgba(58,127,212,0.3)" stroke-width="1">
+    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.1s"/>
+  </line>
+  <line x1="125" y1="86" x2="125" y2="122" stroke="rgba(58,127,212,0.3)" stroke-width="1">
+    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.2s"/>
+  </line>
+
+  <!-- ═══ NEURAL CONNECTIONS — 6 satellite nodes ═══ -->
+  <!-- Node TOP -->
+  <circle cx="120" cy="56" r="6" fill="rgba(240,120,48,0.1)" stroke="#f07830" stroke-width="2" filter="url(#ag3)">
+    <animate attributeName="opacity" values="0;1" dur="0.15s" fill="freeze" begin="2.3s"/>
+    <animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite" begin="3s"/>
+  </circle>
+  <!-- Node BOTTOM -->
+  <circle cx="120" cy="172" r="6" fill="rgba(240,120,48,0.1)" stroke="#f07830" stroke-width="2" filter="url(#ag3)">
+    <animate attributeName="opacity" values="0;1" dur="0.15s" fill="freeze" begin="2.4s"/>
+    <animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite" begin="3.3s"/>
+  </circle>
+  <!-- Node LEFT-TOP -->
+  <circle cx="66" cy="76" r="5" fill="rgba(58,127,212,0.1)" stroke="#3a7fd4" stroke-width="2" filter="url(#ag3)">
+    <animate attributeName="opacity" values="0;1" dur="0.15s" fill="freeze" begin="2.5s"/>
+    <animate attributeName="r" values="5;7;5" dur="2.5s" repeatCount="indefinite" begin="3.5s"/>
+  </circle>
+  <!-- Node RIGHT-TOP -->
+  <circle cx="174" cy="76" r="5" fill="rgba(58,127,212,0.1)" stroke="#3a7fd4" stroke-width="2" filter="url(#ag3)">
+    <animate attributeName="opacity" values="0;1" dur="0.15s" fill="freeze" begin="2.6s"/>
+    <animate attributeName="r" values="5;7;5" dur="2.5s" repeatCount="indefinite" begin="3.8s"/>
+  </circle>
+  <!-- Node LEFT-BOTTOM -->
+  <circle cx="66" cy="152" r="5" fill="rgba(58,127,212,0.1)" stroke="#3a7fd4" stroke-width="2" filter="url(#ag3)">
+    <animate attributeName="opacity" values="0;1" dur="0.15s" fill="freeze" begin="2.7s"/>
+    <animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite" begin="4s"/>
+  </circle>
+  <!-- Node RIGHT-BOTTOM -->
+  <circle cx="174" cy="152" r="5" fill="rgba(58,127,212,0.1)" stroke="#3a7fd4" stroke-width="2" filter="url(#ag3)">
+    <animate attributeName="opacity" values="0;1" dur="0.15s" fill="freeze" begin="2.8s"/>
+    <animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite" begin="4.3s"/>
+  </circle>
+
+  <!-- ═══ NEURAL WIRES — connecting nodes to processor ═══ -->
+  <!-- Top → CPU -->
+  <line x1="120" y1="62" x2="120" y2="86" stroke="rgba(240,120,48,0.5)" stroke-width="1.5" stroke-linecap="round">
+    <animate attributeName="stroke-dasharray" values="0 24;24 0" dur="0.3s" fill="freeze" begin="2.4s"/>
+    <animate attributeName="stroke-opacity" values="0.3;0.7;0.3" dur="1.8s" repeatCount="indefinite" begin="3.2s"/>
+  </line>
+  <!-- Bottom → CPU -->
+  <line x1="120" y1="166" x2="120" y2="122" stroke="rgba(240,120,48,0.5)" stroke-width="1.5" stroke-linecap="round">
+    <animate attributeName="stroke-dasharray" values="0 44;44 0" dur="0.3s" fill="freeze" begin="2.5s"/>
+    <animate attributeName="stroke-opacity" values="0.3;0.7;0.3" dur="2.2s" repeatCount="indefinite" begin="3.5s"/>
+  </line>
+  <!-- Left-top → CPU -->
+  <line x1="71" y1="79" x2="102" y2="92" stroke="rgba(58,127,212,0.45)" stroke-width="1.5" stroke-linecap="round">
+    <animate attributeName="stroke-dasharray" values="0 38;38 0" dur="0.3s" fill="freeze" begin="2.6s"/>
+    <animate attributeName="stroke-opacity" values="0.2;0.6;0.2" dur="2s" repeatCount="indefinite" begin="3.8s"/>
+  </line>
+  <!-- Right-top → CPU -->
+  <line x1="169" y1="79" x2="138" y2="92" stroke="rgba(58,127,212,0.45)" stroke-width="1.5" stroke-linecap="round">
+    <animate attributeName="stroke-dasharray" values="0 38;38 0" dur="0.3s" fill="freeze" begin="2.7s"/>
+    <animate attributeName="stroke-opacity" values="0.2;0.6;0.2" dur="2s" repeatCount="indefinite" begin="4.1s"/>
+  </line>
+  <!-- Left-bottom → CPU -->
+  <line x1="71" y1="149" x2="102" y2="118" stroke="rgba(58,127,212,0.45)" stroke-width="1.5" stroke-linecap="round">
+    <animate attributeName="stroke-dasharray" values="0 42;42 0" dur="0.3s" fill="freeze" begin="2.8s"/>
+    <animate attributeName="stroke-opacity" values="0.2;0.6;0.2" dur="2.5s" repeatCount="indefinite" begin="4.4s"/>
+  </line>
+  <!-- Right-bottom → CPU -->
+  <line x1="169" y1="149" x2="138" y2="118" stroke="rgba(58,127,212,0.45)" stroke-width="1.5" stroke-linecap="round">
+    <animate attributeName="stroke-dasharray" values="0 42;42 0" dur="0.3s" fill="freeze" begin="2.9s"/>
+    <animate attributeName="stroke-opacity" values="0.2;0.6;0.2" dur="2.5s" repeatCount="indefinite" begin="4.7s"/>
+  </line>
+
+  <!-- ═══ PULSE PACKETS — data traveling along wires ═══ -->
+  <!-- Packet: top wire -->
+  <circle r="2.5" fill="#f07830" filter="url(#ag3)">
+    <animateMotion path="M120,62 L120,86" dur="1.2s" repeatCount="indefinite" begin="3.5s"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="1.2s" repeatCount="indefinite" begin="3.5s"/>
+  </circle>
+  <!-- Packet: left-top wire -->
+  <circle r="2" fill="#3a7fd4" filter="url(#ag3)">
+    <animateMotion path="M71,79 L102,92" dur="1.4s" repeatCount="indefinite" begin="4s"/>
+    <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.9;1" dur="1.4s" repeatCount="indefinite" begin="4s"/>
+  </circle>
+  <!-- Packet: right-bottom wire -->
+  <circle r="2" fill="#3a7fd4" filter="url(#ag3)">
+    <animateMotion path="M169,149 L138,118" dur="1.6s" repeatCount="indefinite" begin="4.8s"/>
+    <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.9;1" dur="1.6s" repeatCount="indefinite" begin="4.8s"/>
+  </circle>
+  <!-- Packet: bottom wire reverse -->
+  <circle r="2.5" fill="#f5c842" filter="url(#ag3)">
+    <animateMotion path="M120,122 L120,166" dur="1.3s" repeatCount="indefinite" begin="5.2s"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="1.3s" repeatCount="indefinite" begin="5.2s"/>
+  </circle>
+
+  <!-- ═══ SCAN LINE ═══ -->
+  <rect x="26" y="0" width="188" height="2" fill="url(#ag-main)" clip-path="url(#ag-clip)">
+    <animate attributeName="y" from="18" to="212" dur="3.5s" repeatCount="indefinite" begin="3s"/>
+    <animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.04;0.96;1" dur="3.5s" repeatCount="indefinite" begin="3s"/>
+  </rect>
+
+  <!-- ═══ CORNER BRACKETS ═══ -->
+  <polyline points="44,68 44,54 58,54" fill="none" stroke="url(#ag-main)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <animate attributeName="stroke-dasharray" values="0 30;30 0" dur="0.3s" fill="freeze" begin="2s"/>
+    <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite" begin="3.5s"/>
+  </polyline>
+  <polyline points="196,68 196,54 182,54" fill="none" stroke="url(#ag-main)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <animate attributeName="stroke-dasharray" values="0 30;30 0" dur="0.3s" fill="freeze" begin="2.1s"/>
+    <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite" begin="3.8s"/>
+  </polyline>
+
+  <!-- ═══ PULSING CONCENTRIC RINGS ═══ -->
+  <circle cx="120" cy="104" r="42" fill="none" stroke="rgba(58,127,212,0.08)" stroke-width="1">
+    <animate attributeName="r" values="42;56;42" dur="3.5s" repeatCount="indefinite" begin="3.5s"/>
+    <animate attributeName="stroke-opacity" values="0.08;0.02;0.08" dur="3.5s" repeatCount="indefinite" begin="3.5s"/>
+  </circle>
+  <circle cx="120" cy="104" r="25" fill="rgba(58,127,212,0.04)">
+    <animate attributeName="r" values="25;35;25" dur="2.5s" repeatCount="indefinite" begin="4s"/>
+    <animate attributeName="opacity" values="0.04;0.1;0.04" dur="2.5s" repeatCount="indefinite" begin="4s"/>
+  </circle>
+
+  <!-- ═══ HEADER LINE ═══ -->
+  <line x1="68" y1="24" x2="172" y2="24" stroke="rgba(245,200,66,0.18)" stroke-width="1" stroke-linecap="round">
+    <animate attributeName="stroke-dasharray" values="0 104;104 0" dur="0.8s" fill="freeze" begin="0.5s"/>
+  </line>
+
+  <!-- ═══ BOTTOM ACCENT ═══ -->
+  <circle cx="120" cy="204" r="3.5" fill="#f07830" filter="url(#ag1)">
+    <animate attributeName="opacity" values="0;1" dur="0.2s" fill="freeze" begin="2s"/>
+    <animate attributeName="r" values="3.5;5;3.5" dur="2s" repeatCount="indefinite" begin="3.5s"/>
+  </circle>
+  <line x1="120" y1="204" x2="108" y2="196" stroke="rgba(240,120,48,0.3)" stroke-width="1.5" stroke-linecap="round">
+    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="3s"/>
+  </line>
+  <line x1="120" y1="204" x2="132" y2="196" stroke="rgba(240,120,48,0.3)" stroke-width="1.5" stroke-linecap="round">
+    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="3.1s"/>
+  </line>
+</svg>
+</div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,7vw,5.5rem);line-height:.92;letter-spacing:-1px;margin-bottom:16px;">
+      Agente de<br><span style="color:var(--accent);font-style:italic;">Seguridad Digital.</span>
+    </h1>
+    <p style="font-size:1rem;line-height:1.8;color:var(--ink2);max-width:480px;margin:0 auto 32px;">
+      Responde preguntas sobre ciberseguridad para familias, docentes y jóvenes de Chile. Sin tecnicismos, sin registro, sin costo.
+    </p>
+  </div>
+</section>
+
+<div class="wrap page-inner" style="padding-top:3rem;padding-bottom:5rem;">
+
+  <!-- CHAT -->
+  <div class="agent-chat">
+    <div class="agent-chat-hd">
+      <div class="agent-chat-l">
+        <div class="agent-ava">🛡️</div>
+        <div>
+          <div class="agent-name">Agente Aegis8</div>
+          <div class="agent-status">● en línea · responde en segundos</div>
+        </div>
+      </div>
+      <div class="agent-live"></div>
+    </div>
+    <div class="agent-msgs" id="chatMsgs">
+      <div class="msg bot">
+        <div class="msg-ava">🛡️</div>
+        <div class="msg-bubble">Hola 👋 Soy el Agente de Seguridad de Aegis8. Puedo ayudarte con cualquier pregunta sobre ciberseguridad — ya sea que quieras proteger a tu familia, enseñar seguridad digital en tu clase, o simplemente saber qué hacer ante una situación sospechosa. ¿En qué te puedo ayudar hoy?</div>
+      </div>
+    </div>
+    <div class="agent-quick">
+      <button class="qbtn" onclick="qa('Recibí un mensaje raro en WhatsApp. ¿Cómo sé si es phishing?')">¿Es phishing?</button>
+      <button class="qbtn" onclick="qa('Creo que mi hijo está hablando con alguien sospechoso online. ¿Qué hago?')">Sospecho grooming</button>
+      <button class="qbtn" onclick="qa('Me hackearon una cuenta. ¿Qué hago primero?')">Me hackearon</button>
+      <button class="qbtn" onclick="qa('¿Cómo protejo a mis hijos en internet?')">Proteger a mis hijos</button>
+      <button class="qbtn" onclick="qa('¿Qué es el 2FA y cómo lo activo?')">Qué es el 2FA</button>
+      <button class="qbtn" onclick="qa('¿Cómo sé si una app es segura para mi hijo?')">Apps para niños</button>
+    </div>
+    <div class="agent-row">
+      <input class="agent-in" id="chatIn" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendMsg()" maxlength="1000"/>
+      <button class="send-btn" onclick="sendMsg()">➤</button>
+    </div>
+  </div>
+
+  <div class="privacy-note">
+    <span class="privacy-ico">🔒</span>
+    <span class="privacy-text">Las conversaciones no se guardan ni se asocian a tu identidad. Cada sesión empieza desde cero. No uses este agente para compartir contraseñas ni datos bancarios.</span>
+  </div>
+
+  <!-- PARA QUÉ SIRVE -->
+  <div class="sw" style="margin-top:4rem;">
+    <div class="sl">// Para qué puedes usarlo</div>
+    <h2 class="st">Un agente para<br><em>cada situación.</em></h2>
+    <div class="usos-g">
+      <div class="uso"><div class="uso-ico">👨‍👩‍👧</div><div class="uso-title">Familias</div><div class="uso-body">Grooming, controles parentales, apps peligrosas, cómo hablar con tus hijos, qué hacer ante un incidente.</div></div>
+      <div class="uso"><div class="uso-ico">👩‍🏫</div><div class="uso-title">Docentes</div><div class="uso-body">Cómo enseñar ciberseguridad, protocolos ante incidentes escolares, cómo involucrar a apoderados.</div></div>
+      <div class="uso"><div class="uso-ico">🧑‍💻</div><div class="uso-title">Jóvenes</div><div class="uso-body">Privacidad en redes, hackeos de cuentas, ciberbullying, sextorsión y derechos digitales en Chile.</div></div>
+      <div class="uso"><div class="uso-ico">🎣</div><div class="uso-title">Phishing y estafas</div><div class="uso-body">Verificar si un mensaje o link es sospechoso, qué hacer si caíste en una trampa, cómo denunciar.</div></div>
+      <div class="uso"><div class="uso-ico">🔐</div><div class="uso-title">Contraseñas y cuentas</div><div class="uso-body">Qué hacer si te hackearon, cómo activar el 2FA, gestores de contraseñas, recuperar cuentas.</div></div>
+      <div class="uso"><div class="uso-ico">⚖️</div><div class="uso-title">Leyes chilenas</div><div class="uso-body">Ley 21.459, Ley 20.526, Ley 20.536. Qué está tipificado como delito y cómo denunciar.</div></div>
+    </div>
+  </div>
+
+  <!-- OTRAS HERRAMIENTAS -->
+  <div class="sw">
+    <div class="sl">// También disponible</div>
+    <h2 class="st">Más herramientas<br><em>gratuitas.</em></h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);">
+      <a href="/analizador-phishing.html" style="background:var(--bg2);padding:1.75rem;text-decoration:none;transition:background .2s;display:flex;gap:1rem;align-items:flex-start;" onmouseover="this.style.background='rgba(255,255,255,.03)'" onmouseout="this.style.background='var(--bg2)'">
+        <span style="font-size:1.5rem;flex-shrink:0;">🎣</span>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink);font-weight:600;margin-bottom:.3rem;">Analizador de Phishing</div>
+          <div style="font-size:.8rem;color:var(--ink2);line-height:1.55;">Pega un link o mensaje sospechoso. La IA detecta si es un engaño en segundos.</div>
+        </div>
+      </a>
+      <a href="/checklist.html" style="background:var(--bg2);padding:1.75rem;text-decoration:none;transition:background .2s;display:flex;gap:1rem;align-items:flex-start;" onmouseover="this.style.background='rgba(255,255,255,.03)'" onmouseout="this.style.background='var(--bg2)'">
+        <span style="font-size:1.5rem;flex-shrink:0;">✅</span>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink);font-weight:600;margin-bottom:.3rem;">Checklist Familiar</div>
+          <div style="font-size:.8rem;color:var(--ink2);line-height:1.55;">Genera un plan personalizado de seguridad para tu familia en 4 preguntas.</div>
+        </div>
+      </a>
+      <a href="/caps.html" style="background:var(--bg2);padding:1.75rem;text-decoration:none;transition:background .2s;display:flex;gap:1rem;align-items:flex-start;" onmouseover="this.style.background='rgba(0,255,136,.04)'" onmouseout="this.style.background='var(--bg2)'">
+        <span style="font-size:1.5rem;flex-shrink:0;">🔑</span>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#00ff88;font-weight:600;margin-bottom:.3rem;">CAPS — Generador de Claves</div>
+          <div style="font-size:.8rem;color:var(--ink2);line-height:1.55;">Crea contraseñas seguras y memorables con un personaje, una acción y una comida.</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="page-footer">
+  <a href="/" class="fl">AEGIS<span>8</span></a>
+  <ul class="flinks">
+    <li><a href="/educa.html">Educa</a></li>
+    <li><a href="/educa/profesores.html">Docentes</a></li>
+    <li><a href="/educa/padres.html">Familias</a></li>
+    <li><a href="/analizador-phishing.html">Herramientas</a></li>
+    <li><a href="/contactos.html">Contacto</a></li>
+  </ul>
+  <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+    <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
+    
+  </div>
+</footer>
+<script>
+const WORKER='https://aegis8-agent.christianmora705.workers.dev';
+let hist=[];
+async function sendMsg(){
+  const el=document.getElementById('chatIn');
+  const t=el.value.trim();if(!t)return;el.value='';
+  addM('user',t);hist.push({role:'user',content:t});showT();
+  try{
+    const r=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({messages:hist})});
+    if(r.status===429){removeT();addM('bot','Demasiadas consultas seguidas. Espera un momento e intenta de nuevo.');return;}
+    const d=await r.json();removeT();
+    const rep=d.content?.[0]?.text||'Error al conectar.';
+    hist.push({role:'assistant',content:rep});addM('bot',rep);
+    if(hist.length>20)hist=hist.slice(-20);
+  }catch{removeT();addM('bot','Error de conexión. Intenta de nuevo.');}
+}
+function qa(q){document.getElementById('chatIn').value=q;sendMsg();}
+function addM(r,t){
+  const c=document.getElementById('chatMsgs');
+  const d=document.createElement('div');d.className='msg '+r;
+  const a=document.createElement('div');a.className='msg-ava';a.textContent=r==='bot'?'🛡️':'👤';
+  const b=document.createElement('div');b.className='msg-bubble';b.textContent=t;
+  d.appendChild(a);d.appendChild(b);c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+function showT(){
+  const c=document.getElementById('chatMsgs');
+  const d=document.createElement('div');d.className='msg bot';d.id='tMsg';
+  d.innerHTML='<div class="msg-ava">🛡️</div><div class="msg-bubble"><div class="typing-wrap"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div></div>';
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+function removeT(){document.getElementById('tMsg')?.remove();}
+
+const ro=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});
+},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.sw').forEach(el=>ro.observe(el));
+
+</script>
+</body>
+</html>

@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ley 21.663 — Marco de Ciberseguridad Chile</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:      #f5f2ed;
+  --bg2:     #ede9e2;
+  --ink:     #1a1410;
+  --ink2:    #4a3f35;
+  --ink3:    #8a7a6e;
+  --accent:  #c8410a;
+  --accent2: #e8622a;
+  --blue:    #1a4f8c;
+  --green:   #1a6b3c;
+  --gold:    #a07a10;
+  --purple:  #6b2d8b;
+  --teal:    #0e7c7b;
+  --border:  rgba(26,20,16,.1);
+  --card:    rgba(255,255,255,.6);
+  --shadow:  0 2px 20px rgba(26,20,16,.08);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;
+}
+
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.4;
+}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:10;
+  background:var(--ink);color:#f5f2ed;
+  padding:80px 40px 64px;overflow:hidden;
+}
+.hero::after{
+  content:'';position:absolute;right:-60px;top:-60px;
+  width:420px;height:420px;border-radius:50%;
+  border:80px solid rgba(200,65,10,.12);pointer-events:none;
+}
+.hero::before{
+  content:'';position:absolute;left:-40px;bottom:-80px;
+  width:280px;height:280px;border-radius:50%;
+  border:50px solid rgba(26,79,140,.08);pointer-events:none;
+}
+.hero-inner{max-width:1080px;margin:0 auto;position:relative;z-index:2;}
+
+.hero-eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  letter-spacing:4px;color:var(--accent2);margin-bottom:20px;
+  opacity:0;animation:fadeUp .6s .1s forwards;
+}
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(3rem,8vw,6.5rem);line-height:.95;
+  color:#f5f2ed;margin-bottom:8px;
+  opacity:0;animation:fadeUp .7s .2s forwards;
+}
+.hero-title em{font-style:italic;color:var(--accent2);}
+.hero-year{
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(.9rem,2.5vw,1.5rem);
+  color:rgba(245,242,237,.35);letter-spacing:6px;
+  margin-bottom:28px;opacity:0;animation:fadeUp .7s .3s forwards;
+}
+.hero-desc{
+  max-width:580px;font-size:1rem;line-height:1.85;
+  color:rgba(245,242,237,.7);margin-bottom:36px;
+  opacity:0;animation:fadeUp .7s .4s forwards;
+}
+.hero-stats{
+  display:flex;flex-wrap:wrap;gap:28px;
+  opacity:0;animation:fadeUp .7s .5s forwards;
+}
+.stat{border-left:2px solid var(--accent);padding-left:14px;}
+.stat-num{font-family:'DM Serif Display',serif;font-size:2rem;color:#f5f2ed;line-height:1;}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(245,242,237,.4);letter-spacing:2px;margin-top:3px;}
+
+/* ── NAV ── */
+.main-nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(245,242,237,.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);padding:0 24px;overflow-x:auto;
+}
+.nav-inner{display:flex;gap:0;max-width:1080px;margin:0 auto;white-space:nowrap;}
+.nav-link{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--ink3);text-decoration:none;padding:16px 13px;
+  border-bottom:2px solid transparent;transition:all .2s;text-transform:uppercase;
+}
+.nav-link:hover,.nav-link.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* ── LAYOUT ── */
+.page{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+section.block{
+  padding:72px 0 40px;border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s;
+}
+section.block.visible{opacity:1;transform:none;}
+
+.block-label{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:8px;
+}
+.block-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(1.8rem,4vw,2.8rem);color:var(--ink);
+  margin-bottom:20px;line-height:1.2;
+}
+.block-intro{font-size:.97rem;line-height:1.9;color:var(--ink2);max-width:720px;margin-bottom:36px;}
+
+/* ── HELPERS ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+@media(max-width:680px){.two-col{grid-template-columns:1fr;}}
+
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:720px){.three-col{grid-template-columns:1fr;}}
+
+ol.num-list{counter-reset:li;list-style:none;display:flex;flex-direction:column;gap:10px;}
+.num-list li{display:flex;gap:12px;font-size:.9rem;line-height:1.7;color:var(--ink2);}
+.num-list li::before{
+  content:counter(li);counter-increment:li;
+  display:flex;align-items:center;justify-content:center;
+  min-width:26px;height:26px;background:var(--accent);color:#fff;
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  border-radius:50%;flex-shrink:0;margin-top:2px;
+}
+
+/* ── CALLOUTS ── */
+.note{
+  border-left:3px solid var(--gold);background:rgba(160,122,16,.05);
+  padding:14px 18px;border-radius:0 3px 3px 0;
+  font-size:.88rem;line-height:1.75;color:var(--ink2);margin:20px 0;
+}
+.note-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
+.tip{border-left-color:var(--blue);background:rgba(26,79,140,.04);}
+.tip .note-label{color:var(--blue);}
+.warn{border-left-color:var(--accent);background:rgba(200,65,10,.04);}
+.warn .note-label{color:var(--accent);}
+.success{border-left-color:var(--green);background:rgba(26,107,60,.04);}
+.success .note-label{color:var(--green);}
+
+/* ── BADGE ── */
+.badge{
+  display:inline-block;font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:1px;padding:3px 9px;border-radius:20px;border:1px solid;
+}
+.b-red   {color:var(--accent);border-color:rgba(200,65,10,.3);background:rgba(200,65,10,.06);}
+.b-blue  {color:var(--blue);  border-color:rgba(26,79,140,.3); background:rgba(26,79,140,.06);}
+.b-green {color:var(--green); border-color:rgba(26,107,60,.3); background:rgba(26,107,60,.06);}
+.b-gold  {color:var(--gold);  border-color:rgba(160,122,16,.3);background:rgba(160,122,16,.06);}
+.b-purple{color:var(--purple);border-color:rgba(107,45,139,.3);background:rgba(107,45,139,.06);}
+
+/* ── CARDS ── */
+.card{
+  border:1px solid var(--border);border-radius:4px;
+  padding:22px;background:var(--card);transition:all .22s;
+  position:relative;overflow:hidden;
+}
+.card:hover{box-shadow:var(--shadow);transform:translateY(-3px);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.card-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;color:var(--ink3);margin-bottom:8px;}
+.card-title{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink);margin-bottom:8px;line-height:1.3;}
+.card-body{font-size:.85rem;line-height:1.7;color:var(--ink2);}
+
+/* ── TIMELINE ── */
+.timeline{
+  position:relative;padding-left:28px;
+  border-left:1px solid var(--border);
+  display:flex;flex-direction:column;gap:28px;
+}
+.tl-item{position:relative;}
+.tl-dot{
+  position:absolute;left:-34px;top:4px;
+  width:12px;height:12px;border-radius:50%;
+  border:2px solid var(--accent);background:var(--bg);
+}
+.tl-date{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent);letter-spacing:2px;margin-bottom:4px;}
+.tl-text{font-size:.9rem;line-height:1.75;color:var(--ink2);}
+.tl-text strong{color:var(--ink);font-weight:600;}
+
+/* ── SCOPE BOXES ── */
+.scope-container{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:640px){.scope-container{grid-template-columns:1fr;}}
+
+.scope-box{border:1px solid;border-radius:4px;padding:24px;}
+.scope-pse{border-color:rgba(26,79,140,.3);background:rgba(26,79,140,.04);}
+.scope-oiv{border-color:rgba(200,65,10,.3);background:rgba(200,65,10,.04);}
+
+.scope-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.scope-sigla{font-family:'DM Serif Display',serif;font-size:2.5rem;line-height:1;}
+.scope-pse .scope-sigla{color:var(--blue);}
+.scope-oiv .scope-sigla{color:var(--accent);}
+
+.scope-full{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:1px;line-height:1.5;}
+.scope-pse .scope-full{color:var(--blue);}
+.scope-oiv .scope-full{color:var(--accent);}
+
+.scope-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.scope-list li{font-size:.87rem;line-height:1.6;padding-left:16px;position:relative;}
+.scope-list li::before{content:'›';position:absolute;left:0;font-size:1rem;line-height:1.4;}
+.scope-pse .scope-list li::before{color:var(--blue);}
+.scope-oiv .scope-list li::before{color:var(--accent);}
+
+/* ── TABS ── */
+.tabs-nav{display:flex;flex-wrap:wrap;gap:2px;margin-bottom:20px;}
+.tab-btn{
+  font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;
+  padding:8px 16px;border:1px solid var(--border);border-radius:2px;
+  background:transparent;color:var(--ink3);cursor:pointer;transition:all .2s;
+}
+.tab-btn.active{background:rgba(200,65,10,.08);border-color:rgba(200,65,10,.3);color:var(--accent);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* ── OBLIGATION LIST ── */
+.obligation-list{display:flex;flex-direction:column;gap:12px;}
+.ob-item{
+  display:flex;gap:14px;padding:16px;
+  border:1px solid var(--border);border-radius:3px;
+  background:rgba(255,255,255,.5);transition:border-color .2s;
+}
+.ob-item:hover{border-color:rgba(200,65,10,.3);}
+.ob-num{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  color:var(--accent);flex-shrink:0;padding-top:2px;
+  background:rgba(200,65,10,.08);padding:2px 6px;border-radius:2px;
+  height:fit-content;min-width:24px;text-align:center;
+}
+.ob-title{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--ink);letter-spacing:1px;margin-bottom:5px;}
+.ob-desc{font-size:.85rem;line-height:1.7;color:var(--ink2);}
+
+/* ── INCIDENT TIMELINE ── */
+.incident-flow{
+  position:relative;padding-left:20px;
+  border-left:2px solid var(--border);
+  display:flex;flex-direction:column;gap:0;
+}
+.flow-step{position:relative;padding:0 0 32px 28px;}
+.flow-step:last-child{padding-bottom:0;}
+.flow-circle{
+  position:absolute;left:-29px;top:0;
+  width:16px;height:16px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:600;
+  flex-shrink:0;
+}
+.flow-step:nth-child(1) .flow-circle{background:var(--accent);color:#fff;}
+.flow-step:nth-child(2) .flow-circle{background:var(--gold);color:#fff;}
+.flow-step:nth-child(3) .flow-circle{background:var(--green);color:#fff;}
+.flow-time{font-family:'DM Serif Display',serif;font-size:1.8rem;line-height:1;margin-bottom:4px;}
+.flow-step:nth-child(1) .flow-time{color:var(--accent);}
+.flow-step:nth-child(2) .flow-time{color:var(--gold);}
+.flow-step:nth-child(3) .flow-time{color:var(--green);}
+.flow-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink3);letter-spacing:2px;margin-bottom:6px;}
+.flow-desc{font-size:.88rem;line-height:1.7;color:var(--ink2);}
+
+/* ── ORG DIAGRAM ── */
+.org-diagram{display:flex;flex-direction:column;gap:3px;max-width:680px;}
+.org-node{
+  display:flex;align-items:flex-start;gap:16px;
+  padding:18px 20px;border:1px solid;border-radius:3px;
+  background:rgba(255,255,255,.5);transition:transform .2s;
+}
+.org-node:hover{transform:translateX(5px);}
+.org-node.primary{border-color:rgba(200,65,10,.35);background:rgba(200,65,10,.04);}
+.org-node.secondary{border-color:rgba(26,79,140,.25);background:rgba(26,79,140,.03);margin-left:30px;}
+.org-node.tertiary{border-color:rgba(160,122,16,.2);background:rgba(160,122,16,.03);margin-left:60px;}
+@media(max-width:680px){
+  .org-node.secondary{margin-left:14px;}
+  .org-node.tertiary{margin-left:28px;}
+}
+.org-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px;}
+.org-name{font-family:'DM Serif Display',serif;font-size:1.1rem;margin-bottom:4px;}
+.org-node.primary .org-name{color:var(--accent);}
+.org-node.secondary .org-name{color:var(--blue);}
+.org-node.tertiary .org-name{color:var(--gold);}
+.org-desc{font-size:.83rem;line-height:1.65;color:var(--ink3);}
+
+/* ── SANCTIONS TABLE ── */
+.sanctions-table{width:100%;border-collapse:collapse;}
+.sanctions-table th{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:2px;color:var(--ink3);padding:10px 14px;
+  border-bottom:2px solid var(--border);text-align:left;font-weight:400;
+}
+.sanctions-table td{
+  padding:13px 14px;border-bottom:1px solid var(--border);
+  font-size:.85rem;line-height:1.65;color:var(--ink2);vertical-align:top;
+}
+.sanctions-table tr:hover td{background:rgba(200,65,10,.02);}
+.sev-badge{
+  display:inline-block;padding:4px 10px;border-radius:20px;
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  letter-spacing:1px;font-weight:600;border:1px solid;
+}
+.s-leve  {background:rgba(26,79,140,.08);color:var(--blue);border-color:rgba(26,79,140,.3);}
+.s-grave {background:rgba(160,122,16,.08);color:var(--gold);border-color:rgba(160,122,16,.3);}
+.s-gravis{background:rgba(200,65,10,.08);color:var(--accent);border-color:rgba(200,65,10,.3);}
+
+/* ── CHECKLIST ── */
+.checklist{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
+.check-item{
+  display:flex;gap:12px;padding:14px 16px;
+  border:1px solid var(--border);border-radius:3px;
+  background:rgba(255,255,255,.5);transition:border-color .2s,transform .2s;
+  align-items:flex-start;
+}
+.check-item:hover{border-color:rgba(200,65,10,.3);transform:translateY(-2px);}
+.check-box{
+  width:20px;height:20px;flex-shrink:0;
+  border:1px solid var(--accent);border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;color:var(--accent);margin-top:1px;
+}
+.check-text{font-size:.87rem;line-height:1.65;color:var(--ink2);}
+.check-text strong{color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:.78rem;display:block;margin-bottom:3px;letter-spacing:1px;}
+
+/* ── COMPARE TABLE ── */
+.compare-table{width:100%;border-collapse:collapse;}
+.compare-table th{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:2px;color:var(--ink3);padding:10px 14px;
+  border-bottom:2px solid var(--border);text-align:left;font-weight:400;
+}
+.compare-table td{
+  padding:12px 14px;border-bottom:1px solid var(--border);
+  font-size:.85rem;line-height:1.65;color:var(--ink2);vertical-align:top;
+}
+.compare-table tr:hover td{background:rgba(200,65,10,.02);}
+
+/* ── PRINCIPIOS GRID ── */
+.principles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.principle-card{
+  border:1px solid var(--border);border-radius:3px;
+  padding:20px;background:var(--card);transition:all .22s;
+}
+.principle-card:hover{box-shadow:var(--shadow);transform:translateY(-3px);}
+.principle-icon{font-size:1.5rem;margin-bottom:10px;}
+.principle-name{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:2px;margin-bottom:6px;}
+.principle-desc{font-size:.85rem;line-height:1.7;color:var(--ink2);}
+
+/* ── FOOTER & SCROLL ── */
+footer{
+  background:var(--ink);color:rgba(245,242,237,.5);
+  padding:48px 40px;font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;letter-spacing:1px;line-height:2;text-align:center;
+}
+footer strong{color:rgba(245,242,237,.8);}
+footer a{color:var(--accent2);text-decoration:none;}
+
+.scroll-top{
+  position:fixed;bottom:28px;right:28px;z-index:200;
+  background:var(--ink);color:var(--bg);
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  padding:10px 16px;border:none;border-radius:2px;cursor:pointer;
+  transition:all .2s;letter-spacing:2px;opacity:0;pointer-events:none;
+  box-shadow:0 4px 20px rgba(26,20,16,.2);
+}
+.scroll-top.show{opacity:1;pointer-events:auto;}
+.scroll-top:hover{background:var(--accent);}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(16px);}
+  to  {opacity:1;transform:translateY(0);}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">// República de Chile — Normativa Vigente 2025 · Primero en América Latina</div>
+    <h1 class="hero-title">Ley<br><em>21.663</em></h1>
+    <div class="hero-year">MARCO DE CIBERSEGURIDAD · CHILE</div>
+    <p class="hero-desc">
+      La primera ley marco de ciberseguridad de América Latina. Establece institucionalidad, obligaciones, plazos de reporte y sanciones para organismos públicos y privados que operan servicios esenciales.
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">1.712</div><div class="stat-label">OIV identificados (sep 2025)</div></div>
+      <div class="stat"><div class="stat-num">3h</div><div class="stat-label">Plazo alerta CSIRT</div></div>
+      <div class="stat"><div class="stat-num">40.000</div><div class="stat-label">UTM multa máxima OIV</div></div>
+      <div class="stat"><div class="stat-num">2024</div><div class="stat-label">Año de promulgación</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ NAV ══ -->
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a class="nav-link" href="#historia">Historia</a>
+    <a class="nav-link" href="#principios">Principios</a>
+    <a class="nav-link" href="#institucionalidad">Institucionalidad</a>
+    <a class="nav-link" href="#ambito">Ámbito</a>
+    <a class="nav-link" href="#obligaciones">Obligaciones</a>
+    <a class="nav-link" href="#incidentes">Reportes</a>
+    <a class="nav-link" href="#sanciones">Sanciones</a>
+    <a class="nav-link" href="#cumplimiento">Cumplimiento</a>
+    <a class="nav-link" href="#comparativa">Comparativa</a>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- ══ HISTORIA ══ -->
+<section class="block" id="historia">
+  <div class="block-label">// Contexto &amp; Cronología</div>
+  <h2 class="block-title">Historia de la Ley</h2>
+  <p class="block-intro">
+    Chile venía regulando la ciberseguridad de forma fragmentada a través de decretos y normas dispersas. La Ley 21.663 consolida ese marco y coloca al país como el primero en América Latina con una legislación de este nivel.
+  </p>
+
+  <div class="two-col">
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2004 — 2015</div>
+        <div class="tl-text"><strong>Antecedentes dispersos:</strong> Decreto 83 (seguridad de documentos electrónicos), Decreto 1299 (red de conectividad del Estado) y Decreto 533 (Comité Interministerial de Ciberseguridad). Bases técnicas sin cohesión ni sanción efectiva.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2022</div>
+        <div class="tl-text"><strong>Ley 21.459 de Delitos Informáticos:</strong> Moderniza el Convenio de Budapest y tipifica delitos cibernéticos. Antecedente directo de la ley marco.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">26 Marzo 2024</div>
+        <div class="tl-text"><strong>Promulgación:</strong> El Presidente Gabriel Boric firma la <strong>Ley 21.663</strong>. Inspirada en la directiva NIS2 de la UE y recomendaciones de la UIT.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">8 Abril 2024</div>
+        <div class="tl-text"><strong>Publicación en Diario Oficial:</strong> La ley entra formalmente al ordenamiento jurídico chileno.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">1 Enero 2025</div>
+        <div class="tl-text"><strong>Entrada en vigor general:</strong> Disposiciones generales y comienzo oficial de la <strong>Agencia Nacional de Ciberseguridad (ANCI)</strong>.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">1 Marzo 2025</div>
+        <div class="tl-text"><strong>Disposiciones críticas vigentes:</strong> Art. 5° (calificación OIV), Art. 8° (deberes OIV), Art. 9° (reporte obligatorio), Título VII (sanciones). Se publican el DS 295 y la Resolución 7 de la ANCI con la taxonomía de incidentes.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Septiembre 2025</div>
+        <div class="tl-text"><strong>Primera nómina de OIV:</strong> La ANCI identifica <strong>1.712 instituciones</strong> en energía, salud, telecomunicaciones, servicios digitales, finanzas y Estado.</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="note warn">
+        <div class="note-label">// POR QUÉ ES RELEVANTE</div>
+        Antes de esta ley, Chile no tenía una obligación legal formal de reportar incidentes de ciberseguridad ni un ente rector con poder sancionatorio. La Ley 21.663 cambia el paradigma: la ciberseguridad pasa de ser una <strong>buena práctica voluntaria</strong> a una <strong>obligación legal con consecuencias reales</strong>.
+      </div>
+      <div class="note" style="margin-top:14px;">
+        <div class="note-label">// LEYES COMPLEMENTARIAS</div>
+        La Ley 21.663 coexiste con la <strong>Ley 21.459 de Delitos Informáticos</strong> (2022) y será complementada por la nueva <strong>Ley de Protección de Datos Personales</strong> que entra en vigor en diciembre de 2026, añadiendo un segundo frente de cumplimiento sobre privacidad.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRINCIPIOS ══ -->
+<section class="block" id="principios">
+  <div class="block-label">// Artículo 2 — Bases Doctrinarias</div>
+  <h2 class="block-title">Principios Rectores</h2>
+  <p class="block-intro">
+    La ley establece seis principios que todas las instituciones obligadas deben observar en su conducta y en la toma de decisiones relativas a la ciberseguridad.
+  </p>
+
+  <div class="principles-grid">
+    <div class="principle-card">
+      <div class="principle-icon">🛑</div>
+      <div class="principle-name">Control de Daños</div>
+      <div class="principle-desc">Ante un incidente, la primera obligación es contener su propagación y minimizar el impacto sobre los sistemas propios y de terceros antes de cualquier otra acción.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">🤝</div>
+      <div class="principle-name">Coordinación con la Autoridad</div>
+      <div class="principle-desc">Las instituciones deben cooperar activamente con la ANCI y el CSIRT Nacional, compartiendo información de forma oportuna y colaborando en investigaciones.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">⚖️</div>
+      <div class="principle-name">Respuesta Responsable</div>
+      <div class="principle-desc">Las acciones de respuesta ante incidentes deben ser proporcionales al riesgo, evitando causar daños colaterales a terceros o a la infraestructura de red nacional.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">🔒</div>
+      <div class="principle-name">Seguridad Informática</div>
+      <div class="principle-desc">Garantizar la confidencialidad, integridad y disponibilidad (CIA) de los sistemas e información es un deber permanente y no meramente reactivo.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">📐</div>
+      <div class="principle-name">Racionalidad</div>
+      <div class="principle-desc">Las medidas de ciberseguridad deben ser proporcionales al riesgo real, evitando cargas desmedidas especialmente para organizaciones de menor tamaño o capacidad.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">🔐</div>
+      <div class="principle-name">Seguridad y Privacidad por Diseño</div>
+      <div class="principle-desc">Los sistemas deben incorporar controles de seguridad y privacidad desde su concepción y por defecto, no como añadidos posteriores (Security &amp; Privacy by Design).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INSTITUCIONALIDAD ══ -->
+<section class="block" id="institucionalidad">
+  <div class="block-label">// Nueva Arquitectura Institucional</div>
+  <h2 class="block-title">Institucionalidad</h2>
+  <p class="block-intro">
+    La ley crea cuatro estructuras nuevas que forman la arquitectura de gobernanza de ciberseguridad en Chile, con la ANCI como ente central y rector.
+  </p>
+
+  <div class="org-diagram">
+    <div class="org-node primary">
+      <div class="org-icon">🏛️</div>
+      <div>
+        <div class="org-name">ANCI — Agencia Nacional de Ciberseguridad</div>
+        <div class="org-desc">Servicio público descentralizado, técnico y especializado. Ente rector con facultades normativas, fiscalizadoras y sancionatorias. Asesora al Presidente, coordina CSIRTs sectoriales, dicta estándares técnicos y tiene poder para imponer multas de hasta 40.000 UTM. Autoridades elegidas por Alta Dirección Pública.</div>
+      </div>
+    </div>
+    <div class="org-node secondary">
+      <div class="org-icon">📡</div>
+      <div>
+        <div class="org-name">CSIRT Nacional</div>
+        <div class="org-desc">Núcleo operativo de la ANCI. Recibe reportes de incidentes vía portal.anci.gob.cl (24/7), coordina respuesta técnica, emite alertas y asiste a entidades afectadas.</div>
+      </div>
+    </div>
+    <div class="org-node secondary">
+      <div class="org-icon">🛡️</div>
+      <div>
+        <div class="org-name">CSIRT de la Defensa Nacional</div>
+        <div class="org-desc">Gestiona incidentes en las Fuerzas Armadas e infraestructura de defensa, en coordinación con el CSIRT Nacional.</div>
+      </div>
+    </div>
+    <div class="org-node tertiary">
+      <div class="org-icon">🏢</div>
+      <div>
+        <div class="org-name">CSIRT Sectoriales</div>
+        <div class="org-desc">Equipos especializados en sectores críticos (energía, salud, finanzas), articulados con el CSIRT Nacional.</div>
+      </div>
+    </div>
+    <div class="org-node secondary">
+      <div class="org-icon">👥</div>
+      <div>
+        <div class="org-name">Consejo Multisectorial sobre Ciberseguridad (CMC)</div>
+        <div class="org-desc">Órgano consultivo externo. Asesora a la ANCI con representación de academia, sector privado y sociedad civil.</div>
+      </div>
+    </div>
+    <div class="org-node secondary">
+      <div class="org-icon">🏛️</div>
+      <div>
+        <div class="org-name">Comité Interministerial de Ciberseguridad</div>
+        <div class="org-desc">Coordina políticas públicas de ciberseguridad entre ministerios y articula la acción del gobierno con la ANCI.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ÁMBITO ══ -->
+<section class="block" id="ambito">
+  <div class="block-label">// Artículos 4° y 5° — ¿A quién aplica?</div>
+  <h2 class="block-title">Ámbito de Aplicación</h2>
+  <p class="block-intro">
+    La ley se aplica a dos categorías de actores. No son excluyentes: un OIV siempre es también PSE, pero no todo PSE es OIV.
+  </p>
+
+  <div class="scope-container">
+    <div class="scope-box scope-pse">
+      <div class="scope-head">
+        <div class="scope-sigla">PSE</div>
+        <div class="scope-full">Prestadores de<br>Servicios Esenciales</div>
+      </div>
+      <ul class="scope-list">
+        <li>Organismos de la Administración del Estado (ministerios, servicios, municipios, universidades estatales)</li>
+        <li>Coordinador Eléctrico Nacional</li>
+        <li>Concesionarios de servicios públicos</li>
+        <li>Generación, transmisión y distribución eléctrica</li>
+        <li>Distribución de combustibles y agua potable</li>
+        <li>Telecomunicaciones e infraestructura digital</li>
+        <li>Servicios financieros (banca, seguros, mercado de capitales)</li>
+        <li>Transporte público y logística</li>
+        <li>Salud y servicios sociales</li>
+        <li>Servicios digitales y tecnología de la información</li>
+      </ul>
+    </div>
+    <div class="scope-box scope-oiv">
+      <div class="scope-head">
+        <div class="scope-sigla">OIV</div>
+        <div class="scope-full">Operadores de<br>Importancia Vital</div>
+      </div>
+      <ul class="scope-list">
+        <li>Calificados por la ANCI mediante resolución fundada (proceso de 6 etapas × 30 días cada una)</li>
+        <li><strong>Criterio 1:</strong> servicio depende críticamente de redes y sistemas informáticos</li>
+        <li><strong>Criterio 2:</strong> interrupción genera impacto significativo en seguridad pública, economía o salud</li>
+        <li><strong>Criterio 3:</strong> posible efecto cascada en múltiples sectores o regiones</li>
+        <li><strong style="color:var(--ink);">Sep 2025: 1.712 entidades</strong> designadas en energía, salud, telecom, finanzas, servicios digitales y Estado</li>
+        <li>Obligaciones adicionales y multas duplicadas respecto a PSE no-OIV</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:16px;">
+    <div class="note-label">// PROVEEDORES DEL ESTADO</div>
+    La ley también aplica a cualquier institución, pública o privada, que provea bienes o servicios al Estado. Deberán cumplir con los estándares de ciberseguridad que la ANCI establezca para proveedores. Esto amplía considerablemente el alcance efectivo de la normativa.
+  </div>
+</section>
+
+<!-- ══ OBLIGACIONES ══ -->
+<section class="block" id="obligaciones">
+  <div class="block-label">// Artículos 6°, 7° y 8°</div>
+  <h2 class="block-title">Obligaciones</h2>
+  <p class="block-intro">
+    Existen dos niveles de exigencia. Todos los PSE deben cumplir las obligaciones generales; los OIV deben cumplir además obligaciones adicionales más exigentes.
+  </p>
+
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('general',this)">TODOS LOS PSE</button>
+    <button class="tab-btn" onclick="switchTab('oiv',this)">SOLO OIV (ADICIONALES)</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-general">
+    <div class="obligation-list">
+      <div class="ob-item">
+        <span class="ob-num">01</span>
+        <div><div class="ob-title">POLÍTICAS DE CIBERSEGURIDAD</div><div class="ob-desc">Desarrollar y mantener políticas internas documentadas, actualizadas regularmente y alineadas a protocolos y estándares de la ANCI o sectoriales.</div></div>
+      </div>
+      <div class="ob-item">
+        <span class="ob-num">02</span>
+        <div><div class="ob-title">GESTIÓN DE RIESGOS</div><div class="ob-desc">Identificar, evaluar y tratar continuamente los riesgos cibernéticos. Las medidas pueden ser tecnológicas, organizacionales, físicas o informativas.</div></div>
+      </div>
+      <div class="ob-item">
+        <span class="ob-num">03</span>
+        <div><div class="ob-title">PLANES DE CONTINUIDAD</div><div class="ob-desc">Elaborar planes de continuidad operativa y recuperación ante incidentes que aseguren la prestación ininterrumpida del servicio esencial.</div></div>
+      </div>
+      <div class="ob-item">
+        <span class="ob-num">04</span>
+        <div><div class="ob-title">CAPACITACIÓN DEL PERSONAL</div><div class="ob-desc">Implementar programas regulares de formación y concientización en ciberseguridad para todo el personal, incluyendo campañas de ciberhigiene.</div></div>
+      </div>
+      <div class="ob-item">
+        <span class="ob-num">05</span>
+        <div><div class="ob-title">REPORTE DE INCIDENTES</div><div class="ob-desc">Notificar al CSIRT Nacional los incidentes con efectos significativos, siguiendo el esquema 3h / 72h / 15 días vigente desde marzo 2025.</div></div>
+      </div>
+      <div class="ob-item">
+        <span class="ob-num">06</span>
+        <div><div class="ob-title">RESPONSABILIDAD EJECUTIVA</div><div class="ob-desc">La responsabilidad de cumplimiento recae en la máxima autoridad (director o gerente general), quien debe asegurar la implementación de todas las medidas exigidas.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-oiv">
+    <div class="obligation-list">
+      <div class="ob-item">
+        <span class="ob-num">A</span>
+        <div><div class="ob-title">SGSI CERTIFICADO (ISO/IEC 27001)</div><div class="ob-desc">Implementar un Sistema de Gestión de Seguridad de la Información basado en estándares como la familia ISO 27000. Plazo: 24 meses desde la designación como OIV.</div></div>
+      </div>
+      <div class="ob-item">
+        <span class="ob-num">B</span>
+        <div><div class="ob-title">MONITOREO CONTINUO 24/7</div><div class="ob-desc">Establecer sistemas de vigilancia constante y detección temprana de amenazas sobre redes y sistemas críticos.</div></div>
+      </div>
+      <div class="ob-item">
+        <span class="ob-num">C</span>
+        <div><div class="ob-title">EJERCICIOS Y SIMULACROS PERIÓDICOS</div><div class="ob-desc">Realizar operaciones de revisión, ejercicios de contingencia, simulacros de incidentes y análisis de redes que comprometan la ciberseguridad.</div></div>
+      </div>
+      <div class="ob-item">
+        <span class="ob-num">D</span>
+        <div><div class="ob-title">CERTIFICACIONES DEFINIDAS POR LA ANCI</div><div class="ob-desc">Obtener las certificaciones de ciberseguridad que la ANCI defina por reglamento como obligatorias para la categoría y sector específico.</div></div>
+      </div>
+      <div class="ob-item">
+        <span class="ob-num">E</span>
+        <div><div class="ob-title">MEDIDAS DE CONTENCIÓN</div><div class="ob-desc">Adoptar medidas necesarias para reducir el impacto y la propagación de incidentes, incluyendo aislamiento de sistemas comprometidos.</div></div>
+      </div>
+      <div class="ob-item">
+        <span class="ob-num">F</span>
+        <div><div class="ob-title">AUDITORÍAS EXTERNAS</div><div class="ob-desc">Someterse a auditorías y evaluaciones de cumplimiento realizadas o encargadas por la ANCI para verificar el estado de implementación de controles.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ REPORTE INCIDENTES ══ -->
+<section class="block" id="incidentes">
+  <div class="block-label">// Artículo 9° + DS 295/2024 + Resolución 7/2025</div>
+  <h2 class="block-title">Reporte de Incidentes</h2>
+  <p class="block-intro">
+    La ley establece un esquema progresivo de reporte con plazos perentorios contados desde que la institución toma conocimiento del incidente. Plataforma oficial: <strong>portal.anci.gob.cl</strong>, operativa 24/7.
+  </p>
+
+  <div class="two-col">
+    <div class="incident-flow">
+      <div class="flow-step">
+        <div class="flow-circle">1</div>
+        <div class="flow-time">3 Horas</div>
+        <div class="flow-label">// ALERTA TEMPRANA</div>
+        <div class="flow-desc">Notificación inicial al CSIRT Nacional. Solo indica que existe un incidente con efectos potencialmente significativos. No se requiere análisis completo. Obligatorio para todos los PSE.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-circle">2</div>
+        <div class="flow-time">72 Horas</div>
+        <div class="flow-label">// INFORME INICIAL</div>
+        <div class="flow-desc">Descripción más detallada: sistemas afectados, tipo de incidente según taxonomía de la Resolución 7/2025, impacto preliminar estimado y medidas de contención adoptadas.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-circle">3</div>
+        <div class="flow-time">15 Días</div>
+        <div class="flow-label">// INFORME FINAL</div>
+        <div class="flow-desc">Reporte completo: análisis forense, causa raíz, cronología, impacto real en usuarios y servicios, medidas correctivas implementadas y plan para prevenir recurrencia.</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="note tip">
+        <div class="note-label">// TAXONOMÍA DE INCIDENTES (Resolución 7/2025)</div>
+        La ANCI publicó una clasificación oficial para estandarizar el reporte. Categorías: compromiso de cuentas · malware/ransomware · denegación de servicio · acceso no autorizado · fuga de datos · phishing · vulnerabilidades explotadas. Disponible en portal.anci.gob.cl.
+      </div>
+      <div class="note warn" style="margin-top:14px;">
+        <div class="note-label">// CONSECUENCIA DE NO REPORTAR</div>
+        No reportar dentro del plazo de 3 horas desde que se toma conocimiento, reportar de forma falsa o incompleta, o intentar ocultar un incidente son infracciones que pueden clasificarse como <strong>gravísimas</strong> — la categoría con las multas más altas. La ANCI puede además derivar antecedentes al Ministerio Público.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SANCIONES ══ -->
+<section class="block" id="sanciones">
+  <div class="block-label">// Título VII — Artículo 40</div>
+  <h2 class="block-title">Régimen Sancionatorio</h2>
+  <p class="block-intro">
+    Las infracciones se clasifican en tres grados. Los montos para OIV son el doble que para PSE no-OIV. La ANCI puede aplicar sanciones con independencia del daño real sufrido por terceros.
+  </p>
+
+  <table class="sanctions-table">
+    <thead>
+      <tr>
+        <th>GRAVEDAD</th>
+        <th>MULTA PSE</th>
+        <th>MULTA OIV</th>
+        <th>EJEMPLOS DE INFRACCIÓN</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="sev-badge s-leve">LEVE</span></td>
+        <td><strong>0 – 5.000 UTM</strong><br><span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink3);">Hasta ~$325M CLP</span></td>
+        <td><strong>0 – 10.000 UTM</strong><br><span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink3);">Hasta ~$650M CLP</span></td>
+        <td>Entrega fuera de plazo de información requerida por la ANCI. Incumplimientos formales menores sin impacto operacional.</td>
+      </tr>
+      <tr>
+        <td><span class="sev-badge s-grave">GRAVE</span></td>
+        <td><strong>5.000 – 10.000 UTM</strong><br><span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink3);">~$325M – $650M CLP</span></td>
+        <td><strong>5.000 – 20.000 UTM</strong><br><span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink3);">~$325M – $1.300M CLP</span></td>
+        <td>No implementar políticas de ciberseguridad requeridas. No contar con plan de continuidad. No capacitar al personal. No cumplir estándares ANCI.</td>
+      </tr>
+      <tr>
+        <td><span class="sev-badge s-gravis">GRAVÍSIMA</span></td>
+        <td><strong>10.000 – 20.000 UTM</strong><br><span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink3);">~$650M – $1.300M CLP</span></td>
+        <td><strong>20.000 – 40.000 UTM</strong><br><span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink3);">~$1.300M – $2.600M CLP</span></td>
+        <td>Ocultar incidente o reportar falsamente. No reportar en plazo con dolo o negligencia grave. No adoptar contención generando propagación del incidente.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note warn" style="margin-top:20px;">
+    <div class="note-label">// CONSECUENCIAS ADICIONALES A LAS MULTAS</div>
+    Restricciones operativas hasta subsanar deficiencias · publicación pública de la sanción (impacto reputacional) · exclusión de licitaciones y contratos estatales · incremento de primas de ciberseguro · responsabilidad personal de ejecutivos si la ANCI deriva antecedentes al Ministerio Público por dolo o negligencia grave.
+  </div>
+
+  <div style="margin-top:12px;font-size:.82rem;line-height:1.8;color:var(--ink3);font-family:'JetBrains Mono',monospace;">
+    // Factores de graduación: medidas adoptadas · probabilidad de ocurrencia · gravedad de los efectos · reiteración del incumplimiento · tamaño y capacidad económica del infractor · grado de cooperación con la ANCI.
+  </div>
+</section>
+
+<!-- ══ CUMPLIMIENTO ══ -->
+<section class="block" id="cumplimiento">
+  <div class="block-label">// Hoja de Ruta Práctica</div>
+  <h2 class="block-title">Checklist de Cumplimiento</h2>
+  <p class="block-intro">
+    Pasos concretos para una organización que quiere prepararse. Ítems marcados con ★ son exclusivos para OIV.
+  </p>
+
+  <div class="checklist">
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>DIAGNÓSTICO INICIAL</strong>Determinar si eres PSE u OIV. Revisar si tu sector está en el Art. 4° o si la ANCI ya te designó. Registrarse en portal.anci.gob.cl.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>RESPONSABLE DE CIBERSEGURIDAD</strong>Designar formalmente un CISO o encargado. La máxima autoridad es legalmente responsable del cumplimiento.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>POLÍTICAS DOCUMENTADAS</strong>Redactar y aprobar una política de ciberseguridad interna, alineada al NIST CSF o ISO 27001, con revisión anual.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>EVALUACIÓN DE RIESGOS</strong>Inventariar activos críticos, identificar amenazas y vulnerabilidades, documentar el tratamiento de riesgos prioritarios.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>PLAN DE CONTINUIDAD (BCP/DRP)</strong>Elaborar un plan que contemple escenarios de ciberataque con RTO y RPO definidos para servicios críticos.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>PROCESO DE REPORTE 3H</strong>Establecer un procedimiento interno que garantice notificar al CSIRT Nacional dentro de 3 horas de conocer un incidente significativo.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>CAPACITACIÓN ANUAL</strong>Implementar programa de concientización, phishing simulado y ciberhigiene para toda la organización al menos una vez al año.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box" style="border-color:var(--accent);color:var(--accent);">★</div>
+      <div class="check-text"><strong>SGSI ISO 27001 <span style="color:var(--accent);font-size:.7rem;">[OIV]</span></strong>Iniciar proceso de implementación y certificación ISO/IEC 27001 dentro del plazo de 24 meses desde la designación.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box" style="border-color:var(--accent);color:var(--accent);">★</div>
+      <div class="check-text"><strong>MONITOREO 24/7 <span style="color:var(--accent);font-size:.7rem;">[OIV]</span></strong>Implementar SIEM con capacidad de detección y alerta en tiempo real (Splunk, Elastic SIEM, QRadar).</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box" style="border-color:var(--accent);color:var(--accent);">★</div>
+      <div class="check-text"><strong>SIMULACROS PERIÓDICOS <span style="color:var(--accent);font-size:.7rem;">[OIV]</span></strong>Ejecutar al menos un ejercicio de ciberseguridad o tabletop exercise anual con escenarios realistas.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>PREPARAR NUEVA LEY DE DATOS</strong>Iniciar adecuación para la Ley de Protección de Datos Personales que entra en vigor en diciembre 2026.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COMPARATIVA ══ -->
+<section class="block" id="comparativa">
+  <div class="block-label">// Contexto Internacional</div>
+  <h2 class="block-title">Ley 21.663 vs NIS2 (Unión Europea)</h2>
+  <p class="block-intro">
+    La ley chilena tomó como referencia la Directiva NIS2 de la Unión Europea. Hay similitudes estructurales importantes, pero también diferencias clave en alcance y modelo de gobernanza.
+  </p>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>ASPECTO</th>
+        <th>🇨🇱 LEY 21.663 CHILE</th>
+        <th>🇪🇺 DIRECTIVA NIS2 (UE)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Gobernanza</strong></td>
+        <td>Agencia centralizada (ANCI) como único ente rector nacional</td>
+        <td>Responsabilidad distribuida entre 27 autoridades nacionales coordinadas</td>
+      </tr>
+      <tr>
+        <td><strong>Notificación de incidentes</strong></td>
+        <td>3h alerta / 72h informe / 15 días cierre</td>
+        <td>24h alerta / 72h informe sin plazo fijo de cierre</td>
+      </tr>
+      <tr>
+        <td><strong>Multas máximas</strong></td>
+        <td>40.000 UTM ≈ USD 3M para OIV</td>
+        <td>€10M o 2% de la facturación mundial anual</td>
+      </tr>
+      <tr>
+        <td><strong>SGSI requerido</strong></td>
+        <td>ISO 27001 obligatorio para OIV en 24 meses</td>
+        <td>Marco de gestión de riesgos; frameworks europeos (ENISA)</td>
+      </tr>
+      <tr>
+        <td><strong>Alcance</strong></td>
+        <td>PSE públicos y privados + proveedores del Estado</td>
+        <td>Entidades "esenciales" e "importantes" en sectores críticos</td>
+      </tr>
+      <tr>
+        <td><strong>Cadena de suministro</strong></td>
+        <td>Requisitos para proveedores del Estado</td>
+        <td>Cobertura explícita más amplia de la cadena de suministro digital</td>
+      </tr>
+      <tr>
+        <td><strong>Inspiración</strong></td>
+        <td>NIS2 + recomendaciones UIT</td>
+        <td>Evolución de la Directiva NIS (2016)</td>
+      </tr>
+      <tr>
+        <td><strong>Posición regional</strong></td>
+        <td style="color:var(--green);font-weight:600;">Primera ley marco en América Latina</td>
+        <td>Marco de referencia para el mundo; 27 países coordinados</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note success" style="margin-top:20px;">
+    <div class="note-label">// POSICIÓN DE CHILE EN LATAM</div>
+    Con la Ley 21.663, Chile se convierte en el primer país latinoamericano con una ley marco integral de ciberseguridad que incluye ente rector con poder sancionatorio, obligaciones específicas de reporte y estándares técnicos. Brasil, México, Colombia y Argentina están desarrollando marcos similares con inspiración en el modelo chileno y en NIS2.
+  </div>
+</section>
+
+</div><!-- /page -->
+
+<footer>
+  <strong>Ley 21.663 — Marco de Ciberseguridad e Infraestructura Crítica · República de Chile</strong><br>
+  Promulgada 26.03.2024 · Publicada en Diario Oficial 08.04.2024 · Disposiciones críticas vigentes desde 01.03.2025<br>
+  <a href="https://anci.gob.cl" target="_blank">anci.gob.cl</a> · <a href="https://portal.anci.gob.cl" target="_blank">portal.anci.gob.cl</a> · <a href="https://bcn.cl/leychile/navegar?i=1202434" target="_blank">BCN Ley 21663</a><br><br>
+  <span style="font-size:.62rem;opacity:.5">Documento educativo. Para asesoramiento legal, consulte a un profesional especializado en derecho regulatorio y ciberseguridad.</span>
+</footer>
+
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
+
+<script>
+const revObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold:0.06, rootMargin:'0px 0px -40px 0px' });
+document.querySelectorAll('section.block').forEach(el => revObs.observe(el));
+
+const sBtn = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', () => sBtn.classList.toggle('show', window.scrollY > 500));
+
+const sections = document.querySelectorAll('section.block[id]');
+const navLinks  = document.querySelectorAll('.nav-link');
+const navObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      navLinks.forEach(l => l.classList.remove('active'));
+      const a = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if(a) a.classList.add('active');
+    }
+  });
+}, { threshold:0.3 });
+sections.forEach(s => navObs.observe(s));
+
+function switchTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

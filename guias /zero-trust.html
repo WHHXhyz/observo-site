@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zero Trust Architecture — NIST SP 800-207</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ed;--bg2:#ede9e2;--ink:#1a1410;--ink2:#4a3f35;--ink3:#8a7a6e;
+  --accent:#c8410a;--accent2:#e8622a;--blue:#1a4f8c;--green:#1a6b3c;
+  --gold:#a07a10;--purple:#6b2d8b;--teal:#0e7c7b;
+  --border:rgba(26,20,16,.1);--card:rgba(255,255,255,.6);--shadow:0 2px 20px rgba(26,20,16,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:.4;}
+.hero{position:relative;z-index:10;background:var(--ink);color:#f5f2ed;padding:80px 40px 64px;overflow:hidden;}
+.hero::after{content:'';position:absolute;right:-60px;top:-60px;width:420px;height:420px;border-radius:50%;border:80px solid rgba(200,65,10,.12);pointer-events:none;}
+.hero::before{content:'';position:absolute;left:-40px;bottom:-80px;width:280px;height:280px;border-radius:50%;border:50px solid rgba(26,79,140,.08);pointer-events:none;}
+.hero-inner{max-width:1080px;margin:0 auto;position:relative;z-index:2;}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:4px;color:var(--accent2);margin-bottom:20px;opacity:0;animation:fadeUp .6s .1s forwards;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:clamp(3rem,8vw,6.5rem);line-height:.95;color:#f5f2ed;margin-bottom:8px;opacity:0;animation:fadeUp .7s .2s forwards;}
+.hero-title em{font-style:italic;color:var(--accent2);}
+.hero-year{font-family:'JetBrains Mono',monospace;font-size:clamp(1rem,3vw,1.8rem);color:rgba(245,242,237,.35);letter-spacing:6px;margin-bottom:28px;opacity:0;animation:fadeUp .7s .3s forwards;}
+.hero-desc{max-width:580px;font-size:1rem;line-height:1.85;color:rgba(245,242,237,.7);margin-bottom:36px;opacity:0;animation:fadeUp .7s .4s forwards;}
+.hero-stats{display:flex;flex-wrap:wrap;gap:28px;opacity:0;animation:fadeUp .7s .5s forwards;}
+.stat{border-left:2px solid var(--accent);padding-left:14px;}
+.stat-num{font-family:'DM Serif Display',serif;font-size:2rem;color:#f5f2ed;line-height:1;}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(245,242,237,.4);letter-spacing:2px;margin-top:3px;}
+.main-nav{position:sticky;top:0;z-index:100;background:rgba(245,242,237,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;overflow-x:auto;}
+.nav-inner{display:flex;gap:0;max-width:1080px;margin:0 auto;white-space:nowrap;}
+.nav-link{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:2px;color:var(--ink3);text-decoration:none;padding:16px 11px;border-bottom:2px solid transparent;transition:all .2s;text-transform:uppercase;}
+.nav-link:hover,.nav-link.active{color:var(--accent);border-bottom-color:var(--accent);}
+.page{max-width:1080px;margin:0 auto;padding:0 24px;}
+section.block{padding:72px 0 40px;border-bottom:1px solid var(--border);opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s;}
+section.block.visible{opacity:1;transform:none;}
+.block-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:8px;}
+.block-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--ink);margin-bottom:20px;line-height:1.2;}
+.block-intro{font-size:.97rem;line-height:1.9;color:var(--ink2);max-width:720px;margin-bottom:36px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+@media(max-width:680px){.two-col{grid-template-columns:1fr;}}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:720px){.three-col{grid-template-columns:1fr;}}
+ol.num-list{counter-reset:li;list-style:none;display:flex;flex-direction:column;gap:10px;}
+.num-list li{display:flex;gap:12px;font-size:.9rem;line-height:1.7;color:var(--ink2);}
+.num-list li::before{content:counter(li);counter-increment:li;display:flex;align-items:center;justify-content:center;min-width:26px;height:26px;background:var(--accent);color:#fff;font-family:'JetBrains Mono',monospace;font-size:.65rem;border-radius:50%;flex-shrink:0;margin-top:2px;}
+.note{border-left:3px solid var(--gold);background:rgba(160,122,16,.05);padding:14px 18px;border-radius:0 3px 3px 0;font-size:.88rem;line-height:1.75;color:var(--ink2);margin:20px 0;}
+.note-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
+.tip{border-left-color:var(--blue);background:rgba(26,79,140,.04);}.tip .note-label{color:var(--blue);}
+.warn{border-left-color:var(--accent);background:rgba(200,65,10,.04);}.warn .note-label{color:var(--accent);}
+.success{border-left-color:var(--green);background:rgba(26,107,60,.04);}.success .note-label{color:var(--green);}
+.badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:1px;padding:3px 9px;border-radius:20px;border:1px solid;}
+.b-red{color:var(--accent);border-color:rgba(200,65,10,.3);background:rgba(200,65,10,.06);}
+.b-blue{color:var(--blue);border-color:rgba(26,79,140,.3);background:rgba(26,79,140,.06);}
+.b-green{color:var(--green);border-color:rgba(26,107,60,.3);background:rgba(26,107,60,.06);}
+.b-gold{color:var(--gold);border-color:rgba(160,122,16,.3);background:rgba(160,122,16,.06);}
+/* cards */
+.card{border:1px solid var(--border);border-radius:4px;padding:22px;background:var(--card);transition:all .22s;position:relative;overflow:hidden;}
+.card:hover{box-shadow:var(--shadow);transform:translateY(-3px);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.card-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;color:var(--ink3);margin-bottom:8px;}
+.card-title{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink);margin-bottom:8px;line-height:1.3;}
+.card-body{font-size:.85rem;line-height:1.7;color:var(--ink2);}
+/* principios */
+.principles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.principle-card{border:1px solid var(--border);border-radius:3px;padding:20px;background:var(--card);transition:all .22s;}
+.principle-card:hover{box-shadow:var(--shadow);transform:translateY(-3px);}
+.principle-icon{font-size:1.5rem;margin-bottom:10px;}
+.principle-name{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:2px;margin-bottom:6px;}
+.principle-desc{font-size:.85rem;line-height:1.7;color:var(--ink2);}
+/* pillars */
+.pillars-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+.pillar-card{border:1px solid var(--border);border-radius:4px;padding:20px;background:var(--card);transition:all .2s;border-left:3px solid;}
+.pillar-card:hover{box-shadow:var(--shadow);transform:translateY(-2px);}
+.pillar-num{font-family:'DM Serif Display',serif;font-size:2rem;line-height:1;margin-bottom:8px;opacity:.3;}
+.pillar-name{font-family:'DM Serif Display',serif;font-size:1.05rem;margin-bottom:6px;}
+.pillar-desc{font-size:.83rem;line-height:1.65;color:var(--ink2);}
+.pillar-controls{margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent);background:rgba(200,65,10,.05);padding:6px 10px;border-radius:2px;line-height:1.6;}
+/* migration steps */
+.migration-steps{display:flex;flex-direction:column;gap:0;position:relative;}
+.migration-steps::before{content:'';position:absolute;left:28px;top:16px;bottom:16px;width:1px;background:var(--border);}
+.mig-step{display:flex;gap:28px;padding:0 0 36px;position:relative;}
+.mig-step:last-child{padding-bottom:0;}
+.mig-circle{width:56px;height:56px;border-radius:50%;border:2px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--accent);position:relative;z-index:2;}
+.mig-content{flex:1;padding-top:10px;}
+.mig-title{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);margin-bottom:6px;}
+.mig-desc{font-size:.88rem;line-height:1.75;color:var(--ink2);}
+.mig-tips{margin-top:10px;list-style:none;display:flex;flex-direction:column;gap:4px;}
+.mig-tips li{font-size:.83rem;color:var(--ink2);padding-left:14px;position:relative;line-height:1.6;}
+.mig-tips li::before{content:'•';position:absolute;left:0;color:var(--accent);}
+/* comparison */
+.compare-box{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+@media(max-width:640px){.compare-box{grid-template-columns:1fr;}}
+.cmp-col{padding:24px;}
+.cmp-col:first-child{border-right:1px solid var(--border);}
+.cmp-title{font-family:'DM Serif Display',serif;font-size:1.2rem;margin-bottom:14px;}
+.cmp-items{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.cmp-items li{font-size:.85rem;line-height:1.65;padding-left:16px;position:relative;color:var(--ink2);}
+.cmp-items li::before{position:absolute;left:0;font-size:1rem;line-height:1.4;}
+.perimeter .cmp-items li::before{content:'✗';color:var(--accent);}
+.zerotrust .cmp-items li::before{content:'✓';color:var(--green);}
+/* tools */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
+.tool-item{border:1px solid var(--border);border-radius:3px;padding:14px 16px;background:rgba(255,255,255,.5);transition:border-color .2s,transform .2s;}
+.tool-item:hover{border-color:rgba(200,65,10,.3);transform:translateY(-1px);}
+.tool-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:6px;}
+.tool-tag{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent);background:rgba(200,65,10,.08);padding:2px 7px;border-radius:2px;flex-shrink:0;white-space:nowrap;margin-top:1px;}
+.tool-name{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.3;}
+.tool-desc{font-size:.82rem;line-height:1.65;color:var(--ink2);}
+.tool-badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px;}
+.tool-badge{font-family:'JetBrains Mono',monospace;font-size:.58rem;padding:2px 7px;border-radius:20px;border:1px solid var(--border);color:var(--ink3);}
+/* relaciones */
+.rel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+.rel-item{border:1px solid var(--border);border-radius:4px;padding:20px;background:var(--card);transition:all .2s;}
+.rel-item:hover{box-shadow:var(--shadow);}
+.rel-std{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;margin-bottom:8px;font-weight:600;}
+.rel-name{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);margin-bottom:8px;}
+.rel-how{font-size:.83rem;line-height:1.65;color:var(--ink2);}
+/* maturity */
+.maturity-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+@media(max-width:700px){.maturity-grid{grid-template-columns:1fr;}}
+.mat-col{display:flex;flex-direction:column;gap:2px;}
+.mat-header{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:3px;text-align:center;padding:10px;background:var(--ink);color:rgba(245,242,237,.6);}
+.mat-row{padding:12px 14px;border:1px solid var(--border);font-size:.82rem;line-height:1.6;color:var(--ink2);background:var(--card);}
+.mat-row strong{display:block;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent);letter-spacing:1px;margin-bottom:4px;}
+footer{background:var(--ink);color:rgba(245,242,237,.5);padding:48px 40px;font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:1px;line-height:2;text-align:center;}
+footer strong{color:rgba(245,242,237,.8);}footer a{color:var(--accent2);text-decoration:none;}
+.scroll-top{position:fixed;bottom:28px;right:28px;z-index:200;background:var(--ink);color:var(--bg);font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:10px 16px;border:none;border-radius:2px;cursor:pointer;transition:all .2s;letter-spacing:2px;opacity:0;pointer-events:none;box-shadow:0 4px 20px rgba(26,20,16,.2);}
+.scroll-top.show{opacity:1;pointer-events:auto;}.scroll-top:hover{background:var(--accent);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">// NIST SP 800-207 · Arquitectura de Seguridad · Never Trust, Always Verify</div>
+    <h1 class="hero-title">Zero<br><em>Trust</em></h1>
+    <div class="hero-year">NIST SP 800-207 · ZERO TRUST ARCHITECTURE</div>
+    <p class="hero-desc">El cambio de paradigma más importante en arquitectura de seguridad de la última década. Zero Trust elimina la confianza implícita basada en la ubicación de red y exige verificación continua de cada acceso, desde cualquier lugar.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">7</div><div class="stat-label">Principios Clave</div></div>
+      <div class="stat"><div class="stat-num">5</div><div class="stat-label">Pilares de ZTA</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Niveles de Madurez</div></div>
+      <div class="stat"><div class="stat-num">0</div><div class="stat-label">Confianza implícita</div></div>
+    </div>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a class="nav-link" href="#que-es">¿Qué es?</a>
+    <a class="nav-link" href="#vs-perimetro">vs Perímetro</a>
+    <a class="nav-link" href="#principios">Principios</a>
+    <a class="nav-link" href="#pilares">Pilares</a>
+    <a class="nav-link" href="#arquitectura">Arquitectura</a>
+    <a class="nav-link" href="#madurez">Madurez</a>
+    <a class="nav-link" href="#migracion">Migración</a>
+    <a class="nav-link" href="#herramientas">Herramientas</a>
+    <a class="nav-link" href="#relaciones">Relaciones</a>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- QUÉ ES -->
+<section class="block" id="que-es">
+  <div class="block-label">// Fundamentos</div>
+  <h2 class="block-title">¿Qué es Zero Trust?</h2>
+  <p class="block-intro">Zero Trust es una estrategia de seguridad basada en el principio de <strong>"nunca confiar, siempre verificar"</strong>. A diferencia del modelo tradicional de seguridad perimetral, Zero Trust no asume que nada dentro de la red corporativa es seguro. Cada usuario, dispositivo y solicitud de acceso debe ser autenticada, autorizada y continuamente validada.</p>
+  <div class="two-col">
+    <div>
+      <div class="note warn">
+        <div class="note-label">// ORIGEN DEL CONCEPTO</div>
+        El término fue acuñado por John Kindervag en Forrester Research en 2010. El NIST formalizó la arquitectura en el <strong>SP 800-207</strong> publicado en agosto de 2020. En 2021, una orden ejecutiva del gobierno de EE.UU. mandató la adopción de Zero Trust en todas las agencias federales, dándole impulso global definitivo.<br><br>
+        La pandemia de COVID-19 aceleró la adopción al colapsar el perímetro tradicional con el trabajo remoto masivo.
+      </div>
+      <div class="note tip" style="margin-top:14px;">
+        <div class="note-label">// ZERO TRUST NO ES UN PRODUCTO</div>
+        Zero Trust es una <strong>filosofía y estrategia arquitectural</strong>, no un producto que se compra e instala. No existe "la solución Zero Trust". Es un viaje continuo de mejora de la postura de seguridad que combina múltiples tecnologías, procesos y políticas bajo un enfoque unificado de verificación continua.
+      </div>
+    </div>
+    <div>
+      <div class="block-label" style="margin-bottom:14px;">// Por qué el perímetro ya no es suficiente</div>
+      <ol class="num-list">
+        <li>El trabajo remoto y el BYOD eliminaron el perímetro físico de la red corporativa</li>
+        <li>Las aplicaciones viven en múltiples clouds, no solo en el datacenter propio</li>
+        <li>Los atacantes que comprometen una credencial se mueven lateralmente con libertad dentro de la red "confiable"</li>
+        <li>El 80% de las brechas involucran credenciales comprometidas (Verizon DBIR 2023)</li>
+        <li>Los proveedores y terceros con acceso VPN son vectores frecuentes de ataque (SolarWinds)</li>
+        <li>Las amenazas internas (insiders) no se detectan con un firewall perimetral</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- VS PERÍMETRO -->
+<section class="block" id="vs-perimetro">
+  <div class="block-label">// Cambio de Paradigma</div>
+  <h2 class="block-title">Seguridad Perimetral vs. Zero Trust</h2>
+  <p class="block-intro">El modelo de seguridad perimetral ("castillo y foso") asume que todo lo interno es confiable y todo lo externo es hostil. Zero Trust invierte ese supuesto: nada es confiable por defecto, independientemente de su ubicación.</p>
+  <div class="compare-box">
+    <div class="cmp-col perimeter" style="background:rgba(200,65,10,.03);">
+      <div class="cmp-title" style="color:var(--accent);">🏰 Seguridad Perimetral</div>
+      <ul class="cmp-items">
+        <li>Confía en todo lo que está "dentro" de la red</li>
+        <li>Una vez dentro de la VPN, acceso amplio a recursos internos</li>
+        <li>Autenticación solo al entrar al perímetro</li>
+        <li>Movimiento lateral libre tras compromiso inicial</li>
+        <li>Usuarios remotos son ciudadanos de segunda clase</li>
+        <li>Seguridad basada en la ubicación IP del dispositivo</li>
+        <li>Sin visibilidad del tráfico este-oeste (interno)</li>
+        <li>Un atacante con acceso VPN tiene las "llaves del reino"</li>
+      </ul>
+    </div>
+    <div class="cmp-col zerotrust" style="background:rgba(26,107,60,.03);">
+      <div class="cmp-title" style="color:var(--green);">🛡️ Zero Trust</div>
+      <ul class="cmp-items">
+        <li>Nunca confiar, siempre verificar — en cada acceso</li>
+        <li>Acceso de mínimo privilegio: solo al recurso necesario, no a toda la red</li>
+        <li>Autenticación y autorización continua, no solo al entrar</li>
+        <li>Microsegmentación limita el movimiento lateral</li>
+        <li>Experiencia de acceso unificada desde cualquier lugar</li>
+        <li>Seguridad basada en identidad + dispositivo + contexto</li>
+        <li>Visibilidad completa de todo el tráfico, incluido el interno</li>
+        <li>Compromiso de una credencial tiene blast radius mínimo</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note success" style="margin-top:16px;">
+    <div class="note-label">// ANALOGÍA PRÁCTICA</div>
+    Piensa en un aeropuerto: no porque hayas pasado el control de seguridad puedes entrar a cualquier sala de embarque. Cada puerta verifica tu tarjeta de embarque, que confirma que tienes el vuelo específico. Zero Trust aplica este mismo principio a los sistemas informáticos.
+  </div>
+</section>
+
+<!-- PRINCIPIOS -->
+<section class="block" id="principios">
+  <div class="block-label">// NIST SP 800-207 — Principios Fundamentales</div>
+  <h2 class="block-title">Los 7 Principios de Zero Trust</h2>
+  <p class="block-intro">El NIST SP 800-207 define 7 principios fundamentales que toda arquitectura Zero Trust debe implementar. Son el núcleo conceptual del framework.</p>
+  <div class="principles-grid">
+    <div class="principle-card">
+      <div class="principle-icon">📦</div>
+      <div class="principle-name">1. Todos los recursos son fuentes de datos</div>
+      <div class="principle-desc">Todos los recursos de la empresa (dispositivos, servidores, aplicaciones, servicios de red) se consideran fuentes de datos y servicios a proteger, independientemente de su ubicación.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">🔒</div>
+      <div class="principle-name">2. Comunicaciones siempre seguras</div>
+      <div class="principle-desc">Todas las comunicaciones deben ser seguras, independientemente de la ubicación de la red. El tráfico interno recibe el mismo nivel de escrutinio que el externo. Sin tráfico en texto plano dentro de la red.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">🎯</div>
+      <div class="principle-name">3. Acceso por sesión y recurso</div>
+      <div class="principle-desc">El acceso a recursos individuales se concede por sesión. La confianza se evalúa antes de cada acceso y puede revocarse en cualquier momento basándose en el comportamiento o el contexto.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">📏</div>
+      <div class="principle-name">4. Políticas dinámicas y contextuales</div>
+      <div class="principle-desc">Las decisiones de acceso se basan en políticas dinámicas que consideran identidad, dispositivo, ubicación, tiempo, comportamiento histórico y sensibilidad del recurso. No son reglas estáticas.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">🏥</div>
+      <div class="principle-name">5. Monitoreo continuo de la postura de los activos</div>
+      <div class="principle-desc">La organización monitorea continuamente la integridad y el estado de seguridad de todos los activos (dispositivos propios, BYOD, IoT). Un dispositivo no gestionado recibe menos confianza.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">🔐</div>
+      <div class="principle-name">6. Autenticación y autorización estrictamente aplicadas</div>
+      <div class="principle-desc">Los recursos no se confían a ningún activo de forma inherente. La autenticación es fuerte (MFA) y la autorización es granular y continua, reevaluándose en cada solicitud de acceso.</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon">📊</div>
+      <div class="principle-name">7. Recolección de datos y mejora continua</div>
+      <div class="principle-desc">La organización recolecta datos sobre el estado de activos, tráfico de red y solicitudes de acceso para mejorar continuamente su postura de seguridad y la precisión de sus políticas.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PILARES -->
+<section class="block" id="pilares">
+  <div class="block-label">// Los 5 Pilares de ZTA</div>
+  <h2 class="block-title">Pilares de la Arquitectura Zero Trust</h2>
+  <p class="block-intro">La implementación de Zero Trust se organiza en torno a cinco pilares o dominios tecnológicos. Cada pilar tiene sus propias capacidades y controles que, juntos, forman la arquitectura completa.</p>
+  <div class="pillars-grid">
+    <div class="pillar-card" style="border-left-color:var(--accent);">
+      <div class="pillar-num" style="color:var(--accent);">1</div>
+      <div class="pillar-name" style="color:var(--accent);">Identidad</div>
+      <div class="pillar-desc">El primer y más crítico pilar. La identidad es el nuevo perímetro. Cada usuario, servicio y dispositivo debe tener una identidad fuerte y verificable.</div>
+      <div class="pillar-controls">MFA · SSO · Identidad federada · Privileged Access Management (PAM) · Conditional Access · RBAC · Revisión de accesos</div>
+    </div>
+    <div class="pillar-card" style="border-left-color:var(--blue);">
+      <div class="pillar-num" style="color:var(--blue);">2</div>
+      <div class="pillar-name" style="color:var(--blue);">Dispositivos</div>
+      <div class="pillar-desc">Solo los dispositivos que cumplen los requisitos de seguridad de la organización deben poder acceder a los recursos. Estado de parcheo, cifrado y presencia de EDR se verifican en cada acceso.</div>
+      <div class="pillar-controls">MDM/UEM · EDR · Device compliance policies · Certificate-based auth · Quarantine para dispositivos no conformes</div>
+    </div>
+    <div class="pillar-card" style="border-left-color:var(--green);">
+      <div class="pillar-num" style="color:var(--green);">3</div>
+      <div class="pillar-name" style="color:var(--green);">Redes</div>
+      <div class="pillar-desc">Microsegmentación de la red para limitar el movimiento lateral. Cada segmento tiene sus propias políticas de acceso. El tráfico entre segmentos se inspecciona.</div>
+      <div class="pillar-controls">Microsegmentación · Software-Defined Perimeter (SDP) · Next-Gen Firewall · Cifrado de tráfico este-oeste · Network detection and response (NDR)</div>
+    </div>
+    <div class="pillar-card" style="border-left-color:var(--gold);">
+      <div class="pillar-num" style="color:var(--gold);">4</div>
+      <div class="pillar-name" style="color:var(--gold);">Aplicaciones y Workloads</div>
+      <div class="pillar-desc">Las aplicaciones (on-prem, SaaS, cloud) y los workloads tienen controles de acceso propios. El acceso se otorga a nivel de aplicación, no de red.</div>
+      <div class="pillar-controls">ZTNA / SDP · API Gateway con authn/authz · WAF · Seguridad de contenedores · Secrets management · CASB para SaaS</div>
+    </div>
+    <div class="pillar-card" style="border-left-color:var(--purple);">
+      <div class="pillar-num" style="color:var(--purple);">5</div>
+      <div class="pillar-name" style="color:var(--purple);">Datos</div>
+      <div class="pillar-desc">Proteger los datos en sí, no solo el perímetro que los rodea. Clasificación de datos, cifrado y controles de acceso granulares sobre los datos específicos.</div>
+      <div class="pillar-controls">Clasificación de datos · DLP · Cifrado en reposo y tránsito · IRM/RMS · Data access governance · Tokenización · DSPM</div>
+    </div>
+  </div>
+  <div class="note" style="margin-top:20px;">
+    <div class="note-label">// PILAR TRANSVERSAL: VISIBILIDAD Y ANALÍTICA</div>
+    Transversal a todos los pilares es la capacidad de <strong>visibilidad, analítica y automatización</strong>: SIEM para correlación de eventos, SOAR para respuesta automatizada, User and Entity Behavior Analytics (UEBA) para detectar anomalías. Sin visibilidad completa, Zero Trust no puede funcionar.
+  </div>
+</section>
+
+<!-- ARQUITECTURA -->
+<section class="block" id="arquitectura">
+  <div class="block-label">// NIST SP 800-207 — Componentes Lógicos</div>
+  <h2 class="block-title">Arquitectura de Referencia</h2>
+  <p class="block-intro">El NIST SP 800-207 define los componentes lógicos de una ZTA. El motor central es el <strong>Policy Engine (PE)</strong> que toma decisiones de acceso, ejecutadas por el <strong>Policy Enforcement Point (PEP)</strong>, basándose en datos de múltiples fuentes.</p>
+  <div class="two-col">
+    <div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="padding:18px 20px;border:1px solid rgba(200,65,10,.3);border-radius:3px;background:rgba(200,65,10,.04);border-left:3px solid var(--accent);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--accent);letter-spacing:2px;margin-bottom:6px;">POLICY ENGINE (PE)</div>
+          <div style="font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);margin-bottom:6px;">Motor de Decisión</div>
+          <div style="font-size:.84rem;line-height:1.65;color:var(--ink2);">El "cerebro" de ZTA. Evalúa cada solicitud de acceso contra las políticas definidas y produce una decisión (permitir/denegar/condicional). Recibe inputs de la CDI, el sistema de PKI, SIEM y otros.</div>
+        </div>
+        <div style="padding:18px 20px;border:1px solid rgba(26,79,140,.25);border-radius:3px;background:rgba(26,79,140,.04);border-left:3px solid var(--blue);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:6px;">POLICY ADMINISTRATOR (PA)</div>
+          <div style="font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);margin-bottom:6px;">Administrador de Políticas</div>
+          <div style="font-size:.84rem;line-height:1.65;color:var(--ink2);">Ejecuta las decisiones del PE: establece y revoca las sesiones de comunicación, envía las credenciales y los tokens de acceso al PEP para que permita o bloquee el acceso.</div>
+        </div>
+        <div style="padding:18px 20px;border:1px solid rgba(26,107,60,.25);border-radius:3px;background:rgba(26,107,60,.04);border-left:3px solid var(--green);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--green);letter-spacing:2px;margin-bottom:6px;">POLICY ENFORCEMENT POINT (PEP)</div>
+          <div style="font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);margin-bottom:6px;">Punto de Cumplimiento</div>
+          <div style="font-size:.84rem;line-height:1.65;color:var(--ink2);">El "portero". Intercepta cada solicitud de acceso, la reenvía al PA para decisión, y permite o bloquea el acceso según la respuesta. Puede ser un proxy, un API gateway, un agente en el endpoint o un ZTNA gateway.</div>
+        </div>
+        <div style="padding:18px 20px;border:1px solid rgba(160,122,16,.25);border-radius:3px;background:rgba(160,122,16,.04);border-left:3px solid var(--gold);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--gold);letter-spacing:2px;margin-bottom:6px;">CDI — CONTINUOUS DIAGNOSTICS & MITIGATION</div>
+          <div style="font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);margin-bottom:6px;">Inteligencia Continua</div>
+          <div style="font-size:.84rem;line-height:1.65;color:var(--ink2);">Proporciona al PE información sobre el estado de los activos: inventario de dispositivos, estado de parches, cumplimiento de políticas EDR y postura de seguridad en tiempo real.</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="note warn" style="margin-top:0;">
+        <div class="note-label">// FLUJO DE ACCESO ZERO TRUST</div>
+        1. Usuario intenta acceder a un recurso<br>
+        2. La solicitud llega al <strong>PEP</strong> (no al recurso directamente)<br>
+        3. El PEP consulta al <strong>PA</strong> para autorización<br>
+        4. El PA consulta al <strong>PE</strong> con el contexto completo<br>
+        5. El PE evalúa: identidad verificada + dispositivo conforme + política aplicable + riesgo contextual<br>
+        6. PE devuelve decisión al PA<br>
+        7. PA instruye al PEP: permitir/denegar/acceso condicional<br>
+        8. La sesión se monitorea continuamente — puede revocarse si cambia el contexto
+      </div>
+      <div class="note tip" style="margin-top:14px;">
+        <div class="note-label">// ZERO TRUST NETWORK ACCESS (ZTNA)</div>
+        ZTNA es la tecnología que más directamente implementa ZTA para el acceso remoto, reemplazando las VPN tradicionales. En lugar de dar acceso a toda la red, ZTNA da acceso solo a la aplicación específica solicitada, verificando identidad y postura del dispositivo en cada conexión.<br><br>
+        <strong>Proveedores:</strong> Cloudflare Access · Zscaler Private Access · Palo Alto Prisma Access · Microsoft Entra Private Access
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MADUREZ -->
+<section class="block" id="madurez">
+  <div class="block-label">// CISA Zero Trust Maturity Model</div>
+  <h2 class="block-title">Modelo de Madurez Zero Trust</h2>
+  <p class="block-intro">La CISA (Cybersecurity and Infrastructure Security Agency) publicó el Zero Trust Maturity Model que define 3 etapas de madurez para cada uno de los 5 pilares. Permite evaluar el estado actual y trazar el camino de mejora.</p>
+  <div class="maturity-grid">
+    <div class="mat-col">
+      <div class="mat-header">TRADICIONAL</div>
+      <div class="mat-row"><strong>IDENTIDAD</strong>Autenticación con contraseña. Acceso amplio con roles genéricos. Sin MFA. Revisión de accesos manual y poco frecuente.</div>
+      <div class="mat-row"><strong>DISPOSITIVOS</strong>Sin inventario completo. Sin gestión centralizada. Endpoints no gestionados con acceso pleno.</div>
+      <div class="mat-row"><strong>REDES</strong>Perímetro único. VPN para acceso remoto. Sin microsegmentación. Sin inspección de tráfico interno.</div>
+      <div class="mat-row"><strong>APLICACIONES</strong>Aplicaciones en red "confiable". Sin MFA por aplicación. Sin WAF. APIs sin autenticación fuerte.</div>
+      <div class="mat-row"><strong>DATOS</strong>Sin clasificación. Sin cifrado generalizado. Sin DLP. Acceso amplio a datos por equipos.</div>
+    </div>
+    <div class="mat-col">
+      <div class="mat-header" style="background:var(--blue);">AVANZADO</div>
+      <div class="mat-row"><strong>IDENTIDAD</strong>MFA implementado. IAM centralizado. Acceso condicional básico. Revisiones periódicas de accesos.</div>
+      <div class="mat-row"><strong>DISPOSITIVOS</strong>MDM para gestión. Cumplimiento básico requerido. EDR en endpoints corporativos. Dispositivos personales con acceso limitado.</div>
+      <div class="mat-row"><strong>REDES</strong>Segmentación de red. Inspección del tráfico norte-sur. Cifrado entre zonas. ZTNA para acceso remoto.</div>
+      <div class="mat-row"><strong>APLICACIONES</strong>SSO con MFA. WAF implementado. Acceso por aplicación, no por red. Secrets management básico.</div>
+      <div class="mat-row"><strong>DATOS</strong>Clasificación de datos implementada. Cifrado en reposo y tránsito. DLP básico. Controles de acceso a datos sensibles.</div>
+    </div>
+    <div class="mat-col">
+      <div class="mat-header" style="background:var(--green);">ÓPTIMO</div>
+      <div class="mat-row"><strong>IDENTIDAD</strong>Acceso condicional dinámico basado en riesgo. PAM para cuentas privilegiadas. UEBA activo. Eliminación de contraseñas (passwordless).</div>
+      <div class="mat-row"><strong>DISPOSITIVOS</strong>Postura de seguridad evaluada en tiempo real. Acceso ajustado dinámicamente. Device health como señal de riesgo continua.</div>
+      <div class="mat-row"><strong>REDES</strong>Microsegmentación completa. Inspección de todo el tráfico (E-W y N-S). Cifrado ubiquo. Zero Trust implícito en toda la infraestructura.</div>
+      <div class="mat-row"><strong>APLICACIONES</strong>Análisis de comportamiento de aplicaciones. Autorización a nivel de API granular. Security by design en todos los servicios.</div>
+      <div class="mat-row"><strong>DATOS</strong>DSPM activo. Controles de acceso a datos en tiempo real. DLP avanzado. Tokenización de datos sensibles. Auditoría completa de acceso a datos.</div>
+    </div>
+  </div>
+</section>
+
+<!-- MIGRACIÓN -->
+<section class="block" id="migracion">
+  <div class="block-label">// Hoja de Ruta</div>
+  <h2 class="block-title">Cómo Migrar a Zero Trust</h2>
+  <p class="block-intro">La migración a Zero Trust no es un proyecto de "big bang". Es un viaje iterativo que típicamente tarda 2–5 años en organizaciones medianas. El enfoque recomendado: empezar con identidad (el mayor ROI inmediato) y expandir pilar a pilar.</p>
+  <div class="migration-steps">
+    <div class="mig-step">
+      <div class="mig-circle">1</div>
+      <div class="mig-content">
+        <div class="mig-title">Inventario y visibilidad completa</div>
+        <div class="mig-desc">No puedes proteger lo que no conoces. Antes de cualquier control Zero Trust, necesitas visibilidad total de identidades, dispositivos, aplicaciones y datos. Esta fase define la línea base.</div>
+        <ul class="mig-tips">
+          <li>Inventariar todas las identidades: usuarios, cuentas de servicio, privilegiadas, compartidas</li>
+          <li>Mapear todos los dispositivos: gestionados, no gestionados, IoT, servidores</li>
+          <li>Catalogar todas las aplicaciones: on-prem, SaaS, shadow IT</li>
+          <li>Clasificar los datos más críticos y dónde residen</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mig-step">
+      <div class="mig-circle">2</div>
+      <div class="mig-content">
+        <div class="mig-title">Fortalecer la Identidad — Pilar 1</div>
+        <div class="mig-desc">Implementar MFA es el cambio de mayor impacto en la menor cantidad de tiempo. Microsoft reporta que MFA bloquea el 99.9% de los ataques automatizados de credenciales.</div>
+        <ul class="mig-tips">
+          <li>MFA para todas las cuentas — primero cuentas privilegiadas y acceso externo</li>
+          <li>SSO centralizado con un proveedor de identidad (Azure AD/Entra, Okta, Google Workspace)</li>
+          <li>Acceso condicional básico: si dispositivo no gestionado o ubicación no esperada → MFA adicional</li>
+          <li>Eliminar cuentas compartidas, cuentas de servicio con contraseñas débiles y acceso de por vida</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mig-step">
+      <div class="mig-circle">3</div>
+      <div class="mig-content">
+        <div class="mig-title">Gestión de Dispositivos — Pilar 2</div>
+        <div class="mig-desc">Implementar políticas de cumplimiento de dispositivos y requerir que solo dispositivos conformes accedan a recursos críticos. Comenzar con los dispositivos corporativos antes de abordar BYOD.</div>
+        <ul class="mig-tips">
+          <li>MDM/UEM para gestión centralizada de endpoints (Intune, Jamf, Workspace ONE)</li>
+          <li>EDR en todos los endpoints gestionados</li>
+          <li>Políticas de cumplimiento: versión de SO, cifrado de disco, antivirus activo, parches actualizados</li>
+          <li>Dispositivos no conformes en cuarentena o con acceso muy restringido</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mig-step">
+      <div class="mig-circle">4</div>
+      <div class="mig-content">
+        <div class="mig-title">Microsegmentación de Red — Pilar 3</div>
+        <div class="mig-desc">Reemplazar el modelo de "red plana" con segmentos más pequeños con controles de acceso específicos. Esto limita drásticamente el movimiento lateral en caso de compromiso.</div>
+        <ul class="mig-tips">
+          <li>Mapear los flujos de tráfico actuales antes de segmentar (no interrumpir el negocio)</li>
+          <li>Empezar segmentando los activos más críticos: servidores de producción, bases de datos, sistemas de pago</li>
+          <li>ZTNA para reemplazar VPN: acceso por aplicación, no por red</li>
+          <li>Inspección del tráfico este-oeste con Next-Gen Firewall o Service Mesh</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mig-step">
+      <div class="mig-circle">5</div>
+      <div class="mig-content">
+        <div class="mig-title">Protección de Aplicaciones y Datos — Pilares 4 y 5</div>
+        <div class="mig-desc">Implementar controles de acceso a nivel de aplicación y datos. Clasificar la información sensible y aplicar controles específicos según la clasificación.</div>
+        <ul class="mig-tips">
+          <li>WAF para todas las aplicaciones web expuestas</li>
+          <li>API Gateway con autenticación y autorización en cada endpoint</li>
+          <li>Clasificación de datos y controles DLP para prevenir exfiltración</li>
+          <li>Cifrado de datos sensibles en reposo con gestión de claves centralizada</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mig-step">
+      <div class="mig-circle">6</div>
+      <div class="mig-content">
+        <div class="mig-title">Visibilidad, Analítica y Mejora Continua</div>
+        <div class="mig-desc">Implementar las capacidades de monitoreo y analítica que permiten detectar anomalías, ajustar políticas y demostrar el valor del programa Zero Trust a la dirección.</div>
+        <ul class="mig-tips">
+          <li>SIEM centralizado con correlación de eventos de todos los pilares</li>
+          <li>UEBA para detectar comportamientos anómalos de usuarios y entidades</li>
+          <li>Dashboard de postura Zero Trust para reporting a dirección</li>
+          <li>Revisión periódica de políticas y ajuste basado en incidentes y threat intelligence</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HERRAMIENTAS -->
+<section class="block" id="herramientas">
+  <div class="block-label">// Stack Tecnológico Zero Trust</div>
+  <h2 class="block-title">Herramientas por Pilar</h2>
+  <p class="block-intro">Zero Trust requiere un ecosistema de herramientas integradas. No existe un producto único que lo implemente todo. La clave es la integración entre los componentes de cada pilar.</p>
+  <div class="tools-grid">
+    <div class="tool-item">
+      <div class="tool-head"><span class="tool-tag">IDENTIDAD</span><span class="tool-name">Microsoft Entra ID / Okta</span></div>
+      <div class="tool-desc">Proveedores de identidad (IdP) con SSO, MFA, acceso condicional y privileged identity management. La base del pilar de identidad en Zero Trust.</div>
+      <div class="tool-badges"><span class="tool-badge">IAM</span><span class="tool-badge">MFA</span><span class="tool-badge">SSO</span></div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-head"><span class="tool-tag">PAM</span><span class="tool-name">CyberArk / BeyondTrust / Delinea</span></div>
+      <div class="tool-desc">Gestión de acceso privilegiado: vault de contraseñas, grabación de sesiones privilegiadas, just-in-time access para cuentas admin. Crítico para reducir el riesgo de movimiento lateral con credenciales privilegiadas.</div>
+      <div class="tool-badges"><span class="tool-badge">Privileged Access</span><span class="tool-badge">Vault</span></div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-head"><span class="tool-tag">ZTNA</span><span class="tool-name">Cloudflare Access / Zscaler ZPA</span></div>
+      <div class="tool-desc">Zero Trust Network Access: reemplaza la VPN con acceso granular por aplicación, verificando identidad y postura del dispositivo en cada conexión. Sin necesidad de estar "en la red".</div>
+      <div class="tool-badges"><span class="tool-badge">Reemplaza VPN</span><span class="tool-badge">Cloud</span></div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-head"><span class="tool-tag">MDM/EDR</span><span class="tool-name">Microsoft Intune / CrowdStrike</span></div>
+      <div class="tool-desc">Gestión de dispositivos y detección/respuesta en endpoints. La postura del dispositivo (parches, cifrado, EDR activo) se usa como señal de confianza para el acceso condicional.</div>
+      <div class="tool-badges"><span class="tool-badge">Device Health</span><span class="tool-badge">Compliance</span></div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-head"><span class="tool-tag">MICROSEG.</span><span class="tool-name">Illumio / Guardicore / NSX</span></div>
+      <div class="tool-desc">Plataformas de microsegmentación que mapean los flujos de tráfico y permiten definir políticas granulares de comunicación entre workloads, independientemente de la VLAN o el datacenter.</div>
+      <div class="tool-badges"><span class="tool-badge">East-West</span><span class="tool-badge">Workload</span></div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-head"><span class="tool-tag">CASB</span><span class="tool-name">Microsoft Defender for Cloud Apps</span></div>
+      <div class="tool-desc">Cloud Access Security Broker: visibilidad y control sobre aplicaciones SaaS. Detecta shadow IT, aplica políticas DLP en apps cloud y proporciona visibilidad de comportamiento de usuarios en SaaS.</div>
+      <div class="tool-badges"><span class="tool-badge">SaaS Security</span><span class="tool-badge">DLP</span></div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-head"><span class="tool-tag">UEBA/SIEM</span><span class="tool-name">Microsoft Sentinel / Splunk</span></div>
+      <div class="tool-desc">SIEM con capacidades UEBA para correlacionar señales de todos los pilares y detectar comportamientos anómalos que indican compromiso de credenciales o amenazas internas.</div>
+      <div class="tool-badges"><span class="tool-badge">SIEM</span><span class="tool-badge">UEBA</span><span class="tool-badge">Analytics</span></div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-head"><span class="tool-tag">OPEN SOURCE</span><span class="tool-name">Keycloak / HashiCorp Vault</span></div>
+      <div class="tool-desc">Keycloak para IAM/SSO open-source. HashiCorp Vault para gestión de secretos, certificados y acceso privilegiado. Opciones de alto valor para organizaciones con presupuesto limitado.</div>
+      <div class="tool-badges"><span class="tool-badge">Open-source</span><span class="tool-badge">IAM</span><span class="tool-badge">Secrets</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- RELACIONES -->
+<section class="block" id="relaciones">
+  <div class="block-label">// Ecosistema Normativo</div>
+  <h2 class="block-title">Relación con Otros Marcos</h2>
+  <div class="rel-grid">
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--accent);">ISO/IEC 27001:2022</div>
+      <div class="rel-name">SGSI — Controles Técnicos</div>
+      <div class="rel-how">Los controles 5.15–5.18 (control de acceso), 8.2 (privilegios), 8.20–8.22 (seguridad de redes) y 8.5 (autenticación segura) del Anexo A se implementan directamente con los pilares de Zero Trust. ZTA es la arquitectura que operacionaliza estos controles.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--blue);">NIST CSF 2.0</div>
+      <div class="rel-name">Función PROTECT</div>
+      <div class="rel-how">Las subcategorías PR.AA (gestión de identidad y acceso), PR.PS-01 (configuraciones seguras) y PR.IR-01 (redes protegidas) del CSF se implementan arquitecturalmente con los principios de Zero Trust.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--green);">CIS Controls v8</div>
+      <div class="rel-name">Controles 4, 5, 6, 12, 13, 16</div>
+      <div class="rel-how">Los controles CIS de gestión de cuentas privilegiadas (CIS 5), gestión de dispositivos (CIS 4), control de acceso (CIS 6) y segmentación de red (CIS 12) son la implementación técnica concreta de los pilares Zero Trust.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--gold);">Ley 21.663 Chile</div>
+      <div class="rel-name">OIV — Deberes Específicos</div>
+      <div class="rel-how">Los OIV bajo la Ley 21.663 deben implementar un SGSI (ISO 27001) y monitoreo continuo. Zero Trust Architecture es la estrategia de seguridad más alineada con estos requisitos, especialmente para organizaciones con infraestructura crítica en entornos híbridos y cloud.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--purple);">MITRE ATT&CK</div>
+      <div class="rel-name">Mitigación de Técnicas</div>
+      <div class="rel-how">Los pilares Zero Trust mitigan directamente las técnicas de MITRE ATT&CK más usadas: T1078 (Valid Accounts) con MFA+PAM, T1021 (Remote Services) con ZTNA, T1550 (Use Alternate Auth Material) con acceso condicional.</div>
+    </div>
+    <div class="rel-item">
+      <div class="rel-std" style="color:var(--teal);">CISA ZT Maturity Model</div>
+      <div class="rel-name">Guía de Implementación CISA</div>
+      <div class="rel-how">La CISA publicó el Zero Trust Maturity Model v2.0 (2023) que complementa el NIST SP 800-207 con una guía más operativa y un modelo de madurez de 4 etapas por pilar, con tecnologías y actividades específicas para cada nivel.</div>
+    </div>
+  </div>
+</section>
+
+</div>
+<footer>
+  <strong>Zero Trust Architecture — NIST SP 800-207</strong><br>
+  National Institute of Standards and Technology · Publicado: Agosto 2020<br>
+  <a href="https://csrc.nist.gov/publications/detail/sp/800-207/final" target="_blank">csrc.nist.gov/publications/detail/sp/800-207</a> · <a href="https://www.cisa.gov/zero-trust-maturity-model" target="_blank">CISA Zero Trust Maturity Model</a><br><br>
+  <span style="font-size:.62rem;opacity:.5">Documento educativo. La adopción de Zero Trust es un programa multianual que requiere planificación estratégica y compromiso ejecutivo.</span>
+</footer>
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
+<script>
+const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')});},{threshold:.06,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('section.block').forEach(el=>ro.observe(el));
+const sb=document.getElementById('scrollTopBtn');
+window.addEventListener('scroll',()=>sb.classList.toggle('show',window.scrollY>500));
+const navObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));const a=document.querySelector(`.nav-link[href="#${x.target.id}"]`);if(a)a.classList.add('active');}});},{threshold:.3});
+document.querySelectorAll('section.block[id]').forEach(s=>navObs.observe(s));
+</script>
+</body>
+</html>

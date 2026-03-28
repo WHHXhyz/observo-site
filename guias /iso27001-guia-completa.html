@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISO/IEC 27001:2022 — Guía Completa</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   TOKENS
+══════════════════════════════════════════ */
+:root{
+  --bg:       #f5f2ed;
+  --bg2:      #ede9e2;
+  --ink:      #1a1410;
+  --ink2:     #4a3f35;
+  --ink3:     #8a7a6e;
+  --accent:   #c8410a;
+  --accent2:  #e8622a;
+  --blue:     #1a4f8c;
+  --green:    #1a6b3c;
+  --gold:     #a07a10;
+  --border:   rgba(26,20,16,.1);
+  --card:     rgba(255,255,255,.6);
+  --shadow:   0 2px 20px rgba(26,20,16,.08);
+}
+
+/* ══ RESET ══ */
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Lato',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+  cursor:default;
+}
+
+/* Grain texture */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.4;
+}
+
+/* ══════════════════════════════════════════
+   TYPOGRAPHY
+══════════════════════════════════════════ */
+.serif    { font-family:'DM Serif Display',serif; }
+.mono     { font-family:'JetBrains Mono',monospace; }
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.hero{
+  position:relative;z-index:10;
+  background:var(--ink);
+  color:#f5f2ed;
+  padding:80px 40px 64px;
+  overflow:hidden;
+}
+
+.hero::after{
+  content:'';position:absolute;
+  right:-60px;top:-60px;
+  width:420px;height:420px;
+  border-radius:50%;
+  border:80px solid rgba(200,65,10,.15);
+  pointer-events:none;
+}
+
+.hero::before{
+  content:'';position:absolute;
+  left:-40px;bottom:-80px;
+  width:280px;height:280px;
+  border-radius:50%;
+  border:50px solid rgba(26,79,140,.1);
+  pointer-events:none;
+}
+
+.hero-inner{
+  max-width:1080px;margin:0 auto;
+  position:relative;z-index:2;
+}
+
+.hero-eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;letter-spacing:4px;
+  color:var(--accent2);text-transform:uppercase;
+  margin-bottom:20px;
+  opacity:0;animation:fadeUp .6s .1s forwards;
+}
+
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(3rem,8vw,6.5rem);
+  line-height:.95;
+  color:#f5f2ed;
+  margin-bottom:8px;
+  opacity:0;animation:fadeUp .7s .2s forwards;
+}
+
+.hero-title em{
+  font-style:italic;
+  color:var(--accent2);
+}
+
+.hero-year{
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(1rem,3vw,1.8rem);
+  color:rgba(245,242,237,.35);
+  letter-spacing:6px;
+  margin-bottom:28px;
+  opacity:0;animation:fadeUp .7s .3s forwards;
+}
+
+.hero-desc{
+  max-width:580px;
+  font-size:1rem;line-height:1.85;
+  color:rgba(245,242,237,.7);
+  margin-bottom:36px;
+  opacity:0;animation:fadeUp .7s .4s forwards;
+}
+
+.hero-stats{
+  display:flex;flex-wrap:wrap;gap:28px;
+  opacity:0;animation:fadeUp .7s .5s forwards;
+}
+
+.stat{
+  border-left:2px solid var(--accent);
+  padding-left:14px;
+}
+
+.stat-num{
+  font-family:'DM Serif Display',serif;
+  font-size:2rem;color:#f5f2ed;
+  line-height:1;
+}
+
+.stat-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;color:rgba(245,242,237,.4);
+  letter-spacing:2px;margin-top:3px;
+}
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+.main-nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(245,242,237,.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:0 24px;
+  overflow-x:auto;
+}
+
+.nav-inner{
+  display:flex;gap:0;
+  max-width:1080px;margin:0 auto;
+  white-space:nowrap;
+}
+
+.nav-link{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:2px;
+  color:var(--ink3);text-decoration:none;
+  padding:16px 16px;
+  border-bottom:2px solid transparent;
+  transition:all .2s;
+  text-transform:uppercase;
+}
+
+.nav-link:hover,.nav-link.active{
+  color:var(--accent);
+  border-bottom-color:var(--accent);
+}
+
+/* ══════════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════════ */
+.page{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+section.block{
+  padding:72px 0 40px;
+  border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(24px);
+  transition:opacity .6s,transform .6s;
+}
+
+section.block.visible{opacity:1;transform:none;}
+
+.block-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;letter-spacing:4px;
+  color:var(--accent);text-transform:uppercase;
+  margin-bottom:8px;
+}
+
+.block-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(1.8rem,4vw,2.8rem);
+  color:var(--ink);
+  margin-bottom:20px;
+  line-height:1.2;
+}
+
+.block-intro{
+  font-size:.97rem;line-height:1.9;
+  color:var(--ink2);max-width:720px;
+  margin-bottom:36px;
+}
+
+/* ══════════════════════════════════════════
+   PDCA WHEEL
+══════════════════════════════════════════ */
+.pdca-layout{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:40px;align-items:start;
+}
+
+@media(max-width:740px){.pdca-layout{grid-template-columns:1fr;}}
+
+.pdca-svg-wrap{
+  position:relative;
+  display:flex;justify-content:center;
+}
+
+.pdca-svg-wrap svg{
+  width:100%;max-width:300px;
+  filter:drop-shadow(0 8px 30px rgba(200,65,10,.15));
+}
+
+.pdca-cards{
+  display:flex;flex-direction:column;gap:12px;
+}
+
+.pdca-card{
+  border:1px solid var(--border);border-radius:4px;
+  padding:18px 20px;background:var(--card);
+  backdrop-filter:blur(8px);
+  cursor:pointer;
+  transition:all .2s;
+  border-left:3px solid transparent;
+}
+
+.pdca-card:hover,.pdca-card.active{
+  box-shadow:var(--shadow);
+  transform:translateX(4px);
+}
+
+.pdca-card.p-plan.active  {border-left-color:var(--accent);}
+.pdca-card.p-do.active    {border-left-color:var(--blue);}
+.pdca-card.p-check.active {border-left-color:var(--gold);}
+.pdca-card.p-act.active   {border-left-color:var(--green);}
+
+.pdca-card-head{display:flex;align-items:center;gap:12px;}
+
+.pdca-letter{
+  font-family:'DM Serif Display',serif;
+  font-size:2rem;line-height:1;
+  width:44px;flex-shrink:0;text-align:center;
+}
+
+.p-plan .pdca-letter {color:var(--accent);}
+.p-do   .pdca-letter {color:var(--blue);}
+.p-check .pdca-letter{color:var(--gold);}
+.p-act  .pdca-letter {color:var(--green);}
+
+.pdca-name{
+  font-family:'DM Serif Display',serif;
+  font-size:1.1rem;color:var(--ink);
+}
+
+.pdca-clause{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;color:var(--ink3);
+  letter-spacing:1px;margin-top:2px;
+}
+
+.pdca-body{
+  display:none;margin-top:12px;padding-top:12px;
+  border-top:1px solid var(--border);
+  font-size:.87rem;line-height:1.75;color:var(--ink2);
+}
+
+.pdca-card.active .pdca-body{display:block;}
+
+.pdca-list{list-style:none;margin-top:8px;display:flex;flex-direction:column;gap:5px;}
+.pdca-list li{padding-left:14px;position:relative;font-size:.85rem;}
+.pdca-list li::before{content:'→';position:absolute;left:0;color:var(--accent);}
+
+/* ══════════════════════════════════════════
+   CONTEXTO (4 SECCIONES ISO)
+══════════════════════════════════════════ */
+.clauses-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:16px;
+}
+
+.clause-card{
+  border:1px solid var(--border);border-radius:4px;
+  padding:22px;background:var(--card);
+  backdrop-filter:blur(8px);
+  transition:all .22s;
+  position:relative;overflow:hidden;
+}
+
+.clause-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:3px;
+}
+
+.clause-card:nth-child(1)::before{background:var(--accent);}
+.clause-card:nth-child(2)::before{background:var(--blue);}
+.clause-card:nth-child(3)::before{background:var(--gold);}
+.clause-card:nth-child(4)::before{background:var(--green);}
+.clause-card:nth-child(5)::before{background:#8b2be2;}
+.clause-card:nth-child(6)::before{background:#0e7c7b;}
+.clause-card:nth-child(7)::before{background:#c44b24;}
+
+.clause-card:hover{
+  box-shadow:var(--shadow);
+  transform:translateY(-3px);
+}
+
+.clause-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;letter-spacing:3px;
+  color:var(--ink3);margin-bottom:8px;
+}
+
+.clause-title{
+  font-family:'DM Serif Display',serif;
+  font-size:1.15rem;color:var(--ink);
+  margin-bottom:8px;line-height:1.3;
+}
+
+.clause-desc{font-size:.85rem;line-height:1.7;color:var(--ink2);}
+
+/* ══════════════════════════════════════════
+   DOMINIOS ANEXO A
+══════════════════════════════════════════ */
+.domains-container{display:flex;flex-direction:column;gap:4px;}
+
+.domain-row{
+  border:1px solid var(--border);border-radius:3px;
+  background:var(--card);overflow:hidden;
+}
+
+.domain-header{
+  display:flex;align-items:center;gap:16px;
+  padding:16px 20px;cursor:pointer;
+  transition:background .2s;
+  user-select:none;
+}
+
+.domain-header:hover{background:rgba(26,20,16,.03);}
+.domain-row.open .domain-header{background:rgba(200,65,10,.04);}
+
+.domain-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;letter-spacing:2px;
+  color:var(--accent);
+  min-width:36px;flex-shrink:0;
+}
+
+.domain-name{
+  font-family:'DM Serif Display',serif;
+  font-size:1.05rem;color:var(--ink);
+  flex:1;
+}
+
+.domain-count{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;color:var(--ink3);
+  border:1px solid var(--border);
+  padding:3px 8px;border-radius:20px;
+  flex-shrink:0;
+}
+
+.domain-chevron{
+  font-size:.75rem;color:var(--ink3);
+  transition:transform .2s;
+  flex-shrink:0;
+}
+
+.domain-row.open .domain-chevron{transform:rotate(180deg);}
+
+.domain-body{
+  display:none;
+  padding:0 20px 20px;
+  border-top:1px solid var(--border);
+}
+
+.domain-row.open .domain-body{display:block;}
+
+.domain-intro{
+  font-size:.88rem;line-height:1.75;color:var(--ink2);
+  margin:14px 0 16px;
+  padding:12px 16px;
+  background:rgba(200,65,10,.04);
+  border-left:2px solid var(--accent);
+  border-radius:0 3px 3px 0;
+}
+
+.controls-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:10px;
+}
+
+.control-item{
+  border:1px solid var(--border);border-radius:3px;
+  padding:14px 16px;background:rgba(255,255,255,.5);
+  transition:border-color .2s,transform .2s;
+}
+
+.control-item:hover{
+  border-color:rgba(200,65,10,.3);
+  transform:translateY(-1px);
+}
+
+.ctrl-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:6px;}
+
+.ctrl-id{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;color:var(--accent);
+  letter-spacing:1px;flex-shrink:0;
+  background:rgba(200,65,10,.08);
+  padding:2px 6px;border-radius:2px;
+  margin-top:1px;white-space:nowrap;
+}
+
+.ctrl-name{
+  font-size:.88rem;font-weight:700;
+  color:var(--ink);line-height:1.35;
+}
+
+.ctrl-desc{font-size:.82rem;line-height:1.65;color:var(--ink2);}
+
+.ctrl-type{
+  display:inline-block;margin-top:7px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.58rem;letter-spacing:1px;
+  padding:2px 7px;border-radius:20px;border:1px solid;
+}
+
+.ct-preventive{color:var(--blue);border-color:rgba(26,79,140,.3);background:rgba(26,79,140,.06);}
+.ct-detective  {color:var(--gold);border-color:rgba(160,122,16,.3);background:rgba(160,122,16,.06);}
+.ct-corrective {color:var(--green);border-color:rgba(26,107,60,.3);background:rgba(26,107,60,.06);}
+.ct-directive  {color:#8b2be2;border-color:rgba(139,43,226,.3);background:rgba(139,43,226,.06);}
+
+/* ══════════════════════════════════════════
+   IMPLEMENTACIÓN (pasos)
+══════════════════════════════════════════ */
+.impl-steps{
+  display:flex;flex-direction:column;gap:0;
+  position:relative;
+}
+
+.impl-steps::before{
+  content:'';position:absolute;
+  left:28px;top:16px;bottom:16px;
+  width:1px;background:var(--border);
+}
+
+.impl-step{
+  display:flex;gap:28px;
+  padding:0 0 36px;
+  position:relative;
+}
+
+.impl-step:last-child{padding-bottom:0;}
+
+.step-circle{
+  width:56px;height:56px;
+  border-radius:50%;
+  border:2px solid var(--border);
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  font-family:'DM Serif Display',serif;
+  font-size:1.4rem;
+  color:var(--accent);
+  position:relative;z-index:2;
+}
+
+.step-content{flex:1;padding-top:10px;}
+
+.step-title{
+  font-family:'DM Serif Display',serif;
+  font-size:1.2rem;color:var(--ink);
+  margin-bottom:6px;
+}
+
+.step-desc{font-size:.88rem;line-height:1.75;color:var(--ink2);}
+
+.step-tips{
+  margin-top:10px;list-style:none;
+  display:flex;flex-direction:column;gap:4px;
+}
+
+.step-tips li{
+  font-size:.83rem;color:var(--ink2);
+  padding-left:14px;position:relative;
+  line-height:1.6;
+}
+
+.step-tips li::before{content:'•';position:absolute;left:0;color:var(--accent);}
+
+/* ══════════════════════════════════════════
+   MÉTRICAS / KPIs
+══════════════════════════════════════════ */
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:14px;
+}
+
+.kpi-card{
+  border:1px solid var(--border);border-radius:4px;
+  padding:20px;background:var(--card);
+  transition:all .2s;
+}
+
+.kpi-card:hover{box-shadow:var(--shadow);transform:translateY(-2px);}
+
+.kpi-area{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.58rem;letter-spacing:3px;color:var(--ink3);
+  text-transform:uppercase;margin-bottom:10px;
+}
+
+.kpi-name{
+  font-family:'DM Serif Display',serif;
+  font-size:1.05rem;color:var(--ink);
+  margin-bottom:6px;
+}
+
+.kpi-desc{font-size:.82rem;line-height:1.65;color:var(--ink2);}
+
+.kpi-formula{
+  margin-top:10px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;
+  background:rgba(26,20,16,.05);
+  padding:6px 10px;border-radius:2px;
+  color:var(--accent);
+  line-height:1.5;
+}
+
+/* ══════════════════════════════════════════
+   SOA TABLE
+══════════════════════════════════════════ */
+.soa-intro{
+  font-size:.9rem;line-height:1.8;color:var(--ink2);
+  margin-bottom:24px;
+  padding:16px 20px;
+  border:1px solid var(--border);
+  border-radius:4px;
+  background:var(--card);
+}
+
+.soa-intro strong{color:var(--ink);}
+
+/* ══════════════════════════════════════════
+   RELACIÓN ISO 27001 / 27002
+══════════════════════════════════════════ */
+.relation-box{
+  display:grid;grid-template-columns:1fr 60px 1fr;
+  gap:0;align-items:center;
+  margin:24px 0;
+}
+
+@media(max-width:600px){.relation-box{grid-template-columns:1fr;}}
+
+.rel-card{
+  border:1px solid var(--border);border-radius:4px;
+  padding:24px;background:var(--card);
+}
+
+.rel-title{
+  font-family:'DM Serif Display',serif;
+  font-size:1.4rem;color:var(--ink);
+  margin-bottom:10px;
+}
+
+.rel-sub{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:2px;color:var(--ink3);
+  margin-bottom:12px;
+}
+
+.rel-body{font-size:.87rem;line-height:1.7;color:var(--ink2);}
+
+.rel-arrow{
+  text-align:center;font-size:1.5rem;color:var(--ink3);
+}
+
+/* ══════════════════════════════════════════
+   CALLOUT / NOTE
+══════════════════════════════════════════ */
+.note{
+  border-left:3px solid var(--gold);
+  background:rgba(160,122,16,.05);
+  padding:14px 18px;border-radius:0 3px 3px 0;
+  font-size:.88rem;line-height:1.75;color:var(--ink2);
+  margin:20px 0;
+}
+
+.note-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;letter-spacing:3px;
+  color:var(--gold);margin-bottom:6px;
+}
+
+.tip{border-left-color:var(--blue);background:rgba(26,79,140,.04);}
+.tip .note-label{color:var(--blue);}
+
+.warn{border-left-color:var(--accent);background:rgba(200,65,10,.04);}
+.warn .note-label{color:var(--accent);}
+
+/* ══════════════════════════════════════════
+   BADGE
+══════════════════════════════════════════ */
+.badge{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:1px;
+  padding:3px 9px;border-radius:20px;border:1px solid;
+  vertical-align:middle;
+}
+
+.b-req {color:var(--accent);border-color:rgba(200,65,10,.3);background:rgba(200,65,10,.06);}
+.b-opt {color:var(--blue); border-color:rgba(26,79,140,.3); background:rgba(26,79,140,.06);}
+.b-new {color:var(--green);border-color:rgba(26,107,60,.3);  background:rgba(26,107,60,.06);}
+
+/* ══════════════════════════════════════════
+   TABLA DE CAMBIOS 2013→2022
+══════════════════════════════════════════ */
+.changes-table{
+  width:100%;border-collapse:collapse;
+  font-size:.85rem;
+}
+
+.changes-table th{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;letter-spacing:2px;
+  color:var(--ink3);font-weight:400;
+  padding:10px 14px;
+  border-bottom:2px solid var(--border);
+  text-align:left;
+}
+
+.changes-table td{
+  padding:12px 14px;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+  line-height:1.65;
+  color:var(--ink2);
+}
+
+.changes-table tr:hover td{background:rgba(200,65,10,.02);}
+
+.changes-table .added{color:var(--green);font-weight:700;}
+.changes-table .removed{color:var(--accent);text-decoration:line-through;opacity:.7;}
+.changes-table .changed{color:var(--gold);}
+
+/* ══════════════════════════════════════════
+   SCROLL TOP
+══════════════════════════════════════════ */
+.scroll-top{
+  position:fixed;bottom:28px;right:28px;z-index:200;
+  background:var(--ink);color:var(--bg);
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  padding:10px 16px;border:none;border-radius:2px;
+  cursor:pointer;transition:all .2s;letter-spacing:2px;
+  opacity:0;pointer-events:none;
+  box-shadow:0 4px 20px rgba(26,20,16,.2);
+}
+
+.scroll-top.show{opacity:1;pointer-events:auto;}
+.scroll-top:hover{background:var(--accent);}
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer{
+  background:var(--ink);color:rgba(245,242,237,.5);
+  padding:48px 40px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;letter-spacing:1px;line-height:2;
+  text-align:center;
+}
+
+footer strong{color:rgba(245,242,237,.8);}
+footer a{color:var(--accent2);text-decoration:none;}
+
+/* ══════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════ */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(16px);}
+  to  {opacity:1;transform:translateY(0);}
+}
+
+/* SEARCH bar */
+.search-wrap{
+  position:relative;margin-bottom:20px;max-width:440px;
+}
+
+.search-input{
+  width:100%;
+  font-family:'JetBrains Mono',monospace;font-size:.8rem;
+  padding:10px 16px 10px 40px;
+  border:1px solid var(--border);border-radius:3px;
+  background:var(--card);color:var(--ink);
+  outline:none;transition:border-color .2s;
+}
+
+.search-input:focus{border-color:var(--accent);}
+
+.search-icon{
+  position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  color:var(--ink3);font-size:.9rem;pointer-events:none;
+}
+
+/* highlight */
+.hl{background:rgba(200,65,10,.2);border-radius:2px;}
+
+/* Tab control types legend */
+.type-legend{
+  display:flex;flex-wrap:wrap;gap:8px;
+  margin-bottom:16px;
+}
+
+/* Risk matrix */
+.risk-matrix{
+  display:grid;
+  grid-template-columns:60px repeat(4,1fr);
+  grid-template-rows:auto repeat(4,1fr);
+  gap:2px;
+  max-width:480px;
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+}
+
+.rm-cell{
+  padding:10px 8px;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;border-radius:2px;
+}
+
+.rm-header{
+  background:var(--ink);color:rgba(245,242,237,.7);
+  font-size:.58rem;letter-spacing:1px;
+}
+
+.rm-label{
+  background:var(--ink);color:rgba(245,242,237,.7);
+  writing-mode:vertical-rl;text-orientation:mixed;
+  padding:16px 8px;
+  font-size:.58rem;letter-spacing:1px;
+}
+
+.rm-low   {background:rgba(26,107,60,.15);color:var(--green);}
+.rm-med   {background:rgba(160,122,16,.15);color:var(--gold);}
+.rm-high  {background:rgba(200,65,10,.18);color:var(--accent);}
+.rm-crit  {background:rgba(200,65,10,.35);color:#8c1a00;font-weight:700;}
+
+/* 2-col layout helper */
+.two-col{
+  display:grid;grid-template-columns:1fr 1fr;gap:24px;
+  align-items:start;
+}
+
+@media(max-width:680px){.two-col{grid-template-columns:1fr;}}
+
+/* Numbered list */
+.num-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.num-list li{display:flex;gap:12px;font-size:.9rem;line-height:1.7;color:var(--ink2);}
+.num-list li::before{
+  content:counter(li);counter-increment:li;
+  display:flex;align-items:center;justify-content:center;
+  min-width:26px;height:26px;
+  background:var(--accent);color:#fff;
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  border-radius:50%;flex-shrink:0;margin-top:2px;
+}
+ol.num-list{counter-reset:li;}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">// Estándar Internacional — Sistemas de Gestión de Seguridad de la Información</div>
+    <h1 class="hero-title">ISO/IEC<br><em>27001</em></h1>
+    <div class="hero-year">EDICIÓN 2022</div>
+    <p class="hero-desc">
+      El marco más adoptado globalmente para implementar, operar, mantener y mejorar continuamente un Sistema de Gestión de Seguridad de la Información (SGSI). Guía completa y didáctica desde cero.
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">93</div><div class="stat-label">Controles Anexo A</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Temas de Controles</div></div>
+      <div class="stat"><div class="stat-num">10</div><div class="stat-label">Cláusulas Normativas</div></div>
+      <div class="stat"><div class="stat-num">11</div><div class="stat-label">Atributos por Control</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ NAVEGACIÓN ══ -->
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a class="nav-link" href="#que-es">¿Qué es?</a>
+    <a class="nav-link" href="#estructura">Estructura</a>
+    <a class="nav-link" href="#pdca">Ciclo PDCA</a>
+    <a class="nav-link" href="#clausulas">Cláusulas</a>
+    <a class="nav-link" href="#anexo-a">Controles</a>
+    <a class="nav-link" href="#soa">SoA</a>
+    <a class="nav-link" href="#riesgos">Riesgos</a>
+    <a class="nav-link" href="#implementacion">Implementación</a>
+    <a class="nav-link" href="#metricas">Métricas</a>
+    <a class="nav-link" href="#cambios">2013 vs 2022</a>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- ══ ¿QUÉ ES? ══ -->
+<section class="block" id="que-es">
+  <div class="block-label">// Fundamentos</div>
+  <h2 class="block-title">¿Qué es ISO 27001?</h2>
+  <p class="block-intro">
+    ISO/IEC 27001 es un estándar internacional publicado por la Organización Internacional de Normalización (ISO) y la Comisión Electrotécnica Internacional (IEC). Define los requisitos para establecer, implementar, mantener y mejorar continuamente un <strong>Sistema de Gestión de Seguridad de la Información (SGSI)</strong>.
+  </p>
+
+  <div class="two-col">
+    <div>
+      <div class="note warn">
+        <div class="note-label">// DEFINICIÓN CLAVE</div>
+        Un <strong>SGSI</strong> es un enfoque sistemático para gestionar la información sensible de una organización y asegurar que permanezca segura. Incluye personas, procesos y sistemas de TI aplicando un proceso de gestión de riesgos.
+      </div>
+
+      <div style="margin-top:20px;">
+        <div class="block-label" style="margin-bottom:12px;">// Los 3 pilares de la seguridad (CIA)</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="clause-card" style="padding:14px 18px;">
+            <div class="clause-num">CONFIDENCIALIDAD</div>
+            <div class="clause-desc">La información solo es accesible para quienes tienen autorización. Ejemplo: cifrado de datos, control de acceso basado en roles.</div>
+          </div>
+          <div class="clause-card" style="padding:14px 18px;">
+            <div class="clause-num">INTEGRIDAD</div>
+            <div class="clause-desc">La información es exacta y completa; solo se puede modificar de forma autorizada. Ejemplo: checksums, firmas digitales, logs de auditoría.</div>
+          </div>
+          <div class="clause-card" style="padding:14px 18px;">
+            <div class="clause-num">DISPONIBILIDAD</div>
+            <div class="clause-desc">La información y los sistemas están accesibles cuando se necesitan. Ejemplo: redundancia, backups, planes de continuidad.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="block-label" style="margin-bottom:12px;">// ¿Para qué sirve certificarse?</div>
+      <ol class="num-list" style="counter-reset:li;">
+        <li>Demostrar a clientes, socios y reguladores que la seguridad de la información se gestiona con rigor</li>
+        <li>Cumplir requisitos legales y contractuales (GDPR, Ley 21.663 Chile, contratos con el Estado)</li>
+        <li>Reducir la probabilidad e impacto de incidentes de seguridad</li>
+        <li>Mejorar la cultura de seguridad interna de la organización</li>
+        <li>Diferenciarse competitivamente en licitaciones y procesos de ventas B2B</li>
+        <li>Estructurar y madurar el área de TI/seguridad con un marco probado</li>
+      </ol>
+
+      <div class="note tip" style="margin-top:16px;">
+        <div class="note-label">// ISO 27001 vs ISO 27002</div>
+        <strong>ISO 27001</strong> es el estándar <em>certificable</em>: define los requisitos del SGSI (cláusulas 4–10 y Anexo A).<br>
+        <strong>ISO 27002</strong> es la guía de implementación: explica en detalle cómo aplicar cada uno de los 93 controles. No es certificable por sí sola.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ESTRUCTURA ══ -->
+<section class="block" id="estructura">
+  <div class="block-label">// Arquitectura de la Norma</div>
+  <h2 class="block-title">Estructura del Estándar</h2>
+  <p class="block-intro">
+    ISO 27001 sigue la <strong>Estructura de Alto Nivel (HLS)</strong> — también llamada Anexo SL — común a todas las normas ISO de sistemas de gestión (9001, 14001, 45001…). Esto facilita la integración entre estándares.
+  </p>
+
+  <div class="relation-box">
+    <div class="rel-card">
+      <div class="rel-sub">// CUERPO PRINCIPAL</div>
+      <div class="rel-title">Cláusulas 4–10</div>
+      <div class="rel-body">
+        <strong>Requisitos obligatorios del SGSI.</strong> Toda organización que quiera certificarse debe cumplirlas sin excepción. Definen el qué, no el cómo. Son auditables directamente por el organismo certificador.
+      </div>
+    </div>
+    <div class="rel-arrow">⇄</div>
+    <div class="rel-card">
+      <div class="rel-sub">// COMPLEMENTO</div>
+      <div class="rel-title">Anexo A</div>
+      <div class="rel-body">
+        <strong>93 controles de referencia</strong> organizados en 4 temas. Son la lista de salvaguardas de la que la organización selecciona las aplicables según su evaluación de riesgos. La exclusión debe justificarse en la Declaración de Aplicabilidad (SoA).
+      </div>
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:4px;">
+    <div class="note-label">// IMPORTANTE — MALENTENDIDO FRECUENTE</div>
+    Los 93 controles del Anexo A <strong>no son todos obligatorios</strong>. La organización selecciona cuáles aplican según su contexto y resultados de la evaluación de riesgos, y justifica en la SoA cuáles excluye y por qué. Lo que sí es obligatorio es el proceso de selección y documentación.
+  </div>
+</section>
+
+<!-- ══ PDCA ══ -->
+<section class="block" id="pdca">
+  <div class="block-label">// Mejora Continua</div>
+  <h2 class="block-title">Ciclo PDCA del SGSI</h2>
+  <p class="block-intro">
+    ISO 27001 se basa en el ciclo de Deming (Plan-Do-Check-Act), garantizando que el SGSI no sea un proyecto puntual sino un proceso vivo que mejora continuamente. Haz clic en cada fase para ver los detalles.
+  </p>
+
+  <div class="pdca-layout">
+    <div class="pdca-svg-wrap">
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="150" cy="150" r="130" fill="#1a1410" opacity=".04" stroke="#1a1410" stroke-width=".5" opacity=".1"/>
+        <!-- P -->
+        <path d="M150,150 L150,20 A130,130 0 0,1 280,150 Z" fill="#c8410a" opacity=".85" class="pdca-seg" data-target="plan"/>
+        <!-- D -->
+        <path d="M150,150 L280,150 A130,130 0 0,1 150,280 Z" fill="#1a4f8c" opacity=".85" class="pdca-seg" data-target="do"/>
+        <!-- C -->
+        <path d="M150,150 L150,280 A130,130 0 0,1 20,150 Z" fill="#a07a10" opacity=".85" class="pdca-seg" data-target="check"/>
+        <!-- A -->
+        <path d="M150,150 L20,150 A130,130 0 0,1 150,20 Z" fill="#1a6b3c" opacity=".85" class="pdca-seg" data-target="act"/>
+        <!-- Center circle -->
+        <circle cx="150" cy="150" r="52" fill="#f5f2ed"/>
+        <text x="150" y="144" text-anchor="middle" font-family="DM Serif Display, serif" font-size="13" fill="#1a1410">SGSI</text>
+        <text x="150" y="162" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#8a7a6e" letter-spacing="2">CONTINUO</text>
+        <!-- Labels -->
+        <text x="205" y="95" text-anchor="middle" font-family="DM Serif Display, serif" font-size="22" fill="white" opacity=".95">P</text>
+        <text x="220" y="112" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="white" opacity=".7" letter-spacing="1">PLAN</text>
+        <text x="225" y="205" text-anchor="middle" font-family="DM Serif Display, serif" font-size="22" fill="white" opacity=".95">D</text>
+        <text x="228" y="222" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="white" opacity=".7" letter-spacing="1">DO</text>
+        <text x="90" y="218" text-anchor="middle" font-family="DM Serif Display, serif" font-size="22" fill="white" opacity=".95">C</text>
+        <text x="83" y="235" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="white" opacity=".7" letter-spacing="1">CHECK</text>
+        <text x="72" y="100" text-anchor="middle" font-family="DM Serif Display, serif" font-size="22" fill="white" opacity=".95">A</text>
+        <text x="68" y="117" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="white" opacity=".7" letter-spacing="1">ACT</text>
+        <!-- Arrow -->
+        <path d="M150 26 A124 124 0 0 1 264 114" fill="none" stroke="rgba(245,242,237,0.2)" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arr)"/>
+        <defs>
+          <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="rgba(245,242,237,0.4)"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+
+    <div class="pdca-cards">
+      <div class="pdca-card p-plan active" onclick="togglePdca(this)">
+        <div class="pdca-card-head">
+          <div class="pdca-letter">P</div>
+          <div>
+            <div class="pdca-name">Planificar <span style="color:var(--ink3);font-size:.85rem;font-family:'Lato'">(Plan)</span></div>
+            <div class="pdca-clause">Cláusulas 4, 5, 6, 7</div>
+          </div>
+        </div>
+        <div class="pdca-body">
+          Establecer el SGSI: definir el alcance, la política de seguridad, los objetivos, la evaluación y el tratamiento de riesgos. Aquí se identifican qué controles se van a implementar.
+          <ul class="pdca-list">
+            <li>Análisis del contexto interno y externo (4.1)</li>
+            <li>Identificación de partes interesadas (4.2)</li>
+            <li>Definición del alcance del SGSI (4.3)</li>
+            <li>Política de seguridad de la información (5.2)</li>
+            <li>Evaluación y tratamiento de riesgos (6.1)</li>
+            <li>Declaración de Aplicabilidad — SoA (6.1.3)</li>
+            <li>Objetivos de seguridad y planes (6.2)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pdca-card p-do" onclick="togglePdca(this)">
+        <div class="pdca-card-head">
+          <div class="pdca-letter">D</div>
+          <div>
+            <div class="pdca-name">Hacer <span style="color:var(--ink3);font-size:.85rem;font-family:'Lato'">(Do)</span></div>
+            <div class="pdca-clause">Cláusula 8</div>
+          </div>
+        </div>
+        <div class="pdca-body">
+          Implementar y operar los controles seleccionados en la fase de planificación. Ejecutar el plan de tratamiento de riesgos con los recursos asignados.
+          <ul class="pdca-list">
+            <li>Implementar controles técnicos y organizativos</li>
+            <li>Gestionar los procesos operacionales del SGSI</li>
+            <li>Ejecutar el Plan de Tratamiento de Riesgos (PTR)</li>
+            <li>Gestionar cambios planificados y no planificados</li>
+            <li>Coordinar con proveedores y terceros</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pdca-card p-check" onclick="togglePdca(this)">
+        <div class="pdca-card-head">
+          <div class="pdca-letter">C</div>
+          <div>
+            <div class="pdca-name">Verificar <span style="color:var(--ink3);font-size:.85rem;font-family:'Lato'">(Check)</span></div>
+            <div class="pdca-clause">Cláusulas 9</div>
+          </div>
+        </div>
+        <div class="pdca-body">
+          Monitorear, medir, analizar y evaluar el desempeño del SGSI. Auditar y revisar si los controles funcionan como se esperaba.
+          <ul class="pdca-list">
+            <li>Seguimiento y medición de controles (9.1)</li>
+            <li>Programa de auditoría interna (9.2)</li>
+            <li>Revisión por la dirección (9.3)</li>
+            <li>Evaluación del desempeño vs. objetivos</li>
+            <li>Análisis de incidentes y no conformidades</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pdca-card p-act" onclick="togglePdca(this)">
+        <div class="pdca-card-head">
+          <div class="pdca-letter">A</div>
+          <div>
+            <div class="pdca-name">Actuar <span style="color:var(--ink3);font-size:.85rem;font-family:'Lato'">(Act)</span></div>
+            <div class="pdca-clause">Cláusula 10</div>
+          </div>
+        </div>
+        <div class="pdca-body">
+          Tomar acciones correctivas y preventivas para mejorar continuamente el SGSI basándose en los hallazgos de la fase de verificación.
+          <ul class="pdca-list">
+            <li>Gestión de no conformidades (10.1)</li>
+            <li>Acciones correctivas y análisis de causa raíz</li>
+            <li>Mejora continua del SGSI (10.2)</li>
+            <li>Actualización de la evaluación de riesgos</li>
+            <li>Comunicación de mejoras a la alta dirección</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CLÁUSULAS ══ -->
+<section class="block" id="clausulas">
+  <div class="block-label">// Cláusulas 4–10 — Requisitos Obligatorios</div>
+  <h2 class="block-title">Las 7 Cláusulas del SGSI</h2>
+  <p class="block-intro">
+    Las cláusulas 1–3 son introductorias (alcance, referencias normativas, términos). Las cláusulas 4–10 son los requisitos auditables y certificables. Todas son obligatorias.
+  </p>
+
+  <div class="clauses-grid">
+    <div class="clause-card">
+      <div class="clause-num">CLÁUSULA 4</div>
+      <div class="clause-title">Contexto de la Organización</div>
+      <div class="clause-desc">
+        Entender la organización, su contexto interno y externo, las necesidades y expectativas de las partes interesadas, y definir el <strong>alcance del SGSI</strong>.
+        <br><br>
+        <em>Herramienta típica: análisis FODA, PESTEL, entrevistas con stakeholders.</em>
+      </div>
+    </div>
+
+    <div class="clause-card">
+      <div class="clause-num">CLÁUSULA 5</div>
+      <div class="clause-title">Liderazgo</div>
+      <div class="clause-desc">
+        Compromiso de la alta dirección, política de seguridad de la información, roles y responsabilidades. Sin apoyo ejecutivo el SGSI fracasa.
+        <br><br>
+        <em>Entregables: política firmada por dirección, roles CISO/DPO definidos.</em>
+      </div>
+    </div>
+
+    <div class="clause-card">
+      <div class="clause-num">CLÁUSULA 6</div>
+      <div class="clause-title">Planificación</div>
+      <div class="clause-desc">
+        Gestión de riesgos y oportunidades, evaluación y tratamiento de riesgos, Declaración de Aplicabilidad (SoA) y objetivos de seguridad.
+        <br><br>
+        <em>Entregables: metodología de riesgo, registro de riesgos, SoA, PTR.</em>
+      </div>
+    </div>
+
+    <div class="clause-card">
+      <div class="clause-num">CLÁUSULA 7</div>
+      <div class="clause-title">Apoyo</div>
+      <div class="clause-desc">
+        Recursos, competencias del personal, concienciación, comunicación y gestión documental (información documentada).
+        <br><br>
+        <em>Entregables: programa de formación, registros de competencias, procedimientos documentados.</em>
+      </div>
+    </div>
+
+    <div class="clause-card">
+      <div class="clause-num">CLÁUSULA 8</div>
+      <div class="clause-title">Operación</div>
+      <div class="clause-desc">
+        Planificación, implementación y control de los procesos operativos. Ejecutar la evaluación de riesgos y el plan de tratamiento.
+        <br><br>
+        <em>Entregables: controles implementados, gestión de proveedores, registros operativos.</em>
+      </div>
+    </div>
+
+    <div class="clause-card">
+      <div class="clause-num">CLÁUSULA 9</div>
+      <div class="clause-title">Evaluación del Desempeño</div>
+      <div class="clause-desc">
+        Seguimiento, medición y análisis, auditoría interna y revisión por la dirección. Verificar que el SGSI funciona como se planeó.
+        <br><br>
+        <em>Entregables: KPIs, informe de auditoría interna, actas de revisión por dirección.</em>
+      </div>
+    </div>
+
+    <div class="clause-card">
+      <div class="clause-num">CLÁUSULA 10</div>
+      <div class="clause-title">Mejora</div>
+      <div class="clause-desc">
+        No conformidades y acciones correctivas, mejora continua. Cerrar el ciclo PDCA con acciones documentadas y verificadas.
+        <br><br>
+        <em>Entregables: registro de no conformidades, análisis de causa raíz, evidencias de cierre.</em>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ANEXO A CONTROLES ══ -->
+<section class="block" id="anexo-a">
+  <div class="block-label">// Anexo A — ISO 27001:2022</div>
+  <h2 class="block-title">Los 93 Controles del Anexo A</h2>
+  <p class="block-intro">
+    ISO 27001:2022 reorganizó los controles en <strong>4 temas</strong> (vs. 14 dominios en la versión 2013). Añade <strong>11 controles nuevos</strong> y elimina controles obsoletos. Expande cada tema para ver todos los controles.
+  </p>
+
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="ctrlSearch" placeholder="Buscar control... (ej: cifrado, acceso, proveedor)" oninput="searchControls(this.value)"/>
+  </div>
+
+  <div class="type-legend">
+    <span class="badge b-req">Preventivo</span>
+    <span class="badge" style="color:var(--gold);border-color:rgba(160,122,16,.3);background:rgba(160,122,16,.06);">Detective</span>
+    <span class="badge" style="color:var(--green);border-color:rgba(26,107,60,.3);background:rgba(26,107,60,.06);">Correctivo</span>
+    <span class="badge" style="color:#8b2be2;border-color:rgba(139,43,226,.3);background:rgba(139,43,226,.06);">Directivo</span>
+    <span class="badge b-new">🆕 Nuevo en 2022</span>
+  </div>
+
+  <div class="domains-container" id="domainsContainer">
+
+    <!-- TEMA 5: ORGANIZACIONAL -->
+    <div class="domain-row open" id="dom-org">
+      <div class="domain-header" onclick="toggleDomain(this)">
+        <span class="domain-num">5.x</span>
+        <span class="domain-name">Controles Organizacionales</span>
+        <span class="domain-count">37 controles</span>
+        <span class="domain-chevron">▼</span>
+      </div>
+      <div class="domain-body">
+        <div class="domain-intro">
+          Controles relacionados con políticas, procesos, procedimientos, roles y responsabilidades. Son la base documental y de gobierno del SGSI.
+        </div>
+        <div class="controls-grid">
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.1</span><span class="ctrl-name">Políticas para la seguridad de la información</span></div><div class="ctrl-desc">Definir, aprobar por dirección, publicar y comunicar políticas de SI. Revisión periódica.</div><span class="ctrl-type ct-directive">Directivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.2</span><span class="ctrl-name">Roles y responsabilidades de SI</span></div><div class="ctrl-desc">Asignar claramente responsabilidades para proteger activos de información.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.3</span><span class="ctrl-name">Segregación de funciones</span></div><div class="ctrl-desc">Separar funciones conflictivas para reducir el riesgo de uso indebido intencional o accidental.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.4</span><span class="ctrl-name">Responsabilidades de gestión</span></div><div class="ctrl-desc">Los directivos deben exigir que el personal aplique la seguridad de la información según las políticas.</div><span class="ctrl-type ct-directive">Directivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.5</span><span class="ctrl-name">Contacto con autoridades</span></div><div class="ctrl-desc">Mantener contacto adecuado con autoridades relevantes (CERT, policía, reguladores).</div><span class="ctrl-type ct-corrective">Correctivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.6</span><span class="ctrl-name">Contacto con grupos de interés especial</span></div><div class="ctrl-desc">Participar en foros, grupos profesionales y asociaciones de seguridad para mantenerse actualizado.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.7</span><span class="ctrl-name">Inteligencia sobre amenazas</span></div><div class="ctrl-desc">Recopilar y analizar información sobre amenazas para tomar decisiones informadas. <span class="badge b-new">🆕 2022</span></div><span class="ctrl-type ct-detective">Detective</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.8</span><span class="ctrl-name">SI en la gestión de proyectos</span></div><div class="ctrl-desc">Integrar la seguridad de la información en la gestión de proyectos independientemente del tipo.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.9</span><span class="ctrl-name">Inventario de activos</span></div><div class="ctrl-desc">Identificar, inventariar y gestionar el ciclo de vida de los activos de información.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.10</span><span class="ctrl-name">Uso aceptable de activos</span></div><div class="ctrl-desc">Documentar y aplicar reglas sobre el uso aceptable de los activos de información.</div><span class="ctrl-type ct-directive">Directivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.11</span><span class="ctrl-name">Devolución de activos</span></div><div class="ctrl-desc">Asegurar que los empleados devuelvan todos los activos al término de la relación laboral.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.12</span><span class="ctrl-name">Clasificación de la información</span></div><div class="ctrl-desc">Clasificar la información según su valor, sensibilidad y criticidad para la organización.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.13</span><span class="ctrl-name">Etiquetado de información</span></div><div class="ctrl-desc">Desarrollar e implementar procedimientos de etiquetado de información según el esquema de clasificación.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.14</span><span class="ctrl-name">Transferencia de información</span></div><div class="ctrl-desc">Controlar la transferencia de información dentro y fuera de la organización (email, SFTP, nube).</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.15</span><span class="ctrl-name">Control de acceso</span></div><div class="ctrl-desc">Política de control de acceso basada en principio de menor privilegio y necesidad de conocer.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.16</span><span class="ctrl-name">Gestión de identidades</span></div><div class="ctrl-desc">Gestionar el ciclo de vida completo de identidades digitales: creación, modificación y eliminación.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.17</span><span class="ctrl-name">Información de autenticación</span></div><div class="ctrl-desc">Gestionar contraseñas, tokens y otros factores de autenticación de forma segura.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.18</span><span class="ctrl-name">Derechos de acceso</span></div><div class="ctrl-desc">Provisionar, revisar, modificar y revocar derechos de acceso según cambios en roles.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.19</span><span class="ctrl-name">SI en relaciones con proveedores</span></div><div class="ctrl-desc">Proteger los activos accesibles por proveedores y establecer requisitos de SI en contratos.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.20</span><span class="ctrl-name">SI en contratos con proveedores</span></div><div class="ctrl-desc">Incluir requisitos de SI en todos los acuerdos con proveedores y terceros que accedan a activos.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.21</span><span class="ctrl-name">SI en la cadena de suministro TIC</span></div><div class="ctrl-desc">Gestionar los riesgos de SI asociados a la cadena de suministro de productos y servicios TIC. <span class="badge b-new">🆕 2022</span></div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.22</span><span class="ctrl-name">Seguimiento y revisión de servicios de proveedores</span></div><div class="ctrl-desc">Monitorear, auditar y gestionar cambios en los servicios de proveedores periódicamente.</div><span class="ctrl-type ct-detective">Detective</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.23</span><span class="ctrl-name">SI para el uso de servicios en nube</span></div><div class="ctrl-desc">Establecer procesos para adquisición, uso, gestión y salida de servicios en la nube. <span class="badge b-new">🆕 2022</span></div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.24</span><span class="ctrl-name">Planificación de la gestión de incidentes</span></div><div class="ctrl-desc">Planificar y preparar la gestión de incidentes de SI: roles, procedimientos, comunicación.</div><span class="ctrl-type ct-corrective">Correctivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.25</span><span class="ctrl-name">Evaluación y decisión sobre incidentes</span></div><div class="ctrl-desc">Evaluar los eventos de SI y decidir si se clasifican como incidentes formales.</div><span class="ctrl-type ct-detective">Detective</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.26</span><span class="ctrl-name">Respuesta a incidentes</span></div><div class="ctrl-desc">Responder a incidentes según procedimientos documentados para contener, erradicar y recuperar.</div><span class="ctrl-type ct-corrective">Correctivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.27</span><span class="ctrl-name">Aprendizaje de incidentes</span></div><div class="ctrl-desc">Extraer lecciones aprendidas de incidentes para mejorar controles y reducir recurrencia.</div><span class="ctrl-type ct-corrective">Correctivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.28</span><span class="ctrl-name">Recopilación de evidencias</span></div><div class="ctrl-desc">Definir procedimientos para identificar, recopilar y preservar evidencias de incidentes.</div><span class="ctrl-type ct-detective">Detective</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.29</span><span class="ctrl-name">SI durante perturbaciones</span></div><div class="ctrl-desc">Planificar el mantenimiento de la SI durante perturbaciones: incidentes, desastres, crisis.</div><span class="ctrl-type ct-corrective">Correctivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.30</span><span class="ctrl-name">Preparación TIC para continuidad del negocio</span></div><div class="ctrl-desc">Planificar, implementar y probar la preparación TIC para continuidad ante interrupciones. <span class="badge b-new">🆕 2022</span></div><span class="ctrl-type ct-corrective">Correctivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.31</span><span class="ctrl-name">Requisitos legales, estatutarios y contractuales</span></div><div class="ctrl-desc">Identificar y cumplir todos los requisitos legales, regulatorios y contractuales aplicables.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.32</span><span class="ctrl-name">Derechos de propiedad intelectual</span></div><div class="ctrl-desc">Implementar procedimientos para proteger los derechos de propiedad intelectual.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.33</span><span class="ctrl-name">Protección de registros</span></div><div class="ctrl-desc">Proteger los registros de pérdida, destrucción, falsificación y acceso no autorizado.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.34</span><span class="ctrl-name">Privacidad y protección de datos personales</span></div><div class="ctrl-desc">Asegurar el cumplimiento con leyes de privacidad y protección de datos personales (GDPR, etc.).</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.35</span><span class="ctrl-name">Revisión independiente de la SI</span></div><div class="ctrl-desc">Revisar el SGSI de forma independiente (auditoría interna o externa) a intervalos planificados.</div><span class="ctrl-type ct-detective">Detective</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.36</span><span class="ctrl-name">Cumplimiento de políticas y normas</span></div><div class="ctrl-desc">Verificar regularmente el cumplimiento de políticas y normas de SI por parte de la organización.</div><span class="ctrl-type ct-detective">Detective</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.37</span><span class="ctrl-name">Procedimientos operativos documentados</span></div><div class="ctrl-desc">Documentar, mantener y poner a disposición los procedimientos operativos de SI.</div><span class="ctrl-type ct-directive">Directivo</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEMA 6: PERSONAS -->
+    <div class="domain-row" id="dom-per">
+      <div class="domain-header" onclick="toggleDomain(this)">
+        <span class="domain-num">6.x</span>
+        <span class="domain-name">Controles de Personas</span>
+        <span class="domain-count">8 controles</span>
+        <span class="domain-chevron">▼</span>
+      </div>
+      <div class="domain-body">
+        <div class="domain-intro">
+          Controles relacionados con el ciclo de vida del personal: preselección, durante el empleo y al terminar. El factor humano sigue siendo el vector de ataque más frecuente.
+        </div>
+        <div class="controls-grid">
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">6.1</span><span class="ctrl-name">Verificación de antecedentes</span></div><div class="ctrl-desc">Realizar verificaciones de antecedentes antes de contratar, proporcionales al riesgo del puesto.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">6.2</span><span class="ctrl-name">Términos y condiciones del empleo</span></div><div class="ctrl-desc">Incluir responsabilidades de SI en contratos laborales firmados por todos los empleados.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">6.3</span><span class="ctrl-name">Concienciación, educación y formación en SI</span></div><div class="ctrl-desc">Proporcionar formación periódica en SI a todo el personal. Incluir phishing simulado y ciberhigiene.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">6.4</span><span class="ctrl-name">Proceso disciplinario</span></div><div class="ctrl-desc">Proceso formal y comunicado para tratar violaciones de la política de SI por parte del personal.</div><span class="ctrl-type ct-corrective">Correctivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">6.5</span><span class="ctrl-name">Responsabilidades al término o cambio de empleo</span></div><div class="ctrl-desc">Definir y aplicar responsabilidades de SI al terminar o cambiar de puesto de trabajo.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">6.6</span><span class="ctrl-name">Acuerdos de confidencialidad y no divulgación</span></div><div class="ctrl-desc">Requerir NDAs que reflejen las necesidades de protección de información de la organización.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">6.7</span><span class="ctrl-name">Trabajo remoto</span></div><div class="ctrl-desc">Controles para proteger la información cuando el personal trabaja fuera de las instalaciones. <span class="badge b-new">🆕 2022</span></div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">6.8</span><span class="ctrl-name">Reporte de eventos de SI</span></div><div class="ctrl-desc">Establecer canales claros para que el personal reporte eventos e incidentes de SI observados.</div><span class="ctrl-type ct-detective">Detective</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEMA 7: FÍSICOS -->
+    <div class="domain-row" id="dom-fis">
+      <div class="domain-header" onclick="toggleDomain(this)">
+        <span class="domain-num">7.x</span>
+        <span class="domain-name">Controles Físicos</span>
+        <span class="domain-count">14 controles</span>
+        <span class="domain-chevron">▼</span>
+      </div>
+      <div class="domain-body">
+        <div class="domain-intro">
+          Controles para proteger las instalaciones, el hardware y los activos físicos. La seguridad digital falla si alguien puede acceder físicamente a los servidores.
+        </div>
+        <div class="controls-grid">
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">7.1</span><span class="ctrl-name">Perímetros de seguridad física</span></div><div class="ctrl-desc">Definir y usar perímetros para proteger áreas que contengan información sensible y equipos críticos.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">7.2</span><span class="ctrl-name">Entrada física</span></div><div class="ctrl-desc">Controlar los puntos de acceso para asegurar que solo personal autorizado accede a áreas seguras.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">7.3</span><span class="ctrl-name">Seguridad de oficinas, despachos e instalaciones</span></div><div class="ctrl-desc">Diseñar y aplicar la seguridad física en oficinas y otras áreas de trabajo.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">7.4</span><span class="ctrl-name">Monitoreo de seguridad física</span></div><div class="ctrl-desc">Monitorizar las instalaciones con CCTV, alarmas y sistemas de detección de intrusos. <span class="badge b-new">🆕 2022</span></div><span class="ctrl-type ct-detective">Detective</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">7.5</span><span class="ctrl-name">Protección contra amenazas físicas y ambientales</span></div><div class="ctrl-desc">Proteger contra incendio, inundación, terremoto, polvo, calor excesivo y otras amenazas físicas.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">7.6</span><span class="ctrl-name">Trabajo en áreas seguras</span></div><div class="ctrl-desc">Diseñar y aplicar medidas de seguridad para trabajar en áreas seguras, incluyendo visitantes.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">7.7</span><span class="ctrl-name">Escritorio y pantalla despejados</span></div><div class="ctrl-desc">Política de escritorio y pantalla despejados para reducir exposición de información sensible.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">7.8</span><span class="ctrl-name">Emplazamiento y protección de equipos</span></div><div class="ctrl-desc">Ubicar los equipos en lugares seguros que reduzcan el riesgo de amenazas físicas y ambientales.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">7.9</span><span class="ctrl-name">Seguridad de activos fuera de las instalaciones</span></div><div class="ctrl-desc">Aplicar medidas de seguridad a los activos utilizados fuera del perímetro organizacional.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">7.10</span><span class="ctrl-name">Medios de almacenamiento</span></div><div class="ctrl-desc">Gestionar los medios de almacenamiento (USB, HDD, cintas) durante su ciclo de vida y al eliminarse.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">7.11</span><span class="ctrl-name">Servicios de suministro</span></div><div class="ctrl-desc">Proteger los equipos de fallos de alimentación eléctrica y otras interrupciones de suministro.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">7.12</span><span class="ctrl-name">Seguridad del cableado</span></div><div class="ctrl-desc">Proteger el cableado de energía y telecomunicaciones de interceptación, interferencia o daños.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">7.13</span><span class="ctrl-name">Mantenimiento de equipos</span></div><div class="ctrl-desc">Mantener correctamente los equipos para asegurar su disponibilidad e integridad continua.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">7.14</span><span class="ctrl-name">Eliminación y reutilización segura de equipos</span></div><div class="ctrl-desc">Verificar que los datos se borran de forma irrecuperable antes de eliminar o reutilizar equipos.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEMA 8: TECNOLÓGICOS -->
+    <div class="domain-row" id="dom-tec">
+      <div class="domain-header" onclick="toggleDomain(this)">
+        <span class="domain-num">8.x</span>
+        <span class="domain-name">Controles Tecnológicos</span>
+        <span class="domain-count">34 controles</span>
+        <span class="domain-chevron">▼</span>
+      </div>
+      <div class="domain-body">
+        <div class="domain-intro">
+          Controles técnicos aplicados a sistemas, redes, software y datos. Incluyen los controles más especializados en ciberseguridad, con varios nuevos en la versión 2022.
+        </div>
+        <div class="controls-grid">
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.1</span><span class="ctrl-name">Dispositivos endpoint del usuario</span></div><div class="ctrl-desc">Gestionar la seguridad de laptops, móviles y otros endpoints del usuario final (MDM, EDR).</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.2</span><span class="ctrl-name">Privilegios de acceso</span></div><div class="ctrl-desc">Restringir y gestionar los derechos de acceso privilegiado (admin, root) aplicando PAM.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.3</span><span class="ctrl-name">Restricción de acceso a información</span></div><div class="ctrl-desc">Restringir el acceso a información y funciones de aplicación según la política de control de acceso.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.4</span><span class="ctrl-name">Acceso al código fuente</span></div><div class="ctrl-desc">Gestionar el acceso al código fuente, herramientas de desarrollo y librerías con control de versiones.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.5</span><span class="ctrl-name">Autenticación segura</span></div><div class="ctrl-desc">Implementar tecnologías y procedimientos de autenticación segura (MFA, SSO, certificados).</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.6</span><span class="ctrl-name">Gestión de capacidad</span></div><div class="ctrl-desc">Monitorizar el uso de recursos y proyectar la capacidad futura para garantizar disponibilidad.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.7</span><span class="ctrl-name">Protección contra malware</span></div><div class="ctrl-desc">Implementar controles de detección, prevención y recuperación contra malware y ransomware.</div><span class="ctrl-type ct-detective">Detective</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.8</span><span class="ctrl-name">Gestión de vulnerabilidades técnicas</span></div><div class="ctrl-desc">Inventariar activos, monitorizar vulnerabilidades conocidas y parchear en tiempos definidos.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.9</span><span class="ctrl-name">Gestión de la configuración</span></div><div class="ctrl-desc">Establecer y mantener configuraciones seguras (hardening) para hardware, software y redes. <span class="badge b-new">🆕 2022</span></div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.10</span><span class="ctrl-name">Eliminación de información</span></div><div class="ctrl-desc">Eliminar de forma segura e irrecuperable la información cuando ya no sea necesaria. <span class="badge b-new">🆕 2022</span></div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.11</span><span class="ctrl-name">Enmascaramiento de datos</span></div><div class="ctrl-desc">Enmascarar, anonimizar o seudonimizar datos personales y sensibles para reducir exposición. <span class="badge b-new">🆕 2022</span></div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.12</span><span class="ctrl-name">Prevención de fuga de datos (DLP)</span></div><div class="ctrl-desc">Aplicar medidas para detectar y prevenir la divulgación no autorizada de información sensible. <span class="badge b-new">🆕 2022</span></div><span class="ctrl-type ct-detective">Detective</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.13</span><span class="ctrl-name">Copia de seguridad de información</span></div><div class="ctrl-desc">Mantener y probar regularmente copias de seguridad según la política de backup (3-2-1 rule).</div><span class="ctrl-type ct-corrective">Correctivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.14</span><span class="ctrl-name">Redundancia de instalaciones de procesamiento</span></div><div class="ctrl-desc">Implementar redundancia suficiente para cumplir los requisitos de disponibilidad definidos.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.15</span><span class="ctrl-name">Registro de actividad (logging)</span></div><div class="ctrl-desc">Registrar actividades de usuarios, excepciones, fallos y eventos de SI; proteger y retener logs.</div><span class="ctrl-type ct-detective">Detective</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.16</span><span class="ctrl-name">Actividades de monitorización</span></div><div class="ctrl-desc">Monitorizar redes, sistemas y aplicaciones para detectar comportamientos anómalos. <span class="badge b-new">🆕 2022</span></div><span class="ctrl-type ct-detective">Detective</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.17</span><span class="ctrl-name">Sincronización de relojes</span></div><div class="ctrl-desc">Sincronizar los relojes de los sistemas con fuentes de tiempo de referencia aprobadas (NTP).</div><span class="ctrl-type ct-detective">Detective</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.18</span><span class="ctrl-name">Uso de programas utilitarios privilegiados</span></div><div class="ctrl-desc">Controlar el uso de utilidades que puedan superar los controles del sistema (sysinternals, etc.).</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.19</span><span class="ctrl-name">Instalación de software en sistemas operativos</span></div><div class="ctrl-desc">Implementar procedimientos para controlar de forma segura la instalación de software.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.20</span><span class="ctrl-name">Seguridad en redes</span></div><div class="ctrl-desc">Gestionar y controlar las redes para proteger la información de los sistemas y aplicaciones.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.21</span><span class="ctrl-name">Seguridad de servicios de red</span></div><div class="ctrl-desc">Identificar mecanismos de seguridad, niveles de servicio y requisitos de todos los servicios de red.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.22</span><span class="ctrl-name">Segregación de redes</span></div><div class="ctrl-desc">Segregar grupos de servicios, usuarios y sistemas en redes separadas (VLANs, DMZ, firewalls).</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.23</span><span class="ctrl-name">Filtrado web</span></div><div class="ctrl-desc">Gestionar el acceso a sitios web externos para reducir la exposición a contenido malicioso. <span class="badge b-new">🆕 2022</span></div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.24</span><span class="ctrl-name">Uso de criptografía</span></div><div class="ctrl-desc">Definir e implementar reglas sobre el uso de criptografía, incluyendo gestión de claves.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.25</span><span class="ctrl-name">Ciclo de vida de desarrollo seguro</span></div><div class="ctrl-desc">Establecer reglas para el desarrollo seguro de software y sistemas (SSDLC, DevSecOps).</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.26</span><span class="ctrl-name">Requisitos de seguridad de aplicaciones</span></div><div class="ctrl-desc">Identificar, especificar y aprobar requisitos de SI al desarrollar o adquirir aplicaciones.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.27</span><span class="ctrl-name">Principios de ingeniería de sistemas seguros</span></div><div class="ctrl-desc">Establecer, documentar y aplicar principios de ingeniería segura en todas las capas de arquitectura.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.28</span><span class="ctrl-name">Programación segura</span></div><div class="ctrl-desc">Aplicar principios de programación segura al desarrollar software (OWASP, validación, etc.). <span class="badge b-new">🆕 2022</span></div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.29</span><span class="ctrl-name">Pruebas de seguridad en desarrollo y aceptación</span></div><div class="ctrl-desc">Integrar pruebas de seguridad (SAST, DAST, pentest) en el ciclo de desarrollo y antes del despliegue.</div><span class="ctrl-type ct-detective">Detective</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.30</span><span class="ctrl-name">Desarrollo subcontratado</span></div><div class="ctrl-desc">Supervisar y monitorizar el desarrollo de software subcontratado para asegurar prácticas seguras.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.31</span><span class="ctrl-name">Separación de entornos</span></div><div class="ctrl-desc">Separar los entornos de desarrollo, prueba y producción para reducir el riesgo de cambios no autorizados.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.32</span><span class="ctrl-name">Gestión de cambios</span></div><div class="ctrl-desc">Controlar los cambios en instalaciones de procesamiento e información mediante un proceso formal.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.33</span><span class="ctrl-name">Información de pruebas</span></div><div class="ctrl-desc">Seleccionar, proteger y gestionar adecuadamente la información de prueba (no usar datos reales).</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+          <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.34</span><span class="ctrl-name">Protección de sistemas de información durante pruebas de auditoría</span></div><div class="ctrl-desc">Planificar y acordar las pruebas de auditoría para minimizar perturbaciones en los sistemas.</div><span class="ctrl-type ct-preventive">Preventivo</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /domains -->
+</section>
+
+<!-- ══ SOA ══ -->
+<section class="block" id="soa">
+  <div class="block-label">// Documento Clave del SGSI</div>
+  <h2 class="block-title">Declaración de Aplicabilidad (SoA)</h2>
+  <p class="block-intro">
+    La <strong>Statement of Applicability (SoA)</strong> es quizás el documento más importante del SGSI. Es el puente entre la evaluación de riesgos y los controles del Anexo A.
+  </p>
+
+  <div class="soa-intro">
+    <strong>¿Qué es la SoA?</strong> Un documento que lista los 93 controles del Anexo A e indica para cada uno:<br>
+    • Si aplica o no aplica a la organización<br>
+    • La justificación de inclusión (referenciada a los riesgos identificados, requisitos legales o decisiones de negocio)<br>
+    • La justificación de exclusión (si no aplica, debe explicarse por qué)<br>
+    • El estado de implementación actual
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="block-label" style="margin-bottom:12px;">// Por qué incluir un control</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="note" style="margin:0">
+          <div class="note-label">// RESULTADO DE EVALUACIÓN DE RIESGOS</div>
+          El tratamiento del riesgo requiere este control. Es la razón más común y robusta.
+        </div>
+        <div class="note tip" style="margin:0">
+          <div class="note-label">// REQUISITO LEGAL O CONTRACTUAL</div>
+          Una ley, reglamento o contrato (como la Ley 21.663 en Chile) exige implementarlo.
+        </div>
+        <div class="note warn" style="margin:0">
+          <div class="note-label">// REQUISITO DEL NEGOCIO</div>
+          La organización lo considera necesario por razones estratégicas o de buenas prácticas.
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="block-label" style="margin-bottom:12px;">// Errores frecuentes con la SoA</div>
+      <ol class="num-list" style="counter-reset:li;">
+        <li>Excluir controles sin justificación documentada — esto es una no conformidad grave</li>
+        <li>Incluir todos los controles "por si acaso" sin ligarlos a riesgos reales</li>
+        <li>No actualizar la SoA cuando cambia el contexto o aparecen nuevos riesgos</li>
+        <li>No tener evidencia de implementación real de los controles incluidos</li>
+        <li>Confundir "no aplica" con "todavía no lo hemos implementado"</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ══ GESTIÓN DE RIESGOS ══ -->
+<section class="block" id="riesgos">
+  <div class="block-label">// Cláusula 6.1 — El Corazón del SGSI</div>
+  <h2 class="block-title">Gestión de Riesgos de Seguridad</h2>
+  <p class="block-intro">
+    ISO 27001 no prescribe una metodología específica, pero exige que la organización defina y aplique una. El proceso tiene pasos bien definidos.
+  </p>
+
+  <div class="two-col" style="margin-bottom:32px;">
+    <div>
+      <div class="block-label" style="margin-bottom:14px;">// Proceso de evaluación de riesgos</div>
+      <ol class="num-list" style="counter-reset:li;">
+        <li><strong>Identificar activos de información</strong> — sistemas, datos, personas, instalaciones</li>
+        <li><strong>Identificar amenazas</strong> — malware, phishing, desastre natural, error humano…</li>
+        <li><strong>Identificar vulnerabilidades</strong> — falta de parches, contraseñas débiles, acceso físico…</li>
+        <li><strong>Evaluar probabilidad e impacto</strong> — escala numérica o categórica (Alto/Medio/Bajo)</li>
+        <li><strong>Calcular el nivel de riesgo</strong> — Probabilidad × Impacto</li>
+        <li><strong>Comparar contra criterios de aceptación</strong> definidos por la organización</li>
+        <li><strong>Decidir el tratamiento</strong> para cada riesgo inaceptable</li>
+      </ol>
+    </div>
+
+    <div>
+      <div class="block-label" style="margin-bottom:14px;">// Las 4 opciones de tratamiento (4T)</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="clause-card" style="padding:14px 18px;">
+          <div class="clause-num" style="color:var(--accent)">TRATAR (Mitigar)</div>
+          <div class="clause-desc">Implementar controles para reducir la probabilidad o el impacto del riesgo a un nivel aceptable. Es la opción más común.</div>
+        </div>
+        <div class="clause-card" style="padding:14px 18px;">
+          <div class="clause-num" style="color:var(--blue)">TRANSFERIR</div>
+          <div class="clause-desc">Compartir el riesgo con terceros: seguro de ciberseguridad, externalizar un servicio a un proveedor certificado.</div>
+        </div>
+        <div class="clause-card" style="padding:14px 18px;">
+          <div class="clause-num" style="color:var(--gold)">TOLERAR (Aceptar)</div>
+          <div class="clause-desc">Aceptar conscientemente el riesgo cuando el costo del control supera el impacto esperado. Debe estar documentado y aprobado por dirección.</div>
+        </div>
+        <div class="clause-card" style="padding:14px 18px;">
+          <div class="clause-num" style="color:var(--green)">TERMINAR (Eliminar)</div>
+          <div class="clause-desc">Eliminar la actividad o activo que genera el riesgo. Ej: descontinuar un sistema obsoleto sin parches.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block-label" style="margin-bottom:14px;">// Matriz de riesgo típica (Probabilidad × Impacto)</div>
+
+  <div class="risk-matrix">
+    <div class="rm-cell" style="background:transparent;"></div>
+    <div class="rm-cell rm-header">BAJO<br>impacto</div>
+    <div class="rm-cell rm-header">MEDIO<br>impacto</div>
+    <div class="rm-cell rm-header">ALTO<br>impacto</div>
+    <div class="rm-cell rm-header">CRÍTICO<br>impacto</div>
+
+    <div class="rm-cell rm-label">Alta probabilidad</div>
+    <div class="rm-cell rm-med">MEDIO<br>4</div>
+    <div class="rm-cell rm-high">ALTO<br>8</div>
+    <div class="rm-cell rm-crit">CRÍTICO<br>12</div>
+    <div class="rm-cell rm-crit">CRÍTICO<br>16</div>
+
+    <div class="rm-cell rm-label">Media probabilidad</div>
+    <div class="rm-cell rm-low">BAJO<br>2</div>
+    <div class="rm-cell rm-med">MEDIO<br>4</div>
+    <div class="rm-cell rm-high">ALTO<br>8</div>
+    <div class="rm-cell rm-crit">CRÍTICO<br>12</div>
+
+    <div class="rm-cell rm-label">Baja probabilidad</div>
+    <div class="rm-cell rm-low">MUY BAJO<br>1</div>
+    <div class="rm-cell rm-low">BAJO<br>2</div>
+    <div class="rm-cell rm-med">MEDIO<br>4</div>
+    <div class="rm-cell rm-high">ALTO<br>8</div>
+
+    <div class="rm-cell rm-label">Muy baja probabilidad</div>
+    <div class="rm-cell rm-low">MUY BAJO<br>0.5</div>
+    <div class="rm-cell rm-low">MUY BAJO<br>1</div>
+    <div class="rm-cell rm-low">BAJO<br>2</div>
+    <div class="rm-cell rm-med">MEDIO<br>4</div>
+  </div>
+
+  <div class="note" style="margin-top:16px;">
+    <div class="note-label">// HERRAMIENTAS HABITUALES</div>
+    MAGERIT (metodología española, muy usada en Chile), OCTAVE, ISO 27005, NIST SP 800-30, o herramientas como SimpleRisk, eramba o una hoja Excel bien estructurada. ISO 27001 no exige ninguna metodología específica, solo que sea consistente y repetible.
+  </div>
+</section>
+
+<!-- ══ IMPLEMENTACIÓN ══ -->
+<section class="block" id="implementacion">
+  <div class="block-label">// Hoja de Ruta Práctica</div>
+  <h2 class="block-title">Cómo Implementar un SGSI</h2>
+  <p class="block-intro">
+    Implementar ISO 27001 es un proyecto que típicamente toma entre 9 y 18 meses dependiendo del tamaño y madurez de la organización. Estos son los pasos esenciales.
+  </p>
+
+  <div class="impl-steps">
+    <div class="impl-step">
+      <div class="step-circle">1</div>
+      <div class="step-content">
+        <div class="step-title">Obtener compromiso de la alta dirección</div>
+        <div class="step-desc">Sin apoyo ejecutivo documentado, el SGSI fracasará. La cláusula 5 es la más crítica. La dirección debe aprobar la política, asignar recursos y participar en la revisión.</div>
+        <ul class="step-tips">
+          <li>Presentar el caso de negocio: costo de certificación vs. costo de un incidente</li>
+          <li>Vincular con requisitos legales (Ley 21.663) y ventajas competitivas</li>
+          <li>Conseguir firma de la política de SI por el CEO o directorio</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="impl-step">
+      <div class="step-circle">2</div>
+      <div class="step-content">
+        <div class="step-title">Definir el alcance del SGSI</div>
+        <div class="step-desc">El alcance define qué parte de la organización quedará cubierta por el certificado. Puede ser toda la empresa, una división, un producto o un proceso específico.</div>
+        <ul class="step-tips">
+          <li>Identificar el contexto interno y externo (FODA, PESTEL)</li>
+          <li>Mapear partes interesadas y sus expectativas de SI</li>
+          <li>Documentar el alcance con precisión: sitios, sistemas, procesos incluidos y excluidos</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="impl-step">
+      <div class="step-circle">3</div>
+      <div class="step-content">
+        <div class="step-title">Inventariar activos y realizar evaluación de riesgos</div>
+        <div class="step-desc">Este es el trabajo más intenso. Identificar qué información existe, dónde está, quién la usa, y qué puede salir mal. Es la base de todas las decisiones del SGSI.</div>
+        <ul class="step-tips">
+          <li>Inventario de activos: hardware, software, datos, personas, proveedores</li>
+          <li>Para cada activo: identificar amenazas, vulnerabilidades, probabilidad e impacto</li>
+          <li>Usar una metodología consistente (MAGERIT, OCTAVE, o propia)</li>
+          <li>Obtener aprobación de los niveles de riesgo aceptable por dirección</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="impl-step">
+      <div class="step-circle">4</div>
+      <div class="step-content">
+        <div class="step-title">Elaborar la SoA y el Plan de Tratamiento de Riesgos</div>
+        <div class="step-desc">Seleccionar qué controles del Anexo A se implementarán (ligarlos a los riesgos), y planificar cómo y cuándo se implementará cada uno con responsables y plazos.</div>
+        <ul class="step-tips">
+          <li>La SoA debe cubrir los 93 controles con inclusión/exclusión justificada</li>
+          <li>El PTR debe tener dueño, fecha estimada, recursos necesarios y criterio de cierre</li>
+          <li>Priorizar controles según nivel de riesgo más alto primero</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="impl-step">
+      <div class="step-circle">5</div>
+      <div class="step-content">
+        <div class="step-title">Implementar controles y documentar</div>
+        <div class="step-desc">Ejecutar el PTR: configurar herramientas, redactar procedimientos, formar al personal. ISO 27001 exige evidencias documentales de que los controles están activos.</div>
+        <ul class="step-tips">
+          <li>Documentación mínima obligatoria: política de SI, procedimientos, registros de auditoría, SoA, PTR</li>
+          <li>Capacitar a todo el personal en los controles que les aplican</li>
+          <li>Implementar herramientas: MFA, antivirus/EDR, backups, SIEM, gestión de parches</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="impl-step">
+      <div class="step-circle">6</div>
+      <div class="step-content">
+        <div class="step-title">Auditoría interna y revisión por dirección</div>
+        <div class="step-desc">Antes de la certificación, realizar al menos un ciclo completo de auditoría interna y revisión por la dirección para identificar y corregir no conformidades.</div>
+        <ul class="step-tips">
+          <li>El auditor interno debe ser independiente del área auditada</li>
+          <li>Toda no conformidad debe tener acción correctiva con análisis de causa raíz</li>
+          <li>La revisión por dirección debe documentarse en actas formales</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="impl-step">
+      <div class="step-circle">7</div>
+      <div class="step-content">
+        <div class="step-title">Auditoría de certificación (Etapas 1 y 2)</div>
+        <div class="step-desc">El organismo certificador acreditado realiza dos etapas: revisión documental (Etapa 1) e inspección en sitio con evidencias (Etapa 2). Si se aprueba, se emite el certificado válido por 3 años.</div>
+        <ul class="step-tips">
+          <li>Etapa 1: revisar documentación, alcance y preparación. Detecta brechas mayores</li>
+          <li>Etapa 2 (en sitio): verificar implementación real con entrevistas y muestreo de evidencias</li>
+          <li>Certificado válido 3 años con auditorías de seguimiento anuales</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MÉTRICAS ══ -->
+<section class="block" id="metricas">
+  <div class="block-label">// Cláusula 9.1 — Evaluación del Desempeño</div>
+  <h2 class="block-title">KPIs e Indicadores del SGSI</h2>
+  <p class="block-intro">
+    ISO 27001 exige que el desempeño del SGSI se mida. Sin métricas, no se puede demostrar que los controles funcionan ni justificar inversiones en seguridad. Aquí algunos KPIs recomendados.
+  </p>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-area">Gestión de Vulnerabilidades</div>
+      <div class="kpi-name">Tiempo medio de parcheo</div>
+      <div class="kpi-desc">Tiempo promedio desde que se publica una vulnerabilidad crítica hasta que se aplica el parche en producción.</div>
+      <div class="kpi-formula">MTTR = Σ(fecha_parche − fecha_CVE) / n</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">Control de Acceso</div>
+      <div class="kpi-name">Cuentas con exceso de privilegios</div>
+      <div class="kpi-desc">Porcentaje de cuentas de usuario con privilegios superiores a los necesarios para su función.</div>
+      <div class="kpi-formula">% = cuentas_exceso / total_cuentas × 100</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">Incidentes</div>
+      <div class="kpi-name">Tasa de incidentes mensuales</div>
+      <div class="kpi-desc">Número de incidentes de SI confirmados por mes, segmentados por categoría y severidad.</div>
+      <div class="kpi-formula">Incidentes/mes por categoría + tendencia</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">Copias de Seguridad</div>
+      <div class="kpi-name">Tasa de éxito de backups</div>
+      <div class="kpi-desc">Porcentaje de backups que se completan correctamente y se verifican mediante prueba de restauración.</div>
+      <div class="kpi-formula">% éxito = backups_ok / backups_total × 100</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">Concienciación</div>
+      <div class="kpi-name">Tasa de click en phishing simulado</div>
+      <div class="kpi-desc">Porcentaje de empleados que hacen click en emails de phishing simulado durante las campañas de entrenamiento.</div>
+      <div class="kpi-formula">% click = clicks / emails_enviados × 100<br>Objetivo: &lt; 5%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">Cumplimiento</div>
+      <div class="kpi-name">Cobertura de auditoría interna</div>
+      <div class="kpi-desc">Porcentaje de cláusulas y controles auditados internamente durante el año respecto al plan de auditoría.</div>
+      <div class="kpi-formula">% cobertura = controles_auditados / total × 100</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">Disponibilidad</div>
+      <div class="kpi-name">Uptime de sistemas críticos</div>
+      <div class="kpi-desc">Disponibilidad real de los sistemas incluidos en el alcance del SGSI, medida mensualmente.</div>
+      <div class="kpi-formula">Uptime = (tiempo_disponible / tiempo_total) × 100<br>Objetivo: ≥ 99.9%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-area">No Conformidades</div>
+      <div class="kpi-name">Tasa de cierre de NC</div>
+      <div class="kpi-desc">Porcentaje de no conformidades identificadas que se cierran dentro del plazo acordado con acciones correctivas verificadas.</div>
+      <div class="kpi-formula">% cierre = NC_cerradas / NC_abiertas × 100</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CAMBIOS 2013→2022 ══ -->
+<section class="block" id="cambios">
+  <div class="block-label">// Actualización del Estándar</div>
+  <h2 class="block-title">ISO 27001:2013 vs ISO 27001:2022</h2>
+  <p class="block-intro">
+    La revisión de 2022 modernizó el Anexo A significativamente, alineándolo con las amenazas actuales. Las organizaciones certificadas en la versión 2013 tuvieron hasta el <strong>31 de octubre de 2025</strong> para migrar.
+  </p>
+
+  <table class="changes-table">
+    <thead>
+      <tr>
+        <th>ASPECTO</th>
+        <th>ISO 27001:2013</th>
+        <th>ISO 27001:2022</th>
+        <th>IMPACTO</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Controles totales</strong></td>
+        <td>114 controles</td>
+        <td class="added">93 controles</td>
+        <td>Consolidación: controles similares fusionados</td>
+      </tr>
+      <tr>
+        <td><strong>Organización</strong></td>
+        <td>14 dominios (secciones A.5–A.18)</td>
+        <td class="added">4 temas (Org., Personas, Físico, Tecnológico)</td>
+        <td>Estructura más intuitiva y alineada a la práctica</td>
+      </tr>
+      <tr>
+        <td><strong>Controles nuevos</strong></td>
+        <td>—</td>
+        <td class="added">11 controles nuevos</td>
+        <td>Cubren nube, trabajo remoto, threat intel, DLP, etc.</td>
+      </tr>
+      <tr>
+        <td><strong>Atributos de control</strong></td>
+        <td>No existían</td>
+        <td class="added">5 atributos por control</td>
+        <td>Permite filtrar por tipo, propiedades CIA, conceptos de ciberseguridad, capacidades operativas y dominios de seguridad</td>
+      </tr>
+      <tr>
+        <td><strong>Trabajo remoto</strong></td>
+        <td>Cubierto de forma limitada en A.6.2</td>
+        <td class="added">Control dedicado 6.7</td>
+        <td>Refleja la realidad post-pandemia del trabajo híbrido</td>
+      </tr>
+      <tr>
+        <td><strong>Servicios en nube</strong></td>
+        <td>No cubierto explícitamente</td>
+        <td class="added">Control dedicado 5.23</td>
+        <td>Cubre SaaS, IaaS, PaaS con requisitos específicos</td>
+      </tr>
+      <tr>
+        <td><strong>Threat Intelligence</strong></td>
+        <td>No existía</td>
+        <td class="added">Control 5.7</td>
+        <td>Inteligencia de amenazas como proceso formal</td>
+      </tr>
+      <tr>
+        <td><strong>Programación segura</strong></td>
+        <td>Menciones dispersas</td>
+        <td class="added">Control dedicado 8.28</td>
+        <td>DevSecOps y SSDLC reconocidos explícitamente</td>
+      </tr>
+      <tr>
+        <td><strong>Cláusulas 4–10</strong></td>
+        <td>Estructura HLS básica</td>
+        <td>Mínimos cambios textuales</td>
+        <td>Principalmente el Anexo A fue lo más modificado</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="block-label" style="margin:28px 0 14px;">// Los 11 controles nuevos en 2022</div>
+  <div class="controls-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;">
+    <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.7</span><span class="ctrl-name">Inteligencia sobre amenazas</span></div><div class="ctrl-desc">Recopilar y analizar threat intelligence relevante para la organización.</div></div>
+    <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.23</span><span class="ctrl-name">SI para uso de servicios en nube</span></div><div class="ctrl-desc">Gestión del ciclo de vida de proveedores cloud.</div></div>
+    <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">5.30</span><span class="ctrl-name">Preparación TIC para continuidad</span></div><div class="ctrl-desc">Resiliencia TIC en escenarios de interrupción.</div></div>
+    <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">7.4</span><span class="ctrl-name">Monitoreo de seguridad física</span></div><div class="ctrl-desc">CCTV, alarmas y detección de intrusos.</div></div>
+    <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.9</span><span class="ctrl-name">Gestión de la configuración</span></div><div class="ctrl-desc">Hardening y baseline de configuración segura.</div></div>
+    <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.10</span><span class="ctrl-name">Eliminación de información</span></div><div class="ctrl-desc">Borrado seguro cuando la info ya no es necesaria.</div></div>
+    <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.11</span><span class="ctrl-name">Enmascaramiento de datos</span></div><div class="ctrl-desc">Anonimización y seudonimización de datos sensibles.</div></div>
+    <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.12</span><span class="ctrl-name">Prevención de fuga de datos (DLP)</span></div><div class="ctrl-desc">Detección y prevención de exfiltración de datos.</div></div>
+    <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.16</span><span class="ctrl-name">Actividades de monitorización</span></div><div class="ctrl-desc">SIEM, detección de anomalías y monitoreo continuo.</div></div>
+    <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.23</span><span class="ctrl-name">Filtrado web</span></div><div class="ctrl-desc">Proxy, DNS filtering y control de navegación.</div></div>
+    <div class="control-item"><div class="ctrl-head"><span class="ctrl-id">8.28</span><span class="ctrl-name">Programación segura</span></div><div class="ctrl-desc">OWASP, SAST/DAST, DevSecOps integrado.</div></div>
+  </div>
+</section>
+
+</div><!-- /page -->
+
+<footer>
+  <div style="margin-bottom:12px;">
+    <strong>ISO/IEC 27001:2022</strong> — Tecnología de la Información — Técnicas de Seguridad — SGSI — Requisitos
+  </div>
+  Publicado por ISO (International Organization for Standardization) y IEC (International Electrotechnical Commission)<br>
+  Recursos oficiales: <a href="https://www.iso.org/standard/27001" target="_blank">iso.org/standard/27001</a> · <a href="https://anci.gob.cl" target="_blank">anci.gob.cl (Chile)</a><br><br>
+  <span style="font-size:.62rem;opacity:.5">Este documento es de carácter educativo. No reemplaza la lectura del estándar oficial ni la asesoría de un consultor certificado (Lead Implementer / Lead Auditor ISO 27001).</span>
+</footer>
+
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
+
+<script>
+/* ── Scroll reveal ── */
+const revObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold:0.06, rootMargin:'0px 0px -40px 0px' });
+
+document.querySelectorAll('section.block').forEach(el => revObs.observe(el));
+
+/* ── Scroll top button ── */
+const sBtn = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', () => sBtn.classList.toggle('show', window.scrollY > 500));
+
+/* ── Active nav link ── */
+const sections = document.querySelectorAll('section.block[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+
+const navObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if(active) active.classList.add('active');
+    }
+  });
+}, { threshold:0.3 });
+
+sections.forEach(s => navObs.observe(s));
+
+/* ── PDCA toggle ── */
+function togglePdca(card){
+  const all = document.querySelectorAll('.pdca-card');
+  all.forEach(c => { if(c !== card) c.classList.remove('active'); });
+  card.classList.toggle('active');
+}
+
+/* ── Domain accordion ── */
+function toggleDomain(header){
+  const row = header.parentElement;
+  row.classList.toggle('open');
+}
+
+/* ── Search controls ── */
+function searchControls(query){
+  const q = query.toLowerCase().trim();
+  const items = document.querySelectorAll('.control-item');
+
+  items.forEach(item => {
+    const text = item.textContent.toLowerCase();
+    const match = !q || text.includes(q);
+    item.style.display = match ? '' : 'none';
+
+    // Remove old highlights
+    item.querySelectorAll('.hl').forEach(h => {
+      h.replaceWith(h.textContent);
+    });
+
+    if(q && match){
+      // Highlight in ctrl-name and ctrl-desc
+      ['.ctrl-name','.ctrl-desc'].forEach(sel => {
+        const el = item.querySelector(sel);
+        if(!el) return;
+        const txt = el.textContent;
+        const idx = txt.toLowerCase().indexOf(q);
+        if(idx >= 0){
+          el.innerHTML = txt.slice(0,idx) + '<span class="hl">' + txt.slice(idx,idx+q.length) + '</span>' + txt.slice(idx+q.length);
+        }
+      });
+    }
+  });
+
+  // Open domains that have visible items
+  document.querySelectorAll('.domain-row').forEach(row => {
+    const visible = row.querySelectorAll('.control-item:not([style*="none"])');
+    if(q) row.classList.toggle('open', visible.length > 0);
+  });
+}
+</script>
+</body>
+</html>
