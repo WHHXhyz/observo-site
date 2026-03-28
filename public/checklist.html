@@ -62,7 +62,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background:rgba(255,255,255,.01);transition:background .2s;}
 .cl-section-hd:hover{background:rgba(255,255,255,.03);}
 .cl-section-hd-l{display:flex;align-items:center;gap:12px;}
-.cl-section-ico{font-size:1.2rem;}
+.cl-section-ico{font-family:'DM Serif Display',serif;font-size:1rem;color:var(--accent);font-style:italic;flex-shrink:0;width:28px;text-align:center;line-height:1;}
 .cl-section-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);}
 .cl-section-prog{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--ink3);letter-spacing:1px;}
 .cl-section-prog.done{color:var(--green);}
@@ -154,63 +154,63 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <script>
 const SECCIONES = [
   {
-    id:'cuentas', ico:'🔑', title:'Contraseñas y cuentas',
+    id:'cuentas', ico:'01', title:'Contraseñas y acceso',
     items:[
-      {id:'c1', tag:'urgente',    title:'Activa verificación en 2 pasos (2FA) en tu correo principal',   desc:'Gmail, Outlook o el que uses. Es lo más importante que puedes hacer hoy.'},
-      {id:'c2', tag:'urgente',    title:'Activa 2FA en tu banco y aplicaciones financieras',             desc:'Bancochile, Santander, BCI, Falabella — todos tienen la opción en configuración.'},
-      {id:'c3', tag:'importante', title:'Usa una contraseña diferente para cada cuenta importante',      desc:'Al menos correo, banco y redes sociales deben tener contraseñas distintas.'},
-      {id:'c4', tag:'importante', title:'Verifica si tus datos aparecen en filtraciones',               desc:'Entra a haveibeenpwned.com — es gratis y te dice si tu correo fue filtrado.'},
-      {id:'c5', tag:'basico',     title:'Revisa las apps conectadas a tu cuenta de Google o Apple',     desc:'Ve a tu cuenta → Seguridad → Apps de terceros. Revoca las que no reconoces.'},
+      {id:'c1', tag:'urgente',    title:'Activa la verificación en 2 pasos en tu correo principal',   desc:'Gmail o Outlook: Configuración → Seguridad → Verificación en 2 pasos. Agrega tu número de teléfono. Así aunque roben tu contraseña, no pueden entrar.'},
+      {id:'c2', tag:'urgente',    title:'Activa la verificación en 2 pasos en tu banco',             desc:'Bancochile, Santander, BCI, Falabella — todos lo tienen en Configuración o Seguridad. Si no sabes cómo, llama al número del banco y pídeles que te guíen.'},
+      {id:'c3', tag:'importante', title:'Usa contraseñas distintas para correo, banco y redes sociales',      desc:'No uses la misma en todo. Si alguien roba la de una red social, no puede entrar a tu banco.'},
+      {id:'c4', tag:'importante', title:'Revisa si tu correo apareció en filtraciones de datos',               desc:'Entra a haveibeenpwned.com — escribe tu correo y te dice si fue filtrado en alguna brecha. Es gratis y seguro.'},
+      {id:'c5', tag:'basico',     title:'Cierra sesión en dispositivos que ya no usas',     desc:'Google o Apple: Configuración → Tu cuenta → Dispositivos. Si ves un teléfono viejo o un computador que ya no tienes, cierra su sesión.'},
     ]
   },
   {
-    id:'redes', ico:'📱', title:'Redes sociales y privacidad',
+    id:'redes', ico:'02', title:'Redes sociales de tus hijos/as',
     items:[
-      {id:'r1', tag:'urgente',    title:'Pon en privado los perfiles de redes sociales de tus hijos',   desc:'Instagram, TikTok, Facebook: Configuración → Privacidad → Cuenta privada.'},
-      {id:'r2', tag:'urgente',    title:'Revisa quién puede enviarle mensajes directos a tus hijos',    desc:'En TikTok e Instagram, desactiva mensajes de desconocidos para menores.'},
-      {id:'r3', tag:'importante', title:'Busca el nombre de tus hijos en Google',                       desc:'Ve qué aparece. Si hay fotos o información que no debería estar, es el momento de actuar.'},
-      {id:'r4', tag:'importante', title:'Activa los controles parentales en el teléfono de tus hijos',  desc:'iOS: Tiempo en pantalla. Android: Bienestar digital. Ambos son gratuitos.'},
-      {id:'r5', tag:'basico',     title:'Revisa los permisos de ubicación de las apps en tus teléfonos', desc:'Configuración → Apps → Permisos. Ninguna app de redes necesita ubicación siempre.'},
+      {id:'r1', tag:'urgente',    title:'Pon en privado los perfiles de redes sociales de tus hijos/as',   desc:'Instagram, TikTok, Facebook: Configuración → Privacidad → Cuenta privada. Así solo sus contactos aprobados ven su contenido.'},
+      {id:'r2', tag:'urgente',    title:'Desactiva los mensajes de desconocidos en sus cuentas',    desc:'En TikTok: Configuración → Privacidad → Mensajes directos → Solo seguidores. En Instagram igual. Un adulto desconocido no debería poder escribirles.'},
+      {id:'r3', tag:'importante', title:'Busca el nombre de tus hijos/as en Google',                       desc:'Escríbelo entre comillas: "Nombre Apellido". Ve qué fotos o información aparece. Si hay algo que no debería estar público, actúa.'},
+      {id:'r4', tag:'importante', title:'Activa el control parental en su teléfono',  desc:'iPhone: Configuración → Tiempo en Pantalla → Restricciones de Contenido. Android: Configuración → Bienestar Digital → Controles parentales. Ambos son gratuitos y ya vienen en el teléfono.'},
+      {id:'r5', tag:'basico',     title:'Revisa qué apps tienen acceso a la ubicación en su teléfono', desc:'Configuración → Privacidad → Ubicación. Ninguna app de juegos o redes sociales necesita saber siempre dónde están tus hijos/as.'},
     ]
   },
   {
-    id:'hogar', ico:'🏠', title:'Seguridad en el hogar',
+    id:'hogar', ico:'03', title:'Seguridad en casa',
     items:[
-      {id:'h1', tag:'urgente',    title:'Cambia la contraseña por defecto de tu router WiFi',           desc:'La contraseña que viene en la etiqueta del router debe cambiarse. Es la más fácil de hackear.'},
-      {id:'h2', tag:'urgente',    title:'Revisa si tienes TV boxes o dispositivos piratas conectados',  desc:'Los decodificadores no oficiales pueden tener acceso a tu cámara, micrófono y red.'},
-      {id:'h3', tag:'importante', title:'Crea una red WiFi separada para dispositivos inteligentes',    desc:'Smart TV, cámaras, aspiradoras robóticas — ponlos en una red de invitados separada.'},
-      {id:'h4', tag:'importante', title:'Mantén actualizado el firmware de tu router',                  desc:'Entra a la configuración del router (192.168.1.1) y revisa si hay actualizaciones.'},
-      {id:'h5', tag:'basico',     title:'Apaga el WiFi y Bluetooth cuando no los usas',                desc:'Especialmente en lugares públicos. Un Bluetooth activo puede ser detectado.'},
+      {id:'h1', tag:'urgente',    title:'Cambia la contraseña del WiFi de tu casa',           desc:'La contraseña que viene escrita en el router (el cajita del internet) debe cambiarse. Llama a tu proveedor de internet y pídeles que te ayuden a hacerlo.'},
+      {id:'h2', tag:'urgente',    title:'Revisa si tienes un TV box o decodificador no oficial',  desc:'Los decodificadores piratas de streaming pueden acceder a la cámara, micrófono y red de tu casa sin que lo sepas. Si tienes uno, desconéctalo.'},
+      {id:'h3', tag:'importante', title:'No compartas la contraseña del WiFi con todo el mundo',    desc:'Cada persona con tu contraseña WiFi puede ver el tráfico de tu red. Crea una red de "invitados" si tu router lo permite, o cambia la contraseña periódicamente.'},
+      {id:'h4', tag:'importante', title:'Desactiva el WiFi público automático en tu teléfono',                  desc:'Configuración → WiFi → desactiva "Conectar automáticamente". En redes públicas de malls o cafés tu información puede ser interceptada.'},
+      {id:'h5', tag:'basico',     title:'Apaga el Bluetooth cuando no lo estás usando',                desc:'Especialmente en el transporte público. Un Bluetooth activo puede ser detectado y usado para rastrear tu ubicación.'},
     ]
   },
   {
-    id:'phishing', ico:'🎣', title:'Phishing y estafas',
+    id:'phishing', ico:'04', title:'Mensajes y estafas',
     items:[
-      {id:'p1', tag:'urgente',    title:'Aprende a verificar el dominio de un correo antes de hacer clic', desc:'El nombre del remitente puede ser cualquier cosa. Lo que importa es el dominio (@bancochill.com ≠ @bancochile.cl).'},
-      {id:'p2', tag:'urgente',    title:'Nunca entregues datos bancarios por teléfono o correo',         desc:'Tu banco nunca te llama para pedirte tu clave. Si pasa, cuelga y llama tú al número oficial.'},
-      {id:'p3', tag:'importante', title:'Enséñales a tus hijos a mostrarles links antes de hacer clic',  desc:'Una regla simple: "Si recibes un link que no esperabas, muéstramelo primero".'},
-      {id:'p4', tag:'importante', title:'Instala el Analizador de Phishing de Aegis8 como favorito',    desc:'Ante cualquier duda, pega el link en aegis8.org/analizador-phishing.html'},
-      {id:'p5', tag:'basico',     title:'Activa los filtros de spam en tu correo',                      desc:'Gmail y Outlook tienen filtros automáticos. Asegúrate de que estén activados.'},
+      {id:'p1', tag:'urgente',    title:'Nunca hagas clic en links de mensajes que no esperabas recibir', desc:'No importa si parece del banco, JUNAEB, Falabella o Correos de Chile. Llama tú directamente al número oficial de la empresa.'},
+      {id:'p2', tag:'urgente',    title:'Nunca entregues tu clave ni datos bancarios por teléfono',         desc:'Tu banco nunca te llama para pedirte tu contraseña, RUT o número de tarjeta. Si alguien lo hace, cuelga y llama tú al 800 del banco.'},
+      {id:'p3', tag:'importante', title:'Enséñales a tus hijos/as a mostrarte links antes de hacer clic',  desc:'Regla simple para casa: "Si recibes un link que no esperabas — de WhatsApp, Instagram o correo — muéstramelo primero antes de abrirlo".'},
+      {id:'p4', tag:'importante', title:'Guarda el Analizador de Phishing de Aegis8 como favorito',    desc:'Si recibes un mensaje sospechoso, copia el texto o link y pégalo en aegis8.org/analizador-phishing — la IA te dice si es trampa en segundos.'},
+      {id:'p5', tag:'basico',     title:'Desconfía de los premios, descuentos y ofertas urgentes',      desc:'"Ganaste un iPhone", "Tu cuenta será bloqueada hoy", "Descuento del 90% solo por hoy" — son las frases más usadas para engañar. Si hay urgencia, hay trampa.'},
     ]
   },
   {
-    id:'ninos', ico:'👧', title:'Protección de niños y adolescentes',
+    id:'ninos', ico:'05', title:'Conversaciones con tus hijos/as',
     items:[
-      {id:'n1', tag:'urgente',    title:'Habla con tus hijos sobre el grooming',                        desc:'Explícales que un adulto que pide secretos en internet o hace regalos virtuales es una señal de alerta.'},
-      {id:'n2', tag:'urgente',    title:'Conoce las plataformas donde tus hijos pasan tiempo',          desc:'Roblox, Discord, TikTok, Telegram — cada una tiene riesgos distintos. Aegis8 tiene guías por plataforma.'},
-      {id:'n3', tag:'importante', title:'Establece reglas claras de uso de dispositivos en casa',        desc:'Horarios, lugares donde se puede usar el celular, apps permitidas. Con tu hijo/a, no para él/ella.'},
-      {id:'n4', tag:'importante', title:'Habla abiertamente sobre sexting y sus consecuencias legales', desc:'En Chile, compartir imágenes íntimas sin consentimiento es delito (Ley 21.459).'},
-      {id:'n5', tag:'basico',     title:'Suscríbete al newsletter de Aegis8',                          desc:'Cada mes: la amenaza más relevante para tus hijos + una actividad para hacer juntos.'},
+      {id:'n1', tag:'urgente',    title:'Habla con tus hijos/as sobre el grooming',                        desc:'Explícales: un adulto que pide secretos por internet, que hace regalos virtuales o que quiere hablar en privado es una señal de alerta. Que siempre te cuenten.'},
+      {id:'n2', tag:'urgente',    title:'Conoce las plataformas donde pasan su tiempo',          desc:'Roblox, Discord, TikTok, Telegram — cada una tiene riesgos distintos. No necesitas usarlas, solo saber qué son. Aegis8 tiene guías por plataforma.'},
+      {id:'n3', tag:'importante', title:'Acuerden juntos las reglas de uso del celular',        desc:'Horarios, dónde se usa (no en el dormitorio de noche), qué apps están permitidas. Las reglas funcionan mejor cuando las acuerdan juntos, no cuando se imponen.'},
+      {id:'n4', tag:'importante', title:'Habla del sexting antes de que pase algo', desc:'En Chile compartir fotos íntimas de alguien sin permiso es delito (Ley 21.459). Que lo sepan antes es la mejor protección.'},
+      {id:'n5', tag:'basico',     title:'Mantén una conversación abierta, no un interrogatorio',          desc:'Pregunta cómo les fue en internet igual que preguntas cómo les fue en el colegio. El objetivo es que cuando algo pase, te lo cuenten.'},
     ]
   },
   {
-    id:'emergencia', ico:'🚨', title:'Plan de emergencia',
+    id:'emergencia', ico:'06', title:'Si algo pasa',
     items:[
-      {id:'e1', tag:'urgente',    title:'Guarda el número de PDI Cibercrimen en tu teléfono',           desc:'+56 2 2708 0000 — Para denunciar delitos digitales. Disponible 24 horas.'},
-      {id:'e2', tag:'urgente',    title:'Guarda el Fono Víctimas SernamEG si tienes hijas adolescentes', desc:'1455 — Para situaciones de violencia digital de género. Confidencial y gratuito.'},
-      {id:'e3', tag:'importante', title:'Sabe cómo recuperar el acceso si hackean tu correo principal', desc:'Activa un correo de recuperación y un número de teléfono de respaldo en tu cuenta.'},
-      {id:'e4', tag:'importante', title:'Ten una copia de tus documentos importantes en la nube',       desc:'Cédula, pasaporte, certificados — en Google Drive o iCloud, en una carpeta privada.'},
-      {id:'e5', tag:'basico',     title:'Habla con tu familia sobre qué hacer si algo pasa',            desc:'"Si recibes mensajes raros de alguien que no conoces, cuéntame inmediatamente."'},
+      {id:'e1', tag:'urgente',    title:'Guarda el número de PDI Cibercrimen en tu teléfono',           desc:'+56 2 2708 0000 — Para denunciar delitos digitales en Chile. Disponible las 24 horas. También funciona el 134.'},
+      {id:'e2', tag:'urgente',    title:'Guarda el 1455 si tienes hijas o mujeres en tu familia',       desc:'Fono Víctimas de SernamEG — para situaciones de violencia digital de género. Confidencial, gratuito y disponible ahora.'},
+      {id:'e3', tag:'importante', title:'Ten un correo de respaldo para recuperar tu cuenta principal', desc:'En Gmail o Outlook: Configuración → Seguridad → Correo de recuperación. Si te hackean el correo principal, necesitas este para recuperarlo.'},
+      {id:'e4', tag:'importante', title:'Guarda una foto de tus documentos importantes en la nube',       desc:'Cédula, pasaporte, licencia — una foto en Google Drive o iCloud en una carpeta privada. Si los pierdes o te los roban, los tienes disponibles.'},
+      {id:'e5', tag:'basico',     title:'Acuerda con tu familia qué hacer si algo pasa',            desc:'Una conversación simple: "Si alguien les escribe algo raro, me avisan". "Si pierden el teléfono, me llaman de inmediato". Que todos sepan el plan.'},
     ]
   },
 ];
@@ -292,7 +292,7 @@ function renderChecklist() {
     <div class="cl-section">
       <div class="cl-section-hd" onclick="toggleSection('${s.id}')">
         <div class="cl-section-hd-l">
-          <span class="cl-section-ico">${s.ico}</span>
+          <div class="cl-section-ico">${s.ico}</div>
           <span class="cl-section-title">${s.title}</span>
         </div>
         <span class="cl-section-prog${done===s.items.length?' done':''}" id="prog-${s.id}">
