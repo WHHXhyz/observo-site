@@ -40,6 +40,11 @@
       "source": "/checklist.html",
       "destination": "/checklist",
       "permanent": true
+    },
+    {
+      "source": "/noticias.html",
+      "destination": "/noticias",
+      "permanent": true
     }
   ],
   "rewrites": [

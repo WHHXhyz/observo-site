@@ -191,6 +191,7 @@ const NAV = [
       {href:'/propuesta.html#mvp', label:'Qué construimos'},
       {href:'/propuesta.html#problema', label:'El problema'},
       'div',
+      {href:'/noticias', label:'Inteligencia · Noticias'},
       {href:'/guias.html', label:'Guías técnicas'},
       'div',
       {href:'/violencia-digital.html', label:'Violencia digital', purple:true},
