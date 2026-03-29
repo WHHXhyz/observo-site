@@ -211,6 +211,7 @@ const NAV = [
   {
     label: 'Educa',
     href: '/ninos',
+    noLink: true,
     page: 'educa',
     drop: [
       {href:'/ninos',        label:'Niños 6–12'},
@@ -249,8 +250,14 @@ function buildDesktop(page, ul) {
     li.style.display = 'flex';
     li.style.alignItems = 'center';
 
-    const a = document.createElement('a');
-    a.href = item.href;
+    let a;
+    if (item.drop && item.noLink) {
+      a = document.createElement('span');
+      a.style.cssText = "font-family:'JetBrains Mono',monospace;font-size:.58rem;color:#5a6a80;letter-spacing:2px;text-transform:uppercase;cursor:default;position:relative;white-space:nowrap;padding:0 .9rem;display:inline-block;";
+    } else {
+      a = document.createElement('a');
+      a.href = item.href;
+    }
     a.textContent = item.label;
 
     if (item.cta) {
