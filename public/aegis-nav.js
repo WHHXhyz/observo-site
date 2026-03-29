@@ -1,5 +1,5 @@
 /* ============================================================
-   AEGIS8 — Navbar v4 · Completa
+   AEGIS8 — Navbar v5 · Reestructuración 10 páginas
    <script src="/aegis-nav.js"></script>
    data-page="nombre" en <body>
    ============================================================ */
@@ -64,7 +64,7 @@ const CSS = `
   #aegis-nav .an-links a:hover{color:#eaf0f8;}
   #aegis-nav .an-links a:hover::after{transform:scaleX(1);}
 
-  /* Dropdown parent */
+  /* Dropdown */
   #aegis-nav .an-has-drop{position:relative;}
   #aegis-nav .an-has-drop > a::before{
     content:'▾';font-size:.45rem;margin-left:4px;opacity:.5;
@@ -146,7 +146,7 @@ const CSS = `
   }
   #an-drawer .m-item:hover,#an-drawer .m-item.an-m-active{color:#f07830;}
 
-  /* Grupo expandible */
+  /* Grupo acordeón */
   #an-drawer .m-group{border-bottom:1px solid rgba(58,127,212,.08);}
   #an-drawer .m-group-btn{
     font-family:'JetBrains Mono',monospace;font-size:.78rem;color:#8898b0;
@@ -162,7 +162,7 @@ const CSS = `
   }
   #an-drawer .m-group-btn.open .m-chevron{transform:rotate(180deg);opacity:1;}
 
-  /* Sub-ítems — ocultos por defecto */
+  /* Sub-ítems */
   #an-drawer .m-subs{
     display:none;background:rgba(255,255,255,.02);
     border-top:1px solid rgba(58,127,212,.06);
@@ -177,10 +177,10 @@ const CSS = `
   #an-drawer .m-sub:last-child{border-bottom:none;}
   #an-drawer .m-sub:hover{color:#8898b0;}
 
-  #an-drawer .m-div{height:1px;background:rgba(240,120,48,.06);}
-  #an-drawer .m-agent{
-    color:#f07830!important;
-  }
+  #an-drawer .m-agent{color:#f07830!important;}
+  #an-drawer .m-red{color:#ef4444!important;}
+  #an-drawer .m-purple{color:#9b6dff!important;}
+
   #an-drawer .m-cta{
     font-family:'JetBrains Mono',monospace;font-size:.78rem;letter-spacing:3px;
     text-transform:uppercase;color:#080c14!important;background:#f07830;
@@ -206,21 +206,19 @@ const CSS = `
   }
 `;
 
-// ── ESTRUCTURA DEL NAV ──
+// ── ESTRUCTURA DESKTOP (10 páginas) ──
 const NAV = [
   {
     label: 'Educa',
-    href: '/educa.html',
+    href: '/ninos',
     page: 'educa',
     drop: [
-      {href:'/educa.html', label:'Hub educativo'},
+      {href:'/ninos',        label:'Niños 6–12'},
+      {href:'/adolescentes', label:'Adolescentes'},
+      {href:'/familias',     label:'Familias'},
+      {href:'/docentes',     label:'Docentes'},
       'div',
-      {href:'/educa/ninos.html',        label:'Niños 6–12'},
-      {href:'/educa/adolescentes.html', label:'Adolescentes'},
-      {href:'/educa/padres.html',       label:'Familias'},
-      {href:'/educa/profesores.html',   label:'Docentes'},
-      'div',
-      {href:'/educa/newsletter.html',   label:'Newsletter mensual'},
+      {href:'/educa/newsletter.html', label:'Newsletter mensual'},
     ]
   },
   {
@@ -228,21 +226,21 @@ const NAV = [
     href: '/herramientas',
     page: 'herramientas',
     drop: [
-      {href:'/agente-seguridad.html',      label:'Agente de Seguridad', agent:true},
-      {href:'/analizador-phishing.html',   label:'Analizador de Phishing'},
+      {href:'/agente-seguridad.html',    label:'Agente de Seguridad', agent:true},
+      {href:'/analizador-phishing.html', label:'Analizador de Phishing'},
       'div',
-      {href:'/quiz.html',                  label:'Quiz Semanal'},
-      {href:'/checklist.html',             label:'Checklist Familiar'},
-      {href:'/caps.html',                  label:'CAPS · Contraseñas'},
+      {href:'/quiz.html',                label:'Quiz Semanal'},
+      {href:'/checklist.html',           label:'Checklist Familiar'},
+      {href:'/caps.html',                label:'CAPS · Contraseñas'},
       'div',
-      {href:'/botiquin.html',              label:'Botiquín SOS',        red:true},
-      {href:'/derechos.html',              label:'Derechos Digitales',  purple:true},
-      {href:'/violencia-digital.html',     label:'Violencia Digital',   purple:true},
+      {href:'/botiquin',                 label:'Botiquín SOS',         red:true},
+      {href:'/violencia-digital',        label:'Violencia Digital',    purple:true},
     ]
   },
-  {href:'/noticias', label:'Inteligencia', page:'noticias'},
-  {href:'/talleres.html', label:'Talleres', page:'talleres'},
-  {href:'/contactos.html', label:'Contacto', cta:true},
+  {href:'/noticias',      label:'Noticias',     page:'noticias'},
+  {href:'/el-proyecto',   label:'El Proyecto',  page:'proyecto'},
+  {href:'/talleres.html', label:'Talleres',      page:'talleres'},
+  {href:'/contacto',      label:'Contacto',      cta:true},
 ];
 
 function buildDesktop(page, ul) {
@@ -276,9 +274,9 @@ function buildDesktop(page, ul) {
           const da = document.createElement('a');
           da.href = d.href;
           da.textContent = d.label;
-          if (d.agent) da.style.color = '#f07830';
+          if (d.agent)  da.style.color = '#f07830';
           if (d.purple) da.style.color = '#9b6dff';
-          if (d.red) da.style.color = '#ef4444';
+          if (d.red)    da.style.color = '#ef4444';
           drop.appendChild(da);
         }
       });
@@ -294,41 +292,41 @@ function buildMobile(page, drawer) {
   const GROUPS = [
     {
       label: 'Educa',
-      href:  '/educa.html',
-      pg:    'educa',
+      pg: 'educa',
       subs: [
-        {href:'/educa/ninos.html',        label:'Niños 6–12'},
-        {href:'/educa/adolescentes.html', label:'Adolescentes'},
-        {href:'/educa/padres.html',       label:'Familias'},
-        {href:'/educa/profesores.html',   label:'Docentes'},
-        {href:'/educa/newsletter.html',   label:'Newsletter'},
+        {href:'/ninos',        label:'Niños 6–12'},
+        {href:'/adolescentes', label:'Adolescentes'},
+        {href:'/familias',     label:'Familias'},
+        {href:'/docentes',     label:'Docentes'},
+        {href:'/educa/newsletter.html', label:'Newsletter'},
       ]
     },
     {
       label: 'Herramientas',
-      href:  '/herramientas',
-      pg:    'herramientas',
+      pg: 'herramientas',
       subs: [
-        {href:'/agente-seguridad.html',    label:'Agente IA',          agent:true},
+        {href:'/agente-seguridad.html',    label:'Agente IA',           agent:true},
         {href:'/quiz.html',                label:'Quiz Semanal'},
         {href:'/checklist.html',           label:'Checklist'},
         {href:'/analizador-phishing.html', label:'Analizador Phishing'},
         {href:'/caps.html',                label:'CAPS · Contraseñas'},
-        {href:'/botiquin.html',            label:'Botiquín SOS',       red:true},
-        {href:'/derechos.html',            label:'Derechos Digitales', purple:true},
-        {href:'/violencia-digital.html',   label:'Violencia Digital',  purple:true},
+        {href:'/botiquin',                 label:'Botiquín SOS',         red:true},
+        {href:'/violencia-digital',        label:'Violencia Digital',    purple:true},
       ]
     },
   ];
 
   const DIRECT = [
-    {href:'/noticias',     label:'Inteligencia', pg:'noticias'},
-    {href:'/talleres.html',label:'Talleres',     pg:'talleres'},
+    {href:'/noticias',     label:'Noticias',     pg:'noticias'},
+    {href:'/el-proyecto',  label:'El Proyecto',  pg:'proyecto'},
+    {href:'/talleres.html',label:'Talleres',      pg:'talleres'},
   ];
 
   // Inicio
   const inicio = document.createElement('a');
-  inicio.href = '/'; inicio.textContent = 'Inicio'; inicio.className = 'm-item';
+  inicio.href = '/';
+  inicio.textContent = 'Inicio';
+  inicio.className = 'm-item' + (page === 'home' ? ' an-m-active' : '');
   inicio.addEventListener('click', closeMenu);
   drawer.appendChild(inicio);
 
@@ -348,16 +346,17 @@ function buildMobile(page, drawer) {
       const a = document.createElement('a');
       a.href = sub.href;
       a.textContent = sub.label;
-      a.className = 'm-sub' + (sub.agent ? ' m-agent' : '');
-      if (sub.purple) a.style.color = '#9b6dff';
-      if (sub.red)    a.style.color = '#ef4444';
+      let cls = 'm-sub';
+      if (sub.agent)  cls += ' m-agent';
+      if (sub.red)    cls += ' m-red';
+      if (sub.purple) cls += ' m-purple';
+      a.className = cls;
       a.addEventListener('click', closeMenu);
       subs.appendChild(a);
     });
 
     btn.addEventListener('click', function() {
       const isOpen = btn.classList.contains('open');
-      // Cerrar todos los grupos
       drawer.querySelectorAll('.m-group-btn').forEach(function(b) { b.classList.remove('open'); });
       drawer.querySelectorAll('.m-subs').forEach(function(s) { s.classList.remove('open'); });
       if (!isOpen) {
@@ -384,7 +383,7 @@ function buildMobile(page, drawer) {
 
   // CTA Contacto
   const cta = document.createElement('a');
-  cta.href = '/contactos.html';
+  cta.href = '/contacto';
   cta.textContent = 'Contacto';
   cta.className = 'm-cta';
   cta.addEventListener('click', closeMenu);
@@ -430,7 +429,7 @@ function init(){
   document.body.insertAdjacentElement('afterbegin', drawer);
   document.body.insertAdjacentElement('afterbegin', nav);
 
-  // Cursor
+  // Custom cursor
   const cur = document.createElement('div'); cur.id = 'an-cur';
   const ring = document.createElement('div'); ring.id = 'an-ring';
   document.body.appendChild(cur);
