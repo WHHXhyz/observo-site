@@ -1,122 +1,58 @@
 {
   "cleanUrls": true,
   "redirects": [
-    {
-      "source": "/index.html",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/talleres.html",
-      "destination": "/talleres",
-      "permanent": true
-    },
-    {
-      "source": "/newsletter.html",
-      "destination": "/educa/newsletter",
-      "permanent": true
-    },
-    {
-      "source": "/herramientas.html",
-      "destination": "/herramientas",
-      "permanent": true
-    },
-    {
-      "source": "/botiquin.html",
-      "destination": "/botiquin",
-      "permanent": true
-    },
-    {
-      "source": "/derechos.html",
-      "destination": "/derechos",
-      "permanent": true
-    },
-    {
-      "source": "/quiz.html",
-      "destination": "/quiz",
-      "permanent": true
-    },
-    {
-      "source": "/checklist.html",
-      "destination": "/checklist",
-      "permanent": true
-    },
-    {
-      "source": "/noticias.html",
-      "destination": "/noticias",
-      "permanent": true
-    }
+    { "source": "/index.html",              "destination": "/",                  "permanent": true },
+
+    /* ── URLs antiguas → nuevas URLs limpias ── */
+    { "source": "/educa.html",              "destination": "/",                  "permanent": true },
+    { "source": "/educa",                   "destination": "/",                  "permanent": true },
+    { "source": "/educa/ninos.html",        "destination": "/ninos",             "permanent": true },
+    { "source": "/educa/adolescentes.html", "destination": "/adolescentes",      "permanent": true },
+    { "source": "/educa/padres.html",       "destination": "/familias",          "permanent": true },
+    { "source": "/educa/profesores.html",   "destination": "/docentes",          "permanent": true },
+    { "source": "/formacion.html",          "destination": "/docentes",          "permanent": true },
+    { "source": "/formacion",               "destination": "/docentes",          "permanent": true },
+    { "source": "/derechos.html",           "destination": "/violencia-digital#derechos", "permanent": true },
+    { "source": "/derechos",                "destination": "/violencia-digital#derechos", "permanent": true },
+    { "source": "/propuesta.html",          "destination": "/el-proyecto",       "permanent": true },
+    { "source": "/propuesta",               "destination": "/el-proyecto",       "permanent": true },
+    { "source": "/contactos.html",          "destination": "/contacto",          "permanent": true },
+    { "source": "/contactos",               "destination": "/contacto",          "permanent": true },
+
+    /* ── URLs .html sin cambio de ruta ── */
+    { "source": "/talleres.html",           "destination": "/talleres",          "permanent": true },
+    { "source": "/herramientas.html",       "destination": "/herramientas",      "permanent": true },
+    { "source": "/botiquin.html",           "destination": "/botiquin",          "permanent": true },
+    { "source": "/quiz.html",               "destination": "/quiz",              "permanent": true },
+    { "source": "/checklist.html",          "destination": "/checklist",         "permanent": true },
+    { "source": "/noticias.html",           "destination": "/noticias",          "permanent": true },
+    { "source": "/newsletter.html",         "destination": "/educa/newsletter",  "permanent": true }
   ],
   "rewrites": [
-    {
-      "source": "/wp-login.php",
-      "destination": "/hp?trap=wp-login"
-    },
-    {
-      "source": "/admin",
-      "destination": "/hp?trap=admin"
-    },
-    {
-      "source": "/.env",
-      "destination": "/hp?trap=dotenv"
-    },
-    {
-      "source": "/phpmyadmin",
-      "destination": "/hp?trap=phpmyadmin"
-    },
-    {
-      "source": "/config.php",
-      "destination": "/hp?trap=config"
-    },
-    {
-      "source": "/.git/(.*)",
-      "destination": "/hp?trap=git"
-    },
-    {
-      "source": "/backup(.*)",
-      "destination": "/hp?trap=backup"
-    },
-    {
-      "source": "/xmlrpc.php",
-      "destination": "/hp?trap=xmlrpc"
-    }
+    { "source": "/wp-login.php",    "destination": "/hp?trap=wp-login" },
+    { "source": "/admin",           "destination": "/hp?trap=admin" },
+    { "source": "/.env",            "destination": "/hp?trap=dotenv" },
+    { "source": "/phpmyadmin",      "destination": "/hp?trap=phpmyadmin" },
+    { "source": "/config.php",      "destination": "/hp?trap=config" },
+    { "source": "/.git/(.*)",       "destination": "/hp?trap=git" },
+    { "source": "/backup(.*)",      "destination": "/hp?trap=backup" },
+    { "source": "/xmlrpc.php",      "destination": "/hp?trap=xmlrpc" }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        },
-        {
-          "key": "X-DNS-Prefetch-Control",
-          "value": "off"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
-        },
-        {
-          "key": "Strict-Transport-Security",
-          "value": "max-age=63072000; includeSubDomains; preload"
-        },
+        { "key": "X-Frame-Options",           "value": "DENY" },
+        { "key": "X-Content-Type-Options",    "value": "nosniff" },
+        { "key": "Referrer-Policy",           "value": "strict-origin-when-cross-origin" },
+        { "key": "X-DNS-Prefetch-Control",    "value": "off" },
+        { "key": "Permissions-Policy",        "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()" },
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
         {
           "key": "Content-Security-Policy",
           "value": "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; form-action 'self' https://formspree.io; img-src 'self' data: https://www.gstatic.com https://www.google-analytics.com https://stats.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://www.googletagmanager.com https://www.google-analytics.com https://www.recaptcha.net; connect-src 'self' https://formspree.io https://aegis8-agent.christianmora705.workers.dev https://www.google.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://region1.google-analytics.com; frame-src https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/ https://www.recaptcha.net/recaptcha/; upgrade-insecure-requests"
         },
-        {
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
-        }
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
       ]
     }
   ]
