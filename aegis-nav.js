@@ -214,6 +214,7 @@ const NAV = [
     page: 'educa',
     drop: [
       {href:'/educa',        label:'Hub educativo'},
+      {href:'/modelo',       label:'Modelo Aegis8 · 5 Capas', gold:true},
       'div',
       {href:'/ninos',        label:'Niños 6–12'},
       {href:'/adolescentes', label:'Adolescentes'},
@@ -285,6 +286,7 @@ function buildDesktop(page, ul) {
           if (d.agent)  da.style.color = '#f07830';
           if (d.purple) da.style.color = '#9b6dff';
           if (d.red)    da.style.color = '#ef4444';
+          if (d.gold)   da.style.color = '#f5a823';
           drop.appendChild(da);
         }
       });
@@ -303,6 +305,7 @@ function buildMobile(page, drawer) {
       pg: 'educa',
       subs: [
         {href:'/educa',        label:'Hub educativo'},
+        {href:'/modelo',       label:'Modelo · 5 Capas',      gold:true},
         {href:'/ninos',        label:'Niños 6–12'},
         {href:'/adolescentes', label:'Adolescentes'},
         {href:'/familias',     label:'Familias'},
@@ -359,6 +362,7 @@ function buildMobile(page, drawer) {
       if (sub.agent)  cls += ' m-agent';
       if (sub.red)    cls += ' m-red';
       if (sub.purple) cls += ' m-purple';
+      if (sub.gold)   a.style.color = '#f5a823';
       a.className = cls;
       a.addEventListener('click', closeMenu);
       subs.appendChild(a);
