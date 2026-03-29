@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Aegis8 para Adolescentes · Ciberseguridad Real</title>
+<meta name="description" content="Privacidad en redes, grooming, sexting, sextorsión y tus derechos digitales en Chile. Sin condescendencia. Directo."/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
+  <script src="/aegis-nav.js"></script>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+:root{
+  --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
+  --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
+  --card:rgba(255,255,255,.03);--radius:4px;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(58,127,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.025) 1px,transparent 1px);
+  background-size:80px 80px;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+.page-inner{position:relative;z-index:10;}
+.sl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+  color:var(--accent);text-transform:uppercase;margin-bottom:12px;}
+.st{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.6rem);
+  line-height:1.05;color:var(--ink);margin-bottom:20px;letter-spacing:-1px;}
+.st em{font-style:italic;color:var(--accent);}
+.si{font-size:1rem;line-height:1.9;color:var(--ink2);max-width:640px;margin-bottom:40px;}
+.sw{padding:80px 0 48px;border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
+.sw.vis{opacity:1;transform:none;}
+.sw:last-child{border-bottom:none;}
+.btn-p{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--bg);background:var(--accent);border:none;padding:14px 28px;border-radius:var(--radius);
+  text-decoration:none;transition:all .25s;position:relative;overflow:hidden;display:inline-block;cursor:pointer!important;}
+.btn-p::before{content:'';position:absolute;inset:0;background:var(--accent2);transform:translateX(-100%);transition:transform .3s;}
+.btn-p:hover::before{transform:translateX(0);}
+.btn-p span,.btn-p{position:relative;z-index:1;}
+.btn-p:hover{box-shadow:0 0 28px rgba(240,120,48,.4);transform:translateY(-2px);}
+.btn-g{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink2);background:transparent;border:1px solid var(--border);
+  padding:14px 28px;border-radius:var(--radius);text-decoration:none;transition:all .25s;display:inline-block;}
+.btn-g:hover{color:var(--ink);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
+/* CHAT SHARED */
+.chat-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;}
+.chat-hd{background:rgba(240,120,48,.05);border-bottom:1px solid var(--border2);
+  padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.chat-hd-l{display:flex;align-items:center;gap:.75rem;}
+.chat-ava{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  background:rgba(240,120,48,.12);}
+.chat-name{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;color:var(--ink);}
+.chat-status{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--green);letter-spacing:1px;}
+.chat-live{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+.chat-msgs{height:320px;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;}
+.chat-msgs::-webkit-scrollbar{width:3px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.msg{display:flex;gap:.6rem;align-items:flex-start;}
+.msg.user{flex-direction:row-reverse;}
+.msg-ava{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;flex-shrink:0;background:var(--card);}
+.msg-bubble{background:var(--card);border:1px solid var(--border);padding:.65rem .9rem;
+  font-size:.84rem;line-height:1.6;max-width:85%;border-radius:2px;color:var(--ink2);}
+.msg.user .msg-bubble{background:rgba(240,120,48,.06);border-color:var(--border2);color:var(--ink);}
+.chat-quick{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.4rem;}
+.qbtn{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1px;
+  color:var(--accent);border:1px solid var(--border2);background:rgba(240,120,48,.04);
+  padding:.3rem .7rem;border-radius:var(--radius);cursor:pointer!important;transition:all .2s;}
+.qbtn:hover{background:rgba(240,120,48,.1);border-color:var(--accent);}
+.chat-row{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:.5rem;}
+.chat-in{flex:1;background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);
+  padding:.65rem 1rem;font-family:'Lato',sans-serif;font-size:.88rem;color:var(--ink);
+  outline:none;transition:border-color .2s;}
+.chat-in:focus{border-color:var(--accent);}
+.chat-in::placeholder{color:var(--ink3);}
+.send-btn{background:var(--accent);color:var(--bg);border:none;padding:.65rem 1.1rem;
+  border-radius:var(--radius);font-weight:700;cursor:pointer!important;transition:background .2s;}
+.send-btn:hover{background:var(--accent2);}
+.typing-wrap{display:flex;gap:4px;align-items:center;}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.3;
+  animation:tdot 1.2s ease-in-out infinite;}
+.tdot:nth-child(2){animation-delay:.2s;}.tdot:nth-child(3){animation-delay:.4s;}
+@keyframes tdot{0%,80%,100%{opacity:.2;transform:scale(.8);}40%{opacity:1;transform:scale(1);}}
+/* FOOTER */
+.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);
+  padding:48px 32px 32px;max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;
+  letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.fl span{color:var(--accent);}
+.flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.flinks a:hover{color:var(--accent);}
+.fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
+/* SCROLL REVEAL JS inline */
+@media(max-width:640px){.wrap{padding:0 16px;}.page-footer{padding:32px 16px;}}
+
+
+.hero-ad{position:relative;z-index:10;min-height:90vh;display:flex;flex-direction:column;
+  justify-content:center;padding:80px 0 64px;border-bottom:1px solid var(--border);overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
+.b1{width:600px;height:600px;top:-100px;right:-100px;
+  background:radial-gradient(circle,rgba(155,109,255,.1) 0%,transparent 70%);
+  animation:fl1 9s ease-in-out infinite;}
+.b2{width:400px;height:400px;bottom:-80px;left:-80px;
+  background:radial-gradient(circle,rgba(240,120,48,.07) 0%,transparent 70%);
+  animation:fl2 11s ease-in-out infinite;}
+@keyframes fl1{0%,100%{transform:translate(0,0);}50%{transform:translate(-20px,15px);}}
+@keyframes fl2{0%,100%{transform:translate(0,0);}50%{transform:translate(15px,-20px);}}
+
+/* TEMAS GRID */
+.temas-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
+@media(max-width:720px){.temas-g{grid-template-columns:1fr;}}
+.tema-c{background:var(--bg2);padding:2rem 1.5rem;text-decoration:none;
+  transition:background .2s;display:flex;flex-direction:column;gap:10px;
+  position:relative;overflow:hidden;}
+.tema-c::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.tema-c:hover::before{transform:scaleX(1);}
+.tema-c:hover{background:rgba(255,255,255,.03);}
+.tc-purple::before{background:#9b6dff;}
+.tc-red::before{background:#ef4444;}
+.tc-orange::before{background:var(--accent);}
+.tc-blue::before{background:var(--blue);}
+.tc-green::before{background:var(--green);}
+.tc-gold::before{background:var(--gold);}
+.tema-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;
+  text-transform:uppercase;}
+.tc-purple .tema-tag{color:#9b6dff;}
+.tc-red .tema-tag{color:#ef4444;}
+.tc-orange .tema-tag{color:var(--accent);}
+.tc-blue .tema-tag{color:var(--blue);}
+.tc-green .tema-tag{color:var(--green);}
+.tc-gold .tema-tag{color:var(--gold);}
+.tema-title{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink);line-height:1.2;}
+.tema-desc{font-size:.84rem;color:var(--ink2);line-height:1.65;flex:1;}
+.tema-cta{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  text-transform:uppercase;transition:color .2s;}
+.tc-purple .tema-cta{color:#9b6dff;}
+.tc-red .tema-cta{color:#ef4444;}
+.tc-orange .tema-cta{color:var(--accent);}
+.tc-blue .tema-cta{color:var(--blue);}
+.tc-green .tema-cta{color:var(--green);}
+.tc-gold .tema-cta{color:var(--gold);}
+
+/* SITUACIONES REALES */
+.sit-g{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.sit{background:var(--bg2);padding:1.5rem 1.75rem;display:flex;gap:1.5rem;align-items:flex-start;}
+.sit-num{font-family:'DM Serif Display',serif;font-size:2.8rem;
+  color:rgba(155,109,255,.15);line-height:1;flex-shrink:0;width:48px;font-style:italic;}
+.sit-content{flex:1;}
+.sit-scenario{font-size:.88rem;color:var(--ink);line-height:1.6;margin-bottom:.5rem;font-style:italic;}
+.sit-scenario::before{content:'"';color:#9b6dff;}
+.sit-scenario::after{content:'"';color:#9b6dff;}
+.sit-resp{font-size:.84rem;color:var(--ink2);line-height:1.65;}
+.sit-ley{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:1px;
+  color:#9b6dff;margin-top:.5rem;display:inline-block;}
+
+/* DERECHOS */
+.der-g{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);}
+@media(max-width:640px){.der-g{grid-template-columns:1fr;}}
+.der{background:var(--bg2);padding:1.75rem 1.5rem;display:flex;gap:1rem;align-items:flex-start;}
+.der-ico{width:32px;height:32px;border-radius:6px;background:rgba(155,109,255,.08);
+  border:1px solid rgba(155,109,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.der-title{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;
+  color:var(--ink);margin-bottom:.3rem;}
+.der-body{font-size:.83rem;color:var(--ink2);line-height:1.6;}
+
+/* CONFIGURACIONES */
+.conf-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
+@media(max-width:640px){.conf-g{grid-template-columns:1fr;}}
+.conf-c{background:var(--bg2);padding:1.5rem 1.25rem;}
+.conf-plat{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;
+  color:var(--ink);margin-bottom:.6rem;}
+.conf-items{display:flex;flex-direction:column;gap:5px;}
+.conf-item{font-size:.82rem;color:var(--ink2);line-height:1.5;
+  display:flex;align-items:flex-start;gap:.5rem;}
+.conf-item::before{content:'✓';color:var(--green);flex-shrink:0;font-weight:700;}
+
+</style>
+</head>
+<body data-page="educa">
+<section class="hero-ad">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap" style="position:relative;z-index:2;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+      color:var(--ink3);margin-bottom:24px;display:flex;align-items:center;gap:10px;">
+      <div style="width:28px;height:1px;background:#9b6dff;"></div>
+      AEGIS8 EDUCA · 13–17 AÑOS · CHILE
+    </div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(3rem,9vw,7rem);
+      line-height:.88;letter-spacing:-2px;margin-bottom:20px;max-width:800px;">
+      Internet no es<br>tan simple<br>
+      <span style="color:#9b6dff;font-style:italic;">como parece.</span>
+    </h1>
+    <p style="font-size:1rem;line-height:1.9;color:var(--ink2);max-width:580px;margin-bottom:12px;">
+      Privacidad, grooming, sexting, sextorsión y control digital en el pololeo. Lo que nadie te enseña en clases pero que puede afectarte esta semana.
+    </p>
+    <p style="font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:1px;
+      color:var(--ink3);margin-bottom:36px;">
+      // Sin condescendencia. Sin bajarle el perfil. Con respeto.
+    </p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="#temas" class="btn-p"><span>Ver los temas →</span></a>
+      <a href="/violencia-digital" style="font-family:'JetBrains Mono',monospace;
+        font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:#9b6dff;
+        background:transparent;border:1px solid rgba(155,109,255,.3);
+        padding:15px 28px;border-radius:3px;text-decoration:none;transition:all .25s;"
+        onmouseover="this.style.background='rgba(155,109,255,.08)'"
+        onmouseout="this.style.background='transparent'">
+        Violencia digital →
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap page-inner">
+
+<!-- TEMAS -->
+<div class="sw" id="temas">
+  <div class="sl">// Qué vas a encontrar aquí</div>
+  <h2 class="st">Elige el tema<br><em>que más te importa.</em></h2>
+  <div class="temas-g">
+    <a href="/violencia-digital.html#temas" class="tema-c tc-purple">
+      <div class="tema-tag">Importante saber</div>
+      <div class="tema-title">Sexting y violencia digital</div>
+      <div class="tema-desc">Qué pasa si alguien difunde tus fotos, cómo funciona la sextorsión y qué dice la ley chilena. Incluyendo lo que nadie tiene derecho a pedirte.</div>
+      <div class="tema-cta">Ver información →</div>
+    </a>
+    <a href="#privacidad" class="tema-c tc-blue">
+      <div class="tema-tag">Configuraciones reales</div>
+      <div class="tema-title">Privacidad en redes</div>
+      <div class="tema-desc">Lo que revelan tus posts sin que lo sepas. Configuraciones mínimas en Instagram, TikTok y WhatsApp. Tu huella digital y por qué importa.</div>
+      <div class="tema-cta">Ver configuraciones →</div>
+    </a>
+    <a href="#grooming" class="tema-c tc-red">
+      <div class="tema-tag">Reconocer</div>
+      <div class="tema-title">Grooming y contacto no deseado</div>
+      <div class="tema-desc">Cómo funciona el proceso, por qué personas inteligentes caen, qué señales reconocer y qué hacer si algo ya pasó o le pasó a alguien que conoces.</div>
+      <div class="tema-cta">Ver señales →</div>
+    </a>
+    <a href="#pololeo" class="tema-c tc-orange">
+      <div class="tema-tag">Relaciones de pareja</div>
+      <div class="tema-title">Control digital en el pololeo</div>
+      <div class="tema-desc">Revisar el teléfono, exigir contraseñas, controlar quién te puede escribir. Qué es normal y qué es violencia — aunque "sea por amor".</div>
+      <div class="tema-cta">Ver red flags →</div>
+    </a>
+    <a href="#contrasenas" class="tema-c tc-green">
+      <div class="tema-tag">Seguridad básica</div>
+      <div class="tema-title">Contraseñas y cuentas</div>
+      <div class="tema-desc">Por qué roban cuentas de Instagram y cómo. Qué es el 2FA y por qué te salva. Cómo recuperar una cuenta hackeada.</div>
+      <div class="tema-cta">Ver guía →</div>
+    </a>
+    <a href="#derechos" class="tema-c tc-gold">
+      <div class="tema-tag">Marco legal Chile</div>
+      <div class="tema-title">Tus derechos digitales</div>
+      <div class="tema-desc">Qué leyes te protegen, qué es delito, cómo denunciar sin abogado y qué pasa con el agresor. La ley está más de tu lado de lo que crees.</div>
+      <div class="tema-cta">Ver derechos →</div>
+    </a>
+  </div>
+</div>
+
+<!-- SITUACIONES REALES -->
+<div class="sw">
+  <div class="sl">// Situaciones reales · ¿Qué harías?</div>
+  <h2 class="st">Casos que pasan<br><em>de verdad.</em></h2>
+  <p class="si">No son ejemplos inventados. Son situaciones que ocurren en colegios chilenos cada semana. ¿Sabes qué hacer en cada una?</p>
+  <div class="sit-g">
+    <div class="sit">
+      <div class="sit-num">1</div>
+      <div class="sit-content">
+        <div class="sit-scenario">Un desconocido en Discord dice tener 16 años, lleva semanas hablando contigo, te regala skins y ahora te pide una foto.</div>
+        <div class="sit-resp"><strong style="color:var(--ink);">Lo que está pasando:</strong> Es la etapa 4 del grooming — contacto, confianza, aislamiento y solicitud. Los regalos virtuales crean sensación de deuda. No importa cuánto tiempo llevan hablando. <strong style="color:var(--ink);">Qué hacer:</strong> No mandar nada. Bloquear. Guardar las conversaciones. Contarle a un adulto de confianza.</div>
+        <span class="sit-ley">Ley 20.526 — Grooming es delito en Chile</span>
+      </div>
+    </div>
+    <div class="sit">
+      <div class="sit-num">2</div>
+      <div class="sit-content">
+        <div class="sit-scenario">Tu ex amenaza con publicar fotos íntimas que le mandaste cuando estaban juntos si no vuelves con él/ella.</div>
+        <div class="sit-resp"><strong style="color:var(--ink);">Lo que está pasando:</strong> Es sextorsión — un delito. Que hayas enviado las fotos voluntariamente no le da ningún derecho a usarlas como chantaje. <strong style="color:var(--ink);">Qué hacer:</strong> No ceder. Guardar las amenazas como evidencia. Denunciar en PDI Cibercrimen: +56 2 2708 0000. Cada vez que cedes, el chantaje empeora.</div>
+        <span class="sit-ley">Ley 21.459 Art. 5 — hasta 5 años de prisión</span>
+      </div>
+    </div>
+    <div class="sit">
+      <div class="sit-num">3</div>
+      <div class="sit-content">
+        <div class="sit-scenario">Tu pololo/a revisa tu teléfono sin pedirte permiso y dice que si lo quisieras no tendrías nada que ocultar.</div>
+        <div class="sit-resp"><strong style="color:var(--ink);">Lo que está pasando:</strong> Es control digital — una forma de violencia en relaciones de pareja. La privacidad no es culpa. Nadie tiene derecho a tu teléfono, contraseñas o ubicación, aunque sean tu pareja. <strong style="color:var(--ink);">Qué hacer:</strong> Nombrar lo que pasa, poner límites claros. Si el comportamiento continúa, hablar con un adulto de confianza o SernamEG: 800 104 008.</div>
+        <span class="sit-ley">Ley 20.066 — Violencia intrafamiliar incluye parejas</span>
+      </div>
+    </div>
+    <div class="sit">
+      <div class="sit-num">4</div>
+      <div class="sit-content">
+        <div class="sit-scenario">Alguien hackeó tu Instagram y ahora está enviando mensajes a tus contactos haciéndose pasar por ti.</div>
+        <div class="sit-resp"><strong style="color:var(--ink);">Qué hacer en los próximos 10 minutos:</strong> Ve a Instagram.com/accounts/password/reset desde otro dispositivo. Activa 2FA apenas recuperes la cuenta. Avisa a tus contactos que no respondan mensajes recientes. Reporta la cuenta falsa. Si piden dinero o hay contenido íntimo involucrado — PDI: +56 2 2708 0000.</div>
+        <span class="sit-ley">Ley 21.459 — Acceso no autorizado a sistemas informáticos</span>
+      </div>
+    </div>
+    <div class="sit">
+      <div class="sit-num">5</div>
+      <div class="sit-content">
+        <div class="sit-scenario">Un compañero compartió en el grupo de curso un video íntimo de una compañera. El video está circulando.</div>
+        <div class="sit-resp"><strong style="color:var(--ink);">Lo que NO hacer:</strong> Ver el video, compartirlo o guardarlo — eso te hace parte del delito. <strong style="color:var(--ink);">Qué hacer:</strong> No participar en la circulación. Apoyar a la compañera en privado. Reportar al colegio — están legalmente obligados a actuar (Ley 20.536). Si el colegio no actúa, escalar a la Superintendencia de Educación.</div>
+        <span class="sit-ley">Ley 19.927 + Ley 21.459 — delito grave</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRIVACIDAD EN REDES -->
+<div class="sw" id="privacidad">
+  <div class="sl">// Privacidad en redes · Configuraciones mínimas</div>
+  <h2 class="st">Lo que revelan<br><em>tus posts.</em></h2>
+  <p class="si">Una story con tu ubicación + tu horario de salida del colegio es suficiente para que alguien sepa dónde encontrarte. Más de lo que crees.</p>
+  <div class="conf-g">
+    <div class="conf-c">
+      <div class="conf-plat">Instagram</div>
+      <div class="conf-items">
+        <div class="conf-item">Cuenta en modo privado</div>
+        <div class="conf-item">Ubicación desactivada en stories</div>
+        <div class="conf-item">Solo tus seguidores pueden enviarte mensajes</div>
+        <div class="conf-item">No apareces en búsquedas externas</div>
+        <div class="conf-item">2FA activado con app autenticadora</div>
+        <div class="conf-item">Revisa tu lista de seguidores — ¿los conoces a todos?</div>
+      </div>
+    </div>
+    <div class="conf-c">
+      <div class="conf-plat">TikTok</div>
+      <div class="conf-items">
+        <div class="conf-item">Cuenta privada</div>
+        <div class="conf-item">Mensajes directos: solo amigos</div>
+        <div class="conf-item">Duetos y Stitch: solo amigos</div>
+        <div class="conf-item">Descarga de tus videos: desactivada</div>
+        <div class="conf-item">Sugerir tu cuenta: desactivado</div>
+        <div class="conf-item">Sincronización de contactos: desactivada</div>
+      </div>
+    </div>
+    <div class="conf-c">
+      <div class="conf-plat">WhatsApp</div>
+      <div class="conf-items">
+        <div class="conf-item">Foto de perfil: solo mis contactos</div>
+        <div class="conf-item">Info y estado: solo mis contactos</div>
+        <div class="conf-item">Última vez: nadie o mis contactos</div>
+        <div class="conf-item">2FA activado con PIN de 6 dígitos</div>
+        <div class="conf-item">Nunca compartas el código de verificación</div>
+        <div class="conf-item">Activa "Bloqueo con huella" en ajustes</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:12px;">
+    <a href="/descargas/pdf-privacidad-adolescentes.pdf" download
+      style="display:inline-flex;align-items:center;gap:8px;
+      font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
+      text-transform:uppercase;color:var(--blue);border:1px solid var(--border);
+      padding:.5rem 1rem;border-radius:3px;text-decoration:none;transition:all .2s;"
+      onmouseover="this.style.background='rgba(58,127,212,.06)'"
+      onmouseout="this.style.background='transparent'">
+      ↓ Descargar guía completa de privacidad PDF
+    </a>
+  </div>
+</div>
+
+<!-- DERECHOS -->
+<div class="sw" id="derechos">
+  <div class="sl">// Tus derechos digitales en Chile</div>
+  <h2 class="st">La ley<br><em>está de tu lado.</em></h2>
+  <p class="si">La mayoría de las personas que hacen daño digital cuentan con que la víctima no sabe que es un delito. Ahora lo sabes.</p>
+  <div class="der-g">
+    <div class="der">
+      <div class="der-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M8 2l5 3v6l-5 3-5-3V5L8 2z" stroke="#9b6dff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="der-title">Difundir fotos íntimas sin permiso — delito</div>
+        <div class="der-body">Aunque las hayas enviado tú. Aunque sean "solo" de cara. La Ley 21.459 contempla penas de hasta 5 años. No necesitas abogado para denunciar.</div>
+      </div>
+    </div>
+    <div class="der">
+      <div class="der-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M8 2l5 3v6l-5 3-5-3V5L8 2z" stroke="#9b6dff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="der-title">Hackear tu cuenta — delito</div>
+        <div class="der-body">Acceder sin permiso a tu Instagram, correo o cualquier cuenta es delito bajo la Ley 21.459. Aplica aunque no hayan "robado" nada visible.</div>
+      </div>
+    </div>
+    <div class="der">
+      <div class="der-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M8 2l5 3v6l-5 3-5-3V5L8 2z" stroke="#9b6dff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="der-title">Derecho a que te eliminen contenido</div>
+        <div class="der-body">Instagram, TikTok y X tienen obligación de eliminar contenido íntimo difundido sin consentimiento. Puedes reportarlo directamente tú o un adulto.</div>
+      </div>
+    </div>
+    <div class="der">
+      <div class="der-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M8 2l5 3v6l-5 3-5-3V5L8 2z" stroke="#9b6dff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="der-title">El colegio está obligado a actuar</div>
+        <div class="der-body">Si el acoso, ciberbullying o la difusión de material involucra a estudiantes de tu colegio, el establecimiento tiene obligación legal de intervenir (Ley 20.536).</div>
+      </div>
+    </div>
+    <div class="der">
+      <div class="der-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M8 2l5 3v6l-5 3-5-3V5L8 2z" stroke="#9b6dff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="der-title">Puedes denunciar sin abogado</div>
+        <div class="der-body">PDI Cibercrimen, Fiscalía y Carabineros aceptan denuncias directas. Puedes ir con un adulto o sola/solo. Es gratuito. Puedes hacerlo aunque no tengas todo claro.</div>
+      </div>
+    </div>
+    <div class="der">
+      <div class="der-ico">
+        <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M8 2l5 3v6l-5 3-5-3V5L8 2z" stroke="#9b6dff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="der-title">No es tu culpa — nunca</div>
+        <div class="der-body">Haber enviado fotos, haber dicho que sí antes, haber conocido a alguien online. Nada de eso te hace responsable del daño. La responsabilidad es siempre del agresor.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AGENTE IA + CTA VIOLENCIA -->
+<div class="sw">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);">
+    <a href="/agente-seguridad.html" style="background:var(--bg2);padding:2.5rem 2rem;
+      text-decoration:none;display:flex;flex-direction:column;gap:10px;transition:background .2s;
+      position:relative;overflow:hidden;"
+      onmouseover="this.style.background='rgba(255,255,255,.04)'"
+      onmouseout="this.style.background='var(--bg2)'">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--green);"></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
+        color:var(--green);text-transform:uppercase;display:flex;align-items:center;gap:6px;">
+        <div style="width:6px;height:6px;border-radius:50%;background:var(--green);
+          animation:blink 1.5s step-end infinite;"></div>
+        Agente IA · 24/7
+      </div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink);line-height:1.1;">
+        ¿Pasó algo y<br><em style="color:var(--green);">no sabes qué hacer?</em>
+      </div>
+      <div style="font-size:.86rem;color:var(--ink2);line-height:1.6;flex:1;">
+        El agente IA de Aegis8 responde preguntas concretas sobre seguridad digital, sin juicios y sin guardar lo que escribes.
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
+        color:var(--green);text-transform:uppercase;">Consultar ahora →</div>
+    </a>
+    <a href="/violencia-digital" style="background:rgba(155,109,255,.04);padding:2.5rem 2rem;
+      text-decoration:none;display:flex;flex-direction:column;gap:10px;transition:background .2s;
+      position:relative;overflow:hidden;border:1px solid rgba(155,109,255,.15);"
+      onmouseover="this.style.background='rgba(155,109,255,.08)'"
+      onmouseout="this.style.background='rgba(155,109,255,.04)'">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#9b6dff;"></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
+        color:#9b6dff;text-transform:uppercase;">Información y ayuda</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink);line-height:1.1;">
+        Violencia digital<br><em style="color:#9b6dff;">de género.</em>
+      </div>
+      <div style="font-size:.86rem;color:var(--ink2);line-height:1.6;flex:1;">
+        Sexting, sextorsión, ciberacoso y control en el pololeo. Qué es delito, qué hacer y dónde pedir ayuda en Chile hoy.
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
+        color:#9b6dff;text-transform:uppercase;">Ver información →</div>
+    </a>
+  </div>
+</div>
+
+</div>
+
+<footer class="page-footer">
+  <a href="/" class="fl">AEGIS<span>8</span></a>
+  <ul class="flinks">
+    <li><a href="/">Educa</a></li>
+    <li><a href="/docentes">Docentes</a></li>
+    <li><a href="/familias">Familias</a></li>
+    <li><a href="/analizador-phishing.html">Herramientas</a></li>
+    <li><a href="/contacto">Contacto</a></li>
+  </ul>
+  <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+    <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
+    
+  </div>
+</footer>
+<script>
+
+const ro=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});
+},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.sw').forEach(el=>ro.observe(el));
+
+
+</script>
+</body>
+</html>
