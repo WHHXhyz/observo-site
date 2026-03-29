@@ -210,10 +210,11 @@ const CSS = `
 const NAV = [
   {
     label: 'Educa',
-    href: '/ninos',
-    noLink: true,
+    href: '/educa',
     page: 'educa',
     drop: [
+      {href:'/educa',        label:'Hub educativo'},
+      'div',
       {href:'/ninos',        label:'Niños 6–12'},
       {href:'/adolescentes', label:'Adolescentes'},
       {href:'/familias',     label:'Familias'},
@@ -301,6 +302,7 @@ function buildMobile(page, drawer) {
       label: 'Educa',
       pg: 'educa',
       subs: [
+        {href:'/educa',        label:'Hub educativo'},
         {href:'/ninos',        label:'Niños 6–12'},
         {href:'/adolescentes', label:'Adolescentes'},
         {href:'/familias',     label:'Familias'},

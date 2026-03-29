@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Contacto · Aegis8</title>
+<meta name="description" content="Cuéntanos tu caso. Te respondemos en 1-2 días hábiles con un plan concreto. Sin compromiso."/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
+  <script src="/aegis-nav.js"></script>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+:root{
+  --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
+  --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
+  --card:rgba(255,255,255,.03);--radius:4px;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(58,127,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.025) 1px,transparent 1px);
+  background-size:80px 80px;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+.page-inner{position:relative;z-index:10;}
+.sl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+  color:var(--accent);text-transform:uppercase;margin-bottom:12px;}
+.st{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.6rem);
+  line-height:1.05;color:var(--ink);margin-bottom:20px;letter-spacing:-1px;}
+.st em{font-style:italic;color:var(--accent);}
+.si{font-size:1rem;line-height:1.9;color:var(--ink2);max-width:640px;margin-bottom:40px;}
+.sw{padding:80px 0 48px;border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
+.sw.vis{opacity:1;transform:none;}
+.sw:last-child{border-bottom:none;}
+.btn-p{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--bg);background:var(--accent);border:none;padding:14px 28px;border-radius:var(--radius);
+  text-decoration:none;transition:all .25s;position:relative;overflow:hidden;display:inline-block;cursor:pointer!important;}
+.btn-p::before{content:'';position:absolute;inset:0;background:var(--accent2);transform:translateX(-100%);transition:transform .3s;}
+.btn-p:hover::before{transform:translateX(0);}
+.btn-p span,.btn-p{position:relative;z-index:1;}
+.btn-p:hover{box-shadow:0 0 28px rgba(240,120,48,.4);transform:translateY(-2px);}
+.btn-g{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink2);background:transparent;border:1px solid var(--border);
+  padding:14px 28px;border-radius:var(--radius);text-decoration:none;transition:all .25s;display:inline-block;}
+.btn-g:hover{color:var(--ink);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
+/* CHAT SHARED */
+.chat-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;}
+.chat-hd{background:rgba(240,120,48,.05);border-bottom:1px solid var(--border2);
+  padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.chat-hd-l{display:flex;align-items:center;gap:.75rem;}
+.chat-ava{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  background:rgba(240,120,48,.12);}
+.chat-name{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;color:var(--ink);}
+.chat-status{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--green);letter-spacing:1px;}
+.chat-live{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+.chat-msgs{height:320px;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;}
+.chat-msgs::-webkit-scrollbar{width:3px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.msg{display:flex;gap:.6rem;align-items:flex-start;}
+.msg.user{flex-direction:row-reverse;}
+.msg-ava{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;flex-shrink:0;background:var(--card);}
+.msg-bubble{background:var(--card);border:1px solid var(--border);padding:.65rem .9rem;
+  font-size:.84rem;line-height:1.6;max-width:85%;border-radius:2px;color:var(--ink2);}
+.msg.user .msg-bubble{background:rgba(240,120,48,.06);border-color:var(--border2);color:var(--ink);}
+.chat-quick{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.4rem;}
+.qbtn{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1px;
+  color:var(--accent);border:1px solid var(--border2);background:rgba(240,120,48,.04);
+  padding:.3rem .7rem;border-radius:var(--radius);cursor:pointer!important;transition:all .2s;}
+.qbtn:hover{background:rgba(240,120,48,.1);border-color:var(--accent);}
+.chat-row{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:.5rem;}
+.chat-in{flex:1;background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);
+  padding:.65rem 1rem;font-family:'Lato',sans-serif;font-size:.88rem;color:var(--ink);
+  outline:none;transition:border-color .2s;}
+.chat-in:focus{border-color:var(--accent);}
+.chat-in::placeholder{color:var(--ink3);}
+.send-btn{background:var(--accent);color:var(--bg);border:none;padding:.65rem 1.1rem;
+  border-radius:var(--radius);font-weight:700;cursor:pointer!important;transition:background .2s;}
+.send-btn:hover{background:var(--accent2);}
+.typing-wrap{display:flex;gap:4px;align-items:center;}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.3;
+  animation:tdot 1.2s ease-in-out infinite;}
+.tdot:nth-child(2){animation-delay:.2s;}.tdot:nth-child(3){animation-delay:.4s;}
+@keyframes tdot{0%,80%,100%{opacity:.2;transform:scale(.8);}40%{opacity:1;transform:scale(1);}}
+/* FOOTER */
+.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);
+  padding:48px 32px 32px;max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;
+  letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.fl span{color:var(--accent);}
+.flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.flinks a:hover{color:var(--accent);}
+.fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
+/* SCROLL REVEAL JS inline */
+@media(max-width:640px){.wrap{padding:0 16px;}.page-footer{padding:32px 16px;}}
+
+
+.contact-hero{position:relative;z-index:10;padding:72px 0 48px;border-bottom:1px solid var(--border);}
+.contact-grid{display:grid;grid-template-columns:1fr 340px;gap:3rem;align-items:start;margin-top:48px;}
+@media(max-width:860px){.contact-grid{grid-template-columns:1fr;}}
+.form-panel{border:1px solid var(--border2);background:var(--bg2);border-radius:var(--radius);overflow:hidden;}
+.form-bar{background:rgba(240,120,48,.05);border-bottom:1px solid var(--border);
+  padding:.9rem 1.5rem;display:flex;align-items:center;gap:.75rem;}
+.form-bar-dot{width:8px;height:8px;border-radius:50%;}
+.dot-r{background:#ff5f57;}.dot-y{background:#febc2e;}.dot-g{background:#28c840;}
+.form-title{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--ink3);letter-spacing:2px;margin-left:auto;}
+.form-body{padding:1.75rem;}
+.field{margin-bottom:1.25rem;}
+.field-label{display:block;font-family:'JetBrains Mono',monospace;font-size:.58rem;
+  letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;}
+.field-input,.field-textarea,.field-select{width:100%;background:var(--card);
+  border:1px solid var(--border2);border-radius:var(--radius);
+  color:var(--ink);font-family:'Lato',sans-serif;font-size:.88rem;
+  padding:.75rem 1rem;outline:none;transition:border-color .2s;}
+.field-input:focus,.field-textarea:focus,.field-select:focus{border-color:var(--accent);}
+.field-select{cursor:pointer!important;}
+.field-select option{background:var(--bg2);}
+.field-textarea{resize:none;line-height:1.6;min-height:120px;}
+.mode-g{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;margin-bottom:1.25rem;}
+@media(max-width:480px){.mode-g{grid-template-columns:1fr;}}
+.mode-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1rem .75rem;text-align:center;cursor:pointer!important;transition:all .2s;}
+.mode-btn:hover,.mode-btn.sel{background:rgba(240,120,48,.06);border-color:var(--border2);}
+.mode-btn.sel{border-color:var(--accent);}
+.mode-ico{font-size:1.3rem;margin-bottom:.4rem;}
+.mode-name{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1px;color:var(--ink2);}
+.submit-btn{width:100%;padding:1rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;
+  letter-spacing:2px;text-transform:uppercase;color:var(--bg);background:var(--accent);
+  border:none;border-radius:var(--radius);cursor:pointer!important;transition:background .2s;}
+.submit-btn:hover{background:var(--accent2);}
+.form-notice{display:none;margin-top:1rem;padding:.75rem 1rem;border-radius:var(--radius);
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;line-height:1.5;border:1px solid;}
+.form-notice.success{background:rgba(46,204,128,.06);border-color:rgba(46,204,128,.3);color:#2ecc80;}
+.form-notice.error{background:rgba(240,120,48,.06);border-color:var(--border2);color:var(--accent);}
+.sidebar{display:flex;flex-direction:column;gap:1rem;}
+.sidebar-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;}
+.sidebar-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
+  text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
+.how-item{display:flex;align-items:flex-start;gap:.75rem;padding:.6rem 0;
+  border-bottom:1px solid var(--border);}
+.how-item:last-child{border-bottom:none;}
+.how-ico{font-size:1rem;flex-shrink:0;margin-top:2px;}
+.how-text{font-size:.82rem;color:var(--ink2);line-height:1.5;}
+.how-text strong{color:var(--ink);}
+
+@keyframes fadeInLogo{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
+</style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+</head>
+<body data-page="contacto">
+<section class="contact-hero page-inner">
+  <div class="wrap">
+    <div class="sl">// Contacto</div>
+    
+    <div style="margin-bottom:20px;opacity:0;animation:fadeInLogo .8s cubic-bezier(.34,1.56,.64,1) forwards;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="100" height="100" fill="none">
+  <defs>
+    <filter id="ct1" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="ct2" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="ctg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5c842"/>
+      <stop offset="50%" stop-color="#f07830"/>
+      <stop offset="100%" stop-color="#e0531a"/>
+    </linearGradient>
+    <radialGradient id="ct-core" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="rgba(240,120,48,0.18)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+    <clipPath id="ctc"><path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z"/></clipPath>
+  </defs>
+  <ellipse cx="120" cy="115" rx="88" ry="95" fill="url(#ct-core)" filter="url(#ct2)">
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite"/>
+  </ellipse>
+  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="#0d1422"/>
+  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="none" stroke="url(#ctg)" stroke-width="3">
+    <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="3.5s" repeatCount="indefinite"/>
+  </path>
+  <path d="M120 18 C100 18 68 26 44 38 L26 48 L26 122 C26 162 72 188 120 212 C168 188 214 162 214 122 L214 48 L196 38 C172 26 140 18 120 18 Z" fill="none" stroke="#f07830" stroke-width="3" stroke-dasharray="590" stroke-dashoffset="590" filter="url(#ct1)">
+    <animate attributeName="stroke-dashoffset" from="590" to="0" dur="1.8s" fill="freeze" begin="0.2s" calcMode="spline" keySplines="0.4 0 0.2 1"/>
+  </path>
+  <!-- Envelope body -->
+  <rect x="66" y="82" width="108" height="76" rx="5" fill="rgba(240,120,48,0.06)" stroke="url(#ctg)" stroke-width="2.5" filter="url(#ct1)">
+    <animate attributeName="stroke-dasharray" values="0 368;368 0" dur="0.8s" fill="freeze" begin="1.2s"/>
+    <animate attributeName="fill" values="rgba(240,120,48,0.03);rgba(240,120,48,0.1);rgba(240,120,48,0.03)" dur="3s" repeatCount="indefinite" begin="3s"/>
+  </rect>
+  <!-- Envelope flap — V shape at top -->
+  <polyline points="66,82 120,128 174,82" fill="none" stroke="url(#ctg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#ct1)">
+    <animate attributeName="stroke-dasharray" values="0 130;130 0" dur="0.5s" fill="freeze" begin="1.8s"/>
+    <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite" begin="3s"/>
+  </polyline>
+  <!-- Bottom fold lines -->
+  <line x1="66" y1="158" x2="110" y2="120" stroke="rgba(240,120,48,0.25)" stroke-width="1.5" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.4s"/></line>
+  <line x1="174" y1="158" x2="130" y2="120" stroke="rgba(240,120,48,0.25)" stroke-width="1.5" stroke-linecap="round"><animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="2.5s"/></line>
+  <!-- Flying paper plane leaving envelope -->
+  <path d="M152,68 L176,56 L164,72 Z" fill="rgba(240,120,48,0.15)" stroke="url(#ctg)" stroke-width="2" stroke-linejoin="round" filter="url(#ct1)">
+    <animate attributeName="opacity" values="0;1" dur="0.2s" fill="freeze" begin="2.8s"/>
+    <animateTransform attributeName="transform" type="translate" values="0,0;12,-10;24,-20" dur="3s" repeatCount="indefinite" begin="3.5s" additive="sum"/>
+    <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.8;1" dur="3s" repeatCount="indefinite" begin="3.5s"/>
+  </path>
+  <!-- Paper plane trail -->
+  <line x1="152" y1="68" x2="142" y2="72" stroke="rgba(240,120,48,0.3)" stroke-width="1" stroke-linecap="round" stroke-dasharray="3 4">
+    <animate attributeName="opacity" values="0;0.5;0" dur="3s" repeatCount="indefinite" begin="4s"/>
+  </line>
+  <!-- Notification dot — pulsing -->
+  <circle cx="170" cy="78" r="8" fill="rgba(239,68,68,0.15)" stroke="#ef4444" stroke-width="2" filter="url(#ct1)">
+    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="3.2s"/>
+    <animate attributeName="r" values="8;11;8" dur="1.5s" repeatCount="indefinite" begin="3.5s"/>
+  </circle>
+  <circle cx="170" cy="78" r="4" fill="#ef4444">
+    <animate attributeName="opacity" values="0;1" dur="0.1s" fill="freeze" begin="3.2s"/>
+  </circle>
+  <!-- Signal rings around envelope — "sending" -->
+  <circle cx="120" cy="120" r="52" fill="none" stroke="rgba(240,120,48,0.07)" stroke-width="1.5" stroke-dasharray="6 8">
+    <animate attributeName="r" values="52;64;52" dur="3s" repeatCount="indefinite" begin="3.5s"/>
+    <animate attributeName="stroke-opacity" values="0.07;0.02;0.07" dur="3s" repeatCount="indefinite" begin="3.5s"/>
+  </circle>
+  <!-- Scan, corners, bottom -->
+  <rect x="26" y="0" width="188" height="2" fill="url(#ctg)" clip-path="url(#ctc)"><animate attributeName="y" from="18" to="212" dur="3.5s" repeatCount="indefinite" begin="3.5s"/><animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.04;0.96;1" dur="3.5s" repeatCount="indefinite" begin="3.5s"/></rect>
+  <polyline points="44,68 44,54 58,54" fill="none" stroke="url(#ctg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="stroke-dasharray" values="0 30;30 0" dur="0.3s" fill="freeze" begin="2s"/></polyline>
+  <polyline points="196,68 196,54 182,54" fill="none" stroke="url(#ctg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="stroke-dasharray" values="0 30;30 0" dur="0.3s" fill="freeze" begin="2.1s"/></polyline>
+  <circle cx="120" cy="204" r="3.5" fill="#f07830" filter="url(#ct1)"><animate attributeName="opacity" values="0;1" dur="0.2s" fill="freeze" begin="2s"/><animate attributeName="r" values="3.5;5;3.5" dur="2s" repeatCount="indefinite" begin="3.5s"/></circle>
+  <line x1="68" y1="24" x2="172" y2="24" stroke="rgba(245,200,66,0.18)" stroke-width="1" stroke-linecap="round"><animate attributeName="stroke-dasharray" values="0 104;104 0" dur="0.8s" fill="freeze" begin="0.5s"/></line>
+</svg></div>
+    <h1 class="st">Hablemos<br><em>de educación digital.</em></h1>
+    <p class="si">¿Quieres organizar un taller en tu colegio, necesitas recursos para tu clase o tienes una consulta? Escríbenos — respondemos en 1–2 días hábiles.</p>
+
+    <div class="contact-grid">
+      <div class="form-panel">
+        <div class="form-bar">
+          <div class="form-bar-dot dot-r"></div>
+          <div class="form-bar-dot dot-y"></div>
+          <div class="form-bar-dot dot-g"></div>
+          <span class="form-title">aegis8 — nuevo-contacto.form</span>
+        </div>
+        <div class="form-body">
+          <p style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);margin-bottom:1rem;">// ¿EN QUÉ TE PUEDO AYUDAR? (OPCIONAL)</p>
+          <div class="mode-g">
+            <button class="mode-btn" onclick="setMode('taller',this)"><div class="mode-ico">🏫</div><div class="mode-name">Taller en colegio</div></button>
+            <button class="mode-btn" onclick="setMode('apoderado',this)"><div class="mode-ico">👨‍👩‍👧</div><div class="mode-name">Charla para apoderados</div></button>
+            <button class="mode-btn" onclick="setMode('docente',this)"><div class="mode-ico">👩‍🏫</div><div class="mode-name">Recursos para docentes</div></button>
+            <button class="mode-btn" onclick="setMode('otro',this)"><div class="mode-ico">💬</div><div class="mode-name">Otra consulta</div></button>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="inp-nombre">Nombre</label>
+            <input class="field-input" id="inp-nombre" type="text" placeholder="Tu nombre" required maxlength="100"/>
+          </div>
+          <div class="field">
+            <label class="field-label" for="inp-email">Email</label>
+            <input class="field-input" id="inp-email" type="email" placeholder="tu@email.com" required maxlength="200"/>
+          </div>
+          <div class="field">
+            <label class="field-label" for="inp-msg">Cuéntanos tu caso</label>
+            <textarea class="field-textarea" id="inp-msg" rows="5" placeholder="Describe brevemente tu situación..." required maxlength="2000"></textarea>
+          </div>
+          <input type="hidden" id="inp-honeypot" name="_gotcha"/>
+          <button class="submit-btn" id="btn-submit" onclick="doSubmit()">Enviar mensaje →</button>
+          <div class="form-notice" id="form-notice"></div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <div class="sidebar-card">
+          <div class="sidebar-label">// cómo funciona</div>
+          <div class="how-item"><div class="how-ico">📝</div><div class="how-text"><strong>Completa el formulario</strong> — sin datos sensibles, nunca contraseñas.</div></div>
+          <div class="how-item"><div class="how-ico">⚡</div><div class="how-text"><strong>Te respondemos en 1–2 días hábiles</strong> con información concreta sobre cómo podemos ayudarte.</div></div>
+          <div class="how-item"><div class="how-ico">🤝</div><div class="how-text"><strong>Todo gratuito</strong> para instituciones educativas. Sin burocracia, sin letra chica.</div></div>
+          <div class="how-item"><div class="how-ico">🔒</div><div class="how-text">Tu información <strong>no se vende ni comparte</strong>. Solo la usamos para responderte.</div></div>
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-label">// también en</div>
+          <a href="https://instagram.com/aegis8.cl" target="_blank" style="display:flex;align-items:center;gap:.75rem;text-decoration:none;padding:.5rem 0;">
+            <span style="font-size:1.2rem;">📷</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--accent);">@aegis8.cl</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="page-footer">
+  <a href="/" class="fl">AEGIS<span>8</span></a>
+    <ul class="flinks">
+    <li><a href="/ninos">Niños</a></li>
+    <li><a href="/adolescentes">Adolescentes</a></li>
+    <li><a href="/familias">Familias</a></li>
+    <li><a href="/docentes">Docentes</a></li>
+    <li><a href="/herramientas">Herramientas</a></li>
+    <li><a href="/contacto">Contacto</a></li>
+  </ul>
+  <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+    <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
+    
+  </div>
+</footer>
+<script src="https://www.google.com/recaptcha/api.js?render=6LcaDocsAAAAAKooAzny0RrX53G4R0eWlihi2axK"></script>
+<script>
+var modes={
+  taller:{tipo:'Taller en colegio',msg:'Quisiera organizar un taller de ciberseguridad en nuestro colegio. [Indica el nivel: básico / medio, cantidad de alumnos aproximada y disponibilidad].'},
+  apoderado:{tipo:'Charla para apoderados',msg:'Nos interesa una charla de ciberseguridad para apoderados. Queremos aprender a proteger a nuestros hijos en internet.'},
+  docente:{tipo:'Recursos para docentes',msg:'Soy docente y me interesa usar los materiales de Aegis8 en mis clases. ¿Cómo puedo acceder a los planes de clase y recursos?'},
+  otro:{tipo:'Consulta general',msg:''}
+};
+function setMode(k,btn){
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  var m=modes[k];
+  if(m.msg) document.getElementById('inp-msg').value=m.msg;
+}
+function showNotice(type,msg){
+  var n=document.getElementById('form-notice');
+  n.className='form-notice '+type;
+  n.textContent=msg;n.style.display='block';
+}
+var WORKER_URL='https://aegis8-agent.christianmora705.workers.dev/contact';
+function doSubmit(){
+  var nombre=document.getElementById('inp-nombre').value.trim();
+  var email=document.getElementById('inp-email').value.trim();
+  var msg=document.getElementById('inp-msg').value.trim();
+  var honey=document.getElementById('inp-honeypot').value;
+  if(honey)return;
+  if(!nombre||!email||!msg){showNotice('error','Por favor completa todos los campos.');return;}
+  var btn=document.getElementById('btn-submit');
+  btn.textContent='Enviando...';btn.style.opacity='.6';btn.disabled=true;
+  grecaptcha.ready(function(){
+    grecaptcha.execute('6LcaDocsAAAAAKooAzny0RrX53G4R0eWlihi2axK',{action:'submit'}).then(function(token){
+      fetch(WORKER_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({nombre:nombre,email:email,mensaje:msg,token:token,honeypot:honey,_subject:'Nuevo contacto desde Aegis8'})
+      }).then(function(r){return r.json();}).then(function(d){
+        btn.textContent='Enviar mensaje →';btn.style.opacity='1';btn.disabled=false;
+        if(d.ok){
+          showNotice('success','✓ Mensaje enviado. Te respondemos en 1–2 días hábiles.');
+          document.getElementById('inp-nombre').value='';
+          document.getElementById('inp-email').value='';
+          document.getElementById('inp-msg').value='';
+        } else {
+          showNotice('error','Error al enviar. Intenta de nuevo o escríbenos directamente.');
+        }
+      }).catch(function(){
+        btn.textContent='Enviar mensaje →';btn.style.opacity='1';btn.disabled=false;
+        showNotice('error','Error de conexión. Intenta de nuevo.');
+      });
+    });
+  });
+}
+
+const ro=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});
+},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.sw').forEach(el=>ro.observe(el));
+
+</script>
+</body>
+</html>

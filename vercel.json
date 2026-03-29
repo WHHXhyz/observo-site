@@ -3,8 +3,12 @@
   "redirects": [
     { "source": "/index.html",              "destination": "/",                  "permanent": true },
 
+    /* ── Nuevas páginas ── */
+    { "source": "/educa.html",              "destination": "/educa",             "permanent": true },
+    { "source": "/el-proyecto.html",        "destination": "/el-proyecto",       "permanent": true },
+    { "source": "/contacto.html",           "destination": "/contacto",          "permanent": true },
+
     /* ── URLs antiguas → nuevas URLs limpias ── */
-    { "source": "/educa.html",              "destination": "/",                  "permanent": true },
     { "source": "/educa",                   "destination": "/",                  "permanent": true },
     { "source": "/educa/ninos.html",        "destination": "/ninos",             "permanent": true },
     { "source": "/educa/adolescentes.html", "destination": "/adolescentes",      "permanent": true },
