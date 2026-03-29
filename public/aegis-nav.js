@@ -214,7 +214,6 @@ const NAV = [
     page: 'educa',
     drop: [
       {href:'/educa',        label:'Hub educativo'},
-      {href:'/modelo',       label:'Modelo Aegis8 · 5 Capas', gold:true},
       'div',
       {href:'/ninos',        label:'Niños 6–12'},
       {href:'/adolescentes', label:'Adolescentes'},
@@ -224,6 +223,7 @@ const NAV = [
       {href:'/educa/newsletter.html', label:'Newsletter mensual'},
     ]
   },
+  {href:'/modelo', label:'Modelo', page:'modelo'},
   {
     label: 'Herramientas',
     href: '/herramientas',
@@ -305,7 +305,6 @@ function buildMobile(page, drawer) {
       pg: 'educa',
       subs: [
         {href:'/educa',        label:'Hub educativo'},
-        {href:'/modelo',       label:'Modelo · 5 Capas',      gold:true},
         {href:'/ninos',        label:'Niños 6–12'},
         {href:'/adolescentes', label:'Adolescentes'},
         {href:'/familias',     label:'Familias'},
@@ -329,9 +328,10 @@ function buildMobile(page, drawer) {
   ];
 
   const DIRECT = [
-    {href:'/noticias',     label:'Noticias',     pg:'noticias'},
-    {href:'/el-proyecto',  label:'El Proyecto',  pg:'proyecto'},
-    {href:'/talleres.html',label:'Talleres',      pg:'talleres'},
+    {href:'/modelo',       label:'Modelo',        pg:'modelo'},
+    {href:'/noticias',     label:'Noticias',       pg:'noticias'},
+    {href:'/el-proyecto',  label:'El Proyecto',    pg:'proyecto'},
+    {href:'/talleres.html',label:'Talleres',        pg:'talleres'},
   ];
 
   // Inicio
