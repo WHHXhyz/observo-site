@@ -227,6 +227,115 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   .btn-p:hover { box-shadow: 0 0 28px rgba(155,109,255,.4) !important; }
   .st em { color: #9b6dff !important; }
   .h-eyebrow .h-line { background: #9b6dff !important; }
+
+/* ── DERECHOS DIGITALES ── */
+.purple{color:#9b6dff!important;}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+:root{
+  --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
+  --red:#ef4444;--purple:#9b6dff;
+  --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
+  --card:rgba(255,255,255,.03);--radius:4px;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(58,127,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.025) 1px,transparent 1px);
+  background-size:80px 80px;}
+.wrap{max-width:860px;margin:0 auto;padding:0 24px;}
+.page-inner{position:relative;z-index:10;padding:72px 0 80px;}
+.sw{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
+.sw.vis{opacity:1;transform:none;}
+.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);
+  padding:48px 32px 32px;max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.fl span{color:var(--accent);}
+.flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.flinks a:hover{color:var(--accent);}
+.fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+
+/* ── DERECHO SEMANAL highlight ── */
+.dr-semanal{background:rgba(155,109,255,.05);border:1px solid rgba(155,109,255,.2);
+  border-radius:6px;overflow:hidden;margin-bottom:32px;}
+.dr-semanal-hd{padding:14px 20px;border-bottom:1px solid rgba(155,109,255,.12);
+  background:rgba(155,109,255,.06);
+  display:flex;align-items:center;justify-content:space-between;}
+.dr-semanal-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
+  color:var(--purple);text-transform:uppercase;display:flex;align-items:center;gap:8px;}
+.dr-dot{width:7px;height:7px;border-radius:50%;background:var(--purple);animation:blink 1.5s infinite;}
+.dr-semanal-fecha{font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--ink3);letter-spacing:1px;}
+.dr-semanal-body{padding:24px;}
+.dr-semanal-titulo{font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink);
+  line-height:1.15;margin-bottom:12px;}
+.dr-semanal-desc{font-size:.92rem;color:var(--ink2);line-height:1.8;margin-bottom:16px;}
+.dr-semanal-ley{display:inline-flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--purple);padding:6px 12px;border-radius:20px;
+  border:1px solid rgba(155,109,255,.25);background:rgba(155,109,255,.08);}
+
+/* ── LEYES GRID ── */
+.leyes-g{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:32px;}
+@media(max-width:620px){.leyes-g{grid-template-columns:1fr;}}
+.ley-card{background:var(--bg2);border:1px solid var(--border);border-radius:4px;
+  overflow:hidden;transition:border-color .2s;}
+.ley-card:hover{border-color:rgba(255,255,255,.12);}
+.ley-bar{height:2px;}
+.ley-body{padding:20px;}
+.ley-num{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
+  margin-bottom:8px;}
+.ley-titulo{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink);
+  line-height:1.2;margin-bottom:10px;}
+.ley-desc{font-size:.84rem;color:var(--ink2);line-height:1.65;margin-bottom:12px;}
+.ley-ejemplo{font-size:.82rem;color:var(--ink3);line-height:1.55;
+  padding:10px 12px;background:var(--card);border-radius:3px;
+  border-left:2px solid;}
+.ley-card.c-purple .ley-bar,.ley-card.c-purple .ley-ejemplo{border-color:var(--purple);}
+.ley-card.c-purple .ley-num{color:var(--purple);}
+.ley-card.c-blue .ley-bar,.ley-card.c-blue .ley-ejemplo{border-color:var(--blue);}
+.ley-card.c-blue .ley-num{color:var(--blue);}
+.ley-card.c-green .ley-bar,.ley-card.c-green .ley-ejemplo{border-color:var(--green);}
+.ley-card.c-green .ley-num{color:var(--green);}
+.ley-card.c-gold .ley-bar,.ley-card.c-gold .ley-ejemplo{border-color:var(--gold);}
+.ley-card.c-gold .ley-num{color:var(--gold);}
+
+/* ── PERFILES DERECHOS ── */
+.perfiles-dr{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:32px;}
+@media(max-width:620px){.perfiles-dr{grid-template-columns:1fr;}}
+.perfil-dr{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:18px;}
+.perfil-dr-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:2px;
+  text-transform:uppercase;margin-bottom:10px;}
+.perfil-dr-items{display:flex;flex-direction:column;gap:8px;}
+.perfil-dr-item{display:flex;gap:10px;align-items:flex-start;font-size:.84rem;color:var(--ink2);line-height:1.5;}
+.perfil-dr-item-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+.perfil-dr.c-blue .perfil-dr-tag{color:var(--blue);}
+.perfil-dr.c-blue .perfil-dr-item-dot{background:var(--blue);}
+.perfil-dr.c-purple .perfil-dr-tag{color:var(--purple);}
+.perfil-dr.c-purple .perfil-dr-item-dot{background:var(--purple);}
+.perfil-dr.c-green .perfil-dr-tag{color:var(--green);}
+.perfil-dr.c-green .perfil-dr-item-dot{background:var(--green);}
+.perfil-dr.c-orange .perfil-dr-tag{color:var(--accent);}
+.perfil-dr.c-orange .perfil-dr-item-dot{background:var(--accent);}
+
+/* ── HERRAMIENTA SEMANAL ── */
+.herramienta-semanal{background:var(--bg2);border:1px solid rgba(46,204,128,.2);
+  border-radius:4px;padding:24px;margin-bottom:32px;}
+.hs-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
+  color:var(--green);text-transform:uppercase;margin-bottom:12px;}
+.hs-titulo{font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--ink);margin-bottom:10px;}
+.hs-desc{font-size:.88rem;color:var(--ink2);line-height:1.7;margin-bottom:16px;}
+.hs-pasos{display:flex;flex-direction:column;gap:8px;}
+.hs-paso{display:flex;gap:10px;align-items:flex-start;}
+.hs-paso-n{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--green);
+  width:20px;flex-shrink:0;font-weight:600;margin-top:1px;}
+.hs-paso-txt{font-size:.86rem;color:var(--ink2);line-height:1.6;}
+
 </style>
 </head>
 <body data-page="violencia-digital">
@@ -277,6 +386,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
         <span>Ya me pasó — qué hago →</span>
       </a>
       <a href="#temas" class="btn-g">Entender qué es</a>
+      <a href="#derechos" class="btn-g" style="border-color:rgba(155,109,255,.3);color:#9b6dff;">Tus derechos →</a>
     </div>
   </div>
 </section>
@@ -700,13 +810,13 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <div class="rec-desc">Preguntas sobre qué hacer, cómo denunciar en cada plataforma o cómo proteger tus cuentas. Sin juicio, disponible siempre.</div>
       <div class="rec-cta">Consultar →</div>
     </a>
-    <a href="/educa/profesores.html" class="rec" style="text-decoration:none;">
+    <a href="/docentes" class="rec" style="text-decoration:none;">
       <div class="rec-tag">Para docentes</div>
       <div class="rec-title">Protocolo ante incidente</div>
       <div class="rec-desc">Qué hacer si una estudiante reporta un caso. Pasos, contactos y marco legal.</div>
       <div class="rec-cta">Ver protocolo →</div>
     </a>
-    <a href="/educa/padres.html" class="rec" style="text-decoration:none;">
+    <a href="/familias" class="rec" style="text-decoration:none;">
       <div class="rec-tag">Para familias</div>
       <div class="rec-title">Guía para apoderados</div>
       <div class="rec-desc">Cómo hablar de estos temas con tus hijos e hijas según su edad.</div>
@@ -726,14 +836,212 @@ function toggleTema(id) {
 }
 </script>
 
+<!-- ═══════ DERECHOS DIGITALES ═══════ -->
+<div class="wrap" style="padding:80px 0 0;" id="derechos">
+  <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+    color:#9b6dff;text-transform:uppercase;margin-bottom:40px;
+    display:flex;align-items:center;gap:10px;">
+    <div style="width:28px;height:1px;background:#9b6dff;"></div>
+    DERECHOS DIGITALES · CHILE
+  </div>
+  
+<div class="wrap">
+
+  <!-- Header -->
+  <div style="margin-bottom:40px;" class="sw">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+      color:var(--ink3);margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+      <div style="width:20px;height:1px;background:var(--purple);"></div>
+      DERECHOS DIGITALES · CHILE · ACTUALIZACIÓN SEMANAL
+    </div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.2rem,5vw,3.8rem);
+      line-height:1;letter-spacing:-1px;margin-bottom:16px;">
+      Tus derechos<br><em style="color:var(--purple);">esta semana.</em>
+    </h1>
+    <p style="font-size:1rem;line-height:1.8;color:var(--ink2);max-width:560px;">
+      Las leyes que te protegen digitalmente en Chile. Actualizamos cada semana con cambios legales, sentencias relevantes y nuevas herramientas. Conocer tus derechos es la primera defensa.
+    </p>
+  </div>
+
+  <!-- Derecho de la semana -->
+  <div class="sw" id="derecho-semanal-wrap">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+      color:var(--purple);text-transform:uppercase;margin-bottom:16px;">
+      // Derecho de la semana
+    </div>
+    <div class="dr-semanal" id="derecho-semanal">
+      <!-- Se rellena desde amenaza.json o fallback -->
+      <div class="dr-semanal-hd">
+        <div class="dr-semanal-tag"><div class="dr-dot"></div>DERECHO DE LA SEMANA</div>
+        <div class="dr-semanal-fecha" id="dr-fecha">Sem. 13 · Mar 2026</div>
+      </div>
+      <div class="dr-semanal-body">
+        <div class="dr-semanal-titulo" id="dr-titulo">
+          Tu pareja no tiene derecho legal a acceder a tu teléfono sin tu permiso
+        </div>
+        <div class="dr-semanal-desc" id="dr-desc">
+          Aunque vivan juntos, aunque sean pareja, aunque hayan compartido contraseñas antes — acceder a tus cuentas o dispositivos sin consentimiento explícito es un delito en Chile. No es "celos normales". No es "porque te amo". Es una infracción a la Ley 21.459, Art. 7, que penaliza el acceso ilegal a sistemas informáticos.
+        </div>
+        <div class="dr-semanal-ley" id="dr-ley">⚖️ Ley 21.459 · Art. 7 · Acceso ilegal a sistemas</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leyes principales -->
+  <div class="sw">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+      color:var(--ink3);text-transform:uppercase;margin-bottom:16px;">
+      // Las leyes que te protegen en Chile
+    </div>
+    <div class="leyes-g">
+      <div class="ley-card c-purple">
+        <div class="ley-bar"></div>
+        <div class="ley-body">
+          <div class="ley-num">LEY 21.459 · 2022</div>
+          <div class="ley-titulo">Ley de Delitos Informáticos</div>
+          <div class="ley-desc">Penaliza el acceso no autorizado a sistemas, la difusión de material íntimo sin consentimiento, el sabotaje informático y la suplantación de identidad digital.</div>
+          <div class="ley-ejemplo">Ejemplo: compartir fotos íntimas sin permiso puede significar hasta 3 años de cárcel bajo esta ley.</div>
+        </div>
+      </div>
+      <div class="ley-card c-blue">
+        <div class="ley-bar"></div>
+        <div class="ley-body">
+          <div class="ley-num">LEY 20.536 · 2011</div>
+          <div class="ley-titulo">Ley de Convivencia Escolar</div>
+          <div class="ley-desc">Obliga a los colegios a tener protocolos ante el bullying y ciberacoso. El docente tiene 5 días para reportar un caso al equipo directivo desde que lo conoce.</div>
+          <div class="ley-ejemplo">Ejemplo: si un docente sabe de ciberacoso y no actúa en 5 días, el colegio tiene responsabilidad legal.</div>
+        </div>
+      </div>
+      <div class="ley-card c-green">
+        <div class="ley-bar"></div>
+        <div class="ley-body">
+          <div class="ley-num">LEY 20.526 · 2011</div>
+          <div class="ley-titulo">Protección a Menores en Contexto Sexual</div>
+          <div class="ley-desc">Penaliza la producción y distribución de material sexual que involucre menores de edad, incluyendo el grooming y cualquier comunicación con fines sexuales hacia menores.</div>
+          <div class="ley-ejemplo">Ejemplo: un adulto que solicita fotos íntimas a un menor a través de Discord comete delito bajo esta ley.</div>
+        </div>
+      </div>
+      <div class="ley-card c-gold">
+        <div class="ley-bar"></div>
+        <div class="ley-body">
+          <div class="ley-num">LEY 20.066 · 2005</div>
+          <div class="ley-titulo">Violencia Intrafamiliar</div>
+          <div class="ley-desc">Aplica también a violencia digital dentro del hogar. El control digital de pareja, el monitoreo sin consentimiento y la instalación de software espía en contexto de convivencia puede ser procesado bajo esta ley.</div>
+          <div class="ley-ejemplo">Ejemplo: instalar una app de seguimiento en el teléfono de tu pareja sin su consentimiento puede ser denunciado como VIF.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tus derechos por perfil -->
+  <div class="sw">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+      color:var(--ink3);text-transform:uppercase;margin-bottom:16px;">
+      // Lo que nadie te dijo que tienes derecho a hacer
+    </div>
+    <div class="perfiles-dr">
+      <div class="perfil-dr c-blue">
+        <div class="perfil-dr-tag">Si eres adolescente</div>
+        <div class="perfil-dr-items">
+          <div class="perfil-dr-item"><div class="perfil-dr-item-dot"></div>Tienes derecho a que no compartan tus fotos sin permiso — aunque se las hayas enviado voluntariamente a una persona.</div>
+          <div class="perfil-dr-item"><div class="perfil-dr-item-dot"></div>Tienes derecho a denunciar si alguien mayor te pidió fotos íntimas — aunque hayas dicho que sí en algún momento.</div>
+          <div class="perfil-dr-item"><div class="perfil-dr-item-dot"></div>Tienes derecho a pedir que eliminen contenido tuyo de redes sociales — las plataformas están obligadas a responder.</div>
+        </div>
+      </div>
+      <div class="perfil-dr c-purple">
+        <div class="perfil-dr-tag">Si eres mujer o disidencia</div>
+        <div class="perfil-dr-items">
+          <div class="perfil-dr-item"><div class="perfil-dr-item-dot"></div>Tienes derecho a que no te graben en situaciones íntimas sin consentimiento — aunque estés en pareja.</div>
+          <div class="perfil-dr-item"><div class="perfil-dr-item-dot"></div>Tienes derecho a que tu pareja no revise tu teléfono, cuentas o mensajes sin permiso explícito.</div>
+          <div class="perfil-dr-item"><div class="perfil-dr-item-dot"></div>Tienes derecho a usar StopNCII para eliminar imágenes íntimas de internet de forma gratuita y confidencial.</div>
+        </div>
+      </div>
+      <div class="perfil-dr c-green">
+        <div class="perfil-dr-tag">Si eres padre o madre</div>
+        <div class="perfil-dr-items">
+          <div class="perfil-dr-item"><div class="perfil-dr-item-dot"></div>Tienes derecho a denunciar en nombre de tu hijo/a si fue víctima de grooming o material íntimo — no solo la víctima puede denunciar.</div>
+          <div class="perfil-dr-item"><div class="perfil-dr-item-dot"></div>Tienes derecho a exigir al colegio que active su protocolo de convivencia ante un caso de ciberacoso.</div>
+          <div class="perfil-dr-item"><div class="perfil-dr-item-dot"></div>Tienes derecho a solicitar que plataformas como Meta o Google eliminen contenido que involucre a tu hijo/a menor.</div>
+        </div>
+      </div>
+      <div class="perfil-dr c-orange">
+        <div class="perfil-dr-tag">Si eres docente</div>
+        <div class="perfil-dr-items">
+          <div class="perfil-dr-item"><div class="perfil-dr-item-dot"></div>Tienes obligación legal de reportar casos de acoso — pero también protección legal si lo haces correctamente.</div>
+          <div class="perfil-dr-item"><div class="perfil-dr-item-dot"></div>Tienes derecho a exigir al colegio un protocolo escrito de actuación ante incidentes digitales.</div>
+          <div class="perfil-dr-item"><div class="perfil-dr-item-dot"></div>No estás obligado a investigar solo — la Ley 20.536 establece que la responsabilidad es institucional, no individual.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Herramienta de la semana -->
+  <div class="sw">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+      color:var(--green);text-transform:uppercase;margin-bottom:16px;">
+      // Herramienta de la semana
+    </div>
+    <div class="herramienta-semanal" id="herramienta-semanal">
+      <div class="hs-tag">✦ Herramienta gratuita · Esta semana</div>
+      <div class="hs-titulo">StopNCII — Bloquea imágenes íntimas antes de que se propaguen</div>
+      <div class="hs-desc">
+        StopNCII (Stop Non-Consensual Intimate Images) es una herramienta de la Internet Watch Foundation que permite registrar una "huella digital" de tus imágenes íntimas sin que nadie las vea. Las principales plataformas — Meta, TikTok, Snapchat, OnlyFans — usan esa huella para detectar y eliminar el material automáticamente si alguien intenta subirlo.
+      </div>
+      <div class="hs-pasos">
+        <div class="hs-paso"><div class="hs-paso-n">1.</div><div class="hs-paso-txt">Entra a <strong>stopncii.org</strong> desde tu navegador (no requiere app).</div></div>
+        <div class="hs-paso"><div class="hs-paso-n">2.</div><div class="hs-paso-txt">Sube la imagen directamente desde tu dispositivo — nadie más la ve. El sistema genera un hash (huella matemática única).</div></div>
+        <div class="hs-paso"><div class="hs-paso-n">3.</div><div class="hs-paso-txt">Ese hash se comparte con las plataformas asociadas. Si alguien intenta subir esa imagen, la bloquean antes de que se publique.</div></div>
+      </div>
+      <div style="margin-top:16px;">
+        <a href="https://stopncii.org" target="_blank" rel="noopener"
+          style="display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;
+          font-size:.62rem;letter-spacing:2px;color:var(--green);text-decoration:none;
+          text-transform:uppercase;transition:gap .2s;"
+          onmouseover="this.style.gap='10px'" onmouseout="this.style.gap='6px'">
+          Ir a StopNCII.org →
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA newsletter -->
+  <div class="sw" style="text-align:center;padding:32px;background:var(--bg2);
+    border:1px solid var(--border2);border-radius:4px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,var(--purple),var(--accent));"></div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
+      color:var(--purple);text-transform:uppercase;margin-bottom:10px;">
+      Recibe actualizaciones semanales
+    </div>
+    <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink);
+      margin-bottom:10px;line-height:1.1;">
+      El derecho de la semana<br><em style="color:var(--purple);">en tu correo.</em>
+    </div>
+    <p style="font-size:.88rem;color:var(--ink2);max-width:380px;margin:0 auto 20px;line-height:1.7;">
+      Cada lunes: derecho digital relevante + alerta de amenaza + herramienta gratuita. Un correo. Sin spam.
+    </p>
+    <a href="/educa/newsletter.html"
+      style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.72rem;
+      letter-spacing:2px;text-transform:uppercase;color:var(--bg);background:var(--purple);
+      padding:14px 28px;border-radius:4px;text-decoration:none;transition:all .2s;"
+      onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+      Suscribirse gratis →
+    </a>
+  </div>
+
+</div>
+
+</div>
+
 <footer class="page-footer">
   <a href="/" class="fl">AEGIS<span>8</span></a>
   <ul class="flinks">
-    <li><a href="/educa.html">Educa</a></li>
-    <li><a href="/educa/profesores.html">Docentes</a></li>
-    <li><a href="/educa/padres.html">Familias</a></li>
-    <li><a href="/analizador-phishing.html">Herramientas</a></li>
-    <li><a href="/contactos.html">Contacto</a></li>
+    <li><a href="/ninos">Niños</a></li>
+    <li><a href="/adolescentes">Adolescentes</a></li>
+    <li><a href="/familias">Familias</a></li>
+    <li><a href="/herramientas">Herramientas</a></li>
+    <li><a href="/botiquin">Botiquín SOS</a></li>
+    <li><a href="/contacto">Contacto</a></li>
   </ul>
   <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
     <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
@@ -741,6 +1049,46 @@ function toggleTema(id) {
   </div>
 </footer>
 <script>
+
+<script>
+// Cargar derecho_semana desde amenaza.json
+(async function() {
+  try {
+    let data = null;
+    try {
+      const r = await fetch('https://aegis8-agent.christianmora705.workers.dev/news');
+      if (r.ok) data = await r.json();
+    } catch(e) {}
+    if (!data) {
+      const r = await fetch('/amenaza.json');
+      if (r.ok) data = await r.json();
+    }
+    if (data && data.derecho_semana) {
+      const d = data.derecho_semana;
+      if (d.titulo) document.getElementById('dr-titulo').textContent = d.titulo;
+      if (d.desc)   document.getElementById('dr-desc').textContent = d.desc;
+      if (d.ley)    document.getElementById('dr-ley').textContent = '⚖️ ' + d.ley;
+      if (data.updated) {
+        document.getElementById('dr-fecha').textContent =
+          new Date(data.updated).toLocaleDateString('es-CL', {day:'numeric',month:'short',year:'numeric'});
+      }
+    }
+    if (data && data.herramienta_semana) {
+      const h = data.herramienta_semana;
+      const wrap = document.getElementById('herramienta-semanal');
+      if (wrap && h.titulo) {
+        wrap.querySelector('.hs-titulo').textContent = h.titulo;
+        wrap.querySelector('.hs-desc').textContent = h.desc || '';
+      }
+    }
+  } catch(e) {}
+})();
+
+const ro = new IntersectionObserver(e => {
+  e.forEach(x => { if (x.isIntersecting) x.target.classList.add('vis'); });
+}, { threshold: .07 });
+document.querySelectorAll('.sw').forEach(el => ro.observe(el));
+</script>
 
 const ro=new IntersectionObserver(e=>{
   e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});
