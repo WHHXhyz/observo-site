@@ -229,7 +229,6 @@ const NAV = [
     href: '/herramientas',
     page: 'herramientas',
     drop: [
-      {href:'/agente-seguridad.html',    label:'Agente de Seguridad', agent:true},
       {href:'/analizador-phishing.html', label:'Analizador de Phishing'},
       'div',
       {href:'/quiz.html',                label:'Quiz Semanal'},
@@ -240,10 +239,11 @@ const NAV = [
       {href:'/violencia-digital',        label:'Violencia Digital',    purple:true},
     ]
   },
-  {href:'/noticias',      label:'Noticias',     page:'noticias'},
-  {href:'/el-proyecto',   label:'El Proyecto',  page:'proyecto'},
-  {href:'/talleres.html', label:'Talleres',      page:'talleres'},
-  {href:'/contacto',      label:'Contacto',      cta:true},
+  {href:'/noticias',           label:'Noticias',      page:'noticias'},
+  {href:'/el-proyecto',        label:'El Proyecto',   page:'proyecto'},
+  {href:'/talleres.html',      label:'Talleres',       page:'talleres'},
+  {href:'/agente-seguridad.html', label:'Agente IA',  page:'agente',  agent:true},
+  {href:'/contacto',           label:'Contacto',       cta:true},
 ];
 
 function buildDesktop(page, ul) {
@@ -316,7 +316,6 @@ function buildMobile(page, drawer) {
       label: 'Herramientas',
       pg: 'herramientas',
       subs: [
-        {href:'/agente-seguridad.html',    label:'Agente IA',           agent:true},
         {href:'/quiz.html',                label:'Quiz Semanal'},
         {href:'/checklist.html',           label:'Checklist'},
         {href:'/analizador-phishing.html', label:'Analizador Phishing'},
@@ -328,10 +327,11 @@ function buildMobile(page, drawer) {
   ];
 
   const DIRECT = [
-    {href:'/modelo',       label:'Modelo',        pg:'modelo'},
-    {href:'/noticias',     label:'Noticias',       pg:'noticias'},
-    {href:'/el-proyecto',  label:'El Proyecto',    pg:'proyecto'},
-    {href:'/talleres.html',label:'Talleres',        pg:'talleres'},
+    {href:'/modelo',              label:'Modelo',       pg:'modelo'},
+    {href:'/noticias',            label:'Noticias',     pg:'noticias'},
+    {href:'/el-proyecto',         label:'El Proyecto',  pg:'proyecto'},
+    {href:'/talleres.html',       label:'Talleres',     pg:'talleres'},
+    {href:'/agente-seguridad.html', label:'Agente IA',  pg:'agente',  agent:true},
   ];
 
   // Inicio
@@ -389,6 +389,7 @@ function buildMobile(page, drawer) {
     a.href = item.href;
     a.textContent = item.label;
     a.className = 'm-item';
+    if (item.agent) a.classList.add('m-agent');
     if (page === item.pg) a.classList.add('an-m-active');
     a.addEventListener('click', closeMenu);
     drawer.appendChild(a);
