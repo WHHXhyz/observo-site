@@ -1049,8 +1049,6 @@ function toggleTema(id) {
   </div>
 </footer>
 <script>
-
-<script>
 // Cargar derecho_semana desde amenaza.json
 (async function() {
   try {
@@ -1091,14 +1089,6 @@ const ro = new IntersectionObserver(e => {
   e.forEach(x => { if (x.isIntersecting) x.target.classList.add('vis'); });
 }, { threshold: 0, rootMargin: '0px 0px -10px 0px' });
 document.querySelectorAll('.sw').forEach(el => ro.observe(el));
-</script>
-
-const ro=new IntersectionObserver(e=>{
-  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});
-},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.sw').forEach(el=>ro.observe(el));
-
-
 </script>
 </body>
 </html>
