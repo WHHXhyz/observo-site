@@ -248,7 +248,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background-size:80px 80px;}
 .wrap{max-width:860px;margin:0 auto;padding:0 24px;}
 .page-inner{position:relative;z-index:10;padding:72px 0 80px;}
-.sw{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
+/* .sw definido arriba */
 .sw.vis{opacity:1;transform:none;}
 .page-footer{position:relative;z-index:10;border-top:1px solid var(--border);
   padding:48px 32px 32px;max-width:1080px;margin:0 auto;
@@ -1084,9 +1084,12 @@ function toggleTema(id) {
   } catch(e) {}
 })();
 
+// Forzar visible las primeras secciones (above the fold al cargar)
+document.querySelectorAll('.sw').forEach(el => el.classList.add('vis'));
+// Observer para las que aparecen con scroll
 const ro = new IntersectionObserver(e => {
   e.forEach(x => { if (x.isIntersecting) x.target.classList.add('vis'); });
-}, { threshold: .07 });
+}, { threshold: 0, rootMargin: '0px 0px -10px 0px' });
 document.querySelectorAll('.sw').forEach(el => ro.observe(el));
 </script>
 
