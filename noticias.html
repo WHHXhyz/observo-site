@@ -182,6 +182,8 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
 @keyframes lb{0%,100%{transform:scaleY(.3);opacity:.3;}50%{transform:scaleY(1);opacity:1;}}
 
 /* ── MODO TÉCNICO / GENERAL ── */
+.filter-btn.refresh-btn{color:var(--ink3);border-color:rgba(58,127,212,.15);margin-left:auto;}
+.filter-btn.refresh-btn:hover{color:var(--accent);border-color:var(--border2);}
 .view-toggle{display:flex;gap:0;margin-left:auto;}
 .vt-btn{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:2px;
   text-transform:uppercase;padding:5px 12px;cursor:pointer;border:1px solid var(--border);
@@ -220,6 +222,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
     <button class="filter-btn" data-filter="breach" onclick="setFilter('breach',this)">Filtraciones</button>
     <button class="filter-btn" data-filter="ia" onclick="setFilter('ia',this)">IA</button>
     <button class="filter-btn" data-filter="educacion" onclick="setFilter('educacion',this)">Educación</button>
+    <button class="filter-btn refresh-btn" onclick="forceRefresh(this)" title="Forzar actualización del feed">↻ Actualizar</button>
     <div class="view-toggle">
       <button class="vt-btn active" id="btn-general" onclick="setView('general')">General</button>
       <button class="vt-btn" id="btn-tecnico" onclick="setView('tecnico')">Técnico</button>
@@ -423,9 +426,18 @@ function render() {
   if (du && ALL_ITEMS[0]) du.textContent = 'Actualizado: ' + fmtFull(ALL_ITEMS[0].date);
 }
 
-async function load() {
+async function load(force = false) {
+  // Mostrar skeleton mientras carga
+  document.getElementById('news-root').innerHTML = `
+    <div class="state-msg">
+      <div class="loading-bars"><div class="loading-bar"></div><div class="loading-bar"></div><div class="loading-bar"></div></div>
+      <div class="state-msg-title">${force ? 'Actualizando feed...' : 'Cargando inteligencia...'}</div>
+      <div class="state-msg-sub">Consultando ${force ? 'fuentes en vivo' : '8 fuentes de ciberseguridad'}</div>
+    </div>`;
+
   try {
-    const res = await fetch(WORKER);
+    const url = force ? WORKER + '?force=1' : WORKER;
+    const res = await fetch(url, { cache: force ? 'no-store' : 'default' });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
 
@@ -436,8 +448,12 @@ async function load() {
     // Actualizar masthead
     const dateEl = document.getElementById('feed-date');
     const srcEl  = document.getElementById('feed-sources');
-    if (dateEl) dateEl.textContent = data.updated ? fmtFull(data.updated) : 'Actualizado';
-    if (srcEl)  srcEl.textContent  = `${data.sources?.length || 6} fuentes · ${data.count || ALL_ITEMS.length} noticias`;
+    if (dateEl) {
+      const cacheHit = res.headers.get('X-Cache') === 'HIT';
+      const updated = data.updated ? fmtFull(data.updated) : 'Actualizado';
+      dateEl.textContent = updated + (cacheHit ? ' · caché' : ' · en vivo');
+    }
+    if (srcEl) srcEl.textContent = `${data.sources?.length || 8} fuentes · ${data.count || ALL_ITEMS.length} noticias`;
 
     render();
 
@@ -458,6 +474,12 @@ async function load() {
         </div>
       </div>`;
   }
+}
+
+async function forceRefresh(btn) {
+  if (btn) { btn.textContent = '↻ Actualizando...'; btn.disabled = true; }
+  await load(true);
+  if (btn) { btn.textContent = '↻ Actualizar'; btn.disabled = false; }
 }
 
 load();
