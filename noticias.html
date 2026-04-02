@@ -540,28 +540,20 @@ async function loadMitre() {
       'Defense Evasion':  '#2ecc80',
     };
 
-    document.getElementById('mitre-cards').innerHTML = data.tactics.map(t => {
-      const col = TACTIC_COLORS[t.tactic] || '#8898b0';
-      return `<a href="${t.url}" target="_blank" rel="noopener"
-        style="background:var(--bg2);padding:18px 16px;text-decoration:none;
-        display:flex;flex-direction:column;gap:6px;transition:background .2s;
-        position:relative;overflow:hidden;border-top:2px solid ${col};"
-        onmouseover="this.style.background='rgba(255,255,255,.03)'" onmouseout="this.style.background='var(--bg2)'">
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-          <span style="font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:600;
-            color:${col};letter-spacing:1px;">${t.id}</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:1px;
-            color:var(--ink3);padding:1px 6px;border:1px solid rgba(255,255,255,.08);border-radius:20px;">
-            ${t.tactic}
-          </span>
-        </div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink);font-weight:600;">
-          ${t.name}
-        </div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--ink3);letter-spacing:1px;">
-          ${t.frequency} noticia${t.frequency !== 1 ? 's' : ''} relacionada${t.frequency !== 1 ? 's' : ''} esta semana
-        </div>
-      </a>`;
+    document.getElementById('mitre-cards').innerHTML = data.tactics.map(function(t) {
+      var col = TACTIC_COLORS[t.tactic] || '#8898b0';
+      var html = '<a href="' + t.url + '" target="_blank" rel="noopener" ';
+      html += 'style="background:#0d1422;padding:18px 16px;text-decoration:none;display:flex;';
+      html += 'flex-direction:column;gap:6px;transition:background .2s;border-top:2px solid ' + col + ';" ';
+      html += '>';
+      html += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
+      html += '<span style="font-family:monospace;font-size:.62rem;font-weight:600;color:' + col + ';">' + t.id + '</span>';
+      html += '<span style="font-family:monospace;font-size:.54rem;color:#3a4f68;padding:1px 6px;border:1px solid rgba(255,255,255,.08);border-radius:20px;">' + t.tactic + '</span>';
+      html += '</div>';
+      html += '<div style="font-family:monospace;font-size:.72rem;color:#eaf0f8;font-weight:600;">' + t.name + '</div>';
+      html += '<div style="font-family:monospace;font-size:.54rem;color:#3a4f68;">' + t.frequency + ' noticia' + (t.frequency !== 1 ? 's' : '') + ' esta semana</div>';
+      html += '</a>';
+      return html;
     }).join('');
   } catch(e) {
     // Silencioso — MITRE es sección secundaria
