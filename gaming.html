@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Gaming Seguro · Aegis8 · Guía para Chile</title>
+<meta name="description" content="Guía de seguridad para gamers: estafas de skins y moneda virtual, configuración de Steam, Discord y Roblox, y cómo proteger tus cuentas de juego."/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
+<script src="/aegis-nav.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+:root{
+  --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--red:#ef4444;--gold:#f5a823;
+  --border:rgba(58,127,212,.12);--border2:rgba(46,204,128,.18);
+  --gm:#2ecc80;--gm2:rgba(46,204,128,.06);--gm-border:rgba(46,204,128,.18);
+}
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(46,204,128,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(46,204,128,.015) 1px,transparent 1px);
+  background-size:80px 80px;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+.page-inner{position:relative;z-index:10;}
+@media(max-width:640px){.wrap{padding:0 16px;}}
+.btn-p{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--bg);background:var(--gm);border:none;padding:14px 28px;border-radius:3px;
+  text-decoration:none;transition:all .25s;display:inline-block;position:relative;overflow:hidden;}
+.btn-p::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.15);transform:translateX(-100%);transition:transform .3s;}
+.btn-p:hover::before{transform:translateX(0);}
+.btn-p span{position:relative;z-index:1;}
+.btn-p:hover{box-shadow:0 0 28px rgba(46,204,128,.4);transform:translateY(-2px);}
+.btn-g{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink2);background:transparent;border:1px solid var(--border);
+  padding:14px 28px;border-radius:3px;text-decoration:none;transition:all .25s;display:inline-block;}
+.btn-g:hover{color:var(--ink);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
+.sw{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
+.sw.vis{opacity:1;transform:none;}
+.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);padding:48px 32px 32px;max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.fl span{color:var(--accent);}
+.flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.flinks a:hover{color:var(--accent);}
+.fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
+@media(max-width:640px){.page-footer{padding:32px 16px;}}
+
+/* HERO */
+.hero-gm{position:relative;z-index:10;padding:80px 0 64px;border-bottom:1px solid var(--border);overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
+.b1{width:600px;height:600px;top:-100px;right:-80px;background:radial-gradient(circle,rgba(46,204,128,.08) 0%,transparent 70%);animation:fl1 9s ease-in-out infinite;}
+.b2{width:400px;height:400px;bottom:-60px;left:-80px;background:radial-gradient(circle,rgba(245,168,35,.06) 0%,transparent 70%);animation:fl2 11s ease-in-out infinite;}
+@keyframes fl1{0%,100%{transform:translate(0,0);}50%{transform:translate(-20px,15px);}}
+@keyframes fl2{0%,100%{transform:translate(0,0);}50%{transform:translate(15px,-20px);}}
+
+/* SECCIONES */
+.sl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--gm);text-transform:uppercase;margin-bottom:12px;}
+.st{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.2rem);line-height:1.05;color:var(--ink);margin-bottom:20px;letter-spacing:-1px;}
+.st em{font-style:italic;color:var(--gm);}
+.si{font-size:1rem;line-height:1.9;color:var(--ink2);max-width:640px;margin-bottom:40px;}
+.sec{padding:80px 0 48px;border-bottom:1px solid var(--border);}
+.sec:last-child{border-bottom:none;}
+
+/* ESTAFAS */
+.estafa-g{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.estafa{background:var(--bg2);padding:1.5rem 1.75rem;position:relative;overflow:hidden;}
+.estafa::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.est-alta::before{background:var(--red);}
+.est-media::before{background:var(--gold);}
+.est-baja::before{background:var(--blue);}
+.est-header{display:flex;align-items:center;gap:1rem;margin-bottom:.6rem;flex-wrap:wrap;}
+.est-nivel{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:2px;text-transform:uppercase;padding:2px 8px;border-radius:20px;border:1px solid;flex-shrink:0;}
+.est-alta .est-nivel{color:var(--red);border-color:rgba(239,68,68,.3);}
+.est-media .est-nivel{color:var(--gold);border-color:rgba(245,168,35,.3);}
+.est-baja .est-nivel{color:var(--blue);border-color:rgba(58,127,212,.3);}
+.est-name{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);line-height:1.1;}
+.est-plat{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:1px;color:var(--ink3);margin-bottom:.6rem;}
+.est-desc{font-size:.85rem;color:var(--ink2);line-height:1.7;margin-bottom:.75rem;}
+.est-ejemplo{background:rgba(0,0,0,.2);border-left:3px solid var(--gm);padding:.7rem 1rem;font-size:.81rem;color:var(--ink2);line-height:1.6;margin-bottom:.7rem;}
+.est-ejemplo strong{color:var(--gm);}
+.est-defensa{font-size:.82rem;color:var(--gm);line-height:1.6;display:flex;gap:.5rem;align-items:flex-start;}
+.est-defensa::before{content:'→';flex-shrink:0;margin-top:1px;}
+
+/* PLATAFORMAS */
+.plat-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--bg2);}
+.ptab{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;padding:.75rem 1.5rem;cursor:pointer;color:var(--ink3);border-bottom:2px solid transparent;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;}
+.ptab:hover{color:var(--ink2);}
+.ptab.active{color:var(--gm);border-bottom-color:var(--gm);}
+.plat-panel{display:none;padding:2rem;}
+.plat-panel.active{display:block;}
+@media(max-width:500px){.ptab{padding:.75rem .75rem;font-size:.54rem;}.plat-panel{padding:1.25rem;}}
+
+/* CONFIG ITEMS */
+.cfg-g{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.cfg{background:var(--bg2);padding:1.1rem 1.5rem;display:flex;gap:.75rem;align-items:flex-start;}
+.cfg-ico{width:28px;height:28px;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.85rem;}
+.cfg-ico.ok{background:rgba(46,204,128,.1);border:1px solid rgba(46,204,128,.2);}
+.cfg-ico.warn{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);}
+.cfg-title{font-family:'JetBrains Mono',monospace;font-size:.64rem;font-weight:600;color:var(--ink);margin-bottom:.2rem;}
+.cfg-desc{font-size:.8rem;color:var(--ink2);line-height:1.5;}
+.cfg-path{font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--gm);margin-top:.3rem;letter-spacing:.5px;}
+
+/* ECONOMÍA */
+.eco-g{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);}
+@media(max-width:600px){.eco-g{grid-template-columns:1fr;}}
+.eco{background:var(--bg2);padding:1.5rem;}
+.eco-tag{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:3px;text-transform:uppercase;color:var(--ink3);margin-bottom:.4rem;}
+.eco-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);margin-bottom:.4rem;line-height:1.2;}
+.eco-body{font-size:.83rem;color:var(--ink2);line-height:1.65;}
+
+/* ALERTAS */
+.alerta-g{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);}
+@media(max-width:600px){.alerta-g{grid-template-columns:1fr;}}
+.alerta{background:var(--bg2);padding:1.1rem 1.5rem;display:flex;gap:.75rem;}
+.alerta-flag{color:var(--red);font-size:1rem;flex-shrink:0;margin-top:1px;}
+.alerta-title{font-family:'JetBrains Mono',monospace;font-size:.64rem;font-weight:600;color:var(--ink);margin-bottom:.2rem;}
+.alerta-desc{font-size:.8rem;color:var(--ink2);line-height:1.5;}
+
+/* TABS PERFIL */
+.perfil-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--bg2);}
+.perfil-tab{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;padding:.75rem 1.5rem;cursor:pointer;color:var(--ink3);border-bottom:2px solid transparent;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;}
+.perfil-tab:hover{color:var(--ink2);}
+.perfil-tab.active{color:var(--gm);border-bottom-color:var(--gm);}
+.perfil-panel-g{display:none;padding:2rem;}
+.perfil-panel-g.active{display:block;}
+.panel-lede{border-left:3px solid var(--gm);padding-left:1.25rem;font-size:.95rem;line-height:1.85;color:var(--ink2);margin-bottom:1.5rem;}
+.panel-lede strong{color:var(--ink);font-weight:400;}
+@media(max-width:500px){.perfil-tab{padding:.75rem .75rem;font-size:.54rem;}.perfil-panel-g{padding:1.25rem;}}
+
+/* ACT BOX */
+.act-box{background:var(--gm2);border:1px solid var(--gm-border);border-top:2px solid var(--gm);padding:1.5rem;margin-top:1.5rem;}
+.act-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;text-transform:uppercase;color:var(--gm);margin-bottom:.5rem;}
+.act-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);margin-bottom:.4rem;}
+.act-desc{font-size:.84rem;color:var(--ink2);line-height:1.65;}
+.act-meta{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:1px;color:var(--ink3);margin-top:.5rem;}
+
+/* LEGAL */
+.ley-g{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.ley{background:var(--bg2);padding:1.1rem 1.5rem;display:flex;gap:1.25rem;align-items:flex-start;}
+.ley-num{font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:600;color:var(--blue);width:90px;flex-shrink:0;padding-top:2px;line-height:1.5;}
+.ley-title{font-family:'JetBrains Mono',monospace;font-size:.66rem;font-weight:600;color:var(--ink);margin-bottom:.3rem;}
+.ley-desc{font-size:.83rem;color:var(--ink2);line-height:1.6;}
+</style>
+</head>
+<body data-page="gaming">
+
+<!-- HERO -->
+<section class="hero-gm">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap" style="position:relative;z-index:2;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ink3);margin-bottom:24px;display:flex;align-items:center;gap:10px;">
+      <div style="width:28px;height:1px;background:var(--gm);"></div>
+      AEGIS8 · GUÍA · GAMING SEGURO · CHILE 2026
+    </div>
+    <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--gm);border:1px solid var(--gm-border);padding:4px 12px;border-radius:20px;background:var(--gm2);">
+      <span style="width:6px;height:6px;border-radius:50%;background:var(--gm);display:inline-block;"></span>
+      STEAM · DISCORD · ROBLOX · FORTNITE
+    </div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.8rem,8vw,6rem);line-height:.88;letter-spacing:-2px;margin-bottom:24px;max-width:800px;">
+      Gaming seguro.<br><em style="color:var(--gm);">Las reglas del juego.</em>
+    </h1>
+    <p style="font-size:1.05rem;line-height:1.85;color:var(--ink2);max-width:580px;margin-bottom:16px;">
+      Los videojuegos tienen economías reales con millones de dólares en movimiento. Los Robux, V-Bucks y skins de CS2 tienen valor real — y donde hay valor real, hay estafadores.
+    </p>
+    <p style="font-size:.86rem;color:var(--ink3);max-width:540px;margin-bottom:36px;font-family:'JetBrains Mono',monospace;letter-spacing:.5px;line-height:1.7;">
+      Esta guía es para gamers, sus familias y docentes que quieren entender qué pasa en las plataformas donde los jóvenes chilenos pasan horas cada día.
+    </p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="#estafas" class="btn-p"><span>Ver las estafas →</span></a>
+      <a href="#configuracion" class="btn-g">Configurar mi cuenta</a>
+      <a href="#familias-sec" class="btn-g">Soy apoderado</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap page-inner">
+
+<!-- ECONOMÍA VIRTUAL -->
+<div class="sec sw" id="economia">
+  <div class="sl">// Primero lo básico</div>
+  <h2 class="st">La plata virtual<br><em>no es virtual.</em></h2>
+  <p class="si">Robux, V-Bucks, créditos de Steam, skins de CS2 — se compran con dinero real, se pueden vender y tienen mercados secundarios con millones en circulación. Si algo tiene valor real, puede ser robado.</p>
+  <div class="eco-g">
+    <div class="eco">
+      <div class="eco-tag">Roblox</div>
+      <div class="eco-title">Robux</div>
+      <div class="eco-body">1.000 Robux = aprox. $7 USD. Los menores pueden gastarlos sin que los padres lo noten fácilmente. Los estafadores crean "generadores de Robux gratis" que en realidad roban credenciales.</div>
+    </div>
+    <div class="eco">
+      <div class="eco-tag">Fortnite / Epic Games</div>
+      <div class="eco-title">V-Bucks</div>
+      <div class="eco-body">Moneda oficial de Fortnite. No se pueden transferir entre cuentas, pero las cuentas con skins raras se venden ilegalmente. Una cuenta con todos los skins puede valer $500 USD o más.</div>
+    </div>
+    <div class="eco">
+      <div class="eco-tag">Steam / CS2</div>
+      <div class="eco-title">Skins</div>
+      <div class="eco-body">Los skins de CS2 tienen mercado secundario activo. Un knife skin raro puede valer $500-2.000 USD. Steam tiene API oficial de intercambio que los estafadores usan para crear sitios falsos casi idénticos al real.</div>
+    </div>
+    <div class="eco">
+      <div class="eco-tag">Discord Nitro</div>
+      <div class="eco-title">Nitro</div>
+      <div class="eco-body">Suscripción premium de Discord ($10/mes). Los estafadores ofrecen "Nitro gratis" por invitaciones o completar encuestas — siempre es phishing. Discord nunca regala Nitro así.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ESTAFAS -->
+<div class="sec sw" id="estafas">
+  <div class="sl">// Las 5 estafas más frecuentes</div>
+  <h2 class="st">Así te roban<br><em>en los juegos.</em></h2>
+  <p class="si">No son hackers sofisticados — son estafadores que conocen exactamente cómo piensa un gamer de 12 años y qué lo hace bajar la guardia.</p>
+  <div class="estafa-g">
+
+    <div class="estafa est-alta">
+      <div class="est-header"><span class="est-nivel">Riesgo alto · Todas las edades</span><div class="est-name">Generadores de moneda gratis</div></div>
+      <div class="est-plat">Roblox · Fortnite · CS2 · Todas las plataformas</div>
+      <div class="est-desc">Sitios que prometen Robux, V-Bucks o skins gratis a cambio de completar encuestas, ingresar tu usuario y contraseña, o descargar una app. Son 100% falsos — no existe ningún generador legítimo. Lo que roban: credenciales de la cuenta, datos bancarios de los padres si los tienen guardados.</div>
+      <div class="est-ejemplo"><strong>Cómo se ve:</strong> "¡Obtén 100.000 Robux GRATIS! Solo ingresa tu usuario y haz 2 encuestas." El sitio se ve profesional y tiene "testimonios" falsos.</div>
+      <div class="est-defensa">Regla absoluta: si algo promete moneda gratis, es estafa. Sin excepción. No existe ninguna forma legítima de obtener Robux, V-Bucks o créditos gratis fuera de las plataformas oficiales.</div>
+    </div>
+
+    <div class="estafa est-alta">
+      <div class="est-header"><span class="est-nivel">Riesgo alto · Adolescentes</span><div class="est-name">Phishing de Steam / intercambio falso</div></div>
+      <div class="est-plat">Steam · CS2 · Dota 2</div>
+      <div class="est-desc">Alguien en Steam o Discord ofrece intercambiar skins contigo. Te manda un link a un sitio que parece Steam exacto — mismo diseño, mismo logo, URL casi igual (steаm.com con una a cirílica). Ingresas tu usuario y contraseña. Pierdes toda tu cuenta.</div>
+      <div class="est-ejemplo"><strong>Señal clave:</strong> La URL real de Steam es store.steampowered.com — cualquier variación es falsa. Activa Steam Guard antes de cualquier intercambio.</div>
+      <div class="est-defensa">Nunca hagas intercambios fuera de la plataforma oficial de Steam. Activa la autenticación de dos factores (Steam Guard Mobile). Verifica la URL letra por letra antes de ingresar tu contraseña.</div>
+    </div>
+
+    <div class="estafa est-alta">
+      <div class="est-header"><span class="est-nivel">Riesgo alto · Niños</span><div class="est-name">Torneos falsos con entrada de pago</div></div>
+      <div class="est-plat">Roblox · Fortnite · Minecraft</div>
+      <div class="est-desc">Un "organizador" en Discord o Roblox anuncia un torneo con premio en Robux o V-Bucks. Para participar hay que pagar una "cuota de inscripción" en moneda virtual. El torneo nunca existe — el organizador desaparece con el dinero.</div>
+      <div class="est-ejemplo"><strong>Señal:</strong> Torneos legítimos nunca cobran cuota de inscripción a menores. Si te piden pagar para participar, es estafa.</div>
+      <div class="est-defensa">Los torneos reales no cobran entrada. Verifica torneos solo en los canales oficiales del juego (epic.games/compete, roblox.com/events).</div>
+    </div>
+
+    <div class="estafa est-media">
+      <div class="est-header"><span class="est-nivel">Riesgo medio · Adolescentes</span><div class="est-name">Venta de cuentas y grooming económico</div></div>
+      <div class="est-plat">Fortnite · CS2 · Valorant · Steam</div>
+      <div class="est-desc">Alguien ofrece vender o prestar una cuenta con buenos skins o alto rango. Para "verificarla" necesitas darle acceso temporal. También hay casos donde adultos regalan cuentas o moneda a menores para generar deuda emocional — igual que el grooming tradicional pero con activos digitales.</div>
+      <div class="est-ejemplo"><strong>Señal:</strong> Regalar cuentas o moneda sin razón aparente es una señal de alerta — no de generosidad. Los adultos no regalan cosas valiosas a menores sin esperar algo a cambio.</div>
+      <div class="est-defensa">Jamás compartas acceso a tu cuenta — aunque sea "temporal". Los regalos de extraños online siempre tienen precio. Cuéntale a un adulto si alguien te regala activos digitales sin razón.</div>
+    </div>
+
+    <div class="estafa est-media">
+      <div class="est-header"><span class="est-nivel">Riesgo medio · Todas las edades</span><div class="est-name">Bots maliciosos en Discord</div></div>
+      <div class="est-plat">Discord</div>
+      <div class="est-desc">Bots que se hacen pasar por soporte de Discord o de un juego, que te piden verificar tu cuenta, completar un CAPTCHA o autorizar permisos. Al autorizar, el bot toma control del servidor o roba tu token de sesión.</div>
+      <div class="est-ejemplo"><strong>Señal:</strong> Discord nunca contacta a usuarios por mensaje directo para "verificar" cuentas. Ningún soporte legítimo lo hace por DM.</div>
+      <div class="est-defensa">Nunca autorices permisos a bots que no reconoces. El soporte real de Discord solo opera en discord.com/support — nunca por DM.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIGURACIÓN POR PLATAFORMA -->
+<div class="sec sw" id="configuracion">
+  <div class="sl">// Configuración de seguridad</div>
+  <h2 class="st">Cómo proteger<br><em>tu cuenta.</em></h2>
+  <p class="si">Tres plataformas, tres configuraciones distintas. Todas tienen autenticación en dos pasos — y casi nadie la activa.</p>
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:3px;overflow:hidden;margin-top:32px;">
+    <div class="plat-tabs">
+      <button class="ptab active" onclick="switchPlat('steam',this)">Steam</button>
+      <button class="ptab" onclick="switchPlat('discord',this)">Discord</button>
+      <button class="ptab" onclick="switchPlat('roblox',this)">Roblox</button>
+    </div>
+
+    <div class="plat-panel active" id="plat-steam">
+      <div class="cfg-g">
+        <div class="cfg"><div class="cfg-ico ok">🔐</div><div><div class="cfg-title">STEAM GUARD MOBILE — OBLIGATORIO</div><div class="cfg-desc">Es el escudo más importante de Steam. Sin él, cualquier intercambio de skins puede ser revertido por un atacante en minutos.</div><div class="cfg-path">Steam app → Menú → Steam Guard → Activar autenticación en dos pasos</div></div></div>
+        <div class="cfg"><div class="cfg-ico ok">📧</div><div><div class="cfg-title">CORREO VERIFICADO</div><div class="cfg-desc">Tu email de recuperación debe ser uno que controles tú, no el de un familiar que tal vez no revise. Es la única forma de recuperar la cuenta si te la roban.</div><div class="cfg-path">Steam → Configuración → Cuenta → Actualizar email</div></div></div>
+        <div class="cfg"><div class="cfg-ico warn">🔗</div><div><div class="cfg-title">LINKS DE INTERCAMBIO — CON CUIDADO</div><div class="cfg-desc">Steam tiene links de intercambio oficiales. Antes de aceptar cualquier intercambio, verifica que el link sea de steamcommunity.com — no de sitios externos.</div><div class="cfg-path">Nunca intercambies desde sitios externos que piden tu contraseña</div></div></div>
+        <div class="cfg"><div class="cfg-ico warn">🛒</div><div><div class="cfg-title">WALLET SOLO CON TARJETA VINCULADA</div><div class="cfg-desc">Si tienes la tarjeta de tus padres vinculada a Steam, cualquier compra in-app puede hacerse sin confirmación adicional. Revisa los ajustes de compra.</div><div class="cfg-path">Steam → Configuración → Familia → Supervisión de compras</div></div></div>
+      </div>
+      <div style="background:rgba(0,0,0,.2);border-left:3px solid var(--gm);padding:.75rem 1rem;margin-top:1rem;font-size:.82rem;color:var(--ink2);line-height:1.6;">
+        <strong style="color:var(--gm);">Si te robaron la cuenta:</strong> Escribe a help.steampowered.com inmediatamente. Necesitarás el número de pedido de alguna compra para verificar que eres el dueño original.
+      </div>
+    </div>
+
+    <div class="plat-panel" id="plat-discord">
+      <div class="cfg-g">
+        <div class="cfg"><div class="cfg-ico ok">📱</div><div><div class="cfg-title">AUTENTICACIÓN EN DOS PASOS (2FA)</div><div class="cfg-desc">Sin 2FA, cualquiera que obtenga tu contraseña entra a tu cuenta. Con 2FA necesita también tu teléfono.</div><div class="cfg-path">Configuración de usuario → Mi cuenta → Activar autenticación en dos pasos</div></div></div>
+        <div class="cfg"><div class="cfg-ico ok">🔒</div><div><div class="cfg-title">PRIVACIDAD DE MENSAJES DIRECTOS</div><div class="cfg-desc">Por defecto, cualquier miembro de un servidor puede enviarte DM. Desactívalo para evitar que extraños te contacten.</div><div class="cfg-path">Configuración → Privacidad y seguridad → "Permitir mensajes directos de miembros del servidor" → OFF</div></div></div>
+        <div class="cfg"><div class="cfg-ico warn">⚠️</div><div><div class="cfg-title">SERVIDORES NO OFICIALES</div><div class="cfg-desc">Muchos servidores de "trading" o "sorteos" son trampas para robar tokens. Si un servidor pide que autorices un bot para "verificarte", sal inmediatamente.</div><div class="cfg-path">Solo únete a servidores con links de discord.gg verificados oficialmente</div></div></div>
+        <div class="cfg"><div class="cfg-ico warn">🤖</div><div><div class="cfg-title">PERMISOS DE BOTS</div><div class="cfg-desc">Antes de autorizar cualquier bot, revisa qué permisos pide. Un bot que pide acceso de administrador o "gestionar servidor" sin razón es sospechoso.</div><div class="cfg-path">Al autorizar un bot, lee cada permiso que solicita antes de confirmar</div></div></div>
+      </div>
+      <div style="background:rgba(0,0,0,.2);border-left:3px solid var(--gm);padding:.75rem 1rem;margin-top:1rem;font-size:.82rem;color:var(--ink2);line-height:1.6;">
+        <strong style="color:var(--gm);">Si te robaron la cuenta:</strong> discord.com/safety → Report a compromised account. Si perdiste el 2FA, necesitarás tu código de respaldo (guárdalo cuando actives 2FA).
+      </div>
+    </div>
+
+    <div class="plat-panel" id="plat-roblox">
+      <div class="cfg-g">
+        <div class="cfg"><div class="cfg-ico ok">📧</div><div><div class="cfg-title">EMAIL Y 2FA ACTIVADOS</div><div class="cfg-desc">Las cuentas sin email verificado no pueden recuperarse si las roban. El 2FA agrega una capa extra que bloquea la mayoría de los ataques.</div><div class="cfg-path">Configuración → Seguridad → Activar verificación en dos pasos</div></div></div>
+        <div class="cfg"><div class="cfg-ico ok">👁️</div><div><div class="cfg-title">CUENTA EN PRIVADO</div><div class="cfg-desc">Para menores de 13, Roblox activa restricciones automáticas. Para mayores de 13, configura el perfil como privado manualmente.</div><div class="cfg-path">Configuración → Privacidad → ¿Quién puede ver mi inventario? → Solo yo</div></div></div>
+        <div class="cfg"><div class="cfg-ico ok">💬</div><div><div class="cfg-title">CHAT FILTRADO Y RESTRICCIONES</div><div class="cfg-desc">Para niños menores de 13: habilitar "Solo amigos" en el chat elimina el contacto con extraños.</div><div class="cfg-path">Configuración → Privacidad → ¿Quién puede chatear conmigo? → Solo amigos</div></div></div>
+        <div class="cfg"><div class="cfg-ico warn">💳</div><div><div class="cfg-title">COMPRAS CON CONTRASEÑA</div><div class="cfg-desc">Activa la verificación de contraseña para compras de Robux — así un menor no puede gastar sin que el adulto lo autorice.</div><div class="cfg-path">Configuración → Configuración parental → Activar PIN de cuenta</div></div></div>
+      </div>
+      <div style="background:rgba(0,0,0,.2);border-left:3px solid var(--gm);padding:.75rem 1rem;margin-top:1rem;font-size:.82rem;color:var(--ink2);line-height:1.6;">
+        <strong style="color:var(--gm);">Si tu hijo gastó Robux en una estafa:</strong> Roblox tiene política de reembolso limitado. Reporta en roblox.com/support dentro de las primeras 24h con el historial de transacciones.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POR PERFIL -->
+<div class="sec sw" id="perfiles">
+  <div class="sl">// Por perfil</div>
+  <h2 class="st">Lo que necesita<br><em>saber cada uno.</em></h2>
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:3px;overflow:hidden;margin-top:32px;">
+    <div class="perfil-tabs">
+      <button class="perfil-tab active" onclick="switchPerfil('gm','gamer',this)">Gamer</button>
+      <button class="perfil-tab" onclick="switchPerfil('gm','familias',this)" id="btn-familias-gm">Familias</button>
+      <button class="perfil-tab" onclick="switchPerfil('gm','docentes',this)">Docentes</button>
+    </div>
+
+    <div class="perfil-panel-g active" id="gm-gamer">
+      <p class="panel-lede">Llevas años jugando y sabes más de esto que tus papás. <strong>Eso no significa que no te puedan estafar — significa que los estafadores saben que te crees inmune.</strong></p>
+      <div class="eco-g" style="margin-bottom:1.5rem;">
+        <div class="eco"><div class="eco-tag">La regla de oro</div><div class="eco-title">Si es demasiado bueno para ser verdad, es estafa</div><div class="eco-body">Nadie regala Robux, V-Bucks, skins ni cuentas sin razón. Los estafadores saben que los gamers tienen más confianza online — por eso los atacan primero a ellos.</div></div>
+        <div class="eco"><div class="eco-tag">Tus credenciales</div><div class="eco-title">Nunca las compartas. Nunca.</div><div class="eco-body">Ni a tu mejor amigo, ni a tu hermano, ni a un "moderador oficial". Las plataformas legítimas nunca piden tu contraseña. Si alguien la pide, es estafa.</div></div>
+        <div class="eco"><div class="eco-tag">URLs</div><div class="eco-title">Verifica carácter por carácter</div><div class="eco-body">steamcommunity.com y steаmcommunity.com se ven igual pero son distintos (la segunda tiene una "а" cirílica). Los estafadores compran dominios así para confundirte.</div></div>
+        <div class="eco"><div class="eco-tag">Si te robaron</div><div class="eco-title">Actúa en los primeros 30 minutos</div><div class="eco-body">Cambia la contraseña del email vinculado inmediatamente. Luego contacta soporte de la plataforma. Guarda screenshots de todas las transacciones como evidencia.</div></div>
+      </div>
+      <div class="act-box">
+        <div class="act-tag">✦ Auditoría rápida — hazlo ahora</div>
+        <div class="act-title">¿Tu cuenta está protegida?</div>
+        <div class="act-desc">Revisa: ¿Tienes 2FA activado en Steam, Discord y Roblox? ¿Tu email de recuperación es uno que controlas tú? ¿Has iniciado sesión en algún sitio de "intercambio" externo? ¿Tienes la contraseña guardada en el browser de una cabina de internet o computador compartido?</div>
+        <div class="act-meta">⏱ 5 minutos · Solo necesitas tu teléfono</div>
+      </div>
+    </div>
+
+    <div class="perfil-panel-g" id="gm-familias" style="display:none;">
+      <p class="panel-lede" id="familias-sec">Tu hijo no te cuenta en qué gasta los Robux porque cree que lo vas a regar. <strong>La clave no es prohibir — es entender primero.</strong></p>
+      <div class="eco-g" style="margin-bottom:1.5rem;">
+        <div class="eco"><div class="eco-tag">Lo que sí puedes hacer</div><div class="eco-title">Poner límites de gasto, no de juego</div><div class="eco-body">Steam, Roblox y Epic Games tienen controles parentales para limitar el gasto sin prohibir el juego. Eso es más efectivo que confiscar el teléfono — que solo genera conflicto.</div></div>
+        <div class="eco"><div class="eco-tag">La conversación</div><div class="eco-title">"¿Me muestras qué juego?"</div><div class="eco-body">No "ese juego es peligroso". Pide que te lo muestren. Eso abre conversación, genera confianza, y te permite ver en qué plataformas está activo tu hijo sin que se sienta vigilado.</div></div>
+        <div class="eco"><div class="eco-tag">Señal de alerta</div><div class="eco-title">Gasto inexplicable o secretismo extremo</div><div class="eco-body">Si tu hijo oculta la pantalla, pide dinero para "compras del colegio" de forma inusual, o tiene cuentas que no reconoces, vale la pena preguntarle directamente sin acusar.</div></div>
+        <div class="eco"><div class="eco-tag">Controles parentales</div><div class="eco-title">Plataformas que los tienen</div><div class="eco-body">Roblox: PIN de cuenta y restricción de compras. Steam: supervisión familiar integrada. Epic Games: cabecera de cuenta parental. Nintendo Switch: app de control parental.</div></div>
+      </div>
+      <div class="act-box">
+        <div class="act-tag">✦ Para hacer esta semana</div>
+        <div class="act-title">Tres preguntas sin juicio</div>
+        <div class="act-desc">"¿Qué juegos estás jugando ahora?" / "¿Tienes moneda o skins en esos juegos?" / "¿Alguien te ha ofrecido cosas gratis online?" Sin reaccionar al contenido — solo escucha. La tercera pregunta es la más importante.</div>
+        <div class="act-meta">⏱ 10 minutos · En el auto o durante la cena</div>
+      </div>
+    </div>
+
+    <div class="perfil-panel-g" id="gm-docentes" style="display:none;">
+      <p class="panel-lede">El gaming no es solo entretenimiento — es donde muchos adolescentes construyen identidad, amistades y, lamentablemente, también donde los estafan. <strong>Entenderlo es entender una parte importante de su vida digital.</strong></p>
+      <div class="eco-g" style="margin-bottom:1.5rem;">
+        <div class="eco"><div class="eco-tag">Contexto de aula</div><div class="eco-title">El gaming como entrada al tema</div><div class="eco-body">Preguntar "¿quién juega Roblox o Fortnite?" antes de hablar de estafas digitales activa la atención de inmediato. El gaming es el contexto que más captura a los adolescentes.</div></div>
+        <div class="eco"><div class="eco-tag">Lo que debes saber</div><div class="eco-title">El grooming ocurre en juegos</div><div class="eco-body">Discord, Roblox y Fortnite son plataformas donde adultos contactan menores. Los regalos de moneda virtual son una táctica de grooming — igual que los regalos físicos en el mundo offline.</div></div>
+      </div>
+      <div class="act-box">
+        <div class="act-tag">✦ Actividad de aula · 15 min</div>
+        <div class="act-title">¿Caerías en esta estafa?</div>
+        <div class="act-desc">Muestra una captura de un "generador de Robux" (hay miles en Google Images). Pregunta: ¿qué señales ven de que es falso? ¿Qué les pide que hagan? ¿Por qué funciona esta estafa? Conectar con el Plan de Clase 03 (Phishing).</div>
+        <div class="act-meta">⏱ 15 minutos · Proyector · 5° básico – 4° medio</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEÑALES DE ALERTA -->
+<div class="sec sw" id="alertas">
+  <div class="sl">// Señales de alerta</div>
+  <h2 class="st">Si ves esto,<br><em>para y verifica.</em></h2>
+  <div class="alerta-g">
+    <div class="alerta"><div class="alerta-flag">⚑</div><div><div class="alerta-title">Te ofrecen moneda gratis a cambio de algo</div><div class="alerta-desc">Encuestas, ingresar tu usuario, compartir con amigos, descargar una app. Es siempre estafa.</div></div></div>
+    <div class="alerta"><div class="alerta-flag">⚑</div><div><div class="alerta-title">Alguien te pide tu contraseña</div><div class="alerta-desc">Ninguna plataforma legítima, moderador real ni soporte oficial te pedirá tu contraseña. Jamás.</div></div></div>
+    <div class="alerta"><div class="alerta-flag">⚑</div><div><div class="alerta-title">Link de intercambio fuera de la plataforma</div><div class="alerta-desc">Cualquier intercambio de Steam que ocurra fuera de steamcommunity.com es sospechoso.</div></div></div>
+    <div class="alerta"><div class="alerta-flag">⚑</div><div><div class="alerta-title">Un extraño te regala activos sin razón</div><div class="alerta-desc">Los regalos de extraños online siempre tienen precio — igual que en el mundo real.</div></div></div>
+    <div class="alerta"><div class="alerta-flag">⚑</div><div><div class="alerta-title">Urgencia extrema en el intercambio</div><div class="alerta-desc">"Solo por las próximas 2 horas", "tienes que aceptar ahora". La urgencia es siempre táctica de manipulación.</div></div></div>
+    <div class="alerta"><div class="alerta-flag">⚑</div><div><div class="alerta-title">Bot que pide permisos de administrador</div><div class="alerta-desc">En Discord, un bot que pide acceso de admin sin razón clara quiere tomar control de tu servidor.</div></div></div>
+  </div>
+</div>
+
+<!-- LEGAL -->
+<div class="sec sw" id="legal">
+  <div class="sl">// Marco legal Chile</div>
+  <h2 class="st">Tus derechos<br><em>como consumidor digital.</em></h2>
+  <p class="si" style="margin-bottom:2rem;">Las estafas en videojuegos son delitos reales. Chile tiene legislación que aplica aunque la estafa haya ocurrido "dentro de un juego".</p>
+  <div class="ley-g">
+    <div class="ley">
+      <div class="ley-num">Ley 21.459<br>Art. 2 · 2022</div>
+      <div><div class="ley-title">ACCESO ILEGAL A SISTEMAS</div><div class="ley-desc">Robar credenciales de una cuenta de Steam, Roblox o Discord es acceso ilegal a un sistema informático — delito con pena de hasta 3 años. Aplica aunque el sistema sea un juego.</div></div>
+    </div>
+    <div class="ley">
+      <div class="ley-num">Ley 19.496<br>Art. 3</div>
+      <div><div class="ley-title">PROTECCIÓN AL CONSUMIDOR</div><div class="ley-desc">Si pagaste por Robux o V-Bucks y fuiste estafado por un tercero, el SERNAC puede intermediar. Guarda siempre el comprobante de compra y los chats como evidencia.</div></div>
+    </div>
+    <div class="ley">
+      <div class="ley-num">PDI<br>Cibercrimen</div>
+      <div><div class="ley-title">DÓNDE DENUNCIAR</div><div class="ley-desc">PDI Cibercrimen: +56 2 2708 0000. Para denuncias de robo de cuenta con valor real (skins, moneda). Lleva capturas de pantalla, historial de chat con el estafador y comprobantes de transacciones.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="sec sw" style="text-align:center;border:1px solid var(--gm-border);background:var(--gm2);position:relative;overflow:hidden;padding:56px 24px;">
+  <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gm),var(--blue),var(--accent));"></div>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;color:var(--gm);margin-bottom:12px;text-transform:uppercase;">Aegis8 · Capa 4 del Modelo</div>
+  <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,3rem);color:var(--ink);margin-bottom:12px;letter-spacing:-1px;">
+    El gaming es la puerta de entrada.<br><em style="color:var(--gm);">La seguridad digital, el destino.</em>
+  </h2>
+  <p style="font-size:.92rem;line-height:1.8;color:var(--ink2);max-width:480px;margin:0 auto 28px;">Las habilidades para no caer en estafas de gaming son exactamente las mismas que se necesitan en el mundo digital adulto.</p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+    <a href="/herramientas" class="btn-p"><span>Ver herramientas →</span></a>
+    <a href="/modelo" class="btn-g">Conocer el Modelo Aegis8</a>
+    <a href="/analizador-phishing" class="btn-g">Analizar un link sospechoso</a>
+  </div>
+</div>
+
+</div>
+
+<footer class="page-footer">
+  <a href="/" class="fl">AEGIS<span>8</span></a>
+  <ul class="flinks">
+    <li><a href="/educa">Educa</a></li>
+    <li><a href="/adolescentes">Adolescentes</a></li>
+    <li><a href="/familias">Familias</a></li>
+    <li><a href="/herramientas">Herramientas</a></li>
+    <li><a href="/contacto">Contacto</a></li>
+  </ul>
+  <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
+</footer>
+
+<script>
+function switchPlat(id, btn) {
+  btn.parentElement.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('[id^="plat-"]').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('plat-' + id)?.classList.add('active');
+}
+function switchPerfil(prefix, perfil, btn) {
+  btn.parentElement.querySelectorAll('.perfil-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll(`[id^="${prefix}-"]`).forEach(p => { p.classList.remove('active'); p.style.display='none'; });
+  btn.classList.add('active');
+  const el = document.getElementById(`${prefix}-${perfil}`);
+  if (el) { el.classList.add('active'); el.style.display='block'; }
+}
+document.querySelectorAll('.sw').forEach(el => el.classList.add('vis'));
+const ro = new IntersectionObserver(e => {
+  e.forEach(x => { if (x.isIntersecting) x.target.classList.add('vis'); });
+}, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.sw').forEach(el => ro.observe(el));
+</script>
+</body>
+</html>

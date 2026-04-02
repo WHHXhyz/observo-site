@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>IA Generativa Segura · Aegis8</title>
+<meta name="description" content="Guía práctica sobre IA generativa para adolescentes, familias y docentes en Chile. Deepfakes, phishing con IA, privacidad de datos y cómo detectar contenido falso."/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
+<script src="/aegis-nav.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+:root{
+  --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
+  --red:#ef4444;--purple:#9b6dff;
+  --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
+  --card:rgba(255,255,255,.03);--radius:4px;
+  --ia:#00c9ff;--ia2:rgba(0,201,255,.06);--ia-border:rgba(0,201,255,.18);
+}
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(0,201,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(0,201,255,.015) 1px,transparent 1px);
+  background-size:80px 80px;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+.page-inner{position:relative;z-index:10;}
+@media(max-width:640px){.wrap{padding:0 16px;}}
+.btn-p{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--bg);background:var(--accent);border:none;padding:14px 28px;border-radius:var(--radius);
+  text-decoration:none;transition:all .25s;position:relative;overflow:hidden;display:inline-block;cursor:pointer!important;}
+.btn-p::before{content:'';position:absolute;inset:0;background:var(--accent2);transform:translateX(-100%);transition:transform .3s;}
+.btn-p:hover::before{transform:translateX(0);}
+.btn-p span,.btn-p{position:relative;z-index:1;}
+.btn-p:hover{box-shadow:0 0 28px rgba(240,120,48,.4);transform:translateY(-2px);}
+.btn-g{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink2);background:transparent;border:1px solid var(--border);
+  padding:14px 28px;border-radius:var(--radius);text-decoration:none;transition:all .25s;display:inline-block;}
+.btn-g:hover{color:var(--ink);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
+.sw{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
+.sw.vis{opacity:1;transform:none;}
+.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);
+  padding:48px 32px 32px;max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.fl span{color:var(--accent);}
+.flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.flinks a:hover{color:var(--accent);}
+.fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
+@media(max-width:640px){.page-footer{padding:32px 16px;}}
+
+/* HERO */
+.hero-ia{position:relative;z-index:10;padding:80px 0 64px;border-bottom:1px solid var(--border);overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
+.b1{width:600px;height:600px;top:-100px;right:-80px;background:radial-gradient(circle,rgba(0,201,255,.07) 0%,transparent 70%);animation:fl1 9s ease-in-out infinite;}
+.b2{width:400px;height:400px;bottom:-60px;left:-80px;background:radial-gradient(circle,rgba(155,109,255,.06) 0%,transparent 70%);animation:fl2 11s ease-in-out infinite;}
+@keyframes fl1{0%,100%{transform:translate(0,0);}50%{transform:translate(-20px,15px);}}
+@keyframes fl2{0%,100%{transform:translate(0,0);}50%{transform:translate(15px,-20px);}}
+.timing-alert{display:flex;align-items:flex-start;gap:12px;background:rgba(0,201,255,.06);border:1px solid var(--ia-border);border-radius:4px;padding:14px 20px;margin-top:32px;max-width:640px;}
+.ta-dot{width:8px;height:8px;border-radius:50%;background:var(--ia);flex-shrink:0;margin-top:3px;animation:blink 1.5s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+.ta-text{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--ia);letter-spacing:1px;line-height:1.6;}
+
+/* SECCIONES */
+.sl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ia);text-transform:uppercase;margin-bottom:12px;}
+.st{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.2rem);line-height:1.05;color:var(--ink);margin-bottom:20px;letter-spacing:-1px;}
+.st em{font-style:italic;color:var(--ia);}
+.si{font-size:1rem;line-height:1.9;color:var(--ink2);max-width:640px;margin-bottom:40px;}
+.sec{padding:80px 0 48px;border-bottom:1px solid var(--border);}
+.sec:last-child{border-bottom:none;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
+@media(max-width:720px){.g2,.g3{grid-template-columns:1fr;}}
+.card{background:var(--bg2);padding:1.75rem 1.5rem;}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;text-transform:uppercase;color:var(--ink3);margin-bottom:.4rem;}
+.card-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);margin-bottom:.5rem;line-height:1.2;}
+.card-body{font-size:.84rem;color:var(--ink2);line-height:1.65;}
+.card-body strong{color:var(--ink);font-weight:400;}
+
+/* Steps */
+.steps{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.step{background:var(--bg2);padding:1.5rem 1.75rem;display:flex;gap:1.5rem;align-items:flex-start;}
+.step-n{font-family:'DM Serif Display',serif;font-size:2.5rem;color:rgba(0,201,255,.15);line-height:1;flex-shrink:0;width:48px;font-style:italic;}
+.step-title{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;color:var(--ink);margin-bottom:.3rem;}
+.step-desc{font-size:.85rem;color:var(--ink2);line-height:1.7;}
+.step-warn{font-size:.8rem;color:var(--ia);margin-top:.5rem;font-style:italic;border-left:2px solid var(--ia-border);padding-left:.75rem;}
+
+/* Deepfake checker */
+.df-check{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.df-item{background:var(--bg2);padding:1.1rem 1.5rem;display:flex;gap:.75rem;align-items:flex-start;}
+.df-ico{width:30px;height:30px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.9rem;}
+.df-ico.warn{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);}
+.df-ico.ok{background:rgba(46,204,128,.1);border:1px solid rgba(46,204,128,.2);}
+.df-title{font-family:'JetBrains Mono',monospace;font-size:.64rem;font-weight:600;color:var(--ink);margin-bottom:.2rem;}
+.df-desc{font-size:.8rem;color:var(--ink2);line-height:1.5;}
+
+/* Comparador */
+.comparador{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);margin-top:2rem;}
+@media(max-width:600px){.comparador{grid-template-columns:1fr;}}
+.comp-col{background:var(--bg2);}
+.comp-hd{padding:12px 20px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;}
+.comp-hd.real{color:var(--green);}
+.comp-hd.fake{color:var(--red);}
+.comp-row{padding:9px 20px;border-bottom:1px solid rgba(255,255,255,.03);font-size:.83rem;color:var(--ink2);display:flex;align-items:flex-start;gap:10px;line-height:1.5;}
+.comp-row:last-child{border-bottom:none;}
+.comp-row::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.comp-row.ok::before{background:var(--green);}
+.comp-row.bad::before{background:var(--red);}
+
+/* Ataques */
+.ataque-g{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.ataque{background:var(--bg2);padding:1.5rem 1.75rem;position:relative;overflow:hidden;}
+.ataque::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.at-alta::before{background:var(--red);}
+.at-media::before{background:var(--gold);}
+.at-baja::before{background:var(--blue);}
+.at-header{display:flex;align-items:center;gap:1rem;margin-bottom:.6rem;flex-wrap:wrap;}
+.at-nivel{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:2px;text-transform:uppercase;padding:2px 8px;border-radius:20px;border:1px solid;flex-shrink:0;}
+.at-alta .at-nivel{color:var(--red);border-color:rgba(239,68,68,.3);}
+.at-media .at-nivel{color:var(--gold);border-color:rgba(245,168,35,.3);}
+.at-baja .at-nivel{color:var(--blue);border-color:rgba(58,127,212,.3);}
+.at-name{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);line-height:1.1;}
+.at-sub{font-size:.8rem;color:var(--ink3);margin-bottom:.6rem;font-style:italic;}
+.at-desc{font-size:.85rem;color:var(--ink2);line-height:1.7;margin-bottom:.75rem;}
+.at-ejemplo{background:rgba(0,0,0,.2);border-left:3px solid var(--ia);padding:.7rem 1rem;font-size:.81rem;color:var(--ink2);line-height:1.6;margin-bottom:.7rem;}
+.at-ejemplo strong{color:var(--ia);}
+.at-defensa{font-size:.82rem;color:var(--green);line-height:1.6;display:flex;gap:.5rem;align-items:flex-start;}
+.at-defensa::before{content:'→';color:var(--green);flex-shrink:0;margin-top:1px;}
+
+/* Datos */
+.dato-g{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--border);}
+@media(max-width:600px){.dato-g{grid-template-columns:1fr;}}
+.dato{background:var(--bg2);padding:1.5rem;position:relative;overflow:hidden;}
+.dato::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--c,var(--ia));transform:scaleX(0);transition:transform .4s;}
+.dato:hover::after{transform:scaleX(1);}
+.dato-ico{font-size:1.4rem;margin-bottom:.5rem;}
+.dato-title{font-family:'JetBrains Mono',monospace;font-size:.64rem;font-weight:600;color:var(--ink);margin-bottom:.4rem;letter-spacing:1px;}
+.dato-riesgo{font-size:.82rem;line-height:1.6;}
+
+/* Herramientas */
+.tool-detect{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
+@media(max-width:640px){.tool-detect{grid-template-columns:1fr;}}
+.td-card{background:var(--bg2);padding:1.5rem;text-decoration:none;transition:background .2s;display:flex;flex-direction:column;gap:6px;position:relative;overflow:hidden;}
+.td-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--ia);transform:scaleX(0);transition:transform .3s;}
+.td-card:hover::before{transform:scaleX(1);}
+.td-card:hover{background:rgba(255,255,255,.03);}
+.td-tag{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);}
+.td-name{font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ia);line-height:1.2;}
+.td-desc{font-size:.8rem;color:var(--ink2);line-height:1.5;flex:1;}
+.td-url{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ia);letter-spacing:1px;opacity:.7;}
+.td-gratis{font-family:'JetBrains Mono',monospace;font-size:.52rem;color:var(--green);}
+
+/* Actividades */
+.act-box{background:rgba(0,201,255,.04);border:1px solid var(--ia-border);border-top:2px solid var(--ia);padding:1.5rem;margin-top:1.5rem;}
+.act-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;text-transform:uppercase;color:var(--ia);margin-bottom:.5rem;}
+.act-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);margin-bottom:.4rem;}
+.act-desc{font-size:.84rem;color:var(--ink2);line-height:1.65;}
+.act-meta{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:1px;color:var(--ink3);margin-top:.5rem;}
+
+/* Tabs */
+.perfil-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--bg2);}
+.ptab{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;padding:.75rem 1.5rem;cursor:pointer;color:var(--ink3);border-bottom:2px solid transparent;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;}
+.ptab:hover{color:var(--ink2);}
+.ptab.active{color:var(--ia);border-bottom-color:var(--ia);}
+.perfil-panel{display:none;padding:2rem;}
+.perfil-panel.active{display:block;}
+@media(max-width:500px){.ptab{padding:.75rem .75rem;font-size:.54rem;}.perfil-panel{padding:1.25rem;}}
+.panel-lede{border-left:3px solid var(--ia);padding-left:1.25rem;font-size:.95rem;line-height:1.85;color:var(--ink2);margin-bottom:1.5rem;}
+.panel-lede strong{color:var(--ink);font-weight:400;}
+
+/* Legal */
+.ley-g{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.ley{background:var(--bg2);padding:1.25rem 1.5rem;display:flex;gap:1.25rem;align-items:flex-start;}
+.ley-num{font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:600;color:var(--purple);width:90px;flex-shrink:0;padding-top:2px;line-height:1.5;}
+.ley-title{font-family:'JetBrains Mono',monospace;font-size:.66rem;font-weight:600;color:var(--ink);margin-bottom:.3rem;}
+.ley-desc{font-size:.83rem;color:var(--ink2);line-height:1.6;}
+.ley-ejemplo{font-size:.78rem;color:var(--ink3);margin-top:.4rem;font-style:italic;padding-left:.75rem;border-left:2px solid rgba(155,109,255,.3);}
+
+/* Alertas */
+.alerta-g{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);}
+@media(max-width:600px){.alerta-g{grid-template-columns:1fr;}}
+.alerta{background:var(--bg2);padding:1.25rem 1.5rem;display:flex;gap:.75rem;}
+.alerta-flag{color:var(--red);font-size:1rem;flex-shrink:0;margin-top:1px;}
+.alerta-title{font-family:'JetBrains Mono',monospace;font-size:.64rem;font-weight:600;color:var(--ink);margin-bottom:.2rem;}
+.alerta-desc{font-size:.8rem;color:var(--ink2);line-height:1.5;}
+</style>
+</head>
+<body data-page="guia-ia">
+
+<section class="hero-ia">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap" style="position:relative;z-index:2;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ink3);margin-bottom:24px;display:flex;align-items:center;gap:10px;">
+      <div style="width:28px;height:1px;background:var(--ia);"></div>
+      AEGIS8 · GUÍA · CHILE 2026
+    </div>
+    <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ia);border:1px solid var(--ia-border);padding:4px 12px;border-radius:20px;background:var(--ia2);">
+      <span style="width:6px;height:6px;border-radius:50%;background:var(--ia);animation:blink 1.5s infinite;display:inline-block;"></span>
+      CONTENIDO NUEVO · 2026
+    </div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.8rem,8vw,6rem);line-height:.88;letter-spacing:-2px;margin-bottom:24px;max-width:800px;">
+      IA Generativa<br><em style="color:var(--ia);">Segura.</em>
+    </h1>
+    <p style="font-size:1.05rem;line-height:1.85;color:var(--ink2);max-width:580px;margin-bottom:16px;">
+      ChatGPT, Gemini, clonadores de voz, generadores de imagen. Son poderosas, gratuitas y están en el teléfono de tus alumnos ahora mismo. Esta guía explica qué riesgos reales implican y cómo usarlas sin comprometer tu privacidad o la de otros.
+    </p>
+    <p style="font-size:.86rem;color:var(--ink3);max-width:540px;margin-bottom:36px;font-family:'JetBrains Mono',monospace;letter-spacing:.5px;line-height:1.7;">
+      Capa 4 del Modelo Aegis8 — Los ataques de nueva generación usan IA para ser más convincentes.
+    </p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="#que-es" class="btn-p" style="background:var(--ia);color:#080c14;"><span>Empezar →</span></a>
+      <a href="#deepfakes" class="btn-g">Detectar deepfakes</a>
+      <a href="#ataques" class="btn-g">Ataques con IA</a>
+    </div>
+    <div class="timing-alert">
+      <span class="ta-dot"></span>
+      <span class="ta-text">En Chile, los casos de vishing con voz clonada por IA aumentaron un 89% en 2024. Los deepfakes íntimos son delito bajo la Ley 21.459 — independiente de que sean generados por IA.</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap page-inner">
+
+<div class="sec sw" id="que-es">
+  <div class="sl">// Qué es y cómo funciona</div>
+  <h2 class="st">No es magia.<br><em>Es estadística.</em></h2>
+  <p class="si">La IA generativa no piensa — predice. Aprende patrones de millones de textos, imágenes o voces, y genera nuevo contenido que sigue esos patrones. Entender esto cambia cómo evalúas lo que produce.</p>
+  </div>
+<div class="sec sw" id="deepfakes">
+  <div class="sl">// Deepfakes — cómo detectarlos</div>
+  <h2 class="st">Parece real.<br><em>No lo es.</em></h2>
+  <p class="si">Un deepfake es contenido generado o manipulado por IA para hacer parecer que alguien hizo o dijo algo que nunca ocurrió. Solo se necesita una foto pública para crear uno.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;margin-bottom:2rem;">
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;color:var(--ink3);margin-bottom:12px;text-transform:uppercase;">Señales en videos</div>
+      <div class="df-check">
+        <div class="df-item"><div class="df-ico warn">👁️</div><div><div class="df-title">Parpadeo irregular o ausente</div><div class="df-desc">En deepfakes de menor calidad el parpadeo no es natural.</div></div></div>
+        <div class="df-item"><div class="df-ico warn">💋</div><div><div class="df-title">Labios que no sincronizan</div><div class="df-desc">El movimiento de labios a veces no coincide exactamente con las palabras.</div></div></div>
+        <div class="df-item"><div class="df-ico warn">🔦</div><div><div class="df-title">Iluminación inconsistente</div><div class="df-desc">El rostro generado puede tener sombras que no corresponden al fondo.</div></div></div>
+        <div class="df-item"><div class="df-ico warn">👂</div><div><div class="df-title">Bordes del cabello borrosos</div><div class="df-desc">Las IAs tienen más dificultad con bordes complejos como cabello rizado.</div></div></div>
+        <div class="df-item"><div class="df-ico ok">🔍</div><div><div class="df-title">Busca el original</div><div class="df-desc">Antes de creer un video comprometedor, busca cobertura en fuentes confiables.</div></div></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;color:var(--ink3);margin-bottom:12px;text-transform:uppercase;">Señales en audio y texto</div>
+      <div class="df-check">
+        <div class="df-item"><div class="df-ico warn">🎙️</div><div><div class="df-title">Voz sin pausas naturales</div><div class="df-desc">Las voces clonadas por IA a menudo carecen de micro-pausas y respiraciones naturales.</div></div></div>
+        <div class="df-item"><div class="df-ico warn">📝</div><div><div class="df-title">Texto demasiado perfecto</div><div class="df-desc">Sin errores ortográficos, estructura perfecta. Los emails de phishing ya no cometen errores.</div></div></div>
+        <div class="df-item"><div class="df-ico warn">⚡</div><div><div class="df-title">Urgencia inusual</div><div class="df-desc">La IA genera el texto, la urgencia la pone el atacante.</div></div></div>
+        <div class="df-item"><div class="df-ico ok">📞</div><div><div class="df-title">Verifica por otro canal</div><div class="df-desc">Llama al número que ya tienes guardado — no al que aparece en el mensaje.</div></div></div>
+        <div class="df-item"><div class="df-ico ok">🛠️</div><div><div class="df-title">Herramientas de detección</div><div class="df-desc">Hive Moderation, AI or Not, Illuminarty — gratuitas para uso básico.</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:2px;color:var(--ink3);margin-bottom:10px;text-transform:uppercase;">Email real de banco vs phishing generado por IA</div>
+  <div class="comparador">
+    <div class="comp-col">
+      <div class="comp-hd real">✓ Email legítimo</div>
+      <div class="comp-row ok">Usa tu nombre real tal como está registrado</div>
+      <div class="comp-row ok">No pide claves ni tokens por email</div>
+      <div class="comp-row ok">Dominio exacto del banco (bancochile.cl)</div>
+      <div class="comp-row ok">No genera urgencia artificial</div>
+    </div>
+    <div class="comp-col">
+      <div class="comp-hd fake">✗ Phishing con IA</div>
+      <div class="comp-row bad">Puede usar tu nombre (obtenido de filtraciones)</div>
+      <div class="comp-row bad">Pide verificar datos o hacer clic urgente</div>
+      <div class="comp-row bad">Dominio alterado: bancochile-cl.com</div>
+      <div class="comp-row bad">Urgencia extrema: "bloqueada en 2 horas"</div>
+    </div>
+  </div>
+</div>
+
+<div class="sec sw" id="ataques">
+  <div class="sl">// Ataques potenciados por IA</div>
+  <h2 class="st">Mismos ataques.<br><em>Mucho más convincentes.</em></h2>
+  <p class="si">La IA no inventa nuevos tipos de ataques — hace que los existentes sean más difíciles de detectar. Un phishing sin errores, una llamada con la voz de tu banco, un video que nunca existió.</p>
+  <div class="ataque-g">
+    <div class="ataque at-alta">
+      <div class="at-header"><span class="at-nivel">Riesgo alto · Chile 2026</span><div class="at-name">Vishing con voz clonada</div></div>
+      <div class="at-sub">Phishing por llamada usando voz sintética de alguien conocido</div>
+      <div class="at-desc">Con 3 segundos de audio público, una IA puede clonar cualquier voz. El atacante llama a familiares haciéndose pasar por esa persona en emergencia — "mamá, tuve un accidente, necesito que transfieras plata ahora".</div>
+      <div class="at-ejemplo"><strong>Caso real adaptado:</strong> Familia chilena recibió llamada de "su hijo" pidiendo transferencia urgente de $200.000. La voz era idéntica. El hijo estaba bien.</div>
+      <div class="at-defensa">Establece una "palabra de seguridad" familiar que solo ustedes sepan. Sin esa palabra, cuelga y llama al número que ya tienes guardado.</div>
+    </div>
+    <div class="ataque at-alta">
+      <div class="at-header"><span class="at-nivel">Riesgo alto · Chile 2026</span><div class="at-name">Deepfakes íntimos</div></div>
+      <div class="at-sub">Imágenes sexuales falsas generadas con el rostro de una persona real</div>
+      <div class="at-desc">Solo se necesita una foto pública. Se usan para acosar, extorsionar o dañar la reputación. Afectan desproporcionadamente a mujeres y adolescentes.</div>
+      <div class="at-ejemplo"><strong>Marco legal:</strong> La Ley 21.459 tipifica explícitamente la creación y difusión de deepfakes íntimos como delito, aunque el contenido sea 100% generado por IA.</div>
+      <div class="at-defensa">Denuncia en PDI Cibercrimen: +56 2 2708 0000. Usa StopNCII.org — registra un hash que bloquea la imagen en Meta, TikTok y otras plataformas sin que nadie vea el contenido.</div>
+    </div>
+    <div class="ataque at-alta">
+      <div class="at-header"><span class="at-nivel">Riesgo alto · Aulas Chile</span><div class="at-name">Phishing sin errores</div></div>
+      <div class="at-sub">Emails generados por IA que imitan perfectamente a empresas reales</div>
+      <div class="at-desc">Hasta 2023, los errores ortográficos eran el indicador más confiable de phishing. La IA elimina esa señal. Hoy, un email de phishing puede ser gramaticalmente impecable y personalizado con tu nombre.</div>
+      <div class="at-ejemplo"><strong>La nueva regla:</strong> La ausencia de errores ya no es señal de legitimidad. El indicador que queda: la urgencia, el dominio del remitente y qué te pide.</div>
+      <div class="at-defensa">Verifica el dominio del remitente carácter por carácter. Tu banco nunca pedirá tu clave por email. Ante urgencia extrema, llama al número oficial.</div>
+    </div>
+    
+</div>
+</div>
+<div class="sec sw" id="privacidad">
+  <div class="sl">// Qué le das a la IA cuando la usas</div>
+  <h2 class="st">Gratis no significa<br><em>sin costo.</em></h2>
+  <p class="si">El costo de los servicios de IA gratuitos son tus datos. No es malo usarlos — es importante entender qué intercambias.</p>
+  <div class="dato-g">
+    <div class="dato" style="--c:var(--red);"><div class="dato-ico">🚫</div><div class="dato-title">NUNCA INGRESES</div><div class="dato-riesgo" style="color:var(--red);">Contraseñas · Números de tarjeta · RUT · Datos médicos propios o ajenos · Información de menores · Documentos confidenciales del trabajo · Datos de alumnos o pacientes</div></div>
+    <div class="dato" style="--c:var(--gold);"><div class="dato-ico">⚠️</div><div class="dato-title">ANONIMIZA ANTES</div><div class="dato-riesgo" style="color:var(--gold);">Nombres de personas en situaciones sensibles · Nombre del empleador en conflictos · Ubicaciones exactas · Información de terceros sin su consentimiento</div></div>
+    <div class="dato" style="--c:var(--green);"><div class="dato-ico">✓</div><div class="dato-title">USO SIN RIESGO SIGNIFICATIVO</div><div class="dato-riesgo" style="color:var(--green);">Tareas académicas sin datos personales · Preguntas generales de aprendizaje · Redacción creativa genérica · Análisis de texto público · Código sin datos sensibles</div></div>
+    <div class="dato" style="--c:var(--blue);"><div class="dato-ico">⚙️</div><div class="dato-title">CONFIGURACIÓN QUE DEBES ACTIVAR</div><div class="dato-riesgo" style="color:var(--blue);">ChatGPT: Configuración → Control de datos → desactivar "Mejorar el modelo" · Gemini: Actividad de Gemini → pausar guardado · Claude: sin historial persistente por defecto</div></div>
+  </div>
+</div>
+
+<div class="sec sw" id="herramientas">
+  <div class="sl">// Herramientas para detectar contenido generado</div>
+  <h2 class="st">La IA también<br><em>detecta IA.</em></h2>
+  <p class="si">Estas herramientas gratuitas ayudan a verificar si un contenido fue generado por IA. No son infalibles — úsalas junto con pensamiento crítico.</p>
+  <div class="tool-detect">
+    <a href="https://hivemoderation.com/ai-generated-content-detection" target="_blank" rel="noopener" class="td-card">
+      <div class="td-tag">Imágenes y video</div>
+      <div class="td-name">Hive Moderation</div>
+      <div class="td-desc">Detecta si una imagen fue generada por IA. Funciona con capturas y fotos de redes sociales.</div>
+      <div class="td-url">hivemoderation.com</div>
+      <div class="td-gratis">✓ Gratuito · Sin registro</div>
+    </a>
+    <a href="https://www.aiornot.com" target="_blank" rel="noopener" class="td-card">
+      <div class="td-tag">Imágenes</div>
+      <div class="td-name">AI or Not</div>
+      <div class="td-desc">Interfaz simple: sube la imagen, recibe veredicto. Útil para verificar fotos de perfil sospechosas.</div>
+      <div class="td-url">aiornot.com</div>
+      <div class="td-gratis">✓ Gratuito · 10 imágenes/mes</div>
+    </a>
+    <a href="https://gptzero.me" target="_blank" rel="noopener" class="td-card">
+      <div class="td-tag">Texto</div>
+      <div class="td-name">GPTZero</div>
+      <div class="td-desc">Detecta texto generado por IA. Útil para docentes. No es 100% confiable — complementar con evaluación oral.</div>
+      <div class="td-url">gptzero.me</div>
+      <div class="td-gratis">✓ Gratuito básico</div>
+    </a>
+    <a href="https://stopncii.org" target="_blank" rel="noopener" class="td-card">
+      <div class="td-tag">Deepfakes íntimos</div>
+      <div class="td-name">StopNCII</div>
+      <div class="td-desc">Para víctimas de deepfakes íntimos. Registra un hash para que Meta, TikTok y otras plataformas bloqueen el contenido automáticamente. Confidencial.</div>
+      <div class="td-url">stopncii.org</div>
+      <div class="td-gratis">✓ Gratuito · Confidencial</div>
+    </a>
+    <a href="https://toolbox.google.com/factcheck/explorer" target="_blank" rel="noopener" class="td-card">
+      <div class="td-tag">Desinformación</div>
+      <div class="td-name">Google Fact Check</div>
+      <div class="td-desc">Busca si una noticia ha sido verificada por organizaciones de fact-checking. Cubre contenido en español.</div>
+      <div class="td-url">toolbox.google.com/factcheck</div>
+      <div class="td-gratis">✓ Gratuito · Sin registro</div>
+    </a>
+    <a href="https://www.tineye.com" target="_blank" rel="noopener" class="td-card">
+      <div class="td-tag">Búsqueda inversa</div>
+      <div class="td-name">TinEye</div>
+      <div class="td-desc">Busca el origen de una imagen. Si alguien usó una foto falsa de perfil, TinEye puede mostrar dónde aparece originalmente.</div>
+      <div class="td-url">tineye.com</div>
+      <div class="td-gratis">✓ Gratuito básico</div>
+    </a>
+  </div>
+</div>
+
+<div class="sec sw" id="perfiles">
+  <div class="sl">// Por perfil</div>
+  <h2 class="st">Lo que necesita<br><em>saber cada uno.</em></h2>
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-top:32px;">
+    <div class="perfil-tabs">
+      <button class="ptab active" onclick="switchTab('ia','ninos',this)">Niños</button>
+      <button class="ptab" onclick="switchTab('ia','adolescentes',this)">Adolescentes</button>
+      <button class="ptab" onclick="switchTab('ia','familias',this)">Familias</button>
+      <button class="ptab" onclick="switchTab('ia','docentes',this)">Docentes</button>
+    </div>
+    <div class="perfil-panel active" id="ia-ninos">
+      <p class="panel-lede">Hay robots que pueden escribir cuentos y dibujos. Son herramientas, como una calculadora. <strong>No son personas y a veces se equivocan.</strong></p>
+      <div class="g2" style="margin-bottom:1.5rem;">
+        <div class="card"><div class="card-tag">La regla más importante</div><div class="card-title">No le cuentes secretos</div><div class="card-body">No escribas tu nombre completo, dónde vives ni datos de tu familia en un chat de IA.</div></div>
+        <div class="card"><div class="card-tag">La IA se equivoca</div><div class="card-title">Siempre verifica</div><div class="card-body">A veces inventa cosas que suenan reales pero son falsas. Siempre pregúntale a un adulto.</div></div>
+      </div>
+    </div>
+    <div class="perfil-panel" id="ia-adolescentes">
+      <p class="panel-lede">Usas IA probablemente todos los días. <strong>El riesgo no está en usarla — está en no saber qué le das cuando la usas.</strong></p>
+      <div class="g2" style="margin-bottom:1.5rem;">
+        <div class="card"><div class="card-tag">Privacidad</div><div class="card-title">Qué no poner en ChatGPT</div><div class="card-body">Nunca: conversaciones privadas de terceros, contraseñas, datos de salud, documentos del colegio con nombres de compañeros.</div></div>
+        <div class="card"><div class="card-tag">Imágenes generadas</div><div class="card-title">Generar imágenes de personas reales</div><div class="card-body">Generar imágenes comprometedoras de compañeros es acoso. Si hay contenido íntimo, es delito bajo la Ley 21.459.</div></div>
+        <div class="card"><div class="card-tag">Configuración</div><div class="card-title">Desactiva el entrenamiento</div><div class="card-body">ChatGPT: Configuración → Control de datos → desactivar "Mejorar el modelo". Tarda 30 segundos.</div></div>
+        <div class="card"><div class="card-tag">Tareas</div><div class="card-title">No es trampa usarla. Es trampa mentir.</div><div class="card-body">Usar IA para entender un concepto está bien. Presentar el output como tu trabajo sin decirlo no lo está.</div></div>
+      </div>
+    </div>
+    <div class="perfil-panel" id="ia-familias">
+      <p class="panel-lede">Tus hijos están usando IA. <strong>La pregunta no es si usarla, sino cómo hablar de ella.</strong></p>
+      <div class="g2" style="margin-bottom:1.5rem;">
+        <div class="card"><div class="card-tag">Conversación en familia</div><div class="card-title">Tres preguntas para esta semana</div><div class="card-body">"¿Qué IAs usas?" / "¿Le pusiste tu nombre real alguna vez?" / "¿Sabes que a veces inventa cosas reales pero falsas?" Sin juicio.</div></div>
+        <div class="card"><div class="card-tag">Vishing</div><div class="card-title">La palabra de seguridad familiar</div><div class="card-body">El vishing con voz clonada ya está en Chile. Establezcan una palabra secreta. Sin esa palabra en una llamada de emergencia: cuelga y llama al número guardado.</div></div>
+      </div>
+    </div>
+    <div class="perfil-panel" id="ia-docentes">
+      <p class="panel-lede">Tus alumnos usan IA para tareas, tú la usas para preparar clases. <strong>El desafío no es prohibir — es enseñar a usarla con criterio.</strong></p>
+      <div class="g2" style="margin-bottom:1.5rem;">
+        <div class="card"><div class="card-tag">Tu propio uso</div><div class="card-title">Lo que no debes subir</div><div class="card-body">Nunca ingreses nóminas de alumnos, situaciones de convivencia con nombres reales, o datos del SIGE en ChatGPT. Viola la privacidad de los estudiantes.</div></div>
+        <div class="card"><div class="card-tag">Detección</div><div class="card-title">GPTZero no es infalible</div><div class="card-body">Los detectores tienen falsos positivos. Evaluación oral y pedir borradores siguen siendo las mejores herramientas.</div></div>
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="sec sw" id="legal">
+  <div class="sl">// Marco legal Chile</div>
+  <h2 class="st">Lo que dice<br><em>la ley.</em></h2>
+  <p class="si">Chile tiene legislación que cubre la mayoría de los delitos relacionados con IA generativa — aunque las leyes no mencionen explícitamente la IA.</p>
+  <div class="ley-g">
+    <div class="ley">
+      <div class="ley-num">Ley 21.459<br>Art. 4 · 2022</div>
+      <div><div class="ley-title">Deepfakes íntimos — delito explícito</div><div class="ley-desc">Penaliza la difusión de imágenes íntimas sin consentimiento, incluyendo material "generado o manipulado artificialmente". Pena: hasta 3 años.</div><div class="ley-ejemplo">Generar y compartir un deepfake íntimo de un compañero es delito, aunque el contenido sea 100% falso.</div></div>
+    </div>
+    <div class="ley">
+      <div class="ley-num">Ley 21.459<br>Art. 2 · 2022</div>
+      <div><div class="ley-title">Acceso ilegal vía phishing con IA</div><div class="ley-desc">Cuando el phishing potenciado por IA resulta en acceso a cuentas sin autorización. Pena: hasta 3 años.</div><div class="ley-ejemplo">Usar un email de phishing generado por IA para obtener credenciales es delito bajo este artículo.</div></div>
+    </div>
+    <div class="ley">
+      <div class="ley-num">Ley 20.526<br>2011</div>
+      <div><div class="ley-title">Grooming asistido por IA</div><div class="ley-desc">Penaliza los actos de un adulto que a través de medios digitales contacta a un menor con fines sexuales. El uso de IA para facilitar la conversación no cambia el tipo penal.</div><div class="ley-ejemplo">Un adulto que usa ChatGPT para generar respuestas en una conversación de grooming comete el mismo delito.</div></div>
+    </div>
+    <div class="ley">
+      <div class="ley-num">Ley 19.628<br>1999</div>
+      <div><div class="ley-title">Filtración de datos personales</div><div class="ley-desc">Ingresar datos de terceros en IAs públicas sin su consentimiento puede constituir infracción a la protección de datos, especialmente si son datos sensibles de menores.</div><div class="ley-ejemplo">Un docente que sube datos de alumnos a ChatGPT sin consentimiento puede incurrir en infracción.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec sw" id="alertas">
+  <div class="sl">// Señales de alerta</div>
+  <h2 class="st">Si notas esto,<br><em>para y verifica.</em></h2>
+  <div class="alerta-g">
+    <div class="alerta"><div class="alerta-flag">⚑</div><div><div class="alerta-title">Urgencia extrema en cualquier canal</div><div class="alerta-desc">La urgencia es la herramienta del atacante. En el mundo real, pocas cosas requieren actuar en 2 horas sin verificar.</div></div></div>
+    <div class="alerta"><div class="alerta-flag">⚑</div><div><div class="alerta-title">Voz familiar pidiendo dinero o datos</div><div class="alerta-desc">La IA puede clonar voces con 3 segundos de audio. Cuelga y llama al número que ya tienes guardado.</div></div></div>
+    <div class="alerta"><div class="alerta-flag">⚑</div><div><div class="alerta-title">Email perfecto sin errores</div><div class="alerta-desc">La ausencia de errores ya no es señal de legitimidad. Verifica el dominio del remitente carácter por carácter.</div></div></div>
+    <div class="alerta"><div class="alerta-flag">⚑</div><div><div class="alerta-title">Imagen o video impactante sin fuente</div><div class="alerta-desc">Los deepfakes circulan antes de ser desmentidos. Busca cobertura en dos fuentes independientes antes de compartir.</div></div></div>
+    <div class="alerta"><div class="alerta-flag">⚑</div><div><div class="alerta-title">Alguien online siempre perfecto</div><div class="alerta-desc">Responde siempre rápido, nunca tiene un mal día, siempre dice exactamente lo correcto. Puede ser IA asistiendo manipulación.</div></div></div>
+    <div class="alerta"><div class="alerta-flag">⚑</div><div><div class="alerta-title">IA gratis que pide credenciales</div><div class="alerta-desc">Servicios de "IA gratis ilimitada" que piden tu contraseña de otro servicio. Los servicios legítimos no necesitan tus credenciales de otros servicios.</div></div></div>
+  </div>
+</div>
+
+<div class="sec sw" style="text-align:center;border:1px solid var(--ia-border);background:var(--ia2);position:relative;overflow:hidden;padding:56px 24px;">
+  <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ia),var(--purple),var(--accent));"></div>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;color:var(--ia);margin-bottom:12px;text-transform:uppercase;">Capa 4 del Modelo Aegis8</div>
+  <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,3rem);color:var(--ink);margin-bottom:12px;letter-spacing:-1px;">
+    Entender la amenaza<br><em style="color:var(--ia);">es la mitad de la defensa.</em>
+  </h2>
+  <p style="font-size:.92rem;line-height:1.8;color:var(--ink2);max-width:480px;margin:0 auto 28px;">La otra mitad está en las herramientas y los hábitos.</p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+    <a href="/checklist" class="btn-p"><span>Checklist de defensa →</span></a>
+    <a href="/analizador-phishing" class="btn-g">Analizar mensaje sospechoso</a>
+    <a href="/modelo" class="btn-g">Ver el Modelo Aegis8</a>
+  </div>
+</div>
+
+</div>
+
+<footer class="page-footer">
+  <a href="/" class="fl">AEGIS<span>8</span></a>
+  <ul class="flinks">
+    <li><a href="/educa">Educa</a></li>
+    <li><a href="/modelo">Modelo</a></li>
+    <li><a href="/herramientas">Herramientas</a></li>
+    <li><a href="/violencia-digital">Violencia digital</a></li>
+    <li><a href="/contacto">Contacto</a></li>
+  </ul>
+  <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
+</footer>
+
+<script>
+function switchTab(prefix, perfil, btn) {
+  btn.parentElement.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll(`[id^="${prefix}-"]`).forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(`${prefix}-${perfil}`)?.classList.add('active');
+}
+const ro = new IntersectionObserver(e => {
+  e.forEach(x => { if (x.isIntersecting) x.target.classList.add('vis'); });
+}, { threshold: .07, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.sw').forEach(el => ro.observe(el));
+</script>
+</body>
+</html>
