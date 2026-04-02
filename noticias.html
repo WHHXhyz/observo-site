@@ -221,7 +221,6 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
     <button class="filter-btn" data-filter="phishing" onclick="setFilter('phishing',this)">Phishing</button>
     <button class="filter-btn" data-filter="breach" onclick="setFilter('breach',this)">Filtraciones</button>
     <button class="filter-btn" data-filter="malware" onclick="setFilter('malware',this)">Malware</button>
-    <button class="filter-btn" data-filter="mitre" onclick="setFilter('mitre',this)">MITRE ATT&amp;CK</button>
     <button class="filter-btn" data-filter="ia" onclick="setFilter('ia',this)">IA</button>
     <button class="filter-btn refresh-btn" onclick="forceRefresh(this)" title="Forzar actualización del feed">↻ Actualizar</button>
     <div class="view-toggle">
@@ -238,40 +237,6 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
       <div class="state-msg-sub">Consultando 6 fuentes de ciberseguridad</div>
     </div>
   </div>
-
-<!-- ══ SECCIÓN MITRE ATT&CK ══ -->
-<div id="mitre-section" style="margin-top:40px;padding-bottom:40px;">
-  <div style="border-top:2px solid rgba(245,168,35,.3);padding-top:32px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
-      <div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
-          color:var(--gold);text-transform:uppercase;margin-bottom:6px;">// MITRE ATT&CK · Tácticas activas esta semana</div>
-        <h3 style="font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--ink);line-height:1.1;">
-          Basado en las noticias del feed
-        </h3>
-      </div>
-      <a href="https://attack.mitre.org" target="_blank" rel="noopener"
-        style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:2px;
-        color:var(--gold);text-decoration:none;text-transform:uppercase;border:1px solid rgba(245,168,35,.3);
-        padding:.35rem .9rem;border-radius:3px;transition:all .2s;"
-        onmouseover="this.style.background='rgba(245,168,35,.08)'" onmouseout="this.style.background=''">
-        Ver MITRE ATT&CK →
-      </a>
-    </div>
-    <div id="mitre-cards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2px;background:var(--border);">
-      <div style="background:var(--bg2);padding:20px;grid-column:1/-1;
-        font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--ink3);text-align:center;">
-        Cargando tácticas...
-      </div>
-    </div>
-    <div style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:.58rem;
-      color:var(--ink3);letter-spacing:1px;">
-      Las tácticas mostradas corresponden a los tipos de ataque más frecuentes en las noticias actuales del feed.
-      Referencia: <a href="https://attack.mitre.org" target="_blank" rel="noopener"
-        style="color:var(--gold);text-decoration:none;">MITRE ATT&CK Framework</a>
-    </div>
-  </div>
-</div>
 
 
 </div>
@@ -520,67 +485,6 @@ async function forceRefresh(btn) {
 
 load();
 
-// ── Cargar tácticas MITRE ──
-const MITRE_WORKER = WORKER.replace('/noticias','') + '/mitre';
-async function loadMitre() {
-  try {
-    const res = await fetch(MITRE_WORKER.replace('.workers.dev/noticias','').replace('.workers.dev','') + '/mitre');
-    const data = await res.json();
-    if (!data.tactics || !data.tactics.length) return;
-
-    const TACTIC_COLORS = {
-      'Initial Access':   '#ef4444',
-      'Execution':        '#f97316',
-      'Privilege Esc.':   '#f5a823',
-      'Persistence':      '#f5a823',
-      'Collection':       '#9b6dff',
-      'Exfiltration':     '#9b6dff',
-      'Impact':           '#ef4444',
-      'Resource Dev.':    '#3a7fd4',
-      'Defense Evasion':  '#2ecc80',
-    };
-
-    document.getElementById('mitre-cards').innerHTML = data.tactics.map(function(t) {
-      var col = TACTIC_COLORS[t.tactic] || '#8898b0';
-      var html = '<a href="' + t.url + '" target="_blank" rel="noopener" ';
-      html += 'style="background:#0d1422;padding:18px 16px;text-decoration:none;display:flex;';
-      html += 'flex-direction:column;gap:6px;transition:background .2s;border-top:2px solid ' + col + ';" ';
-      html += '>';
-      html += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
-      html += '<span style="font-family:monospace;font-size:.62rem;font-weight:600;color:' + col + ';">' + t.id + '</span>';
-      html += '<span style="font-family:monospace;font-size:.54rem;color:#3a4f68;padding:1px 6px;border:1px solid rgba(255,255,255,.08);border-radius:20px;">' + t.tactic + '</span>';
-      html += '</div>';
-      html += '<div style="font-family:monospace;font-size:.72rem;color:#eaf0f8;font-weight:600;">' + t.name + '</div>';
-      html += '<div style="font-family:monospace;font-size:.54rem;color:#3a4f68;">' + t.frequency + ' noticia' + (t.frequency !== 1 ? 's' : '') + ' esta semana</div>';
-      html += '</a>';
-      return html;
-    }).join('');
-  } catch(e) {
-    // Silencioso — MITRE es sección secundaria
-  }
-}
-
-// Construir URL correcta para MITRE endpoint
-(async function() {
-  const base = WORKER.split('/noticias')[0];
-  try {
-    const res = await fetch(base + '/mitre');
-    const data = await res.json();
-    if (!data.tactics || !data.tactics.length) return;
-    const TACTIC_COLORS = {'Initial Access':'#ef4444','Execution':'#f97316','Privilege Esc.':'#f5a823','Collection':'#9b6dff','Exfiltration':'#9b6dff','Impact':'#ef4444','Resource Dev.':'#3a7fd4','Defense Evasion':'#2ecc80'};
-    document.getElementById('mitre-cards').innerHTML = data.tactics.map(function(t) {
-      var col = TACTIC_COLORS[t.tactic] || '#8898b0';
-      return '<a href="'+t.url+'" target="_blank" rel="noopener" style="background:var(--bg2);padding:18px 16px;text-decoration:none;display:flex;flex-direction:column;gap:6px;transition:background .2s;position:relative;overflow:hidden;border-top:2px solid '+col+';" >'
-        + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">'
-        + '<span style="font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:600;color:'+col+';letter-spacing:1px;">'+t.id+'</span>'
-        + '<span style="font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:1px;color:var(--ink3);padding:1px 6px;border:1px solid rgba(255,255,255,.08);border-radius:20px;">'+t.tactic+'</span>'
-        + '</div>'
-        + '<div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink);font-weight:600;">'+t.name+'</div>'
-        + '<div style="font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--ink3);letter-spacing:1px;">'+t.frequency+' noticia'+(t.frequency!==1?'s':'')+' relacionada'+(t.frequency!==1?'s':'')+' esta semana</div>'
-        + '</a>';
-    }).join('');
-  } catch(e) {}
-})();
 
 </script>
 </body>
