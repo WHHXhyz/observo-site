@@ -545,8 +545,7 @@ async function loadMitre() {
       var html = '<a href="' + t.url + '" target="_blank" rel="noopener" ';
       html += 'style="background:#0d1422;padding:18px 16px;text-decoration:none;display:flex;';
       html += 'flex-direction:column;gap:6px;transition:background .2s;border-top:2px solid ' + col + ';" ';
-      html += 'onmouseover="this.style.background='rgba(255,255,255,.03)'" ';
-      html += 'onmouseout="this.style.background='#0d1422'">';
+      html += '>';
       html += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">';
       html += '<span style="font-family:monospace;font-size:.62rem;font-weight:600;color:' + col + ';">' + t.id + '</span>';
       html += '<span style="font-family:monospace;font-size:.54rem;color:#3a4f68;padding:1px 6px;border:1px solid rgba(255,255,255,.08);border-radius:20px;">' + t.tactic + '</span>';
