@@ -223,7 +223,6 @@ const NAV = [
       {href:'/educa/newsletter.html', label:'Newsletter mensual'},
     ]
   },
-  {href:'/modelo', label:'Modelo', page:'modelo'},
   {
     label: 'Herramientas',
     href: '/herramientas',
@@ -327,7 +326,6 @@ function buildMobile(page, drawer) {
   ];
 
   const DIRECT = [
-    {href:'/modelo',              label:'Modelo',       pg:'modelo'},
     {href:'/noticias',            label:'Noticias',     pg:'noticias'},
     {href:'/el-proyecto',         label:'El Proyecto',  pg:'proyecto'},
     {href:'/talleres.html',       label:'Talleres',     pg:'talleres'},
