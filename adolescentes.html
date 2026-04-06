@@ -119,6 +119,13 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 /* TEMAS GRID */
 .temas-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
 @media(max-width:720px){.temas-g{grid-template-columns:1fr;}}
+.tema-acc{border:none;border-bottom:1px solid var(--border);}
+.tema-acc:last-child{border-bottom:none;}
+.tema-acc summary{list-style:none;}
+.tema-acc summary::-webkit-details-marker{display:none;}
+.tema-body{padding:1.25rem 1.5rem 1.5rem;font-size:.88rem;color:var(--ink2);line-height:1.7;border-top:1px solid var(--border);}
+.tema-body strong{color:var(--ink);font-weight:400;}
+.tema-body ul{color:var(--ink2);}
 .tema-c{background:var(--bg2);padding:2rem 1.5rem;text-decoration:none;
   transition:background .2s;display:flex;flex-direction:column;gap:10px;
   position:relative;overflow:hidden;}
@@ -166,6 +173,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 
 /* DERECHOS */
 .der-g{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);}
+@media(max-width:560px){.der-g{grid-template-columns:1fr;}}
 @media(max-width:640px){.der-g{grid-template-columns:1fr;}}
 .der{background:var(--bg2);padding:1.75rem 1.5rem;display:flex;gap:1rem;align-items:flex-start;}
 .der-ico{width:32px;height:32px;border-radius:6px;background:rgba(155,109,255,.08);
@@ -229,42 +237,96 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div class="sl">// Qué vas a encontrar aquí</div>
   <h2 class="st">Elige el tema<br><em>que más te importa.</em></h2>
   <div class="temas-g">
-    <a href="/violencia-digital.html#temas" class="tema-c tc-purple">
-      <div class="tema-tag">Importante saber</div>
-      <div class="tema-title">Sexting y violencia digital</div>
-      <div class="tema-desc">Qué pasa si alguien difunde tus fotos, cómo funciona la sextorsión y qué dice la ley chilena. Incluyendo lo que nadie tiene derecho a pedirte.</div>
-      <div class="tema-cta">Ver información →</div>
-    </a>
-    <a href="#privacidad" class="tema-c tc-blue">
-      <div class="tema-tag">Configuraciones reales</div>
-      <div class="tema-title">Privacidad en redes</div>
-      <div class="tema-desc">Lo que revelan tus posts sin que lo sepas. Configuraciones mínimas en Instagram, TikTok y WhatsApp. Tu huella digital y por qué importa.</div>
-      <div class="tema-cta">Ver configuraciones →</div>
-    </a>
-    <a href="#grooming" class="tema-c tc-red">
-      <div class="tema-tag">Reconocer</div>
-      <div class="tema-title">Grooming y contacto no deseado</div>
-      <div class="tema-desc">Cómo funciona el proceso, por qué personas inteligentes caen, qué señales reconocer y qué hacer si algo ya pasó o le pasó a alguien que conoces.</div>
-      <div class="tema-cta">Ver señales →</div>
-    </a>
-    <a href="#pololeo" class="tema-c tc-orange">
-      <div class="tema-tag">Relaciones de pareja</div>
-      <div class="tema-title">Control digital en el pololeo</div>
-      <div class="tema-desc">Revisar el teléfono, exigir contraseñas, controlar quién te puede escribir. Qué es normal y qué es violencia — aunque "sea por amor".</div>
-      <div class="tema-cta">Ver red flags →</div>
-    </a>
-    <a href="#contrasenas" class="tema-c tc-green">
-      <div class="tema-tag">Seguridad básica</div>
-      <div class="tema-title">Contraseñas y cuentas</div>
-      <div class="tema-desc">Por qué roban cuentas de Instagram y cómo. Qué es el 2FA y por qué te salva. Cómo recuperar una cuenta hackeada.</div>
-      <div class="tema-cta">Ver guía →</div>
-    </a>
-    <a href="#derechos" class="tema-c tc-gold">
-      <div class="tema-tag">Marco legal Chile</div>
-      <div class="tema-title">Tus derechos digitales</div>
-      <div class="tema-desc">Qué leyes te protegen, qué es delito, cómo denunciar sin abogado y qué pasa con el agresor. La ley está más de tu lado de lo que crees.</div>
-      <div class="tema-cta">Ver derechos →</div>
-    </a>
+
+    <details class="tema-acc" style="background:var(--bg2);">
+      <summary class="tema-c tc-purple" style="list-style:none;cursor:pointer;">
+        <div class="tema-tag">Importante saber</div>
+        <div class="tema-title">Sexting y violencia digital</div>
+        <div class="tema-desc">Qué pasa si alguien difunde tus fotos, cómo funciona la sextorsión y qué dice la ley.</div>
+        <div class="tema-cta">Ver información ↓</div>
+      </summary>
+      <div class="tema-body">
+        <p>Si alguien difunde o amenaza con difundir fotos íntimas tuyas sin tu consentimiento, eso es <strong>sextorsión</strong> — delito en Chile con pena de hasta 5 años (Ley 21.459 Art. 5).</p>
+        <p style="margin-top:.75rem;">Lo primero: no borres los mensajes del atacante — son evidencia. Guarda capturas. Denuncia en PDI Cibercrimen: <strong>+56 2 2708 0000</strong>.</p>
+        <a href="/violencia-digital" style="display:inline-block;margin-top:1rem;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:#9b6dff;text-transform:uppercase;">Ver guía completa →</a>
+      </div>
+    </details>
+
+    <details class="tema-acc" style="background:var(--bg2);">
+      <summary class="tema-c tc-blue" style="list-style:none;cursor:pointer;">
+        <div class="tema-tag">Configuraciones reales</div>
+        <div class="tema-title">Privacidad en redes</div>
+        <div class="tema-desc">Lo que revelan tus posts sin que lo sepas. Configuraciones mínimas en Instagram y TikTok.</div>
+        <div class="tema-cta">Ver configuraciones ↓</div>
+      </summary>
+      <div class="tema-body">
+        <p>Una story con tu ubicación + tu horario de salida del colegio es suficiente para que alguien sepa dónde encontrarte. Lo mínimo que deberías tener activado:</p>
+        <ul style="margin-top:.75rem;padding-left:1.25rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li>Cuenta privada — en Instagram y TikTok</li>
+          <li>Ubicación desactivada en stories</li>
+          <li>2FA con app autenticadora (no SMS)</li>
+          <li>Solo seguidores que conoces en persona</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="tema-acc" style="background:var(--bg2);">
+      <summary class="tema-c tc-red" style="list-style:none;cursor:pointer;">
+        <div class="tema-tag">Reconocer</div>
+        <div class="tema-title">Grooming y contacto no deseado</div>
+        <div class="tema-desc">Cómo funciona el proceso, por qué personas inteligentes caen, qué señales reconocer.</div>
+        <div class="tema-cta">Ver señales ↓</div>
+      </summary>
+      <div class="tema-body">
+        <p>El grooming no empieza con una petición — empieza con amabilidad. Un adulto construye confianza durante semanas antes de pedir algo. <strong>La señal más importante: te pide guardar secretos de tus papás.</strong></p>
+        <p style="margin-top:.75rem;">Los adultos con buenas intenciones no necesitan que mantengas una relación en secreto. Si pasa esto: bloquea, guarda los mensajes, y cuéntale a un adulto de confianza.</p>
+      </div>
+    </details>
+
+    <details class="tema-acc" style="background:var(--bg2);">
+      <summary class="tema-c tc-orange" style="list-style:none;cursor:pointer;">
+        <div class="tema-tag">Relaciones de pareja</div>
+        <div class="tema-title">Control digital en el pololeo</div>
+        <div class="tema-desc">Revisar el teléfono, exigir contraseñas, controlar quién te puede escribir.</div>
+        <div class="tema-cta">Ver red flags ↓</div>
+      </summary>
+      <div class="tema-body">
+        <p>Tu pareja <strong>no tiene derecho</strong> a revisar tu teléfono, exigirte tu contraseña ni controlar con quién hablas — aunque estén de novios/as. Eso es control digital, una forma de violencia.</p>
+        <p style="margin-top:.75rem;">Ley 20.066 cubre violencia intrafamiliar incluyendo parejas jóvenes. Si estás en esta situación: PDI o Fiscalía 600 333 0000.</p>
+      </div>
+    </details>
+
+    <details class="tema-acc" style="background:var(--bg2);">
+      <summary class="tema-c tc-green" style="list-style:none;cursor:pointer;">
+        <div class="tema-tag">Seguridad básica</div>
+        <div class="tema-title">Contraseñas y cuentas</div>
+        <div class="tema-desc">Por qué roban cuentas de Instagram y cómo protegerte en 5 minutos.</div>
+        <div class="tema-cta">Ver guía ↓</div>
+      </summary>
+      <div class="tema-body">
+        <p>El 90% de los robos de cuenta se evita con dos pasos: <strong>contraseña única por cuenta</strong> + <strong>2FA activado</strong>. Si usas la misma contraseña en Gmail, Instagram y el portal del colegio, y hackean uno, hackean todo.</p>
+        <p style="margin-top:.75rem;">2FA = código adicional por app (Google Authenticator). Más seguro que SMS.</p>
+      </div>
+    </details>
+
+    <details class="tema-acc" style="background:var(--bg2);">
+      <summary class="tema-c tc-gold" style="list-style:none;cursor:pointer;">
+        <div class="tema-tag">Marco legal Chile</div>
+        <div class="tema-title">Tus derechos digitales</div>
+        <div class="tema-desc">Qué leyes te protegen, qué es delito, cómo denunciar sin abogado.</div>
+        <div class="tema-cta">Ver derechos ↓</div>
+      </summary>
+      <div class="tema-body">
+        <p>Las leyes que te protegen como adolescente en Chile:</p>
+        <ul style="margin-top:.75rem;padding-left:1.25rem;display:flex;flex-direction:column;gap:.4rem;">
+          <li><strong>Ley 21.459</strong> — deepfakes, sextorsión, acceso no autorizado a cuentas</li>
+          <li><strong>Ley 20.526</strong> — grooming (hasta 3 años de pena)</li>
+          <li><strong>Ley 20.536</strong> — ciberbullying en el contexto escolar</li>
+        </ul>
+        <a href="/violencia-digital" style="display:inline-block;margin-top:1rem;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--gold);text-transform:uppercase;">Ver marco legal completo →</a>
+      </div>
+    </details>
+
   </div>
 </div>
 

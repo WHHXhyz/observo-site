@@ -224,7 +224,6 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     </p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;">
       <a href="#planes" class="btn-p"><span>Ver planes de clase →</span></a>
-      <a href="#agente" class="btn-g">Consultar al agente IA</a>
     </div>
     <div class="stat-band" style="margin-top:48px;">
       <div class="sb-item"><div class="sb-n">3/4</div><div class="sb-l">Docentes no se sienten preparados para enseñar seguridad digital</div><div class="sb-src">CPEIP 2024</div></div>
@@ -325,13 +324,103 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <h2 class="st">Listos para<br><em>usar mañana.</em></h2>
   <p class="si">6 planes de clase completos con objetivos, actividades y materiales. Adaptados al currículo chileno, desde 1° básico hasta 4° medio.</p>
   <div class="planes-g">
-    <div class="plan-c"><div class="plan-n">PLAN 01</div><div class="plan-title">¿Qué es seguro compartir?</div><div class="plan-meta">1° – 4° básico · 45 min · Grupal</div><div class="plan-desc">Actividad de clasificación: datos públicos vs privados. Incluye tarjetas imprimibles y dinámica de roles.</div><div class="plan-pills"><span class="pp">datos personales</span><span class="pp">privacidad</span></div></div>
-    <div class="plan-c"><div class="plan-n">PLAN 02</div><div class="plan-title">Contraseñas que protegen</div><div class="plan-meta">5° – 8° básico · 45 min · Individual</div><div class="plan-desc">Taller práctico de creación de contraseñas seguras con el medidor interactivo de Aegis8.</div><div class="plan-pills"><span class="pp">contraseñas</span><span class="pp">autenticación</span></div></div>
-    <div class="plan-c"><div class="plan-n">PLAN 03</div><div class="plan-title">Reconocer el phishing</div><div class="plan-meta">7° básico – 2° medio · 60 min · Grupal</div><div class="plan-desc">Análisis de casos reales chilenos. Debate grupal y checklist de verificación. Usa el analizador de Aegis8.</div><div class="plan-pills"><span class="pp">phishing</span><span class="pp">análisis crítico</span></div></div>
-    <div class="plan-c"><div class="plan-n">PLAN 04</div><div class="plan-title">Grooming: señales y respuestas</div><div class="plan-meta">7° básico – 2° medio · 60 min · Grupal</div><div class="plan-desc">Simulación de conversaciones. Identificación de señales de alerta. Protocolo de denuncia en Chile.</div><div class="plan-pills"><span class="pp">grooming</span><span class="pp">Ley 20.526</span></div></div>
-    <div class="plan-c"><div class="plan-n">PLAN 05</div><div class="plan-title">Huella digital y reputación</div><div class="plan-meta">1° – 3° medio · 45 min · Individual</div><div class="plan-desc">Actividad de googleo propio y reflexión sobre permanencia de la información online.</div><div class="plan-pills"><span class="pp">redes sociales</span><span class="pp">privacidad</span></div></div>
-    <div class="plan-c"><div class="plan-n">PLAN 06</div><div class="plan-title">Ciberbullying: roles y derechos</div><div class="plan-meta">5° básico – 4° medio · 60 min · Grupal</div><div class="plan-desc">Teatro fórum con situaciones reales. Revisión de la Ley 20.536 y derechos del alumno.</div><div class="plan-pills"><span class="pp">ciberbullying</span><span class="pp">convivencia escolar</span></div></div>
-  </div>
+    <details class="plan-acc" style="background:var(--bg2);border-bottom:1px solid var(--border);">
+      <summary class="plan-c" style="cursor:pointer;list-style:none;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;">
+        <div class="plan-n" style="color:var(--blue);">PLAN 01</div>
+        <div style="flex:1;">
+          <div class="plan-title">¿Qué es seguro compartir?</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--ink3);letter-spacing:1px;margin-top:.2rem;">C1 · Fundamento · 1° – 4° básico · 60 min</div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);">↓</div>
+      </summary>
+      <div style="padding:1rem 1.5rem 1.25rem;border-top:1px solid var(--border);font-size:.86rem;color:var(--ink2);line-height:1.7;">
+        Los alumnos aprenden a distinguir qué información personal es segura compartir online y cuál no. Actividad central: combinar datos sueltos para descubrir cómo se vuelven peligrosos en conjunto.
+        <div style="margin-top:1rem;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="/descargas/plan-clase-01-datos-personales.pdf" download style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--bg);background:var(--blue);padding:8px 16px;border-radius:3px;text-decoration:none;">↓ Descargar PDF</a>
+        </div>
+      </div>
+    </details>
+    <details class="plan-acc" style="background:var(--bg2);border-bottom:1px solid var(--border);">
+      <summary class="plan-c" style="cursor:pointer;list-style:none;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;">
+        <div class="plan-n" style="color:var(--green);">PLAN 02</div>
+        <div style="flex:1;">
+          <div class="plan-title">Contraseñas que protegen</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--ink3);letter-spacing:1px;margin-top:.2rem;">C5 · Defensa · 5° – 8° básico · 60 min</div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);">↓</div>
+      </summary>
+      <div style="padding:1rem 1.5rem 1.25rem;border-top:1px solid var(--border);font-size:.86rem;color:var(--ink2);line-height:1.7;">
+        Por qué las contraseñas débiles son una puerta abierta. Técnica de la frase, gestores de contraseñas y el problema de reutilizar. Incluye actividad práctica sin revelar contraseñas reales.
+        <div style="margin-top:1rem;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="/descargas/plan-clase-02-contrasenas.pdf" download style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--bg);background:var(--green);padding:8px 16px;border-radius:3px;text-decoration:none;">↓ Descargar PDF</a>
+        </div>
+      </div>
+    </details>
+    <details class="plan-acc" style="background:var(--bg2);border-bottom:1px solid var(--border);">
+      <summary class="plan-c" style="cursor:pointer;list-style:none;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;">
+        <div class="plan-n" style="color:var(--accent);">PLAN 03</div>
+        <div style="flex:1;">
+          <div class="plan-title">Reconocer el phishing</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--ink3);letter-spacing:1px;margin-top:.2rem;">C4 · Amenazas · 7° básico – 2° medio · 60 min</div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);">↓</div>
+      </summary>
+      <div style="padding:1rem 1.5rem 1.25rem;border-top:1px solid var(--border);font-size:.86rem;color:var(--ink2);line-height:1.7;">
+        Análisis grupal de mensajes reales de phishing. Los 5 pasos de verificación antes de hacer clic. Demo con el Analizador de Phishing de Aegis8.
+        <div style="margin-top:1rem;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="/descargas/plan-clase-03-phishing.pdf" download style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--bg);background:var(--accent);padding:8px 16px;border-radius:3px;text-decoration:none;">↓ Descargar PDF</a>
+        </div>
+      </div>
+    </details>
+    <details class="plan-acc" style="background:var(--bg2);border-bottom:1px solid var(--border);">
+      <summary class="plan-c" style="cursor:pointer;list-style:none;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;">
+        <div class="plan-n" style="color:var(--red);">PLAN 04</div>
+        <div style="flex:1;">
+          <div class="plan-title">Grooming: señales y respuesta</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--ink3);letter-spacing:1px;margin-top:.2rem;">C3 · Relaciones · 7° básico – 2° medio · 60 min</div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);">↓</div>
+      </summary>
+      <div style="padding:1rem 1.5rem 1.25rem;border-top:1px solid var(--border);font-size:.86rem;color:var(--ink2);line-height:1.7;">
+        Las 4 fases del grooming y por qué funciona. Análisis de escenarios ficticios. Protocolo de respuesta en 3 pasos. Números de emergencia: PDI +56 2 2708 0000.
+        <div style="margin-top:1rem;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="/descargas/plan-clase-04-grooming.pdf" download style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--bg);background:var(--red);padding:8px 16px;border-radius:3px;text-decoration:none;">↓ Descargar PDF</a>
+        </div>
+      </div>
+    </details>
+    <details class="plan-acc" style="background:var(--bg2);border-bottom:1px solid var(--border);">
+      <summary class="plan-c" style="cursor:pointer;list-style:none;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;">
+        <div class="plan-n" style="color:var(--purple);">PLAN 05</div>
+        <div style="flex:1;">
+          <div class="plan-title">Huella digital y reputación</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--ink3);letter-spacing:1px;margin-top:.2rem;">C2 · Identidad · 1° – 3° medio · 60 min</div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);">↓</div>
+      </summary>
+      <div style="padding:1rem 1.5rem 1.25rem;border-top:1px solid var(--border);font-size:.86rem;color:var(--ink2);line-height:1.7;">
+        Huella activa vs huella pasiva. Caso ficticio de postulación universitaria. Auditoría personal (privada) de redes. Una acción concreta que cada alumno hace en clase.
+        <div style="margin-top:1rem;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="/descargas/plan-clase-05-huella-digital.pdf" download style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--bg);background:var(--purple);padding:8px 16px;border-radius:3px;text-decoration:none;">↓ Descargar PDF</a>
+        </div>
+      </div>
+    </details>
+    <details class="plan-acc" style="background:var(--bg2);border-bottom:1px solid var(--border);">
+      <summary class="plan-c" style="cursor:pointer;list-style:none;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;">
+        <div class="plan-n" style="color:var(--blue);">PLAN 06</div>
+        <div style="flex:1;">
+          <div class="plan-title">Ciberbullying: roles y derechos</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--ink3);letter-spacing:1px;margin-top:.2rem;">C3 · Relaciones · 5° básico – 4° medio · 60 min</div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);">↓</div>
+      </summary>
+      <div style="padding:1rem 1.5rem 1.25rem;border-top:1px solid var(--border);font-size:.86rem;color:var(--ink2);line-height:1.7;">
+        El poder del testigo. Diferencias con bullying presencial. Ley 20.536 y obligaciones del establecimiento. Reflexión escrita individual no compartida.
+        <div style="margin-top:1rem;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="/descargas/plan-clase-06-ciberbullying.pdf" download style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--bg);background:var(--blue);padding:8px 16px;border-radius:3px;text-decoration:none;">↓ Descargar PDF</a>
+        </div>
+      </div>
+    </details>
+</div>
 </div>
 
 <!-- ═══════ RECURSOS PDF ═══════ -->
@@ -373,26 +462,32 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   </div>
 </div>
 
-<!-- ═══════ EJEMPLOS EN EL AULA ═══════ -->
-<div class="sw" id="ejemplos">
-  <div class="sl">// Cómo se ve en la práctica</div>
-  <h2 class="st">En tu sala,<br><em>esta semana.</em></h2>
-  <div class="ej-g">
-    <div class="ej"><div class="ej-num">1</div><div class="ej-content"><div class="ej-ctx">Lunes · 7° básico · 15 minutos</div><div class="ej-title">El link sospechoso del grupo de WhatsApp</div><div class="ej-desc">Proyecta en la pantalla el link que alguien compartió en el grupo de curso. Pregunta: "¿Qué señales ven antes de hacer clic?" La clase construye la lista de alertas.</div><span class="ej-tip">Sin materiales · Sin preparación previa</span></div></div>
-    <div class="ej"><div class="ej-num">2</div><div class="ej-content"><div class="ej-ctx">Consejo de curso · 4° medio · 20 minutos</div><div class="ej-title">Tu huella digital antes de postular a la universidad</div><div class="ej-desc">Pide a dos voluntarios que busquen su propio nombre en Google. Lo que aparece es su huella digital actual. La conversación sola toma 20 minutos — tú solo moderas.</div><span class="ej-tip">Sin materiales · Alto impacto</span></div></div>
-    <div class="ej"><div class="ej-num">3</div><div class="ej-content"><div class="ej-ctx">Reunión de apoderados · Cualquier nivel</div><div class="ej-title">La charla de ciberseguridad que los apoderados nunca tuvieron</div><div class="ej-desc">Descarga el PDF "Guía para Apoderados" y repártelo al final de la reunión. Dedica 10 minutos a los 3 puntos más urgentes: grooming, contraseñas y controles parentales.</div><span class="ej-tip">PDF incluido · 10 min de charla</span></div></div>
-    <div class="ej"><div class="ej-num">4</div><div class="ej-content"><div class="ej-ctx">Taller · Básica completa · 60 minutos</div><div class="ej-title">El quiz de Aegis8 como evaluación formativa</div><div class="ej-desc">Crea una clase en la app Aegis8, proyecta el código QR, los alumnos responden desde sus celulares. Al terminar ves en tiempo real quién entendió qué.</div><span class="ej-tip">Requiere celulares · Resultados en tiempo real</span></div></div>
-  </div>
-</div>
-
 <!-- ═══════ CONSEJOS ═══════ -->
 <div class="sw">
   <div class="sl">// Sin ser experto igual puedes</div>
   <h2 class="st">Tres cosas que<br><em>ya sabe hacer.</em></h2>
-  <div class="tip-g">
-    <div class="tip"><div class="tip-n">01</div><div class="tip-text"><strong>No necesitas saber todo.</strong> Tu rol es facilitar la reflexión, no ser el experto técnico. Los alumnos traen la experiencia.</div></div>
-    <div class="tip"><div class="tip-n">02</div><div class="tip-text"><strong>Usa casos reales chilenos.</strong> El phishing de Banco Estado o el ciberbullying en WhatsApp conectan más que ejemplos abstractos.</div></div>
-    <div class="tip"><div class="tip-n">03</div><div class="tip-text"><strong>La IA es tu aliada.</strong> El agente docente de Aegis8 responde preguntas difíciles en tiempo real, incluso durante la clase.</div></div>
+  <div style="display:flex;flex-direction:column;gap:2px;background:var(--border);">
+    <div style="background:var(--bg2);padding:1.75rem;display:flex;gap:1.5rem;align-items:flex-start;">
+      <div style="font-family:'DM Serif Display',serif;font-size:2.5rem;font-style:italic;color:rgba(240,120,48,.25);line-height:1;flex-shrink:0;width:44px;">01</div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;color:var(--ink);margin-bottom:.4rem;letter-spacing:1px;">NO NECESITAS SABERLO TODO</div>
+        <div style="font-size:.9rem;color:var(--ink2);line-height:1.7;">Tu rol no es ser experta en ciberseguridad — es abrir la conversación y saber a quién derivar. Un docente que dice "no lo sé, busquémoslo juntos" enseña más que uno que finge saber todo.</div>
+      </div>
+    </div>
+    <div style="background:var(--bg2);padding:1.75rem;display:flex;gap:1.5rem;align-items:flex-start;">
+      <div style="font-family:'DM Serif Display',serif;font-size:2.5rem;font-style:italic;color:rgba(240,120,48,.25);line-height:1;flex-shrink:0;width:44px;">02</div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;color:var(--ink);margin-bottom:.4rem;letter-spacing:1px;">USA CASOS REALES CHILENOS</div>
+        <div style="font-size:.9rem;color:var(--ink2);line-height:1.7;">Cada plan de Aegis8 incluye casos que ocurrieron en Chile. Cuando un alumno reconoce la situación, la atención es inmediata. No hay que inventar nada — la realidad ya es suficientemente impactante.</div>
+      </div>
+    </div>
+    <div style="background:var(--bg2);padding:1.75rem;display:flex;gap:1.5rem;align-items:flex-start;">
+      <div style="font-family:'DM Serif Display',serif;font-size:2.5rem;font-style:italic;color:rgba(240,120,48,.25);line-height:1;flex-shrink:0;width:44px;">03</div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;color:var(--ink);margin-bottom:.4rem;letter-spacing:1px;">EL AGENTE IA ES TU ALIADO</div>
+        <div style="font-size:.9rem;color:var(--ink2);line-height:1.7;">Si tienes dudas sobre cómo abordar un tema, qué dice la ley o cómo responder a una situación en el aula — el Agente Docente de Aegis8 responde en lenguaje de profe, no de ingeniero. O escríbenos directo.</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -400,7 +495,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <div class="sw">
   <div class="sl">// Guías especializadas</div>
   <h2 class="st">Temas que<br><em>vale la pena conocer.</em></h2>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);margin-top:2rem;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);margin-top:2rem;" class="guias-g-doc">
     <a href="/gaming" style="background:rgba(46,204,128,.04);padding:2.5rem 2rem;
       text-decoration:none;display:flex;flex-direction:column;gap:10px;transition:background .2s;
       position:relative;overflow:hidden;border:1px solid rgba(46,204,128,.12);"
@@ -441,7 +536,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <!-- ═══════ AGENTE IA ═══════ -->
 <div class="sw" id="agente">
   <div class="sl">// Agente IA para docentes</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;" class="agente-grid-doc">
     <div>
       <h2 class="st">Pregunta lo<br>que nadie<br><em>te enseñó.</em></h2>
       <p style="font-size:.9rem;line-height:1.8;color:var(--ink2);margin-bottom:1rem;">
@@ -451,6 +546,9 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
         El Agente Docente de Aegis8 responde en lenguaje de profe, no de ingeniero. Disponible 24/7, sin costo.
       </p>
       <a href="/agente-seguridad.html" class="btn-p"><span>Hablar con el agente →</span></a>
+      <p style="margin-top:1rem;font-size:.82rem;color:var(--ink3);line-height:1.6;max-width:380px;">
+        Después de revisar los materiales, si tienes dudas o quieres complementar — pregúntale al agente o <a href="/contacto" style="color:var(--accent);text-decoration:none;">escríbenos directo</a>. Respondemos en menos de 24 horas.
+      </p>
     </div>
     <div class="ia-preview">
       <div class="ia-hd"><div class="ia-dot"></div><div class="ia-hd-title">Agente <span>Docente</span> · Aegis8</div></div>

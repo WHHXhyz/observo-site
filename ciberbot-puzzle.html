@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CiberBot: Conecta el Camino — Aegis8</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --card: #1c2333;
+  --accent: #00ff88;
+  --orange: #ff8c00;
+  --blue: #58a6ff;
+  --purple: #bc8cff;
+  --red: #ff6b6b;
+  --yellow: #ffd166;
+  --text: #e6edf3;
+  --muted: #7d8590;
+  --border: rgba(0,255,136,0.15);
+  --r: 14px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Animated starfield bg */
+body::before {
+  content:'';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 10% 15%, rgba(0,255,136,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 60%, rgba(88,166,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 25%, rgba(188,140,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 70%, rgba(255,209,102,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 85%, rgba(0,255,136,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 40%, rgba(255,107,107,0.3) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Header */
+.header {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 28px 20px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.bot-icon {
+  width: 48px;
+  height: 48px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem;
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+
+.header p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Level selector */
+.level-bar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 20px;
+  flex-wrap: wrap;
+}
+
+.level-btn {
+  background: var(--card);
+  border: 2px solid var(--border);
+  color: var(--muted);
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.9rem;
+  padding: 6px 14px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.level-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.level-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0d1117;
+}
+
+.level-btn.locked {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.level-btn.locked:hover {
+  transform: none;
+  border-color: var(--border);
+  color: var(--muted);
+}
+
+/* Tip banner */
+.tip-banner {
+  position: relative;
+  z-index: 10;
+  margin: 0 20px 12px;
+  background: linear-gradient(135deg, rgba(0,255,136,0.08), rgba(88,166,255,0.08));
+  border: 1px solid rgba(0,255,136,0.2);
+  border-radius: var(--r);
+  padding: 12px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: all 0.4s;
+}
+
+.tip-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+.tip-text { font-size: 0.82rem; line-height: 1.5; color: var(--text); }
+.tip-text strong { color: var(--accent); }
+
+/* Main game area */
+.game-area {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 20px 30px;
+  gap: 16px;
+}
+
+/* Stats row */
+.stats-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.stat-chip {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 6px 16px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+}
+
+.stat-chip span { color: var(--text); }
+#moveCount { color: var(--yellow); }
+#fillCount { color: var(--accent); }
+
+/* Canvas wrapper */
+.canvas-wrap {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid var(--border);
+  box-shadow: 0 0 40px rgba(0,255,136,0.08), 0 0 0 1px rgba(255,255,255,0.03);
+  background: var(--surface);
+  touch-action: none;
+}
+
+canvas {
+  display: block;
+  cursor: pointer;
+}
+
+/* Buttons */
+.btn-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  padding: 10px 24px;
+  border-radius: 50px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #0d1117;
+}
+.btn-primary:hover { background: #00e07a; transform: translateY(-2px); }
+
+.btn-secondary {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--muted);
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+/* Win overlay */
+.win-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+  backdrop-filter: blur(8px);
+}
+
+.win-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.win-card {
+  background: var(--card);
+  border: 2px solid var(--accent);
+  border-radius: 24px;
+  padding: 40px 36px;
+  text-align: center;
+  max-width: 340px;
+  width: 90%;
+  box-shadow: 0 0 60px rgba(0,255,136,0.2);
+  transform: scale(0.85);
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.win-overlay.show .win-card { transform: scale(1); }
+
+.win-emoji {
+  font-size: 3.5rem;
+  margin-bottom: 12px;
+  display: block;
+  animation: bounce 0.5s 0.3s ease both;
+}
+
+@keyframes bounce {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.win-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.8rem;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.win-msg {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.win-tip {
+  background: rgba(0,255,136,0.07);
+  border: 1px solid rgba(0,255,136,0.15);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 0.82rem;
+  color: var(--text);
+  margin-bottom: 22px;
+  text-align: left;
+  line-height: 1.5;
+}
+.win-tip strong { color: var(--accent); }
+
+.win-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+/* Confetti */
+.confetti-piece {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  animation: confettiFall linear forwards;
+  pointer-events: none;
+  z-index: 200;
+}
+
+@keyframes confettiFall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .header h1 { font-size: 1.6rem; }
+  .btn { padding: 9px 18px; font-size: 0.9rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-row">
+    <svg class="bot-icon" viewBox="0 0 48 48" fill="none">
+      <rect x="8" y="14" width="32" height="26" rx="8" fill="#1c2333" stroke="#00ff88" stroke-width="2"/>
+      <rect x="18" y="6" width="12" height="10" rx="4" fill="#1c2333" stroke="#00ff88" stroke-width="2"/>
+      <line x1="24" y1="14" x2="24" y2="16" stroke="#00ff88" stroke-width="2"/>
+      <circle cx="18" cy="26" r="4" fill="#00ff88" opacity="0.9"/>
+      <circle cx="30" cy="26" r="4" fill="#00ff88" opacity="0.9"/>
+      <rect x="17" y="33" width="14" height="3" rx="1.5" fill="#00ff88" opacity="0.6"/>
+      <rect x="6" y="22" width="4" height="8" rx="2" fill="#00ff88" opacity="0.5"/>
+      <rect x="38" y="22" width="4" height="8" rx="2" fill="#00ff88" opacity="0.5"/>
+    </svg>
+    <h1>CiberBot: Conecta el Camino</h1>
+  </div>
+  <p>Conecta los números en orden · Llena todas las celdas · ¡Aprende ciberseguridad!</p>
+</div>
+
+<div class="level-bar" id="levelBar"></div>
+
+<div class="tip-banner" id="tipBanner">
+  <span class="tip-icon">🔐</span>
+  <div class="tip-text" id="tipText">Cargando...</div>
+</div>
+
+<div class="game-area">
+  <div class="stats-row">
+    <div class="stat-chip">🎮 Movimientos: <span id="moveCount">0</span></div>
+    <div class="stat-chip">🟩 Celdas: <span id="fillCount">0%</span></div>
+  </div>
+
+  <div class="canvas-wrap" id="canvasWrap">
+    <canvas id="gameCanvas"></canvas>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-secondary" onclick="resetLevel()">↩ Reiniciar</button>
+    <button class="btn btn-secondary" onclick="undoMove()">↺ Deshacer</button>
+  </div>
+</div>
+
+<!-- Win overlay -->
+<div class="win-overlay" id="winOverlay">
+  <div class="win-card">
+    <span class="win-emoji" id="winEmoji">⭐</span>
+    <div class="win-title" id="winTitle">¡Camino Seguro!</div>
+    <div class="win-msg" id="winMsg"></div>
+    <div class="win-tip" id="winTipDetail"></div>
+    <div class="win-buttons">
+      <button class="btn btn-secondary" onclick="closeWin(); resetLevel();">Repetir</button>
+      <button class="btn btn-primary" id="nextBtn" onclick="nextLevel()">Siguiente →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── PALETTE ──────────────────────────────────────────────────────────────────
+const COLORS = [
+  '#00ff88', // 1 verde
+  '#58a6ff', // 2 azul
+  '#ff6b6b', // 3 rojo
+  '#ffd166', // 4 amarillo
+  '#bc8cff', // 5 morado
+  '#ff8c00', // 6 naranja
+  '#00d4ff', // 7 cyan
+  '#ff69b4', // 8 rosa
+  '#a8ff78', // 9 lima
+  '#ff4500', // 10 rojo oscuro
+];
+
+// ── LEVELS ───────────────────────────────────────────────────────────────────
+// Each level: { grid: N, nodes: [[r,c,num], ...], tip, winTip, emoji }
+// num is 1-based, pairs share the same number
+const LEVELS = [
+  {
+    // Verified seed=1: 4x4, 3 colors
+    // B B B B / B C C B / B A B B / B A A A
+    grid: 4,
+    nodes: [
+      [2,1,1],[3,3,1],
+      [2,2,2],[3,0,2],
+      [1,1,3],[1,2,3],
+    ],
+    tip: '<strong>Contraseña 101:</strong> Una buena contraseña es como un camino secreto — conecta los puntos sin cruzarte con los demás.',
+    winTip: '🔑 <strong>Dato seguro:</strong> Una contraseña fuerte tiene mayúsculas, números y símbolos. ¡Nunca la compartas!',
+    winTitle: '¡Ruta Segura!',
+    winMsg: 'Conectaste todos los caminos sin cruzarte. ¡Igual que una contraseña segura!',
+    emoji: '🔑',
+  },
+  {
+    // Verified seed=14: 5x5, 4 colors
+    // D A A A A / D D D C C / C C D B C / C B B B C / C C C C C
+    grid: 5,
+    nodes: [
+      [0,1,1],[0,4,1],
+      [2,3,2],[3,1,2],
+      [1,3,3],[2,1,3],
+      [0,0,4],[2,2,4],
+    ],
+    tip: '<strong>Phishing:</strong> Los hackers intentan cruzar tus caminos con engaños. ¡Mantén tu ruta limpia!',
+    winTip: '🎣 <strong>Dato seguro:</strong> El phishing son correos o mensajes falsos. Si algo parece raro, ¡no hagas clic!',
+    winTitle: '¡Anti-Phishing!',
+    winMsg: 'Navegaste sin caer en trampas. ¡Así se evita el phishing!',
+    emoji: '🎣',
+  },
+  {
+    // Verified seed=14 (same layout, different theme): 5x5, 4 colors
+    // D A A A A / D D D C C / C C D B C / C B B B C / C C C C C
+    grid: 5,
+    nodes: [
+      [0,1,1],[0,4,1],
+      [2,3,2],[3,1,2],
+      [1,3,3],[2,1,3],
+      [0,0,4],[2,2,4],
+    ],
+    tip: '<strong>Privacidad:</strong> Tus datos son como caminos privados. Solo tú decides quién puede seguirlos.',
+    winTip: '🛡️ <strong>Dato seguro:</strong> No compartas tu dirección, colegio ni rutinas en redes sociales.',
+    winTitle: '¡Privacidad Protegida!',
+    winMsg: 'Todos tus caminos privados llegaron a destino sin filtrarse.',
+    emoji: '🛡️',
+  },
+  {
+    // Verified seed=254: 6x6, 5 colors
+    // D D D D D D / D B B B B D / D B E E B B / D B B E E E / D C B B B B / D C C C A A
+    grid: 6,
+    nodes: [
+      [5,4,1],[5,5,1],
+      [2,5,2],[4,5,2],
+      [4,1,3],[5,3,3],
+      [1,5,4],[5,0,4],
+      [2,2,5],[3,5,5],
+    ],
+    tip: '<strong>Identidad digital:</strong> Tu identidad online es única. Conéctala bien y no dejes huecos libres.',
+    winTip: '🆔 <strong>Dato seguro:</strong> Tu nombre, foto y número de teléfono son datos personales. Cuídalos en internet.',
+    winTitle: '¡Identidad Segura!',
+    winMsg: 'Protegiste todos los caminos de tu identidad digital.',
+    emoji: '🆔',
+  },
+  {
+    // Verified seed=201: 6x6, 6 colors
+    // C C C C C C / C D A A A C / C D F F A A / C D D F F A / C E E E F A / C B B F F A
+    grid: 6,
+    nodes: [
+      [1,2,1],[5,5,1],
+      [5,1,2],[5,2,2],
+      [1,5,3],[5,0,3],
+      [1,1,4],[3,2,4],
+      [4,1,5],[4,3,5],
+      [2,2,6],[5,3,6],
+    ],
+    tip: '<strong>Redes seguras:</strong> El WiFi público es como un camino abierto — cualquiera puede ver lo que envías.',
+    winTip: '📶 <strong>Dato seguro:</strong> Evita hacer compras o ingresar contraseñas en WiFi público. Usa datos móviles o una VPN.',
+    winTitle: '¡Red Protegida!',
+    winMsg: 'Trazaste una red de caminos seguros sin dejar ninguno expuesto.',
+    emoji: '📶',
+  },
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let currentLevel = 0;
+let unlockedLevels = 1;
+let state = null;
+let dragging = false;
+let dragColor = null;
+let history = [];
+let moves = 0;
+
+// ── CANVAS SETUP ─────────────────────────────────────────────────────────────
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+let CELL = 64;
+let PAD = 12;
+
+function setupCanvas(n) {
+  const maxW = Math.min(window.innerWidth - 48, 480);
+  CELL = Math.floor((maxW - PAD * 2) / n);
+  const size = CELL * n + PAD * 2;
+  canvas.width = size;
+  canvas.height = size;
+  canvas.style.width = size + 'px';
+  canvas.style.height = size + 'px';
+}
+
+// ── LEVEL INIT ────────────────────────────────────────────────────────────────
+function loadLevel(idx) {
+  currentLevel = idx;
+  const lv = LEVELS[idx];
+  setupCanvas(lv.grid);
+
+  // Build grid: null or { color, num, isNode }
+  const n = lv.grid;
+  const grid = Array.from({length:n}, () => Array(n).fill(null));
+  const nodeMap = {}; // num -> [{r,c}]
+
+  lv.nodes.forEach(([r,c,num]) => {
+    const col = COLORS[num-1];
+    grid[r][c] = { color: col, num, isNode: true };
+    if (!nodeMap[num]) nodeMap[num] = [];
+    nodeMap[num].push({r,c});
+  });
+
+  // Paths: num -> array of {r,c} in order
+  const paths = {};
+  lv.nodes.forEach(([r,c,num]) => {
+    if (!paths[num]) paths[num] = [{r,c}];
+  });
+
+  state = { grid, n, nodeMap, paths, solved: false };
+  history = [];
+  moves = 0;
+  dragging = false;
+  dragColor = null;
+
+  updateLevelBar();
+  updateTip(lv.tip);
+  updateStats();
+  draw();
+}
+
+function updateTip(html) {
+  document.getElementById('tipText').innerHTML = html;
+}
+
+function updateStats() {
+  document.getElementById('moveCount').textContent = moves;
+  const total = state.n * state.n;
+  let filled = 0;
+  for (let r = 0; r < state.n; r++)
+    for (let c = 0; c < state.n; c++)
+      if (state.grid[r][c]) filled++;
+  document.getElementById('fillCount').textContent =
+    Math.round(filled/total*100) + '%';
+}
+
+function updateLevelBar() {
+  const bar = document.getElementById('levelBar');
+  bar.innerHTML = '';
+  LEVELS.forEach((lv, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'level-btn' +
+      (i === currentLevel ? ' active' : '') +
+      (i >= unlockedLevels ? ' locked' : '');
+    btn.textContent = (i < unlockedLevels) ? `Nivel ${i+1}` : `🔒 ${i+1}`;
+    btn.onclick = () => {
+      if (i < unlockedLevels) loadLevel(i);
+    };
+    bar.appendChild(btn);
+  });
+}
+
+// ── DRAWING ───────────────────────────────────────────────────────────────────
+function cellPos(r, c) {
+  return {
+    x: PAD + c * CELL,
+    y: PAD + r * CELL,
+  };
+}
+
+function draw() {
+  const {n, grid} = state;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Background
+  ctx.fillStyle = '#161b22';
+  roundRect(ctx, 0, 0, canvas.width, canvas.height, 18);
+  ctx.fill();
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(0,255,136,0.08)';
+  ctx.lineWidth = 1;
+  for (let r = 0; r <= n; r++) {
+    const y = PAD + r * CELL;
+    ctx.beginPath(); ctx.moveTo(PAD, y); ctx.lineTo(PAD + n*CELL, y); ctx.stroke();
+  }
+  for (let c = 0; c <= n; c++) {
+    const x = PAD + c * CELL;
+    ctx.beginPath(); ctx.moveTo(x, PAD); ctx.lineTo(x, PAD + n*CELL); ctx.stroke();
+  }
+
+  // Draw paths (tubes)
+  drawPaths();
+
+  // Draw cells that are filled (non-node)
+  for (let r = 0; r < n; r++) {
+    for (let c = 0; c < n; c++) {
+      const cell = grid[r][c];
+      if (cell && !cell.isNode) {
+        drawFilledCell(r, c, cell.color);
+      }
+    }
+  }
+
+  // Draw nodes (numbered circles)
+  for (let r = 0; r < n; r++) {
+    for (let c = 0; c < n; c++) {
+      const cell = grid[r][c];
+      if (cell && cell.isNode) {
+        drawNode(r, c, cell.color, cell.num);
+      }
+    }
+  }
+}
+
+function drawPaths() {
+  const {paths, nodeMap, n} = state;
+  Object.entries(paths).forEach(([num, path]) => {
+    if (path.length < 2) return;
+    const col = COLORS[num-1];
+    ctx.strokeStyle = col;
+    ctx.lineWidth = CELL * 0.38;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.globalAlpha = 0.55;
+    ctx.beginPath();
+    path.forEach((pt, i) => {
+      const {x, y} = cellPos(pt.r, pt.c);
+      const cx = x + CELL/2, cy = y + CELL/2;
+      if (i === 0) ctx.moveTo(cx, cy);
+      else ctx.lineTo(cx, cy);
+    });
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  });
+}
+
+function drawFilledCell(r, c, color) {
+  const {x, y} = cellPos(r, c);
+  ctx.fillStyle = color + '22';
+  roundRect(ctx, x+2, y+2, CELL-4, CELL-4, 6);
+  ctx.fill();
+}
+
+function drawNode(r, c, color, num) {
+  const {x, y} = cellPos(r, c);
+  const cx = x + CELL/2, cy = y + CELL/2;
+  const rad = CELL * 0.36;
+
+  // Glow
+  ctx.save();
+  ctx.shadowBlur = 18;
+  ctx.shadowColor = color;
+
+  // Circle
+  ctx.fillStyle = '#1c2333';
+  ctx.beginPath(); ctx.arc(cx, cy, rad, 0, Math.PI*2); ctx.fill();
+
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.arc(cx, cy, rad, 0, Math.PI*2); ctx.stroke();
+
+  // Number
+  ctx.fillStyle = color;
+  ctx.font = `bold ${Math.round(CELL*0.36)}px Fredoka One, cursive`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(num, cx, cy+1);
+  ctx.restore();
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r, y);
+  ctx.lineTo(x+w-r, y);
+  ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+  ctx.lineTo(x+w, y+h-r);
+  ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+  ctx.lineTo(x+r, y+h);
+  ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+  ctx.lineTo(x, y+r);
+  ctx.quadraticCurveTo(x, y, x+r, y);
+  ctx.closePath();
+}
+
+// ── INPUT ─────────────────────────────────────────────────────────────────────
+function getCell(clientX, clientY) {
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+  const px = (clientX - rect.left) * scaleX;
+  const py = (clientY - rect.top) * scaleY;
+  const c = Math.floor((px - PAD) / CELL);
+  const r = Math.floor((py - PAD) / CELL);
+  const n = state.n;
+  if (r < 0 || r >= n || c < 0 || c >= n) return null;
+  return {r, c};
+}
+
+function adjacent(a, b) {
+  return (Math.abs(a.r-b.r) + Math.abs(a.c-b.c)) === 1;
+}
+
+function startDrag(r, c) {
+  const cell = state.grid[r][c];
+  if (!cell) return;
+
+  saveHistory();
+
+  const num = cell.num;
+  dragColor = COLORS[num-1];
+
+  // If dragging from a node: start fresh path from that node
+  if (cell.isNode) {
+    // Clear existing path for this num
+    clearPathFrom(num, 0);
+    state.paths[num] = [{r,c}];
+  } else {
+    // Drag from middle of path — truncate to this point
+    const path = state.paths[num];
+    const idx = path.findIndex(p => p.r===r && p.c===c);
+    if (idx < 0) return;
+    clearPathFrom(num, idx+1);
+    state.paths[num] = path.slice(0, idx+1);
+  }
+
+  dragging = true;
+  draw();
+}
+
+function clearPathFrom(num, fromIdx) {
+  const path = state.paths[num];
+  for (let i = fromIdx; i < path.length; i++) {
+    const {r,c} = path[i];
+    const cell = state.grid[r][c];
+    if (cell && !cell.isNode) {
+      state.grid[r][c] = null;
+    }
+  }
+}
+
+function extendDrag(r, c) {
+  if (!dragging) return;
+
+  // Find which num we're dragging
+  const num = COLORS.indexOf(dragColor) + 1;
+  const path = state.paths[num];
+  if (!path || path.length === 0) return;
+
+  const last = path[path.length-1];
+  if (last.r === r && last.c === c) return;
+
+  // Must be adjacent
+  if (!adjacent(last, {r,c})) return;
+
+  // Check if we're backtracking
+  if (path.length >= 2) {
+    const prev = path[path.length-2];
+    if (prev.r === r && prev.c === c) {
+      // Backtrack
+      const removed = path.pop();
+      if (!state.grid[removed.r][removed.c]?.isNode) {
+        state.grid[removed.r][removed.c] = null;
+      }
+      draw(); updateStats();
+      return;
+    }
+  }
+
+  const targetCell = state.grid[r][c];
+
+  // If occupied by same color, block (unless it's the paired endpoint)
+  if (targetCell && targetCell.num === num && !targetCell.isNode) return;
+
+  // If occupied by different color, clear that path
+  if (targetCell && targetCell.num !== num) {
+    if (targetCell.isNode) return; // can't overwrite other node
+    // Remove the other path
+    const otherNum = targetCell.num;
+    state.paths[otherNum] = [];
+    // Clear all non-node cells of that color
+    for (let rr=0;rr<state.n;rr++) for(let cc=0;cc<state.n;cc++) {
+      if (state.grid[rr][cc]?.num===otherNum && !state.grid[rr][cc].isNode)
+        state.grid[rr][cc]=null;
+    }
+  }
+
+  // Extend
+  path.push({r,c});
+  if (!targetCell?.isNode) {
+    state.grid[r][c] = { color: dragColor, num, isNode: false };
+  }
+
+  moves++;
+  draw();
+  updateStats();
+
+  // Check if we landed on the paired endpoint
+  if (targetCell?.isNode && targetCell.num === num) {
+    // Path complete for this num
+    dragging = false;
+    dragColor = null;
+    checkWin();
+  }
+}
+
+function endDrag() {
+  dragging = false;
+  dragColor = null;
+}
+
+// Mouse events
+canvas.addEventListener('mousedown', e => {
+  const cell = getCell(e.clientX, e.clientY);
+  if (cell) startDrag(cell.r, cell.c);
+});
+canvas.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  const cell = getCell(e.clientX, e.clientY);
+  if (cell) extendDrag(cell.r, cell.c);
+});
+canvas.addEventListener('mouseup', endDrag);
+canvas.addEventListener('mouseleave', endDrag);
+
+// Touch events
+canvas.addEventListener('touchstart', e => {
+  e.preventDefault();
+  const t = e.touches[0];
+  const cell = getCell(t.clientX, t.clientY);
+  if (cell) startDrag(cell.r, cell.c);
+}, {passive:false});
+canvas.addEventListener('touchmove', e => {
+  e.preventDefault();
+  if (!dragging) return;
+  const t = e.touches[0];
+  const cell = getCell(t.clientX, t.clientY);
+  if (cell) extendDrag(cell.r, cell.c);
+}, {passive:false});
+canvas.addEventListener('touchend', endDrag);
+
+// ── WIN CHECK ─────────────────────────────────────────────────────────────────
+function checkWin() {
+  const {grid, n, paths, nodeMap} = state;
+
+  // All paths must connect their two endpoints
+  const lv = LEVELS[currentLevel];
+  const numCount = {};
+  lv.nodes.forEach(([r,c,num]) => {
+    numCount[num] = (numCount[num]||0)+1;
+  });
+
+  for (const [num, count] of Object.entries(numCount)) {
+    const path = paths[num];
+    if (!path || path.length < 2) return;
+    // Check endpoints match nodes
+    const nodes = lv.nodes.filter(([r,c,n]) => n==num);
+    if (nodes.length !== 2) return;
+    const [a, b] = nodes;
+    const start = path[0], end = path[path.length-1];
+    const matchA = (start.r===a[0]&&start.c===a[1]&&end.r===b[0]&&end.c===b[1]) ||
+                   (start.r===b[0]&&start.c===b[1]&&end.r===a[0]&&end.c===a[1]);
+    if (!matchA) return;
+  }
+
+  // All cells must be filled
+  for (let r=0;r<n;r++) for(let c=0;c<n;c++) {
+    if (!grid[r][c]) return;
+  }
+
+  // WIN!
+  state.solved = true;
+  if (currentLevel+1 >= unlockedLevels) unlockedLevels = currentLevel+2;
+  setTimeout(showWin, 300);
+}
+
+function showWin() {
+  const lv = LEVELS[currentLevel];
+  document.getElementById('winEmoji').textContent = lv.emoji;
+  document.getElementById('winTitle').textContent = lv.winTitle;
+  document.getElementById('winMsg').textContent = lv.winMsg + ' (' + moves + ' movimientos)';
+  document.getElementById('winTipDetail').innerHTML = lv.winTip;
+  document.getElementById('nextBtn').style.display =
+    currentLevel+1 < LEVELS.length ? '' : 'none';
+  document.getElementById('winOverlay').classList.add('show');
+  spawnConfetti();
+}
+
+function closeWin() {
+  document.getElementById('winOverlay').classList.remove('show');
+}
+
+function nextLevel() {
+  closeWin();
+  if (currentLevel+1 < LEVELS.length) loadLevel(currentLevel+1);
+}
+
+// ── CONFETTI ──────────────────────────────────────────────────────────────────
+function spawnConfetti() {
+  const colors = ['#00ff88','#58a6ff','#ffd166','#ff6b6b','#bc8cff','#ff8c00'];
+  for (let i=0; i<60; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.cssText = `
+      left: ${Math.random()*100}vw;
+      top: -10px;
+      background: ${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration: ${1.2+Math.random()*1.5}s;
+      animation-delay: ${Math.random()*0.5}s;
+      transform: rotate(${Math.random()*360}deg);
+      width: ${6+Math.random()*8}px;
+      height: ${6+Math.random()*8}px;
+      border-radius: ${Math.random()>0.5?'50%':'2px'};
+    `;
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
+}
+
+// ── HISTORY / UNDO ────────────────────────────────────────────────────────────
+function saveHistory() {
+  // Deep clone state
+  const snap = {
+    grid: state.grid.map(row => row.map(cell => cell ? {...cell} : null)),
+    paths: {},
+  };
+  Object.entries(state.paths).forEach(([k,v]) => {
+    snap.paths[k] = v.map(p => ({...p}));
+  });
+  history.push(snap);
+  if (history.length > 50) history.shift();
+}
+
+function undoMove() {
+  if (!history.length) return;
+  const snap = history.pop();
+  state.grid = snap.grid;
+  state.paths = snap.paths;
+  moves = Math.max(0, moves-1);
+  draw();
+  updateStats();
+}
+
+function resetLevel() {
+  loadLevel(currentLevel);
+}
+
+// ── RESIZE ────────────────────────────────────────────────────────────────────
+window.addEventListener('resize', () => {
+  setupCanvas(state.n);
+  draw();
+});
+
+// ── BOOT ─────────────────────────────────────────────────────────────────────
+loadLevel(0);
+</script>
+</body>
+</html>
