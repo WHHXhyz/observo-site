@@ -1,318 +1,617 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Aegis8 — Ciberseguridad Educativa para Chile</title>
-<meta name="description" content="Proyecto social de ciberseguridad educativa de Chile. Gratis para familias y docentes. Construido para proteger a los que más importan."/>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
-<link rel="manifest" href="/app/manifest.json"/>
+<meta name="description" content="Proyecto social de educación digital gratuito para niños, adolescentes, familias y docentes de Chile. Herramientas concretas, sin tecnicismos, con contexto legal chileno."/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="manifest" href="/app/manifest.json">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
+<script src="/aegis-nav.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet"/>
 <style>
+
 :root{
+
   --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+
   --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
+
   --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);--card:rgba(255,255,255,.03);
+
 }
+
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
 html{scroll-behavior:smooth;}
+
 body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
 
+
+
 /* noise */
+
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+
 /* grid */
+
 body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+
   background:linear-gradient(rgba(58,127,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.025) 1px,transparent 1px);
+
   background-size:80px 80px;}
 
 
+
+
+
 /* ── AMENAZAS REALES ── */
+
 .amenazas-real{position:relative;z-index:2;background:rgba(13,20,34,.92);
+
   border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+
   opacity:0;animation:up .8s .9s forwards;}
+
 .ar-hd{display:flex;align-items:center;justify-content:space-between;
+
   padding:13px 32px;border-bottom:1px solid var(--border);background:rgba(8,12,20,.5);}
+
 .ar-hd-l{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;
+
   color:var(--ink3);display:flex;align-items:center;gap:10px;}
+
 .ar-live{width:7px;height:7px;border-radius:50%;background:#ef4444;
+
   animation:blink 1.5s infinite;}
+
 .ar-hd-r{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ink3);letter-spacing:2px;}
+
 .ar-body{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);}
+
 @media(max-width:720px){.ar-body{grid-template-columns:1fr;}}
+
 .ar-item{padding:28px 28px;display:flex;align-items:flex-start;gap:18px;
+
   border-right:1px solid var(--border);position:relative;overflow:hidden;}
+
 .ar-item:last-child{border-right:none;}
+
 @media(max-width:720px){.ar-item{border-right:none;border-bottom:1px solid var(--border);}}
+
 .ar-item::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+
 .ar-1::before{background:var(--accent);}
+
 .ar-2::before{background:#ef4444;}
+
 .ar-3::before{background:#9b6dff;}
+
 .ar-n{font-family:'DM Serif Display',serif;font-size:2.4rem;line-height:1;
+
   font-style:italic;flex-shrink:0;min-width:64px;}
+
 .ar-1 .ar-n{color:var(--accent);}
+
 .ar-2 .ar-n{color:#ef4444;}
+
 .ar-3 .ar-n{color:#9b6dff;}
+
 .ar-title{font-size:.86rem;color:var(--ink);line-height:1.4;margin-bottom:5px;font-weight:400;}
+
 .ar-sub{font-size:.78rem;color:var(--ink3);line-height:1.55;}
 
+
+
 /* ── HERO ── */
+
 .hero{position:relative;z-index:10;min-height:100vh;display:flex;flex-direction:column;padding:64px 0 0;overflow:hidden;}
+
 .blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
+
 .b1{width:600px;height:600px;top:-100px;right:-150px;background:radial-gradient(circle,rgba(240,120,48,.12) 0%,transparent 70%);animation:fl1 8s ease-in-out infinite;}
+
 .b2{width:500px;height:500px;bottom:-80px;left:-100px;background:radial-gradient(circle,rgba(58,127,212,.1) 0%,transparent 70%);animation:fl2 10s ease-in-out infinite;}
+
 .b3{width:280px;height:280px;top:45%;left:45%;background:radial-gradient(circle,rgba(46,204,128,.06) 0%,transparent 70%);animation:fl3 12s ease-in-out infinite;}
+
 @keyframes fl1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-40px,30px) scale(1.1);}}
+
 @keyframes fl2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(30px,-40px) scale(1.05);}}
+
 @keyframes fl3{0%,100%{transform:translate(0,0);}33%{transform:translate(20px,-20px);}66%{transform:translate(-15px,15px);}}
+
 @keyframes up{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
 
+
+
 .circuit-bg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+
 .circuit-bg svg{position:absolute;inset:0;width:100%;height:100%;opacity:.06;}
+
 .hero-logo-mark svg{filter:drop-shadow(0 0 20px rgba(240,120,48,0.4));}
 
+
+
 .hero-top{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+
   text-align:center;padding:60px 24px 40px;position:relative;z-index:2;}
+
 .h-eyebrow{display:inline-flex;align-items:center;gap:10px;
+
   font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ink3);
+
   margin-bottom:32px;opacity:0;animation:up .6s .1s forwards;}
+
 .h-line{width:32px;height:1px;background:var(--accent);}
+
 .h-title{font-family:'DM Serif Display',serif;font-size:clamp(3.2rem,10vw,8rem);line-height:.88;
+
   color:var(--ink);letter-spacing:-2px;opacity:0;animation:up .9s .25s forwards;}
+
 .h-title .ac{color:var(--accent);font-style:italic;display:block;}
+
 .h-title .gh{color:transparent;-webkit-text-stroke:1px rgba(234,240,248,.1);display:block;}
+
 .h-desc{margin-top:28px;font-size:1.05rem;line-height:1.85;color:var(--ink2);max-width:520px;
+
   opacity:0;animation:up .8s .5s forwards;}
+
 .h-desc strong{color:var(--ink);font-weight:400;}
+
 .h-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:36px;
+
   opacity:0;animation:up .8s .7s forwards;}
+
 .btn-p{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+
   color:var(--bg);background:var(--accent);border:none;padding:15px 32px;border-radius:3px;
+
   text-decoration:none;transition:all .25s;position:relative;overflow:hidden;}
+
 .btn-p::before{content:'';position:absolute;inset:0;background:var(--accent2);transform:translateX(-100%);transition:transform .3s;}
+
 .btn-p:hover::before{transform:translateX(0);}
+
 .btn-p span{position:relative;z-index:1;}
+
 .btn-p:hover{box-shadow:0 0 32px rgba(240,120,48,.45);transform:translateY(-2px);}
+
 .btn-g{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+
   color:var(--ink2);background:transparent;border:1px solid var(--border);
+
   padding:15px 28px;border-radius:3px;text-decoration:none;transition:all .25s;}
+
 .btn-g:hover{color:var(--ink);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
 
+
+
 /* ── VIOLENCIA DIGITAL BANNER ── */
+
 .vd-banner{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;
+
   text-decoration:none;border:1px solid rgba(155,109,255,.2);border-radius:4px;
+
   padding:40px;position:relative;overflow:hidden;background:rgba(155,109,255,.04);
+
   transition:all .3s;}
+
 .vd-banner:hover{border-color:rgba(155,109,255,.45);background:rgba(155,109,255,.07);
+
   transform:translateY(-3px);box-shadow:0 20px 60px rgba(155,109,255,.12);}
+
 .vd-bar{position:absolute;top:0;left:0;right:0;height:2px;
+
   background:linear-gradient(90deg,#9b6dff,rgba(155,109,255,.4));}
+
 .vd-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
+
   color:#9b6dff;text-transform:uppercase;margin-bottom:14px;
+
   display:flex;align-items:center;gap:8px;}
+
 .vd-dot{width:7px;height:7px;border-radius:50%;background:#9b6dff;
+
   animation:blink 1.5s infinite;box-shadow:0 0 6px rgba(155,109,255,.5);}
+
 .vd-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);
+
   color:var(--ink);line-height:1.05;letter-spacing:-.5px;margin-bottom:14px;}
+
 .vd-title em{color:#9b6dff;font-style:italic;}
+
 .vd-desc{font-size:.9rem;line-height:1.8;color:var(--ink2);max-width:480px;margin-bottom:18px;}
+
 .vd-pills{display:flex;flex-wrap:wrap;gap:6px;}
+
 .vd-pill{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:1px;
+
   padding:3px 9px;border-radius:20px;border:1px solid rgba(155,109,255,.2);color:rgba(155,109,255,.7);}
+
 .vd-right{display:flex;flex-direction:column;gap:16px;align-items:flex-end;min-width:190px;}
+
 .vd-nums{display:flex;flex-direction:column;gap:10px;width:100%;}
+
 .vd-num-item{background:rgba(155,109,255,.06);border:1px solid rgba(155,109,255,.15);
+
   border-radius:4px;padding:12px 16px;}
+
 .vd-num{font-family:'DM Serif Display',serif;font-size:2rem;color:#9b6dff;
+
   font-style:italic;line-height:1;margin-bottom:4px;}
+
 .vd-num-label{font-family:'JetBrains Mono',monospace;font-size:.55rem;
+
   color:var(--ink3);letter-spacing:1px;line-height:1.6;}
+
 .vd-cta{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
+
   color:#9b6dff;text-transform:uppercase;transition:letter-spacing .2s;}
+
 .vd-banner:hover .vd-cta{letter-spacing:3px;}
+
 @media(max-width:720px){
+
   .vd-banner{grid-template-columns:1fr;gap:24px;padding:28px 20px;}
+
   .vd-right{align-items:flex-start;}
+
   .vd-nums{flex-direction:row;}
-}
-@media(max-width:480px){
-  .vd-nums{flex-direction:column;}
+
 }
 
-/* ── CTA 3 CUADROS RESPONSIVE ── */
-.cta3-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
-@media(max-width:720px){.cta3-grid{grid-template-columns:1fr;}}
-.cta3-card{background:var(--bg2);padding:2.5rem 2rem;text-decoration:none;
-  display:flex;flex-direction:column;gap:10px;transition:background .2s;
-  position:relative;overflow:hidden;}
-.cta3-bar{position:absolute;top:0;left:0;right:0;height:2px;}
-.cta3-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;text-transform:uppercase;}
-.cta3-title{font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink);line-height:1.1;}
-.cta3-title em{font-style:italic;}
-.cta3-desc{font-size:.86rem;color:var(--ink2);line-height:1.6;flex:1;}
-.cta3-cta{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;}
-@media(max-width:720px){
-  .cta3-card{padding:2rem 1.5rem;}
-  .cta3-title{font-size:1.4rem;}
+@media(max-width:480px){
+
+  .vd-nums{flex-direction:column;}
+
 }
+
+
+
+/* ── CTA 3 CUADROS RESPONSIVE ── */
+
+.cta3-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
+
+@media(max-width:720px){.cta3-grid{grid-template-columns:1fr;}}
+
+.cta3-card{background:var(--bg2);padding:2.5rem 2rem;text-decoration:none;
+
+  display:flex;flex-direction:column;gap:10px;transition:background .2s;
+
+  position:relative;overflow:hidden;}
+
+.cta3-bar{position:absolute;top:0;left:0;right:0;height:2px;}
+
+.cta3-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;text-transform:uppercase;}
+
+.cta3-title{font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink);line-height:1.1;}
+
+.cta3-title em{font-style:italic;}
+
+.cta3-desc{font-size:.86rem;color:var(--ink2);line-height:1.6;flex:1;}
+
+.cta3-cta{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;}
+
+@media(max-width:720px){
+
+  .cta3-card{padding:2rem 1.5rem;}
+
+  .cta3-title{font-size:1.4rem;}
+
+}
+
+
+
 
 
 .demo{position:relative;z-index:2;background:rgba(13,20,34,.92);
+
   border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+
   opacity:0;animation:up .8s .9s forwards;}
+
 .demo-hd{display:flex;align-items:center;justify-content:space-between;
+
   padding:13px 32px;border-bottom:1px solid var(--border);background:rgba(8,12,20,.5);}
+
 .demo-hd-l{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;
+
   color:var(--ink3);display:flex;align-items:center;gap:10px;}
+
 .demo-live{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;}
+
 .demo-hd-r{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:2px;}
+
 .demo-body{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;}
+
 @media(max-width:680px){.demo-body{grid-template-columns:1fr;}}
+
 .demo-msg{padding:26px 32px;border-right:1px solid var(--border);}
+
 @media(max-width:680px){.demo-msg{border-right:none;border-bottom:1px solid var(--border);}}
+
 .demo-msg-lbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;color:var(--ink3);margin-bottom:12px;}
+
 .demo-box{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:3px;
+
   padding:16px 18px;font-size:.88rem;line-height:1.75;color:var(--ink2);transition:border-color .3s;}
+
 .demo-box.ph{border-color:rgba(240,120,48,.4);}
+
 .demo-box.ok{border-color:rgba(46,204,128,.3);}
+
 .demo-from{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent);margin-bottom:7px;}
+
 .demo-from.ok{color:var(--green);}
+
 .hl{background:rgba(240,120,48,.15);color:var(--accent);border-radius:2px;padding:0 3px;font-weight:700;}
+
 .demo-act{padding:26px 32px;display:flex;flex-direction:column;justify-content:center;gap:12px;}
+
 .demo-act-lbl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;color:var(--ink3);}
+
 .demo-btns{display:flex;gap:10px;flex-wrap:wrap;}
+
 .db{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:1px;
+
   padding:10px 18px;border-radius:2px;border:1px solid;background:transparent;transition:all .2s;flex:1;text-align:center;cursor:pointer!important;}
+
 .db-ok{color:var(--green);border-color:rgba(46,204,128,.3);}
+
 .db-ok:hover,.db-ok.sel{background:rgba(46,204,128,.1);border-color:var(--green);}
+
 .db-ph{color:var(--accent);border-color:rgba(240,120,48,.3);}
+
 .db-ph:hover,.db-ph.sel{background:rgba(240,120,48,.1);border-color:var(--accent);}
+
 .demo-res{margin-top:10px;padding:12px 14px;border-radius:3px;font-size:.84rem;line-height:1.6;
+
   display:none;border-left:3px solid;}
+
 .demo-res.show{display:block;}
+
 .demo-res.right{background:rgba(46,204,128,.07);border-left-color:var(--green);color:var(--green);}
+
 .demo-res.wrong{background:rgba(240,120,48,.07);border-left-color:var(--accent);color:var(--accent);}
+
 .demo-nxt{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
+
   color:var(--ink3);background:none;border:1px solid var(--border);
+
   padding:8px 14px;border-radius:2px;transition:all .2s;display:none;margin-top:6px;cursor:pointer!important;}
+
 .demo-nxt.show{display:block;}
+
 .demo-nxt:hover{color:var(--ink2);border-color:rgba(255,255,255,.2);}
+
 .demo-sc{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
+
 .demo-sc span{color:var(--accent);}
 
+
+
 /* TICKER */
+
 .ticker{position:relative;z-index:10;overflow:hidden;padding:11px 0;
+
   background:rgba(240,120,48,.06);
+
   border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);}
+
 .ticker-t{display:flex;gap:48px;width:max-content;animation:tick 40s linear infinite;}
+
 .ticker-t span{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;color:#6e84a3;white-space:nowrap;flex-shrink:0;}
+
 .ticker-t .ta{color:var(--accent);opacity:.8;}
+
 @keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
+
+
 /* SECTIONS */
+
 .page{max-width:1080px;margin:0 auto;padding:0 24px;}
+
 .sw{padding:96px 0 56px;border-bottom:1px solid var(--border);
+
   opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s;}
+
 .sw.vis{opacity:1;transform:none;}
+
 .sw:last-child{border-bottom:none;}
+
 .sl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
+
   color:var(--accent);text-transform:uppercase;margin-bottom:12px;}
+
 .st{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.6rem);
+
   line-height:1.05;color:var(--ink);margin-bottom:22px;letter-spacing:-1px;}
+
 .st em{font-style:italic;color:var(--accent);}
+
 .si{font-size:1rem;line-height:1.9;color:var(--ink2);max-width:640px;margin-bottom:48px;}
 
+
+
 /* PERFILES */
+
 .pg{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+
 @media(max-width:640px){.pg{grid-template-columns:1fr;}}
+
 .pc{position:relative;border:1px solid var(--border);border-radius:4px;padding:36px 32px 28px;
+
   background:var(--card);text-decoration:none;overflow:hidden;transition:all .3s;
+
   display:flex;flex-direction:column;gap:14px;}
+
 .pc-bgn{position:absolute;right:-10px;bottom:-20px;font-family:'DM Serif Display',serif;
+
   font-size:9rem;line-height:1;font-style:italic;opacity:.04;pointer-events:none;transition:opacity .3s;color:var(--ink);}
+
 .pc::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:4px;}
+
 .pcn::before{background:radial-gradient(circle at 70% 30%,rgba(58,127,212,.08),transparent 60%);}
+
 .pca::before{background:radial-gradient(circle at 70% 30%,rgba(155,109,255,.07),transparent 60%);}
+
 .pcp::before{background:radial-gradient(circle at 70% 30%,rgba(46,204,128,.07),transparent 60%);}
+
 .pcd::before{background:radial-gradient(circle at 70% 30%,rgba(240,120,48,.08),transparent 60%);}
+
 .pc:hover::before,.pc:hover .pc-bgn{opacity:.07;}
+
 .pc:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.1);box-shadow:0 20px 60px rgba(0,0,0,.3);}
+
 .pc-top{display:flex;align-items:center;gap:14px;}
+
 .pc-ico{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
 .pcn .pc-ico{background:rgba(58,127,212,.15);}
+
 .pca .pc-ico{background:rgba(155,109,255,.12);}
+
 .pcp .pc-ico{background:rgba(46,204,128,.12);}
+
 .pcd .pc-ico{background:rgba(240,120,48,.12);}
+
 .pc-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;color:var(--ink3);margin-bottom:4px;}
+
 .pc-name{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--ink);line-height:1.1;}
+
 .pc-desc{font-size:.88rem;line-height:1.7;color:var(--ink2);flex:1;}
+
 .pc-pills{display:flex;flex-wrap:wrap;gap:6px;}
+
 .pp{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:1px;
+
   padding:3px 9px;border-radius:20px;border:1px solid var(--border);color:var(--ink3);}
+
 .pc-cta{display:flex;align-items:center;justify-content:space-between;margin-top:4px;}
+
 .pc-cta-t{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;color:var(--accent);}
+
 .pc-arr{width:32px;height:32px;border-radius:50%;border:1px solid var(--border2);
+
   display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--accent);transition:all .25s;}
+
 .pc:hover .pc-arr{background:var(--accent);color:var(--bg);border-color:var(--accent);transform:translateX(4px);}
 
+
+
 /* STAT BAND */
+
 .stats-s{position:relative;z-index:10;background:rgba(13,20,34,.85);
+
   border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;}
+
 .stats-s::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);
+
   width:800px;height:400px;background:radial-gradient(ellipse,rgba(240,120,48,.05) 0%,transparent 70%);pointer-events:none;}
+
 .stats-in{max-width:1080px;margin:0 auto;padding:80px 24px;
+
   display:grid;grid-template-columns:1fr 2fr;gap:60px;align-items:center;}
+
 @media(max-width:720px){.stats-in{grid-template-columns:1fr;gap:32px;}}
+
 .stats-hl{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);
+
   line-height:1.15;color:var(--ink);letter-spacing:-1px;}
+
 .stats-hl em{color:var(--accent);font-style:italic;display:block;}
+
 .stats-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+
 @media(max-width:480px){.stats-g{grid-template-columns:1fr;}}
+
 .sb{padding:28px 20px;background:var(--card);border:1px solid var(--border);text-align:center;}
+
 .sb-n{font-family:'DM Serif Display',serif;font-size:2.8rem;color:var(--accent);line-height:1;margin-bottom:6px;font-style:italic;}
+
 .sb-l{font-size:.82rem;line-height:1.55;color:var(--ink2);}
+
 .sb-s{font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--ink3);letter-spacing:1px;margin-top:6px;}
 
+
+
 /* MANIFESTO */
+
 .mf{padding:64px;background:rgba(240,120,48,.04);border:1px solid var(--border2);
+
   border-radius:4px;text-align:center;position:relative;overflow:hidden;}
+
 .mf::before{content:'"';position:absolute;top:-20px;left:28px;
+
   font-family:'DM Serif Display',serif;font-size:14rem;
+
   color:rgba(240,120,48,.05);line-height:1;pointer-events:none;}
+
 .mf-text{font-family:'DM Serif Display',serif;font-size:clamp(1.3rem,2.8vw,2rem);
+
   line-height:1.5;color:var(--ink);max-width:700px;margin:0 auto;font-style:italic;position:relative;z-index:1;}
+
 .mf-text em{color:var(--accent);font-style:normal;}
+
 .mf-sig{margin-top:20px;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:3px;}
+
 @media(max-width:640px){.mf{padding:32px 20px;}}
 
+
+
 /* FOOTER */
+
 footer{position:relative;z-index:10;border-top:1px solid var(--border);
+
   padding:48px 32px 32px;max-width:1080px;margin:0 auto;
+
   display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+
 .fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;
+
   letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+
 .fl span{color:var(--accent);}
+
 .flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+
 .flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+
   color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+
 .flinks a:hover{color:var(--accent);}
+
 .fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
+
 .ft{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);
+
   letter-spacing:1px;text-decoration:none;transition:color .2s;}
+
 .ft:hover{color:var(--accent);}
+
 .stb{position:fixed;bottom:24px;right:24px;z-index:100;width:40px;height:40px;
+
   background:var(--bg2);border:1px solid var(--border);border-radius:50%;
+
   color:var(--ink3);font-size:.9rem;cursor:pointer;transition:all .2s;}
+
 .stb:hover{border-color:var(--accent);color:var(--accent);}
+
 @media(max-width:640px){footer{padding:32px 16px;}}
+
 </style>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
-  <script src="/aegis-nav.js"></script>
 </head>
 <body data-page="index">
 
+<!-- HERO -->
 <!-- HERO -->
 <section class="hero">
 <div class="circuit-bg">
@@ -586,6 +885,9 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
   </div>
 
 
+
+
+<!-- TICKER DINÁMICO -->
 <!-- TICKER DINÁMICO -->
 <div class="ticker">
   <div class="ticker-t" id="ticker-inner">
@@ -608,6 +910,9 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
   </div>
 </div>
 
+
+
+<!-- STATS -->
 <!-- STATS -->
 <div class="stats-s">
   <div class="stats-in">
@@ -616,12 +921,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
       <p style="font-size:.88rem;line-height:1.7;color:var(--ink2);margin-top:16px;">
         Los niños chilenos están expuestos. Los docentes no tienen herramientas. Las familias no saben qué hacer. Aegis8 existe para cambiar eso.
       </p>
-      <a href="/el-proyecto#problema" style="display:inline-flex;align-items:center;gap:6px;
-        font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
-        color:var(--accent);text-decoration:none;text-transform:uppercase;margin-top:20px;
-        transition:gap .2s;" onmouseover="this.style.gap='10px'" onmouseout="this.style.gap='6px'">
-        Ver el análisis completo →
-      </a>
+      
     </div>
     <div class="stats-g">
       <div class="sb">
@@ -643,96 +943,15 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
   </div>
 </div>
 
-<!-- VIOLENCIA DIGITAL — única aparición, ancho completo -->
-<div class="page">
-<div class="sw">
-  <a href="/violencia-digital" class="vd-banner">
-    <div class="vd-bar"></div>
-    <div class="vd-left">
-      <div class="vd-tag">
-        <div class="vd-dot"></div>
-        SI TE PASÓ ALGO · INFORMACIÓN Y AYUDA · CHILE
-      </div>
-      <div class="vd-title">No estás<br><em>sola.</em></div>
-      <div class="vd-desc">Sextorsión, difusión de imágenes, acoso digital y control en el pololeo. Qué dice la ley chilena, qué hacer primero y dónde pedir ayuda ahora mismo.</div>
-      <div class="vd-pills">
-        <span class="vd-pill">Sexting no consentido</span>
-        <span class="vd-pill">Sextorsión</span>
-        <span class="vd-pill">Deepfakes</span>
-        <span class="vd-pill">Control digital</span>
-        <span class="vd-pill">Ciberacoso</span>
-        <span class="vd-pill">StopNCII</span>
-      </div>
-    </div>
-    <div class="vd-right">
-      <div class="vd-nums">
-        <div class="vd-num-item">
-          <div class="vd-num">1455</div>
-          <div class="vd-num-label">Fono Víctimas SernamEG<br>Confidencial · Gratuito</div>
-        </div>
-        <div class="vd-num-item">
-          <div class="vd-num">134</div>
-          <div class="vd-num-label">PDI Cibercrimen<br>24 horas</div>
-        </div>
-      </div>
-      <div class="vd-cta">Ver información y recursos →</div>
-    </div>
-  </a>
-</div>
-</div>
 
-<!-- BOTIQUÍN SOS -->
+<!-- PERFILES -->
 <div class="page">
-<div class="sw">
-  <div class="sl">// Algo pasó · Actúa ahora</div>
-  <h2 class="st">Botiquín<br><em>SOS.</em></h2>
-  <p class="si" style="margin-bottom:24px;">Elige tu situación. Te guiamos paso a paso en lo que tienes que hacer ahora mismo.</p>
-  <div style="background:var(--bg2);border:1px solid rgba(239,68,68,.2);border-radius:4px;overflow:hidden;">
-    <div style="padding:13px 20px;background:rgba(239,68,68,.05);border-bottom:1px solid rgba(239,68,68,.1);
-      display:flex;align-items:center;justify-content:space-between;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
-        color:#ef4444;text-transform:uppercase;display:flex;align-items:center;gap:8px;">
-        <div style="width:7px;height:7px;border-radius:50%;background:#ef4444;animation:blink 1.2s infinite;"></div>
-        AYUDA INMEDIATA
-      </div>
-      <a href="/botiquin" style="font-family:'JetBrains Mono',monospace;font-size:.58rem;
-        letter-spacing:2px;color:#ef4444;text-decoration:none;text-transform:uppercase;">
-        Ver todos los casos →
-      </a>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(239,68,68,.08);">
-      <a href="/botiquin" style="background:var(--bg2);padding:20px 18px;text-decoration:none;
-        display:flex;flex-direction:column;gap:8px;transition:background .2s;"
-        onmouseover="this.style.background='rgba(239,68,68,.04)'" onmouseout="this.style.background='var(--bg2)'">
-        <div style="font-size:1.4rem;">🚨</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ink);line-height:1.2;">Me están amenazando con fotos</div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;color:#ef4444;letter-spacing:1px;">Sextorsión → qué hacer ya</div>
-      </a>
-      <a href="/botiquin" style="background:var(--bg2);padding:20px 18px;text-decoration:none;
-        display:flex;flex-direction:column;gap:8px;transition:background .2s;"
-        onmouseover="this.style.background='rgba(239,68,68,.04)'" onmouseout="this.style.background='var(--bg2)'">
-        <div style="font-size:1.4rem;">👶</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ink);line-height:1.2;">Algo le pasó a mi hijo/a</div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;color:#ef4444;letter-spacing:1px;">Grooming → pasos urgentes</div>
-      </a>
-      <a href="/botiquin" style="background:var(--bg2);padding:20px 18px;text-decoration:none;
-        display:flex;flex-direction:column;gap:8px;transition:background .2s;"
-        onmouseover="this.style.background='rgba(239,68,68,.04)'" onmouseout="this.style.background='var(--bg2)'">
-        <div style="font-size:1.4rem;">🎣</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ink);line-height:1.2;">Recibí algo sospechoso</div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;color:#ef4444;letter-spacing:1px;">Phishing → analizar ahora</div>
-      </a>
-    </div>
-  </div>
-</div>
-</div>
-
 <!-- PERFILES -->
 <div class="page">
 <div class="sw" id="perfiles">
   <div class="sl">// ¿Para quién es?</div>
   <h2 class="st">Elige tu <em>camino.</em></h2>
-  <p class="si">Cada perfil tiene contenido específico — el mismo tema se enseña diferente a un niño de 8 años que a un docente con clase mañana.</p>
+  <p class="si">Pincha el perfil que te corresponde. El contenido, el lenguaje y los ejemplos cambian completamente según quién eres — pero la protección es la misma para todos.</p>
   <div class="pg">
     <a href="/ninos" class="pc pcn">
       <div class="pc-bgn">01</div>
@@ -766,50 +985,10 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
 </div>
 </div>
 
-<!-- MISIÓN + DERECHO + QUIZ — retorno semanal -->
+</div>
+
+<!-- NOTICIA -->
 <div class="page">
-<div class="sw">
-  <div class="sl">// Esta semana en Aegis8</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--border);">
-
-    <!-- Quiz widget -->
-    <div id="quiz-widget" style="background:var(--bg2);padding:24px 20px;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;
-        color:var(--blue);text-transform:uppercase;margin-bottom:10px;">● Quiz semanal</div>
-      <div style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink);
-        margin-bottom:8px;line-height:1.2;">¿Qué tan bien te defiendes esta semana?</div>
-      <a href="/quiz.html" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
-        color:var(--blue);text-decoration:none;text-transform:uppercase;">Hacer el quiz →</a>
-    </div>
-
-    <!-- Misión semanal -->
-    <div style="background:var(--bg2);padding:24px 20px;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;
-        color:var(--gold);text-transform:uppercase;margin-bottom:10px;">✦ Misión de la semana</div>
-      <div id="mision-titulo" style="font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);
-        line-height:1.3;margin-bottom:8px;">Revisa los permisos de apps en el teléfono de tus hijos/as</div>
-      <div id="mision-meta" style="font-family:'JetBrains Mono',monospace;font-size:.54rem;
-        color:var(--ink3);letter-spacing:1px;margin-bottom:10px;">Familias · 5 min</div>
-      <a id="mision-link" href="/checklist.html" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;
-        letter-spacing:2px;color:var(--gold);text-decoration:none;text-transform:uppercase;">Completar →</a>
-    </div>
-
-    <!-- Derecho de la semana -->
-    <div style="background:var(--bg2);padding:24px 20px;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;
-        color:#9b6dff;text-transform:uppercase;margin-bottom:10px;">⚖️ Derecho de la semana</div>
-      <div id="dr-widget-titulo" style="font-size:.9rem;color:var(--ink);line-height:1.5;
-        margin-bottom:8px;">Tu pareja no puede acceder a tu teléfono sin permiso — aunque vivan juntos.</div>
-      <div id="dr-widget-ley" style="font-family:'JetBrains Mono',monospace;font-size:.54rem;
-        color:var(--ink3);letter-spacing:1px;margin-bottom:10px;">Ley 21.459 · Art. 7 · Chile</div>
-      <a href="/violencia-digital#derechos" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;
-        letter-spacing:2px;color:#9b6dff;text-decoration:none;text-transform:uppercase;">Ver mis derechos →</a>
-    </div>
-
-  </div>
-</div>
-</div>
-
 <!-- INTELIGENCIA — CTA a /noticias con titular dinámico -->
 <div class="page">
 <div class="sw">
@@ -843,177 +1022,236 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
 </div>
 </div>
 
-<!-- CTA FINAL — herramientas de retorno -->
+<!-- MANIFESTO FINAL -->
 <div class="page">
-<div class="sw">
-  <div class="sl">// Herramientas · Todas gratis</div>
-  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--border);">
-
-    <a href="/quiz.html" class="cta3-card"
-      onmouseover="this.style.background='rgba(58,127,212,.05)'" onmouseout="this.style.background='var(--bg2)'">
-      <div class="cta3-bar" style="background:var(--blue);"></div>
-      <div class="cta3-tag" style="color:var(--blue);">Quiz semanal · Nuevo cada lunes</div>
-      <div class="cta3-title">¿Qué tan bien<br><em style="color:var(--blue);">te defiendes?</em></div>
-      <div class="cta3-desc">5 preguntas sobre la amenaza de esta semana. Score persistente. Vuelve cada lunes a mejorar.</div>
-      <div class="cta3-cta" style="color:var(--blue);">Hacer el quiz →</div>
+<div class="sw" style="padding:64px 0;text-align:center;border-top:1px solid var(--border);">
+  <p style="font-family:'DM Serif Display',serif;font-size:clamp(1.1rem,3vw,1.6rem);
+    color:var(--ink2);line-height:1.7;max-width:620px;margin:0 auto 28px;font-style:italic;">
+    "La educación digital temprana es la única defensa real — y la mayoría de los colegios todavía no la imparte. 
+    Aegis8 existe para cambiar eso. Gratis. Para todos. Sin excusas."
+  </p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+    <a href="/el-proyecto" style="font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;
+      text-transform:uppercase;color:var(--bg);background:var(--accent);
+      padding:12px 24px;border-radius:3px;text-decoration:none;transition:opacity .2s;"
+      onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+      Conocer el proyecto →
     </a>
-
-    <a href="/checklist.html" class="cta3-card"
-      onmouseover="this.style.background='rgba(46,204,128,.04)'" onmouseout="this.style.background='var(--bg2)'">
-      <div class="cta3-bar" style="background:var(--green);"></div>
-      <div class="cta3-tag" style="color:var(--green);">30 acciones · Progreso guardado</div>
-      <div class="cta3-title">¿Tu familia está<br><em style="color:var(--green);">protegida?</em></div>
-      <div class="cta3-desc">Checklist interactivo con 30 acciones concretas. Sin registro. Tu progreso se guarda en tu dispositivo.</div>
-      <div class="cta3-cta" style="color:var(--green);">Ver checklist →</div>
+    <a href="/contacto" style="font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;
+      text-transform:uppercase;color:var(--ink2);border:1px solid var(--border);
+      padding:12px 24px;border-radius:3px;text-decoration:none;transition:all .2s;"
+      onmouseover="this.style.color='var(--ink)';this.style.borderColor='rgba(255,255,255,.2)'"
+      onmouseout="this.style.color='var(--ink2)';this.style.borderColor='var(--border)'">
+      Talleres en tu colegio
     </a>
-
-    <a href="/violencia-digital#derechos" class="cta3-card"
-      onmouseover="this.style.background='rgba(155,109,255,.04)'" onmouseout="this.style.background='var(--bg2)'">
-      <div class="cta3-bar" style="background:#9b6dff;"></div>
-      <div class="cta3-tag" style="color:#9b6dff;">Actualización semanal · Chile</div>
-      <div class="cta3-title">Tus derechos<br><em style="color:#9b6dff;">digitales.</em></div>
-      <div class="cta3-desc">Las leyes que te protegen. Derecho de la semana, herramienta gratuita y cambios legales relevantes. Actualizado cada lunes.</div>
-      <div class="cta3-cta" style="color:#9b6dff;">Ver mis derechos →</div>
-    </a>
-
-    <a href="/herramientas" class="cta3-card"
-      onmouseover="this.style.background='rgba(240,120,48,.04)'" onmouseout="this.style.background='var(--bg2)'">
-      <div class="cta3-bar" style="background:var(--accent);"></div>
-      <div class="cta3-tag" style="color:var(--accent);">8 herramientas · Todas gratis</div>
-      <div class="cta3-title">La caja de<br><em style="color:var(--accent);">herramientas.</em></div>
-      <div class="cta3-desc">Analizador de phishing, CAPS, quiz, checklist, botiquín SOS, agente IA, derechos digitales y violencia digital. Todo en un lugar.</div>
-      <div class="cta3-cta" style="color:var(--accent);">Ver todas →</div>
-    </a>
-
   </div>
 </div>
 </div>
 
-<!-- MANIFESTO -->
-<div class="page">
-<div class="sw">
-  <div class="mf">
-    <div class="mf-text">La educación digital temprana es la única defensa real — y la mayoría de los colegios todavía no la imparte. <em>Aegis8 existe para cambiar eso.</em> Gratis. Para todos. Sin excusas.</div>
-    <div class="mf-sig">// Aegis8 · Proyecto Social · Chile · 2026</div>
-  </div>
-</div>
-</div>
-
-<footer>
+<footer class="page-footer">
   <a href="/" class="fl">AEGIS<span>8</span></a>
   <ul class="flinks">
-    <li><a href="/">Educa</a></li>
-    <li><a href="/herramientas">Herramientas</a></li>
-    <li><a href="/violencia-digital#derechos">Derechos</a></li>
-    <li><a href="/botiquin">Botiquín SOS</a></li>
+    <li><a href="/educa">Educa</a></li>
+    <li><a href="/noticias">Noticias</a></li>
     <li><a href="/el-proyecto">El Proyecto</a></li>
+    <li><a href="/talleres">Talleres</a></li>
     <li><a href="/contacto">Contacto</a></li>
   </ul>
-  <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
-    <div class="fcopy">© 2026 · Proyecto educativo-social · Chile · Gratuito</div>
-    <a href="/talleres.html" class="ft">Talleres en colegios →</a>
-  </div>
+  <div class="fcopy">© 2026 · Proyecto educativo-social · Chile · Gratuito</div>
 </footer>
 
-<button class="stb" id="stb" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
 <script>
+
+
 /* SCROLL REVEAL */
+
 const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
+
 document.querySelectorAll('.sw').forEach(el=>ro.observe(el));
 
+
+
 /* COUNTERS */
+
 function animCount(el){
+
   if(el.dataset.special)return;
+
   const tgt=parseInt(el.dataset.target);const suf=el.dataset.suffix||'';
+
   let cur=0;const step=tgt/(1800/16);
+
   const t=setInterval(()=>{cur=Math.min(cur+step,tgt);el.textContent=Math.floor(cur)+suf;if(cur>=tgt)clearInterval(t);},16);
+
 }
+
 const statsObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.querySelectorAll('[data-target]').forEach(animCount);statsObs.unobserve(x.target);}});},{threshold:.4});
+
 const ss=document.querySelector('.stats-s');if(ss)statsObs.observe(ss);
+
+
 
 /* SERVICE WORKER */
 
 
+
+
+
 /* CONTENIDO DINÁMICO */
+
 (async function(){
+
   async function fetchData(){
+
     try{const r=await fetch('https://aegis8-agent.christianmora705.workers.dev/news',{headers:{'Cache-Control':'max-age=1800'}});if(r.ok)return await r.json();}catch(e){}
+
     try{const r=await fetch('/amenaza.json');if(r.ok)return await r.json();}catch(e){}
+
     return null;
+
   }
+
   function cc(c){return{red:'red',accent:'accent',blue:'blue',green:'green',gold:'gold',purple:'purple'}[c]||'accent';}
 
+
+
   const data=await fetchData();
+
   if(!data)return;
 
+
+
   /* Ticker */
+
   if(data.ticker&&data.ticker.length){
+
     const el=document.getElementById('ticker-inner');
+
     if(el){
+
       const items=[...data.ticker,...data.ticker];
+
       el.innerHTML=items.map(t=>`<span class="ta">///</span><span>${t}</span>`).join('');
+
       el.style.animationDuration=Math.max(30,data.ticker.length*5)+'s';
+
     }
+
   }
+
+
+
 
 
   /* Titular más reciente desde /noticias */
+
   (async function(){
+
     try {
+
       const r = await fetch('https://aegis8-agent.christianmora705.workers.dev/noticias');
+
       if (!r.ok) return;
+
       const d = await r.json();
+
       if (!d.items || !d.items.length) return;
+
       const top = d.items[0];
+
       const t = document.getElementById('noticias-titular');
+
       const f = document.getElementById('noticias-fuente');
+
       if (t) t.textContent = top.title;
+
       if (f) f.textContent = top.source + ' · ' + new Date(top.date).toLocaleDateString('es-CL',{day:'numeric',month:'long'});
+
     } catch(e) {
+
       const t = document.getElementById('noticias-titular');
+
       if (t) t.textContent = 'CVEs, amenazas activas y alertas de Chile — actualizadas cada 4 días.';
+
     }
+
   })();
 
+
+
   /* Misión */
+
   if(data.mision_semana){
+
     const m=data.mision_semana;
+
     const t=document.getElementById('mision-titulo'),mt=document.getElementById('mision-meta'),ml=document.getElementById('mision-link');
+
     if(t&&m.titulo)t.textContent=m.titulo;
+
     if(mt)mt.textContent=(m.perfil||'Familias')+' · '+(m.duracion||'5 min');
+
     if(ml&&m.url)ml.href=m.url;
+
   }
+
+
 
   /* Derecho */
+
   if(data.derecho_semana){
+
     const d=data.derecho_semana;
+
     const t=document.getElementById('dr-widget-titulo'),l=document.getElementById('dr-widget-ley');
+
     if(t&&d.titulo)t.textContent=d.titulo;
+
     if(l&&d.ley)l.textContent=d.ley;
+
   }
+
+
 
   /* Quiz widget */
+
   const QW=document.getElementById('quiz-widget');
+
   if(QW){
+
     const KEY_DONE='aegis8_quiz_done',KEY_BEST='aegis8_quiz_best';
+
     function getSemana(){const d=new Date(),ini=new Date(d.getFullYear(),0,1);return`${d.getFullYear()}-W${Math.ceil(((d-ini)/86400000+ini.getDay()+1)/7)}`;}
+
     const done=localStorage.getItem(KEY_DONE)===getSemana(),best=localStorage.getItem(KEY_BEST)||'0';
+
     QW.innerHTML=`
+
       <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;
+
         color:${done?'var(--green)':'var(--blue)'};text-transform:uppercase;margin-bottom:10px;">
+
         ${done?'✓ Completado esta semana':'● Quiz semanal'}</div>
+
       <div style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink);margin-bottom:8px;line-height:1.2;">
+
         ${done?`Tu mejor resultado: <strong style="color:var(--accent)">${best}%</strong><br><span style="font-family:'Lato';font-size:.8rem;color:var(--ink3);font-weight:300;">Vuelve el próximo lunes</span>`
+
                :'¿Qué tan bien te defiendes esta semana?'}</div>
+
       <a href="/quiz.html" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+
         color:${done?'var(--green)':'var(--blue)'};text-decoration:none;text-transform:uppercase;">
+
         ${done?'Ver resultado →':'Hacer el quiz →'}</a>`;
+
   }
 
-})();
-</script>
 
+
+})();
+
+
+</script>
 </body>
 </html>
-

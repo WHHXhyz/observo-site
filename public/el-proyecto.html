@@ -3,582 +3,315 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>El Proyecto · Aegis8 — Ciberseguridad educativa para Chile</title>
-<meta name="description" content="Aegis8 es el primer proyecto social de ciberseguridad educativa de Chile. Gratuito para familias y docentes. Construido para proteger a los que más importan."/>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
-  <script src="/aegis-nav.js"></script>
+<title>El Proyecto · Aegis8 — Ciberseguridad Educativa para Chile</title>
+<meta name="description" content="Por qué existe Aegis8, a quién ayuda, qué hace y cómo lo hace. El proyecto social de educación digital gratuito para Chile."/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
+<script src="/aegis-nav.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet"/>
 <style>
-
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap');
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 :root{
   --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
-  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
+  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;--red:#ef4444;--purple:#9b6dff;
   --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
-  --card:rgba(255,255,255,.03);--radius:4px;
+  --c1:#3a7fd4;--c2:#9b6dff;--c3:#ef4444;--c4:#f5a823;--c5:#2ecc80;
 }
 body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
 body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:linear-gradient(rgba(58,127,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.025) 1px,transparent 1px);
+  background:linear-gradient(rgba(58,127,212,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.02) 1px,transparent 1px);
   background-size:80px 80px;}
 .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
-.page-inner{position:relative;z-index:10;}
-.sl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
-  color:var(--accent);text-transform:uppercase;margin-bottom:12px;}
-.st{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.6rem);
-  line-height:1.05;color:var(--ink);margin-bottom:20px;letter-spacing:-1px;}
-.st em{font-style:italic;color:var(--accent);}
-.si{font-size:1rem;line-height:1.9;color:var(--ink2);max-width:640px;margin-bottom:40px;}
-.sw{padding:80px 0 48px;border-bottom:1px solid var(--border);
-  opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
-.sw.vis{opacity:1;transform:none;}
-.sw:last-child{border-bottom:none;}
+.pi{position:relative;z-index:10;}
+@media(max-width:640px){.wrap{padding:0 16px;}}
 .btn-p{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
-  color:var(--bg);background:var(--accent);border:none;padding:14px 28px;border-radius:var(--radius);
-  text-decoration:none;transition:all .25s;position:relative;overflow:hidden;display:inline-block;cursor:pointer!important;}
+  color:var(--bg);background:var(--accent);border:none;padding:14px 28px;border-radius:3px;
+  text-decoration:none;transition:all .25s;display:inline-block;position:relative;overflow:hidden;}
 .btn-p::before{content:'';position:absolute;inset:0;background:var(--accent2);transform:translateX(-100%);transition:transform .3s;}
 .btn-p:hover::before{transform:translateX(0);}
-.btn-p span,.btn-p{position:relative;z-index:1;}
+.btn-p span{position:relative;z-index:1;}
 .btn-p:hover{box-shadow:0 0 28px rgba(240,120,48,.4);transform:translateY(-2px);}
 .btn-g{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
   color:var(--ink2);background:transparent;border:1px solid var(--border);
-  padding:14px 28px;border-radius:var(--radius);text-decoration:none;transition:all .25s;display:inline-block;}
+  padding:14px 28px;border-radius:3px;text-decoration:none;transition:all .25s;display:inline-block;}
 .btn-g:hover{color:var(--ink);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
-/* CHAT SHARED */
-.chat-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;}
-.chat-hd{background:rgba(240,120,48,.05);border-bottom:1px solid var(--border2);
-  padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
-.chat-hd-l{display:flex;align-items:center;gap:.75rem;}
-.chat-ava{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;
-  background:rgba(240,120,48,.12);}
-.chat-name{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;color:var(--ink);}
-.chat-status{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--green);letter-spacing:1px;}
-.chat-live{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
-.chat-msgs{height:320px;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;}
-.chat-msgs::-webkit-scrollbar{width:3px;}
-.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
-.msg{display:flex;gap:.6rem;align-items:flex-start;}
-.msg.user{flex-direction:row-reverse;}
-.msg-ava{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;
-  font-size:.85rem;flex-shrink:0;background:var(--card);}
-.msg-bubble{background:var(--card);border:1px solid var(--border);padding:.65rem .9rem;
-  font-size:.84rem;line-height:1.6;max-width:85%;border-radius:2px;color:var(--ink2);}
-.msg.user .msg-bubble{background:rgba(240,120,48,.06);border-color:var(--border2);color:var(--ink);}
-.chat-quick{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.4rem;}
-.qbtn{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1px;
-  color:var(--accent);border:1px solid var(--border2);background:rgba(240,120,48,.04);
-  padding:.3rem .7rem;border-radius:var(--radius);cursor:pointer!important;transition:all .2s;}
-.qbtn:hover{background:rgba(240,120,48,.1);border-color:var(--accent);}
-.chat-row{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:.5rem;}
-.chat-in{flex:1;background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);
-  padding:.65rem 1rem;font-family:'Lato',sans-serif;font-size:.88rem;color:var(--ink);
-  outline:none;transition:border-color .2s;}
-.chat-in:focus{border-color:var(--accent);}
-.chat-in::placeholder{color:var(--ink3);}
-.send-btn{background:var(--accent);color:var(--bg);border:none;padding:.65rem 1.1rem;
-  border-radius:var(--radius);font-weight:700;cursor:pointer!important;transition:background .2s;}
-.send-btn:hover{background:var(--accent2);}
-.typing-wrap{display:flex;gap:4px;align-items:center;}
-.tdot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.3;
-  animation:tdot 1.2s ease-in-out infinite;}
-.tdot:nth-child(2){animation-delay:.2s;}.tdot:nth-child(3){animation-delay:.4s;}
-@keyframes tdot{0%,80%,100%{opacity:.2;transform:scale(.8);}40%{opacity:1;transform:scale(1);}}
-/* FOOTER */
-.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);
-  padding:48px 32px 32px;max-width:1080px;margin:0 auto;
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
-.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;
-  letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.sw{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s;}
+.sw.vis{opacity:1;transform:none;}
+.hero{position:relative;z-index:10;padding:100px 0 80px;border-bottom:1px solid var(--border);overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none;}
+.b1{width:700px;height:700px;top:-150px;right:-100px;background:radial-gradient(circle,rgba(240,120,48,.07) 0%,transparent 70%);animation:fl1 10s ease-in-out infinite;}
+.b2{width:500px;height:500px;bottom:-100px;left:-100px;background:radial-gradient(circle,rgba(58,127,212,.06) 0%,transparent 70%);animation:fl2 13s ease-in-out infinite;}
+@keyframes fl1{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,20px);}}
+@keyframes fl2{0%,100%{transform:translate(0,0);}50%{transform:translate(20px,-25px);}}
+.sec{padding:88px 0 64px;border-bottom:1px solid var(--border);}
+.sec:last-child{border-bottom:none;}
+.sl{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+.st{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4.5vw,3.4rem);line-height:1.05;letter-spacing:-1px;color:var(--ink);margin-bottom:20px;}
+.st em{font-style:italic;color:var(--accent);}
+.si{font-size:1rem;line-height:1.95;color:var(--ink2);max-width:620px;}
+.si strong{color:var(--ink);font-weight:400;}
+.stats{display:flex;flex-direction:column;gap:2px;background:var(--border);}
+.stat{background:var(--bg2);padding:1.75rem;display:flex;gap:1.75rem;align-items:flex-start;}
+.stat-n{font-family:'DM Serif Display',serif;font-size:3rem;font-style:italic;line-height:1;flex-shrink:0;color:var(--accent);min-width:100px;text-align:center;}
+.stat-title{font-family:'JetBrains Mono',monospace;font-size:.64rem;font-weight:600;color:var(--ink);margin-bottom:.35rem;letter-spacing:1px;}
+.stat-desc{font-size:.86rem;color:var(--ink2);line-height:1.7;}
+.stat-src{font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--ink3);margin-top:.5rem;letter-spacing:1px;}
+.perfiles{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);}
+@media(max-width:800px){.perfiles{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:420px){.perfiles{grid-template-columns:1fr;}}
+.perfil{background:var(--bg2);padding:2rem 1.5rem;text-decoration:none;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;transition:background .2s;}
+.perfil::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--pc);transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.perfil:hover::before{transform:scaleX(1);}
+.perfil:hover{background:rgba(255,255,255,.025);}
+.perfil-tag{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:3px;text-transform:uppercase;}
+.perfil-name{font-family:'DM Serif Display',serif;font-size:1.25rem;color:var(--ink);line-height:1.1;}
+.perfil-desc{font-size:.83rem;color:var(--ink2);line-height:1.6;flex:1;}
+.perfil-cta{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;}
+.capas{display:flex;flex-direction:column;gap:2px;background:var(--border);}
+.capa{background:var(--bg2);padding:1.5rem 1.75rem 1.5rem 1.5rem;display:flex;gap:1.5rem;align-items:flex-start;border-left:3px solid var(--c,var(--accent));text-decoration:none;transition:background .2s;}
+.capa:hover{background:rgba(255,255,255,.02);}
+.capa-n{font-family:'DM Serif Display',serif;font-size:2.8rem;font-style:italic;line-height:1;flex-shrink:0;width:48px;text-align:center;margin-top:-2px;}
+.capa-tag{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;}
+.capa-title{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);margin-bottom:4px;line-height:1.1;}
+.capa-body{font-size:.85rem;color:var(--ink2);line-height:1.6;}
+.capa-arr{color:var(--ink3);font-size:1rem;flex-shrink:0;margin-top:4px;transition:transform .2s;}
+.capa:hover .capa-arr{transform:translateX(4px);}
+@media(max-width:560px){.capa{flex-wrap:wrap;gap:.75rem;}.capa-n{width:auto;font-size:2rem;}}
+.proceso{display:flex;flex-direction:column;gap:2px;background:var(--border);}
+.paso{background:var(--bg2);padding:1.5rem 1.75rem;display:flex;gap:1.5rem;align-items:flex-start;}
+.paso-n{font-family:'DM Serif Display',serif;font-size:2.2rem;font-style:italic;color:rgba(240,120,48,.2);line-height:1;flex-shrink:0;width:40px;}
+.paso-title{font-family:'JetBrains Mono',monospace;font-size:.66rem;font-weight:600;color:var(--ink);margin-bottom:.3rem;letter-spacing:1px;}
+.paso-body{font-size:.86rem;color:var(--ink2);line-height:1.7;}
+.quote{border-left:3px solid var(--accent);padding:1.25rem 1.75rem;background:rgba(240,120,48,.04);margin:2rem 0;}
+.quote-text{font-family:'DM Serif Display',serif;font-size:1.2rem;font-style:italic;color:var(--ink);line-height:1.5;margin-bottom:.4rem;}
+.quote-src{font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--ink3);letter-spacing:2px;text-transform:uppercase;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);}
+@media(max-width:640px){.g2{grid-template-columns:1fr;}}
+.card{background:var(--bg2);padding:2rem 1.75rem;}
+.card-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:.6rem;}
+.card-body{font-size:.88rem;color:var(--ink2);line-height:1.75;}
+.cta-final{text-align:center;padding:80px 24px;position:relative;overflow:hidden;border:1px solid var(--border2);background:rgba(240,120,48,.03);}
+.cta-final::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4),var(--c5));}
+.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);padding:48px 32px 32px;max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;letter-spacing:3px;color:var(--ink2);text-decoration:none;}
 .fl span{color:var(--accent);}
 .flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
-.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
-  color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
 .flinks a:hover{color:var(--accent);}
 .fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
-/* SCROLL REVEAL JS inline */
-@media(max-width:640px){.wrap{padding:0 16px;}.page-footer{padding:32px 16px;}}
-
-
-/* ── HERO ── */
-.hero-p{position:relative;z-index:10;padding:72px 0 64px;border-bottom:1px solid var(--border);overflow:hidden;}
-.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
-.b1{width:600px;height:600px;top:-100px;right:-120px;background:radial-gradient(circle,rgba(240,120,48,.08) 0%,transparent 70%);animation:fl1 9s ease-in-out infinite;}
-.b2{width:400px;height:400px;bottom:-60px;left:-80px;background:radial-gradient(circle,rgba(58,127,212,.07) 0%,transparent 70%);animation:fl2 11s ease-in-out infinite;}
-@keyframes fl1{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,20px);}}
-@keyframes fl2{0%,100%{transform:translate(0,0);}50%{transform:translate(20px,-30px);}}
-
-/* ── STAT BAND ── */
-.stat-band{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  display:grid;grid-template-columns:repeat(4,1fr);}
-@media(max-width:640px){.stat-band{grid-template-columns:repeat(2,1fr);}}
-.sb-item{padding:28px 20px;text-align:center;border-right:1px solid var(--border);}
-.sb-item:last-child{border-right:none;}
-@media(max-width:640px){.sb-item:nth-child(2){border-right:none;}}
-.sb-n{font-family:'DM Serif Display',serif;font-size:2.6rem;font-style:italic;
-  line-height:1;margin-bottom:6px;color:var(--accent);}
-.sb-n.red{color:#ef4444;}
-.sb-n.blue{color:var(--blue);}
-.sb-n.gold{color:var(--gold);}
-.sb-l{font-size:.82rem;color:var(--ink2);line-height:1.5;}
-.sb-src{font-family:'JetBrains Mono',monospace;font-size:.52rem;color:var(--ink3);
-  letter-spacing:1px;margin-top:5px;}
-
-/* ── PROBLEMA ── */
-.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
-@media(max-width:720px){.prob-grid{grid-template-columns:1fr;}}
-.prob-quotes{display:flex;flex-direction:column;gap:12px;}
-.quote-card{background:var(--bg2);border-left:3px solid var(--border-o);
-  padding:16px 18px;border-radius:0 var(--radius) var(--radius) 0;}
-.quote-card.q-red{border-left-color:#ef4444;}
-.quote-card.q-gold{border-left-color:var(--gold);}
-.quote-card.q-blue{border-left-color:var(--blue);}
-.quote-text{font-size:.9rem;color:var(--ink);line-height:1.6;font-style:italic;margin-bottom:6px;}
-.quote-src{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ink3);letter-spacing:1px;}
-
-/* ── BRECHA ── */
-.brecha-g{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);}
-@media(max-width:640px){.brecha-g{grid-template-columns:1fr;}}
-.brecha-c{background:var(--bg2);padding:2rem 1.75rem;}
-.brecha-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
-  text-transform:uppercase;margin-bottom:.75rem;}
-.b-red{color:#ef4444;}
-.b-green{color:var(--green);}
-.brecha-title{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);
-  margin-bottom:.75rem;line-height:1.2;}
-.brecha-items{display:flex;flex-direction:column;gap:6px;}
-.brecha-item{font-size:.84rem;color:var(--ink2);line-height:1.5;display:flex;gap:.6rem;}
-.brecha-item::before{flex-shrink:0;margin-top:2px;}
-.b-no::before{content:'✗';color:#ef4444;}
-.b-yes::before{content:'✓';color:var(--green);}
-
-/* ── SOLUCION MVP ── */
-.mvp-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
-@media(max-width:640px){.mvp-g{grid-template-columns:1fr;}}
-.mvp-c{background:var(--bg2);padding:1.75rem 1.5rem;transition:background .2s;
-  position:relative;overflow:hidden;}
-.mvp-c::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  transform:scaleX(0);transform-origin:left;transition:transform .4s;}
-.mvp-c:hover::before{transform:scaleX(1);}
-.mvp-c:hover{background:rgba(255,255,255,.03);}
-.m1::before{background:var(--accent);}
-.m2::before{background:var(--blue);}
-.m3::before{background:var(--green);}
-.m4::before{background:var(--gold);}
-.m5::before{background:#9b6dff;}
-.m6::before{background:#ef4444;}
-.mvp-n{font-family:'DM Serif Display',serif;font-size:2.5rem;color:rgba(240,120,48,.08);
-  line-height:1;margin-bottom:.5rem;font-style:italic;}
-.mvp-ico{font-size:1.6rem;margin-bottom:.5rem;}
-.mvp-title{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;
-  color:var(--ink);margin-bottom:.4rem;}
-.mvp-desc{font-size:.82rem;color:var(--ink2);line-height:1.6;margin-bottom:.75rem;}
-.mvp-tag{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:1px;
-  color:var(--ink3);border-top:1px solid var(--border);padding-top:.6rem;}
-
-/* ── IMPACTO BUSCADO ── */
-.impacto-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
-@media(max-width:640px){.impacto-g{grid-template-columns:1fr;}}
-.imp{background:var(--bg2);padding:2rem 1.5rem;text-align:center;}
-.imp-n{font-family:'DM Serif Display',serif;font-size:2.8rem;color:var(--accent);
-  font-style:italic;line-height:1;margin-bottom:.5rem;}
-.imp-l{font-size:.86rem;color:var(--ink2);line-height:1.55;}
-.imp-sub{font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--ink3);
-  margin-top:5px;letter-spacing:1px;}
-
-/* ── ROADMAP ── */
-.road-g{display:flex;flex-direction:column;gap:1px;background:var(--border);}
-.road{background:var(--bg2);padding:1.4rem 1.75rem;display:flex;gap:1.5rem;align-items:flex-start;}
-.road-fase{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:2px;
-  text-transform:uppercase;padding:.22rem .65rem;border-radius:20px;flex-shrink:0;margin-top:3px;
-  white-space:nowrap;}
-.fase-done{color:var(--green);background:rgba(46,204,128,.1);border:1px solid rgba(46,204,128,.2);}
-.fase-now{color:var(--accent);background:rgba(240,120,48,.1);border:1px solid rgba(240,120,48,.25);
-  animation:pulse-now 2s ease-in-out infinite;}
-@keyframes pulse-now{0%,100%{box-shadow:0 0 0 0 rgba(240,120,48,0);}50%{box-shadow:0 0 0 3px rgba(240,120,48,.12);}}
-.fase-next{color:var(--ink3);background:var(--card);border:1px solid var(--border);}
-.road-content{flex:1;}
-.road-title{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;
-  color:var(--ink);margin-bottom:.3rem;}
-.road-desc{font-size:.83rem;color:var(--ink2);line-height:1.6;}
-
-/* ── MANIFESTO ── */
-.mf{padding:56px;background:rgba(240,120,48,.03);border:1px solid var(--border-o);
-  border-radius:var(--radius);text-align:center;position:relative;overflow:hidden;}
-.mf::before{content:'"';position:absolute;top:-20px;left:20px;font-family:'DM Serif Display',serif;
-  font-size:12rem;color:rgba(240,120,48,.05);line-height:1;pointer-events:none;}
-.mf-text{font-family:'DM Serif Display',serif;font-size:clamp(1.3rem,2.8vw,1.9rem);
-  line-height:1.55;color:var(--ink);max-width:680px;margin:0 auto;
-  font-style:italic;position:relative;z-index:1;}
-.mf-text em{color:var(--accent);font-style:normal;}
-.mf-sig{margin-top:20px;font-family:'JetBrains Mono',monospace;font-size:.6rem;
-  color:var(--ink3);letter-spacing:3px;}
-@media(max-width:640px){.mf{padding:32px 20px;}}
-
-/* ── CTAs FINALES ── */
-.cta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-@media(max-width:640px){.cta-grid{grid-template-columns:1fr;}}
-.cta-card{border:1px solid var(--border);border-radius:var(--radius);padding:2rem 1.75rem;
-  background:var(--card);text-decoration:none;transition:all .25s;
-  display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;}
-.cta-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
-  transform:scaleX(0);transform-origin:left;transition:transform .3s;}
-.cta-card:hover::after{transform:scaleX(1);}
-.cta-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.1);}
-.cc1::after{background:var(--accent);}
-.cc2::after{background:var(--blue);}
-.cc3::after{background:var(--green);}
-.cta-ico{font-size:1.8rem;}
-.cta-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;
-  color:var(--ink3);text-transform:uppercase;}
-.cta-name{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);line-height:1.2;}
-.cta-desc{font-size:.83rem;color:var(--ink2);line-height:1.6;flex:1;}
-.cta-action{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
-  color:var(--accent);display:flex;align-items:center;gap:5px;transition:gap .2s;}
-.cc2 .cta-action{color:var(--blue);}
-.cc3 .cta-action{color:var(--green);}
-.cta-card:hover .cta-action{gap:9px;}
-
+@media(max-width:640px){.page-footer{padding:32px 16px;}}
 </style>
 </head>
 <body data-page="proyecto">
 
-<!-- ═══════════════════════════════
-     HERO
-═══════════════════════════════ -->
-<section class="hero-p">
-  <div class="blob b1"></div><div class="blob b2"></div>
+<section class="hero">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
   <div class="wrap" style="position:relative;z-index:2;">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;
-      color:var(--ink3);margin-bottom:28px;display:flex;align-items:center;gap:10px;">
-      <div style="width:28px;height:1px;background:var(--accent);"></div>
-      PROYECTO SOCIAL · CHILE · 2024
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ink3);display:flex;align-items:center;gap:12px;margin-bottom:28px;">
+      <div style="width:32px;height:1px;background:var(--accent);"></div>
+      AEGIS8 · PROYECTO SOCIAL · CHILE
     </div>
-    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.8rem,8vw,6rem);
-      line-height:.9;letter-spacing:-2px;margin-bottom:20px;">
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(3rem,9vw,7rem);line-height:.85;letter-spacing:-3px;margin-bottom:28px;max-width:820px;">
       El problema existe.<br>
-      <span style="color:var(--accent);font-style:italic;">La solución, también.</span>
+      <em style="color:var(--accent);">La solución, también.</em>
     </h1>
-    <p style="font-size:1.05rem;line-height:1.85;color:var(--ink2);max-width:580px;margin-bottom:32px;">
-      En Chile, miles de niños son víctimas de grooming, phishing y ciberbullying cada año.
-      Los colegios no tienen herramientas. Las familias no tienen información.
-      <strong style="color:var(--ink);font-weight:400;">Aegis8 existe para cambiar eso — gratis, sin excusas.</strong>
+    <p style="font-size:1.1rem;line-height:1.9;color:var(--ink2);max-width:560px;margin-bottom:36px;">
+      En Chile, miles de niños son víctimas de grooming, phishing y ciberbullying cada año. Los colegios no tienen herramientas. Las familias no tienen información. Aegis8 existe para cambiar eso — gratis, sin excusas.
     </p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;">
-      <a href="#solucion" class="btn-p"><span>La solución →</span></a>
+      <a href="#necesidad" class="btn-p"><span>Ver el problema →</span></a>
       <a href="/contacto" class="btn-g">Solicitar taller</a>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════
-     STAT BAND — números duros arriba
-═══════════════════════════════ -->
-<div class="stat-band page-inner">
-  <div class="sb-item">
-    <div class="sb-n red">68%</div>
-    <div class="sb-l">Colegios chilenos sin ningún programa de educación digital</div>
-    <div class="sb-src">MINEDUC 2023</div>
-  </div>
-  <div class="sb-item">
-    <div class="sb-n">14</div>
-    <div class="sb-l">Años — edad promedio de la primera víctima de grooming en Chile</div>
-    <div class="sb-src">PDI Cibercrimen</div>
-  </div>
-  <div class="sb-item">
-    <div class="sb-n gold">3/4</div>
-    <div class="sb-l">Docentes que no se sienten preparados para enseñar seguridad digital</div>
-    <div class="sb-src">CPEIP 2024</div>
-  </div>
-  <div class="sb-item">
-    <div class="sb-n blue">$0</div>
-    <div class="sb-l">Presupuesto promedio de un colegio municipal para ciberseguridad educativa</div>
-    <div class="sb-src">Encuesta Aegis8 2024</div>
-  </div>
-</div>
+<div class="wrap pi">
 
-<div class="wrap page-inner">
-
-<!-- ═══════════════════════════════
-     EL PROBLEMA — concreto, Chile real
-═══════════════════════════════ -->
-<div class="sw">
-  <div class="sl">// El problema</div>
-  <div class="prob-grid">
-    <div>
-      <h2 class="st">No es falta<br>de interés.<br><em>Es falta de acceso.</em></h2>
-      <p class="si" style="max-width:100%;">Los docentes quieren enseñar esto. Los apoderados quieren proteger a sus hijos. El problema no es la motivación — es que no existen materiales gratuitos, en español, con contexto chileno, que un profesor sin formación técnica pueda usar mañana.</p>
-      <p style="font-size:.88rem;line-height:1.8;color:var(--ink2);">Las soluciones que existen son para empresas. Costosas, técnicas, en inglés, diseñadas para equipos de TI. No para una profesora de 4° básico en Pudahuel ni para un apoderado preocupado por lo que hace su hijo en TikTok a las 11 de la noche.</p>
+<section class="sec sw" id="necesidad">
+  <div class="sl">// La necesidad</div>
+  <h2 class="st">No es falta de interés.<br><em>Es falta de acceso.</em></h2>
+  <p class="si" style="margin-bottom:2rem;">Los docentes quieren enseñar esto. Los apoderados quieren proteger a sus hijos. El problema no es la motivación — es que no existen materiales gratuitos, en español, con contexto chileno, que un profesor sin formación técnica pueda usar mañana.</p>
+  <p class="si" style="margin-bottom:2.5rem;">Las soluciones que existen son para empresas. Costosas, técnicas, en inglés. <strong>No para una profesora de 4° básico en Pudahuel ni para un apoderado preocupado por lo que hace su hijo en TikTok.</strong></p>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-n">68%</div>
+      <div>
+        <div class="stat-title">DE LOS COLEGIOS SIN PROGRAMA DE EDUCACIÓN DIGITAL</div>
+        <div class="stat-desc">Más de dos tercios de los establecimientos chilenos no tienen ningún programa formal de educación digital. El docente queda solo frente a un incidente.</div>
+        <div class="stat-src">MINEDUC 2023</div>
+      </div>
     </div>
-    <div class="prob-quotes">
-      <div class="quote-card q-red">
-        <div class="quote-text">"Sé que debería hablar con mis alumnos sobre esto pero no sé por dónde empezar ni qué decir exactamente."</div>
-        <div class="quote-src">— Docente, 5° básico, colegio municipal, RM</div>
+    <div class="stat">
+      <div class="stat-n">14</div>
+      <div>
+        <div class="stat-title">AÑOS — EDAD PROMEDIO DE LA PRIMERA VÍCTIMA DE GROOMING</div>
+        <div class="stat-desc">Un adolescente de 14 enfrenta el proceso de grooming sin saber que tiene un nombre legal y una forma de denunciarlo. La mayoría no lo reporta.</div>
+        <div class="stat-src">PDI Cibercrimen Chile</div>
       </div>
-      <div class="quote-card q-gold">
-        <div class="quote-text">"Mi hijo de 11 años recibió mensajes raros de un desconocido en Roblox. No supe qué hacer ni a quién llamar."</div>
-        <div class="quote-src">— Apoderada, Lo Espejo, Santiago</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n">3/4</div>
+      <div>
+        <div class="stat-title">DOCENTES QUE NO SE SIENTEN PREPARADOS</div>
+        <div class="stat-desc">Tres de cada cuatro docentes chilenos declaran no sentirse preparados para enseñar seguridad digital. No es ignorancia — es que nadie los formó para esto.</div>
+        <div class="stat-src">CPEIP 2024</div>
       </div>
-      <div class="quote-card q-blue">
-        <div class="quote-text">"Tuvimos un caso de ciberbullying grave en el colegio. Actuamos tarde porque no teníamos protocolo."</div>
-        <div class="quote-src">— Inspector general, colegio subvencionado, Valparaíso</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n">$0</div>
+      <div>
+        <div class="stat-title">PRESUPUESTO PROMEDIO PARA CIBERSEGURIDAD EDUCATIVA</div>
+        <div class="stat-desc">El presupuesto promedio de un colegio municipal chileno destinado a ciberseguridad educativa es cero. No porque no importe — porque no está en ningún programa ministerial.</div>
+        <div class="stat-src">Encuesta Aegis8 2024</div>
       </div>
     </div>
   </div>
-</div>
-
-<!-- ═══════════════════════════════
-     LA BRECHA — por qué nadie lo resolvió
-═══════════════════════════════ -->
-<div class="sw">
-  <div class="sl">// Por qué nadie lo resolvió antes</div>
-  <h2 class="st">La brecha que<br><em>nadie quería llenar.</em></h2>
-  <p class="si">Las soluciones existentes sirven al mercado que tiene dinero. Los colegios municipales, los apoderados de clase media y los docentes sin formación técnica no son un mercado atractivo. Son, sin embargo, los que más necesitan ayuda.</p>
-  <div class="brecha-g">
-    <div class="brecha-c">
-      <div class="brecha-label b-red">✗ Lo que existe hoy</div>
-      <div class="brecha-title">Soluciones para empresas,<br>no para personas</div>
-      <div class="brecha-items">
-        <div class="brecha-item b-no">Cursos de ciberseguridad: $200–$800 USD, en inglés, para profesionales IT</div>
-        <div class="brecha-item b-no">Charlas escolares: puntuales, sin seguimiento, sin material de apoyo</div>
-        <div class="brecha-item b-no">Contenido online: disperso, sin contexto chileno, sin marco legal local</div>
-        <div class="brecha-item b-no">Apps de control parental: técnicas, de pago, sin educación asociada</div>
-        <div class="brecha-item b-no">Guías del MINEDUC: desactualizadas, sin herramientas prácticas</div>
-      </div>
-    </div>
-    <div class="brecha-c">
-      <div class="brecha-label b-green">✓ Lo que hace Aegis8</div>
-      <div class="brecha-title">Educación digital accesible<br>para todos</div>
-      <div class="brecha-items">
-        <div class="brecha-item b-yes">100% gratuito, sin registro, sin freemium — siempre</div>
-        <div class="brecha-item b-yes">Planes de clase listos en 5 minutos, para docentes sin formación técnica</div>
-        <div class="brecha-item b-yes">Marco legal chileno integrado: Ley 21.459, 20.526, 20.536, 21.663</div>
-        <div class="brecha-item b-yes">4 agentes IA especializados disponibles 24/7 en lenguaje simple</div>
-        <div class="brecha-item b-yes">Talleres presenciales gratuitos para colegios de la RM</div>
-      </div>
-    </div>
+  <div class="quote" style="margin-top:2rem;">
+    <div class="quote-text">"El problema no es que los niños usen internet. Es que nadie les enseñó las reglas del lugar donde pasan 6 horas al día."</div>
+    <div class="quote-src">Aegis8 · Principio fundacional</div>
   </div>
-</div>
+</section>
 
-<!-- ═══════════════════════════════
-     SOLUCIÓN — el MVP concreto
-═══════════════════════════════ -->
-<div class="sw" id="solucion">
-  <div class="sl">// La solución · MVP en producción</div>
-  <h2 class="st">Seis componentes.<br><em>Un solo objetivo.</em></h2>
-  <p class="si">Aegis8 no es una app ni una plataforma de cursos. Es una infraestructura educativa gratuita donde cada pieza resuelve un problema específico.</p>
-  <div class="mvp-g">
-    <div class="mvp-c m1">
-      <div class="mvp-n">01</div>
-      <div class="mvp-ico">🤖</div>
-      <div class="mvp-title">Agentes IA especializados</div>
-      <div class="mvp-desc">CiberBot (niños), Agente Teen (adolescentes), Agente Familiar y Agente Docente. Cada uno con su propio sistema de conocimiento, tono y contexto legal chileno. Disponibles 24/7.</div>
-      <div class="mvp-tag">Worker Cloudflare · Claude API</div>
-    </div>
-    <div class="mvp-c m2">
-      <div class="mvp-n">02</div>
-      <div class="mvp-ico">📚</div>
-      <div class="mvp-title">Contenido por perfil</div>
-      <div class="mvp-desc">Quiz con casos reales, guías de conversación por edad, planes de clase completos y protocolos de incidentes. Todo adaptado al currículo y realidad chilena.</div>
-      <div class="mvp-tag">Chile-first · Actualizado 2025</div>
-    </div>
-    <div class="mvp-c m3">
-      <div class="mvp-n">03</div>
-      <div class="mvp-ico">📄</div>
-      <div class="mvp-title">Biblioteca descargable</div>
-      <div class="mvp-desc">10 PDFs educativos y 10 guías técnicas HTML. Desde el póster "5 Reglas del Internauta" para pegar en sala hasta un plan de clase de 60 minutos listo para mañana.</div>
-      <div class="mvp-tag">Gratuito · Sin registro</div>
-    </div>
-    <div class="mvp-c m4">
-      <div class="mvp-n">04</div>
-      <div class="mvp-ico">🎣</div>
-      <div class="mvp-title">Herramientas IA interactivas</div>
-      <div class="mvp-desc">Analizador de phishing en tiempo real, generador de checklist personalizada y agente de seguridad general. Cualquier persona las usa sin saber nada de tecnología.</div>
-      <div class="mvp-tag">IA en producción · Tiempo real</div>
-    </div>
-    <div class="mvp-c m5">
-      <div class="mvp-n">05</div>
-      <div class="mvp-ico">🏫</div>
-      <div class="mvp-title">Talleres presenciales</div>
-      <div class="mvp-desc">Talleres gratuitos en colegios de la Región Metropolitana para niños, adolescentes y apoderados. Sin equipos especiales — solo proyector y ganas de aprender.</div>
-      <div class="mvp-tag">Presencial · Santiago RM</div>
-    </div>
-    <div class="mvp-c m6">
-      <div class="mvp-n">06</div>
-      <div class="mvp-ico">📬</div>
-      <div class="mvp-title">Newsletter mensual</div>
-      <div class="mvp-desc">La amenaza digital más relevante del mes para tus alumnos + una actividad lista para usar en clases esa semana. Para docentes que no tienen tiempo de investigar pero sí quieren enseñar.</div>
-      <div class="mvp-tag">Mensual · Sin spam · Docentes</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════
-     QUIÉNES SOMOS
-═══════════════════════════════ -->
-<div class="sw">
-  <div class="sl">// Quiénes somos</div>
-  <h2 class="st">Un proyecto.<br><em>No una empresa.</em></h2>
-  <p class="si">Aegis8 nació en Chile en 2024 con una convicción simple: la ciberseguridad no debería ser un privilegio. Lo construimos con las mismas herramientas que usaría cualquier equipo técnico serio — y lo damos gratis porque creemos que el impacto importa más que el margen.</p>
-
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);margin-top:32px;">
-    <div style="background:var(--bg2);padding:1.75rem 1.5rem;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
-        color:var(--accent);text-transform:uppercase;margin-bottom:.75rem;">Origen</div>
-      <div style="font-size:.88rem;color:var(--ink2);line-height:1.7;">Nacimos de observar que los recursos de ciberseguridad para personas — no para empresas — simplemente no existían en Chile. Decidimos construirlos.</div>
-    </div>
-    <div style="background:var(--bg2);padding:1.75rem 1.5rem;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
-        color:var(--accent);text-transform:uppercase;margin-bottom:.75rem;">Enfoque</div>
-      <div style="font-size:.88rem;color:var(--ink2);line-height:1.7;">Todo el contenido es Chile-first: estadísticas chilenas, leyes chilenas, ejemplos de nuestras escuelas. No traducimos materiales de otros países.</div>
-    </div>
-    <div style="background:var(--bg2);padding:1.75rem 1.5rem;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;
-        color:var(--accent);text-transform:uppercase;margin-bottom:.75rem;">Compromiso</div>
-      <div style="font-size:.88rem;color:var(--ink2);line-height:1.7;">Sin patrocinadores, sin fear marketing, sin vender datos. La sostenibilidad viene de talleres para organizaciones no educativas. El contenido es y seguirá siendo gratis.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════
-     IMPACTO QUE BUSCAMOS
-═══════════════════════════════ -->
-<div class="sw">
-  <div class="sl">// Impacto · Metas 2025–2026</div>
-  <h2 class="st">No medimos<br><em>pageviews.</em></h2>
-  <p class="si">Medimos cuántos niños, docentes y familias tienen acceso a educación digital que antes no existía.</p>
-  <div class="impacto-g">
-    <div class="imp">
-      <div class="imp-n">100K</div>
-      <div class="imp-l">Visitas únicas anuales al hub educativo</div>
-      <div class="imp-sub">META 2025</div>
-    </div>
-    <div class="imp">
-      <div class="imp-n">500</div>
-      <div class="imp-l">Colegios con al menos un docente activo</div>
-      <div class="imp-sub">META 2025</div>
-    </div>
-    <div class="imp">
-      <div class="imp-n">50K</div>
-      <div class="imp-l">Niños alcanzados directa o indirectamente</div>
-      <div class="imp-sub">META 2026</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════
-     ROADMAP
-═══════════════════════════════ -->
-<div class="sw">
-  <div class="sl">// Hoja de ruta</div>
-  <h2 class="st">Dónde estamos<br><em>y hacia dónde vamos.</em></h2>
-  <div class="road-g">
-    <div class="road">
-      <div class="road-fase fase-done">✓ Hecho</div>
-      <div class="road-content">
-        <div class="road-title">Plataforma educativa completa en producción</div>
-        <div class="road-desc">15 páginas, 4 agentes IA, analizador de phishing, checklist, 10 PDFs, 10 guías técnicas, newsletter y PWA instalable.</div>
-      </div>
-    </div>
-    <div class="road">
-      <div class="road-fase fase-now">● Ahora</div>
-      <div class="road-content">
-        <div class="road-title">Talleres presenciales en Santiago + PWA con dashboard docente</div>
-        <div class="road-desc">Primeros talleres en colegios de la RM. App web con asignación de módulos a alumnos, QR de clase y resultados en tiempo real.</div>
-      </div>
-    </div>
-    <div class="road">
-      <div class="road-fase fase-next">Próximo</div>
-      <div class="road-content">
-        <div class="road-title">Alianzas con municipios y SLEP</div>
-        <div class="road-desc">Convenios con Servicios Locales de Educación para escalar a colegios municipales. Integración en programas de convivencia escolar existentes.</div>
-      </div>
-    </div>
-    <div class="road">
-      <div class="road-fase fase-next">2026</div>
-      <div class="road-content">
-        <div class="road-title">Expansión LATAM — Colombia, México, Perú</div>
-        <div class="road-desc">El modelo Chile-first como plantilla replicable. Marco legal y ejemplos localizados por país. Aegis8 como estándar regional de educación digital.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════
-     MANIFIESTO
-═══════════════════════════════ -->
-<div class="sw">
-  <div class="mf">
-    <div class="mf-text">
-      La ciberseguridad no es un problema técnico. Es un problema de <em>acceso</em>.
-      Quienes más necesitan protección digital son los que menos tienen acceso a educación sobre el tema.
-      <em>Aegis8 existe para cerrar esa brecha.</em>
-      Gratis. Para todos. Sin excusas.
-    </div>
-    <div class="mf-sig">// Aegis8 · Proyecto Social · Santiago, Chile · 2024</div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════
-     CTAs FINALES
-═══════════════════════════════ -->
-<div class="sw">
-  <div class="sl">// ¿Qué quieres hacer?</div>
-  <h2 class="st">Sé parte<br><em>del cambio.</em></h2>
-  <div class="cta-grid">
-    <a href="/talleres.html" class="cta-card cc1">
-      <div class="cta-ico">🏫</div>
-      <div class="cta-tag">Acción directa</div>
-      <div class="cta-name">Organiza un taller</div>
-      <div class="cta-desc">Llevamos talleres presenciales a tu colegio u organización. Gratuito para establecimientos educacionales.</div>
-      <div class="cta-action">Solicitar →</div>
+<section class="sec sw" id="quienes">
+  <div class="sl">// A quién ayudamos</div>
+  <h2 class="st">Cuatro grupos.<br><em>Un mismo problema.</em></h2>
+  <p class="si" style="margin-bottom:2.5rem;">El mismo tema se enseña diferente a un niño de 8 años que a un docente con clase mañana. El contenido cambia completamente — la urgencia es la misma para todos.</p>
+  <div class="perfiles">
+    <a href="/ninos" class="perfil" style="--pc:var(--c1);">
+      <div class="perfil-tag" style="color:var(--c1);">6 — 12 años</div>
+      <div class="perfil-name">Niños</div>
+      <div class="perfil-desc">Cuentos, juegos y CiberBot. Las amenazas digitales en lenguaje simple, con actividades y sin condescendencia.</div>
+      <div class="perfil-cta" style="color:var(--c1);">Ir al módulo →</div>
     </a>
-    <a href="/educa/newsletter" class="cta-card cc2">
-      <div class="cta-ico">📬</div>
-      <div class="cta-tag">Para docentes</div>
-      <div class="cta-name">Suscríbete al newsletter</div>
-      <div class="cta-desc">La amenaza del mes + actividad lista para usar en clases. Un correo mensual. Sin spam.</div>
-      <div class="cta-action">Suscribirse gratis →</div>
+    <a href="/adolescentes" class="perfil" style="--pc:var(--c2);">
+      <div class="perfil-tag" style="color:var(--c2);">13 — 17 años</div>
+      <div class="perfil-name">Adolescentes</div>
+      <div class="perfil-desc">Sin sermones. Casos reales, privacidad en redes, derechos digitales y agente IA para consultas directas.</div>
+      <div class="perfil-cta" style="color:var(--c2);">Ir al módulo →</div>
     </a>
-    <a href="/educa" class="cta-card cc3">
-      <div class="cta-ico">📖</div>
-      <div class="cta-tag">Empieza ya</div>
-      <div class="cta-name">Usa los materiales</div>
-      <div class="cta-desc">Todo el contenido disponible ahora. Sin registro, sin costo. Compártelo con quien lo necesite.</div>
-      <div class="cta-action">Ir a Aegis Educa →</div>
+    <a href="/familias" class="perfil" style="--pc:var(--c3);">
+      <div class="perfil-tag" style="color:var(--c3);">Apoderados</div>
+      <div class="perfil-name">Familias</div>
+      <div class="perfil-desc">Señales de alerta, conversaciones por edad y protocolo si algo ocurre. Sin necesitar ser experto en tecnología.</div>
+      <div class="perfil-cta" style="color:var(--c3);">Ir al módulo →</div>
+    </a>
+    <a href="/docentes" class="perfil" style="--pc:var(--c5);">
+      <div class="perfil-tag" style="color:var(--c5);">Educadores</div>
+      <div class="perfil-name">Docentes</div>
+      <div class="perfil-desc">6 planes de clase listos, protocolo de emergencia y agente IA docente. Aplicable mañana sin ser experto.</div>
+      <div class="perfil-cta" style="color:var(--c5);">Ir al módulo →</div>
     </a>
   </div>
+</section>
+
+<section class="sec sw" id="que-hacemos">
+  <div class="sl">// Qué hacemos</div>
+  <h2 class="st">Herramientas concretas.<br><em>No consejos genéricos.</em></h2>
+  <p class="si" style="margin-bottom:2.5rem;">Aegis8 no es un blog de tips. Es una plataforma con herramientas que se pueden usar hoy, sin registro, sin costo y sin necesitar formación previa.</p>
+  <div class="g2">
+    <div class="card">
+      <div class="card-label" style="color:var(--blue);">Contenido educativo</div>
+      <div class="card-body">Guías por perfil, planes de clase descargables, cuentos infantiles de ciberseguridad y material adaptado a cada nivel. En español, con contexto legal chileno.</div>
+    </div>
+    <div class="card">
+      <div class="card-label" style="color:var(--green);">Herramientas digitales</div>
+      <div class="card-body">Analizador de phishing con IA, agente de seguridad 24/7, checklist familiar, quiz semanal, botiquín SOS y CAPS para contraseñas. Todo gratis, sin registro.</div>
+    </div>
+    <div class="card">
+      <div class="card-label" style="color:var(--accent);">Talleres presenciales</div>
+      <div class="card-body">Talleres en colegios para niños, adolescentes, apoderados y docentes. Prácticos, con casos reales de Chile. Gratuitos para establecimientos municipales.</div>
+    </div>
+    <div class="card">
+      <div class="card-label" style="color:var(--purple);">Agente IA especializado</div>
+      <div class="card-body">Un agente entrenado para responder preguntas de ciberseguridad en lenguaje simple, con contexto legal chileno, disponible sin crear cuenta.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sw" id="modelo">
+  <div class="sl">// Cómo lo hacemos — el modelo</div>
+  <h2 class="st">5 capas.<br><em>Como el OSI, pero para personas.</em></h2>
+  <p class="si" style="margin-bottom:12px;">El modelo OSI organiza las redes en capas progresivas — cada una depende de la anterior. Aegis8 tomó ese principio y lo aplicó a la educación en ciberseguridad.</p>
+  <p class="si" style="margin-bottom:2.5rem;"><strong>No es una lista de tips.</strong> Si se fortalece una capa, todo lo que viene después mejora. Si falta una, las superiores quedan sin base.</p>
+  <div class="capas">
+    <a href="/educa" class="capa" style="--c:var(--c1);">
+      <div class="capa-n" style="color:var(--c1);">1</div>
+      <div style="flex:1;"><div class="capa-tag" style="color:var(--c1);">Fundamento</div><div class="capa-title">El Mundo Digital</div><div class="capa-body">¿Qué es internet, cómo funciona y quiénes son sus dueños? Sin este contexto, todo lo demás son reglas sin razón.</div></div>
+      <div class="capa-arr">›</div>
+    </a>
+    <a href="/educa" class="capa" style="--c:var(--c2);">
+      <div class="capa-n" style="color:var(--c2);">2</div>
+      <div style="flex:1;"><div class="capa-tag" style="color:var(--c2);">Identidad</div><div class="capa-title">La Identidad Digital</div><div class="capa-body">Huella digital, privacidad y datos personales. La diferencia entre ser usuario y ser el producto.</div></div>
+      <div class="capa-arr">›</div>
+    </a>
+    <a href="/violencia-digital" class="capa" style="--c:var(--c3);">
+      <div class="capa-n" style="color:var(--c3);">3</div>
+      <div style="flex:1;"><div class="capa-tag" style="color:var(--c3);">Relaciones</div><div class="capa-title">Las Relaciones Digitales</div><div class="capa-body">Grooming, sextorsión, control digital en parejas. Las amenazas que vienen de personas, no de máquinas.</div></div>
+      <div class="capa-arr">›</div>
+    </a>
+    <a href="/herramientas" class="capa" style="--c:var(--c4);">
+      <div class="capa-n" style="color:var(--c4);">4</div>
+      <div style="flex:1;"><div class="capa-tag" style="color:var(--c4);">Amenazas</div><div class="capa-title">Los Ataques</div><div class="capa-body">Phishing, ransomware, ingeniería social. Los ataques explotan psicología — hay que entender la manipulación para reconocerla.</div></div>
+      <div class="capa-arr">›</div>
+    </a>
+    <a href="/herramientas" class="capa" style="--c:var(--c5);">
+      <div class="capa-n" style="color:var(--c5);">5</div>
+      <div style="flex:1;"><div class="capa-tag" style="color:var(--c5);">Defensa</div><div class="capa-title">La Defensa</div><div class="capa-body">2FA, contraseñas, configuración de privacidad. La defensa tiene sentido solo cuando entiendes qué estás protegiendo.</div></div>
+      <div class="capa-arr">›</div>
+    </a>
+  </div>
+</section>
+
+<section class="sec sw">
+  <div class="sl">// Cómo trabajamos</div>
+  <h2 class="st">Sin condescendencia.<br><em>Sin humo.</em></h2>
+  <p class="si" style="margin-bottom:2.5rem;">Aegis8 nació de una convicción: la ciberseguridad se enseña mal porque se le habla mal a las personas. Nosotros asumimos que el usuario es inteligente.</p>
+  <div class="proceso">
+    <div class="paso"><div class="paso-n">01</div><div><div class="paso-title">CONTENIDO QUE SE USA HOY</div><div class="paso-body">Los planes de clase se aplican en 15 minutos sin preparación previa. Las guías se leen en 5 minutos. El agente IA responde en tiempo real.</div></div></div>
+    <div class="paso"><div class="paso-n">02</div><div><div class="paso-title">MARCO LEGAL CHILENO — SIEMPRE</div><div class="paso-body">Cada amenaza viene con la ley chilena que la cubre. Ley 21.459, Ley 20.526, Ley 20.536. Saber cuáles son cambia la conversación de víctima a ciudadano informado.</div></div></div>
+    <div class="paso"><div class="paso-n">03</div><div><div class="paso-title">GRATUITO — SIN CONDICIONES</div><div class="paso-body">Sin registro, sin datos personales, sin paywalls. La ciberseguridad no debería ser un privilegio de quienes pueden pagar.</div></div></div>
+    <div class="paso"><div class="paso-n">04</div><div><div class="paso-title">EL OBJETIVO ES QUE NO NOS NECESITEN</div><div class="paso-body">Cuando un docente detecta grooming sin un experto. Cuando una familia sabe qué decirle a la PDI. Cuando un adolescente entiende por qué no comparte su contraseña. Ese es el éxito.</div></div></div>
+  </div>
+</section>
+
+<div class="sw" style="padding:64px 0 0;">
+  <div class="cta-final">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;color:var(--accent);margin-bottom:16px;text-transform:uppercase;">Aegis8 · Chile 2026</div>
+    <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3.2rem);color:var(--ink);margin-bottom:16px;letter-spacing:-1px;line-height:1.05;">
+      ¿Quieres esto<br><em style="color:var(--accent);">en tu colegio?</em>
+    </h2>
+    <p style="font-size:.95rem;line-height:1.85;color:var(--ink2);max-width:480px;margin:0 auto 32px;">Talleres presenciales gratuitos para colegios municipales. Una llamada de 15 minutos y coordinamos todo.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <a href="/contacto" class="btn-p"><span>Solicitar taller →</span></a>
+      <a href="/educa" class="btn-g">Explorar el contenido</a>
+    </div>
+  </div>
 </div>
 
-</div><!-- /wrap -->
+</div>
 
 <footer class="page-footer">
   <a href="/" class="fl">AEGIS<span>8</span></a>
-    <ul class="flinks">
-    <li><a href="/ninos">Niños</a></li>
-    <li><a href="/adolescentes">Adolescentes</a></li>
-    <li><a href="/familias">Familias</a></li>
-    <li><a href="/docentes">Docentes</a></li>
-    <li><a href="/herramientas">Herramientas</a></li>
+  <ul class="flinks">
+    <li><a href="/educa">Educa</a></li>
+    <li><a href="/noticias">Noticias</a></li>
+    <li><a href="/talleres">Talleres</a></li>
     <li><a href="/contacto">Contacto</a></li>
   </ul>
-  <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
-    <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
-    
-  </div>
+  <div class="fcopy">© 2026 · Proyecto educativo-social · Chile · Gratuito</div>
 </footer>
+
 <script>
-
-const ro=new IntersectionObserver(e=>{
-  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});
-},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.sw').forEach(el=>ro.observe(el));
-
-
+document.querySelectorAll('.sw').forEach(el => el.classList.add('vis'));
+const ro = new IntersectionObserver(e => {
+  e.forEach(x => { if (x.isIntersecting) x.target.classList.add('vis'); });
+}, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.sw').forEach(el => ro.observe(el));
 </script>
 </body>
 </html>

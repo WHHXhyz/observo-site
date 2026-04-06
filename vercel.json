@@ -115,6 +115,31 @@
       "source": "/newsletter.html",
       "destination": "/educa/newsletter",
       "permanent": true
+    },
+    {
+      "source": "/modelo",
+      "destination": "/el-proyecto",
+      "permanent": true
+    },
+    {
+      "source": "/modelo.html",
+      "destination": "/el-proyecto",
+      "permanent": true
+    },
+    {
+      "source": "/herramientas",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/guia-ia.html",
+      "destination": "/guia-ia",
+      "permanent": true
+    },
+    {
+      "source": "/gaming.html",
+      "destination": "/gaming",
+      "permanent": true
     }
   ],
   "rewrites": [
