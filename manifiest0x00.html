@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <title>0x00 — AEGIS8</title>
+  <!-- Si llegaste aquí, sabías dónde mirar. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080808;
+      --surface: #0f0f0f;
+      --green: #00ff88;
+      --green-dim: #00ff8840;
+      --green-faint: #00ff8810;
+      --red: #ff2244;
+      --white: #e8e8e8;
+      --muted: #555;
+      --border: #1a1a1a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Space Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    /* Scanlines overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.15) 2px,
+        rgba(0,0,0,0.15) 4px
+      );
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* Grid background */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 32px 100px;
+    }
+
+    /* ── BOOT SEQUENCE ── */
+    .boot {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 60px;
+      line-height: 1.8;
+    }
+    .boot span { color: var(--green); }
+    .boot .err { color: var(--red); }
+    .boot .prompt { color: var(--red); font-weight: 700; }
+    .boot .path { color: #4af; }
+
+    /* ── WELCOME BLOCK ── */
+    .welcome {
+      margin-bottom: 72px;
+      position: relative;
+    }
+
+    .welcome-inner {
+      border: 1px solid #1f1f1f;
+      background: linear-gradient(135deg, #0d0d0d 0%, #0a0f0a 100%);
+      padding: 52px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Esquinas tipo crosshair */
+    .welcome-inner::before,
+    .welcome-inner::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-color: var(--green);
+      border-style: solid;
+      opacity: 0.6;
+    }
+    .welcome-inner::before {
+      top: 12px; left: 12px;
+      border-width: 2px 0 0 2px;
+    }
+    .welcome-inner::after {
+      bottom: 12px; right: 12px;
+      border-width: 0 2px 2px 0;
+    }
+
+    /* Glow ambiental verde */
+    .welcome-glow {
+      position: absolute;
+      top: -60px; left: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(0,255,136,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      animation: glow-pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+
+    .welcome-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 28px;
+      opacity: 0.7;
+    }
+
+    .welcome-headline {
+      font-size: clamp(22px, 4vw, 36px);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 28px;
+      color: var(--white);
+    }
+
+    .welcome-headline .accent-green {
+      color: var(--green);
+      text-shadow: 0 0 20px rgba(0,255,136,0.4);
+    }
+
+    .welcome-headline .accent-red {
+      color: var(--red);
+      text-shadow: 0 0 20px rgba(255,34,68,0.35);
+    }
+
+    .welcome-body {
+      font-size: 15px;
+      line-height: 1.85;
+      color: #888;
+      max-width: 680px;
+    }
+
+    .welcome-body p {
+      margin-bottom: 16px;
+    }
+
+    .welcome-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .welcome-body strong {
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    .welcome-body .highlight {
+      color: var(--green);
+      font-style: italic;
+    }
+
+    /* Separador animado */
+    .welcome-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 36px 0 32px;
+    }
+
+    .welcome-divider span {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: var(--green);
+      letter-spacing: 3px;
+      white-space: nowrap;
+      opacity: 0.8;
+    }
+
+    .welcome-divider::before,
+    .welcome-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green-dim), transparent);
+      animation: line-pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes line-pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* Tag hacktivismo */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+
+    .tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      padding: 5px 12px;
+      border: 1px solid;
+      text-transform: uppercase;
+    }
+
+    .tag-g { color: var(--green); border-color: var(--green-dim); background: var(--green-faint); }
+    .tag-r { color: var(--red); border-color: rgba(255,34,68,0.25); background: rgba(255,34,68,0.05); }
+    .tag-w { color: #888; border-color: #2a2a2a; background: transparent; }
+
+    /* ── HEADER ── */
+    header {
+      border-left: 3px solid var(--green);
+      padding-left: 24px;
+      margin-bottom: 64px;
+    }
+
+    .tag-line {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--green);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--green);
+    }
+
+    .subtitle {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── SNOWDEN QUOTE ── */
+    .snowden {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--green);
+      padding: 32px 36px;
+      margin-bottom: 64px;
+      position: relative;
+    }
+
+    .snowden::before {
+      content: '"';
+      position: absolute;
+      top: -20px;
+      left: 30px;
+      font-size: 80px;
+      color: var(--green-dim);
+      font-family: Georgia, serif;
+      line-height: 1;
+    }
+
+    .snowden blockquote {
+      font-size: clamp(16px, 2.5vw, 20px);
+      line-height: 1.7;
+      color: var(--white);
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    .snowden blockquote strong {
+      font-style: normal;
+      color: var(--green);
+      background: var(--green-faint);
+      padding: 2px 6px;
+    }
+
+    .snowden cite {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 2px;
+      display: block;
+      text-align: right;
+    }
+
+    /* ── MANIFESTO ── */
+    .manifesto {
+      margin-bottom: 64px;
+    }
+
+    .section-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: var(--green);
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .manifesto-block {
+      margin-bottom: 40px;
+    }
+
+    .manifesto-block h2 {
+      font-size: 13px;
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--green);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .manifesto-block h2::before {
+      content: '//';
+      color: var(--muted);
+    }
+
+    .manifesto-block p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #aaa;
+      padding-left: 28px;
+      border-left: 1px solid var(--border);
+    }
+
+    .manifesto-block p strong {
+      color: var(--white);
+    }
+
+    /* ── PILLARS ── */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 64px;
+    }
+
+    .pillar {
+      background: var(--bg);
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.2s;
+    }
+
+    .pillar:hover {
+      background: var(--surface);
+    }
+
+    .pillar::before {
+      content: attr(data-n);
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 32px;
+      color: var(--green-dim);
+      font-weight: 700;
+    }
+
+    .pillar h3 {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--green);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .pillar p {
+      font-size: 13px;
+      color: #777;
+      line-height: 1.6;
+    }
+
+    /* ── CALL ── */
+    .call {
+      background: var(--green-faint);
+      border: 1px solid var(--green-dim);
+      padding: 40px 36px;
+      text-align: center;
+      margin-bottom: 64px;
+      position: relative;
+    }
+
+    .call h2 {
+      font-size: clamp(18px, 3vw, 26px);
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    .call h2 em {
+      font-style: normal;
+      color: var(--green);
+    }
+
+    .call p {
+      color: #888;
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 560px;
+      margin: 0 auto 28px;
+    }
+
+    .call-link {
+      display: inline-block;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      color: var(--green);
+      border: 1px solid var(--green);
+      padding: 10px 24px;
+      text-decoration: none;
+      letter-spacing: 2px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .call-link:hover {
+      background: var(--green);
+      color: var(--bg);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a {
+      color: var(--green);
+      text-decoration: none;
+    }
+
+    /* ── GLITCH ── */
+    .glitch {
+      position: relative;
+      display: inline-block;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .glitch::before {
+      color: #00ffff44;
+      animation: glitch-a 3.5s infinite steps(1);
+      clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+    }
+
+    .glitch::after {
+      color: #ff224444;
+      animation: glitch-b 4.2s infinite steps(1);
+      clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+    }
+
+    @keyframes glitch-a {
+      0%,90%,100% { transform: none; opacity: 0; }
+      92% { transform: translateX(-3px); opacity: 1; }
+      95% { transform: translateX(3px); opacity: 1; }
+    }
+
+    @keyframes glitch-b {
+      0%,85%,100% { transform: none; opacity: 0; }
+      87% { transform: translateX(4px); opacity: 1; }
+      91% { transform: translateX(-4px); opacity: 1; }
+    }
+
+    /* ── CURSOR BLINK ── */
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 1.1em;
+      background: var(--green);
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ── TYPED ANIMATION ── */
+    .typed-wrap {
+      overflow: hidden;
+      white-space: nowrap;
+      width: 0;
+      animation: reveal 0.6s steps(40) forwards;
+    }
+
+    @keyframes reveal {
+      to { width: 100%; }
+    }
+
+    /* Stagger delays for boot lines */
+    .boot .line { opacity: 0; animation: fadein 0.1s forwards; }
+    .boot .line:nth-child(1)  { animation-delay: 0.1s; }
+    .boot .line:nth-child(2)  { animation-delay: 0.5s; }
+    .boot .line:nth-child(3)  { animation-delay: 0.9s; }
+    .boot .line:nth-child(4)  { animation-delay: 1.2s; }
+    .boot .line:nth-child(5)  { animation-delay: 1.4s; }
+    .boot .line:nth-child(6)  { animation-delay: 1.8s; }
+    .boot .line:nth-child(7)  { animation-delay: 2.1s; }
+    .boot .line:nth-child(8)  { animation-delay: 2.4s; }
+    .boot .line:nth-child(9)  { animation-delay: 2.7s; }
+    .boot .line:nth-child(10) { animation-delay: 3.0s; }
+    .boot .line:nth-child(11) { animation-delay: 3.3s; }
+    .boot .line:nth-child(12) { animation-delay: 3.6s; }
+    /* El h1 y el resto aparecen después del boot */
+    .welcome { transition-delay: 4.0s !important; }
+
+    @keyframes fadein { to { opacity: 1; } }
+
+    .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.6s, transform 0.6s; }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- BOOT -->
+  <div class="boot" aria-hidden="true">
+    <div class="line"><span class="prompt">root@kali</span>:<span class="path">~/recon/aegis8</span># curl -s https://aegis8.org/robots.txt</div>
+    <div class="line">User-agent: *  &nbsp;|&nbsp;  Disallow: <span>/manifiest0x00</span></div>
+    <div class="line"><span class="prompt">root@kali</span>:<span class="path">~/recon/aegis8</span># curl -sI https://aegis8.org/manifiest0x00 | grep -E "HTTP|X-"</div>
+    <div class="line">HTTP/2 <span>200</span> &nbsp;·&nbsp; X-Robots-Tag: noindex, nofollow &nbsp;·&nbsp; X-Frame-Options: SAMEORIGIN</div>
+    <div class="line"><span class="prompt">root@kali</span>:<span class="path">~/recon/aegis8</span># gobuster dir -u https://aegis8.org -w /usr/share/wordlists/dirb/common.txt -q</div>
+    <div class="line"><span class="err">[-]</span> /manifiest0x00 — <span class="err">NOT IN WORDLIST</span>. encontrado vía <span>robots.txt</span>. bien jugado.</div>
+    <div class="line"><span class="prompt">root@kali</span>:<span class="path">~/recon/aegis8</span># cat /proc/aegis8/identity</div>
+    <div class="line">uid=0(root) &nbsp;gid=0(knowledge) &nbsp;groups=0(freedom),1337(hacktivism),31337(elite)</div>
+    <div class="line"><span class="prompt">root@kali</span>:<span class="path">~/recon/aegis8</span># ./decrypt_manifesto.sh --key=curiosidad --target=/manifiest0x00</div>
+    <div class="line">[*] Passive recon complete. &nbsp;Fingerprinting done. &nbsp;OSINT layer verified.</div>
+    <div class="line">[*] Enumerating target consciousness ...</div>
+    <div class="line"><span>[+]</span> <span>ACCESS GRANTED.</span> &nbsp;bienvenido/a. <span class="cursor"></span></div>
+  </div>
+
+  <!-- H1 — lo primero que lees al terminar el boot -->
+  <header class="reveal">
+    <div class="tag-line">// aegis8.org / manifiest0x00</div>
+    <h1>
+      <span class="glitch" data-text="Conocimiento">Conocimiento</span><br>
+      que <em>no se puede</em><br>
+      silenciar.
+    </h1>
+    <div class="subtitle">— este documento no existe en ningún sitemap —</div>
+  </header>
+
+  <!-- SNOWDEN -->
+  <div class="snowden reveal">
+    <blockquote>
+      Decir que no te importa la privacidad porque no tienes nada que ocultar
+      <strong>es lo mismo que decir que no te importa la libertad de expresión porque no tienes nada que decir.</strong>
+      Cuando dices "no tengo nada que ocultar", lo que realmente estás diciendo es
+      "no me importa este derecho". No tienes que ser culpable de algo para querer proteger tu privacidad.
+    </blockquote>
+    <cite>— EDWARD SNOWDEN / ex-analista NSA / whistleblower</cite>
+  </div>
+
+  <!-- WELCOME — golpe emocional, sin repetir ideas del manifiesto -->
+  <div class="welcome reveal">
+    <div class="welcome-inner">
+      <div class="welcome-glow"></div>
+
+      <div class="welcome-label">// transmisión entrante — destinatario verificado</div>
+
+      <div class="welcome-headline">
+        Si llegaste hasta acá,<br>
+        ya demostraste que sabes<br>
+        <span class="accent-green">mirar donde otros no miran.</span>
+      </div>
+
+      <div class="welcome-divider">
+        <span>conocimiento = poder = libertad</span>
+      </div>
+
+      <div class="welcome-body">
+        <p>
+          Los que llegaron acá leyendo un <span class="highlight">robots.txt</span>,
+          inspeccionando headers, o siguiendo la intuición de que había algo más detrás —
+          <strong>son exactamente las personas que necesitamos.</strong>
+          No para romper. Para construir lo que viene después.
+        </p>
+        <p>
+          Si eres hacktivista, pentester, investigador/a, docente con ganas de enseñar
+          lo que nadie enseña, o simplemente alguien que cree que el conocimiento
+          no debería tener precio —
+          <span class="highlight">bienvenido/a al único lado correcto de esta historia.</span>
+        </p>
+      </div>
+
+      <div class="tags">
+        <span class="tag tag-g">#KnowledgeIsFree</span>
+        <span class="tag tag-g">#HackTheSystem</span>
+        <span class="tag tag-r">#NoSilence</span>
+        <span class="tag tag-r">#PrivacyIsARight</span>
+        <span class="tag tag-w">#educación_libre</span>
+        <span class="tag tag-w">#resistencia_digital</span>
+        <span class="tag tag-g">#hacktivism</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MANIFESTO -->
+  <div class="manifesto reveal">
+    <div class="section-label">manifesto</div>
+
+    <div class="manifesto-block">
+      <h2>Quiénes somos</h2>
+      <p>
+        Aegis8 no es una empresa de ciberseguridad. Somos una entidad que cree que
+        <strong>el conocimiento de defensa digital es un derecho, no un privilegio.</strong>
+        Existimos porque hay quienes quieren mantener a la gente en la ignorancia —
+        porque la ignorancia es más fácil de controlar.
+      </p>
+    </div>
+
+    <div class="manifesto-block">
+      <h2>El monopolio que combatimos</h2>
+      <p>
+        Durante décadas, la educación en ciberseguridad fue territorio exclusivo de empresas,
+        gobiernos y certificaciones caras. Se construyó un muro invisible:
+        <strong>si no pagas, no sabes. Si no sabes, eres vulnerable. Si eres vulnerable, dependes de quien sí sabe.</strong>
+        Ese ciclo es el monopolio. Y lo rompemos a propósito.
+      </p>
+    </div>
+
+    <div class="manifesto-block">
+      <h2>Lo que creemos</h2>
+      <p>
+        Creemos que una madre tiene el mismo derecho a entender phishing que un analista SOC.
+        Que un adolescente en Chiloé merece saber cómo proteger su identidad digital
+        tanto como uno en Providencia. Que <strong>educar gratis no es caridad — es resistencia.</strong>
+      </p>
+    </div>
+
+    <div class="manifesto-block">
+      <h2>Sobre quienes quieren callarnos</h2>
+      <p>
+        Hay actores —corporativos, institucionales, a veces estatales— que prefieren
+        que la gente no sepa cómo funciona su propia vigilancia. Que no sepa que su router
+        puede ser un punto de entrada. Que no sepa que sus datos son un negocio.
+        <strong>Cada persona que educamos es una persona más difícil de manipular.</strong>
+        Eso nos hace incómodos para ciertos poderes. Bien.
+      </p>
+    </div>
+
+    <div class="manifesto-block">
+      <h2>Por qué ahora</h2>
+      <p>
+        En los últimos 10 años, la vigilancia masiva pasó de ser ciencia ficción a
+        infraestructura normalizada. Las leyes de protección de datos las redactan los
+        mismos lobbies que las violan. Los algoritmos deciden qué información te llega
+        y cuál no. La educación en seguridad digital sigue siendo un negocio de
+        certificaciones de miles de dólares para pocos. <strong>Mientras tanto,
+        una niña de 13 años en Temuco enfrenta grooming sin saber qué es.
+        Un adulto mayor en Valparaíso pierde sus ahorros en una llamada de vishing.
+        Un docente en Antofagasta no sabe cómo hablarle a sus alumnos sobre privacidad.</strong>
+        La brecha no es técnica. Es intencional. Y ya no aceptamos que siga así.
+      </p>
+    </div>
+
+    <div class="manifesto-block">
+      <h2>Lo que NO somos</h2>
+      <p>
+        No somos Anonymous. No somos un grupo de ataque. No promovemos el acceso
+        no autorizado a sistemas, el daño a infraestructura ni ninguna forma de
+        actividad ilegal. <strong>Somos exactamente lo opuesto:</strong> existimos para
+        que las personas que normalmente son víctimas aprendan a no serlo.
+        La diferencia entre un hacker y un educador no está en el conocimiento —
+        está en qué hace con él. Nosotros elegimos enseñar.
+      </p>
+    </div>
+
+    <div class="manifesto-block">
+      <h2>Lo que prometemos</h2>
+      <p>
+        Siempre gratuito para quien no puede pagar. Siempre en español claro, sin
+        tecnicismos innecesarios. Nunca vendemos datos de quienes nos visitan.
+        Nunca trabajamos para quien quiere vigilar — solo para quien quiere defenderse.
+        <strong>Si algún día Aegis8 rompe alguna de estas promesas,
+        este documento seguirá existiendo como evidencia.</strong>
+        Eso también es transparencia radical.
+      </p>
+    </div>
+  </div>
+
+  <!-- PILLARS -->
+  <div class="pillars reveal">
+    <div class="pillar" data-n="01">
+      <h3>Libertad educativa</h3>
+      <p>Sin muros de pago. Sin jerga innecesaria. Sin requisitos de entrada. El conocimiento de defensa digital debe ser universal.</p>
+    </div>
+    <div class="pillar" data-n="02">
+      <h3>Autonomía digital</h3>
+      <p>Cada persona tiene derecho a entender y controlar su propia huella digital. La privacidad no es un lujo técnico.</p>
+    </div>
+    <div class="pillar" data-n="03">
+      <h3>Resistencia informada</h3>
+      <p>No enseñamos miedo. Enseñamos herramientas. Una comunidad que sabe defenderse es una comunidad libre.</p>
+    </div>
+    <div class="pillar" data-n="04">
+      <h3>Transparencia radical</h3>
+      <p>Decimos lo que sabemos. Decimos lo que no sabemos. Sin humo, sin teatro de seguridad, sin vender miedo.</p>
+    </div>
+  </div>
+
+  <!-- CALL -->
+  <div class="call reveal">
+    <h2>
+      Si llegaste hasta aquí,<br>
+      ya sabes que <em>el conocimiento</em><br>
+      no se pide permiso.
+    </h2>
+    <p>
+      No te pedimos que nos sigas. Te pedimos que hagas lo mismo que hacemos nosotros:
+      enseña lo que sabes. Comparte lo que encuentras. Traduce lo técnico a lo humano.
+      Habla con quien no sabe. <strong>Eso es el movimiento.</strong>
+      No tiene logo, no tiene membresía, no tiene cuota.
+      Solo tiene personas que decidieron que la ignorancia ajena
+      ya no era un problema de otros.
+    </p>
+    <a href="https://aegis8.org" class="call-link">→ volver a aegis8.org</a>
+    &nbsp;&nbsp;
+    <a href="https://aegis8.org/contactos.html" class="call-link">→ habla con nosotros</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="reveal">
+    <span>AEGIS8 / /manifiest0x00 / no indexado / no rastreable</span>
+    <span>
+      <a href="https://aegis8.org">volver al inicio</a>
+    </span>
+    <span>grep -r "freedom" .</span>
+  </footer>
+
+</div>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Konami code easter egg dentro del easter egg
+  const konami = [38,38,40,40,37,39,37,39,66,65];
+  let ki = 0;
+  document.addEventListener('keydown', e => {
+    if (e.keyCode === konami[ki]) { ki++; }
+    else { ki = 0; }
+    if (ki === konami.length) {
+      document.body.style.setProperty('--green', '#ff2244');
+      document.body.style.setProperty('--green-dim', '#ff224440');
+      setTimeout(() => {
+        document.body.style.setProperty('--green', '#00ff88');
+        document.body.style.setProperty('--green-dim', '#00ff8840');
+      }, 3000);
+      ki = 0;
+    }
+  });
+</script>
+
+</body>
+</html>
