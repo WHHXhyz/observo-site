@@ -302,7 +302,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     
   </div>
 </footer>
-<script src="https://www.google.com/recaptcha/api.js?render=6LcaDocsAAAAAKooAzny0RrX53G4R0eWlihi2axK"></script>
+
 <script>
 var modes={
   taller:{tipo:'Taller en colegio',msg:'Quisiera organizar un taller de ciberseguridad en nuestro colegio. [Indica el nivel: básico / medio, cantidad de alumnos aproximada y disponibilidad].'},
@@ -321,7 +321,7 @@ function showNotice(type,msg){
   n.className='form-notice '+type;
   n.textContent=msg;n.style.display='block';
 }
-var WORKER_URL='https://aegis8-agent.christianmora705.workers.dev/contact';
+var FORMSPREE_URL='https://formspree.io/f/mdawgeje';
 function doSubmit(){
   var nombre=document.getElementById('inp-nombre').value.trim();
   var email=document.getElementById('inp-email').value.trim();
@@ -329,29 +329,36 @@ function doSubmit(){
   var honey=document.getElementById('inp-honeypot').value;
   if(honey)return;
   if(!nombre||!email||!msg){showNotice('error','Por favor completa todos los campos.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showNotice('error','Ingresa un email válido.');return;}
   var btn=document.getElementById('btn-submit');
   btn.textContent='Enviando...';btn.style.opacity='.6';btn.disabled=true;
-  grecaptcha.ready(function(){
-    grecaptcha.execute('6LcaDocsAAAAAKooAzny0RrX53G4R0eWlihi2axK',{action:'submit'}).then(function(token){
-      fetch(WORKER_URL,{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({nombre:nombre,email:email,mensaje:msg,token:token,honeypot:honey,_subject:'Nuevo contacto desde Aegis8'})
-      }).then(function(r){return r.json();}).then(function(d){
-        btn.textContent='Enviar mensaje →';btn.style.opacity='1';btn.disabled=false;
-        if(d.ok){
-          showNotice('success','✓ Mensaje enviado. Te respondemos en 1–2 días hábiles.');
-          document.getElementById('inp-nombre').value='';
-          document.getElementById('inp-email').value='';
-          document.getElementById('inp-msg').value='';
-        } else {
-          showNotice('error','Error al enviar. Intenta de nuevo o escríbenos directamente.');
-        }
-      }).catch(function(){
-        btn.textContent='Enviar mensaje →';btn.style.opacity='1';btn.disabled=false;
-        showNotice('error','Error de conexión. Intenta de nuevo.');
-      });
-    });
+  var modo=document.querySelector('.mode-btn.sel');
+  var modoTexto=modo?modo.querySelector('span:last-child').textContent:'Sin especificar';
+  fetch(FORMSPREE_URL,{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({
+      nombre:nombre,
+      email:email,
+      mensaje:msg,
+      motivo:modoTexto,
+      _subject:'Aegis8 Contacto: '+modoTexto+' — '+nombre
+    })
+  }).then(function(r){return r.json();}).then(function(d){
+    btn.textContent='Enviar mensaje →';btn.style.opacity='1';btn.disabled=false;
+    if(d.ok){
+      showNotice('success','✓ Mensaje enviado. Te respondemos en 1–2 días hábiles.');
+      document.getElementById('inp-nombre').value='';
+      document.getElementById('inp-email').value='';
+      document.getElementById('inp-msg').value='';
+      document.querySelectorAll('.mode-btn').forEach(function(b){b.classList.remove('sel');});
+    } else {
+      var err=d.errors&&d.errors[0]?d.errors[0].message:'Error al enviar. Intenta de nuevo.';
+      showNotice('error',err);
+    }
+  }).catch(function(){
+    btn.textContent='Enviar mensaje →';btn.style.opacity='1';btn.disabled=false;
+    showNotice('error','Error de conexión. Verifica tu internet e intenta de nuevo.');
   });
 }
 
