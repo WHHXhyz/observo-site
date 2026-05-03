@@ -124,6 +124,11 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
 /* SCROLL REVEAL JS inline */
 @media(max-width:640px){.wrap{padding:0 16px;}.page-footer{padding:32px 16px;}}
+@keyframes modalIn{from{opacity:0;transform:scale(.96) translateY(12px);}to{opacity:1;transform:scale(1) translateY(0);}}
+@media(max-width:640px){
+  .modal-book-grid{grid-template-columns:1fr !important;}
+  .modal-book-grid > div:first-child{min-height:220px !important;}
+}
 
 
 .page-hero-s{position:relative;z-index:10;padding:64px 0 40px;border-bottom:1px solid var(--border);}
@@ -452,46 +457,158 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     Cada cuento tiene una aventura y una lección sobre cómo protegerte en internet. Pídele a un adulto que los lean juntos.
   </p>
 
-  <!-- GRID DE CUENTOS -->
+  <!-- GRID DE CUENTOS CLICKEABLES -->
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(58,127,212,.12);" class="cuentos-grid">
 
-    <!-- PRÓXIMAMENTE -->
-    <div style="background:#0d1422;padding:2rem 1.5rem;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;">
+    <!-- CUENTO 1 -->
+    <div onclick="abrirCuento('cuento1')" style="background:#0d1422;padding:2rem 1.5rem;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;cursor:pointer;transition:background .2s;"
+      onmouseover="this.style.background='rgba(58,127,212,.06)'" onmouseout="this.style.background='#0d1422'">
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--blue);"></div>
-      <div style="font-size:2.5rem;line-height:1;">📚</div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;color:var(--blue);text-transform:uppercase;">Cuento 1 · Próximamente</div>
-      <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);line-height:1.2;">Pascuala y el Susurro de los Cristales</div>
-      <div style="font-size:.84rem;color:var(--ink2);line-height:1.6;flex:1;">Una niña descubre que su contraseña es mágica. Pero si la comparte, ¡todo cambia! Una aventura sobre guardar secretos digitales.</div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <div style="width:8px;height:8px;border-radius:50%;background:var(--gold);animation:blink 1.5s infinite;"></div>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--gold);letter-spacing:1px;">EN PREPARACIÓN</span>
-      </div>
+      <div style="font-size:2.5rem;line-height:1;">🗺️</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;color:var(--blue);text-transform:uppercase;">Cuento 1</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);line-height:1.2;">El Mapa de los Mil Caminos</div>
+      <div style="font-size:.84rem;color:var(--ink2);line-height:1.6;flex:1;">Internet es como un mapa mágico lleno de aventuras — pero también de caminos que hay que conocer bien.</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--blue);text-transform:uppercase;">📖 Leer cuento →</div>
     </div>
 
-    <div style="background:#0d1422;padding:2rem 1.5rem;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;">
+    <!-- CUENTO 2 -->
+    <div onclick="abrirCuento('cuento2')" style="background:#0d1422;padding:2rem 1.5rem;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;cursor:pointer;transition:background .2s;"
+      onmouseover="this.style.background='rgba(46,204,128,.06)'" onmouseout="this.style.background='#0d1422'">
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--green);"></div>
-      <div style="font-size:2.5rem;line-height:1;">🤖</div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;color:var(--green);text-transform:uppercase;">Cuento 2 · Próximamente</div>
-      <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);line-height:1.2;">CiberBot y el Link Sospechoso</div>
-      <div style="font-size:.84rem;color:var(--ink2);line-height:1.6;flex:1;">CiberBot recibe un mensaje con un link muy tentador. ¿Hará clic? Una historia sobre pensar antes de tocar la pantalla.</div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <div style="width:8px;height:8px;border-radius:50%;background:var(--gold);animation:blink 1.5s infinite;"></div>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--gold);letter-spacing:1px;">EN PREPARACIÓN</span>
-      </div>
+      <div style="font-size:2.5rem;line-height:1;">🪟</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;color:var(--green);text-transform:uppercase;">Cuento 2</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);line-height:1.2;">Cortinas de Cristal</div>
+      <div style="font-size:.84rem;color:var(--ink2);line-height:1.6;flex:1;">Daniel descubre que compartir demasiado en internet puede abrir puertas que es mejor mantener cerradas.</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--green);text-transform:uppercase;">📖 Leer cuento →</div>
     </div>
 
-    <div style="background:#0d1422;padding:2rem 1.5rem;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;">
+    <!-- CUENTO 3 -->
+    <div onclick="abrirCuento('cuento3')" style="background:#0d1422;padding:2rem 1.5rem;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;cursor:pointer;transition:background .2s;"
+      onmouseover="this.style.background='rgba(240,120,48,.06)'" onmouseout="this.style.background='#0d1422'">
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);"></div>
-      <div style="font-size:2.5rem;line-height:1;">🦸</div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;color:var(--accent);text-transform:uppercase;">Cuento 3 · Próximamente</div>
-      <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);line-height:1.2;">Los Guardianes del Internet</div>
-      <div style="font-size:.84rem;color:var(--ink2);line-height:1.6;flex:1;">Tres amigos aprenden que en internet también hay que cuidarse, igual que en la calle. Una aventura sobre los datos personales.</div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <div style="width:8px;height:8px;border-radius:50%;background:var(--gold);animation:blink 1.5s infinite;"></div>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--gold);letter-spacing:1px;">EN PREPARACIÓN</span>
-      </div>
+      <div style="font-size:2.5rem;line-height:1;">⚔️</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;color:var(--accent);text-transform:uppercase;">Cuento 3</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);line-height:1.2;">La Armadura que Renace con la Luz</div>
+      <div style="font-size:.84rem;color:var(--ink2);line-height:1.6;flex:1;">Montserrat aprende que mantener sus defensas actualizadas es el secreto de los verdaderos exploradores digitales.</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--accent);text-transform:uppercase;">📖 Leer cuento →</div>
     </div>
 
+  </div>
+
+  <!-- CTA LIBRO AMAZON -->
+  <div style="margin-top:2px;border-left:4px solid var(--accent);background:linear-gradient(135deg,#0d1422 0%,rgba(240,120,48,.04) 100%);padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:8px;">📚 ¿Te gustaron los cuentos?</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--ink);margin-bottom:6px;">Consigue los <em style="color:var(--accent);">15 cuentos completos</em></div>
+      <div style="font-size:.84rem;color:var(--ink2);line-height:1.6;max-width:480px;"><em>Ciber cuentos para niños y niñas digitales</em> — con ilustraciones y lecciones para cada aventura. Disponible en Amazon Kindle.</div>
+    </div>
+    <a href="https://www.amazon.com/-/es/Christian-Mora-ebook/dp/B0GYFFYWF2/" target="_blank" rel="noopener"
+      style="font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:#fff;background:var(--accent);padding:14px 24px;text-decoration:none;border-radius:var(--radius);white-space:nowrap;transition:background .2s;display:inline-block;font-weight:700;"
+      onmouseover="this.style.background='var(--accent2)'" onmouseout="this.style.background='var(--accent)'">
+      Ver en Amazon →
+    </a>
+  </div>
+</div>
+
+<!-- ══ MODALES DE CUENTOS ══ -->
+
+<!-- MODAL 1: El Mapa de los Mil Caminos -->
+<div id="cuento1" style="display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;" role="dialog" aria-modal="true">
+  <div onclick="cerrarCuento('cuento1')" style="position:absolute;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(6px);"></div>
+  <div style="position:relative;background:#0d1422;border:1px solid rgba(58,127,212,.2);border-radius:6px;width:95vw;max-width:860px;max-height:92vh;overflow-y:auto;z-index:1;animation:modalIn .25s ease;">
+    <button onclick="cerrarCuento('cuento1')" style="position:sticky;top:16px;float:right;margin:16px 16px 0 0;background:#1a2535;border:none;color:var(--ink2);width:36px;height:36px;border-radius:50%;font-size:.9rem;cursor:pointer;z-index:10;transition:all .2s;" onmouseover="this.style.background='#2a3a50'" onmouseout="this.style.background='#1a2535'">✕</button>
+    <div style="display:grid;grid-template-columns:1fr 1fr;clear:both;" class="modal-book-grid">
+      <div style="background:#080c14;display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:380px;">
+        <img src="/assets/img/cuentos/cuento1-mapa.jpg" alt="Niña con mapa mágico luminoso" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.parentElement.innerHTML='<div style=\'font-size:5rem;text-align:center;\'>🗺️</div>'">
+      </div>
+      <div style="padding:36px 32px 32px;display:flex;flex-direction:column;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;color:var(--blue);text-transform:uppercase;margin-bottom:10px;">Cuento 1</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--blue);margin-bottom:20px;line-height:1.2;">El Mapa de los Mil Caminos</h2>
+        <div style="font-size:.88rem;color:var(--ink2);line-height:1.8;flex:1;overflow-y:auto;">
+          <p style="margin-bottom:14px;text-indent:1.2em;">¿Sabías que, a cada instante, millones de mensajes invisibles recorren el mundo? Internet es como una gran red de hilos de luz que conecta personas, ideas y lugares lejanos, permitiendo que un pensamiento cruce océanos en un abrir y cerrar de ojos.</p>
+          <p style="margin-bottom:14px;text-indent:1.2em;">Ese entramado brillante es el Mapa de los Mil Caminos. Gracias a él puedes aprender cosas nuevas, visitar lugares increíbles y jugar con amigos que viven muy lejos, como si todo el universo cupiera en la palma de tu mano.</p>
+          <p style="margin-bottom:14px;text-indent:1.2em;">Pero este mapa también se parece a un bosque encantado: lleno de senderos atractivos, aunque no todos son seguros. Algunas puertas brillan demasiado y no todas las voces que llaman tienen buenas intenciones.</p>
+          <p style="margin-bottom:14px;text-indent:1.2em;">Por eso, cada explorador necesita su brújula de seguridad. Ella recuerda cuidar los datos personales, proteger los secretos importantes y caminar con atención.</p>
+          <p style="text-indent:1.2em;">Y hay una regla que nunca falla: cuando algo resulta extraño o confuso, lo mejor es detenerse y pedir ayuda a un adulto de confianza. Así, el Mapa de los Mil Caminos se convierte en un lugar para descubrir, jugar y aprender con tranquilidad y confianza.</p>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(46,204,128,.05);border-left:3px solid var(--green);padding:14px;border-radius:2px;margin:20px 0;">
+          <span style="font-size:1rem;flex-shrink:0;">💡</span>
+          <p style="font-size:.82rem;color:var(--ink2);line-height:1.5;margin:0;"><strong style="color:var(--ink);">Lección:</strong> Internet es maravilloso, pero necesitas tu brújula. Cuando algo se sienta raro, pide ayuda a un adulto de confianza.</p>
+        </div>
+        <div style="border-top:1px solid rgba(58,127,212,.12);padding-top:18px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ink3);margin-bottom:10px;letter-spacing:1px;">¿QUIERES LEER LOS 15 CUENTOS COMPLETOS?</div>
+          <a href="https://www.amazon.com/-/es/Christian-Mora-ebook/dp/B0GYFFYWF2/" target="_blank" rel="noopener"
+            style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:#fff;background:var(--accent);padding:11px 20px;text-decoration:none;border-radius:var(--radius);display:inline-block;font-weight:700;transition:background .2s;"
+            onmouseover="this.style.background='var(--accent2)'" onmouseout="this.style.background='var(--accent)'">📚 Ver libro en Amazon →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 2: Cortinas de Cristal -->
+<div id="cuento2" style="display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;" role="dialog" aria-modal="true">
+  <div onclick="cerrarCuento('cuento2')" style="position:absolute;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(6px);"></div>
+  <div style="position:relative;background:#0d1422;border:1px solid rgba(46,204,128,.2);border-radius:6px;width:95vw;max-width:860px;max-height:92vh;overflow-y:auto;z-index:1;animation:modalIn .25s ease;">
+    <button onclick="cerrarCuento('cuento2')" style="position:sticky;top:16px;float:right;margin:16px 16px 0 0;background:#1a2535;border:none;color:var(--ink2);width:36px;height:36px;border-radius:50%;font-size:.9rem;cursor:pointer;z-index:10;transition:all .2s;" onmouseover="this.style.background='#2a3a50'" onmouseout="this.style.background='#1a2535'">✕</button>
+    <div style="display:grid;grid-template-columns:1fr 1fr;clear:both;" class="modal-book-grid modal-book-reverse">
+      <div class="modal-img-col" style="background:#080c14;display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:380px;">
+        <img src="/assets/img/cuentos/cuento2-cortinas.jpg" alt="Daniel frente a cortinas de cristal" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.parentElement.innerHTML='<div style=\'font-size:5rem;text-align:center;\'>🪟</div>'">
+      </div>
+      <div class="modal-txt-col" style="padding:36px 32px 32px;display:flex;flex-direction:column;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;color:var(--green);text-transform:uppercase;margin-bottom:10px;">Cuento 2</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--green);margin-bottom:20px;line-height:1.2;">Cortinas de Cristal</h2>
+        <div style="font-size:.88rem;color:var(--ink2);line-height:1.8;flex:1;overflow-y:auto;">
+          <p style="margin-bottom:14px;text-indent:1.2em;">Mientras Daniel acomodaba los últimos detalles de su casa flotante en el mapa digital, encontró unas delicadas Cortinas de Cristal. Eran transparentes y hermosas: permitían mirar hacia afuera sin perder calidez, y al mismo tiempo protegían lo que había dentro. Tras ellas guardaba recuerdos valiosos, nombres importantes y pequeños hábitos que formaban su día a día. Eran su escudo silencioso.</p>
+          <p style="margin-bottom:14px;text-indent:1.2em;">Entusiasmado, Daniel decidió abrirlas por completo. Saludó al mundo, mostró su casa con orgullo y dejó pasar la luz. Sin notarlo, también quedaron visibles datos que no pensaba compartir: la ubicación de su jardín, el nombre de su escuela, horarios que solo su familia conocía. En el mapa digital, una ventana abierta llama más miradas de las que uno imagina.</p>
+          <p style="margin-bottom:14px;text-indent:1.2em;">No tardó en aparecer un Coleccionista de Sombras, atento y paciente, tomando nota desde lejos. Daniel sintió que algo no estaba bien; el aire ya no era tan amable. Entonces recordó el consejo de Aegis8: los datos personales son joyas, no adornos para la vitrina.</p>
+          <p style="text-indent:1.2em;">Con un movimiento decidido, cerró las cortinas, dejando apenas una rendija para quienes eran de confianza. La casa volvió a sentirse segura. Desde entonces, Daniel sabe que abrir o cerrar su mundo es siempre una elección suya y que cuidar lo que se comparte no es desconfiar del mundo, sino conocer el propio valor.</p>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(46,204,128,.05);border-left:3px solid var(--green);padding:14px;border-radius:2px;margin:20px 0;">
+          <span style="font-size:1rem;flex-shrink:0;">💡</span>
+          <p style="font-size:.82rem;color:var(--ink2);line-height:1.5;margin:0;"><strong style="color:var(--ink);">Lección:</strong> Tus datos personales son joyas, no adornos para la vitrina. Tú decides cuánto compartir y con quién.</p>
+        </div>
+        <div style="border-top:1px solid rgba(58,127,212,.12);padding-top:18px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ink3);margin-bottom:10px;letter-spacing:1px;">¿QUIERES LEER LOS 15 CUENTOS COMPLETOS?</div>
+          <a href="https://www.amazon.com/-/es/Christian-Mora-ebook/dp/B0GYFFYWF2/" target="_blank" rel="noopener"
+            style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:#fff;background:var(--accent);padding:11px 20px;text-decoration:none;border-radius:var(--radius);display:inline-block;font-weight:700;transition:background .2s;"
+            onmouseover="this.style.background='var(--accent2)'" onmouseout="this.style.background='var(--accent)'">📚 Ver libro en Amazon →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 3: La Armadura que Renace con la Luz -->
+<div id="cuento3" style="display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;" role="dialog" aria-modal="true">
+  <div onclick="cerrarCuento('cuento3')" style="position:absolute;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(6px);"></div>
+  <div style="position:relative;background:#0d1422;border:1px solid rgba(240,120,48,.2);border-radius:6px;width:95vw;max-width:860px;max-height:92vh;overflow-y:auto;z-index:1;animation:modalIn .25s ease;">
+    <button onclick="cerrarCuento('cuento3')" style="position:sticky;top:16px;float:right;margin:16px 16px 0 0;background:#1a2535;border:none;color:var(--ink2);width:36px;height:36px;border-radius:50%;font-size:.9rem;cursor:pointer;z-index:10;transition:all .2s;" onmouseover="this.style.background='#2a3a50'" onmouseout="this.style.background='#1a2535'">✕</button>
+    <div style="display:grid;grid-template-columns:1fr 1fr;clear:both;" class="modal-book-grid">
+      <div style="background:#080c14;display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:380px;">
+        <img src="/assets/img/cuentos/cuento3-armadura.jpg" alt="Montserrat con armadura brillante" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.parentElement.innerHTML='<div style=\'font-size:5rem;text-align:center;\'>⚔️</div>'">
+      </div>
+      <div style="padding:36px 32px 32px;display:flex;flex-direction:column;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:10px;">Cuento 3</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--accent);margin-bottom:20px;line-height:1.2;">La Armadura que Renace con la Luz</h2>
+        <div style="font-size:.88rem;color:var(--ink2);line-height:1.8;flex:1;overflow-y:auto;">
+          <p style="margin-bottom:14px;text-indent:1.2em;">En el transcurso que Montserrat vigilaba los límites del mapa digital con paso atento, notó algo inquietante: su armadura de exploradora antes firme y brillante, comenzaba a mostrar pequeñas grietas. Eran casi invisibles, pero por ellas se colaban unas diminutas Polillas de Datos, criaturas traviesas que mordisqueaban archivos y hacían tropezar a las aplicaciones. Montserrat intentó espantarlas, pero aparecían una y otra vez, más rápidas que sus manos.</p>
+          <p style="margin-bottom:14px;text-indent:1.2em;">Entonces, su brazalete emitió un destello suave. Sobre la pantalla flotó un mensaje sencillo: "Actualización disponible". Montserrat dudó. Detenerse nunca era divertido. Sin embargo, recordó las palabras de los Sabios de Aegis8: una protección que no se renueva termina por romperse justo cuando más se la necesita. Con decisión, tocó el símbolo luminoso.</p>
+          <p style="margin-bottom:14px;text-indent:1.2em;">Una lluvia de chispas recorrió la armadura. Las grietas se cerraron como si nunca hubieran existido, y el metal resplandeció con nueva fuerza. Las polillas huyeron, desorientadas, incapaces de regresar. Montserrat respiró aliviada y retomó su patrulla.</p>
+          <p style="text-indent:1.2em;">Desde ese día, cada vez que la luz de actualización aparece, Montserrat sonríe. Sabe que esas pausas breves son el secreto para que su camino siga protegido y su aventura continúe sin interrupciones en el mapa.</p>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(46,204,128,.05);border-left:3px solid var(--green);padding:14px;border-radius:2px;margin:20px 0;">
+          <span style="font-size:1rem;flex-shrink:0;">💡</span>
+          <p style="font-size:.82rem;color:var(--ink2);line-height:1.5;margin:0;"><strong style="color:var(--ink);">Lección:</strong> Actualizar tus apps y dispositivos no es una molestia — es renovar tu armadura para seguir protegido/a.</p>
+        </div>
+        <div style="border-top:1px solid rgba(58,127,212,.12);padding-top:18px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ink3);margin-bottom:10px;letter-spacing:1px;">¿QUIERES LEER LOS 15 CUENTOS COMPLETOS?</div>
+          <a href="https://www.amazon.com/-/es/Christian-Mora-ebook/dp/B0GYFFYWF2/" target="_blank" rel="noopener"
+            style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:#fff;background:var(--accent);padding:11px 20px;text-decoration:none;border-radius:var(--radius);display:inline-block;font-weight:700;transition:background .2s;"
+            onmouseover="this.style.background='var(--accent2)'" onmouseout="this.style.background='var(--accent)'">📚 Ver libro en Amazon →</a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -806,6 +923,32 @@ const ro=new IntersectionObserver(e=>{
 },{threshold:.07,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.sw').forEach(el=>ro.observe(el));
 
+
+// ── MODALES CUENTOS ──
+function abrirCuento(id){
+  var m=document.getElementById(id);
+  if(!m)return;
+  m.style.display='flex';
+  document.body.style.overflow='hidden';
+  var inner=m.querySelector('[style*="border-radius:6px"]');
+  if(inner)inner.scrollTop=0;
+  document.addEventListener('keydown',_escCuento);
+}
+function cerrarCuento(id){
+  var m=document.getElementById(id);
+  if(!m)return;
+  m.style.display='none';
+  document.body.style.overflow='';
+  document.removeEventListener('keydown',_escCuento);
+}
+function _escCuento(e){
+  if(e.key==='Escape'){
+    ['cuento1','cuento2','cuento3'].forEach(function(id){
+      var m=document.getElementById(id);
+      if(m&&m.style.display==='flex')cerrarCuento(id);
+    });
+  }
+}
 </script>
 </body>
 </html>
