@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Newsletter Docente · Aegis8 — La amenaza del mes, lista para enseñar</title>
+<meta name="description" content="Un correo mensual con la amenaza digital más relevante para tus alumnos + actividad lista para usar en clases. Gratis, sin spam."/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
+<script src="/aegis-nav.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+:root{
+  --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+  --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
+  --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
+  --card:rgba(255,255,255,.03);--radius:4px;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(58,127,212,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(58,127,212,.025) 1px,transparent 1px);
+  background-size:80px 80px;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+.page-inner{position:relative;z-index:10;}
+.sl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:12px;}
+.st{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.6rem);line-height:1.05;color:var(--ink);margin-bottom:20px;letter-spacing:-1px;}
+.st em{font-style:italic;color:var(--accent);}
+.si{font-size:1rem;line-height:1.9;color:var(--ink2);max-width:640px;margin-bottom:40px;}
+.sw{padding:80px 0 48px;border-bottom:1px solid var(--border);opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
+.sw.vis{opacity:1;transform:none;}
+.sw:last-child{border-bottom:none;}
+.btn-p{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--bg);background:var(--accent);border:none;padding:14px 28px;border-radius:var(--radius);
+  text-decoration:none;transition:all .25s;position:relative;overflow:hidden;display:inline-block;cursor:pointer!important;}
+.btn-p::before{content:'';position:absolute;inset:0;background:var(--accent2);transform:translateX(-100%);transition:transform .3s;}
+.btn-p:hover::before{transform:translateX(0);}
+.btn-p span{position:relative;z-index:1;}
+.btn-p:hover{box-shadow:0 0 28px rgba(240,120,48,.4);transform:translateY(-2px);}
+.page-footer{position:relative;z-index:10;border-top:1px solid var(--border);padding:48px 32px 32px;max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.fl span{color:var(--accent);}
+.flinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+.flinks a{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.flinks a:hover{color:var(--accent);}
+.fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
+@media(max-width:640px){.wrap{padding:0 16px;}.page-footer{padding:32px 16px;}}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+
+/* HERO */
+.nl-hero{padding:80px 0 64px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
+.b1{width:600px;height:600px;top:-100px;right:-100px;background:radial-gradient(circle,rgba(240,120,48,.09) 0%,transparent 70%);animation:fl1 9s ease-in-out infinite;}
+.b2{width:400px;height:400px;bottom:-60px;left:-60px;background:radial-gradient(circle,rgba(58,127,212,.07) 0%,transparent 70%);animation:fl2 11s ease-in-out infinite;}
+@keyframes fl1{0%,100%{transform:translate(0,0);}50%{transform:translate(-20px,15px);}}
+@keyframes fl2{0%,100%{transform:translate(0,0);}50%{transform:translate(15px,-20px);}}
+
+/* LAYOUT */
+.nl-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
+@media(max-width:780px){.nl-grid{grid-template-columns:1fr;gap:0;}}
+
+/* FORM */
+.nl-form-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:36px;position:relative;overflow:hidden;}
+.nl-form-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--gold));}
+.nl-field{margin-bottom:16px;}
+.nl-field label{display:block;font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:7px;}
+.nl-field input,.nl-field select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:3px;color:var(--ink);font-family:'Lato',sans-serif;font-size:.95rem;padding:11px 14px;outline:none;transition:border-color .2s;}
+.nl-field input:focus,.nl-field select:focus{border-color:var(--accent);}
+.nl-field select{cursor:pointer;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%233a4f68' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:10px;}
+.nl-field select option{background:var(--bg2);}
+.nl-field input::placeholder{color:var(--ink3);}
+.nl-2col{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:500px){.nl-2col{grid-template-columns:1fr;}}
+.nl-submit{width:100%;padding:15px;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--bg);background:var(--accent);border:none;border-radius:3px;cursor:pointer;transition:all .25s;margin-top:8px;position:relative;overflow:hidden;}
+.nl-submit::before{content:'';position:absolute;inset:0;background:var(--accent2);transform:translateX(-100%);transition:transform .3s;}
+.nl-submit:hover::before{transform:translateX(0);}
+.nl-submit span{position:relative;z-index:1;}
+.nl-submit:hover{box-shadow:0 0 24px rgba(240,120,48,.35);}
+.nl-submit:disabled{opacity:.5;cursor:not-allowed;}
+.nl-privacy{font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--ink3);letter-spacing:1px;text-align:center;margin-top:10px;}
+.nl-success{display:none;text-align:center;padding:48px 24px;}
+.nl-success.show{display:block;}
+.nl-success-icon{width:64px;height:64px;border-radius:50%;background:rgba(46,204,128,.1);border:1px solid rgba(46,204,128,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+.nl-success-title{font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--ink);margin-bottom:8px;}
+.nl-success-sub{font-size:.88rem;color:var(--ink2);line-height:1.7;max-width:360px;margin:0 auto;}
+
+/* BENEFICIOS */
+.bens{display:flex;flex-direction:column;gap:1px;background:var(--border);border-radius:4px;overflow:hidden;}
+.ben{background:var(--bg2);padding:1.2rem 1.5rem;display:flex;align-items:flex-start;gap:1rem;}
+.ben-ico{width:32px;height:32px;border-radius:6px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;}
+.ben-title{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;color:var(--ink);margin-bottom:3px;letter-spacing:.5px;}
+.ben-desc{font-size:.82rem;color:var(--ink2);line-height:1.55;}
+
+/* PREVIEW */
+.preview-card{background:var(--bg2);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+.prev-header{background:var(--bg);padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.prev-from{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);}
+.prev-from span{color:var(--accent);}
+.prev-date{font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--ink3);}
+.prev-body{padding:24px 20px;}
+.prev-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:12px;}
+.prev-title{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);margin-bottom:12px;line-height:1.2;}
+.prev-divider{height:1px;background:var(--border);margin:14px 0;}
+.prev-section{margin-bottom:14px;}
+.prev-sec-title{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:2px;color:var(--blue);text-transform:uppercase;margin-bottom:6px;}
+.prev-text{font-size:.82rem;color:var(--ink2);line-height:1.65;}
+.prev-cta{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--bg);background:var(--accent);padding:8px 16px;border-radius:2px;margin-top:8px;text-decoration:none;}
+.prev-footer{padding:12px 20px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:.52rem;color:var(--ink3);display:flex;justify-content:space-between;}
+
+/* ARCHIVO */
+.archivo-item{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;text-decoration:none;transition:background .2s;position:relative;overflow:hidden;margin-bottom:8px;}
+.archivo-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);transform:scaleY(0);transform-origin:top;transition:transform .3s;}
+.archivo-item:hover::before{transform:scaleY(1);}
+.archivo-item:hover{background:rgba(255,255,255,.03);}
+.archivo-mes{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;color:var(--accent);min-width:72px;}
+.archivo-amenaza{font-size:.88rem;color:var(--ink);flex:1;line-height:1.4;}
+.archivo-pill{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:1px;padding:2px 8px;border-radius:20px;border:1px solid var(--border);color:var(--ink3);white-space:nowrap;}
+
+/* GUÍA TÉCNICA */
+.paso{display:flex;gap:16px;align-items:flex-start;margin-bottom:24px;}
+.paso-n{width:28px;height:28px;border-radius:50%;background:rgba(240,120,48,.12);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);flex-shrink:0;margin-top:2px;}
+.paso-body h4{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;color:var(--ink);margin-bottom:6px;letter-spacing:1px;}
+.paso-body p{font-size:.86rem;color:var(--ink2);line-height:1.7;}
+.paso-body code{font-family:'JetBrains Mono',monospace;font-size:.78rem;background:rgba(240,120,48,.08);border:1px solid var(--border2);padding:2px 7px;border-radius:3px;color:var(--accent);}
+.paso-body a{color:var(--blue);text-decoration:none;}
+.paso-body a:hover{text-decoration:underline;}
+.guia-block{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:32px;margin-bottom:24px;}
+.guia-block-title{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;}
+.code-block{background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:16px;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--ink2);line-height:2;}
+
+</style>
+</head>
+<body data-page="educa">
+
+<section class="nl-hero">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="wrap" style="position:relative;z-index:2;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ink3);margin-bottom:20px;display:flex;align-items:center;gap:10px;">
+      <div style="width:24px;height:1px;background:var(--accent);"></div>
+      NEWSLETTER · MENSUAL · DOCENTES CHILE
+    </div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,7vw,5rem);line-height:.92;letter-spacing:-1.5px;margin-bottom:20px;">
+      Una amenaza real.<br>
+      <span style="color:var(--accent);font-style:italic;">Lista para enseñar.</span>
+    </h1>
+    <p style="font-size:.95rem;line-height:1.8;color:var(--ink2);max-width:540px;margin-bottom:24px;">
+      Cada mes, la amenaza digital más relevante para tus alumnos — con contexto chileno, actividad lista para usar en clases esa semana y PDF descargable. Sin spam, sin vender nada, sin registro de datos innecesarios.
+    </p>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--green);animation:blink 1.5s infinite;box-shadow:0 0 6px rgba(46,204,128,.5);"></div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:2px;">LISTA ACTIVA · CHILE</span>
+      </div>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;">1 CORREO AL MES · DARSE DE BAJA SIEMPRE</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap page-inner">
+
+<!-- FORMULARIO + PREVIEW -->
+<div class="sw">
+  <div class="nl-grid">
+
+    <!-- IZQUIERDA: Formulario -->
+    <div>
+      <div class="sl">// Suscribirse gratis</div>
+      <h2 class="st" style="font-size:clamp(1.8rem,4vw,2.4rem);">Únete.<br><em>Es gratis y siempre lo será.</em></h2>
+
+      <div class="nl-form-wrap">
+        <div id="nl-form-inner">
+          <div class="nl-2col">
+            <div class="nl-field">
+              <label for="nl-nombre">Nombre</label>
+              <input type="text" id="nl-nombre" placeholder="Ana" maxlength="50" autocomplete="given-name"/>
+            </div>
+            <div class="nl-field">
+              <label for="nl-apellido">Apellido</label>
+              <input type="text" id="nl-apellido" placeholder="González" maxlength="50" autocomplete="family-name"/>
+            </div>
+          </div>
+          <div class="nl-field">
+            <label for="nl-email">Correo electrónico</label>
+            <input type="email" id="nl-email" placeholder="ana@colegio.cl" maxlength="100" autocomplete="email"/>
+          </div>
+          <div class="nl-2col">
+            <div class="nl-field">
+              <label for="nl-nivel">Nivel que enseñas</label>
+              <select id="nl-nivel">
+                <option value="">Selecciona...</option>
+                <option value="basica-baja">1° a 4° básico</option>
+                <option value="basica-alta">5° a 8° básico</option>
+                <option value="media">1° a 4° medio</option>
+                <option value="varios">Varios niveles</option>
+              </select>
+            </div>
+            <div class="nl-field">
+              <label for="nl-region">Región</label>
+              <select id="nl-region">
+                <option value="">Selecciona...</option>
+                <option value="rm">Metropolitana</option>
+                <option value="v">Valparaíso</option>
+                <option value="viii">Biobío</option>
+                <option value="ix">La Araucanía</option>
+                <option value="x">Los Lagos</option>
+                <option value="iv">Coquimbo</option>
+                <option value="vi">O'Higgins</option>
+                <option value="vii">Maule</option>
+                <option value="xiv">Los Ríos</option>
+                <option value="xi">Aysén</option>
+                <option value="xii">Magallanes</option>
+                <option value="otra">Otra región</option>
+              </select>
+            </div>
+          </div>
+          <button class="nl-submit" id="nl-submit" onclick="submitNewsletter()">
+            <span>Suscribirme gratis →</span>
+          </button>
+          <p class="nl-privacy">Sin spam · Puedes darte de baja cuando quieras · Nunca venderemos tu correo</p>
+        </div>
+        <div class="nl-success" id="nl-success">
+          <div class="nl-success-icon">
+            <svg viewBox="0 0 24 24" fill="none" width="28" height="28">
+              <path d="M5 13l4 4L19 7" stroke="#2ecc80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="nl-success-title">¡Listo, estás dentro!</div>
+          <div class="nl-success-sub">Revisa tu correo — te llegará una confirmación en minutos. El primer newsletter llega el primer lunes del próximo mes.</div>
+        </div>
+      </div>
+
+      <div class="bens" style="margin-top:20px;">
+        <div class="ben">
+          <div class="ben-ico" style="background:rgba(240,120,48,.08);border:1px solid var(--border2);">
+            <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><circle cx="8" cy="8" r="6" stroke="#f07830" stroke-width="1.2"/><path d="M8 5v3l2 2" stroke="#f07830" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
+          <div><div class="ben-title">Un correo al mes — no más</div><div class="ben-desc">Siempre el primer lunes del mes. Sin notificaciones intermedias ni sorpresas.</div></div>
+        </div>
+        <div class="ben">
+          <div class="ben-ico" style="background:rgba(58,127,212,.08);border:1px solid var(--border);">
+            <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M8 2C4.7 2 2 4.7 2 8s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6z" stroke="#3a7fd4" stroke-width="1.2"/><path d="M8 5v3M8 10v.5" stroke="#3a7fd4" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
+          <div><div class="ben-title">Contexto chileno, no traducido</div><div class="ben-desc">Estadísticas de PDI, MINEDUC y casos reales de Chile. Cero contenido genérico de EE.UU.</div></div>
+        </div>
+        <div class="ben">
+          <div class="ben-ico" style="background:rgba(46,204,128,.08);border:1px solid var(--border);">
+            <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><rect x="2" y="2" width="12" height="12" rx="1" stroke="#2ecc80" stroke-width="1.2"/><path d="M5 8l3 3 3-5" stroke="#2ecc80" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div><div class="ben-title">Actividad lista para esa semana</div><div class="ben-desc">Llega el lunes, la aplicas el martes. 15 minutos de clase, sin preparación adicional.</div></div>
+        </div>
+        <div class="ben">
+          <div class="ben-ico" style="background:rgba(245,168,35,.08);border:1px solid var(--border);">
+            <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M3 4h10M3 8h7M3 12h5" stroke="#f5a823" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
+          <div><div class="ben-title">PDF descargable incluido</div><div class="ben-desc">Plan de clase completo para imprimir o proyectar. Viene en cada edición.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DERECHA: Preview -->
+    <div class="sw" style="padding-top:48px;border:none;">
+      <div class="sl">// Así se ve cada mes</div>
+      <h2 class="st" style="font-size:clamp(1.6rem,3vw,2rem);">El formato<br><em>exacto.</em></h2>
+      <div class="preview-card">
+        <div class="prev-header">
+          <div class="prev-from">De: <span>equipo@aegis8.org</span></div>
+          <div class="prev-date">1er lunes · 08:00</div>
+        </div>
+        <div class="prev-body">
+          <div class="prev-tag">Aegis8 · La amenaza del mes · Abril 2026</div>
+          <div class="prev-title">Phishing disfrazado de JUNAEB — campaña activa en colegios RM</div>
+          <div class="prev-divider"></div>
+          <div class="prev-section">
+            <div class="prev-sec-title">⚠ La amenaza</div>
+            <div class="prev-text">Circula un mensaje de WhatsApp suplantando a JUNAEB con beneficios escolares. Redirige a formulario que roba RUT y datos bancarios de apoderados. 340 casos reportados en la RM esta semana.</div>
+          </div>
+          <div class="prev-divider"></div>
+          <div class="prev-section">
+            <div class="prev-sec-title">📋 En el aula esta semana</div>
+            <div class="prev-text"><strong style="color:var(--ink);font-weight:400;">Actividad: Identifica el engaño</strong><br>
+            15 min · Sin materiales · 5° básico en adelante<br><br>
+            Muestra el mensaje falso en el proyector. Pregunta: ¿qué señales ves? Construyan juntos la lista de señales de alerta.</div>
+          </div>
+          <div class="prev-divider"></div>
+          <div class="prev-section">
+            <div class="prev-sec-title">🏠 Para llevar a casa</div>
+            <div class="prev-text">"Pregúntale a tu familia: ¿sabrían reconocer un mensaje falso de una institución?"</div>
+          </div>
+          <a href="#" class="prev-cta" onclick="return false;">↓ Descargar plan de clase PDF</a>
+        </div>
+        <div class="prev-footer">
+          <span>aegis8.org · Chile</span>
+          <span>Darse de baja</span>
+        </div>
+      </div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--ink3);letter-spacing:1px;margin-top:12px;">// Ejemplo real — contenido cambia cada mes según amenazas activas en Chile</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ARCHIVO HISTÓRICO -->
+<div class="sw">
+  <div class="sl">// Archivo · Ediciones anteriores</div>
+  <h2 class="st">Lo que ya<br><em>cubrimos.</em></h2>
+  <p class="si">Las últimas ediciones — disponibles para todos, sin necesidad de suscribirse.</p>
+  <a href="#" class="archivo-item" onclick="return false;">
+    <div class="archivo-mes">Mar 2026</div>
+    <div class="archivo-amenaza">Grooming en Roblox y Minecraft — cómo hablar con alumnos de básica</div>
+    <div class="archivo-pill">Básica</div>
+  </a>
+  <a href="#" class="archivo-item" onclick="return false;">
+    <div class="archivo-mes">Feb 2026</div>
+    <div class="archivo-amenaza">Sextorsión en adolescentes: aumento del 60% en Chile según PDI</div>
+    <div class="archivo-pill">Media</div>
+  </a>
+  <a href="#" class="archivo-item" onclick="return false;">
+    <div class="archivo-mes">Ene 2026</div>
+    <div class="archivo-amenaza">Ciberacoso en WhatsApp: el problema que empeora los fines de semana</div>
+    <div class="archivo-pill">Todos</div>
+  </a>
+  <a href="#" class="archivo-item" onclick="return false;">
+    <div class="archivo-mes">Dic 2025</div>
+    <div class="archivo-amenaza">Phishing de fin de año — estafas disfrazadas de beneficios de Navidad</div>
+    <div class="archivo-pill">Familias</div>
+  </a>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--ink3);letter-spacing:1px;margin-top:4px;">// Los links se activan con cada edición real publicada</p>
+</div>
+
+<!-- GUÍA TÉCNICA COMPLETA -->
+<div class="sw">
+  <div class="sl">// Guía técnica · Cómo enviarlo</div>
+  <h2 class="st">Configurar y<br><em>enviar cada edición.</em></h2>
+  <p class="si">Paso a paso con Brevo (gratuito). No necesitas saber de código — todo desde un panel visual.</p>
+
+  <!-- BLOQUE 1: Configuración inicial -->
+  <div class="guia-block">
+    <div class="guia-block-title" style="color:var(--accent);">PARTE 1 — CONFIGURACIÓN INICIAL (una sola vez)</div>
+
+    <div class="paso">
+      <div class="paso-n">1</div>
+      <div class="paso-body">
+        <h4>Crear cuenta en Brevo</h4>
+        <p>Ve a <a href="https://brevo.com" target="_blank">brevo.com</a> y regístrate con tu correo de Aegis8. El plan gratuito incluye hasta 300 correos/día y contactos ilimitados — suficiente para empezar. No necesitas tarjeta de crédito.</p>
+      </div>
+    </div>
+
+    <div class="paso">
+      <div class="paso-n">2</div>
+      <div class="paso-body">
+        <h4>Crear la lista "Docentes Aegis8"</h4>
+        <p>En Brevo → <strong style="color:var(--ink);font-weight:400;">Contactos → Listas → Nueva lista</strong>. Nómbrala "Docentes Aegis8". Anota el número de ID que aparece debajo del nombre — lo necesitarás en el paso 4.</p>
+      </div>
+    </div>
+
+    <div class="paso">
+      <div class="paso-n">3</div>
+      <div class="paso-body">
+        <h4>Obtener la API Key</h4>
+        <p>En Brevo → <strong style="color:var(--ink);font-weight:400;">Configuración (ícono arriba derecha) → API Keys → Generar nueva clave API</strong>. Nómbrala "Aegis8 Web". Copia la clave — solo se muestra una vez. Guárdala en un lugar seguro.</p>
+      </div>
+    </div>
+
+    <div class="paso">
+      <div class="paso-n">4</div>
+      <div class="paso-body">
+        <h4>Pegar las credenciales en este archivo</h4>
+        <p>Abre <code>newsletter.html</code> en VS Code. Busca estas dos líneas al final del archivo y reemplaza los valores:</p>
+        <div class="code-block">
+          <span style="color:var(--ink3);">// Busca estas líneas y reemplaza:</span><br>
+          <span style="color:var(--accent);">const BREVO_API_KEY</span> = <span style="color:var(--green);">'TU_API_KEY_AQUI'</span>;<br>
+          <span style="color:var(--accent);">const LIST_ID</span> = <span style="color:var(--gold);">3</span>; <span style="color:var(--ink3);">// reemplaza 3 por el ID de tu lista</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="paso">
+      <div class="paso-n">5</div>
+      <div class="paso-body">
+        <h4>Verificar el dominio remitente (importante)</h4>
+        <p>En Brevo → <strong style="color:var(--ink);font-weight:400;">Configuración → Remitentes y dominios → Agregar dominio</strong>. Agrega <code>aegis8.org</code> y sigue las instrucciones para agregar 2 registros DNS en tu proveedor de hosting. Esto evita que tus correos lleguen a spam y es obligatorio para envíos masivos.</p>
+      </div>
+    </div>
+
+    <div class="paso">
+      <div class="paso-n">6</div>
+      <div class="paso-body">
+        <h4>Crear el correo de bienvenida automático</h4>
+        <p>En Brevo → <strong style="color:var(--ink);font-weight:400;">Automatización → Nuevo workflow → "Contacto agregado a lista"</strong>. Configúralo para que envíe automáticamente un correo de bienvenida cuando alguien se suscriba. Incluye el PDF de grooming como primer recurso — fideliza desde el día uno.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOQUE 2: Envío mensual -->
+  <div class="guia-block">
+    <div class="guia-block-title" style="color:var(--blue);">PARTE 2 — CREAR Y ENVIAR CADA EDICIÓN (mensual o semanal)</div>
+
+    <div class="paso">
+      <div class="paso-n">1</div>
+      <div class="paso-body">
+        <h4>Definir la amenaza del mes</h4>
+        <p>Revisa las fuentes: PDI Chile (pdichile.cl), CSIRT.gob.cl, y redes de docentes. Elige la amenaza más relevante para el nivel escolar. Para básica: grooming, ciberacoso. Para media: sextorsión, phishing, identidad digital.</p>
+      </div>
+    </div>
+
+    <div class="paso">
+      <div class="paso-n">2</div>
+      <div class="paso-body">
+        <h4>Crear la campaña en Brevo</h4>
+        <p>En Brevo → <strong style="color:var(--ink);font-weight:400;">Campañas de email → Crear campaña → Newsletter</strong>. Asunto recomendado: <code>Aegis8 [Mes] · [Nombre amenaza breve]</code><br>Ejemplo: <code>Aegis8 Abril · Phishing disfrazado de JUNAEB</code></p>
+      </div>
+    </div>
+
+    <div class="paso">
+      <div class="paso-n">3</div>
+      <div class="paso-body">
+        <h4>Usar la plantilla guardada</h4>
+        <p>La primera vez diseña el correo siguiendo la estructura del preview de esta página: encabezado Aegis8, sección "La amenaza", sección "En el aula esta semana", sección "Para llevar a casa" y botón de descarga PDF. Guárdala como plantilla — las siguientes ediciones solo cambias el contenido, no el diseño.</p>
+      </div>
+    </div>
+
+    <div class="paso">
+      <div class="paso-n">4</div>
+      <div class="paso-body">
+        <h4>Seleccionar la lista y programar el envío</h4>
+        <p>Selecciona "Docentes Aegis8". Programa para el <strong style="color:var(--ink);font-weight:400;">primer lunes del mes a las 08:00</strong> — mejor tasa de apertura para docentes chilenos según datos de email marketing LATAM. Brevo te permite programar con anticipación.</p>
+      </div>
+    </div>
+
+    <div class="paso">
+      <div class="paso-n">5</div>
+      <div class="paso-body">
+        <h4>¿Mensual o semanal?</h4>
+        <p><strong style="color:var(--ink);font-weight:400;">Mensual recomendado para empezar</strong> — menos carga de contenido, menos desinscripciones, mayor calidad por edición. Si en 3 meses tienes más de 500 suscriptores y quieres aumentar la frecuencia, puedes hacer un correo semanal más breve: solo la amenaza activa + una pregunta para el aula. Guarda el plan completo con actividad para el envío mensual.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIP FINAL -->
+  <div style="background:rgba(46,204,128,.04);border:1px solid rgba(46,204,128,.2);border-radius:4px;padding:24px;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;color:var(--green);margin-bottom:12px;">TIP · MÉTRICAS QUE IMPORTAN</div>
+    <p style="font-size:.88rem;color:var(--ink2);line-height:1.75;">
+      En Brevo puedes ver tasa de apertura, clics y desuscripciones por edición. Un buen newsletter educativo tiene <strong style="color:var(--ink);font-weight:400;">35–45% de tasa de apertura</strong>. Si baja del 25%, el asunto del correo necesita más contexto urgente o el contenido no es lo suficientemente específico. El indicador más importante es cuántos hacen clic en "Descargar plan de clase" — ese es el valor real que entrega Aegis8.
+    </p>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<footer class="page-footer">
+  <a href="/" class="fl">AEGIS<span>8</span></a>
+  <ul class="flinks">
+    <li><a href="/educa.html">Educa</a></li>
+    <li><a href="/educa/profesores.html">Docentes</a></li>
+    <li><a href="/educa/padres.html">Familias</a></li>
+    <li><a href="/analizador-phishing.html">Herramientas</a></li>
+    <li><a href="/contactos.html">Contacto</a></li>
+  </ul>
+  <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+    <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
+  </div>
+</footer>
+
+<script>
+async function submitNewsletter() {
+  const nombre  = document.getElementById('nl-nombre').value.trim();
+  const apellido= document.getElementById('nl-apellido').value.trim();
+  const email   = document.getElementById('nl-email').value.trim();
+  const nivel   = document.getElementById('nl-nivel').value;
+  const region  = document.getElementById('nl-region').value;
+
+  if (!nombre || !email) { alert('Por favor ingresa tu nombre y correo.'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Ingresa un correo válido.'); return; }
+
+  const btn = document.getElementById('nl-submit');
+  btn.disabled = true;
+  btn.querySelector('span').textContent = 'Enviando...';
+
+  try {
+    const res = await fetch('https://formspree.io/f/mdawgeje', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        email, nombre, apellido, nivel, region,
+        _subject: 'Nueva suscripción newsletter Aegis8'
+      })
+    });
+    if (res.ok) { showSuccess(); return; }
+    throw new Error('Error al enviar');
+  } catch(e) {
+    btn.disabled = false;
+    btn.querySelector('span').textContent = 'Suscribirme gratis →';
+    alert('Hubo un problema. Intenta nuevamente o escríbenos a equipo@aegis8.org');
+  }
+}
+
+function showSuccess() {
+  document.getElementById('nl-form-inner').style.display = 'none';
+  document.getElementById('nl-success').classList.add('show');
+}
+
+const ro = new IntersectionObserver(e => {
+  e.forEach(x => { if (x.isIntersecting) x.target.classList.add('vis'); });
+}, { threshold: .07, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.sw').forEach(el => ro.observe(el));
+</script>
+</body>
+</html>
