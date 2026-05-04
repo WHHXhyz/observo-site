@@ -263,21 +263,31 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
             </button>
           </div>
 
-          <div class="field">
-            <label class="field-label" for="inp-nombre">Nombre</label>
-            <input class="field-input" id="inp-nombre" type="text" placeholder="Tu nombre" required maxlength="100"/>
-          </div>
-          <div class="field">
-            <label class="field-label" for="inp-email">Email</label>
-            <input class="field-input" id="inp-email" type="email" placeholder="tu@email.com" required maxlength="200"/>
-          </div>
-          <div class="field">
-            <label class="field-label" for="inp-msg">Cuéntanos tu caso</label>
-            <textarea class="field-textarea" id="inp-msg" rows="5" placeholder="Describe brevemente tu situación..." required maxlength="2000"></textarea>
-          </div>
-          <input type="hidden" id="inp-honeypot" name="_gotcha"/>
-          <button class="submit-btn" id="btn-submit" onclick="doSubmit()">Enviar mensaje →</button>
-          <div class="form-notice" id="form-notice"></div>
+          <form id="contacto-form"
+            action="https://formspree.io/f/mdawgeje"
+            method="POST"
+            onsubmit="return validarForm()">
+
+            <input type="hidden" name="_subject" id="inp-subject" value="Aegis8 Contacto"/>
+            <input type="hidden" name="motivo" id="inp-motivo" value="Sin especificar"/>
+            <input type="text" name="_gotcha" style="display:none"/>
+
+            <div class="field">
+              <label class="field-label" for="inp-nombre">Nombre</label>
+              <input class="field-input" id="inp-nombre" name="nombre" type="text" placeholder="Tu nombre" required maxlength="100"/>
+            </div>
+            <div class="field">
+              <label class="field-label" for="inp-email">Email</label>
+              <input class="field-input" id="inp-email" name="email" type="email" placeholder="tu@email.com" required maxlength="200"/>
+            </div>
+            <div class="field">
+              <label class="field-label" for="inp-msg">Cuéntanos tu caso</label>
+              <textarea class="field-textarea" id="inp-msg" name="mensaje" rows="5" placeholder="Describe brevemente tu situación..." required maxlength="2000"></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn" id="btn-submit">Enviar mensaje →</button>
+            <div class="form-notice" id="form-notice"></div>
+          </form>
         </div>
       </div>
 
@@ -347,45 +357,27 @@ function showNotice(type,msg){
   n.className='form-notice '+type;
   n.textContent=msg;n.style.display='block';
 }
-var FORMSPREE_URL='https://formspree.io/f/mdawgeje';
-function doSubmit(){
+function validarForm(){
   var nombre=document.getElementById('inp-nombre').value.trim();
   var email=document.getElementById('inp-email').value.trim();
   var msg=document.getElementById('inp-msg').value.trim();
-  var honey=document.getElementById('inp-honeypot').value;
-  if(honey)return;
-  if(!nombre||!email||!msg){showNotice('error','Por favor completa todos los campos.');return;}
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showNotice('error','Ingresa un email válido.');return;}
+  if(!nombre||!email||!msg){
+    var n=document.getElementById('form-notice');
+    n.className='form-notice error';
+    n.textContent='Por favor completa todos los campos.';
+    n.style.display='block';
+    return false;
+  }
+  // Actualizar subject y motivo antes de enviar
+  var modo=document.querySelector('.mode-btn.sel .mode-name');
+  var modoTexto=modo?modo.textContent:'Sin especificar';
+  document.getElementById('inp-subject').value='Aegis8 Contacto: '+modoTexto+' — '+nombre;
+  document.getElementById('inp-motivo').value=modoTexto;
   var btn=document.getElementById('btn-submit');
-  btn.textContent='Enviando...';btn.style.opacity='.6';btn.disabled=true;
-  var modo=document.querySelector('.mode-btn.sel');
-  var modoTexto=modo?modo.querySelector('span:last-child').textContent:'Sin especificar';
-  fetch(FORMSPREE_URL,{
-    method:'POST',
-    headers:{'Content-Type':'application/json','Accept':'application/json'},
-    body:JSON.stringify({
-      nombre:nombre,
-      email:email,
-      mensaje:msg,
-      motivo:modoTexto,
-      _subject:'Aegis8 Contacto: '+modoTexto+' — '+nombre
-    })
-  }).then(function(r){return r.json();}).then(function(d){
-    btn.textContent='Enviar mensaje →';btn.style.opacity='1';btn.disabled=false;
-    if(d.ok){
-      showNotice('success','✓ Mensaje enviado. Te respondemos en 1–2 días hábiles.');
-      document.getElementById('inp-nombre').value='';
-      document.getElementById('inp-email').value='';
-      document.getElementById('inp-msg').value='';
-      document.querySelectorAll('.mode-btn').forEach(function(b){b.classList.remove('sel');});
-    } else {
-      var err=d.errors&&d.errors[0]?d.errors[0].message:'Error al enviar. Intenta de nuevo.';
-      showNotice('error',err);
-    }
-  }).catch(function(){
-    btn.textContent='Enviar mensaje →';btn.style.opacity='1';btn.disabled=false;
-    showNotice('error','Error de conexión. Verifica tu internet e intenta de nuevo.');
-  });
+  btn.textContent='Enviando...';
+  btn.style.opacity='.6';
+  btn.disabled=true;
+  return true;
 }
 
 const ro=new IntersectionObserver(e=>{
