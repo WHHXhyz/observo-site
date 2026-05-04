@@ -481,16 +481,17 @@ async function submitNewsletter() {
   btn.querySelector('span').textContent = 'Enviando...';
 
   try {
-    const res = await fetch('https://formspree.io/f/mdawgeje', {
+    const res = await fetch('https://aegis8-agent.christianmora705.workers.dev/newsletter', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
         email, nombre, apellido, nivel, region,
-        _subject: 'Nueva suscripción newsletter Aegis8'
+        _gotcha: ''
       })
     });
-    if (res.ok) { showSuccess(); return; }
-    throw new Error('Error al enviar');
+    const data = await res.json();
+    if (data.ok) { showSuccess(); return; }
+    throw new Error(data.error || 'Error al enviar');
   } catch(e) {
     btn.disabled = false;
     btn.querySelector('span').textContent = 'Suscribirme gratis →';
