@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Política de Privacidad · Aegis8</title>
+<meta name="description" content="Política de privacidad de la aplicación móvil educativa Aegis8."/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;600&family=Lato:wght@300;400;700&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
+  --accent:#f07830;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;
+  --border:rgba(58,127,212,.12);--radius:4px;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(58,127,212,.02) 1px,transparent 1px),
+             linear-gradient(90deg,rgba(58,127,212,.02) 1px,transparent 1px);
+  background-size:60px 60px;}
+
+/* NAV */
+.top-bar{position:sticky;top:0;z-index:100;background:rgba(8,12,20,.92);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
+  padding:.75rem 2rem;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;
+  letter-spacing:3px;color:var(--ink2);text-decoration:none;}
+.logo span{color:var(--accent);}
+.nav-pill{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--blue);border:1px solid rgba(58,127,212,.3);
+  padding:.3rem .8rem;border-radius:2px;text-decoration:none;transition:all .2s;}
+.nav-pill:hover{background:rgba(58,127,212,.08);border-color:var(--blue);}
+
+/* HERO */
+.doc-hero{position:relative;z-index:10;padding:72px 0 48px;border-bottom:1px solid var(--border);}
+.wrap{max-width:780px;margin:0 auto;padding:0 24px;}
+.doc-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:4px;
+  color:var(--accent);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.doc-eyebrow::before{content:'';width:24px;height:1px;background:var(--accent);}
+h1{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.2rem);
+  line-height:1.05;letter-spacing:-1px;margin-bottom:16px;}
+h1 em{color:var(--blue);font-style:italic;}
+.doc-meta{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--ink3);
+  letter-spacing:1px;margin-bottom:0;}
+
+/* ÍNDICE */
+.toc{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--blue);
+  padding:1.5rem 1.75rem;margin:40px 0;border-radius:var(--radius);}
+.toc-title{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:3px;
+  color:var(--blue);text-transform:uppercase;margin-bottom:12px;}
+.toc ol{padding-left:1.25rem;display:flex;flex-direction:column;gap:6px;}
+.toc li{font-size:.85rem;color:var(--ink2);}
+.toc a{color:var(--blue);text-decoration:none;transition:color .2s;}
+.toc a:hover{color:var(--ink);}
+
+/* SECCIONES */
+.doc-body{position:relative;z-index:10;padding:40px 0 80px;}
+.sec{padding:40px 0;border-bottom:1px solid var(--border);}
+.sec:last-of-type{border-bottom:none;}
+h2{font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink);
+  letter-spacing:-.5px;margin-bottom:16px;display:flex;align-items:baseline;gap:10px;}
+.sec-num{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);
+  letter-spacing:2px;font-style:normal;}
+p{font-size:.92rem;color:var(--ink2);margin-bottom:12px;line-height:1.8;}
+p:last-child{margin-bottom:0;}
+ul,ol{padding-left:1.4rem;margin-bottom:12px;}
+li{font-size:.9rem;color:var(--ink2);line-height:1.75;margin-bottom:4px;}
+strong{color:var(--ink);font-weight:400;}
+
+/* CALLOUTS */
+.callout{border-radius:var(--radius);padding:1rem 1.25rem;margin:16px 0;font-size:.87rem;line-height:1.7;}
+.callout-blue{background:rgba(58,127,212,.06);border-left:3px solid var(--blue);color:var(--ink2);}
+.callout-green{background:rgba(46,204,128,.05);border-left:3px solid var(--green);color:var(--ink2);}
+.callout-orange{background:rgba(240,120,48,.06);border-left:3px solid var(--accent);color:var(--ink2);}
+.callout-gold{background:rgba(245,168,35,.05);border-left:3px solid var(--gold);color:var(--ink2);}
+.callout strong{color:var(--ink);}
+
+/* TABLA */
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.85rem;}
+th{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--blue);text-transform:uppercase;text-align:left;
+  padding:.6rem .75rem;border-bottom:1px solid var(--blue);background:rgba(58,127,212,.04);}
+td{padding:.65rem .75rem;border-bottom:1px solid var(--border);color:var(--ink2);vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+
+/* BADGE ESTADO */
+.badge{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:2px;
+  text-transform:uppercase;padding:.2rem .55rem;border-radius:2px;vertical-align:middle;}
+.badge-green{background:rgba(46,204,128,.12);color:var(--green);}
+.badge-gold{background:rgba(245,168,35,.12);color:var(--gold);}
+
+/* FOOTER */
+.doc-footer{border-top:1px solid var(--border);padding:32px 24px;
+  max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}
+.disclaimer{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);
+  padding:1rem 1.25rem;border-radius:var(--radius);font-size:.8rem;color:var(--ink3);line-height:1.6;}
+.fc{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--ink3);letter-spacing:1px;}
+
+@media(max-width:640px){.wrap{padding:0 16px;}.top-bar{padding:.75rem 1rem;}}
+</style>
+</head>
+<body>
+
+<nav class="top-bar" aria-label="Navegación principal">
+  <a href="https://aegis8.org" class="logo">AEGIS<span>8</span></a>
+  <a href="/terminos.html" class="nav-pill">Términos de uso →</a>
+</nav>
+
+<header class="doc-hero">
+  <div class="wrap">
+    <div class="doc-eyebrow">Documento legal</div>
+    <h1>Política de <em>Privacidad</em></h1>
+    <p class="doc-meta">ÚLTIMA ACTUALIZACIÓN: 3 DE MAYO DE 2026 &nbsp;·&nbsp; AEGIS8 · CHILE</p>
+  </div>
+</header>
+
+<main class="doc-body">
+<div class="wrap">
+
+  <nav class="toc" aria-label="Índice de contenidos">
+    <div class="toc-title">Índice</div>
+    <ol>
+      <li><a href="#responsable">Responsable del tratamiento</a></li>
+      <li><a href="#datos">Datos que tratamos</a></li>
+      <li><a href="#finalidad">Finalidad y base legal</a></li>
+      <li><a href="#conservacion">Conservación de datos</a></li>
+      <li><a href="#menores">Menores de edad</a></li>
+      <li><a href="#ia">Agente de inteligencia artificial</a></li>
+      <li><a href="#transferencias">Transferencias internacionales</a></li>
+      <li><a href="#seguridad">Seguridad</a></li>
+      <li><a href="#derechos">Derechos del titular</a></li>
+      <li><a href="#cambios">Cambios a esta política</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ol>
+  </nav>
+
+  <div class="callout callout-blue">
+    <strong>Resumen en lenguaje simple:</strong> Aegis8 no vende tus datos, no muestra publicidad personalizada y no crea cuentas de usuario. Los únicos datos que guardamos en tu dispositivo son tu progreso educativo y preferencias. Si usas el agente de IA, los mensajes viajan cifrados al proveedor del modelo, pero no quedan guardados en la app entre sesiones.
+  </div>
+
+  <!-- 1 -->
+  <section class="sec" id="responsable">
+    <h2><span class="sec-num">01</span> Responsable del tratamiento</h2>
+    <p><strong>Aegis8</strong> es un proyecto educativo-social sin fines de lucro operado por su fundador en Chile.</p>
+    <table>
+      <tr><th>Campo</th><th>Datos</th></tr>
+      <tr><td>Responsable</td><td>Aegis8 — Proyecto educativo-social</td></tr>
+      <tr><td>Correo de contacto</td><td>privacidad@aegis8.org</td></tr>
+      <tr><td>País</td><td>Chile</td></tr>
+      <tr><td>Sitio web</td><td>https://aegis8.org</td></tr>
+    </table>
+  </section>
+
+  <!-- 2 -->
+  <section class="sec" id="datos">
+    <h2><span class="sec-num">02</span> Datos que tratamos</h2>
+    <p>Aegis8 <strong>no requiere registro ni cuenta de usuario</strong>. No recopilamos nombre, correo, teléfono ni ningún identificador personal de forma directa. Los datos tratados son:</p>
+
+    <table>
+      <tr><th>Categoría</th><th>Descripción</th><th>Dónde se almacena</th><th>Es sensible</th></tr>
+      <tr>
+        <td>Progreso educativo</td>
+        <td>Lecciones completadas, puntuaciones, logros dentro de la app</td>
+        <td>Dispositivo del usuario (local)</td>
+        <td><span class="badge badge-green">No</span></td>
+      </tr>
+      <tr>
+        <td>Preferencias</td>
+        <td>Idioma, tema visual, configuración de notificaciones locales</td>
+        <td>Dispositivo del usuario (local)</td>
+        <td><span class="badge badge-green">No</span></td>
+      </tr>
+      <tr>
+        <td>Métricas agregadas de uso</td>
+        <td>Estadísticas anónimas de uso de módulos (sin identificador personal)</td>
+        <td>Dispositivo / servidor aegis8.org vía HTTPS</td>
+        <td><span class="badge badge-green">No</span></td>
+      </tr>
+      <tr>
+        <td>Mensajes al agente de IA</td>
+        <td>Texto que el usuario envía al chat de IA durante la sesión activa</td>
+        <td>Tránsito cifrado HTTPS; no persiste en el dispositivo entre sesiones</td>
+        <td><span class="badge badge-gold">Potencialmente</span></td>
+      </tr>
+      <tr>
+        <td>Contenido educativo descargado</td>
+        <td>Archivos JSON desde aegis8.org para uso offline</td>
+        <td>Caché local del dispositivo</td>
+        <td><span class="badge badge-green">No</span></td>
+      </tr>
+    </table>
+
+    <div class="callout callout-green">
+      <strong>Datos con almacenamiento reforzado:</strong> La información marcada como sensible (si la hubiera en versiones futuras) se protege mediante <code>flutter_secure_storage</code> en Android, que utiliza el almacén de claves del sistema operativo (Android Keystore). En iOS se utiliza el llavero del sistema (Keychain).
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="sec" id="finalidad">
+    <h2><span class="sec-num">03</span> Finalidad y base legal</h2>
+    <p>Tratamos los datos exclusivamente para las siguientes finalidades:</p>
+    <ul>
+      <li><strong>Entrega del servicio educativo:</strong> guardar el progreso del usuario para que pueda retomar las lecciones donde las dejó.</li>
+      <li><strong>Mejora del contenido:</strong> métricas agregadas y anónimas para detectar qué módulos son más usados o tienen más errores.</li>
+      <li><strong>Funcionamiento del agente de IA:</strong> transmitir los mensajes del usuario al proveedor de IA para generar respuestas educativas en tiempo real.</li>
+    </ul>
+    <div class="callout callout-blue">
+      <strong>Base legal [PENDIENTE REVISIÓN LEGAL]:</strong> La app opera principalmente con datos almacenados localmente en el dispositivo sin identificación personal. En la medida en que aplique la Ley N° 19.628 sobre Protección de la Vida Privada (Chile) y, en su caso, la Ley N° 21.719 (pendiente de entrada en vigor plena), la base del tratamiento es el <strong>consentimiento informado</strong> otorgado al aceptar esta política, y el <strong>interés legítimo</strong> en la mejora del servicio educativo. Para transferencias internacionales de datos hacia el proveedor de IA, véase la sección 7.
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="sec" id="conservacion">
+    <h2><span class="sec-num">04</span> Conservación de datos</h2>
+    <table>
+      <tr><th>Dato</th><th>Período de conservación</th></tr>
+      <tr><td>Progreso y preferencias locales</td><td>Hasta que el usuario desinstale la app o borre los datos de la aplicación desde el sistema operativo</td></tr>
+      <tr><td>Mensajes al agente de IA</td><td>No se conservan en el dispositivo entre sesiones; el proveedor de IA aplica sus propias políticas de retención (ver sección 6)</td></tr>
+      <tr><td>Métricas agregadas en servidor</td><td>Máximo 24 meses desde su registro, en forma anónima</td></tr>
+    </table>
+    <p>El usuario puede eliminar todos los datos locales en cualquier momento desde <strong>Ajustes del sistema operativo → Aplicaciones → Aegis8 → Borrar datos</strong>.</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="sec" id="menores">
+    <h2><span class="sec-num">05</span> Menores de edad</h2>
+    <p>Aegis8 está diseñada para ser usada por niños, adolescentes y sus familias y docentes. Dado que la app <strong>no recopila datos personales identificativos</strong> y no requiere registro, el riesgo asociado al tratamiento es mínimo.</p>
+    <p>Sin embargo, para el uso del <strong>agente de IA</strong> por parte de menores de 14 años, recomendamos que un adulto responsable esté presente o supervise la sesión, conforme al espíritu del artículo 16 de la Ley N° 21.719 y la Convención sobre los Derechos del Niño (ONU, Art. 16).</p>
+    <div class="callout callout-orange">
+      <strong>Para padres, madres y docentes:</strong> Si un menor usa el agente de IA, los mensajes enviados durante esa sesión son procesados por un proveedor externo fuera de Chile. No se almacenan en el dispositivo una vez cerrada la sesión. Recomendamos revisar juntos las consultas realizadas si el menor es menor de 14 años.
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="sec" id="ia">
+    <h2><span class="sec-num">06</span> Agente de inteligencia artificial</h2>
+    <p>La app incluye un agente conversacional de IA educativa. Su funcionamiento implica:</p>
+    <ul>
+      <li>El texto que escribe el usuario se envía, mediante HTTPS cifrado, a un <strong>proxy propio en Cloudflare Workers</strong> (dominio aegis8.org o subdominio). Este proxy reenvía la consulta al modelo de IA del proveedor.</li>
+      <li>El proveedor del modelo puede procesar la solicitud en servidores ubicados <strong>fuera de Chile</strong> (ver sección 7).</li>
+      <li>Los mensajes <strong>no se almacenan en el dispositivo</strong> entre sesiones. Cada sesión comienza sin historial previo.</li>
+      <li>No asociamos los mensajes de IA a ningún identificador personal del usuario.</li>
+    </ul>
+    <div class="callout callout-orange">
+      <strong>Importante:</strong> Las respuestas del agente de IA son orientativas y educativas. No constituyen asesoría legal, psicológica ni de ninguna otra profesión regulada. Si te encuentras en una situación de peligro o urgencia, contacta directamente a las autoridades competentes (PDI: +56 2 2708 0000; Fono Infancia: 147).
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="sec" id="transferencias">
+    <h2><span class="sec-num">07</span> Transferencias internacionales</h2>
+    <p>Los mensajes enviados al agente de IA pueden ser procesados por el proveedor del modelo de lenguaje en servidores ubicados en el extranjero (principalmente Estados Unidos y la Unión Europea). Esta transferencia:</p>
+    <ul>
+      <li>Se realiza siempre mediante <strong>conexión HTTPS cifrada</strong>.</li>
+      <li>Se efectúa sin asociar el mensaje a un identificador personal del usuario.</li>
+      <li>Está sujeta a los términos de privacidad y las políticas de uso aceptable del proveedor del modelo <span class="badge badge-gold">[PENDIENTE REVISIÓN LEGAL: indicar proveedor e incluir enlace a su política]</span>.</li>
+    </ul>
+    <p>Ningunos otros datos de la app se transfieren fuera de Chile ni del dispositivo del usuario, salvo las métricas anónimas enviadas a nuestros servidores en aegis8.org.</p>
+    <div class="callout callout-blue">
+      <strong>[PENDIENTE REVISIÓN LEGAL]:</strong> La adecuación de estas transferencias internacionales a la normativa chilena vigente (Ley 19.628 y futura Ley 21.719) deberá ser evaluada por un profesional jurídico, especialmente en lo relativo a la exigencia de consentimiento expreso para transferencias a países sin nivel adecuado de protección.
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="sec" id="seguridad">
+    <h2><span class="sec-num">08</span> Seguridad</h2>
+    <p>Implementamos las siguientes medidas técnicas de seguridad:</p>
+    <ul>
+      <li><strong>Almacenamiento cifrado</strong> en Android mediante <code>flutter_secure_storage</code> (Android Keystore) para datos sensibles locales.</li>
+      <li><strong>Comunicaciones HTTPS</strong> en todas las conexiones a aegis8.org y al proxy de IA.</li>
+      <li><strong>Sin base de datos de usuarios:</strong> al no existir registro, no hay base de datos de credenciales que pueda ser vulnerada.</li>
+      <li><strong>Sin cookies de seguimiento</strong> ni SDKs de publicidad en la app.</li>
+      <li>Los enlaces externos permitidos están restringidos al dominio <code>aegis8.org</code> y sus subdominios HTTPS.</li>
+    </ul>
+    <p>Ninguna medida de seguridad es infalible. En caso de detectar una vulnerabilidad, agradecemos la divulgación responsable al correo privacidad@aegis8.org.</p>
+  </section>
+
+  <!-- 9 -->
+  <section class="sec" id="derechos">
+    <h2><span class="sec-num">09</span> Derechos del titular</h2>
+    <p>De conformidad con la Ley N° 19.628 y en anticipación a la Ley N° 21.719, tienes derecho a:</p>
+    <ul>
+      <li><strong>Acceso:</strong> saber qué datos tratamos sobre ti.</li>
+      <li><strong>Rectificación:</strong> corregir datos inexactos.</li>
+      <li><strong>Cancelación / supresión:</strong> solicitar la eliminación de tus datos.</li>
+      <li><strong>Oposición:</strong> oponerte a determinados tratamientos.</li>
+    </ul>
+    <p>Dado que la app no recopila datos personales identificativos directamente, el ejercicio práctico de estos derechos se realiza principalmente <strong>desinstalando la app o borrando sus datos</strong> desde el sistema operativo. Para consultas adicionales o datos transmitidos al servidor, escribe a privacidad@aegis8.org.</p>
+    <div class="callout callout-green">
+      Para datos procesados por el proveedor del modelo de IA, deberás ejercer tus derechos directamente ante dicho proveedor conforme a su política de privacidad.
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="sec" id="cambios">
+    <h2><span class="sec-num">10</span> Cambios a esta política</h2>
+    <p>Podemos actualizar esta política cuando sea necesario. Los cambios relevantes serán comunicados mediante una notificación en la app o en el sitio web aegis8.org. La fecha de "Última actualización" al inicio del documento siempre reflejará la versión vigente.</p>
+    <p>El uso continuado de la app tras la publicación de cambios implica la aceptación de la nueva versión.</p>
+  </section>
+
+  <!-- 11 -->
+  <section class="sec" id="contacto">
+    <h2><span class="sec-num">11</span> Contacto</h2>
+    <p>Para cualquier consulta, solicitud de derechos o reporte de vulnerabilidad:</p>
+    <table>
+      <tr><th>Medio</th><th>Detalle</th></tr>
+      <tr><td>Correo electrónico</td><td>privacidad@aegis8.org</td></tr>
+      <tr><td>Domicilio postal</td><td>Chile</td></tr>
+      <tr><td>Sitio web</td><td>https://aegis8.org/contacto</td></tr>
+    </table>
+    <p>Nos comprometemos a responder toda solicitud en un plazo máximo de <strong>30 días hábiles</strong>.</p>
+    <p style="margin-top:16px;">→ Consulta también nuestros <a href="/terminos.html" style="color:var(--blue);">Términos de Uso</a>.</p>
+  </section>
+
+</div>
+</main>
+
+<footer class="doc-footer" role="contentinfo">
+  <div class="disclaimer">
+    <strong style="color:var(--gold);">Documento orientativo.</strong> Esta política de privacidad ha sido redactada con base en el marco legal chileno vigente y las mejores prácticas del sector. Sin embargo, <strong>no sustituye la revisión de un profesional jurídico especializado</strong>. Se recomienda validar su contenido con un abogado con conocimiento en protección de datos antes de su publicación definitiva.
+  </div>
+  <div class="fc">© 2026 · Aegis8 · Proyecto educativo-social · Chile · <a href="https://aegis8.org" style="color:var(--blue);text-decoration:none;">aegis8.org</a></div>
+</footer>
+
+</body>
+</html>
