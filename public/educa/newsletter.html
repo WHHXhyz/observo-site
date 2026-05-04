@@ -187,35 +187,17 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
             <label for="nl-email">Correo electrónico</label>
             <input type="email" id="nl-email" placeholder="ana@gmail.com" maxlength="100" autocomplete="email"/>
           </div>
-          <div class="nl-2col">
-            <div class="nl-field">
-              <label for="nl-nivel">Nivel que enseñas</label>
-              <select id="nl-nivel">
-                <option value="">Selecciona...</option>
-                <option value="basica-baja">1° a 4° básico</option>
-                <option value="basica-alta">5° a 8° básico</option>
-                <option value="media">1° a 4° medio</option>
-                <option value="varios">Varios niveles</option>
-              </select>
-            </div>
-            <div class="nl-field">
-              <label for="nl-region">Región</label>
-              <select id="nl-region">
-                <option value="">Selecciona...</option>
-                <option value="rm">Metropolitana</option>
-                <option value="v">Valparaíso</option>
-                <option value="viii">Biobío</option>
-                <option value="ix">La Araucanía</option>
-                <option value="x">Los Lagos</option>
-                <option value="iv">Coquimbo</option>
-                <option value="vi">O'Higgins</option>
-                <option value="vii">Maule</option>
-                <option value="xiv">Los Ríos</option>
-                <option value="xi">Aysén</option>
-                <option value="xii">Magallanes</option>
-                <option value="otra">Otra región</option>
-              </select>
-            </div>
+          <div class="nl-field">
+            <label for="nl-perfil">Soy... (opcional)</label>
+            <select id="nl-perfil">
+              <option value="">Selecciona</option>
+              <option value="docente">Docente</option>
+              <option value="padre-madre">Padre o madre</option>
+              <option value="apoderado">Apoderado/a</option>
+              <option value="estudiante">Estudiante</option>
+              <option value="profesional">Profesional de educación</option>
+              <option value="otro">Otro</option>
+            </select>
           </div>
           <button class="nl-submit" id="nl-submit" onclick="submitNewsletter()">
             <span>Suscribirme gratis →</span>
@@ -468,8 +450,7 @@ async function submitNewsletter() {
   const nombre  = document.getElementById('nl-nombre').value.trim();
   const apellido= document.getElementById('nl-apellido').value.trim();
   const email   = document.getElementById('nl-email').value.trim();
-  const nivel   = document.getElementById('nl-nivel').value;
-  const region  = document.getElementById('nl-region').value;
+  const perfil  = document.getElementById('nl-perfil') ? document.getElementById('nl-perfil').value : '';
 
   if (!nombre || !email) { alert('Por favor ingresa tu nombre y correo.'); return; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Ingresa un correo válido.'); return; }
@@ -483,7 +464,7 @@ async function submitNewsletter() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
-        email, nombre, apellido, nivel, region,
+        email, nombre, apellido, nivel: perfil, region: '',
         _gotcha: ''
       })
     });
