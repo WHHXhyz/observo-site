@@ -209,6 +209,10 @@
           "value": "same-site"
         },
         {
+          "key": "Origin-Agent-Cluster",
+          "value": "?1"
+        },
+        {
           "key": "X-Permitted-Cross-Domain-Policies",
           "value": "none"
         },
