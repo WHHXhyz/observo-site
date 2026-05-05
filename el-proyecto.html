@@ -72,15 +72,19 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .perfil-desc{font-size:.83rem;color:var(--ink2);line-height:1.6;flex:1;}
 .perfil-cta{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;}
 .capas{display:flex;flex-direction:column;gap:2px;background:var(--border);}
-.capa{background:var(--bg2);padding:1.5rem 1.75rem 1.5rem 1.5rem;display:flex;gap:1.5rem;align-items:flex-start;border-left:3px solid var(--c,var(--accent));text-decoration:none;transition:background .2s;}
-.capa:hover{background:rgba(255,255,255,.02);}
+.capa-item{background:var(--bg2);border-left:3px solid var(--c,var(--accent));}
+.capa{width:100%;background:transparent;padding:1.5rem 1.75rem 1.5rem 1.5rem;display:flex;gap:1.5rem;align-items:flex-start;border:none;text-align:left;cursor:pointer;color:inherit;transition:background .2s;}
+.capa:hover,.capa:focus-visible{background:rgba(255,255,255,.02);}
 .capa-n{font-family:'DM Serif Display',serif;font-size:2.8rem;font-style:italic;line-height:1;flex-shrink:0;width:48px;text-align:center;margin-top:-2px;}
 .capa-tag{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;}
 .capa-title{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);margin-bottom:4px;line-height:1.1;}
 .capa-body{font-size:.85rem;color:var(--ink2);line-height:1.6;}
 .capa-arr{color:var(--ink3);font-size:1rem;flex-shrink:0;margin-top:4px;transition:transform .2s;}
-.capa:hover .capa-arr{transform:translateX(4px);}
-@media(max-width:560px){.capa{flex-wrap:wrap;gap:.75rem;}.capa-n{width:auto;font-size:2rem;}}
+.capa-item.open .capa-arr{transform:rotate(90deg);}
+.capa-panel{display:none;padding:0 1.75rem 1.4rem calc(1.5rem + 48px + 1.5rem);}
+.capa-item.open .capa-panel{display:block;}
+.capa-detail{font-size:.84rem;line-height:1.7;color:var(--ink2);background:rgba(255,255,255,.02);border:1px solid var(--border);padding:12px 14px;border-radius:3px;}
+@media(max-width:560px){.capa{flex-wrap:wrap;gap:.75rem;}.capa-n{width:auto;font-size:2rem;}.capa-panel{padding:0 1rem 1rem;}}
 .proceso{display:flex;flex-direction:column;gap:2px;background:var(--border);}
 .paso{background:var(--bg2);padding:1.5rem 1.75rem;display:flex;gap:1.5rem;align-items:flex-start;}
 .paso-n{font-family:'DM Serif Display',serif;font-size:2.2rem;font-style:italic;color:rgba(240,120,48,.2);line-height:1;flex-shrink:0;width:40px;}
@@ -239,41 +243,62 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <p class="si" style="margin-bottom:12px;">En redes, el modelo OSI ordena sistemas complejos por capas. Aegis8 usa ese principio como marco educativo: desde comprender el entorno digital hasta sostener una cultura de cuidado.</p>
   <p class="si" style="margin-bottom:2.5rem;"><strong>No son tips sueltos.</strong> Es una secuencia progresiva: cada capa habilita la siguiente. Si una se debilita, todo el sistema de protección pierde eficacia en casa, en el aula y en la comunidad.</p>
   <div class="capas">
-    <a href="/educa" class="capa" style="--c:var(--c1);">
+    <div class="capa-item open" style="--c:var(--c1);">
+    <button class="capa" type="button" aria-expanded="true">
       <div class="capa-n" style="color:var(--c1);">1</div>
       <div style="flex:1;"><div class="capa-tag" style="color:var(--c1);">Entender</div><div class="capa-title">El mundo digital</div><div class="capa-body">Qué es internet, cómo circula la información y por qué aparecen riesgos. Sin esta base, las reglas se sienten arbitrarias y se olvidan rápido.</div></div>
       <div class="capa-arr">›</div>
-    </a>
-    <a href="/educa" class="capa" style="--c:var(--c2);">
+    </button>
+    <div class="capa-panel"><div class="capa-detail">Ejemplo real: antes de pedir "no compartas", explicamos dónde queda publicado, quién puede verlo y cómo una captura puede circular fuera de control.</div></div>
+    </div>
+    <div class="capa-item" style="--c:var(--c2);">
+    <button class="capa" type="button" aria-expanded="false">
       <div class="capa-n" style="color:var(--c2);">2</div>
       <div style="flex:1;"><div class="capa-tag" style="color:var(--c2);">Cuidar</div><div class="capa-title">Identidad digital</div><div class="capa-body">Privacidad, huella digital y datos personales: qué compartir, con quién y por qué. Pasar de usar apps a usar apps con criterio.</div></div>
       <div class="capa-arr">›</div>
-    </a>
-    <a href="/violencia-digital" class="capa" style="--c:var(--c3);">
+    </button>
+    <div class="capa-panel"><div class="capa-detail">Ejemplo real: revisar permisos y privacidad de una cuenta en 10 minutos para evitar exposición de ubicación, colegio y rutinas familiares.</div></div>
+    </div>
+    <div class="capa-item" style="--c:var(--c3);">
+    <button class="capa" type="button" aria-expanded="false">
       <div class="capa-n" style="color:var(--c3);">3</div>
       <div style="flex:1;"><div class="capa-tag" style="color:var(--c3);">Detectar</div><div class="capa-title">Relaciones digitales</div><div class="capa-body">Grooming, sextorsión y control digital. Señales tempranas para niños, adolescentes y adultos antes de que el daño escale.</div></div>
       <div class="capa-arr">›</div>
-    </a>
-    <a href="/herramientas" class="capa" style="--c:var(--c4);">
+    </button>
+    <div class="capa-panel"><div class="capa-detail">Ejemplo real: diferenciar una conversación normal de una conversación de riesgo, y saber cuándo guardar evidencia y pedir ayuda.</div></div>
+    </div>
+    <div class="capa-item" style="--c:var(--c4);">
+    <button class="capa" type="button" aria-expanded="false">
       <div class="capa-n" style="color:var(--c4);">4</div>
       <div style="flex:1;"><div class="capa-tag" style="color:var(--c4);">Prevenir</div><div class="capa-title">Ataques y engaños</div><div class="capa-body">Phishing, vishing, malware e ingeniería social. Aprender a reconocer la manipulación antes del clic y antes de entregar datos.</div></div>
       <div class="capa-arr">›</div>
-    </a>
-    <a href="/herramientas" class="capa" style="--c:var(--c5);">
+    </button>
+    <div class="capa-panel"><div class="capa-detail">Ejemplo real: aplicar una lista de verificación de 30 segundos para detectar mensajes falsos antes de abrir enlaces o adjuntos.</div></div>
+    </div>
+    <div class="capa-item" style="--c:var(--c5);">
+    <button class="capa" type="button" aria-expanded="false">
       <div class="capa-n" style="color:var(--c5);">5</div>
       <div style="flex:1;"><div class="capa-tag" style="color:var(--c5);">Responder</div><div class="capa-title">Defensa activa</div><div class="capa-body">Contraseñas fuertes, 2FA, configuración segura y protocolo de acción. Qué hacer hoy, a quién avisar y cómo reducir daño si algo ya pasó.</div></div>
       <div class="capa-arr">›</div>
-    </a>
-    <a href="/familias" class="capa" style="--c:var(--c6);">
+    </button>
+    <div class="capa-panel"><div class="capa-detail">Ejemplo real: ante un hackeo, cambiar credenciales, cerrar sesiones activas, registrar evidencia y notificar a la institución correspondiente.</div></div>
+    </div>
+    <div class="capa-item" style="--c:var(--c6);">
+    <button class="capa" type="button" aria-expanded="false">
       <div class="capa-n" style="color:var(--c6);">6</div>
       <div style="flex:1;"><div class="capa-tag" style="color:var(--c6);">Acompañar</div><div class="capa-title">Comunidad y cuidado</div><div class="capa-body">Conversaciones en familia, acuerdos en el curso y red de apoyo adulto. La seguridad digital se sostiene en vínculos, no solo en herramientas.</div></div>
       <div class="capa-arr">›</div>
-    </a>
-    <a href="/docentes" class="capa" style="--c:var(--c7);">
+    </button>
+    <div class="capa-panel"><div class="capa-detail">Ejemplo real: establecer acuerdos de curso sobre privacidad, respeto y reporte para que niños y adolescentes sepan cuándo y cómo pedir ayuda.</div></div>
+    </div>
+    <div class="capa-item" style="--c:var(--c7);">
+    <button class="capa" type="button" aria-expanded="false">
       <div class="capa-n" style="color:var(--c7);">7</div>
       <div style="flex:1;"><div class="capa-tag" style="color:var(--c7);">Transformar</div><div class="capa-title">Cultura digital permanente</div><div class="capa-body">Integrar la ciberseguridad en rutinas escolares y familiares: practicar, evaluar y mejorar. El objetivo final es autonomía sostenida, no dependencia de expertos.</div></div>
       <div class="capa-arr">›</div>
-    </a>
+    </button>
+    <div class="capa-panel"><div class="capa-detail">Ejemplo real: repetir cada mes una rutina breve de revisión, simulación y mejora para convertir la seguridad digital en hábito, no en reacción.</div></div>
+    </div>
   </div>
 </section>
 
@@ -322,6 +347,22 @@ const ro = new IntersectionObserver(e => {
   e.forEach(x => { if (x.isIntersecting) x.target.classList.add('vis'); });
 }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.sw').forEach(el => ro.observe(el));
+
+document.querySelectorAll('.capa-item .capa').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.capa-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.capa-item').forEach(i => {
+      i.classList.remove('open');
+      const b = i.querySelector('.capa');
+      if (b) b.setAttribute('aria-expanded', 'false');
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
 </script>
 </body>
 </html>
