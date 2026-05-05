@@ -10,6 +10,7 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -20,7 +21,7 @@
       --green-faint: #00ff8810;
       --red: #ff2244;
       --white: #e8e8e8;
-      --muted: #555;
+      --muted: #7a7a7a;
       --border: #1a1a1a;
     }
 
@@ -32,7 +33,24 @@
       font-family: 'Space Mono', monospace;
       min-height: 100vh;
       overflow-x: hidden;
-      cursor: crosshair;
+      cursor: default;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 12px;
+      top: -44px;
+      background: var(--green);
+      color: var(--bg);
+      padding: 8px 12px;
+      text-decoration: none;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      z-index: 200;
+      border: 1px solid var(--green);
+    }
+    .skip-link:focus {
+      top: 12px;
     }
 
     /* Scanlines overlay */
@@ -165,7 +183,7 @@
     .welcome-body {
       font-size: 15px;
       line-height: 1.85;
-      color: #888;
+      color: #a8a8a8;
       max-width: 680px;
     }
 
@@ -365,7 +383,7 @@
     .manifesto-block p {
       font-size: 15px;
       line-height: 1.8;
-      color: #aaa;
+      color: #b5b5b5;
       padding-left: 28px;
       border-left: 1px solid var(--border);
     }
@@ -418,7 +436,7 @@
 
     .pillar p {
       font-size: 13px;
-      color: #777;
+      color: #9a9a9a;
       line-height: 1.6;
     }
 
@@ -444,7 +462,7 @@
     }
 
     .call p {
-      color: #888;
+      color: #acacac;
       font-size: 14px;
       line-height: 1.7;
       max-width: 560px;
@@ -574,11 +592,21 @@
 
     .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.6s, transform 0.6s; }
     .reveal.visible { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+      .typed-wrap { width: auto; }
+      body::before { opacity: 0.35; }
+    }
   </style>
 </head>
 <body>
-
-<div class="container">
+<a href="#main-content" class="skip-link">Saltar al contenido</a>
+<main id="main-content" class="container">
 
   <!-- BOOT -->
   <div class="boot" aria-hidden="true">
@@ -644,8 +672,8 @@
         </p>
         <p>
           Si eres hacktivista, pentester, investigador/a, docente con ganas de enseñar
-          lo que nadie enseña, o simplemente alguien que cree que el conocimiento
-          no debería tener precio —
+          lo que no se enseña, o simplemente alguien que cree que el conocimiento
+          debe ser accesible —
           <span class="highlight">bienvenido/a al único lado correcto de esta historia.</span>
         </p>
       </div>
@@ -709,23 +737,21 @@
     <div class="manifesto-block">
       <h2>Por qué ahora</h2>
       <p>
-        En los últimos 10 años, la vigilancia masiva pasó de ser ciencia ficción a
-        infraestructura normalizada. Las leyes de protección de datos las redactan los
-        mismos lobbies que las violan. Los algoritmos deciden qué información te llega
-        y cuál no. La educación en seguridad digital sigue siendo un negocio de
-        certificaciones de miles de dólares para pocos. <strong>Mientras tanto,
+        En 10 años, la vigilancia masiva pasó de ciencia ficción a infraestructura.
+        Los algoritmos filtran qué información te llega y la educación en seguridad digital
+        sigue siendo un negocio para pocos. <strong>Mientras tanto,
         una niña de 13 años en Temuco enfrenta grooming sin saber qué es.
         Un adulto mayor en Valparaíso pierde sus ahorros en una llamada de vishing.
         Un docente en Antofagasta no sabe cómo hablarle a sus alumnos sobre privacidad.</strong>
-        La brecha no es técnica. Es intencional. Y ya no aceptamos que siga así.
+        La brecha no es técnica. Es estructural. Y ya no aceptamos que siga así.
       </p>
     </div>
 
     <div class="manifesto-block">
       <h2>Lo que NO somos</h2>
       <p>
-        No somos Anonymous. No somos un grupo de ataque. No promovemos el acceso
-        no autorizado a sistemas, el daño a infraestructura ni ninguna forma de actividad ilegal.
+        No somos Anonymous. No somos un grupo de ataque.
+        No promovemos acceso no autorizado, daño a infraestructura ni actividad ilegal.
         Existimos para que las personas que normalmente son víctimas aprendan a no serlo.
         <strong>La diferencia entre un hacker y un educador no está en el conocimiento —
         está en qué hace con él.</strong> Nosotros enseñamos.
@@ -735,8 +761,9 @@
     <div class="manifesto-block">
       <h2>Lo que prometemos</h2>
       <p>
-        Siempre gratuito para quien no puede pagar. Siempre en español claro, sin
-        tecnicismos innecesarios. Nunca vendemos datos de quienes nos visitan.
+        Siempre gratuito para quien no puede pagar.
+        Siempre en español claro, sin tecnicismos innecesarios.
+        Nunca vendemos datos de quienes nos visitan.
         Nunca trabajamos para quien quiere vigilar — solo para quien quiere defenderse.
         <strong>Si algún día Aegis8 rompe alguna de estas promesas,
         este documento seguirá existiendo como evidencia.</strong>
@@ -774,14 +801,10 @@
     </h2>
     <p>
       No te pedimos que nos sigas. Te pedimos que hagas lo mismo:
-      enseña lo que sabes. Comparte lo que encuentras. Traduce lo técnico a lo humano.
+      enseña lo que sabes, comparte lo que encuentras, traduce lo técnico a lo humano.
       Habla con quien no sabe. <strong>Eso es el movimiento.</strong>
-      Sin logo, sin membresía, sin cuota.
-      Solo personas que decidieron que la ignorancia ajena ya no es un problema de otros.
+      Sin logo, sin membresía, sin cuota: solo personas que decidieron actuar.
     </p>
-    <a href="https://aegis8.org" class="call-link">→ aegis8.org</a>
-    &nbsp;&nbsp;
-    <a href="https://aegis8.org/contacto" class="call-link">→ habla con nosotros</a>
   </div>
 
   <!-- FOOTER -->
@@ -793,7 +816,7 @@
     <span>grep -r "freedom" .</span>
   </footer>
 
-</div>
+</main>
 
 <script>
   // Scroll reveal
@@ -809,10 +832,11 @@
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
   // Konami code easter egg dentro del easter egg
-  const konami = [38,38,40,40,37,39,37,39,66,65];
+  const konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
   let ki = 0;
   document.addEventListener('keydown', e => {
-    if (e.keyCode === konami[ki]) { ki++; }
+    const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    if (key === konami[ki]) { ki++; }
     else { ki = 0; }
     if (ki === konami.length) {
       document.body.style.setProperty('--green', '#ff2244');
