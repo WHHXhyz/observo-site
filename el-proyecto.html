@@ -17,7 +17,7 @@ html{scroll-behavior:smooth;}
   --bg:#080c14;--bg2:#0d1422;--ink:#eaf0f8;--ink2:#8898b0;--ink3:#3a4f68;
   --accent:#f07830;--accent2:#d4611a;--blue:#3a7fd4;--green:#2ecc80;--gold:#f5a823;--red:#ef4444;--purple:#9b6dff;
   --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
-  --c1:#3a7fd4;--c2:#9b6dff;--c3:#ef4444;--c4:#f5a823;--c5:#2ecc80;--c6:#ff6b9a;--c7:#38bdf8;
+  --c1:#3a7fd4;--c2:#9b6dff;--c3:#ef4444;--c4:#f5a823;--c5:#2ecc80;
 }
 body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
@@ -72,19 +72,15 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .perfil-desc{font-size:.83rem;color:var(--ink2);line-height:1.6;flex:1;}
 .perfil-cta{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;}
 .capas{display:flex;flex-direction:column;gap:2px;background:var(--border);}
-.capa-item{background:var(--bg2);border-left:3px solid var(--c,var(--accent));}
-.capa{width:100%;background:transparent;padding:1.5rem 1.75rem 1.5rem 1.5rem;display:flex;gap:1.5rem;align-items:flex-start;border:none;text-align:left;cursor:pointer;color:inherit;transition:background .2s;}
-.capa:hover,.capa:focus-visible{background:rgba(255,255,255,.02);}
+.capa{background:var(--bg2);padding:1.5rem 1.75rem 1.5rem 1.5rem;display:flex;gap:1.5rem;align-items:flex-start;border-left:3px solid var(--c,var(--accent));text-decoration:none;transition:background .2s;}
+.capa:hover{background:rgba(255,255,255,.02);}
 .capa-n{font-family:'DM Serif Display',serif;font-size:2.8rem;font-style:italic;line-height:1;flex-shrink:0;width:48px;text-align:center;margin-top:-2px;}
 .capa-tag{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;}
 .capa-title{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ink);margin-bottom:4px;line-height:1.1;}
 .capa-body{font-size:.85rem;color:var(--ink2);line-height:1.6;}
 .capa-arr{color:var(--ink3);font-size:1rem;flex-shrink:0;margin-top:4px;transition:transform .2s;}
-.capa-item.open .capa-arr{transform:rotate(90deg);}
-.capa-panel{display:none;padding:0 1.75rem 1.4rem calc(1.5rem + 48px + 1.5rem);}
-.capa-item.open .capa-panel{display:block;}
-.capa-detail{font-size:.84rem;line-height:1.7;color:var(--ink2);background:rgba(255,255,255,.02);border:1px solid var(--border);padding:12px 14px;border-radius:3px;}
-@media(max-width:560px){.capa{flex-wrap:wrap;gap:.75rem;}.capa-n{width:auto;font-size:2rem;}.capa-panel{padding:0 1rem 1rem;}}
+.capa:hover .capa-arr{transform:translateX(4px);}
+@media(max-width:560px){.capa{flex-wrap:wrap;gap:.75rem;}.capa-n{width:auto;font-size:2rem;}}
 .proceso{display:flex;flex-direction:column;gap:2px;background:var(--border);}
 .paso{background:var(--bg2);padding:1.5rem 1.75rem;display:flex;gap:1.5rem;align-items:flex-start;}
 .paso-n{font-family:'DM Serif Display',serif;font-size:2.2rem;font-style:italic;color:rgba(240,120,48,.2);line-height:1;flex-shrink:0;width:40px;}
@@ -124,8 +120,8 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       El problema existe.<br>
       <em style="color:var(--accent);">La solución, también.</em>
     </h1>
-    <p style="font-size:1.1rem;line-height:1.9;color:var(--ink2);max-width:620px;margin-bottom:36px;">
-      En Chile, niños, adolescentes, familias y docentes enfrentan riesgos digitales sin apoyo claro. Aegis8 traduce la ciberseguridad a lenguaje simple, con herramientas prácticas y contexto chileno para actuar hoy: gratis, sin registro y sin tecnicismos.
+    <p style="font-size:1.1rem;line-height:1.9;color:var(--ink2);max-width:560px;margin-bottom:36px;">
+      En Chile, miles de niños son víctimas de grooming, phishing y ciberbullying cada año. Los colegios no tienen herramientas. Las familias no tienen información. Aegis8 existe para cambiar eso — gratis, sin excusas.
     </p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;">
       <a href="#necesidad" class="btn-p"><span>Ver el problema →</span></a>
@@ -139,8 +135,8 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <section class="sec sw" id="necesidad">
   <div class="sl">// La necesidad</div>
   <h2 class="st">No es falta de interés.<br><em>Es falta de acceso.</em></h2>
-  <p class="si" style="margin-bottom:2rem;">Docentes y apoderados sí quieren aprender y enseñar esto. El problema no es la voluntad: es la falta de materiales gratuitos, en español y con realidad chilena que se puedan usar mañana, sin formación técnica previa.</p>
-  <p class="si" style="margin-bottom:2.5rem;">Gran parte de la oferta actual fue diseñada para empresas: cara, técnica y muchas veces en inglés. <strong>No para una profesora de 4to básico en Pudahuel ni para una familia preocupada por lo que pasa en redes.</strong></p>
+  <p class="si" style="margin-bottom:2rem;">Los docentes quieren enseñar esto. Los apoderados quieren proteger a sus hijos. El problema no es la motivación — es que no existen materiales gratuitos, en español, con contexto chileno, que un profesor sin formación técnica pueda usar mañana.</p>
+  <p class="si" style="margin-bottom:2.5rem;">Las soluciones que existen son para empresas. Costosas, técnicas, en inglés. <strong>No para una profesora de 4° básico en Pudahuel ni para un apoderado preocupado por lo que hace su hijo en TikTok.</strong></p>
   <div class="stats">
     <div class="stat">
       <div class="stat-n">68%</div>
@@ -163,7 +159,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <div>
         <div class="stat-title">DOCENTES QUE NO SE SIENTEN PREPARADOS</div>
         <div class="stat-desc">Tres de cada cuatro docentes chilenos declaran no sentirse preparados para enseñar seguridad digital. No es ignorancia — es que nadie los formó para esto.</div>
-        <div class="stat-src">CPEIP 2025</div>
+        <div class="stat-src">CPEIP 2026</div>
       </div>
     </div>
     <div class="stat">
@@ -184,7 +180,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <section class="sec sw" id="quienes">
   <div class="sl">// A quién ayudamos</div>
   <h2 class="st">Cuatro grupos.<br><em>Un mismo problema.</em></h2>
-  <p class="si" style="margin-bottom:2.5rem;">La ciberseguridad no se enseña igual a un niño de 8 años que a un docente con clase mañana. Cambian el lenguaje, los ejemplos y el formato; la necesidad de protección es la misma para todos.</p>
+  <p class="si" style="margin-bottom:2.5rem;">El mismo tema se enseña diferente a un niño de 8 años que a un docente con clase mañana. El contenido cambia completamente — la urgencia es la misma para todos.</p>
   <div class="perfiles">
     <a href="/ninos" class="perfil" style="--pc:var(--c1);">
       <div class="perfil-tag" style="color:var(--c1);">6 — 12 años</div>
@@ -216,7 +212,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <section class="sec sw" id="que-hacemos">
   <div class="sl">// Qué hacemos</div>
   <h2 class="st">Herramientas concretas.<br><em>No consejos genéricos.</em></h2>
-  <p class="si" style="margin-bottom:2.5rem;">Aegis8 no es un blog de consejos sueltos. Es una plataforma educativa con herramientas que se usan hoy mismo: sin costo, sin registro y sin requerir conocimientos técnicos.</p>
+  <p class="si" style="margin-bottom:2.5rem;">Aegis8 no es un blog de tips. Es una plataforma con herramientas que se pueden usar hoy, sin registro, sin costo y sin necesitar formación previa.</p>
   <div class="g2">
     <div class="card">
       <div class="card-label" style="color:var(--blue);">Contenido educativo</div>
@@ -239,73 +235,42 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 
 <section class="sec sw" id="modelo">
   <div class="sl">// Cómo lo hacemos — el modelo</div>
-  <h2 class="st">7 capas.<br><em>La columna de Aegis8.</em></h2>
-  <p class="si" style="margin-bottom:12px;">En redes, el modelo OSI ordena sistemas complejos por capas. Aegis8 usa ese principio como marco educativo: desde comprender el entorno digital hasta sostener una cultura de cuidado.</p>
-  <p class="si" style="margin-bottom:2.5rem;"><strong>No son tips sueltos.</strong> Es una secuencia progresiva: cada capa habilita la siguiente. Si una se debilita, todo el sistema de protección pierde eficacia en casa, en el aula y en la comunidad.</p>
+  <h2 class="st">5 capas.<br><em>Como el OSI, pero para personas.</em></h2>
+  <p class="si" style="margin-bottom:12px;">El modelo OSI organiza las redes en capas progresivas — cada una depende de la anterior. Aegis8 tomó ese principio y lo aplicó a la educación en ciberseguridad.</p>
+  <p class="si" style="margin-bottom:2.5rem;"><strong>No es una lista de tips.</strong> Si se fortalece una capa, todo lo que viene después mejora. Si falta una, las superiores quedan sin base.</p>
   <div class="capas">
-    <div class="capa-item open" style="--c:var(--c1);">
-    <button class="capa" type="button" aria-expanded="true">
+    <a href="/educa" class="capa" style="--c:var(--c1);">
       <div class="capa-n" style="color:var(--c1);">1</div>
-      <div style="flex:1;"><div class="capa-tag" style="color:var(--c1);">Entender</div><div class="capa-title">El mundo digital</div><div class="capa-body">Qué es internet, cómo circula la información y por qué aparecen riesgos. Sin esta base, las reglas se sienten arbitrarias y se olvidan rápido.</div></div>
+      <div style="flex:1;"><div class="capa-tag" style="color:var(--c1);">Fundamento</div><div class="capa-title">El Mundo Digital</div><div class="capa-body">¿Qué es internet, cómo funciona y quiénes son sus dueños? Sin este contexto, todo lo demás son reglas sin razón.</div></div>
       <div class="capa-arr">›</div>
-    </button>
-    <div class="capa-panel"><div class="capa-detail">Ejemplo real: antes de pedir "no compartas", explicamos dónde queda publicado, quién puede verlo y cómo una captura puede circular fuera de control.</div></div>
-    </div>
-    <div class="capa-item" style="--c:var(--c2);">
-    <button class="capa" type="button" aria-expanded="false">
+    </a>
+    <a href="/educa" class="capa" style="--c:var(--c2);">
       <div class="capa-n" style="color:var(--c2);">2</div>
-      <div style="flex:1;"><div class="capa-tag" style="color:var(--c2);">Cuidar</div><div class="capa-title">Identidad digital</div><div class="capa-body">Privacidad, huella digital y datos personales: qué compartir, con quién y por qué. Pasar de usar apps a usar apps con criterio.</div></div>
+      <div style="flex:1;"><div class="capa-tag" style="color:var(--c2);">Identidad</div><div class="capa-title">La Identidad Digital</div><div class="capa-body">Huella digital, privacidad y datos personales. La diferencia entre ser usuario y ser el producto.</div></div>
       <div class="capa-arr">›</div>
-    </button>
-    <div class="capa-panel"><div class="capa-detail">Ejemplo real: revisar permisos y privacidad de una cuenta en 10 minutos para evitar exposición de ubicación, colegio y rutinas familiares.</div></div>
-    </div>
-    <div class="capa-item" style="--c:var(--c3);">
-    <button class="capa" type="button" aria-expanded="false">
+    </a>
+    <a href="/violencia-digital" class="capa" style="--c:var(--c3);">
       <div class="capa-n" style="color:var(--c3);">3</div>
-      <div style="flex:1;"><div class="capa-tag" style="color:var(--c3);">Detectar</div><div class="capa-title">Relaciones digitales</div><div class="capa-body">Grooming, sextorsión y control digital. Señales tempranas para niños, adolescentes y adultos antes de que el daño escale.</div></div>
+      <div style="flex:1;"><div class="capa-tag" style="color:var(--c3);">Relaciones</div><div class="capa-title">Las Relaciones Digitales</div><div class="capa-body">Grooming, sextorsión, control digital en parejas. Las amenazas que vienen de personas, no de máquinas.</div></div>
       <div class="capa-arr">›</div>
-    </button>
-    <div class="capa-panel"><div class="capa-detail">Ejemplo real: diferenciar una conversación normal de una conversación de riesgo, y saber cuándo guardar evidencia y pedir ayuda.</div></div>
-    </div>
-    <div class="capa-item" style="--c:var(--c4);">
-    <button class="capa" type="button" aria-expanded="false">
+    </a>
+    <a href="/herramientas" class="capa" style="--c:var(--c4);">
       <div class="capa-n" style="color:var(--c4);">4</div>
-      <div style="flex:1;"><div class="capa-tag" style="color:var(--c4);">Prevenir</div><div class="capa-title">Ataques y engaños</div><div class="capa-body">Phishing, vishing, malware e ingeniería social. Aprender a reconocer la manipulación antes del clic y antes de entregar datos.</div></div>
+      <div style="flex:1;"><div class="capa-tag" style="color:var(--c4);">Amenazas</div><div class="capa-title">Los Ataques</div><div class="capa-body">Phishing, ransomware, ingeniería social. Los ataques explotan psicología — hay que entender la manipulación para reconocerla.</div></div>
       <div class="capa-arr">›</div>
-    </button>
-    <div class="capa-panel"><div class="capa-detail">Ejemplo real: aplicar una lista de verificación de 30 segundos para detectar mensajes falsos antes de abrir enlaces o adjuntos.</div></div>
-    </div>
-    <div class="capa-item" style="--c:var(--c5);">
-    <button class="capa" type="button" aria-expanded="false">
+    </a>
+    <a href="/herramientas" class="capa" style="--c:var(--c5);">
       <div class="capa-n" style="color:var(--c5);">5</div>
-      <div style="flex:1;"><div class="capa-tag" style="color:var(--c5);">Responder</div><div class="capa-title">Defensa activa</div><div class="capa-body">Contraseñas fuertes, 2FA, configuración segura y protocolo de acción. Qué hacer hoy, a quién avisar y cómo reducir daño si algo ya pasó.</div></div>
+      <div style="flex:1;"><div class="capa-tag" style="color:var(--c5);">Defensa</div><div class="capa-title">La Defensa</div><div class="capa-body">2FA, contraseñas, configuración de privacidad. La defensa tiene sentido solo cuando entiendes qué estás protegiendo.</div></div>
       <div class="capa-arr">›</div>
-    </button>
-    <div class="capa-panel"><div class="capa-detail">Ejemplo real: ante un hackeo, cambiar credenciales, cerrar sesiones activas, registrar evidencia y notificar a la institución correspondiente.</div></div>
-    </div>
-    <div class="capa-item" style="--c:var(--c6);">
-    <button class="capa" type="button" aria-expanded="false">
-      <div class="capa-n" style="color:var(--c6);">6</div>
-      <div style="flex:1;"><div class="capa-tag" style="color:var(--c6);">Acompañar</div><div class="capa-title">Comunidad y cuidado</div><div class="capa-body">Conversaciones en familia, acuerdos en el curso y red de apoyo adulto. La seguridad digital se sostiene en vínculos, no solo en herramientas.</div></div>
-      <div class="capa-arr">›</div>
-    </button>
-    <div class="capa-panel"><div class="capa-detail">Ejemplo real: establecer acuerdos de curso sobre privacidad, respeto y reporte para que niños y adolescentes sepan cuándo y cómo pedir ayuda.</div></div>
-    </div>
-    <div class="capa-item" style="--c:var(--c7);">
-    <button class="capa" type="button" aria-expanded="false">
-      <div class="capa-n" style="color:var(--c7);">7</div>
-      <div style="flex:1;"><div class="capa-tag" style="color:var(--c7);">Transformar</div><div class="capa-title">Cultura digital permanente</div><div class="capa-body">Integrar la ciberseguridad en rutinas escolares y familiares: practicar, evaluar y mejorar. El objetivo final es autonomía sostenida, no dependencia de expertos.</div></div>
-      <div class="capa-arr">›</div>
-    </button>
-    <div class="capa-panel"><div class="capa-detail">Ejemplo real: repetir cada mes una rutina breve de revisión, simulación y mejora para convertir la seguridad digital en hábito, no en reacción.</div></div>
-    </div>
+    </a>
   </div>
 </section>
 
 <section class="sec sw">
   <div class="sl">// Cómo trabajamos</div>
   <h2 class="st">Sin condescendencia.<br><em>Sin humo.</em></h2>
-  <p class="si" style="margin-bottom:2.5rem;">Aegis8 nace de una idea simple: cuando la explicación mejora, la protección mejora. No infantilizamos a nadie: hablamos claro, con respeto y con pasos aplicables.</p>
+  <p class="si" style="margin-bottom:2.5rem;">Aegis8 nació de una convicción: la ciberseguridad se enseña mal porque se le habla mal a las personas. Nosotros asumimos que el usuario es inteligente.</p>
   <div class="proceso">
     <div class="paso"><div class="paso-n">01</div><div><div class="paso-title">CONTENIDO QUE SE USA HOY</div><div class="paso-body">Los planes de clase se aplican en 15 minutos sin preparación previa. Las guías se leen en 5 minutos. El agente IA responde en tiempo real.</div></div></div>
     <div class="paso"><div class="paso-n">02</div><div><div class="paso-title">MARCO LEGAL CHILENO — SIEMPRE</div><div class="paso-body">Cada amenaza viene con la ley chilena que la cubre. Ley 21.459, Ley 20.526, Ley 20.536. Saber cuáles son cambia la conversación de víctima a ciudadano informado.</div></div></div>
@@ -347,22 +312,6 @@ const ro = new IntersectionObserver(e => {
   e.forEach(x => { if (x.isIntersecting) x.target.classList.add('vis'); });
 }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.sw').forEach(el => ro.observe(el));
-
-document.querySelectorAll('.capa-item .capa').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const item = btn.closest('.capa-item');
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.capa-item').forEach(i => {
-      i.classList.remove('open');
-      const b = i.querySelector('.capa');
-      if (b) b.setAttribute('aria-expanded', 'false');
-    });
-    if (!isOpen) {
-      item.classList.add('open');
-      btn.setAttribute('aria-expanded', 'true');
-    }
-  });
-});
 </script>
 </body>
 </html>

@@ -315,6 +315,7 @@ function buildMobile(page, drawer) {
       label: 'Herramientas',
       pg: 'herramientas',
       subs: [
+        {href:'/herramientas',             label:'Todas las herramientas'},
         {href:'/quiz.html',                label:'Quiz Semanal'},
         {href:'/checklist.html',           label:'Checklist'},
         {href:'/analizador-phishing.html', label:'Analizador Phishing'},

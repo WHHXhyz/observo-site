@@ -127,11 +127,6 @@
       "permanent": true
     },
     {
-      "source": "/herramientas",
-      "destination": "/",
-      "permanent": true
-    },
-    {
       "source": "/guia-ia.html",
       "destination": "/guia-ia",
       "permanent": true

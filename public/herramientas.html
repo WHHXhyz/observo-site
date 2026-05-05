@@ -19,7 +19,6 @@ html{scroll-behavior:smooth;}
   --border:rgba(58,127,212,.12);--border2:rgba(240,120,48,.15);
   --card:rgba(255,255,255,.03);
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--ink);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
@@ -122,6 +121,29 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
 .ht-link{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;}
 .ht-arr{font-size:.85rem;color:var(--ink3);transition:transform .2s;}
 .ht-card:hover .ht-arr{transform:translateX(4px);}
+
+.ht-lead{max-width:560px;}
+.ht-solicitar-taller{
+  font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--bg);background:var(--accent);
+  padding:12px 22px;border-radius:3px;text-decoration:none;white-space:nowrap;
+  flex-shrink:0;transition:background .2s,border-color .2s;
+}
+.ht-solicitar-taller:hover{background:var(--accent2);}
+
+@media(max-width:640px){
+  .ht-hero{text-align:center;}
+  .ht-hero .ht-eyebrow{justify-content:center;margin-left:auto;margin-right:auto;}
+  .ht-lead{margin-left:auto;margin-right:auto;}
+  .ht-hero h1{margin-left:auto;margin-right:auto;}
+  .ht-card{text-align:center;align-items:center;}
+  .ht-card > div[style*="display:flex"]{flex-direction:column;text-align:center;}
+  .ht-icon-box{margin:0 auto;}
+  .ht-pills{justify-content:center;}
+  .ht-footer{flex-direction:column;gap:10px;align-items:center;}
+  .ht-note{flex-direction:column;text-align:center;}
+  .ht-note .ht-solicitar-taller{width:100%;max-width:280px;text-align:center;}
+}
 </style>
 </head>
 <body data-page="herramientas">
@@ -129,8 +151,8 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
 <div class="wrap">
 
   <!-- Header -->
-  <div class="sw" style="margin-bottom:48px;">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:4px;
+  <div class="sw ht-hero" style="margin-bottom:48px;">
+    <div class="ht-eyebrow" style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:4px;
       color:var(--ink3);margin-bottom:16px;display:flex;align-items:center;gap:10px;">
       <div style="width:20px;height:1px;background:var(--accent);"></div>
       HERRAMIENTAS · AEGIS8 · TODAS GRATUITAS
@@ -139,8 +161,8 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
       line-height:1;letter-spacing:-1px;margin-bottom:16px;">
       La caja de<br><em style="color:var(--accent);">herramientas.</em>
     </h1>
-    <p style="font-size:1rem;line-height:1.8;color:var(--ink2);max-width:540px;">
-      Ocho herramientas concretas para protegerte ahora mismo. Sin registro, sin costos, sin letra chica.
+    <p class="ht-lead" style="font-size:1rem;line-height:1.8;color:var(--ink2);">
+      Ocho herramientas concretas para protegerte ahora mismo: phishing, quiz, checklist, contraseñas, ayuda urgente y más. Sin registro, sin costos, sin letra chica.
     </p>
   </div>
 
@@ -314,7 +336,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
     </a>
 
     <!-- VIOLENCIA DIGITAL -->
-    <a href="/violencia-digital.html" class="ht-card v-purple">
+    <a href="/violencia-digital" class="ht-card v-purple">
       <div class="ht-top-bar"></div>
       <div class="ht-icon-box">
         <svg viewBox="0 0 24 24">
@@ -338,7 +360,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
   </div>
 
   <!-- Nota final -->
-  <div class="sw" style="margin-top:32px;padding:22px 24px;background:var(--bg2);
+  <div class="sw ht-note" style="margin-top:32px;padding:22px 24px;background:var(--bg2);
     border:1px solid var(--border);border-radius:4px;
     display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
     <div style="flex:1;min-width:220px;">
@@ -348,15 +370,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
         Todas las herramientas son gratuitas, sin registro y sin versión de pago. Aegis8 es un proyecto social — los datos de los usuarios no se venden ni se usan con fines comerciales.
       </div>
     </div>
-    <a href="/contactos.html"
-      style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;
-      text-transform:uppercase;color:var(--bg);background:var(--accent);
-      padding:12px 22px;border-radius:3px;text-decoration:none;white-space:nowrap;
-      transition:background .2s;flex-shrink:0;"
-      onmouseover="this.style.background='var(--accent2)'"
-      onmouseout="this.style.background='var(--accent)'">
-      Solicitar taller →
-    </a>
+    <a href="/contacto" class="ht-solicitar-taller">Solicitar taller →</a>
   </div>
 
 </div>
@@ -365,11 +379,11 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
 <footer>
   <a href="/" class="fl">AEGIS<span>8</span></a>
   <ul class="flinks">
-    <li><a href="/educa.html">Educa</a></li>
+    <li><a href="/educa">Educa</a></li>
     <li><a href="/agente-seguridad.html">Agente IA</a></li>
-    <li><a href="/botiquin.html">Botiquín SOS</a></li>
-    <li><a href="/derechos.html">Derechos</a></li>
-    <li><a href="/contactos.html">Contacto</a></li>
+    <li><a href="/botiquin">Botiquín SOS</a></li>
+    <li><a href="/violencia-digital">Violencia digital</a></li>
+    <li><a href="/contacto">Contacto</a></li>
   </ul>
   <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
 </footer>
