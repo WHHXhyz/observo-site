@@ -9,7 +9,7 @@
 <link rel="manifest" href="/app/manifest.json">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
-<script src="/aegis-nav.js" defer></script>
+<script defer src="/aegis-nav.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet"/>
 <style>
 
@@ -151,13 +151,13 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 
 .h-line{width:32px;height:1px;background:var(--accent);}
 
-.h-title{font-family:'DM Serif Display',serif;font-size:clamp(3.2rem,10vw,8rem);line-height:.88;
+.h-title{font-family:'DM Serif Display',serif;font-size:clamp(3.2rem,10vw,8rem);line-height:0.98;
 
   color:var(--ink);letter-spacing:-2px;opacity:0;animation:up .9s .25s forwards;}
 
-.h-title .ac{color:var(--accent);font-style:italic;display:block;}
+.h-title .ac{color:var(--accent);font-style:italic;display:block;padding-bottom:0.14em;line-height:1.05;}
 
-.h-title .gh{color:transparent;-webkit-text-stroke:1px rgba(234,240,248,.1);display:block;}
+.h-title .gh{color:transparent;-webkit-text-stroke:1px rgba(234,240,248,.1);display:block;margin-top:0.1em;line-height:1.05;}
 
 .h-desc{margin-top:28px;font-size:1.05rem;line-height:1.85;color:var(--ink2);max-width:520px;
 
@@ -597,6 +597,37 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
 
 .ft:hover{color:var(--accent);}
 
+.news-card:hover{border-color:rgba(255,255,255,.1)!important;background:rgba(255,255,255,.025)!important;}
+
+@keyframes cta-legal-border{
+  0%{background-position:0% 50%;}
+  100%{background-position:200% 50%;}
+}
+
+a.cta-legal{
+  position:relative;z-index:0;display:inline-flex;align-items:center;justify-content:center;
+  min-width:min(100%,280px);box-sizing:border-box;
+  font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink2);background:transparent;text-decoration:none;
+  padding:12px 24px;border-radius:3px;transition:color .2s,background .2s;
+}
+
+a.cta-legal::before{
+  content:'';position:absolute;inset:-1px;z-index:-2;border-radius:4px;
+  background:linear-gradient(110deg,var(--accent),var(--blue),var(--accent2),var(--accent));
+  background-size:200% 200%;animation:cta-legal-border 4s linear infinite;
+}
+
+a.cta-legal::after{
+  content:'';position:absolute;inset:1px;z-index:-1;border-radius:2px;background:var(--bg2);
+}
+
+a.cta-legal:hover{color:var(--ink);}
+
+a.cta-legal:hover::after{background:rgba(13,20,34,.95);}
+
+.legal-cta-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+
 .stb{position:fixed;bottom:24px;right:24px;z-index:100;width:40px;height:40px;
 
   background:var(--bg2);border:1px solid var(--border);border-radius:50%;
@@ -604,6 +635,16 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
   color:var(--ink3);font-size:.9rem;cursor:pointer;transition:all .2s;}
 
 .stb:hover{border-color:var(--accent);color:var(--accent);}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation:none!important;transition:none!important;}
+  .ticker-t{animation:none!important;transform:translateX(0)!important;}
+  a.cta-legal::before{
+    background:linear-gradient(135deg,var(--accent),var(--blue))!important;
+    background-size:100% 100%!important;
+  }
+}
 
 @media(max-width:640px){footer{padding:32px 16px;}}
 
@@ -946,8 +987,6 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
 
 <!-- PERFILES -->
 <div class="page">
-<!-- PERFILES -->
-<div class="page">
 <div class="sw" id="perfiles">
   <div class="sl">// ¿Para quién es?</div>
   <h2 class="st">Elige tu <em>camino.</em></h2>
@@ -985,19 +1024,14 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
 </div>
 </div>
 
-</div>
-
 <!-- NOTICIA -->
 <div class="page">
 <!-- INTELIGENCIA — CTA a /noticias con titular dinámico -->
-<div class="page">
 <div class="sw">
-  <a href="/noticias" id="noticias-cta"
+  <a href="/noticias" id="noticias-cta" class="news-card"
     style="display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;
     text-decoration:none;border:1px solid var(--border);border-radius:4px;
-    padding:28px 32px;background:var(--bg2);transition:all .25s;position:relative;overflow:hidden;"
-    onmouseover="this.style.borderColor='rgba(255,255,255,.1)';this.style.background='rgba(255,255,255,.025)'"
-    onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--bg2)'">
+    padding:28px 32px;background:var(--bg2);transition:all .25s;position:relative;overflow:hidden;">
     <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--accent),transparent);"></div>
     <div>
       <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:3px;
@@ -1030,20 +1064,9 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);
     "La educación digital temprana es la única defensa real — y la mayoría de los colegios todavía no la imparte. 
     Aegis8 existe para cambiar eso. Gratis. Para todos. Sin excusas."
   </p>
-  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
-    <a href="/newsletter" style="font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;
-      text-transform:uppercase;color:var(--bg);background:var(--accent);
-      padding:12px 24px;border-radius:3px;text-decoration:none;transition:opacity .2s;"
-      onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
-      Suscríbete al boletín →
-    </a>
-    <a href="/contacto" style="font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;
-      text-transform:uppercase;color:var(--ink2);border:1px solid var(--border);
-      padding:12px 24px;border-radius:3px;text-decoration:none;transition:all .2s;"
-      onmouseover="this.style.color='var(--ink)';this.style.borderColor='rgba(255,255,255,.2)'"
-      onmouseout="this.style.color='var(--ink2)';this.style.borderColor='var(--border)'">
-      Contacto
-    </a>
+  <div class="legal-cta-row">
+    <a href="/privacidad" class="cta-legal">Política de privacidad →</a>
+    <a href="/terminos" class="cta-legal">Términos de uso →</a>
   </div>
 </div>
 </div>
@@ -1131,7 +1154,18 @@ const ss=document.querySelector('.stats-s');if(ss)statsObs.observe(ss);
 
       const items=[...data.ticker,...data.ticker];
 
-      el.innerHTML=items.map(t=>`<span class="ta">///</span><span>${t}</span>`).join('');
+      el.textContent='';
+      const frag=document.createDocumentFragment();
+      items.forEach(t=>{
+        const sep=document.createElement('span');
+        sep.className='ta';
+        sep.textContent='///';
+        const msg=document.createElement('span');
+        msg.textContent=t;
+        frag.appendChild(sep);
+        frag.appendChild(msg);
+      });
+      el.appendChild(frag);
 
       el.style.animationDuration=Math.max(30,data.ticker.length*5)+'s';
 

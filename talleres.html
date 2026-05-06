@@ -4,12 +4,12 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Talleres · Aegis8</title>
-<meta name="description" content="Talleres presenciales de ciberseguridad para colegios, familias y organizaciones. Gratuitos para instituciones educativas en Chile."/>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
-  <script src="/aegis-nav.js" defer></script>
+<meta name="description" content="Talleres presenciales de educación digital y ciberseguridad para establecimientos educativos en Chile. Calendario próximamente; contenido y coordinación descritos en la página."/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XNJT1V3G6T"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XNJT1V3G6T');</script>
+<script src="/aegis-nav.js" defer></script>
 <style>
-
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap');
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -32,14 +32,15 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .st{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.6rem);
   line-height:1.05;color:var(--ink);margin-bottom:20px;letter-spacing:-1px;}
 .st em{font-style:italic;color:var(--accent);}
-.si{font-size:1rem;line-height:1.9;color:var(--ink2);max-width:640px;margin-bottom:40px;}
+.si{font-size:1rem;line-height:1.9;color:var(--ink2);max-width:680px;margin-bottom:40px;}
+.si strong{color:var(--ink);font-weight:400;}
 .sw{padding:80px 0 48px;border-bottom:1px solid var(--border);
   opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
 .sw.vis{opacity:1;transform:none;}
 .sw:last-child{border-bottom:none;}
 .btn-p{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
   color:var(--bg);background:var(--accent);border:none;padding:14px 28px;border-radius:var(--radius);
-  text-decoration:none;transition:all .25s;position:relative;overflow:hidden;display:inline-block;cursor:pointer!important;}
+  text-decoration:none;transition:all .25s;position:relative;overflow:hidden;display:inline-block;cursor:pointer;}
 .btn-p::before{content:'';position:absolute;inset:0;background:var(--accent2);transform:translateX(-100%);transition:transform .3s;}
 .btn-p:hover::before{transform:translateX(0);}
 .btn-p span,.btn-p{position:relative;z-index:1;}
@@ -48,47 +49,6 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   color:var(--ink2);background:transparent;border:1px solid var(--border);
   padding:14px 28px;border-radius:var(--radius);text-decoration:none;transition:all .25s;display:inline-block;}
 .btn-g:hover{color:var(--ink);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
-/* CHAT SHARED */
-.chat-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;}
-.chat-hd{background:rgba(240,120,48,.05);border-bottom:1px solid var(--border2);
-  padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
-.chat-hd-l{display:flex;align-items:center;gap:.75rem;}
-.chat-ava{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;
-  background:rgba(240,120,48,.12);}
-.chat-name{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;color:var(--ink);}
-.chat-status{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--green);letter-spacing:1px;}
-.chat-live{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
-.chat-msgs{height:320px;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;}
-.chat-msgs::-webkit-scrollbar{width:3px;}
-.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
-.msg{display:flex;gap:.6rem;align-items:flex-start;}
-.msg.user{flex-direction:row-reverse;}
-.msg-ava{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;
-  font-size:.85rem;flex-shrink:0;background:var(--card);}
-.msg-bubble{background:var(--card);border:1px solid var(--border);padding:.65rem .9rem;
-  font-size:.84rem;line-height:1.6;max-width:85%;border-radius:2px;color:var(--ink2);}
-.msg.user .msg-bubble{background:rgba(240,120,48,.06);border-color:var(--border2);color:var(--ink);}
-.chat-quick{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.4rem;}
-.qbtn{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1px;
-  color:var(--accent);border:1px solid var(--border2);background:rgba(240,120,48,.04);
-  padding:.3rem .7rem;border-radius:var(--radius);cursor:pointer!important;transition:all .2s;}
-.qbtn:hover{background:rgba(240,120,48,.1);border-color:var(--accent);}
-.chat-row{padding:.65rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:.5rem;}
-.chat-in{flex:1;background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);
-  padding:.65rem 1rem;font-family:'Lato',sans-serif;font-size:.88rem;color:var(--ink);
-  outline:none;transition:border-color .2s;}
-.chat-in:focus{border-color:var(--accent);}
-.chat-in::placeholder{color:var(--ink3);}
-.send-btn{background:var(--accent);color:var(--bg);border:none;padding:.65rem 1.1rem;
-  border-radius:var(--radius);font-weight:700;cursor:pointer!important;transition:background .2s;}
-.send-btn:hover{background:var(--accent2);}
-.typing-wrap{display:flex;gap:4px;align-items:center;}
-.tdot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.3;
-  animation:tdot 1.2s ease-in-out infinite;}
-.tdot:nth-child(2){animation-delay:.2s;}.tdot:nth-child(3){animation-delay:.4s;}
-@keyframes tdot{0%,80%,100%{opacity:.2;transform:scale(.8);}40%{opacity:1;transform:scale(1);}}
-/* FOOTER */
 .page-footer{position:relative;z-index:10;border-top:1px solid var(--border);
   padding:48px 32px 32px;max-width:1080px;margin:0 auto;
   display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;}
@@ -100,16 +60,29 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;}
 .flinks a:hover{color:var(--accent);}
 .fcopy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:1px;}
-/* SCROLL REVEAL JS inline */
+.footer-back{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);
+  text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.footer-back:hover{color:var(--accent);}
 @media(max-width:640px){.wrap{padding:0 16px;}.page-footer{padding:32px 16px;}}
 
-
 .hero-t{position:relative;z-index:10;padding:72px 0 56px;border-bottom:1px solid var(--border);overflow:hidden;text-align:center;}
+.hero-soon{margin:0 auto 22px;max-width:520px;padding:14px 22px;
+  border:1px solid rgba(240,120,48,.38);background:rgba(240,120,48,.07);
+  border-radius:var(--radius);text-align:center;}
+.hero-soon-k{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px;}
+.hero-soon-t{font-size:.88rem;color:var(--ink2);line-height:1.58;}
+.cta-soon-note{font-size:.88rem;color:var(--ink3);max-width:520px;margin:0 auto 22px;line-height:1.6;}
 .blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
 .b1{width:500px;height:500px;top:-80px;right:-100px;background:radial-gradient(circle,rgba(240,120,48,.09) 0%,transparent 70%);animation:fl1 8s ease-in-out infinite;}
 .b2{width:400px;height:400px;bottom:-60px;left:-80px;background:radial-gradient(circle,rgba(58,127,212,.08) 0%,transparent 70%);animation:fl2 10s ease-in-out infinite;}
 @keyframes fl1{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,20px);}}
 @keyframes fl2{0%,100%{transform:translate(0,0);}50%{transform:translate(20px,-30px);}}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  .b1,.b2{animation:none;}
+  .sw{opacity:1;transform:none;transition:none;}
+}
+
 .tipos-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
 @media(max-width:720px){.tipos-g{grid-template-columns:1fr;}}
 .tipo{background:var(--bg2);padding:2.5rem 2rem;position:relative;overflow:hidden;transition:background .2s;}
@@ -119,102 +92,190 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .t1::before{background:var(--accent);}
 .t2::before{background:var(--blue);}
 .t3::before{background:var(--green);}
-.tipo-ico{font-size:2.5rem;margin-bottom:1rem;}
-.tipo-title{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--ink);margin-bottom:.6rem;line-height:1.15;}
-.tipo-desc{font-size:.86rem;color:var(--ink2);line-height:1.7;margin-bottom:1rem;}
+.tipo-icon{width:56px;height:56px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border);background:rgba(255,255,255,.02);margin-bottom:1.25rem;}
+.tipo-icon svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;}
+.t1 .tipo-icon{color:var(--accent);border-color:rgba(240,120,48,.28);}
+.t2 .tipo-icon{color:var(--blue);border-color:rgba(58,127,212,.28);}
+.t3 .tipo-icon{color:var(--green);border-color:rgba(46,204,128,.28);}
+.tipo-title{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--ink);margin-bottom:.65rem;line-height:1.15;}
+.tipo-desc{font-size:.9rem;color:var(--ink2);line-height:1.75;margin-bottom:.85rem;}
+.tipo-more{font-size:.86rem;color:var(--ink3);line-height:1.72;margin-bottom:1rem;border-top:1px solid var(--border);padding-top:.85rem;}
 .tipo-pills{display:flex;flex-wrap:wrap;gap:.4rem;}
-.pp{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:1px;padding:2px 8px;border-radius:20px;border:1px solid var(--border);color:var(--ink3);}
+.pp{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:1px;padding:3px 9px;border-radius:2px;border:1px solid var(--border);color:var(--ink3);background:rgba(255,255,255,.02);}
+
+.metodo{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--blue);
+  padding:1.75rem 2rem;border-radius:0 var(--radius) var(--radius) 0;margin-top:2rem;}
+.metodo-h{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:.75rem;}
+.metodo p{font-size:.92rem;color:var(--ink2);line-height:1.85;}
+.metodo p+p{margin-top:.85rem;}
+
 .como-g{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);}
 @media(max-width:640px){.como-g{grid-template-columns:repeat(2,1fr);}}
-.paso{background:var(--bg2);padding:2rem 1.5rem;text-align:center;}
-.paso-n{font-family:'DM Serif Display',serif;font-size:3rem;color:rgba(240,120,48,.1);line-height:1;margin-bottom:.5rem;}
-.paso-ico{font-size:1.4rem;margin-bottom:.5rem;}
-.paso-title{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink);font-weight:600;margin-bottom:.35rem;}
-.paso-desc{font-size:.8rem;color:var(--ink2);line-height:1.55;}
+.paso{background:var(--bg2);padding:2rem 1.5rem;text-align:left;}
+.paso-n{font-family:'DM Serif Display',serif;font-size:2.5rem;color:rgba(240,120,48,.12);line-height:1;margin-bottom:.65rem;}
+.paso-icon{width:44px;height:44px;margin-bottom:.65rem;display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,.02);}
+.paso-icon svg{width:22px;height:22px;stroke:var(--ink2);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.paso-title{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--ink);font-weight:600;margin-bottom:.4rem;letter-spacing:.5px;}
+.paso-desc{font-size:.84rem;color:var(--ink2);line-height:1.65;}
+
 .preguntas-g{display:flex;flex-direction:column;gap:1px;background:var(--border);}
 .preg{background:var(--bg2);border-radius:0;}
-.preg-hd{padding:1.1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
+.preg-hd{width:100%;padding:1.1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;cursor:pointer;background:transparent;border:none;font:inherit;text-align:left;color:inherit;}
 .preg-hd:hover{background:rgba(255,255,255,.02);}
-.preg-q{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--ink);font-weight:600;}
-.preg-arr{font-size:.9rem;color:var(--ink3);transition:transform .2s;}
+.preg-hd:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+.preg-q{font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--ink);font-weight:600;line-height:1.35;}
+.preg-arr{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--ink3);transition:transform .2s;flex-shrink:0;}
 .preg.open .preg-arr{transform:rotate(90deg);}
-.preg-body{display:none;padding:0 1.5rem 1.25rem;font-size:.86rem;color:var(--ink2);line-height:1.7;}
+.preg-body{display:none;padding:0 1.5rem 1.35rem;font-size:.88rem;color:var(--ink2);line-height:1.75;}
 .preg.open .preg-body{display:block;}
 .cta-s{text-align:center;padding:80px 0;background:radial-gradient(ellipse at 50% 100%,rgba(240,120,48,.05) 0%,transparent 60%);}
-
 </style>
 </head>
 <body data-page="talleres">
+<main>
 <section class="hero-t">
-  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="blob b1" aria-hidden="true"></div><div class="blob b2" aria-hidden="true"></div>
   <div class="wrap" style="position:relative;z-index:2;">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:4px;color:var(--ink3);margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:10px;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:3px;color:var(--ink3);margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:10px;">
       <div style="width:24px;height:1px;background:var(--accent);"></div>
-      TALLERES PRESENCIALES · CHILE · GRATUITOS PARA COLEGIOS
+      EDUCACIÓN DIGITAL Y CIBERSEGURIDAD · ESTABLECIMIENTOS EDUCATIVOS · CHILE
       <div style="width:24px;height:1px;background:var(--accent);"></div>
     </div>
-    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.8rem,8vw,6.5rem);line-height:.9;letter-spacing:-2px;margin-bottom:20px;">
-      Ciberseguridad<br>
-      <span style="color:var(--accent);font-style:italic;">en tu colegio.</span>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.6rem,7vw,5.2rem);line-height:1.02;letter-spacing:-2px;margin-bottom:18px;">
+      Talleres presenciales<br>
+      <span style="color:var(--accent);font-style:italic;">para tu comunidad escolar.</span>
     </h1>
-    <p style="font-size:1.05rem;line-height:1.8;color:var(--ink2);max-width:520px;margin:0 auto 32px;">
-      Talleres presenciales para niños, adolescentes, apoderados y docentes. Prácticos, sin tecnicismos, adaptados a la realidad chilena.
+    <div class="hero-soon" role="status">
+      <div class="hero-soon-k">Próximamente</div>
+      <p class="hero-soon-t">El calendario de visitas y bloques de agendamiento <strong>aún no está publicado</strong>. Mientras tanto, esta página describe el programa; puedes escribirnos para registrar interés de tu colegio u organización.</p>
+    </div>
+    <p style="font-size:1.02rem;line-height:1.85;color:var(--ink2);max-width:640px;margin:0 auto 16px;">
+      Sesiones facilitadas para <strong>estudiantes, familias y equipos docentes</strong>, con lenguaje claro, ejemplos cercanos a la vida digital en Chile y énfasis en prevención, hábitos seguros y respuesta ante incidentes.
+    </p>
+    <p style="font-size:.95rem;line-height:1.82;color:var(--ink3);max-width:640px;margin:0 auto 30px;">
+      El contenido se adapta por edad y contexto: no se trata de una charla genérica, sino de un programa acotado en tiempo, con objetivos medibles y materiales de apoyo para quienes acompañan el aprendizaje en casa y en el aula.
     </p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
-      <a href="/contacto" class="btn-p"><span>Solicitar taller →</span></a>
-      <a href="#como" class="btn-g">Cómo funciona</a>
+      <a href="/contacto" class="btn-p"><span>Registrar interés →</span></a>
+      <a href="#como" class="btn-g">Proceso de coordinación</a>
     </div>
+    <p style="font-size:.8rem;color:var(--ink3);margin:14px auto 0;max-width:480px;line-height:1.5;">Al contactar, indica establecimiento, comuna y nivel educativo; te responderemos sin compromiso cuando definamos fechas.</p>
   </div>
 </section>
 
 <div class="wrap page-inner">
 
 <div class="sw">
-  <div class="sl">// Tipos de taller</div>
-  <h2 class="st">Uno para<br><em>cada grupo.</em></h2>
-  <p class="si">Contenido diferente según la audiencia. El mismo tema se aborda con lenguaje y ejemplos distintos para niños, adolescentes o adultos.</p>
+  <div class="sl">Programas por audiencia</div>
+  <h2 class="st">Tres líneas,<br><em>un mismo estándar.</em></h2>
+  <p class="si">Cada programa mantiene rigor pedagógico y mensajes coherentes con la línea editorial de Aegis8: <strong>protección de personas</strong>, no exposición técnica innecesaria. Las sesiones combinan exposición breve, dinámicas guiadas y espacio para preguntas.</p>
   <div class="tipos-g">
     <div class="tipo t1">
-      <div class="tipo-ico">🧒</div>
-      <div class="tipo-title">Taller para Niños</div>
-      <div class="tipo-desc">Actividades interactivas, juegos y dinámicas para aprender a estar seguros en internet. Sin tecnicismos, con ejemplos de su mundo digital.</div>
-      <div class="tipo-pills"><span class="pp">6–12 años</span><span class="pp">60–90 min</span><span class="pp">grupal</span><span class="pp">actividades</span></div>
+      <div class="tipo-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M8 7h8M8 11h6"/></svg>
+      </div>
+      <div class="tipo-title">Nivel inicial y básico</div>
+      <div class="tipo-desc">Orientado a <strong>niñas y niños de aproximadamente 6 a 12 años</strong>. Se trabajan conceptos como identidad en línea, límites con desconocidos, contraseñas sencillas y qué hacer ante algo que incomoda.</div>
+      <div class="tipo-more">Las actividades priorizan participación y analogías con el entorno escolar y familiar. Se evita alarmismo; el foco está en confianza con adultos de referencia y en reconocer señales básicas de riesgo.</div>
+      <div class="tipo-pills"><span class="pp">6–12 años</span><span class="pp">60–90 min</span><span class="pp">Grupal</span><span class="pp">Material de refuerzo</span></div>
     </div>
     <div class="tipo t2">
-      <div class="tipo-ico">🧑‍💻</div>
-      <div class="tipo-title">Taller para Adolescentes</div>
-      <div class="tipo-desc">Casos reales de grooming, ciberbullying, privacidad y estafas en videojuegos. Con debate, sin sermones. Adaptado a su realidad digital.</div>
-      <div class="tipo-pills"><span class="pp">13–17 años</span><span class="pp">60–90 min</span><span class="pp">debate</span><span class="pp">casos reales</span></div>
+      <div class="tipo-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/><path d="M9 6h6"/></svg>
+      </div>
+      <div class="tipo-title">Educación media</div>
+      <div class="tipo-desc">Para <strong>adolescentes de 13 a 17 años</strong>. Se abordan privacidad, reputación digital, interacciones en redes y juegos, estafas dirigidas a menores y dinámicas de presión en línea.</div>
+      <div class="tipo-more">Se utilizan casos sintéticos inspirados en situaciones reales (sin exponer datos personales) y se fomenta el debate crítico. El objetivo es que salgan con criterio para decidir, pedir ayuda y conocer canales de denuncia pertinentes en Chile.</div>
+      <div class="tipo-pills"><span class="pp">13–17 años</span><span class="pp">60–90 min</span><span class="pp">Debate guiado</span><span class="pp">Enfoque preventivo</span></div>
     </div>
     <div class="tipo t3">
-      <div class="tipo-ico">👨‍👩‍👧</div>
-      <div class="tipo-title">Taller para Apoderados</div>
-      <div class="tipo-desc">Cómo hablar con tus hijos sobre internet, qué señales de alerta buscar, controles parentales y qué hacer si algo pasa. En 45 minutos.</div>
-      <div class="tipo-pills"><span class="pp">apoderados</span><span class="pp">45–60 min</span><span class="pp">práctico</span><span class="pp">reunión de curso</span></div>
+      <div class="tipo-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="tipo-title">Familias y apoderados</div>
+      <div class="tipo-desc">Pensado para <strong>madres, padres y cuidadores</strong>. Cómo conversar sobre pantallas sin confrontación permanente, qué observar ante cambios de conducta y cómo actuar si hay indicios de grooming, extorsión o acceso indebido a material íntimo.</div>
+      <div class="tipo-more">Incluye referencias a controles y hábitos realistas (no promesas de “vigilancia total”), y orientación sobre documentación y derivación cuando corresponda. Puede integrarse a reuniones de curso o talleres UTP con duración acotada.</div>
+      <div class="tipo-pills"><span class="pp">Apoderados</span><span class="pp">45–60 min</span><span class="pp">UTP / curso</span><span class="pp">Guías para el hogar</span></div>
     </div>
+  </div>
+  <div class="metodo">
+    <div class="metodo-h">Metodología y alineación institucional</div>
+    <p>Las sesiones se diseñan para complementar —no sustituir— las políticas internas del establecimiento y el trabajo del equipo de convivencia escolar. Se puede coordinar con el nivel de convivencia, orientación o tecnología para evitar mensajes contradictorios y reforzar los mismos criterios ante estudiantes y familias.</p>
+    <p>Si el colegio ya utiliza recursos de Aegis8 en línea (guías, checklist o herramientas), el taller puede enlazarse explícitamente a esos materiales para que docentes y apoderados tengan un <strong>seguimiento después de la visita</strong>.</p>
   </div>
 </div>
 
 <div class="sw" id="como">
-  <div class="sl">// Cómo funciona</div>
-  <h2 class="st">Simple y<br><em>sin burocracia.</em></h2>
+  <div class="sl">Coordinación</div>
+  <h2 class="st">Cuatro pasos<br><em>antes del día de la sesión.</em></h2>
+  <p class="si" style="margin-bottom:28px;">El agendamiento está pensado para reducir carga administrativa en el establecimiento: un solo punto de contacto, acuerdos por escrito cuando se requieren y claridad sobre requisitos mínimos de espacio y tiempo.</p>
   <div class="como-g">
-    <div class="paso"><div class="paso-n">01</div><div class="paso-ico">✉️</div><div class="paso-title">Nos contactas</div><div class="paso-desc">Cuéntanos qué necesitas: nivel, cantidad de alumnos y disponibilidad.</div></div>
-    <div class="paso"><div class="paso-n">02</div><div class="paso-ico">🤝</div><div class="paso-title">Coordinamos</div><div class="paso-desc">Acordamos fecha, formato y contenido en una llamada de 15 minutos.</div></div>
-    <div class="paso"><div class="paso-n">03</div><div class="paso-ico">🏫</div><div class="paso-title">Vamos al colegio</div><div class="paso-desc">Llegamos con todo listo. Sin equipos ni instalaciones especiales.</div></div>
-    <div class="paso"><div class="paso-n">04</div><div class="paso-ico">📋</div><div class="paso-title">Materiales</div><div class="paso-desc">Dejamos guías para apoderados y recursos para el docente a cargo.</div></div>
+    <div class="paso">
+      <div class="paso-n">01</div>
+      <div class="paso-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg>
+      </div>
+      <div class="paso-title">Solicitud</div>
+      <div class="paso-desc">Escríbenos con nivel educativo, número aproximado de participantes, fechas posibles y si la sesión es para estudiantes, apoderados o ambos.</div>
+    </div>
+    <div class="paso">
+      <div class="paso-n">02</div>
+      <div class="paso-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      </div>
+      <div class="paso-title">Alineación</div>
+      <div class="paso-desc">Agendamos una videollamada breve para confirmar objetivos, duración, perfil del grupo y logística (aula, simultáneas por nivel, etc.).</div>
+    </div>
+    <div class="paso">
+      <div class="paso-n">03</div>
+      <div class="paso-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+      </div>
+      <div class="paso-title">Implementación</div>
+      <div class="paso-desc">El equipo llega con el material necesario. Solo se requiere espacio adecuado y, de ser posible, proyector o pantalla visible para todo el grupo.</div>
+    </div>
+    <div class="paso">
+      <div class="paso-n">04</div>
+      <div class="paso-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+      </div>
+      <div class="paso-title">Cierre y entregables</div>
+      <div class="paso-desc">Se dejan resúmenes para familias y, cuando aplica, orientaciones para docentes para continuar el tema en el aula sin duplicar esfuerzos.</div>
+    </div>
   </div>
 </div>
 
 <div class="sw">
-  <div class="sl">// Preguntas frecuentes</div>
-  <h2 class="st">Lo que<br><em>siempre preguntan.</em></h2>
+  <div class="sl">Preguntas frecuentes</div>
+  <h2 class="st">Condiciones<br><em>y alcance.</em></h2>
   <div class="preguntas-g">
-    <div class="preg" id="q1"><div class="preg-hd" onclick="togglePreg('q1')"><span class="preg-q">¿Tiene algún costo para el colegio?</span><span class="preg-arr">›</span></div><div class="preg-body">No. Los talleres son completamente gratuitos para establecimientos educacionales municipales, subvencionados y particulares sin fines de lucro. Aegis8 es un proyecto social.</div></div>
-    <div class="preg" id="q2"><div class="preg-hd" onclick="togglePreg('q2')"><span class="preg-q">¿Cuánto tiempo duran?</span><span class="preg-arr">›</span></div><div class="preg-body">Depende del formato. Los talleres para niños y adolescentes duran entre 60 y 90 minutos. La charla para apoderados puede hacerse en 45 minutos dentro de una reunión de curso.</div></div>
-    <div class="preg" id="q3"><div class="preg-hd" onclick="togglePreg('q3')"><span class="preg-q">¿Qué necesita el colegio para recibir el taller?</span><span class="preg-arr">›</span></div><div class="preg-body">Solo un espacio con proyector o pantalla. Nosotros llevamos el material. No se necesita sala de computación ni equipos especiales.</div></div>
-    <div class="preg" id="q4"><div class="preg-hd" onclick="togglePreg('q4')"><span class="preg-q">¿Están disponibles en regiones?</span><span class="preg-arr">›</span></div><div class="preg-body">Actualmente operamos en la Región Metropolitana. Para otras regiones, tenemos formato online con la misma calidad de contenido. Consúltanos.</div></div>
-    <div class="preg" id="q5"><div class="preg-hd" onclick="togglePreg('q5')"><span class="preg-q">¿Pueden hacer talleres para empresas u organizaciones?</span><span class="preg-arr">›</span></div><div class="preg-body">Sí. Para organizaciones no educativas el taller tiene un costo según el alcance. El foco siempre es ciberseguridad para personas, no para infraestructura técnica.</div></div>
+    <div class="preg" id="q1">
+      <button type="button" class="preg-hd" aria-expanded="false" aria-controls="qb1" id="qh1"><span class="preg-q">¿Tiene costo para el establecimiento educativo?</span><span class="preg-arr" aria-hidden="true">›</span></button>
+      <div class="preg-body" id="qb1" role="region" aria-labelledby="qh1">No. Para <strong>colegios y instituciones educativas</strong> sin fines de lucro el taller se ofrece en modalidad de proyecto social. En casos corporativos u organizaciones no educativas puede aplicarse una cotización según alcance, manteniendo el foco en personas y cultura de seguridad, no en infraestructura técnica.</div>
+    </div>
+    <div class="preg" id="q2">
+      <button type="button" class="preg-hd" aria-expanded="false" aria-controls="qb2" id="qh2"><span class="preg-q">¿Cuánto duran las sesiones?</span><span class="preg-arr" aria-hidden="true">›</span></button>
+      <div class="preg-body" id="qb2" role="region" aria-labelledby="qh2">Como referencia, <strong>60 a 90 minutos</strong> para grupos de estudiantes, según nivel y cantidad de participantes. Las instancias para apoderados suelen concentrarse en <strong>45 a 60 minutos</strong>, compatibles con reuniones de curso o bloques UTP. La duración exacta se fija en la etapa de alineación.</div>
+    </div>
+    <div class="preg" id="q3">
+      <button type="button" class="preg-hd" aria-expanded="false" aria-controls="qb3" id="qh3"><span class="preg-q">¿Qué infraestructura necesita el colegio?</span><span class="preg-arr" aria-hidden="true">›</span></button>
+      <div class="preg-body" id="qb3" role="region" aria-labelledby="qh3">Un aula o espacio equivalente con buena visibilidad y acústica. Se solicita <strong>pantalla o proyector</strong> disponible en el establecimiento; no es obligatoria sala de computación ni conexión especial. Si el recinto es muy grande, se evalúa micrófono con la institución.</div>
+    </div>
+    <div class="preg" id="q4">
+      <button type="button" class="preg-hd" aria-expanded="false" aria-controls="qb4" id="qh4"><span class="preg-q">¿Atienden fuera de la Región Metropolitana?</span><span class="preg-arr" aria-hidden="true">›</span></button>
+      <div class="preg-body" id="qb4" role="region" aria-labelledby="qh4">La operación presencial prioriza la <strong>Región Metropolitana</strong>. Para otras regiones puede ofrecerse formato sincrónico en línea con la misma estructura pedagógica, o evaluarse desplazamiento según disponibilidad y calendarización. Conviene indicarlo en la solicitud inicial.</div>
+    </div>
+    <div class="preg" id="q5">
+      <button type="button" class="preg-hd" aria-expanded="false" aria-controls="qb5" id="qh5"><span class="preg-q">¿Pueden participar empresas u ONG?</span><span class="preg-arr" aria-hidden="true">›</span></button>
+      <div class="preg-body" id="qb5" role="region" aria-labelledby="qh5">Sí. Para organizaciones que no son establecimientos escolares el servicio se cotiza según número de sesiones, asistentes y desplazamiento. El contenido sigue centrado en <strong>protección digital de personas y familias</strong>, no en auditorías ni despliegue de sistemas.</div>
+    </div>
+    <div class="preg" id="q6">
+      <button type="button" class="preg-hd" aria-expanded="false" aria-controls="qb6" id="qh6"><span class="preg-q">¿Cuándo habrá fechas para agendar?</span><span class="preg-arr" aria-hidden="true">›</span></button>
+      <div class="preg-body" id="qb6" role="region" aria-labelledby="qh6">Por ahora el calendario de talleres presenciales está <strong>en preparación</strong> y no publicamos fechas concretas. Puedes dejar tus datos por el formulario de contacto para avisarte cuando abramos coordinación; la información de esta página describe cómo será el servicio una vez activo.</div>
+    </div>
   </div>
 </div>
 
@@ -222,12 +283,14 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 
 <section class="cta-s page-inner">
   <div class="wrap">
-    <div class="sl" style="display:flex;justify-content:center;">// ¿Listo para agendar?</div>
-    <h2 class="st">Agenda tu<br><em>taller ahora.</em></h2>
-    <p class="si" style="margin:0 auto 36px;">Cuéntanos qué necesitas y coordinamos en menos de 48 horas.</p>
-    <a href="/contacto" class="btn-p"><span>Solicitar taller →</span></a>
+    <div class="sl" style="display:flex;justify-content:center;">Próximo paso</div>
+    <h2 class="st">Déjanos tus<br><em>datos de contacto.</em></h2>
+    <p class="cta-soon-note"><strong>Próximamente</strong> abriremos agenda de visitas. Mientras tanto, si dejas establecimiento, comuna y a qué nivel va dirigida la sesión, podemos confirmar recepción y contactarte cuando el calendario esté listo.</p>
+    <p class="si" style="margin:0 auto 28px;">En operación normal, la primera respuesta orientativa se envía en hasta <strong>48 horas hábiles</strong> (sujeto a volumen de mensajes).</p>
+    <a href="/contacto" class="btn-p"><span>Ir a contacto →</span></a>
   </div>
 </section>
+</main>
 
 <footer class="page-footer">
   <a href="/" class="fl">AEGIS<span>8</span></a>
@@ -235,26 +298,37 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     <li><a href="/educa">Educa</a></li>
     <li><a href="/docentes">Docentes</a></li>
     <li><a href="/familias">Familias</a></li>
-    <li><a href="/analizador-phishing.html">Herramientas</a></li>
+    <li><a href="/herramientas">Herramientas</a></li>
     <li><a href="/contacto">Contacto</a></li>
   </ul>
   <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
     <div class="fcopy">© 2026 · Proyecto educativo-social · Chile</div>
-    <a href="/educa" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--ink3);text-decoration:none;text-transform:uppercase;transition:color .2s;" onmouseover="this.style.color='#f07830'" onmouseout="this.style.color=''">← Ver recursos educativos</a>
+    <a href="/educa" class="footer-back">← Recursos educativos</a>
   </div>
 </footer>
 <script>
 function togglePreg(id){
   const p=document.getElementById(id);
-  document.querySelectorAll('.preg').forEach(x=>{if(x.id!==id)x.classList.remove('open');});
-  p.classList.toggle('open');
+  const wasOpen=p.classList.contains('open');
+  document.querySelectorAll('.preg').forEach(x=>{
+    x.classList.remove('open');
+    const b=x.querySelector('.preg-hd');
+    if(b)b.setAttribute('aria-expanded','false');
+  });
+  if(!wasOpen){
+    p.classList.add('open');
+    const btn=p.querySelector('.preg-hd');
+    if(btn)btn.setAttribute('aria-expanded','true');
+  }
 }
+document.querySelectorAll('.preg-hd').forEach(btn=>{
+  btn.addEventListener('click',()=>togglePreg(btn.closest('.preg').id));
+});
 
 const ro=new IntersectionObserver(e=>{
   e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});
 },{threshold:.07,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.sw').forEach(el=>ro.observe(el));
-
 </script>
 </body>
 </html>
