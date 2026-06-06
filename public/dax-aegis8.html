@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://aegis8-agent.christianmora705.workers.dev https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:; base-uri 'self'; form-action 'none';">
+<title>Aegis8 · DAX — Asistente DAX en Español</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --accent: #0078d4;
+  --accent-hover: #106ebe;
+  --accent-soft: #eff6ff;
+  --accent-border: #bfdbfe;
+  --success: #0f766e;
+  --success-soft: #ecfdf5;
+  --error: #b91c1c;
+  --error-soft: #fef2f2;
+  --error-border: #fecaca;
+  --text: #0f172a;
+  --text2: #475569;
+  --text3: #94a3b8;
+  --code-bg: #0f172a;
+  --code-border: #1e293b;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+  --radius: 6px;
+  --shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --max-prompt: 2000;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+::selection {
+  background: rgba(0, 120, 212, 0.18);
+  color: var(--text);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADER ── */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 56px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-mark {
+  width: 32px;
+  height: 32px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius);
+}
+
+.logo-text {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.logo-text span { color: var(--accent); }
+
+.badge {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text2);
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.status-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--text2);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--success);
+  border-radius: 50%;
+}
+
+.query-count {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-muted);
+}
+
+.query-count strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ── MAIN ── */
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+/* ── HERO ── */
+.hero {
+  margin-bottom: 36px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.hero h1 {
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.hero p {
+  font-size: 15px;
+  color: var(--text2);
+  max-width: 520px;
+  line-height: 1.6;
+}
+
+.hero-credit {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--text3);
+}
+
+/* ── FEATURES ── */
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--surface);
+}
+
+.feature svg {
+  flex-shrink: 0;
+  color: var(--accent);
+  margin-top: 1px;
+}
+
+.feature-text {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.45;
+}
+
+.feature-text strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+
+/* ── CHIPS ── */
+.chips-section { margin-bottom: 24px; }
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  font-size: 12px;
+  font-weight: 400;
+  padding: 6px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.chip:hover {
+  border-color: var(--accent-border);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── INPUT ── */
+.input-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+
+.input-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.input-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.char-count {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.char-count.warn { color: #c2410c; }
+.char-count.error { color: var(--error); }
+
+textarea {
+  width: 100%;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  padding: 12px 14px;
+  resize: vertical;
+  min-height: 108px;
+  max-height: 320px;
+  line-height: 1.6;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+textarea::placeholder { color: var(--text3); }
+
+textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.12);
+  background: var(--surface);
+}
+
+.input-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--text3);
+}
+
+.hint kbd {
+  font-family: var(--mono);
+  font-size: 10px;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+/* ── BUTTON ── */
+.btn-generate {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 148px;
+  background: var(--accent);
+  color: #fff;
+  border: 1px solid var(--accent);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px 20px;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn-generate:hover:not(:disabled) {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.btn-generate:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btn-generate:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-generate .spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: none;
+}
+
+.btn-generate.loading .spinner { display: block; }
+.btn-generate.loading .btn-text { display: none; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── PROGRESS ── */
+.progress-bar {
+  height: 2px;
+  background: var(--border);
+  overflow: hidden;
+  display: none;
+  margin-bottom: 16px;
+  border-radius: 1px;
+}
+
+.progress-bar.active { display: block; }
+
+.progress-inner {
+  height: 100%;
+  width: 30%;
+  background: var(--accent);
+  animation: progress 1.6s ease-in-out infinite;
+}
+
+@keyframes progress {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
+}
+
+/* ── ERROR ── */
+.error-msg {
+  display: none;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--error-soft);
+  border: 1px solid var(--error-border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--error);
+  margin-bottom: 16px;
+}
+
+.error-msg.visible { display: flex; }
+
+.error-msg svg { flex-shrink: 0; margin-top: 1px; }
+
+/* ── RESULT ── */
+.result-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: none;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+
+.result-card.visible { display: block; }
+
+.result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--surface-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.result-title {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text2);
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  padding: 5px 12px;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.copy-btn:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.copy-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.copy-btn.copied {
+  border-color: #99f6e4;
+  color: var(--success);
+  background: var(--success-soft);
+}
+
+.code-wrap {
+  display: flex;
+  background: var(--code-bg);
+}
+
+.line-nums {
+  padding: 16px 0 16px 14px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.75;
+  color: #475569;
+  text-align: right;
+  user-select: none;
+  min-width: 34px;
+  border-right: 1px solid var(--code-border);
+}
+
+pre {
+  flex: 1;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #e2e8f0;
+  padding: 16px;
+  margin: 0;
+  overflow-x: auto;
+}
+
+.explanation {
+  padding: 16px;
+  border-top: 1px solid var(--border);
+  background: var(--surface-muted);
+}
+
+.explanation-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+
+.explanation p {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.65;
+}
+
+/* ── TIPS ── */
+.tips-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-top: 8px;
+}
+
+.tips-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+
+.tips-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tips-list li {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.5;
+  padding-left: 0;
+}
+
+.tips-list li::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+.tips-list strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ── HISTORY ── */
+.history-section { margin-top: 28px; }
+
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.clear-history {
+  font-size: 11px;
+  color: var(--text3);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.clear-history:hover { color: var(--text2); }
+.clear-history:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.history-list { display: flex; flex-direction: column; gap: 6px; }
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  text-align: left;
+  width: 100%;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.history-item:hover {
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+}
+
+.history-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.history-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  min-width: 24px;
+}
+
+.history-text {
+  color: var(--text2);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  padding: 20px 24px;
+  text-align: center;
+}
+
+.footer-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.footer-brand {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.footer-meta {
+  font-size: 11px;
+  color: var(--text3);
+  line-height: 1.6;
+}
+
+.footer-meta a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.footer-meta a:hover { text-decoration: underline; }
+
+/* ── SYNTAX ── */
+.dax-fn  { color: #7dd3fc; }
+.dax-kw  { color: #c4b5fd; }
+.dax-str { color: #fdba74; }
+.dax-col { color: #6ee7b7; }
+.dax-cmt { color: #64748b; font-style: italic; }
+.dax-num { color: #fde68a; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  header { padding: 0 16px; }
+  .header-meta .status-pill { display: none; }
+  main { padding: 32px 16px 64px; }
+  .features { grid-template-columns: 1fr; }
+  .btn-generate { width: 100%; }
+  .input-footer { flex-direction: column-reverse; align-items: stretch; }
+  .line-nums { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark" aria-hidden="true">DAX</div>
+    <div class="logo-text">Aegis8 · <span>DAX</span></div>
+    <div class="badge">Beta</div>
+  </div>
+  <div class="header-meta">
+    <div class="status-pill">
+      <span class="status-dot" aria-hidden="true"></span>
+      Servicio activo
+    </div>
+    <div class="query-count">Consultas: <strong id="qCount">0</strong></div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="hero-title">
+    <p class="hero-eyebrow">Power BI · Asistente DAX</p>
+    <h1 id="hero-title">Genera <em>fórmulas DAX</em> en español</h1>
+    <p>Describe la métrica que necesitas y obtén código DAX listo para usar en Power BI, con una explicación breve.</p>
+    <p class="hero-credit">Herramienta de Aegis8 · Christian "M0riarty" Mora</p>
+  </section>
+
+  <div class="features" role="list">
+    <div class="feature" role="listitem">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      <div class="feature-text"><strong>Generación asistida</strong>Respuestas estructuradas en segundos</div>
+    </div>
+    <div class="feature" role="listitem">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <div class="feature-text"><strong>Copia directa</strong>Código listo para pegar en el modelo</div>
+    </div>
+    <div class="feature" role="listitem">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <div class="feature-text"><strong>Explicación incluida</strong>Contexto breve de la fórmula generada</div>
+    </div>
+  </div>
+
+  <section class="chips-section" aria-labelledby="chips-label">
+    <p class="section-label" id="chips-label">Ejemplos</p>
+    <div class="chips" role="group" aria-label="Ejemplos de consultas">
+      <button type="button" class="chip" data-prompt="Suma de ventas del mes actual vs mes anterior">Ventas mes actual vs anterior</button>
+      <button type="button" class="chip" data-prompt="Porcentaje de crecimiento de ingresos año a año">Crecimiento YoY</button>
+      <button type="button" class="chip" data-prompt="Promedio de ventas por vendedor excluyendo los que no vendieron nada">Promedio por vendedor</button>
+      <button type="button" class="chip" data-prompt="Top 5 productos más vendidos del trimestre">Top 5 productos</button>
+      <button type="button" class="chip" data-prompt="Acumulado de ventas desde inicio de año hasta hoy">Acumulado YTD</button>
+    </div>
+  </section>
+
+  <section class="input-card" aria-labelledby="input-label">
+    <div class="input-header">
+      <label class="input-label" id="input-label" for="prompt">Descripción de la métrica</label>
+      <span class="char-count" id="charCount" aria-live="polite">0 / 2000</span>
+    </div>
+    <textarea
+      id="prompt"
+      maxlength="2000"
+      placeholder="Ej: Ventas del mes actual comparadas con el mismo mes del año anterior, expresadas como variación porcentual."
+      autocomplete="off"
+      spellcheck="true"
+    ></textarea>
+    <div class="input-footer">
+      <span class="hint"><kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>Enter</kbd> para generar</span>
+      <button type="button" class="btn-generate" id="btn">
+        <span class="spinner" aria-hidden="true"></span>
+        <span class="btn-text">Generar DAX</span>
+      </button>
+    </div>
+  </section>
+
+  <div class="progress-bar" id="progressBar" role="progressbar" aria-hidden="true">
+    <div class="progress-inner"></div>
+  </div>
+
+  <div class="error-msg" id="errorMsg" role="alert" aria-live="assertive">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <span id="errorText"></span>
+  </div>
+
+  <section class="result-card" id="resultCard" aria-labelledby="result-title">
+    <div class="result-header">
+      <span class="result-title" id="result-title">dax_formula.dax</span>
+      <button type="button" class="copy-btn" id="copyBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copiar
+      </button>
+    </div>
+    <div class="result-body">
+      <div class="code-wrap">
+        <div class="line-nums" id="lineNums" aria-hidden="true"></div>
+        <pre id="daxOutput"></pre>
+      </div>
+      <div class="explanation" id="explanationBlock">
+        <div class="explanation-label">Explicación</div>
+        <p id="explanationText"></p>
+      </div>
+    </div>
+  </section>
+
+  <aside class="tips-card" aria-labelledby="tips-title">
+    <h2 class="tips-title" id="tips-title">Recomendaciones</h2>
+    <ul class="tips-list">
+      <li><strong>Contexto del modelo:</strong> indica tablas y columnas si las conoces.</li>
+      <li><strong>Filtros:</strong> especifica rangos de fecha, región o categoría.</li>
+      <li><strong>Tipo de cálculo:</strong> aclara si necesitas medida o columna calculada.</li>
+      <li><strong>Validación:</strong> revisa siempre la fórmula antes de usarla en producción.</li>
+    </ul>
+  </aside>
+
+  <section class="history-section" id="historySection" hidden>
+    <div class="history-header">
+      <p class="section-label">Historial de sesión</p>
+      <button type="button" class="clear-history" id="clearHistory">Limpiar</button>
+    </div>
+    <div class="history-list" id="historyList"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <p class="footer-brand">Aegis8 · DAX</p>
+    <p class="footer-meta">
+      Las consultas se procesan en el servidor y no se almacenan en este navegador.<br>
+      © 2026 Aegis8 · Asistente impulsado por IA
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  const WORKER_URL = 'https://aegis8-agent.christianmora705.workers.dev';
+  const ALLOWED_ORIGIN = 'https://aegis8-agent.christianmora705.workers.dev';
+  const MAX_PROMPT = 2000;
+  const MAX_HISTORY = 8;
+  const REQUEST_TIMEOUT_MS = 45000;
+  const COOLDOWN_MS = 2000;
+
+  let queryCount = 0;
+  let history = [];
+  let rawDAX = '';
+  let lastRequestAt = 0;
+  let activeController = null;
+
+  const COPY_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+  const CHECK_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+
+  const $ = (id) => document.getElementById(id);
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function sanitizePrompt(input) {
+    return input
+      .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '')
+      .trim()
+      .slice(0, MAX_PROMPT);
+  }
+
+  function isAllowedWorkerUrl(url) {
+    try {
+      const parsed = new URL(url);
+      return parsed.protocol === 'https:' && parsed.origin === ALLOWED_ORIGIN;
+    } catch {
+      return false;
+    }
+  }
+
+  function setChip(text) {
+    const ta = $('prompt');
+    ta.value = sanitizePrompt(text);
+    ta.focus();
+    updateCharCount();
+  }
+
+  function updateCharCount() {
+    const len = $('prompt').value.length;
+    const el = $('charCount');
+    el.textContent = len + ' / ' + MAX_PROMPT;
+    el.classList.toggle('warn', len > MAX_PROMPT * 0.85);
+    el.classList.toggle('error', len >= MAX_PROMPT);
+  }
+
+  function updateLineNums(code) {
+    const lines = Math.max(1, code.split('\n').length);
+    $('lineNums').textContent = Array.from({ length: lines }, (_, i) => i + 1).join('\n');
+  }
+
+  function highlightDAX(code) {
+    const functions = ['CALCULATE','SUM','SUMX','AVERAGE','AVERAGEX','COUNT','COUNTX','COUNTROWS',
+      'DISTINCTCOUNT','MAX','MIN','MAXX','MINX','IF','IFERROR','SWITCH','FILTER','ALL','ALLEXCEPT',
+      'RELATED','RELATEDTABLE','LOOKUPVALUE','VALUES','DISTINCT','EARLIER','EARLIEST','DIVIDE',
+      'RANKX','TOPN','SELECTEDVALUE','HASONEVALUE','ISBLANK','BLANK','TRUE','FALSE','NOT','AND','OR',
+      'DATEADD','DATESYTD','DATESMTD','DATESQTD','SAMEPERIODLASTYEAR','PREVIOUSMONTH','PREVIOUSYEAR',
+      'PREVIOUSQUARTER','NEXTMONTH','NEXTYEAR','TOTALYTD','TOTALMTD','TOTALQTD','USERELATIONSHIP',
+      'CROSSFILTER','KEEPFILTERS','REMOVEFILTERS','ALLSELECTED','TREATAS','FORMAT','CONCATENATE',
+      'LEFT','RIGHT','MID','LEN','TRIM','UPPER','LOWER','SUBSTITUTE','FIND','SEARCH','TEXT',
+      'INT','ROUND','ROUNDUP','ROUNDDOWN','ABS','MOD','POWER','SQRT','LOG','EXP','FIXED',
+      'NOW','TODAY','DATE','YEAR','MONTH','DAY','HOUR','MINUTE','SECOND','WEEKDAY','WEEKNUM',
+      'EOMONTH','EDATE','DATEDIFF','CALENDAR','CALENDARAUTO'];
+
+    let html = escapeHtml(code);
+
+    html = html.replace(/(\/\/[^\n]*)/g, '<span class="dax-cmt">$1</span>');
+    html = html.replace(/"([^"]*)"/g, '"<span class="dax-str">$1</span>"');
+    html = html.replace(/(\[[^\]]+\])/g, '<span class="dax-col">$1</span>');
+    html = html.replace(/\b(\d+\.?\d*)\b/g, '<span class="dax-num">$1</span>');
+
+    const fnRegex = new RegExp('\\b(' + functions.join('|') + ')\\b', 'g');
+    html = html.replace(fnRegex, '<span class="dax-fn">$1</span>');
+    html = html.replace(/\b(VAR|RETURN|IN|NOT IN)\b/g, '<span class="dax-kw">$1</span>');
+
+    return html;
+  }
+
+  function renderDAX(code) {
+    rawDAX = code;
+    $('daxOutput').innerHTML = highlightDAX(code);
+    updateLineNums(code);
+  }
+
+  function setLoading(isLoading) {
+    const btn = $('btn');
+    const progressBar = $('progressBar');
+    btn.classList.toggle('loading', isLoading);
+    btn.disabled = isLoading;
+    progressBar.classList.toggle('active', isLoading);
+    progressBar.setAttribute('aria-hidden', String(!isLoading));
+  }
+
+  function showError(msg) {
+    $('errorText').textContent = msg;
+    $('errorMsg').classList.add('visible');
+  }
+
+  function hideError() {
+    $('errorMsg').classList.remove('visible');
+    $('errorText').textContent = '';
+  }
+
+  function mapFetchError(err) {
+    if (err.name === 'AbortError') {
+      return 'La solicitud tardó demasiado. Inténtalo de nuevo.';
+    }
+    return 'No se pudo completar la solicitud. Verifica tu conexión e inténtalo más tarde.';
+  }
+
+  function parseApiResponse(data) {
+    const text = typeof data?.content?.[0]?.text === 'string' ? data.content[0].text : '';
+    if (!text || text.length > 12000) {
+      throw new Error('INVALID_RESPONSE');
+    }
+
+    const formulaMatch = text.match(/FORMULA:\s*([\s\S]*?)(?:EXPLICACION:|$)/i);
+    const explMatch = text.match(/EXPLICACION:\s*([\s\S]*?)$/i);
+
+    const formula = formulaMatch ? formulaMatch[1].trim() : text.trim();
+    const explanation = explMatch ? explMatch[1].trim() : '';
+
+    if (!formula || formula.length > 8000) {
+      throw new Error('INVALID_RESPONSE');
+    }
+
+    return { formula, explanation: explanation.slice(0, 2000) };
+  }
+
+  async function generateDAX() {
+    const prompt = sanitizePrompt($('prompt').value);
+
+    if (!prompt) {
+      showError('Describe la métrica que quieres calcular.');
+      return;
+    }
+
+    const now = Date.now();
+    if (now - lastRequestAt < COOLDOWN_MS) {
+      showError('Espera un momento antes de enviar otra consulta.');
+      return;
+    }
+
+    if (!isAllowedWorkerUrl(WORKER_URL)) {
+      showError('Configuración del servicio no válida.');
+      return;
+    }
+
+    if (activeController) {
+      activeController.abort();
+    }
+
+    activeController = new AbortController();
+    const timeoutId = setTimeout(() => activeController.abort(), REQUEST_TIMEOUT_MS);
+
+    setLoading(true);
+    hideError();
+    $('resultCard').classList.remove('visible');
+
+    try {
+      lastRequestAt = now;
+
+      const response = await fetch(WORKER_URL + '/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'omit',
+        referrerPolicy: 'strict-origin-when-cross-origin',
+        signal: activeController.signal,
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system: 'Eres un experto en DAX (Data Analysis Expressions) para Power BI.\nEl usuario te describirá en español lo que quiere calcular.\nResponde SIEMPRE en este formato exacto:\n\nFORMULA:\n[aquí el código DAX limpio, sin markdown, sin triple backticks]\n\nEXPLICACION:\n[aquí una explicación breve en español, 2-3 oraciones]\n\nNo uses triple backticks ni markdown. El código DAX debe ser directamente utilizable en Power BI.',
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('HTTP_' + response.status);
+      }
+
+      const data = await response.json();
+      const { formula, explanation } = parseApiResponse(data);
+
+      renderDAX(formula);
+
+      const exBlock = $('explanationBlock');
+      if (explanation) {
+        $('explanationText').textContent = explanation;
+        exBlock.hidden = false;
+      } else {
+        exBlock.hidden = true;
+      }
+
+      $('resultCard').classList.add('visible');
+      $('resultCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      queryCount++;
+      $('qCount').textContent = String(queryCount);
+
+      history.unshift({ prompt, dax: formula });
+      if (history.length > MAX_HISTORY) history.length = MAX_HISTORY;
+      renderHistory();
+
+    } catch (err) {
+      if (err.message === 'INVALID_RESPONSE') {
+        showError('La respuesta del servicio no fue válida. Intenta reformular tu consulta.');
+      } else {
+        showError(mapFetchError(err));
+      }
+    } finally {
+      clearTimeout(timeoutId);
+      activeController = null;
+      setLoading(false);
+    }
+  }
+
+  async function copyDAX() {
+    if (!rawDAX) return;
+
+    try {
+      await navigator.clipboard.writeText(rawDAX);
+      const btn = $('copyBtn');
+      btn.innerHTML = CHECK_ICON + ' Copiado';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.innerHTML = COPY_ICON + ' Copiar';
+        btn.classList.remove('copied');
+      }, 2000);
+    } catch {
+      showError('No se pudo copiar al portapapeles.');
+    }
+  }
+
+  function renderHistory() {
+    const section = $('historySection');
+    const list = $('historyList');
+
+    if (history.length === 0) {
+      section.hidden = true;
+      list.replaceChildren();
+      return;
+    }
+
+    section.hidden = false;
+    list.replaceChildren();
+
+    history.forEach((item, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'history-item';
+      btn.dataset.index = String(i);
+
+      const num = document.createElement('span');
+      num.className = 'history-num';
+      num.textContent = String(i + 1).padStart(2, '0');
+
+      const text = document.createElement('span');
+      text.className = 'history-text';
+      text.textContent = item.prompt;
+
+      btn.append(num, text);
+      list.appendChild(btn);
+    });
+  }
+
+  function restoreHistory(index) {
+    const item = history[index];
+    if (!item) return;
+
+    $('prompt').value = item.prompt;
+    updateCharCount();
+    renderDAX(item.dax);
+    $('resultCard').classList.add('visible');
+    $('explanationBlock').hidden = true;
+    $('resultCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function clearHistory() {
+    history = [];
+    renderHistory();
+  }
+
+  function bindEvents() {
+    $('prompt').addEventListener('input', updateCharCount);
+
+    $('btn').addEventListener('click', generateDAX);
+
+    $('copyBtn').addEventListener('click', copyDAX);
+
+    $('clearHistory').addEventListener('click', clearHistory);
+
+    document.querySelectorAll('.chip').forEach((chip) => {
+      chip.addEventListener('click', () => setChip(chip.dataset.prompt || ''));
+    });
+
+    $('historyList').addEventListener('click', (e) => {
+      const item = e.target.closest('.history-item');
+      if (!item) return;
+      restoreHistory(Number(item.dataset.index));
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        generateDAX();
+      }
+    });
+  }
+
+  bindEvents();
+  updateCharCount();
+})();
+</script>
+</body>
+</html>
