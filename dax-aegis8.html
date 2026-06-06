@@ -8,52 +8,84 @@
 <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://aegis8-agent.christianmora705.workers.dev https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:; base-uri 'self'; form-action 'none';">
 <title>Aegis8 · DAX — Asistente DAX en Español</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='white' font-family='system-ui' font-size='9' font-weight='700'%3EDAX%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f4f6f9;
+  --bg: #f0f4fa;
+  --bg-mesh: radial-gradient(ellipse 80% 50% at 20% -10%, rgba(37,99,235,0.08), transparent 50%),
+             radial-gradient(ellipse 60% 40% at 90% 10%, rgba(139,92,246,0.06), transparent 50%);
   --surface: #ffffff;
   --surface-muted: #f8fafc;
+  --surface-glass: rgba(255,255,255,0.82);
   --border: #e2e8f0;
   --border-strong: #cbd5e1;
-  --accent: #0078d4;
-  --accent-hover: #106ebe;
-  --accent-soft: #eff6ff;
-  --accent-border: #bfdbfe;
-  --success: #0f766e;
-  --success-soft: #ecfdf5;
-  --error: #b91c1c;
-  --error-soft: #fef2f2;
-  --error-border: #fecaca;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-soft: rgba(37,99,235,0.08);
+  --accent-glow: rgba(37,99,235,0.2);
+  --violet: #8b5cf6;
+  --success: #059669;
+  --success-soft: rgba(5,150,105,0.1);
+  --error: #dc2626;
+  --error-soft: rgba(220,38,38,0.08);
+  --error-border: rgba(220,38,38,0.2);
   --text: #0f172a;
   --text2: #475569;
   --text3: #94a3b8;
-  --code-bg: #0f172a;
+  --code-bg: #0c1222;
+  --code-bar: #151d2e;
   --code-border: #1e293b;
-  --mono: 'IBM Plex Mono', monospace;
-  --sans: 'IBM Plex Sans', sans-serif;
-  --radius: 6px;
-  --shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Plus Jakarta Sans', sans-serif;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 2px rgba(15,23,42,0.04), 0 8px 24px rgba(15,23,42,0.06);
+  --shadow-lg: 0 16px 48px rgba(15,23,42,0.1);
+  --header-h: 60px;
   --max-prompt: 2000;
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+  --bg: #080c14;
+  --bg-mesh: radial-gradient(ellipse 80% 50% at 20% -10%, rgba(59,130,246,0.12), transparent 50%),
+             radial-gradient(ellipse 60% 40% at 90% 10%, rgba(139,92,246,0.08), transparent 50%);
+  --surface: #111827;
+  --surface-muted: #0f1623;
+  --surface-glass: rgba(17,24,39,0.88);
+  --border: #1e293b;
+  --border-strong: #334155;
+  --accent: #3b82f6;
+  --accent-hover: #60a5fa;
+  --accent-soft: rgba(59,130,246,0.12);
+  --accent-glow: rgba(59,130,246,0.25);
+  --text: #f1f5f9;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --code-bg: #060a12;
+  --code-bar: #0c1220;
+  --shadow: 0 1px 2px rgba(0,0,0,0.2), 0 8px 24px rgba(0,0,0,0.3);
+  --shadow-lg: 0 16px 48px rgba(0,0,0,0.4);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; color-scheme: light; }
+[data-theme="dark"] { color-scheme: dark; }
 
-::selection {
-  background: rgba(0, 120, 212, 0.18);
-  color: var(--text);
-}
+::selection { background: var(--accent-soft); color: var(--text); }
 
 body {
   background: var(--bg);
+  background-image: var(--bg-mesh);
   color: var(--text);
   font-family: var(--sans);
   min-height: 100vh;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  transition: background var(--transition), color var(--transition);
 }
 
 /* ── HEADER ── */
@@ -64,57 +96,63 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 32px;
-  height: 56px;
+  padding: 0 24px;
+  height: var(--header-h);
   border-bottom: 1px solid var(--border);
-  background: var(--surface);
+  background: var(--surface-glass);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
 }
 
 .logo {
   display: flex;
   align-items: center;
   gap: 12px;
+  text-decoration: none;
+  color: inherit;
 }
 
 .logo-mark {
-  width: 32px;
-  height: 32px;
-  background: var(--accent);
-  color: #fff;
-  font-family: var(--mono);
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--violet) 100%);
+  border-radius: 10px;
   display: grid;
   place-items: center;
-  border-radius: var(--radius);
+  box-shadow: 0 4px 12px var(--accent-glow);
 }
+
+.logo-mark svg { display: block; }
 
 .logo-text {
   font-size: 15px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--text);
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
-.logo-text span { color: var(--accent); }
+.logo-text span {
+  background: linear-gradient(90deg, var(--accent), var(--violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
 .badge {
-  font-size: 10px;
-  font-weight: 500;
-  color: var(--text2);
-  background: var(--surface-muted);
-  border: 1px solid var(--border);
-  padding: 2px 8px;
-  border-radius: 4px;
-  letter-spacing: 0.04em;
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid rgba(37,99,235,0.2);
+  padding: 3px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .header-meta {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
 }
 
 .status-pill {
@@ -126,179 +164,249 @@ header {
 }
 
 .status-dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   background: var(--success);
   border-radius: 50%;
+  box-shadow: 0 0 8px rgba(5,150,105,0.5);
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
 }
 
 .query-count {
   font-family: var(--mono);
   font-size: 11px;
   color: var(--text3);
-  padding: 4px 10px;
+  padding: 5px 11px;
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 20px;
   background: var(--surface-muted);
 }
 
-.query-count strong {
-  color: var(--text);
-  font-weight: 500;
+.query-count strong { color: var(--text); font-weight: 600; }
+
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+  color: var(--text2);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: border-color var(--transition), color var(--transition);
 }
 
-/* ── MAIN ── */
-main {
-  max-width: 720px;
+.theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+.theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.theme-toggle .icon-sun { display: none; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+
+/* ── LAYOUT ── */
+.app {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 48px 24px 80px;
+  padding: 28px 24px 64px;
 }
 
-/* ── HERO ── */
+.app-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .app-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 28px;
+  }
+  .panel-result {
+    position: sticky;
+    top: calc(var(--header-h) + 20px);
+  }
+}
+
+/* ── HERO COMPACT ── */
 .hero {
-  margin-bottom: 36px;
-  padding-bottom: 32px;
-  border-bottom: 1px solid var(--border);
+  padding: 22px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+
+.hero-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
 }
 
 .hero-eyebrow {
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  font-weight: 600;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 12px;
+}
+
+.hero-badge {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text3);
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  padding: 3px 9px;
+  border-radius: 20px;
 }
 
 .hero h1 {
-  font-size: clamp(24px, 4vw, 32px);
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
-  margin-bottom: 12px;
-  color: var(--text);
+  font-size: clamp(22px, 3.5vw, 28px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  margin-bottom: 10px;
 }
 
 .hero h1 em {
   font-style: normal;
-  color: var(--accent);
+  background: linear-gradient(135deg, var(--accent), var(--violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.hero p {
-  font-size: 15px;
+.hero-lead {
+  font-size: 14px;
   color: var(--text2);
-  max-width: 520px;
   line-height: 1.6;
+  margin-bottom: 16px;
 }
 
-.hero-credit {
-  margin-top: 16px;
-  font-size: 12px;
-  color: var(--text3);
-}
-
-/* ── FEATURES ── */
-.features {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  margin-bottom: 32px;
-}
-
-.feature {
+.hero-steps {
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 14px 16px;
-  background: var(--surface);
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
 }
 
-.feature svg {
-  flex-shrink: 0;
-  color: var(--accent);
-  margin-top: 1px;
-}
-
-.feature-text {
-  font-size: 12px;
-  color: var(--text2);
-  line-height: 1.45;
-}
-
-.feature-text strong {
-  display: block;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 2px;
-}
-
-/* ── SECTION LABEL ── */
-.section-label {
+.hero-steps li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 10px;
+  color: var(--text2);
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  padding: 5px 11px;
+  border-radius: 20px;
 }
 
-/* ── CHIPS ── */
-.chips-section { margin-bottom: 24px; }
+.hero-steps li span {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--accent);
+}
+
+/* ── WORKSPACE ── */
+.workspace {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.workspace-head {
+  padding: 18px 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.workspace-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.category-tabs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding-bottom: 0;
+  scrollbar-width: none;
+}
+
+.category-tabs::-webkit-scrollbar { display: none; }
+
+.cat-tab {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text3);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 8px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--transition), border-color var(--transition);
+  margin-bottom: -1px;
+}
+
+.cat-tab:hover { color: var(--text2); }
+.cat-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.workspace-body { padding: 16px 20px 20px; }
 
 .chips {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  margin-bottom: 16px;
+  min-height: 34px;
 }
 
 .chip {
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 500;
   padding: 6px 12px;
-  background: var(--surface);
+  background: var(--surface-muted);
   border: 1px solid var(--border);
   color: var(--text2);
   cursor: pointer;
-  border-radius: var(--radius);
-  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  border-radius: 20px;
+  transition: all var(--transition);
 }
 
 .chip:hover {
-  border-color: var(--accent-border);
+  border-color: var(--accent);
   color: var(--accent);
   background: var(--accent-soft);
-}
-
-.chip:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-/* ── INPUT ── */
-.input-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow);
 }
 
 .input-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .input-label {
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text);
 }
 
@@ -308,98 +416,107 @@ main {
   color: var(--text3);
 }
 
-.char-count.warn { color: #c2410c; }
+.char-count.warn { color: #ea580c; }
 .char-count.error { color: var(--error); }
 
 textarea {
   width: 100%;
   background: var(--surface-muted);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   color: var(--text);
   font-family: var(--sans);
   font-size: 14px;
-  padding: 12px 14px;
+  padding: 14px 16px;
   resize: vertical;
-  min-height: 108px;
-  max-height: 320px;
-  line-height: 1.6;
+  min-height: 120px;
+  max-height: 280px;
+  line-height: 1.65;
   outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color var(--transition), box-shadow var(--transition);
 }
 
 textarea::placeholder { color: var(--text3); }
 
 textarea:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.12);
+  box-shadow: 0 0 0 3px var(--accent-soft);
   background: var(--surface);
 }
 
-.input-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.progress-bar {
+  height: 2px;
+  background: var(--border);
+  overflow: hidden;
+  display: none;
   margin-top: 14px;
-  flex-wrap: wrap;
-  gap: 12px;
+  border-radius: 2px;
 }
 
-.hint {
-  font-size: 12px;
-  color: var(--text3);
+.progress-bar.active { display: block; }
+
+.progress-inner {
+  height: 100%;
+  width: 35%;
+  background: linear-gradient(90deg, var(--accent), var(--violet));
+  border-radius: 2px;
+  animation: progress 1.4s ease-in-out infinite;
 }
 
-.hint kbd {
-  font-family: var(--mono);
-  font-size: 10px;
-  background: var(--surface-muted);
-  border: 1px solid var(--border);
-  padding: 1px 5px;
-  border-radius: 3px;
+@keyframes progress {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
 }
 
-/* ── BUTTON ── */
+.error-msg {
+  display: none;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--error-soft);
+  border: 1px solid var(--error-border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--error);
+  margin-top: 14px;
+}
+
+.error-msg.visible { display: flex; }
+
 .btn-generate {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-width: 148px;
-  background: var(--accent);
+  width: 100%;
+  margin-top: 14px;
+  background: linear-gradient(135deg, var(--accent) 0%, #4f46e5 100%);
   color: #fff;
-  border: 1px solid var(--accent);
+  border: none;
   font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 500;
-  padding: 9px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 13px 24px;
   cursor: pointer;
-  border-radius: var(--radius);
-  transition: background 0.15s, border-color 0.15s;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 16px var(--accent-glow);
+  transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
 }
 
 .btn-generate:hover:not(:disabled) {
-  background: var(--accent-hover);
-  border-color: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px var(--accent-glow);
 }
 
-.btn-generate:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.btn-generate:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
+.btn-generate:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
 
 .btn-generate .spinner {
-  width: 14px;
-  height: 14px;
-  border: 2px solid rgba(255,255,255,0.35);
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
   border-top-color: #fff;
   border-radius: 50%;
-  animation: spin 0.7s linear infinite;
+  animation: spin 0.65s linear infinite;
   display: none;
 }
 
@@ -408,129 +525,161 @@ textarea:focus {
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── PROGRESS ── */
-.progress-bar {
-  height: 2px;
-  background: var(--border);
-  overflow: hidden;
-  display: none;
-  margin-bottom: 16px;
-  border-radius: 1px;
+.hint {
+  display: block;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 10px;
 }
 
-.progress-bar.active { display: block; }
-
-.progress-inner {
-  height: 100%;
-  width: 30%;
-  background: var(--accent);
-  animation: progress 1.6s ease-in-out infinite;
+.hint kbd {
+  font-family: var(--mono);
+  font-size: 10px;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  padding: 1px 5px;
+  border-radius: 4px;
 }
 
-@keyframes progress {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(400%); }
-}
-
-/* ── ERROR ── */
-.error-msg {
-  display: none;
-  align-items: flex-start;
-  gap: 10px;
-  background: var(--error-soft);
-  border: 1px solid var(--error-border);
-  border-radius: var(--radius);
-  padding: 12px 14px;
-  font-size: 13px;
-  color: var(--error);
-  margin-bottom: 16px;
-}
-
-.error-msg.visible { display: flex; }
-
-.error-msg svg { flex-shrink: 0; margin-top: 1px; }
-
-/* ── RESULT ── */
-.result-card {
+/* ── RESULT PANEL ── */
+.panel-result {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  overflow: hidden;
-  display: none;
-  margin-bottom: 24px;
   box-shadow: var(--shadow);
+  overflow: hidden;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
 }
 
-.result-card.visible { display: block; }
+.panel-result.has-result {
+  box-shadow: var(--shadow-lg);
+  animation: panelIn 0.35s ease;
+}
 
-.result-header {
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.result-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 32px;
+  text-align: center;
+  color: var(--text3);
+}
+
+.result-empty svg {
+  opacity: 0.35;
+  margin-bottom: 16px;
+}
+
+.result-empty p {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text2);
+  margin-bottom: 6px;
+}
+
+.result-empty span { font-size: 12px; }
+
+.result-content { display: none; flex-direction: column; flex: 1; }
+.panel-result.has-result .result-empty { display: none; }
+.panel-result.has-result .result-content { display: flex; }
+
+.result-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 16px;
-  background: var(--surface-muted);
-  border-bottom: 1px solid var(--border);
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--code-bar);
+  border-bottom: 1px solid var(--code-border);
+  flex-wrap: wrap;
 }
 
-.result-title {
+.measure-name {
+  flex: 1;
+  min-width: 140px;
   font-family: var(--mono);
   font-size: 12px;
-  color: var(--text2);
+  font-weight: 500;
+  color: #94a3b8;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--code-border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  outline: none;
+  transition: border-color var(--transition);
 }
 
-.copy-btn {
+.measure-name:focus {
+  border-color: var(--accent);
+  color: #e2e8f0;
+}
+
+.result-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.action-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 500;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text2);
-  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--code-border);
+  color: #94a3b8;
+  padding: 6px 12px;
   cursor: pointer;
-  border-radius: var(--radius);
-  transition: border-color 0.15s, color 0.15s;
+  border-radius: 6px;
+  transition: all var(--transition);
 }
 
-.copy-btn:hover {
-  border-color: var(--border-strong);
-  color: var(--text);
+.action-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: #e2e8f0;
+  border-color: #475569;
 }
 
-.copy-btn:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.copy-btn.copied {
-  border-color: #99f6e4;
-  color: var(--success);
+.action-btn.copied {
+  border-color: var(--success);
+  color: #6ee7b7;
   background: var(--success-soft);
 }
 
 .code-wrap {
   display: flex;
+  flex: 1;
   background: var(--code-bg);
+  min-height: 180px;
 }
 
 .line-nums {
-  padding: 16px 0 16px 14px;
+  padding: 16px 0 16px 12px;
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.75;
-  color: #475569;
+  color: #334155;
   text-align: right;
   user-select: none;
-  min-width: 34px;
+  min-width: 32px;
   border-right: 1px solid var(--code-border);
 }
 
 pre {
   flex: 1;
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 12.5px;
   line-height: 1.75;
   white-space: pre-wrap;
   word-break: break-word;
@@ -541,40 +690,51 @@ pre {
 }
 
 .explanation {
-  padding: 16px;
+  padding: 16px 18px;
   border-top: 1px solid var(--border);
   background: var(--surface-muted);
 }
 
 .explanation-label {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text3);
+  color: var(--accent);
   margin-bottom: 8px;
 }
 
 .explanation p {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text2);
   line-height: 1.65;
 }
 
-/* ── TIPS ── */
-.tips-card {
+/* ── TIPS + HISTORY ── */
+.bottom-section {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 960px) {
+  .bottom-section { grid-template-columns: 1fr 1fr; }
+}
+
+.card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 20px;
-  margin-top: 8px;
+  box-shadow: var(--shadow);
 }
 
-.tips-title {
+.card-title {
   font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
+  font-weight: 700;
   margin-bottom: 14px;
+  letter-spacing: -0.01em;
 }
 
 .tips-list {
@@ -585,131 +745,174 @@ pre {
 }
 
 .tips-list li {
-  display: flex;
-  gap: 10px;
   font-size: 13px;
   color: var(--text2);
   line-height: 1.5;
-  padding-left: 0;
+  padding-left: 14px;
+  position: relative;
 }
 
 .tips-list li::before {
   content: '';
-  width: 4px;
-  height: 4px;
-  background: var(--accent);
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  background: linear-gradient(135deg, var(--accent), var(--violet));
   border-radius: 50%;
-  margin-top: 8px;
-  flex-shrink: 0;
 }
 
-.tips-list strong {
-  color: var(--text);
-  font-weight: 500;
-}
-
-/* ── HISTORY ── */
-.history-section { margin-top: 28px; }
+.tips-list strong { color: var(--text); font-weight: 600; }
 
 .history-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
+
+.history-header .card-title { margin-bottom: 0; }
 
 .clear-history {
   font-size: 11px;
+  font-weight: 500;
   color: var(--text3);
   background: none;
   border: none;
   cursor: pointer;
-  padding: 2px 4px;
-  border-radius: 3px;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
 
-.clear-history:hover { color: var(--text2); }
-.clear-history:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.clear-history:hover { color: var(--error); }
 
-.history-list { display: flex; flex-direction: column; gap: 6px; }
+.history-empty {
+  font-size: 13px;
+  color: var(--text3);
+  text-align: center;
+  padding: 20px 0;
+}
+
+.history-list { display: flex; flex-direction: column; gap: 8px; }
 
 .history-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
-  background: var(--surface);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px 12px;
+  align-items: start;
+  padding: 12px 14px;
+  background: var(--surface-muted);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
   text-align: left;
   width: 100%;
   font-family: inherit;
-  font-size: 13px;
+  transition: all var(--transition);
 }
 
 .history-item:hover {
-  border-color: var(--accent-border);
+  border-color: var(--accent);
   background: var(--accent-soft);
 }
 
-.history-item:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+.history-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 52px;
 }
 
 .history-num {
   font-family: var(--mono);
   font-size: 10px;
-  color: var(--text3);
-  min-width: 24px;
+  font-weight: 600;
+  color: var(--accent);
 }
 
-.history-text {
-  color: var(--text2);
-  flex: 1;
+.history-time {
+  font-size: 10px;
+  color: var(--text3);
+}
+
+.history-body { min-width: 0; }
+
+.history-prompt {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin-bottom: 4px;
+}
+
+.history-preview {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-restore {
+  color: var(--text3);
+  padding-top: 2px;
 }
 
 /* ── FOOTER ── */
 footer {
   border-top: 1px solid var(--border);
   background: var(--surface);
-  padding: 20px 24px;
-  text-align: center;
+  padding: 24px;
+  margin-top: 16px;
 }
 
 .footer-inner {
-  max-width: 720px;
+  max-width: 1200px;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .footer-brand {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.footer-brand span {
+  background: linear-gradient(90deg, var(--accent), var(--violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .footer-meta {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text3);
   line-height: 1.6;
+  text-align: right;
 }
 
 .footer-meta a {
   color: var(--accent);
   text-decoration: none;
+  font-weight: 600;
 }
 
 .footer-meta a:hover { text-decoration: underline; }
 
 /* ── SYNTAX ── */
-.dax-fn  { color: #7dd3fc; }
-.dax-kw  { color: #c4b5fd; }
+.dax-fn  { color: #7dd3fc; font-weight: 500; }
+.dax-kw  { color: #c4b5fd; font-weight: 500; }
 .dax-str { color: #fdba74; }
 .dax-col { color: #6ee7b7; }
 .dax-cmt { color: #64748b; font-style: italic; }
@@ -718,18 +921,17 @@ footer {
 /* ── RESPONSIVE ── */
 @media (max-width: 640px) {
   header { padding: 0 16px; }
-  .header-meta .status-pill { display: none; }
-  main { padding: 32px 16px 64px; }
-  .features { grid-template-columns: 1fr; }
-  .btn-generate { width: 100%; }
-  .input-footer { flex-direction: column-reverse; align-items: stretch; }
+  .status-pill { display: none; }
+  .app { padding: 20px 16px 48px; }
+  .hero { padding: 18px; }
   .line-nums { display: none; }
+  .footer-inner { flex-direction: column; text-align: center; }
+  .footer-meta { text-align: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
@@ -739,129 +941,135 @@ footer {
 <body>
 
 <header>
-  <div class="logo">
-    <div class="logo-mark" aria-hidden="true">DAX</div>
+  <a class="logo" href="https://aegis8.org" target="_blank" rel="noopener noreferrer">
+    <div class="logo-mark" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z" fill="white" fill-opacity="0.95"/></svg>
+    </div>
     <div class="logo-text">Aegis8 · <span>DAX</span></div>
     <div class="badge">Beta</div>
-  </div>
+  </a>
   <div class="header-meta">
     <div class="status-pill">
       <span class="status-dot" aria-hidden="true"></span>
-      Servicio activo
+      En línea
     </div>
-    <div class="query-count">Consultas: <strong id="qCount">0</strong></div>
+    <div class="query-count">Consultas <strong id="qCount">0</strong></div>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
   </div>
 </header>
 
-<main>
-  <section class="hero" aria-labelledby="hero-title">
-    <p class="hero-eyebrow">Power BI · Asistente DAX</p>
-    <h1 id="hero-title">Genera <em>fórmulas DAX</em> en español</h1>
-    <p>Describe la métrica que necesitas y obtén código DAX listo para usar en Power BI, con una explicación breve.</p>
-    <p class="hero-credit">Herramienta de Aegis8 · Christian "M0riarty" Mora</p>
-  </section>
+<div class="app">
+  <div class="app-grid">
+    <div class="col-input">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-top">
+          <p class="hero-eyebrow">Aegis8 · Power BI</p>
+          <span class="hero-badge">Asistente DAX</span>
+        </div>
+        <h1 id="hero-title">Genera <em>fórmulas DAX</em> en español</h1>
+        <p class="hero-lead">Describe tu métrica, genera la fórmula y pégala directamente en Power BI.</p>
+        <ol class="hero-steps" aria-label="Cómo funciona">
+          <li><span>01</span> Describe</li>
+          <li><span>02</span> Genera</li>
+          <li><span>03</span> Copia</li>
+        </ol>
+      </section>
 
-  <div class="features" role="list">
-    <div class="feature" role="listitem">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-      <div class="feature-text"><strong>Generación asistida</strong>Respuestas estructuradas en segundos</div>
+      <section class="workspace" aria-label="Área de trabajo">
+        <div class="workspace-head">
+          <p class="workspace-title">Nueva métrica</p>
+          <div class="category-tabs" role="tablist" id="categoryTabs">
+            <button type="button" class="cat-tab active" role="tab" data-cat="comparativas" aria-selected="true">Comparativas</button>
+            <button type="button" class="cat-tab" role="tab" data-cat="rankings" aria-selected="false">Rankings</button>
+            <button type="button" class="cat-tab" role="tab" data-cat="acumulados" aria-selected="false">Acumulados</button>
+            <button type="button" class="cat-tab" role="tab" data-cat="promedios" aria-selected="false">Promedios</button>
+          </div>
+        </div>
+        <div class="workspace-body">
+          <div class="chips" id="chipsContainer" role="group" aria-label="Ejemplos"></div>
+          <div class="input-header">
+            <label class="input-label" for="prompt">Descripción</label>
+            <span class="char-count" id="charCount" aria-live="polite">0 / 2000</span>
+          </div>
+          <textarea id="prompt" maxlength="2000" placeholder="Ej: Ventas del mes actual vs el mismo mes del año anterior, como variación %." autocomplete="off" spellcheck="true"></textarea>
+          <div class="progress-bar" id="progressBar" role="progressbar" aria-hidden="true"><div class="progress-inner"></div></div>
+          <div class="error-msg" id="errorMsg" role="alert" aria-live="assertive">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span id="errorText"></span>
+          </div>
+          <button type="button" class="btn-generate" id="btn">
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="btn-text">Generar fórmula DAX</span>
+          </button>
+          <span class="hint"><kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>Enter</kbd></span>
+        </div>
+      </section>
     </div>
-    <div class="feature" role="listitem">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      <div class="feature-text"><strong>Copia directa</strong>Código listo para pegar en el modelo</div>
-    </div>
-    <div class="feature" role="listitem">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      <div class="feature-text"><strong>Explicación incluida</strong>Contexto breve de la fórmula generada</div>
-    </div>
-  </div>
 
-  <section class="chips-section" aria-labelledby="chips-label">
-    <p class="section-label" id="chips-label">Ejemplos</p>
-    <div class="chips" role="group" aria-label="Ejemplos de consultas">
-      <button type="button" class="chip" data-prompt="Suma de ventas del mes actual vs mes anterior">Ventas mes actual vs anterior</button>
-      <button type="button" class="chip" data-prompt="Porcentaje de crecimiento de ingresos año a año">Crecimiento YoY</button>
-      <button type="button" class="chip" data-prompt="Promedio de ventas por vendedor excluyendo los que no vendieron nada">Promedio por vendedor</button>
-      <button type="button" class="chip" data-prompt="Top 5 productos más vendidos del trimestre">Top 5 productos</button>
-      <button type="button" class="chip" data-prompt="Acumulado de ventas desde inicio de año hasta hoy">Acumulado YTD</button>
-    </div>
-  </section>
-
-  <section class="input-card" aria-labelledby="input-label">
-    <div class="input-header">
-      <label class="input-label" id="input-label" for="prompt">Descripción de la métrica</label>
-      <span class="char-count" id="charCount" aria-live="polite">0 / 2000</span>
-    </div>
-    <textarea
-      id="prompt"
-      maxlength="2000"
-      placeholder="Ej: Ventas del mes actual comparadas con el mismo mes del año anterior, expresadas como variación porcentual."
-      autocomplete="off"
-      spellcheck="true"
-    ></textarea>
-    <div class="input-footer">
-      <span class="hint"><kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>Enter</kbd> para generar</span>
-      <button type="button" class="btn-generate" id="btn">
-        <span class="spinner" aria-hidden="true"></span>
-        <span class="btn-text">Generar DAX</span>
-      </button>
-    </div>
-  </section>
-
-  <div class="progress-bar" id="progressBar" role="progressbar" aria-hidden="true">
-    <div class="progress-inner"></div>
-  </div>
-
-  <div class="error-msg" id="errorMsg" role="alert" aria-live="assertive">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-    <span id="errorText"></span>
-  </div>
-
-  <section class="result-card" id="resultCard" aria-labelledby="result-title">
-    <div class="result-header">
-      <span class="result-title" id="result-title">dax_formula.dax</span>
-      <button type="button" class="copy-btn" id="copyBtn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        Copiar
-      </button>
-    </div>
-    <div class="result-body">
-      <div class="code-wrap">
-        <div class="line-nums" id="lineNums" aria-hidden="true"></div>
-        <pre id="daxOutput"></pre>
+    <section class="panel-result" id="resultPanel" aria-label="Resultado">
+      <div class="result-empty" id="resultEmpty">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <p>Tu fórmula DAX aparecerá aquí</p>
+        <span>Describe una métrica y pulsa generar</span>
       </div>
-      <div class="explanation" id="explanationBlock">
-        <div class="explanation-label">Explicación</div>
-        <p id="explanationText"></p>
+      <div class="result-content" id="resultContent">
+        <div class="result-toolbar">
+          <input type="text" class="measure-name" id="measureName" value="Medida_DAX" aria-label="Nombre de la medida" spellcheck="false">
+          <div class="result-actions">
+            <button type="button" class="action-btn" id="copyBtn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copiar
+            </button>
+            <button type="button" class="action-btn" id="downloadBtn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              .dax
+            </button>
+          </div>
+        </div>
+        <div class="code-wrap">
+          <div class="line-nums" id="lineNums" aria-hidden="true"></div>
+          <pre id="daxOutput"></pre>
+        </div>
+        <div class="explanation" id="explanationBlock" hidden>
+          <div class="explanation-label">Explicación</div>
+          <p id="explanationText"></p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 
-  <aside class="tips-card" aria-labelledby="tips-title">
-    <h2 class="tips-title" id="tips-title">Recomendaciones</h2>
-    <ul class="tips-list">
-      <li><strong>Contexto del modelo:</strong> indica tablas y columnas si las conoces.</li>
-      <li><strong>Filtros:</strong> especifica rangos de fecha, región o categoría.</li>
-      <li><strong>Tipo de cálculo:</strong> aclara si necesitas medida o columna calculada.</li>
-      <li><strong>Validación:</strong> revisa siempre la fórmula antes de usarla en producción.</li>
-    </ul>
-  </aside>
-
-  <section class="history-section" id="historySection" hidden>
-    <div class="history-header">
-      <p class="section-label">Historial de sesión</p>
-      <button type="button" class="clear-history" id="clearHistory">Limpiar</button>
-    </div>
-    <div class="history-list" id="historyList"></div>
-  </section>
-</main>
+  <div class="bottom-section">
+    <aside class="card" aria-labelledby="tips-title">
+      <h2 class="card-title" id="tips-title">Recomendaciones</h2>
+      <ul class="tips-list">
+        <li><strong>Contexto:</strong> indica tablas y columnas reales de tu modelo.</li>
+        <li><strong>Filtros:</strong> especifica fechas, regiones o categorías.</li>
+        <li><strong>Tipo:</strong> aclara si necesitas medida o columna calculada.</li>
+        <li><strong>Validación:</strong> revisa la fórmula antes de producción.</li>
+      </ul>
+    </aside>
+    <section class="card" id="historySection">
+      <div class="history-header">
+        <h2 class="card-title">Historial</h2>
+        <button type="button" class="clear-history" id="clearHistory" hidden>Limpiar</button>
+      </div>
+      <p class="history-empty" id="historyEmpty">Sin consultas en esta sesión</p>
+      <div class="history-list" id="historyList"></div>
+    </section>
+  </div>
+</div>
 
 <footer>
   <div class="footer-inner">
-    <p class="footer-brand">Aegis8 · DAX</p>
+    <p class="footer-brand">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z" fill="url(#fg)"/><defs><linearGradient id="fg" x1="4" y1="2" x2="20" y2="22"><stop stop-color="#2563eb"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg>
+      <span>Aegis8 · DAX</span>
+    </p>
     <p class="footer-meta">
-      Las consultas se procesan en el servidor y no se almacenan en este navegador.<br>
-      © 2026 Aegis8 · Asistente impulsado por IA
+      <a href="https://aegis8.org" target="_blank" rel="noopener noreferrer">Volver a aegis8.org</a> · © 2026 · Consultas no almacenadas localmente
     </p>
   </div>
 </footer>
@@ -877,14 +1085,38 @@ footer {
   const REQUEST_TIMEOUT_MS = 45000;
   const COOLDOWN_MS = 2000;
 
+  const EXAMPLES = {
+    comparativas: [
+      { label: 'Mes actual vs anterior', prompt: 'Suma de ventas del mes actual vs mes anterior' },
+      { label: 'Crecimiento YoY', prompt: 'Porcentaje de crecimiento de ingresos año a año' },
+      { label: 'Mismo periodo año pasado', prompt: 'Ventas del trimestre actual comparadas con el mismo trimestre del año anterior' }
+    ],
+    rankings: [
+      { label: 'Top 5 productos', prompt: 'Top 5 productos más vendidos del trimestre' },
+      { label: 'Ranking vendedores', prompt: 'Ranking de vendedores por total de ventas del mes' },
+      { label: 'Peor desempeño', prompt: 'Bottom 3 regiones con menor facturación del año' }
+    ],
+    acumulados: [
+      { label: 'Acumulado YTD', prompt: 'Acumulado de ventas desde inicio de año hasta hoy' },
+      { label: 'Running total', prompt: 'Total acumulado de ventas por mes dentro del año' },
+      { label: 'MTD ventas', prompt: 'Total de ventas acumulado del mes en curso' }
+    ],
+    promedios: [
+      { label: 'Promedio por vendedor', prompt: 'Promedio de ventas por vendedor excluyendo los que no vendieron nada' },
+      { label: 'Ticket promedio', prompt: 'Ticket promedio de compra por cliente' },
+      { label: 'Media móvil 3M', prompt: 'Promedio móvil de ventas de los últimos 3 meses' }
+    ]
+  };
+
   let queryCount = 0;
   let history = [];
   let rawDAX = '';
   let lastRequestAt = 0;
   let activeController = null;
+  let activeCategory = 'comparativas';
 
-  const COPY_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
-  const CHECK_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+  const COPY_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+  const CHECK_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
 
   const $ = (id) => document.getElementById(id);
 
@@ -913,11 +1145,59 @@ footer {
     }
   }
 
-  function setChip(text) {
-    const ta = $('prompt');
-    ta.value = sanitizePrompt(text);
-    ta.focus();
-    updateCharCount();
+  function extractMeasureName(code) {
+    const match = code.match(/^([A-Za-z_\u00C0-\u024F][\w\u00C0-\u024F]*)\s*=/m);
+    return match ? match[1] : 'Medida_DAX';
+  }
+
+  function formatRelativeTime(ts) {
+    const diff = Date.now() - ts;
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return 'ahora';
+    if (mins < 60) return 'hace ' + mins + ' min';
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return 'hace ' + hrs + ' h';
+    return 'hace ' + Math.floor(hrs / 24) + ' d';
+  }
+
+  function initTheme() {
+    const saved = localStorage.getItem('aegis8-dax-theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+  }
+
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('aegis8-dax-theme', next);
+  }
+
+  function renderChips(category) {
+    activeCategory = category;
+    const container = $('chipsContainer');
+    container.replaceChildren();
+    (EXAMPLES[category] || []).forEach((ex) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'chip';
+      btn.textContent = ex.label;
+      btn.addEventListener('click', () => {
+        $('prompt').value = ex.prompt;
+        updateCharCount();
+        $('prompt').focus();
+      });
+      container.appendChild(btn);
+    });
+  }
+
+  function setCategory(cat) {
+    document.querySelectorAll('.cat-tab').forEach((tab) => {
+      const active = tab.dataset.cat === cat;
+      tab.classList.toggle('active', active);
+      tab.setAttribute('aria-selected', String(active));
+    });
+    renderChips(cat);
   }
 
   function updateCharCount() {
@@ -947,32 +1227,41 @@ footer {
       'EOMONTH','EDATE','DATEDIFF','CALENDAR','CALENDARAUTO'];
 
     let html = escapeHtml(code);
-
     html = html.replace(/(\/\/[^\n]*)/g, '<span class="dax-cmt">$1</span>');
     html = html.replace(/"([^"]*)"/g, '"<span class="dax-str">$1</span>"');
     html = html.replace(/(\[[^\]]+\])/g, '<span class="dax-col">$1</span>');
     html = html.replace(/\b(\d+\.?\d*)\b/g, '<span class="dax-num">$1</span>');
-
     const fnRegex = new RegExp('\\b(' + functions.join('|') + ')\\b', 'g');
     html = html.replace(fnRegex, '<span class="dax-fn">$1</span>');
     html = html.replace(/\b(VAR|RETURN|IN|NOT IN)\b/g, '<span class="dax-kw">$1</span>');
-
     return html;
   }
 
-  function renderDAX(code) {
-    rawDAX = code;
-    $('daxOutput').innerHTML = highlightDAX(code);
-    updateLineNums(code);
+  function showResult(formula, explanation) {
+    rawDAX = formula;
+    $('daxOutput').innerHTML = highlightDAX(formula);
+    updateLineNums(formula);
+    $('measureName').value = extractMeasureName(formula);
+
+    const exBlock = $('explanationBlock');
+    if (explanation) {
+      $('explanationText').textContent = explanation;
+      exBlock.hidden = false;
+    } else {
+      exBlock.hidden = true;
+    }
+
+    $('resultPanel').classList.add('has-result');
+    if (window.innerWidth < 960) {
+      $('resultPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
-  function setLoading(isLoading) {
-    const btn = $('btn');
-    const progressBar = $('progressBar');
-    btn.classList.toggle('loading', isLoading);
-    btn.disabled = isLoading;
-    progressBar.classList.toggle('active', isLoading);
-    progressBar.setAttribute('aria-hidden', String(!isLoading));
+  function setLoading(on) {
+    $('btn').classList.toggle('loading', on);
+    $('btn').disabled = on;
+    $('progressBar').classList.toggle('active', on);
+    $('progressBar').setAttribute('aria-hidden', String(!on));
   }
 
   function showError(msg) {
@@ -985,65 +1274,42 @@ footer {
     $('errorText').textContent = '';
   }
 
-  function mapFetchError(err) {
-    if (err.name === 'AbortError') {
-      return 'La solicitud tardó demasiado. Inténtalo de nuevo.';
-    }
-    return 'No se pudo completar la solicitud. Verifica tu conexión e inténtalo más tarde.';
-  }
-
   function parseApiResponse(data) {
     const text = typeof data?.content?.[0]?.text === 'string' ? data.content[0].text : '';
-    if (!text || text.length > 12000) {
-      throw new Error('INVALID_RESPONSE');
-    }
+    if (!text || text.length > 12000) throw new Error('INVALID_RESPONSE');
 
     const formulaMatch = text.match(/FORMULA:\s*([\s\S]*?)(?:EXPLICACION:|$)/i);
     const explMatch = text.match(/EXPLICACION:\s*([\s\S]*?)$/i);
-
     const formula = formulaMatch ? formulaMatch[1].trim() : text.trim();
     const explanation = explMatch ? explMatch[1].trim() : '';
 
-    if (!formula || formula.length > 8000) {
-      throw new Error('INVALID_RESPONSE');
-    }
-
+    if (!formula || formula.length > 8000) throw new Error('INVALID_RESPONSE');
     return { formula, explanation: explanation.slice(0, 2000) };
   }
 
   async function generateDAX() {
     const prompt = sanitizePrompt($('prompt').value);
-
-    if (!prompt) {
-      showError('Describe la métrica que quieres calcular.');
-      return;
-    }
+    if (!prompt) { showError('Describe la métrica que quieres calcular.'); return; }
 
     const now = Date.now();
     if (now - lastRequestAt < COOLDOWN_MS) {
       showError('Espera un momento antes de enviar otra consulta.');
       return;
     }
-
     if (!isAllowedWorkerUrl(WORKER_URL)) {
       showError('Configuración del servicio no válida.');
       return;
     }
 
-    if (activeController) {
-      activeController.abort();
-    }
-
+    if (activeController) activeController.abort();
     activeController = new AbortController();
     const timeoutId = setTimeout(() => activeController.abort(), REQUEST_TIMEOUT_MS);
 
     setLoading(true);
     hideError();
-    $('resultCard').classList.remove('visible');
 
     try {
       lastRequestAt = now;
-
       const response = await fetch(WORKER_URL + '/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1058,38 +1324,25 @@ footer {
         })
       });
 
-      if (!response.ok) {
-        throw new Error('HTTP_' + response.status);
-      }
+      if (!response.ok) throw new Error('HTTP_' + response.status);
 
-      const data = await response.json();
-      const { formula, explanation } = parseApiResponse(data);
-
-      renderDAX(formula);
-
-      const exBlock = $('explanationBlock');
-      if (explanation) {
-        $('explanationText').textContent = explanation;
-        exBlock.hidden = false;
-      } else {
-        exBlock.hidden = true;
-      }
-
-      $('resultCard').classList.add('visible');
-      $('resultCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      const { formula, explanation } = parseApiResponse(await response.json());
+      showResult(formula, explanation);
 
       queryCount++;
       $('qCount').textContent = String(queryCount);
 
-      history.unshift({ prompt, dax: formula });
+      history.unshift({ prompt, dax: formula, ts: Date.now() });
       if (history.length > MAX_HISTORY) history.length = MAX_HISTORY;
       renderHistory();
 
     } catch (err) {
       if (err.message === 'INVALID_RESPONSE') {
-        showError('La respuesta del servicio no fue válida. Intenta reformular tu consulta.');
+        showError('La respuesta no fue válida. Intenta reformular tu consulta.');
+      } else if (err.name === 'AbortError') {
+        showError('La solicitud tardó demasiado. Inténtalo de nuevo.');
       } else {
-        showError(mapFetchError(err));
+        showError('No se pudo completar la solicitud. Verifica tu conexión.');
       }
     } finally {
       clearTimeout(timeoutId);
@@ -1100,14 +1353,13 @@ footer {
 
   async function copyDAX() {
     if (!rawDAX) return;
-
     try {
       await navigator.clipboard.writeText(rawDAX);
       const btn = $('copyBtn');
-      btn.innerHTML = CHECK_ICON + ' Copiado';
+      btn.innerHTML = CHECK_SVG + ' Copiado';
       btn.classList.add('copied');
       setTimeout(() => {
-        btn.innerHTML = COPY_ICON + ' Copiar';
+        btn.innerHTML = COPY_SVG + ' Copiar';
         btn.classList.remove('copied');
       }, 2000);
     } catch {
@@ -1115,17 +1367,31 @@ footer {
     }
   }
 
+  function downloadDAX() {
+    if (!rawDAX) return;
+    const name = ($('measureName').value.trim() || 'Medida_DAX').replace(/[^\w\u00C0-\u024F-]/g, '_');
+    const blob = new Blob([rawDAX], { type: 'text/plain;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name + '.dax';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
   function renderHistory() {
-    const section = $('historySection');
     const list = $('historyList');
+    const empty = $('historyEmpty');
+    const clearBtn = $('clearHistory');
 
     if (history.length === 0) {
-      section.hidden = true;
+      empty.hidden = false;
+      clearBtn.hidden = true;
       list.replaceChildren();
       return;
     }
 
-    section.hidden = false;
+    empty.hidden = true;
+    clearBtn.hidden = false;
     list.replaceChildren();
 
     history.forEach((item, i) => {
@@ -1134,15 +1400,31 @@ footer {
       btn.className = 'history-item';
       btn.dataset.index = String(i);
 
+      const meta = document.createElement('div');
+      meta.className = 'history-meta';
       const num = document.createElement('span');
       num.className = 'history-num';
       num.textContent = String(i + 1).padStart(2, '0');
+      const time = document.createElement('span');
+      time.className = 'history-time';
+      time.textContent = formatRelativeTime(item.ts);
+      meta.append(num, time);
 
-      const text = document.createElement('span');
-      text.className = 'history-text';
-      text.textContent = item.prompt;
+      const body = document.createElement('div');
+      body.className = 'history-body';
+      const promptEl = document.createElement('div');
+      promptEl.className = 'history-prompt';
+      promptEl.textContent = item.prompt;
+      const preview = document.createElement('div');
+      preview.className = 'history-preview';
+      preview.textContent = item.dax.replace(/\s+/g, ' ').slice(0, 80);
+      body.append(promptEl, preview);
 
-      btn.append(num, text);
+      const arrow = document.createElement('span');
+      arrow.className = 'history-restore';
+      arrow.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>';
+
+      btn.append(meta, body, arrow);
       list.appendChild(btn);
     });
   }
@@ -1150,13 +1432,10 @@ footer {
   function restoreHistory(index) {
     const item = history[index];
     if (!item) return;
-
     $('prompt').value = item.prompt;
     updateCharCount();
-    renderDAX(item.dax);
-    $('resultCard').classList.add('visible');
+    showResult(item.dax, '');
     $('explanationBlock').hidden = true;
-    $('resultCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   function clearHistory() {
@@ -1166,21 +1445,20 @@ footer {
 
   function bindEvents() {
     $('prompt').addEventListener('input', updateCharCount);
-
     $('btn').addEventListener('click', generateDAX);
-
     $('copyBtn').addEventListener('click', copyDAX);
-
+    $('downloadBtn').addEventListener('click', downloadDAX);
     $('clearHistory').addEventListener('click', clearHistory);
+    $('themeToggle').addEventListener('click', toggleTheme);
 
-    document.querySelectorAll('.chip').forEach((chip) => {
-      chip.addEventListener('click', () => setChip(chip.dataset.prompt || ''));
+    $('categoryTabs').addEventListener('click', (e) => {
+      const tab = e.target.closest('.cat-tab');
+      if (tab) setCategory(tab.dataset.cat);
     });
 
     $('historyList').addEventListener('click', (e) => {
       const item = e.target.closest('.history-item');
-      if (!item) return;
-      restoreHistory(Number(item.dataset.index));
+      if (item) restoreHistory(Number(item.dataset.index));
     });
 
     document.addEventListener('keydown', (e) => {
@@ -1191,6 +1469,8 @@ footer {
     });
   }
 
+  initTheme();
+  renderChips('comparativas');
   bindEvents();
   updateCharCount();
 })();
